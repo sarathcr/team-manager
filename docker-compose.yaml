@@ -13,8 +13,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: thinko-creator-nodejs
+      args:
+        - UID=${UID}
+        - GID=${UID}
     user: node
-    command: npm run prerender
+    command: >
+      sh -c "npm install
+      && npm run prerender
+      && id -g"
     volumes:
       - .:/home/node/app
