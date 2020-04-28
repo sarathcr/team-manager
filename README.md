@@ -2,6 +2,16 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
 
+## Set up steps
+
+`npm install -g @angular/cli`
+`ng new thinko-creator`
+`cd thinko-creator`
+
+## Git Thinkö repository 
+
+`git remote add origin https://gitlab.opentrends.net/tk004-thinko_elearning/tk004-thinko_creator.git` 
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
