@@ -19,6 +19,11 @@ ng g c route-a
 ng g c nav
 ```
 
+Add prerender by universal component
+```
+ng add @nguniversal/express-engine --clientProject thinko-creator
+npm run prerender
+```
 
 ## Git Thinkö repository 
 
