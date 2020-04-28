@@ -2,12 +2,22 @@
 
 ## Run static scripts
 
-Execute the command
+Execute the command to generate static files
 ```
 docker-compose up -d
 ```
 
-Access to http://localhost:8080
+or preventing permissions problems in Unix systems
+```
+export UID; docker-compose up -d
+```
+
+Check the logs to assure that static files rendering has finished:
+```
+ docker-compose logs -f
+```
+
+Access at http://localhost:8080
 
 ##  DevOps - Set up steps
 
