@@ -4,9 +4,21 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Set up steps
 
-`npm install -g @angular/cli`
-`ng new thinko-creator`
-`cd thinko-creator`
+Angular project set up
+```
+npm install -g @angular/cli
+ng new thinko-creator
+cd thinko-creator
+```
+
+
+Add components
+```
+ng g c home
+ng g c route-a
+ng g c nav
+```
+
 
 ## Git Thinkö repository 
 
