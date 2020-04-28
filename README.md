@@ -1,8 +1,15 @@
 # ThinkoCreator
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
+## Run static scripts
 
-## Set up steps
+Execute the command
+```
+docker-compose up -d
+```
+
+Access to http://localhost:8080
+
+##  DevOps - Set up steps
 
 Angular project set up
 ```
@@ -11,6 +18,10 @@ ng new thinko-creator
 cd thinko-creator
 ```
 
+Add git remote
+```
+git remote add origin https://gitlab.opentrends.net/tk004-thinko_elearning/tk004-thinko_creator.git
+```
 
 Add components
 ```
@@ -25,9 +36,11 @@ ng add @nguniversal/express-engine --clientProject thinko-creator
 npm run prerender
 ```
 
-## Git Thinkö repository 
+ 
 
-`git remote add origin https://gitlab.opentrends.net/tk004-thinko_elearning/tk004-thinko_creator.git` 
+# Angular CLI README
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.3.
 
 ## Development server
 
