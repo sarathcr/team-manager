@@ -22,11 +22,16 @@ Access at http://localhost:8080
 
 ## Upload to S3
 
-There's a provisional script to upload the static files into a privisional S3 bucket. It can be executed with:
+There's a provisional script to upload the static files into a privisional S3 bucket. 
+
+**Note**: Check before the AWS requirements 
+
 
 ```shell script
 ops/upload_statics_to_s3.sh
 ``` 
+
+The S3 site is published under CloudFront distribution at http://d18ta45l1rv296.cloudfront.net/
 
 ### AWS requirements
 
