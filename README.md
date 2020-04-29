@@ -19,6 +19,34 @@ Check the logs to assure that static files rendering has finished:
 
 Access at http://localhost:8080
 
+
+## Upload to S3
+
+There's a provisional script to upload the static files into a privisional S3 bucket. It can be executed with:
+
+```shell script
+ops/upload_statics_to_s3.sh
+``` 
+
+### AWS requirements
+
+To upload to S3 you must have installed and configured the AWS CLI with an AWS profile named "thinko", like this:
+
+```shell script
+# cat ~/.aws/credentials
+
+[thinko]
+aws_access_key_id = XXXXXXXXX
+aws_secret_access_key = YYYYYYYY
+```
+
+```shell script
+# cat ~/.aws/config
+
+[profile thinko]
+region = eu-west-3
+```
+
 ##  DevOps - Set up steps
 
 Angular project set up
@@ -45,7 +73,6 @@ Add prerender by universal component
 ng add @nguniversal/express-engine --clientProject thinko-creator
 npm run prerender
 ```
-
  
 
 # Angular CLI README
