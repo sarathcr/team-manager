@@ -1,0 +1,25 @@
+version: '3'
+services:
+  web:
+    image: nginx
+    volumes:
+     - ./dist:/var/www
+     - ./docker/nginx-default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+     - "8080:80"
+    depends_on:
+      - nodejs
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - UID=${UID}
+        - GID=${UID}
+    user: node
+    command: >
+      sh -c "npm install
+      && npm run prerender
+      && id -g"
+    volumes:
+      - .:/home/node/app
