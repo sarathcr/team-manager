@@ -166,6 +166,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "thinko-creator"
+    }
+  },
+  "defaultProject": "thinko-creator",
+  "cli": {
+    "analytics": "79c27afc-e3a2-4a23-a6d2-bd687ac4a639"
+  }
 }
