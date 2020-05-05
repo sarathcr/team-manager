@@ -24,7 +24,6 @@
               "src/assets"
             ],
             "styles": [
-              "../tk004-thinko_frontend/dist/css/main.css",
               "src/styles.css"
             ],
             "scripts": []
