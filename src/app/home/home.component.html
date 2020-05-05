@@ -1,1 +1,9 @@
-<p>home works!</p>
+<div class="creator-home">
+    <app-sidebar></app-sidebar>
+    <app-creator-header></app-creator-header>
+    <h1 class="creator-home__head-text">{{title}}</h1>
+    <div class="project">
+        <app-add-project routerLink="/project-editor"></app-add-project>
+        <app-list-project></app-list-project>
+    </div>
+</div>
