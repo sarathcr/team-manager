@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Project, LocalStorageService } from 'src/app/services/localStorage.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   title = 'Tus plantillas';
-  constructor() { }
+  allProjects: Project[];
+  constructor(private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
+    this.allProjects = this.localStorageService.projectsList;
   }
 
 }
