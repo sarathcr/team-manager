@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LocalStorageService } from './services/localStorage.service';
 import { HomeComponent } from './home/home.component';
 import { ProjectEditorComponent } from './project-editor/project-editor.component';
 import { NavComponent } from './nav/nav.component';
@@ -19,10 +20,13 @@ import { NavComponent } from './nav/nav.component';
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
-    SharedModule,
-    ModulesModule
+    ModulesModule,
+    SharedModule
   ],
-  providers: [],
+  providers: [
+    LocalStorageService,
+    AppRoutingModule,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
