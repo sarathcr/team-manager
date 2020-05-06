@@ -10,9 +10,7 @@ export class HomeComponent implements OnInit {
   title = 'Tus plantillas';
   allProjects: Project[];
   constructor(private localStorageService: LocalStorageService) { }
-
   ngOnInit(): void {
     this.allProjects = this.localStorageService.projectsList;
   }
-
 }
