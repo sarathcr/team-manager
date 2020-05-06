@@ -5,20 +5,16 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { ProjectEditorComponent } from './project-editor/project-editor.component';
-import { NavComponent } from './nav/nav.component';
+import { PagesModule } from './pages/pages.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    ProjectEditorComponent,
-    NavComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
+    PagesModule,
     SharedModule,
     ModulesModule
   ],
