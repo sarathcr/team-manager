@@ -37,7 +37,11 @@ export class LocalStorageService {
   }
   addProject(project: Project){
     this.getAllProjects();
-    this.projectsList.push(project)
+    if (this.projectsList === null){
+      this.projectsList = [project]
+    } else{
+      this.projectsList.push(project);
+    }
     this.setData(this.projectsList);
   }
   deleteProject(id: number){

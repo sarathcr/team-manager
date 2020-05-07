@@ -1,19 +1,22 @@
-import { SidebarComponent } from './../shared/sidebar/sidebar.component';
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
-import { CreatorHeaderComponent } from './creator-header/creator-header.component';
+import { CreatorHeaderComponent } from './components/creator-header/creator-header.component';
+import { NavComponent } from './components/nav/nav.component';
 
 @NgModule({
     declarations: [
         SidebarComponent,
-        CreatorHeaderComponent
+        CreatorHeaderComponent,
+        NavComponent
     ],
     imports: [
         CommonModule
     ],
     exports: [
         SidebarComponent,
-        CreatorHeaderComponent
+        CreatorHeaderComponent,
+        NavComponent
     ]
 })
 
