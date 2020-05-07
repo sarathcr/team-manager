@@ -11078,7 +11078,7 @@ body.body-overflow-hidden {
   padding: 72px 0;
 }
 
-/* line 4, src/sass/components/_publication-list.scss */
+/* line 5, src/sass/components/_publication-list.scss */
 .publication-list__main-title {
   white-space: nowrap;
   overflow: hidden;
@@ -11086,7 +11086,7 @@ body.body-overflow-hidden {
   max-width: 418px;
 }
 
-/* line 11, src/sass/components/_publication-list.scss */
+/* line 12, src/sass/components/_publication-list.scss */
 .publication-list__wrapper {
   margin: 44px 0 20px 0;
   -webkit-box-orient: horizontal;
@@ -11095,7 +11095,7 @@ body.body-overflow-hidden {
           flex-flow: row wrap;
 }
 
-/* line 15, src/sass/components/_publication-list.scss */
+/* line 16, src/sass/components/_publication-list.scss */
 .publication-list__cards {
   -webkit-box-flex: 0;
       -ms-flex: 0 0 32.1%;
@@ -11114,7 +11114,7 @@ body.body-overflow-hidden {
   box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.1);
 }
 
-/* line 24, src/sass/components/_publication-list.scss */
+/* line 25, src/sass/components/_publication-list.scss */
 .publication-list__figure {
   height: 238px;
   -webkit-box-flex: 0;
@@ -11123,14 +11123,14 @@ body.body-overflow-hidden {
   position: relative;
 }
 
-/* line 28, src/sass/components/_publication-list.scss */
+/* line 29, src/sass/components/_publication-list.scss */
 .publication-list__figure img {
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 4px 4px 0 0;
 }
 
-/* line 33, src/sass/components/_publication-list.scss */
+/* line 34, src/sass/components/_publication-list.scss */
 .publication-list__details {
   padding: 23px 30px 32px 30px;
   background-color: rgba(255, 255, 255, 0.99);
@@ -11140,7 +11140,7 @@ body.body-overflow-hidden {
           flex: 1 0 auto;
 }
 
-/* line 38, src/sass/components/_publication-list.scss */
+/* line 39, src/sass/components/_publication-list.scss */
 .publication-list__details h6 {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -11149,19 +11149,19 @@ body.body-overflow-hidden {
   -webkit-line-clamp: 1;
 }
 
-/* line 45, src/sass/components/_publication-list.scss */
+/* line 46, src/sass/components/_publication-list.scss */
 .publication-list__details h4 {
   min-height: 64px;
   margin-bottom: 0;
 }
 
-/* line 51, src/sass/components/_publication-list.scss */
+/* line 52, src/sass/components/_publication-list.scss */
 .publication-list__overtitle {
   text-transform: uppercase;
   margin-bottom: 5px;
 }
 
-/* line 57, src/sass/components/_publication-list.scss */
+/* line 58, src/sass/components/_publication-list.scss */
 .publication-list__title {
   color: #141C3A;
   overflow: hidden;
@@ -11171,17 +11171,17 @@ body.body-overflow-hidden {
   -webkit-line-clamp: 3;
 }
 
-/* line 67, src/sass/components/_publication-list.scss */
+/* line 68, src/sass/components/_publication-list.scss */
 .publication-list__link {
   color: #141C3A;
 }
 
 @media (max-width: 991.98px) {
-  /* line 72, src/sass/components/_publication-list.scss */
+  /* line 73, src/sass/components/_publication-list.scss */
   .publication-list__figure {
     height: 185px;
   }
-  /* line 75, src/sass/components/_publication-list.scss */
+  /* line 76, src/sass/components/_publication-list.scss */
   .publication-list__cards {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 48%;
@@ -11195,24 +11195,40 @@ body.body-overflow-hidden {
   .publication-list {
     padding: 40px 0;
   }
-  /* line 82, src/sass/components/_publication-list.scss */
+  /* line 83, src/sass/components/_publication-list.scss */
   .publication-list__wrapper {
     margin: 24px 0 32px 0;
   }
-  /* line 85, src/sass/components/_publication-list.scss */
+  /* line 86, src/sass/components/_publication-list.scss */
   .publication-list__details {
     padding: 15px 20px 24px 20px;
   }
-  /* line 87, src/sass/components/_publication-list.scss */
+  /* line 88, src/sass/components/_publication-list.scss */
   .publication-list__details h4 {
     min-height: 0;
   }
-  /* line 91, src/sass/components/_publication-list.scss */
+  /* line 92, src/sass/components/_publication-list.scss */
   .publication-list__cards {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 100%;
             flex: 0 0 100%;
     margin-bottom: 24px;
+  }
+  /* line 97, src/sass/components/_publication-list.scss */
+  .publication-list_related {
+    padding: 40px 0 28px;
+  }
+  /* line 100, src/sass/components/_publication-list.scss */
+  .publication-list_related .publication-list__details {
+    padding: 18px 20px 28px;
+  }
+  /* line 104, src/sass/components/_publication-list.scss */
+  .publication-list_related .publication-list__wrapper {
+    margin: 28px 0 0;
+  }
+  /* line 108, src/sass/components/_publication-list.scss */
+  .publication-list_related .publication-list__overtitle {
+    margin-bottom: 10px;
   }
 }
 
@@ -11624,6 +11640,7 @@ body.body-overflow-hidden {
 .app-tags__tag-link {
   pointer-events: none;
   display: inline-block;
+  float: left;
   margin-right: 12px;
   margin-bottom: 12px;
   padding: 6px 20px;
@@ -11634,7 +11651,7 @@ body.body-overflow-hidden {
   text-transform: capitalize;
 }
 
-/* line 20, src/sass/components/_app-tags.scss */
+/* line 21, src/sass/components/_app-tags.scss */
 .app-tags__btn-share {
   border: none;
   display: none;
@@ -11647,14 +11664,14 @@ body.body-overflow-hidden {
   padding: 0;
 }
 
-/* line 29, src/sass/components/_app-tags.scss */
+/* line 30, src/sass/components/_app-tags.scss */
 .app-tags__btn-share-title {
   text-transform: uppercase;
   margin-right: 16px;
   text-align: right;
 }
 
-/* line 36, src/sass/components/_app-tags.scss */
+/* line 37, src/sass/components/_app-tags.scss */
 .app-tags__btn-share .icon {
   font-size: 34px;
 }
@@ -11664,7 +11681,7 @@ body.body-overflow-hidden {
   .app-tags {
     margin: 70px 0 0 0;
   }
-  /* line 44, src/sass/components/_app-tags.scss */
+  /* line 45, src/sass/components/_app-tags.scss */
   .app-tags__btn-share {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -12377,6 +12394,16 @@ body.app-share-modal-open {
 }
 
 /* line 21, src/sass/components/_app-bio.scss */
+.app-bio__content-links-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/* line 26, src/sass/components/_app-bio.scss */
 .app-bio__content-links-block {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
@@ -12386,46 +12413,46 @@ body.app-share-modal-open {
   margin-right: 14px;
 }
 
-/* line 27, src/sass/components/_app-bio.scss */
+/* line 32, src/sass/components/_app-bio.scss */
 .app-bio__content-links-block .icon {
   font-size: 48px;
   color: #141C3A;
   display: block;
 }
 
-/* line 36, src/sass/components/_app-bio.scss */
+/* line 41, src/sass/components/_app-bio.scss */
 .app-bio__author-wrap {
   height: 80px;
   margin-bottom: 18px;
 }
 
-/* line 41, src/sass/components/_app-bio.scss */
+/* line 46, src/sass/components/_app-bio.scss */
 .app-bio_multiple-entities {
   margin: 2px 0 50px 0;
   padding: 0 0 52px 0;
 }
 
-/* line 45, src/sass/components/_app-bio.scss */
+/* line 50, src/sass/components/_app-bio.scss */
 .app-bio_multiple-entities .app-bio__author {
   margin-bottom: 0;
 }
 
-/* line 49, src/sass/components/_app-bio.scss */
+/* line 54, src/sass/components/_app-bio.scss */
 .app-bio_multiple-entities .app-bio__author-wrap {
   margin-bottom: 10px;
 }
 
-/* line 53, src/sass/components/_app-bio.scss */
+/* line 58, src/sass/components/_app-bio.scss */
 .app-bio_multiple-entities .app-bio__content {
   padding-top: 56px;
 }
 
-/* line 55, src/sass/components/_app-bio.scss */
+/* line 60, src/sass/components/_app-bio.scss */
 .app-bio_multiple-entities .app-bio__content-links {
   margin-top: 24px;
 }
 
-/* line 61, src/sass/components/_app-bio.scss */
+/* line 66, src/sass/components/_app-bio.scss */
 .app-bio__author {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -12433,14 +12460,14 @@ body.app-share-modal-open {
   margin-bottom: 18px;
 }
 
-/* line 66, src/sass/components/_app-bio.scss */
+/* line 71, src/sass/components/_app-bio.scss */
 .app-bio__author-details, .app-bio__author-image {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-/* line 71, src/sass/components/_app-bio.scss */
+/* line 76, src/sass/components/_app-bio.scss */
 .app-bio__author-image {
   border: 4px solid #37D4C8;
   width: 68px;
@@ -12452,7 +12479,7 @@ body.app-share-modal-open {
   margin-right: 26px;
 }
 
-/* line 81, src/sass/components/_app-bio.scss */
+/* line 86, src/sass/components/_app-bio.scss */
 .app-bio__author-image-block {
   width: 100%;
   height: 100%;
@@ -12460,7 +12487,7 @@ body.app-share-modal-open {
      object-fit: cover;
 }
 
-/* line 88, src/sass/components/_app-bio.scss */
+/* line 93, src/sass/components/_app-bio.scss */
 .app-bio__author-details {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -12471,7 +12498,7 @@ body.app-share-modal-open {
       align-self: center;
 }
 
-/* line 93, src/sass/components/_app-bio.scss */
+/* line 98, src/sass/components/_app-bio.scss */
 .app-bio__author-details .app-bio__author-title {
   margin-bottom: 0;
   line-height: 28px;
@@ -12480,7 +12507,7 @@ body.app-share-modal-open {
   display: flex;
 }
 
-/* line 100, src/sass/components/_app-bio.scss */
+/* line 105, src/sass/components/_app-bio.scss */
 .app-bio__author-details .app-bio__author-subtitle {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -12488,7 +12515,7 @@ body.app-share-modal-open {
   margin-bottom: 0;
 }
 
-/* line 108, src/sass/components/_app-bio.scss */
+/* line 113, src/sass/components/_app-bio.scss */
 .app-bio__multimedia {
   margin-top: 30px;
 }
@@ -12499,20 +12526,20 @@ body.app-share-modal-open {
     margin: 52px 0 36px;
     padding: 60px 45px;
   }
-  /* line 116, src/sass/components/_app-bio.scss */
+  /* line 121, src/sass/components/_app-bio.scss */
   .app-bio__multimedia {
     margin-left: auto;
     margin-top: 0;
   }
-  /* line 120, src/sass/components/_app-bio.scss */
+  /* line 125, src/sass/components/_app-bio.scss */
   .app-bio__multimedia-block {
     margin-top: 10px;
   }
-  /* line 125, src/sass/components/_app-bio.scss */
+  /* line 130, src/sass/components/_app-bio.scss */
   .app-bio__content, .app-bio__multimedia {
     max-width: 464px;
   }
-  /* line 130, src/sass/components/_app-bio.scss */
+  /* line 135, src/sass/components/_app-bio.scss */
   .app-bio_multiple-entities {
     margin: 2px 0 50px;
     padding: 10px 45px 70px 45px;
@@ -12660,8 +12687,18 @@ body.app-share-modal-open {
   left: 0;
   width: 100%;
   min-height: 75px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   background: #fff;
   border-bottom: 1px solid rgba(20, 28, 58, 0.1);
+}
+
+/* line 12, src/sass/components/_creator-projectEditor-header.scss */
+.projectTitle-input {
+  max-width: 215px;
+  padding: 0px 10px 0px 10px;
+  border: 1px solid #000;
 }
 
 /* line 1, src/sass/components/_creator-projectEditor-sidebar.scss */
