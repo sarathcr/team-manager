@@ -6,6 +6,7 @@ import { Project, LocalStorageService } from 'src/app/services/localStorage.serv
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
   styleUrls: ['./add-project.component.css']
+  
 })
 export class AddProjectComponent implements OnInit {
   constructor(private localStorage: LocalStorageService) { }
