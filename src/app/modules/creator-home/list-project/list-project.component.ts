@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Project } from 'src/app/services/localStorage.service';
 
 @Component({
   selector: 'app-list-project',
@@ -8,8 +9,8 @@ import { Router } from '@angular/router';
 })
 export class ListProjectComponent implements OnInit {
 
-  constructor(private router:Router) { }
-
+  constructor(private router: Router) { }
+  @Input() project: Project;
   ngOnInit(): void {
   }
   redirect() {
