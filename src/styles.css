@@ -12697,6 +12697,13 @@ body.app-share-modal-open {
   border: 1px solid #000;
 }
 
+/* line 18, src/sass/components/_creator-projectEditor-header.scss */
+.projectTitle-text {
+  margin-top: 15px;
+  margin-left: 10px;
+  float: left;
+}
+
 /* line 1, src/sass/components/_creator-projectEditor-sidebar.scss */
 .projectEditor-sidebar {
   background: #fff;

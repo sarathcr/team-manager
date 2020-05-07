@@ -2,7 +2,6 @@ import { ListProjectComponent } from './creator-home/list-project/list-project.c
 import { AddProjectComponent } from './creator-home/add-project/add-project.component';
 import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { ProjectEditorHeaderComponent } from './creator-projectEditor/project-editor-header/project-editor-header.component';
 import { ProjectEditorSidebarComponent } from './creator-projectEditor/project-editor-sidebar/project-editor-sidebar.component';
 import { ProjectInputTitleComponent } from './creator-projectEditor/project-input-title/project-input-title.component';
@@ -17,7 +16,6 @@ import { ProjectInputTitleComponent } from './creator-projectEditor/project-inpu
     ],
     imports: [
         CommonModule,
-        FormsModule
     ],
     exports: [
         AddProjectComponent,

@@ -16,9 +16,10 @@ export class AddProjectComponent implements OnInit {
   addNewProject(){
     const newProject: Project = {
       id: (this.localStorage.projectsList == null || this.localStorage.projectsList.length === 0) ? 1
-      : this.localStorage.projectsList.length + 1,
+        : this.localStorage.projectsList.length + 1,
       title: 'project '.concat((this.localStorage.projectsList == null || this.localStorage.projectsList.length === 0) ? String(1)
       : String(this.localStorage.projectsList.length + 1)),
+      // title: '',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       image: 'https://homepages.cae.wisc.edu/~ece533/images/monarch.png',
       theme: 'Some blah blah',
