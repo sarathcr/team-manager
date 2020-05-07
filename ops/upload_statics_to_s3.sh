@@ -4,9 +4,9 @@ set -e
 BASEDIR=$(dirname "$0")
 
 AWS_PROFILE=thinko
-S3_BUCKET=s3://pre-creator-front-staticsite-s3bucket-yjac1u6w51uj
+S3_BUCKET=s3://dev-static-site-s3bucket-81fdpw6evd7p
 STATIC_FILES_PATH=${BASEDIR}/../dist/thinko-creator/browser/
-CLOUDFRONT_DISTRIBUTION_ID=E3HE3KS5ZZRW9I
+CLOUDFRONT_DISTRIBUTION_ID=E2ATFVC7QPOT46
 
 
 
