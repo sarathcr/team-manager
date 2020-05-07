@@ -2,7 +2,7 @@
     <app-sidebar id="sidebar"></app-sidebar>
     <app-creator-header id="creator-header"></app-creator-header>
     <h1 class="creator-home__head-text">{{title}}</h1>
-    <div class="project">
+    <div class="project row">
         <app-add-project routerLink="/project-editor" id="add-project"></app-add-project>
         <app-list-project id="list-project-{{i}}" *ngFor="let project of allProjects; index as i;" [project]="project"></app-list-project>
     </div>

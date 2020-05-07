@@ -12584,6 +12584,7 @@ body.app-share-modal-open {
 .add-project, .list-project {
   height: 194px;
   width: 194px;
+  margin: 0 15px 30px 15px;
   position: relative;
   border-radius: 4px;
   background-color: #6400E4;
@@ -12667,7 +12668,7 @@ body.app-share-modal-open {
 
 /* line 1, src/sass/components/_creator-list-project.scss */
 .list-project {
-  margin: 0 0 0 30px;
+  margin: 0 15px 30px 15px;
   background: #fff;
   -webkit-box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.1);
   box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.1);
