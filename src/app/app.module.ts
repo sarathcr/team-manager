@@ -7,9 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { LocalStorageService } from './services/localStorage.service';
-// import { HomeComponent } from './home/home.component';
-// import { ProjectEditorComponent } from './project-editor/project-editor.component';
-// import { NavComponent } from './nav/nav.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +18,6 @@ import { LocalStorageService } from './services/localStorage.service';
     PagesModule,
     SharedModule,
     ModulesModule,
-    SharedModule
   ],
   providers: [
     LocalStorageService,
