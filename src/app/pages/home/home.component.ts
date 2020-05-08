@@ -12,5 +12,12 @@ export class HomeComponent implements OnInit {
   constructor(private localStorageService: LocalStorageService) { }
   ngOnInit(): void {
     this.allProjects = this.localStorageService.projectsList;
+    if (this.allProjects && this.allProjects.length > 1){
+      this.allProjects.sort((a, b) => {
+        a.date = new Date(a.date);
+        b.date = new Date(b.date);
+        return  b.date.getTime() - a.date.getTime();
+      });
+    }
   }
 }
