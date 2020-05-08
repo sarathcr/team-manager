@@ -13,8 +13,8 @@ export class ListProjectComponent implements OnInit {
   @Input() project: Project;
   ngOnInit(): void {
   }
-  redirect(e,project) {
-    this.localStorageService.getProject(project.id);
+  redirect(e,id) {
+    this.localStorageService.getProject(id);
     this.router.navigate(['./project-editor']);
   }
 }
