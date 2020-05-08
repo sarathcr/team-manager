@@ -21,10 +21,8 @@ export class LocalStorageService {
   }
   getProject(id: number){
     this.getAllProjects();
-    this.project = this.projectsList.reduce((item) => {
-      if (item.id === id){
-        return item;
-      }
+    this.project = this.projectsList.reduce((acc, item) => {
+      return (item.id === id) ? item : acc;
     });
   }
   getAllProjects(){
@@ -38,11 +36,11 @@ export class LocalStorageService {
   addProject(project: Project){
     this.getAllProjects();
     if (this.projectsList === null){
-      this.projectsList = [project]
+      this.projectsList = [project];
     } else{
       this.projectsList.push(project);
     }
-    this.project=project;
+    this.project = project;
     this.setData(this.projectsList);
   }
   deleteProject(id: number){
