@@ -7,7 +7,7 @@ import { LocalStorageService, Project } from 'src/app/services/localStorage.serv
   styleUrls: ['./project-input-title.component.css']
 })
 export class ProjectInputTitleComponent implements OnInit {
-  @ViewChild("titleInput") inputElement: ElementRef;
+  @ViewChild('titleInput') inputElement: ElementRef;
   projectTitle: string;
   showInputfield = false;
   projectDetails: Project;
@@ -23,7 +23,7 @@ export class ProjectInputTitleComponent implements OnInit {
   getProjectDetails(): void {
     this.projectDetails = this.localStorage.project;
     this.projectId = this.projectDetails.id;
-    if (this.projectDetails.title === "" || this.projectDetails.title === null) {
+    if (this.projectDetails.title === '' || this.projectDetails.title === null) {
       this.showInputfield = true;
     } else {
       this.projectTitle = this.projectDetails.title;
@@ -33,16 +33,15 @@ export class ProjectInputTitleComponent implements OnInit {
   // Function to show or hide the input text field.
   toggleInputfield(): void {
     this.showInputfield = true;
-    setTimeout(() => this.inputElement.nativeElement.focus(), 0)
+    setTimeout(() => this.inputElement.nativeElement.focus(), 0);
   }
 
   // Function to compare the title value and to save the value.
   handleBlur(value: any): void {
-    console.log(value)
     if (this.projectTitle !== value) {
       this.projectTitle = value;
-      this.localStorage.updateProject(this.projectId, "title", this.projectTitle)
-      if (value !== "" && value !== null) {
+      this.localStorage.updateProject(this.projectId, 'title', this.projectTitle)
+      if (value !== '' && value !== null) {
         this.showInputfield = false;
       }
     } else {
