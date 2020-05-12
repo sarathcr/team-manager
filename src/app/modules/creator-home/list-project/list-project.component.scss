@@ -1,0 +1,19 @@
+@import '../../../../assets/helpers/_helpers-master';
+.list-project{
+  background: $list-card-background;
+  @include card-box-shadow();
+  padding:15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &__figure{
+      background-color: $list-figure-background;
+      width: 100%;
+      height: 130px;
+  }
+  &__image{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+  }
+}

@@ -1,0 +1,23 @@
+@import '../../../../assets/helpers/_helpers-master';
+.projectEditor-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 75px;
+  display: flex;
+  background: $background-primary;
+  border-bottom: 1px solid $creator-border;
+}
+
+.projectTitle-input {
+  max-width: 215px;
+  padding: 0px 10px 0px 10px;
+  border: 1px solid $black;
+}
+
+.projectTitle-text {
+  margin-top: 15px;
+  margin-left: 10px;
+  float: left;
+}

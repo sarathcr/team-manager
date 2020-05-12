@@ -1,0 +1,70 @@
+@import "./assets/main";
+
+
+.creator-home,.project-editor{
+  width: calc(100% - 187px);
+  min-height: 100vh;
+  background-color: $creator-background;
+  margin-left: auto;
+  padding:75px 15px 0 38px;
+  position: relative;
+  &__head-text{
+      @extend .title_xs;
+      margin-bottom: 35px;
+  }
+}
+:focus{
+  outline: none;
+}
+
+
+.add-project,.list-project{
+  height: 194px;
+  width: 194px;
+  border-radius: 4px;
+  background-color: $add-card-background;
+  position: relative;
+  cursor: pointer;
+  margin:0 15px 30px 15px;
+  @include card-box-shadow();
+  &__addIcon{
+      position: relative;
+      top: 70px;
+      margin:0 auto;
+      width: 26px;
+      height:26px;
+      margin-bottom: 44px;
+      &:before,&:after{
+          position: absolute;
+          content: '';
+          background: $background-primary;
+          top:50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+      }
+      &:before{
+          width:100%;
+          height: 2px;
+      }
+      &:after{
+          width: 2px;
+          height: 100%;
+      }
+  }
+  &__addText{
+      width: 100%;
+      color: $add-card-color;
+      font-family: $font-family-tertiary;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 0.2px;
+      line-height: 32px;
+      text-align: center;
+      position: absolute;
+      bottom: 23px;
+      left: 50%;
+      transform: translateX(-50%);
+  }
+}
+
+

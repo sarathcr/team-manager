@@ -1,0 +1,28 @@
+//Numbered List Style
+.numbered-list{
+    list-style: none;
+    padding-left: 15px;
+    margin-bottom: 44px;
+    font-size: $font-size-body;
+    counter-reset: list;
+
+    & > li{
+        padding-left: 24px;
+        margin-bottom: 16px;
+        position: relative;
+        counter-increment: list;
+
+        &:before{
+            content: counter(list)'.';
+            top: 0;
+            left: 0;
+            color: $primary-font-color;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-body;
+            position: absolute;
+        }
+        &:last-child{
+            margin-bottom:0;
+        }
+     }
+}

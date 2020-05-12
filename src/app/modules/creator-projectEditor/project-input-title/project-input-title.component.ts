@@ -4,7 +4,7 @@ import { LocalStorageService, Project } from 'src/app/services/localStorage.serv
 @Component({
   selector: 'app-project-input-title',
   templateUrl: './project-input-title.component.html',
-  styleUrls: ['./project-input-title.component.css']
+  styleUrls: ['./project-input-title.component.scss']
 })
 export class ProjectInputTitleComponent implements OnInit {
   @ViewChild('titleInput') inputElement: ElementRef;
