@@ -5,7 +5,7 @@ import { Project, LocalStorageService } from 'src/app/services/localStorage.serv
 @Component({
   selector: 'app-list-project',
   templateUrl: './list-project.component.html',
-  styleUrls: ['./list-project.component.css']
+  styleUrls: ['./list-project.component.scss']
 })
 export class ListProjectComponent implements OnInit {
 

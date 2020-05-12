@@ -1,0 +1,10 @@
+@import '../../../../assets/helpers/_helpers-master';
+.projectEditor-sidebar{
+  background:$background-primary;
+  border-right:1px solid $creator-border;
+  top: 75px;
+  width: 75px;
+  position: fixed;
+  left: 0;
+  height: 100%;
+}

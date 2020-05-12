@@ -4,7 +4,7 @@ import { Project, LocalStorageService } from 'src/app/services/localStorage.serv
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
   title = 'Tus plantillas';

@@ -1,0 +1,143 @@
+.title{
+    &_xxl{
+        font-family: $font-family-primary;
+        font-size: $font-size-xxl-mob;
+        line-height: $line-height-48px;
+        letter-spacing: 0.2px;
+        font-weight: 900;
+    }
+
+    &_xl{
+        font-family: $font-family-primary;
+        font-size: $font-size-xl-mob;
+        line-height: $line-height-40px;
+        letter-spacing: normal;
+        font-weight: 900;
+    }
+
+    &_l{
+        font-family: $font-family-primary;
+        font-size: $font-size-l-mob;
+        line-height: $line-height-36px;
+        letter-spacing: normal;
+        font-weight: 900;
+    }
+
+    &_m{
+        font-family: $font-family-primary;
+        font-size: $font-size-m-mob;
+        line-height: $line-height-36px;
+        letter-spacing: normal;
+        font-weight:900;
+    }
+
+    //Font size and styles common for both Mobile and Desktop
+    &_s{
+        font-family: $font-family-primary;
+        font-size: $font-size-s;
+        line-height: $line-height-32px;
+        letter-spacing: 0.3px;
+        font-weight: 900;
+    }
+
+    &_xs{
+        font-family: $font-family-tertiary;
+        font-size: $font-size-xs;
+        line-height: $line-height-36px;
+        letter-spacing: 0.3px;
+        font-weight: 700;
+    }
+
+    &_primary{
+        font-family: $font-family-primary;
+    }
+
+    &_secondary{
+        font-family: $font-family-secondary;
+        font-weight:  700;
+    }
+
+    &_grey{
+        color: $top-article-title;
+    }
+
+    &_upper-case{
+        text-transform: uppercase;
+    }
+
+    &_inline{
+        display: inline;
+    }
+
+    &_over-lap{
+        padding-bottom: 12px;
+        &::after{
+            content: none;
+        }
+        span{
+            position: relative;
+            z-index: 1;
+            padding-right: 50px;
+            overflow-wrap: break-word;
+            padding-bottom: 25px;
+            vertical-align: middle;
+        }
+    }
+
+    @include media-breakpoint-down (md){
+        &_over-lap{
+            font-size: $font-size-xxl-mob;
+            line-height: $line-height-40px;
+            letter-spacing:0;
+            padding-bottom: 10px;
+            span{
+                padding-bottom: 10px;
+                padding-right: 22px;
+            }
+            &::after{
+                content: "";
+                position: absolute;
+                width: 24px;
+                height: 100%;
+                top: 0;
+                left: -24px;
+                background-color:$white;
+            }
+        }
+    }
+
+    @include media-breakpoint-up(lg) {
+        &_xxl{
+            font-size: $font-size-xxl;
+            line-height: $line-height-92px;
+            letter-spacing: 0.3px;
+        }
+    
+        &_xl{
+            font-size: $font-size-xl;
+            line-height: $line-height-84px;
+            letter-spacing: 0.3px;
+        }
+    
+        &_l{
+            font-size: $font-size-l;
+            line-height: $line-height-60px;
+            letter-spacing: 0.3px;
+        }
+    
+        &_m{
+            font-size: $font-size-m;
+            line-height: $line-height-40px;
+            letter-spacing: 0.3px;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+

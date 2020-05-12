@@ -1,0 +1,10 @@
+@import '../../../../assets/helpers/_helpers-master';
+.sidebar{
+  width: 187px;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background:$background-primary;
+  border-right:1px solid $creator-border-color;
+}
