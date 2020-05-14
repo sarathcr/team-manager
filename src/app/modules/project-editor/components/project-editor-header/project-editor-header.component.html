@@ -5,6 +5,8 @@
           <!-- <img class="app-logo__img" src="" alt="thinko"/> -->
         </a>
       </div>  
-    <app-project-input-title></app-project-input-title>
+    <app-project-input-title [value]="projectTitle" [maxLength]="75" (blur)="handleTitleBlur($event)"
+    [placeholder]="'Nombre del proyecto'" >
+    </app-project-input-title>
   </div>
 </div>

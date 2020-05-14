@@ -1,5 +1,5 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { LocalStorageService, Project } from 'src/app/services/localStorage.service';
+import { Component, OnInit, ElementRef, ViewChild, Input, Output,EventEmitter } from '@angular/core';
+import { LocalStorageService } from 'src/app/services/localStorage.service';
 
 @Component({
   selector: 'app-project-input-title',
@@ -8,31 +8,19 @@ import { LocalStorageService, Project } from 'src/app/services/localStorage.serv
 })
 export class ProjectInputTitleComponent implements OnInit {
   @ViewChild('titleInput') inputElement: ElementRef;
+  @Input() value: any;
+  @Input() maxLength: number;
+  @Input() placeholder: any;
+  @Output() blur= new EventEmitter()
   projectTitle: string;
-  showInputfield = false;
+  showInputfield = true;
   projectId: number;
 
   constructor(private localStorage: LocalStorageService) { }
 
   ngOnInit(): void {
-    this.getProjectDetails();
-  }
-
-  ngOnDestroy(): void{
-    if (!this.projectTitle) {
-      const noTitle ="Experiencia sin título"  // Default value for no title project
-      this.handleSubmit(this.projectId, 'title', noTitle)
-   }
-  }
-
-  // Function to get the project details from service.
-  getProjectDetails(): void {
-    const projectDetails: Project = this.localStorage.project;
-    this.projectId = projectDetails.id;
-    if (!projectDetails.title) {
-      this.showInputfield = true;
-    } else {
-      this.projectTitle = projectDetails.title;
+    if(this.value){
+      this.showInputfield = false;
     }
   }
 
@@ -42,20 +30,14 @@ export class ProjectInputTitleComponent implements OnInit {
     setTimeout(() => this.inputElement.nativeElement.focus(), 0);
   }
 
-  // Function to compare the title value and on blur of input field.
-  handleBlur(value: any): void {
-    if (this.projectTitle !== value) {
-      this.projectTitle = value;
-      this.handleSubmit(this.projectId, 'title', this.projectTitle)
-      if (value) {
-        this.showInputfield = false;
-      }
-    } else if (value) {
-      this.showInputfield = false;
+  // Function to handle blur event of input field.
+  handleBlur(event: Event): void {
+    const title = (<HTMLInputElement>event.target).value;
+    if(title){
+      this.showInputfield=false;
+    }else {
+      this.showInputfield=true;
     }
+    this.blur.emit(event)
   }
-// Function saves the title to the backend
-handleSubmit(id: number,key: string,value: any): void{
-  this.localStorage.updateProject(id,key,value)
-}
 }
