@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Project, LocalStorageService } from 'src/app/services/localStorage.service';
+import { Project, LocalStorageService } from './../../../../services/localStorage.service';
 
 @Component({
   selector: 'app-list-project',

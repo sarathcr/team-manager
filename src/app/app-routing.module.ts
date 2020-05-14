@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
-
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'project-editor', component: ProjectEditorComponent },
-  { path: '**', redirectTo: 'home' }
+  {
+    path: '',
+    loadChildren: () => import('./modules/project-editor/project-editor.module').then(m => m.ProjectEditorModule)
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
