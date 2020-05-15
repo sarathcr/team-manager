@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./project-editor.component.scss']
 })
 export class ProjectEditorComponent implements OnInit {
-  status='done';
+  status='';
   title='crea paso apaso';
   view='Ver ficha estructura';
   items=[
