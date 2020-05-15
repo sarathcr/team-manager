@@ -1,6 +1,0 @@
-<input type="text" class="projectTitle-input title_xs px-1" *ngIf="showInputfield; else hideInputfield"
-  placeholder="Nombre del proyecto" value={{projectTitle}} maxlength="75" #titleInput
-  (blur)="handleBlur($event.target.value)">
-<ng-template #hideInputfield>
-  <h1 class="projectTitle-text title_xs" (click)="toggleInputfield()">{{projectTitle}}</h1>
-</ng-template>

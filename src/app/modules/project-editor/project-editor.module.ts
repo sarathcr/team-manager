@@ -7,7 +7,7 @@ import { ListProjectComponent } from './components/list-project/list-project.com
 import { AddProjectComponent } from './components/add-project/add-project.component';
 import { ProjectEditorHeaderComponent } from './components/project-editor-header/project-editor-header.component';
 import { ProjectEditorSidebarComponent } from './components/project-editor-sidebar/project-editor-sidebar.component';
-import { ProjectInputTitleComponent } from './components/project-input-title/project-input-title.component';
+import { ProjectTitleComponent } from './components/project-title/project-title.component';
 // pages
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
@@ -21,7 +21,7 @@ import { LeftMenuComponent } from './components/left-menu/left-menu.component';
         ListProjectComponent,
         ProjectEditorHeaderComponent,
         ProjectEditorSidebarComponent,
-        ProjectInputTitleComponent,
+        ProjectTitleComponent,
         HomeComponent,
         ProjectEditorComponent,
         LeftMenuComponent
