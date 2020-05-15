@@ -1,10 +1,42 @@
 @import '../../../../../assets/helpers/_helpers-master';
-.projectEditor-sidebar{
+.project-editor-sidebar{
   background:$background-primary;
   border-right:1px solid $creator-border;
   top: 75px;
-  width: 75px;
+  width: 236px;
   position: fixed;
   left: 0;
   height: 100%;
+  padding: 24px 20px 24px 30px;
+  &__title, &__view{
+    font-family: $font-family-tertiary;
+    font-size: $font-size-body-s;
+    color: $sidebar-text;
+    font-weight: bold;
+    letter-spacing: 0.16px;
+    line-height: 32px;
+    margin-bottom: 15px;
+  }
+  &__view{
+    color:$sidebar-text-active;
+    position: relative;
+    padding-left:25px;
+    &::after{
+      content: '';
+      position: absolute;
+      width: 120px;
+      bottom: 2px;
+      left: 25px;
+      height: 1px;
+      background:$sidebar-text-active;
+    }
+  }
+  &__icon{
+    font-size: 20px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
+
