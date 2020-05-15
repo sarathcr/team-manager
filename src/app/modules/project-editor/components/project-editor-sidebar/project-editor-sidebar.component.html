@@ -1,1 +1,6 @@
-<div class="projectEditor-sidebar"></div>
+<div class="projectEditor-sidebar">
+    <div class="projectEditor-sidebar__title">{{title}}</div>
+    <app-left-menu *ngFor="let item of items; let index = index" [item]="item" [class.active]="index == 0">
+    </app-left-menu>
+    <div class="projectEditor-sidebar__view"><span class="projectEditor-sidebar__icon"></span>{{view}}</div>
+</div>

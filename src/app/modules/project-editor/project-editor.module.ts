@@ -13,6 +13,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
 import { ProjectEditorRoutingModule } from './project-editor-routing.module';
 import { LocalStorageService } from 'src/app/services/localStorage.service';
+import { LeftMenuComponent } from './components/left-menu/left-menu.component';
  
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { LocalStorageService } from 'src/app/services/localStorage.service';
         ProjectEditorSidebarComponent,
         ProjectInputTitleComponent,
         HomeComponent,
-        ProjectEditorComponent
+        ProjectEditorComponent,
+        LeftMenuComponent
     ],
     imports: [
         CommonModule,

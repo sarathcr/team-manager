@@ -1,0 +1,18 @@
+@import '../../../../../assets/helpers/_helpers-master';
+.menu{
+    font-family: $font-family-tertiary;
+    font-size: $font-size-body-s;
+    color: $sidebar-text;
+    font-weight: normal;
+    letter-spacing: 0.16px;
+    line-height: 32px;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    &__id{
+        position: absolute;
+        left: 0;
+    }
+}
+
