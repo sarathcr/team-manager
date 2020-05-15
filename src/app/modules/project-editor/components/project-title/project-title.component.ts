@@ -2,11 +2,11 @@ import { Component, OnInit, ElementRef, ViewChild, Input, Output,EventEmitter } 
 import { LocalStorageService } from 'src/app/services/localStorage.service';
 
 @Component({
-  selector: 'app-project-input-title',
-  templateUrl: './project-input-title.component.html',
-  styleUrls: ['./project-input-title.component.scss']
+  selector: 'app-project-title',
+  templateUrl: './project-title.component.html',
+  styleUrls: ['./project-title.component.scss']
 })
-export class ProjectInputTitleComponent implements OnInit {
+export class ProjectTitleComponent implements OnInit {
   @ViewChild('titleInput') inputElement: ElementRef;
   @Input() value: any;
   @Input() maxLength: number;
