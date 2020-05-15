@@ -1,7 +1,7 @@
 @import '../../../../../assets/helpers/_helpers-master';
 
 .project-title{
-    padding: 0px 30px 0px 30px;
+    padding: 0px 30px;
     &__input,&__text{
     color:$blue-whale;
     font-family: $font-family-pt-sans;
@@ -26,5 +26,11 @@
   &__edit{
     font-size: $font-size-default;
     margin: 0 30px;
-}
+    display: none;
   }
+  &__edit-img{
+    height: 24px;
+    width: 24px;
+    margin-left: 30px;
+  }
+}
