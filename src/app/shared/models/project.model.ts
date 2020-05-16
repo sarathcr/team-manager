@@ -1,8 +1,8 @@
 export class Project {
-    id: Number|null;
-    title: String;
-    creativeTitle: String;
-    name: String;
+    id: number|null;
+    title: string;
+    creativeTitle: string;
+    name: string;
     finalProduct: Object;
     country: Object;
     region: Object;
@@ -13,6 +13,20 @@ export class Project {
     grades: Array<object>;
     subjects: Array<object>;
 }
+
+export function compareProjects(p1:Project, p2: Project) {
+
+    const compare = p1.id - p2.id;
+  
+    if (compare > 0) {
+      return 1;
+    }
+    else if ( compare < 0) {
+      return -1;
+    }
+    else return 0;
+  
+  }
 // -- Sample data
 // "name": "Proyecto description 1",
 // "title": "Proyecto title 1",

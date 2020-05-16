@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, State } from '@ngrx/store';
-import { projecEditortState } from '../../reducers';
-import { createProject } from '../../reducers/project-editor.actions';
+import { ProjectsState } from '../../state/project.reducers';
+// import { createProject } from '../../reducers/project-editor.actions';
 import { Project } from 'src/app/shared/models/project.model';
 
 @Component({
@@ -11,7 +11,7 @@ import { Project } from 'src/app/shared/models/project.model';
 })
 export class ProjectEditorComponent implements OnInit {
 
-  constructor(private store: Store<projecEditortState>) { }
+  constructor(private store: Store<ProjectsState>) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +32,7 @@ export class ProjectEditorComponent implements OnInit {
   }
 
   createProject() {
-    this.store.dispatch(createProject({project: this.temp}))
+  //   this.store.dispatch(createProject({project: this.temp}))
   }
 
 }

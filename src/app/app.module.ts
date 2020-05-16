@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,7 +9,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AuthModule } from './modules/auth/auth.module';
 import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
-import { metaReducers, appReducers } from './state'
+import { metaReducers, appReducers } from './state';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { metaReducers, appReducers } from './state'
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     AuthModule.forRoot(),
+    HttpClientModule,
     StoreModule.forRoot(
       appReducers,{
         metaReducers,
@@ -34,6 +37,7 @@ import { metaReducers, appReducers } from './state'
       stateKey: 'router',
       routerState: RouterState.Minimal
     }),
+    EffectsModule.forRoot([])
   ],
   providers: [
     AppRoutingModule,

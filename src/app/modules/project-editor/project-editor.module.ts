@@ -12,10 +12,15 @@ import { ProjectInputTitleComponent } from './components/project-input-title/pro
 // pages
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
-
+// services
 import { LocalStorageService } from 'src/app/services/localStorage.service';
+import { ProjectsHttpService } from './services/projects-http.service';
+// NgRx
 import { StoreModule } from '@ngrx/store';
-import * as fromProjectEditor from './reducers';
+import { projectsReducer } from './state/project.reducers';
+import { ProjectsResolver } from './state/projects.resolver';
+import { EffectsModule } from '@ngrx/effects';
+import { ProjectsEffects } from './state/projects.effects'
  
 @NgModule({
     declarations: [
@@ -31,10 +36,13 @@ import * as fromProjectEditor from './reducers';
         CommonModule,
         SharedModule,
         ProjectEditorRoutingModule,
-        StoreModule.forFeature(fromProjectEditor.projectEditorFeatureKey, fromProjectEditor.projecEditortReducer)
+        StoreModule.forFeature('projects', projectsReducer),
+        EffectsModule.forFeature([ProjectsEffects]),
     ],
     providers: [
-        LocalStorageService
+        LocalStorageService,
+        ProjectsHttpService,
+        ProjectsResolver
     ]
 })
 

@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'http://thinko-creator-provisional-118504127.eu-west-3.elb.amazonaws.com'
 };
 
 /*
