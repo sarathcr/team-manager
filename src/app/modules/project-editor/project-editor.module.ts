@@ -14,6 +14,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
 
 import { LocalStorageService } from 'src/app/services/localStorage.service';
+import { StoreModule } from '@ngrx/store';
+import * as fromProjectEditor from './reducers';
  
 @NgModule({
     declarations: [
@@ -28,7 +30,8 @@ import { LocalStorageService } from 'src/app/services/localStorage.service';
     imports: [
         CommonModule,
         SharedModule,
-        ProjectEditorRoutingModule
+        ProjectEditorRoutingModule,
+        StoreModule.forFeature(fromProjectEditor.projectEditorFeatureKey, fromProjectEditor.projecEditortReducer)
     ],
     providers: [
         LocalStorageService
