@@ -14,6 +14,8 @@ import { ProjectEditorComponent } from './pages/project-editor/project-editor.co
 import { ProjectEditorRoutingModule } from './project-editor-routing.module';
 import { LocalStorageService } from 'src/app/services/localStorage.service';
 import { LeftMenuComponent } from './components/left-menu/left-menu.component';
+// ngx translate
+import { TranslateModule } from '@ngx-translate/core';
  
 @NgModule({
     declarations: [
@@ -29,7 +31,8 @@ import { LeftMenuComponent } from './components/left-menu/left-menu.component';
     imports: [
         CommonModule,
         SharedModule,
-        ProjectEditorRoutingModule
+        ProjectEditorRoutingModule,
+        TranslateModule.forChild()
     ],
     providers: [
         LocalStorageService
