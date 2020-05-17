@@ -18,7 +18,7 @@ $background-primary: $white !default;
 $color-border: rgba(255, 255, 255, 0.2);
 $article-border: rgba(20,28,58,0.2);
 $creator-border: rgba(20,28,58,0.1);
-$creator-background: rgba(20,28,58,0.03);
+$creator-background: rgba(20,28,58,0.05);
 
 // Gradient colors
 // Padding and margin
@@ -116,6 +116,8 @@ $module-margin-large: 120px !default;
 $module-margin-large-mob: 50px !default;
 $module-margin-default-mob: 50px !default;
 $grid-gutter-width-mob:  16px !default;
+$grid-gutter-width: 60px !default;
+
 
 $font-weight-lighter: lighter !default;
 $font-weight-light: 300 !default;
@@ -218,6 +220,8 @@ $add-card-color: $white;
 $add-card-background: $electric-indigo;
 $list-card-background: $white;
 $list-figure-background: #ccc;
+$sidebar-text: rgba($blue-whale,0.5) !default;
+$sidebar-text-active:$blue-whale;
 
 //Cookies
 $cookies-bg-color:  $white !default;
