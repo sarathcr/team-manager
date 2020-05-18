@@ -17,13 +17,6 @@ export class ProjectEditorHeaderComponent implements OnInit {
     this.getProjectDetails();
   }
 
-  ngOnDestroy(): void{
-    if (!this.projectTitle) {
-      const noTitle ="Experiencia sin título"  // Default value for no title project
-      this.handleSubmit(this.projectId, 'title', noTitle)
-   }
-  }
-
   // Function to get the project details.
   getProjectDetails(): void {
     const projectDetails: Project = this.localStorage.project;

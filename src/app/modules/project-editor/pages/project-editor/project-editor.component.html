@@ -1,5 +1,6 @@
 <div class="project-editor" id="project-editor">
     <app-project-editor-header id="project-editor-header"></app-project-editor-header>
-    <app-project-editor-sidebar id="project-editor-sidebar" [title]="title" [view]="view" [items]="items" [status]="status"></app-project-editor-sidebar>
+    <app-project-editor-sidebar id="project-editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" 
+    view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}" [items]="items" [status]="status"></app-project-editor-sidebar>
     <p>Project Editor</p>
 </div>
