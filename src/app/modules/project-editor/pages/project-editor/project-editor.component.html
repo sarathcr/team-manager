@@ -1,5 +1,8 @@
-<div class="project-editor" id="project-editor">
-    <app-project-editor-header id="project-editor-header"></app-project-editor-header>
+<div class="project-editor" id="project-editor" *ngIf="(notFound$ | async) > 0 || projectUrl == 'create'">
+    <app-project-editor-header [project]="project$ | async" id="project-editor-header"></app-project-editor-header>
     <app-project-editor-sidebar id="project-editor-sidebar" [title]="title" [view]="view" [items]="items" [status]="status"></app-project-editor-sidebar>
     <p>Project Editor</p>
+</div>
+<div *ngIf="(notFound$ | async) == 0">
+    Project not found
 </div>

@@ -170,7 +170,7 @@
   },
   "defaultProject": "thinko-creator",
   "cli": {
-    "analytics": "79c27afc-e3a2-4a23-a6d2-bd687ac4a639"
+    "defaultCollection": "@ngrx/schematics"
   },
   "schematics": {
     "@schematics/angular:component": {
