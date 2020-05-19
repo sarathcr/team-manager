@@ -1,7 +1,4 @@
 {
-    "HOME": {
-        "SELECT": "Changer la langue"
-    },
     "PROJECT":{
       "project_button_markdone": "MARCAR COMO HECHO",
       "project_button_done": "HECHO",
@@ -17,5 +14,50 @@
       "project_structure_stepsmenu_finalproduct": "Producto final",
       "project_structure_stepsmenu_sinopsis": "Sinopsis",
       "project_structure_stepsmenu_output": "Ver ficha estructura"
+    },
+    "STARTING_POINT":{
+      "project_startingpoint_title": "Curso y asignatura(s)",
+      "project_startingpoint_description": "Escoge las áreas o asignaturas que van a estar implicadas en tu proyecto. \nPara ofrecerte solo las áreas que te interesan, necesitamos saber qué curso impartes y en qué territorio.",
+      "project_startingpoint_year": "Año académico",
+      "project_startingpoint_year_placeholder": "Selecciona el año académico",
+      "project_startingpoint_year_example": "aaaa-aaaa",
+      "project_startingpoint_country": "País",
+      "project_startingpoint_country_placeholder": "Selecciona un país",
+      "project_startingpoint_country_españa":	"España",
+      "project_startingpoint_region":	"Territorio",
+      "project_startingpoint_region_placeholder":	"Selecciona un territorio",
+      "project_startingpoint_grades":	"Curso(s)",
+      "project_startingpoint_grades_placeholder":	"Selecciona uno o más cursos",
+      "project_startingpoint_subjects": "Asignatura(s)",
+      "project_startingpoint_subjects_placeholder": "Selecciona una o más asignaturas",
+      "project_startingpoint_term": "Trimestre(s)",
+      "project_startingpoint_term_placeholder": "Selecciona uno o más trimestres"
+    },
+    "THEMATIC":{
+      "project_thematic_title": "Temática",
+      "project_thematic_description": "Escoge un tema, el asunto que quieres trabajar con tus alumnos. Este apartado responde al sobre qué tratará el proyecto. Elige libremente, que no te condicione el currículum. Más adelante te ayudaremos a conectarlo.",
+      "project_thematic_placeholder": "Especifica uno o más temas..."
+    },
+    "RETHINK_TITLE":{
+      "project_rethinktitle_title": "Repensar título",
+      "project_rethinktitle_description": "¿Mantienes el nombre que le has dado a tu proyecto o prefieres cambiarlo? \nAhora puedes repensar el título inicial y darle un plus de creatividad. Si no se te ocurre nada, sigue nuestros consejos de la guía pedagógica. También puedes subir una imagen que te inspire. ",
+      "project_rethinktitle_creativetitle": "Título creativo",
+      "project_rethinktitle_creativetitle_placeholder": "Escribe un título creativo",
+      "project_rethinktitle_addimage": "Acompañalo de una imagen inspiradora"
+    },
+    "DRIVING_QUESTIONS":{
+      "project_drivingquestions_title": "Preguntas guía",
+      "project_drivingquestions_description": "Formula las cuestiones esenciales a las que l@s alumn@s intentarán dar respuesta durante el proyecto.  Estas preguntas reflejan el para qué del proyecto.",
+      "project_drivingquestions_placeholder": "Escribe la primera pregunta..."
+    },
+    "FINAL_PRODUCT":{
+      "project_finalproduct_title": "Producto final",
+      "project_finalproduct_description": "El producto es el resultado, tangible o no, de los aprendizajes de tu alumnado a través del proyecto. Refleja qué serán capaces de hacer los alumnos con los aprendizajes que adquirirán. ",
+      "project_finalproduct_placeholder": "Describe la propuesta de producto final"
+    },
+    "SINOPSIS":{
+      "project_synopsis_title": "Sinopsis",
+      "project_synopsis_description": "Describe en pocas líneas por qué has querido desarrollar este proyecto. No hay una receta cerrada para este apartado, menciona aquello que consideras relevante.",
+      "project_synopsis_placeholder": "Describe brevemente tu proyecto"
     }
 }

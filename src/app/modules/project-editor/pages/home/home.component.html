@@ -2,20 +2,6 @@
     <app-sidebar id="sidebar"></app-sidebar>
     <app-creator-header id="creator-header"></app-creator-header>
     <h1 class="creator-home__head-text">{{title}}</h1>
-    <!-- sample translate -->
-    <h2>{{ 'HOME.SELECT' | translate }}</h2>
-    <ul>
-        <li translate [translateParams]="{ count: 0 }">pluralization.things</li>
-        <li translate [translateParams]="{ count: 1 }">pluralization.things</li>
-        <li>{{'pluralization.things' | translate:"{ count: 2 }"}}</li>
-    </ul>
-    <ul>
-        <li translate [translateParams]="{ gender: 'female', name: 'Sarah' }">pluralization.people</li>
-        <li translate [translateParams]="{ gender: 'male', name: 'Peter' }">pluralization.people</li>
-        <li>{{'pluralization.people' | translate:"{ name: 'Sarah + Peter' }"}}</li>
-    </ul>
-    
-    
     <div class="project">
         <app-add-project routerLink="/project-editor" id="add-project"></app-add-project>
         <app-list-project id="list-project-{{i}}" *ngFor="let project of allProjects; index as i;" [project]="project"></app-list-project>
