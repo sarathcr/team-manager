@@ -14,8 +14,8 @@ import { NewProjectResService } from '../../services/new-project-res.service';
 })
 export class ProjectEditorComponent implements OnInit, OnDestroy {
 
-  project$: Observable<Project>
-  notFound$: Observable<number>
+  project$: Observable<Project>;
+  notFound$: Observable<number>;
   projectUrl;
   subscription: Subscription;
   status = '';
@@ -41,10 +41,10 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
     private newProjectRes: NewProjectResService,
   ) {
     this.subscription = this.newProjectRes.getResponse().subscribe(res => {
-      console.log(res.id, 'router new parm')
+      console.log(res.id, 'router new parm');
       this.location.go('projects/' + res.id);
-      this.projectUrl = res.id
-      this.reload()
+      this.projectUrl = res.id;
+      this.reload();
     })
   }
 
@@ -54,23 +54,22 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe()
+    this.subscription.unsubscribe();
   }
 
   reload() {
     this.notFound$ = this.projectsService.entities$
       .pipe(
-        map(projects => projects.filter(project => project.id == Number(this.projectUrl)).length)
+        map(projects => projects.filter(project => project.id === Number(this.projectUrl)).length)
       );
 
     if (this.projectUrl !== 'create') {
       this.project$ = this.projectsService.entities$
         .pipe(
           map(projects => projects.find(project => {
-            return project.id == Number(this.projectUrl)
+            return project.id === Number(this.projectUrl);
           }))
-        )
+        );
     }
   }
-
 }

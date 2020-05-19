@@ -1,0 +1,173 @@
+@import '../../../../../assets/helpers/_helpers-master';
+.dropdown{
+  width: 100%;
+  margin-bottom: $m-36px;
+  &__wrap{
+    position: relative;
+    font-family: $font-family-pt-sans;
+    color: $primary-font-color;
+    background-color: $creator-background;
+  }
+  &__field{
+    padding: $padding-input;
+    font-size: $font-size-default;
+    letter-spacing: 0;
+    line-height: $line-height-24px;
+    border: none;
+    outline: none;
+    width: 100%;
+    border: 1px solid $creator-border;
+    border-radius: 3px;
+    z-index: 1;
+    &:active, &:focus{
+      border: 2px solid $primary;
+    }
+  }
+  &__label{
+    position: absolute;
+    font-size: $font-size-small;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+    line-height: $font-size-small;
+    top: 0;
+    transform: translateY(-50%);
+    padding: 2px 5px;
+    background-color: inherit;
+    left: $spacer-sm;
+    z-index: 2;
+  }
+  .multiselect-dropdown{
+    .dropdown-btn{
+      height: 48px;
+      display: flex !important;
+      align-items: center;
+      border-radius: 3px !important;
+      border: 1px solid $creator-border !important;
+      &:active, &:focus{
+        border: 2px solid $primary !important;
+      }
+      >span:last-child{
+        justify-self: end;
+        margin-left: auto;
+      }
+      .dropdown-up,.dropdown-down{
+        border: none !important;
+        font-family: $font-icons;
+        font-size: 20px;
+        font-weight: bold;
+        color: $blue-whale;
+        width: 14px !important;
+        height: 14px !important;
+        // display: block !important;
+        top: 3px !important;
+        position: relative;
+        transition: transform 0.3s ease;
+        &::before{
+          content: "\e903";
+          display: block;
+          width: 14px;
+          height: 14px;
+          position: absolute;
+          top: 0;
+          left: -3px;
+          line-height: 0.7;
+          text-align: center;
+        }
+      }
+      .dropdown-up{
+        transform: rotate(180deg);
+        transform-origin: center ;
+      }
+      .selected-item{
+        background: unset !important;
+        border: none !important;
+        color: inherit !important;
+        padding: 0 !important;
+        margin-left: 5px;
+        position: relative;
+        a{
+          display: none !important;
+        }
+        &::before{
+          content: ',';
+          margin-left: -8px;
+          position: absolute;
+        }
+        &:first-child{
+          &::before{
+            content: none;
+          }
+        }
+      }
+    }
+    .dropdown-list{
+      border-radius: 0 0 4px 4px;
+      background-color: $background-primary;
+      box-shadow: 0 20px 50px -10px $transparent-shadow;
+      border: none;
+      margin-top: 0;
+      padding-bottom: 5px;
+      .multiselect-item-checkbox{
+        padding: 10px 15px;
+        &:hover{
+          background-color: $creator-background;
+        }
+        input[type=checkbox] + div{
+          padding-left: 36px !important;
+          &:before{
+              height: 18px !important;
+              width: 18px !important;
+              border: 1px solid $creator-background !important;
+              border-radius: 2px !important;
+              background: $background-primary !important;
+              margin-top: -10px !important;
+              animation: unset !important;
+          }
+          &::after{
+            content: none !important;
+            color: $primary !important;
+            font-family: $font-icons;
+            transform: unset !important;
+            font-size: 20px;
+            left: -2px !important;
+            width: 18px !important;
+            height: 18px !important;
+            margin-top: -15px !important;
+            background-color: transparent !important;
+            border-color: transparent !important;
+          }
+        }
+        input[type=checkbox]:checked + div{
+          &::after{
+            content: '\e915' !important;
+            color: $primary !important;
+            font-family: $font-icons;
+            transform: unset !important;
+          }
+          &:before{
+            border-color: transparent !important;
+          }
+        }
+      }
+    }
+  }
+  &.active{
+    .dropdown-btn{
+      border: 2px solid $primary !important;
+    }
+  }
+  ::-webkit-scrollbar {
+    width: 7px;
+
+  }
+  ::-webkit-scrollbar-track {
+    background-color: $background-primary;
+  }
+  ::-webkit-scrollbar-button{
+    display: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3.5px;
+    background-color: $creator-border;
+  }
+}
