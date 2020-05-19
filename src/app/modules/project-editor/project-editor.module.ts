@@ -12,17 +12,27 @@ import { ProjectTitleComponent } from './components/project-title/project-title.
 // pages
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
+import { LeftMenuComponent } from './components/left-menu/left-menu.component';
 // services
-import { LocalStorageService } from 'src/app/services/localStorage.service';
 import { ProjectsHttpService } from './services/projects-http.service';
 // NgRx
-import { StoreModule } from '@ngrx/store';
-import { projectsReducer } from './state/project.reducers';
-import { ProjectsResolver } from './state/projects.resolver';
-import { EffectsModule } from '@ngrx/effects';
-import { ProjectsEffects } from './state/projects.effects'
-import { LeftMenuComponent } from './components/left-menu/left-menu.component';
+import {EntityDataService, EntityDefinitionService, EntityMetadataMap} from '@ngrx/data';
+import {ProjectEntityService} from './services/project-entity.service';
+import {ProjectsResolver} from './services/projects.resolver';
+import {ProjectsDataService} from './services/projects-data.service';
+import { compareProjects } from 'src/app/shared/models/project.model';
+import { NewProjectResService } from './services/new-project-res.service';
  
+
+const entityMetadata: EntityMetadataMap = {
+    Project: {
+        sortComparer: compareProjects,
+        entityDispatcherOptions: {
+            optimisticUpdate: true
+        }
+    }
+};
+
 @NgModule({
     declarations: [
         AddProjectComponent,
@@ -38,14 +48,28 @@ import { LeftMenuComponent } from './components/left-menu/left-menu.component';
         CommonModule,
         SharedModule,
         ProjectEditorRoutingModule,
-        StoreModule.forFeature('projects', projectsReducer),
-        EffectsModule.forFeature([ProjectsEffects]),
     ],
     providers: [
-        LocalStorageService,
         ProjectsHttpService,
-        ProjectsResolver
+        ProjectsResolver,
+        ProjectEntityService,
+        ProjectsDataService,
+        NewProjectResService
     ]
 })
 
-export class ProjectEditorModule { }
+export class ProjectEditorModule { 
+
+    constructor(
+        private eds: EntityDefinitionService,
+        private entityDataService: EntityDataService,
+        private projectsDataService: ProjectsDataService) {
+
+        eds.registerMetadataMap(entityMetadata);
+
+        entityDataService.registerService('Project', projectsDataService);
+
+    }
+
+
+}
