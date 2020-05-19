@@ -13,16 +13,13 @@ import { ProjectTitleComponent } from './components/project-title/project-title.
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
 import { LeftMenuComponent } from './components/left-menu/left-menu.component';
-// services
-import { ProjectsHttpService } from './services/projects-http.service';
 // NgRx
-import {EntityDataService, EntityDefinitionService, EntityMetadataMap} from '@ngrx/data';
-import {ProjectEntityService} from './services/project-entity.service';
-import {ProjectsResolver} from './services/projects.resolver';
-import {ProjectsDataService} from './services/projects-data.service';
+import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
+import { ProjectEntityService } from './services/project-entity.service';
+import { ProjectsResolver } from './services/projects.resolver';
+import { ProjectsDataService } from './services/projects-data.service';
 import { compareProjects } from 'src/app/shared/models/project.model';
 import { NewProjectResService } from './services/new-project-res.service';
- 
 
 const entityMetadata: EntityMetadataMap = {
     Project: {
@@ -50,7 +47,6 @@ const entityMetadata: EntityMetadataMap = {
         ProjectEditorRoutingModule,
     ],
     providers: [
-        ProjectsHttpService,
         ProjectsResolver,
         ProjectEntityService,
         ProjectsDataService,
@@ -58,7 +54,7 @@ const entityMetadata: EntityMetadataMap = {
     ]
 })
 
-export class ProjectEditorModule { 
+export class ProjectEditorModule {
 
     constructor(
         private eds: EntityDefinitionService,
@@ -66,10 +62,7 @@ export class ProjectEditorModule {
         private projectsDataService: ProjectsDataService) {
 
         eds.registerMetadataMap(entityMetadata);
-
         entityDataService.registerService('Project', projectsDataService);
-
     }
-
 
 }
