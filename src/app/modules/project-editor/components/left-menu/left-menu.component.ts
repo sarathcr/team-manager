@@ -6,12 +6,13 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./left-menu.component.scss']
 })
 export class LeftMenuComponent implements OnInit {
+
   @Input() item;
   @Input() status;
+
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.status);
   }
 
 }

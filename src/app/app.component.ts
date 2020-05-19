@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,11 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  title = 'thinko-creator';
+  loading = true;
+  isLoggedIn$: Observable<boolean>;
+  isLoggedOut$: Observable<boolean>;
+
   constructor(public TranslateService: TranslateService) {
     // ngx-translate
     TranslateService.addLangs(['en', 'es']);
@@ -14,5 +20,7 @@ export class AppComponent {
     const browserLang = TranslateService.getBrowserLang();
     TranslateService.use(browserLang.match(/en|es/) ? browserLang : 'en');
   }
-  title = 'thinko-creator';
+  ngOnInit() {
+  }
+  
 }

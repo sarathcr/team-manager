@@ -1,0 +1,8 @@
+<div class="dropdown dropdown_multiple {{active ? 'active':''}}" [formGroup]="group">
+  <div class="dropdown__wrap">
+    <label class="dropdown__label" for="">{{config.label}}</label>
+    <ng-multiselect-dropdown [placeholder]="config.placeholder" [settings] ="dropdownSettings" [data]="config.options"
+      (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" [formControlName]='config.name' (onDropDownClose)="onDropDownClose()">
+    </ng-multiselect-dropdown>
+  </div>
+</div>

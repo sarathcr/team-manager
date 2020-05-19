@@ -1,0 +1,3 @@
+<form class="form" [formGroup]="form" (submit)="handleSubmit($event)">
+  <ng-container *ngFor="let field of config;" appField [config]="field" [group]="form"> </ng-container>
+</form>

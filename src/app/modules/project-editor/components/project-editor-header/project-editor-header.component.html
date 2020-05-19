@@ -1,12 +1,12 @@
-  <div class="project-editor-header align-items-center">
-    <div class="container-fluid d-flex ">
-      <div class="app-logo">
-        <a class="app-logo__link" routerLink="/">
-          <img class="app-logo__img" src="../../../../../assets/images/thinko_logo.png" alt="thinko"/>
-        </a>
-      </div>  
-    <app-project-title [value]="projectTitle" [maxLength]="75" (blur)="handleTitleBlur($event)"
-    [placeholder]="'Nombre del proyecto'" id="'project-title'" >
+<div class="project-editor-header align-items-center">
+  <div class="container-fluid d-flex ">
+    <div class="app-logo">
+      <a class="app-logo__link" routerLink="/">
+        <img class="app-logo__img" src="../../../../../assets/images/thinko_logo.png" alt="thinko" />
+      </a>
+    </div>
+    <app-project-title [project]="project" [maxLength]="75" (blur)="handleTitleBlur($event)"
+      [placeholder]="'Nombre del proyecto'" id="'project-title'">
     </app-project-title>
   </div>
 </div>

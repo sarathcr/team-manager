@@ -1,7 +1,13 @@
 @import '../../../../../assets/helpers/_helpers-master';
 .project-editor{
   width: 100%;
-  padding:110px 15px 0 276px;
+  padding: 75px 15px 0 236px;
   margin: 0;
+  &__form{
+    display: flex;
+    width: 55%;
+    padding: $grid-gutter-width/2;
+    padding-left: 40px;
+  }
 }
 
