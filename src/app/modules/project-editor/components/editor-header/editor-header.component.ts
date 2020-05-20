@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { Project } from 'src/app/shared/constants/project.model';
 
 @Component({
-  selector: 'app-project-editor-header',
-  templateUrl: './project-editor-header.component.html',
-  styleUrls: ['./project-editor-header.component.scss']
+  selector: 'app-editor-header',
+  templateUrl: './editor-header.component.html',
+  styleUrls: ['./editor-header.component.scss']
 })
-export class ProjectEditorHeaderComponent implements OnInit {
+export class EditorHeaderComponent implements OnInit {
 
   @Input() project: string;
   @Input() newProject: any;

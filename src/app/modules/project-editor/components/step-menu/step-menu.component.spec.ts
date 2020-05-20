@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LeftMenuComponent } from './left-menu.component';
+import { StepMenuComponent } from './step-menu.component';
 
-describe('LeftMenuComponent', () => {
-  let component: LeftMenuComponent;
-  let fixture: ComponentFixture<LeftMenuComponent>;
+describe('StepMenuComponent', () => {
+  let component: StepMenuComponent;
+  let fixture: ComponentFixture<StepMenuComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LeftMenuComponent ]
+      declarations: [ StepMenuComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LeftMenuComponent);
+    fixture = TestBed.createComponent(StepMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

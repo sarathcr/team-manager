@@ -1,0 +1,10 @@
+<div class="project-editor-sidebar">
+    <div class="project-editor-sidebar__title">{{title}}</div>
+    <app-step-menu *ngFor="let item of items; index as i" id="menu-{{i}}" [item]="item"  [status]="item.status" [selected]="item.selected" [ngClass]="{'active': item.selected == true }"
+    (click)="childEvent(i)">
+    </app-step-menu>
+    <div class="project-editor-sidebar__view">
+        <span class="project-editor-sidebar__icon icon icon-ic_view_small"></span>
+        {{view}}
+    </div>
+</div>
