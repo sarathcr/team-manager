@@ -29,6 +29,7 @@ import { Subject } from 'src/app/shared/constants/subject.model';
 })
 export class StartPointComponent implements OnInit, AfterViewInit {
   @Output() projectUpdate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() statusUpdate: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(FormComponent) form: FormComponent;
   countries$: Observable<Country[]>;
   regions$: Observable<Region[]>;
@@ -39,6 +40,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   regionId: number;
   yearId: number;
   subjectId: number;
+
   buttonConfig: FieldConfig = {
       label: 'MARCAR COMO HECHO',
       name: 'submit',
@@ -118,7 +120,10 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getAllCountries();
     this.countries$ = this.countryService.entities$;
-
+    this.regions$ = this.regionService.entities$;
+    this.academicYears$ = this.academicYearService.entities$;
+    this.grades$ = this.gradeService.entities$;
+    this.subjects$ = this.subjectService.entities$;
   }
   ngAfterViewInit() {
     let previousValid = this.form.valid;
@@ -127,6 +132,8 @@ export class StartPointComponent implements OnInit, AfterViewInit {
         previousValid = this.form.valid;
         this.form.setDisabled('submit', !previousValid);
       }
+
+      console.log(ev)
       // this.form.setValue('name', 'Todd Motto');
     });
     this.countries$.subscribe(country => {
@@ -152,7 +159,8 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     // this.config.map( item => item.submitted = true);
     this.buttonConfig.submitted = true;
     this.buttonConfig.label = 'hencho';
-    this.projectUpdate.emit(value)
+    this.projectUpdate.emit(value);
+    this.statusUpdate.emit({id: 1, status: 'done'});
     console.log(value)
   }
   formUpdate(res){
@@ -168,6 +176,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
             this.regionDropdown.options = region;
           });
           this.regionDropdown.disabled = false;
+          this.statusUpdate.emit({id: 1, status: 'inprocess'});
           break;
         }
         case 'region': {
@@ -178,6 +187,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
             this.academicYearDropdown.options = year;
           });
           this.academicYearDropdown.disabled = false;
+          this.statusUpdate.emit({id: 1, status: 'inprocess'});
           break;
         }
         case 'academicYear': {
@@ -196,10 +206,12 @@ export class StartPointComponent implements OnInit, AfterViewInit {
             this.subjectsDropdown.options = subject;
           });
           this.subjectsDropdown.disabled = false;
+          this.statusUpdate.emit({id: 1, status: 'inprocess'});
           break;
         }
         default: {
           this.getAllCountries();
+          this.statusUpdate.emit({id: 1, status: 'inprocess'});
           break;
         }
       }

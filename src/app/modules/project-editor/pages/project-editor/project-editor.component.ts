@@ -68,8 +68,8 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
         ]
         ).subscribe(
         translations => {
-         this.items=[
-              {id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], status: 'selected', selected: true},
+         this.items = [
+              {id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], status: 'pending', selected: true},
               {id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], status: 'pending', selected: false},
               {id: 3, name: 'Objetivos competenciales', status: 'pending', selected: false}, // add localization
               {id: 4, name: 'Contenidos', status: 'pending', selected: false}, // add localization
@@ -103,7 +103,11 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
     console.log(formValue);
     console.log(this.project$)
   }
-
+  updateStatus(update){
+    console.log(update)
+    this.items = this.items.map(item => item.id === update.id ? {...item, [status]: update.status} : item);
+    console.log(this.items)
+  }
   // function to scroll to the step section
   grandmaHandleClick(value) {
     document.querySelector('#step-' + value).scrollIntoView();

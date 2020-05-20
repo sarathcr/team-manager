@@ -5,8 +5,15 @@
      [items]="items" [status]="status" [selected]="selected" (notifyGrandParent)="grandmaHandleClick($event)"></app-editor-sidebar>
     <div class="app">
       <div class="project-editor__form">
-        <app-start-point id="step-0" class="step-section"  (projectUpdate)='updateProject($event)'></app-start-point>
+        <div class="status-indicator">
+          <div class="status-indicator__ball"></div>
+          <div class="status-indicator__bar"></div>
+          <div class="status-indicator__ball status-indicator__ball_bottom"></div>
+          <div class="status-indicator__bar status-indicator__bar_bottom"></div>
         </div>
+        <app-start-point id="step-0" class="step-section"  (projectUpdate)='updateProject($event)' (statusUpdate)='updateStatus($event)'></app-start-point>
+      </div>
+
     </div>
 </div>
 <div *ngIf="(notFound$ | async) == 0">
