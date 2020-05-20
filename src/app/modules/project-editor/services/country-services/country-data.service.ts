@@ -10,14 +10,14 @@ import { environment } from 'src/environments/environment';
 export class CountryDataService extends DefaultDataService<Country> {
 
     constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
-        super('Project', http, httpUrlGenerator);
+        super('Country', http, httpUrlGenerator);
 
     }
 
     getAll(): Observable<Country[]> {
-        return this.http.get<Country[]>(`${environment.apiUrl}/countries`)
-            .pipe(
-                map(res => res)
-            );
+      return this.http.get<Country[]>(`${environment.apiUrl}/countries`)
+          .pipe(
+              map(res => res)
+          );
     }
 }

@@ -14,8 +14,7 @@ export class HomeComponent implements OnInit {
   title = 'Tus plantillas';
   projects$: Observable<Project[]>;
 
-  constructor(
-    private projectsService: ProjectEntityService) {
+  constructor(private projectsService: ProjectEntityService) {
   }
 
   ngOnInit() {
@@ -23,7 +22,7 @@ export class HomeComponent implements OnInit {
   }
 
   reload() {
-    this.projects$ = this.projectsService.entities$
+    this.projects$ = this.projectsService.entities$;
   }
 
 }

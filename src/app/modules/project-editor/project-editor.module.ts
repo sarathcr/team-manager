@@ -23,7 +23,6 @@ import { ProjectsDataService } from './services/project-services/projects-data.s
 import { compareProjects } from 'src/app/shared/models/project.model';
 import { NewProjectResService } from './services/project-services/new-project-res.service';
 import { CountryEntityService } from './services/country-services/country-entity.service';
-import { CountryResolver } from './services/country-services/country.resolver';
 import { CountryDataService } from './services/country-services/country-data.service';
 
 const entityMetadata: EntityMetadataMap = {
@@ -63,7 +62,6 @@ const entityMetadata: EntityMetadataMap = {
         ProjectsDataService,
         NewProjectResService,
         CountryEntityService,
-        CountryResolver,
         CountryDataService
     ]
 })

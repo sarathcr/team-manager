@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
 // Interfaces
 import { Field } from '../../models/field.interface';
 import { FieldConfig } from '../../models/field-config.interface';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-dropdown',
@@ -18,6 +18,7 @@ export class DropdownComponent implements OnInit, Field {
   dropdownList = [];
   selectedItems = [];
   dropdownSettings: IDropdownSettings = {};
+  // dropdownSettings = {};
   constructor() { }
 
   ngOnInit(): void {
@@ -26,7 +27,6 @@ export class DropdownComponent implements OnInit, Field {
       singleSelection: !this.config.multiselect || false,
       textField: 'value',
       itemsShowLimit: 3,
-      // allowSearchFilter: true,
       closeDropDownOnSelection: true,
       maxHeight: 265,
       enableCheckAll: false

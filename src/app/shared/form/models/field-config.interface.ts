@@ -4,7 +4,7 @@ export interface FieldConfig {
   disabled?: boolean;
   label?: string;
   name: string;
-  options?: Array<{ id: number; value: string; }>;
+  options?: Array<{ id: number; name: string; }>;
   placeholder?: string;
   type?: string;
   field: string;
