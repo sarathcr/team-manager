@@ -1,4 +1,4 @@
-@import '../../../../../assets/helpers/_helpers-master';
+@import '../../../../../styles/helpers/_helpers-master';
 
 .project-title{
     padding: 0px 30px;
@@ -13,11 +13,11 @@
     border: none;
     border-bottom: 1px solid $black;
     }
-  
+
   &__input {
     max-width: 212px;
   }
-  
+
   &__text {
     float: left;
     margin:0;
