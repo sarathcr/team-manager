@@ -5,7 +5,7 @@ import { filter, first, map, tap } from 'rxjs/operators';
 import { FieldConfig } from '../../../../shared/form/models/field-config.interface';
 import { FormComponent } from '../../../../shared/form/containers/form/form.component';
 import { CountryEntityService } from '../../services/country-services/country-entity.service';
-import { Country } from 'src/app/shared/models/country.model';
+import { Country } from 'src/app/shared/constants/country.model';
 
 @Component({
   selector: 'app-start-point',
