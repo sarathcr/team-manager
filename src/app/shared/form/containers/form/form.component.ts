@@ -12,6 +12,7 @@ import { FieldConfig } from '../../models/field-config.interface';
 export class FormComponent implements OnChanges, OnInit {
   @Input() config: FieldConfig[] = [];
   @Output() formSubmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() formUpdate: EventEmitter<any> = new EventEmitter<any>();
   form: FormGroup;
 
   get controls() { return this.config.filter(({field}) => field !== 'button'); }
@@ -24,6 +25,15 @@ export class FormComponent implements OnChanges, OnInit {
 
   ngOnInit() {
     this.form = this.createGroup();
+    this.controls.forEach(control => {
+      this.form.get(control.name).valueChanges.subscribe(val => {
+        const modifiedVal = {
+          controller: control.id,
+          val
+        }
+        this.formUpdate.emit(modifiedVal);
+      });
+    });
   }
 
   ngOnChanges() {
@@ -74,8 +84,5 @@ export class FormComponent implements OnChanges, OnInit {
 
   setValue(name: string, value: any) {
     this.form.controls[name].setValue(value, {emitEvent: true});
-  }
-  getSelectedItem(item){
-    console.log(item);
   }
 }

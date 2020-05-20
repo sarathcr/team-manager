@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { ProjectEntityService } from '../../services/project-services/project-entity.service';
+import { ProjectEntityService } from '../../services/project/project-entity.service';
 import { Project, initialProject } from 'src/app/shared/models/project.model';
-import { NewProjectResService } from '../../services/project-services/new-project-res.service';
+import { NewProjectResService } from '../../services/project/new-project-res.service';
 
 @Component({
   selector: 'app-project-title',

@@ -3,7 +3,7 @@
     <app-project-editor-sidebar id="project-editor-sidebar" [title]="title" [view]="view" [items]="items" [status]="status"></app-project-editor-sidebar>
     <div class="app">
       <div class="project-editor__form">
-        <app-start-point></app-start-point>
+        <app-start-point (projectUpdate)='updateProject($event)'></app-start-point>
       </div>
     </div>
 </div>

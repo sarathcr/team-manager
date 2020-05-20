@@ -25,7 +25,7 @@ export class DropdownComponent implements OnInit, Field {
     // this.dropdownList  = this.config.options;
     this.dropdownSettings = {
       singleSelection: !this.config.multiselect || false,
-      textField: 'name',
+      textField: this.config.textField || 'name',
       itemsShowLimit: 3,
       closeDropDownOnSelection: true,
       maxHeight: 265,

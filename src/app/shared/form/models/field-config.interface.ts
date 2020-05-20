@@ -13,4 +13,6 @@ export interface FieldConfig {
   value?: any;
   multiselect?: boolean;
   submitted?: boolean;
+  id: string;
+  textField?: string;
 }
