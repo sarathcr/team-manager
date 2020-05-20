@@ -5,6 +5,7 @@
   margin: 0;
   position: relative;
   height: 100%;
+  z-index: 1;
   &__form{
     display: flex;
     width: 55%;
@@ -22,6 +23,7 @@
     right: 0;
     width: 100%;
     height: calc(100vh - 75px);
+    z-index: -1;
   }
   .step-section{
     scroll-margin-top: 110px;
