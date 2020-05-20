@@ -155,6 +155,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     this.buttonConfig.submitted = true;
     this.buttonConfig.label = 'hencho';
     this.projectUpdate.emit(value)
+    console.log(value)
   }
   formUpdate(res){
     if  (res.val.length > 0) {
