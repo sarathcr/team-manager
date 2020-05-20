@@ -1,83 +1,100 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Project } from 'src/app/shared/models/project.model';
+// ngx-translate
+import { TranslateService } from '@ngx-translate/core';
+import { Project } from 'src/app/shared/constants/project.model';
 import { ProjectEntityService } from '../../services/project-entity.service';
-
+import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.model'
 
 @Component({
   selector: 'app-project-editor',
   templateUrl: './project-editor.component.html',
   styleUrls: ['./project-editor.component.scss']
 })
-export class ProjectEditorComponent implements OnInit, OnDestroy {
+export class ProjectEditorComponent implements OnInit {
 
-  project:Project;
+  project: Project;
   notFound$: Observable<number>;
   projectUrl;
   subscription: Subscription;
   status = '';
-  title = 'crea paso apaso';
-  view = 'Ver ficha estructura';
-  items = [
-    { id: 1, name: 'Punto de partida' },
-    { id: 2, name: 'Temática' },
-    { id: 3, name: 'Objetivos competenciales' },
-    { id: 4, name: 'Contenidos' },
-    { id: 5, name: 'Evaluación' },
-    { id: 6, name: 'Título creativo' },
-    { id: 7, name: 'Preguntas guía' },
-    { id: 8, name: 'Producto final' },
-    { id: 9, name: 'Sinopsis' },
-    { id: 10, name: 'Interacción con alumnos' }
-  ];
+  items: Array<StepMenu>;
 
   constructor(
     private projectsService: ProjectEntityService,
     private route: ActivatedRoute,
     private location: Location,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
     this.projectUrl = this.route.snapshot.paramMap.get('id');
-    this.reload()
+    this.createStepList();
+    this.reload();
   }
 
-  ngOnDestroy() {}
+  // to create step list
+  createStepList() {
+    // localization for step menu
+    this.translate.stream(
+      [
+        'STEPS_MENU.project_structure_stepsmenu_startingpoint',
+        'STEPS_MENU.project_structure_stepsmenu_topic',
+        'STEPS_MENU.project_structure_stepsmenu_creativetitle',
+        'STEPS_MENU.project_stepsmenu_drivingquestion',
+        'STEPS_MENU.project_structure_stepsmenu_finalproduct',
+        'STEPS_MENU.project_structure_stepsmenu_sinopsis',
+      ])
+      .subscribe(translations => {
+        this.items = [
+          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'] },
+          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'] },
+          { id: 3, name: 'Objetivos competenciales' }, // add localization
+          { id: 4, name: 'Contenidos' }, // add localization
+          { id: 5, name: 'Evaluación' }, // add localization
+          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'] },
+          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'] },
+          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'] },
+          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'] },
+          { id: 10, name: 'Interacción con alumnos' } // add localization
+        ];
+      }
+      );
+  }
 
   // Function to handle blur of title field 
-  handleTitleBlur(event: Event){
+  handleTitleBlur(event: Event) {
     const title = (<HTMLInputElement>event.target).value;
-    if(!this.project?.id){
-      this.handleSubmit({title});
-    }else {
+    if (!this.project?.id) {
+      this.handleSubmit({ title });
+    } else {
       if (title == this.project.title) return // check if value is same
-      this.handleSubmit({title})
+      this.handleSubmit({ title })
     }
   }
 
   // Function create or update the project
-  handleSubmit(projectData: object){
-    if(!this.project?.id){
+  handleSubmit(projectData: object) {
+    if (!this.project?.id) {
       // create mode
       const newProject = {
-        id:null,
-        title:"",
+        id: null,
+        title: "",
         ...projectData
       }
       console.log(newProject)
       this.projectsService.add(newProject)
         .subscribe(
           newProject => {
-            console.log('New Course', newProject);
             this.location.go('projects/' + newProject.id);
             this.projectUrl = newProject.id;
             this.reload();
           }
         );
-    }else{
+    } else {
       // update mode
       const updateProject = {
         id: this.project.id,
@@ -99,8 +116,8 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
           map(projects => projects.find(project => {
             return project.id === Number(this.projectUrl);
           }))
-        ).subscribe(project=>{
-          this.project=project
+        ).subscribe(project => {
+          this.project = project
         });
     }
   }

@@ -11,14 +11,10 @@ export class ProjectEditorHeaderComponent implements OnInit {
   @Input() projectId: number;
   @Input() newProject: any;
   @Output() titleBlur = new EventEmitter();
-  showInputfield = false;
   
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
   }
 
   // Function to handle the blur in title field
