@@ -3,7 +3,7 @@
     <app-header id="creator-header"></app-header>
     <h1 class="creator-home__head-text">{{title}}</h1>
     <div class="project">
-        <app-create-button routerLink="create" id="add-project"></app-create-button>
+        <app-create-project routerLink="create" id="add-project"></app-create-project>
         <app-project-thumbnail id="list-project-{{i}}" *ngFor="let project of projects$ | async; index as i;" [project]="project"></app-project-thumbnail>
     </div>
 </div>

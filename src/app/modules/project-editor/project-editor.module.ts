@@ -7,7 +7,7 @@ import { ProjectEditorRoutingModule } from './project-editor-routing.module';
 import { StartPointComponent } from './containers/start-point/start-point.component';
 // components
 import { ProjectThumbnailComponent } from './components/project-thumbnail/project-thumbnail.component';
-import { CreateButtonComponent } from './components/create-button/create-button.component';
+import { CreateProjectComponent } from './components/create-project/create-project.component';
 import { EditorHeaderComponent } from './components/editor-header/editor-header.component';
 import { EditorSidebarComponent } from './components/editor-sidebar/editor-sidebar.component';
 import { ProjectTitleComponent } from './components/project-title/project-title.component';
@@ -42,7 +42,7 @@ const entityMetadata: EntityMetadataMap = {
         ProjectEditorComponent,
         StartPointComponent,
         ProjectThumbnailComponent,
-        CreateButtonComponent,
+        CreateProjectComponent,
         EditorHeaderComponent,
         EditorSidebarComponent,
         ProjectTitleComponent,
