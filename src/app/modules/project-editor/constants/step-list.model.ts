@@ -1,3 +1,4 @@
 export interface StepList {
     id: number,
-    name: string; }
+    name: string
+ }
