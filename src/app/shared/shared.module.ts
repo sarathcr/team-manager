@@ -6,6 +6,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CreatorHeaderComponent } from './components/creator-header/creator-header.component';
 import { NavComponent } from './components/nav/nav.component';
+import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
+import { TranslateModule } from '@ngx-translate/core';
 // Components
 import { FormButtonComponent } from './form/components/form-button/form-button.component';
 import { FormInputComponent } from './form/components/form-input/form-input.component';
@@ -20,14 +22,16 @@ import { DropdownComponent } from './form/components/dropdown/dropdown.component
         SidebarComponent,
         CreatorHeaderComponent,
         NavComponent,
+        LanguageSelectorComponent,
         FormButtonComponent,
         FormInputComponent,
         FieldDirective,
         FormComponent,
-        DropdownComponent
+        DropdownComponent,
     ],
     imports: [
         CommonModule,
+        TranslateModule.forChild(),
         ReactiveFormsModule,
         NgMultiSelectDropDownModule
     ],
@@ -40,6 +44,7 @@ import { DropdownComponent } from './form/components/dropdown/dropdown.component
         SidebarComponent,
         CreatorHeaderComponent,
         NavComponent,
+        LanguageSelectorComponent,
         FormComponent,
         DropdownComponent
     ]

@@ -1,11 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { Project } from 'src/app/shared/models/project.model';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectEntityService } from '../../services/project-entity.service';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+// ngx-translate
+import { TranslateService } from '@ngx-translate/core';
+
 import { NewProjectResService } from '../../services/new-project-res.service';
+import { ProjectEntityService } from '../../services/project-entity.service';
+import { Project } from 'src/app/shared/constants/project.model';
+import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.model'
+
+
+
+
 
 @Component({
   selector: 'app-project-editor',
@@ -19,26 +27,14 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
   projectUrl;
   subscription: Subscription;
   status = '';
-  title = 'crea paso apaso';
-  view = 'Ver ficha estructura';
-  items = [
-    { id: 1, name: 'Punto de partida' },
-    { id: 2, name: 'Temática' },
-    { id: 3, name: 'Objetivos competenciales' },
-    { id: 4, name: 'Contenidos' },
-    { id: 5, name: 'Evaluación' },
-    { id: 6, name: 'Título creativo' },
-    { id: 7, name: 'Preguntas guía' },
-    { id: 8, name: 'Producto final' },
-    { id: 9, name: 'Sinopsis' },
-    { id: 10, name: 'Interacción con alumnos' }
-  ];
+  items: Array<StepMenu>;
 
   constructor(
     private projectsService: ProjectEntityService,
     private route: ActivatedRoute,
     private location: Location,
     private newProjectRes: NewProjectResService,
+    private translate :TranslateService
   ) {
     this.subscription = this.newProjectRes.getResponse().subscribe(res => {
       console.log(res.id, 'router new parm');
@@ -50,11 +46,42 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.projectUrl = this.route.snapshot.paramMap.get('id');
-    this.reload()
+    this.createStepList();
+    this.reload();
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  // to create step list
+  createStepList(){
+       // localization for step menu
+       this.translate.stream(
+        [
+          'STEPS_MENU.project_structure_stepsmenu_startingpoint',
+          'STEPS_MENU.project_structure_stepsmenu_topic',
+          'STEPS_MENU.project_structure_stepsmenu_creativetitle',
+          'STEPS_MENU.project_stepsmenu_drivingquestion',
+          'STEPS_MENU.project_structure_stepsmenu_finalproduct',
+          'STEPS_MENU.project_structure_stepsmenu_sinopsis',
+        ]
+        ).subscribe(
+        translations => {
+         this.items=[
+              {id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint']},
+              {id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic']},
+              {id: 3, name:'Objetivos competenciales'}, // add localization
+              {id: 4, name:'Contenidos'}, // add localization
+              {id: 5, name:'Evaluación'}, // add localization
+              {id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle']},
+              {id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion']},
+              {id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct']},
+              {id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis']},
+              {id: 10, name:'Interacción con alumnos'} // add localization
+            ];
+        }
+     );
   }
 
   reload() {
