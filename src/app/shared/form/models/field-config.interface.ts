@@ -5,6 +5,7 @@ export interface FieldConfig {
   label?: string;
   name: string;
   options?: Array<{ id: number; name: string; }>;
+  // selectedOptions?: Array<{ id: number; name: string; }>;
   placeholder?: string;
   type?: string;
   field: string;

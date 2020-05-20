@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 // Interfaces
 import { Field } from '../../models/field.interface';
@@ -12,20 +12,20 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   encapsulation: ViewEncapsulation.None
 })
 export class DropdownComponent implements OnInit, Field {
+  @Output() getSelectedItem: EventEmitter<any> = new EventEmitter();
   config: FieldConfig;
   group: FormGroup;
   active = false;
   dropdownList = [];
   selectedItems = [];
   dropdownSettings: IDropdownSettings = {};
-  // dropdownSettings = {};
   constructor() { }
 
   ngOnInit(): void {
-    this.dropdownList  = this.config.options;
+    // this.dropdownList  = this.config.options;
     this.dropdownSettings = {
       singleSelection: !this.config.multiselect || false,
-      textField: 'value',
+      textField: 'name',
       itemsShowLimit: 3,
       closeDropDownOnSelection: true,
       maxHeight: 265,
@@ -34,6 +34,11 @@ export class DropdownComponent implements OnInit, Field {
   }
   onItemSelect(item: any) {
     this.active = true;
+    this.getSelectedItem.emit(this.selectedItems);
+  }
+  onItemDeSelect(item: any) {
+    this.active = true;
+    this.getSelectedItem.emit(this.selectedItems);
   }
   onSelectAll(items: any) {
     console.log(items);

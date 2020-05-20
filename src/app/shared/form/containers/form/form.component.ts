@@ -19,6 +19,7 @@ export class FormComponent implements OnChanges, OnInit {
   get valid() { return this.form.valid; }
   get value() { return this.form.value; }
 
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -73,5 +74,8 @@ export class FormComponent implements OnChanges, OnInit {
 
   setValue(name: string, value: any) {
     this.form.controls[name].setValue(value, {emitEvent: true});
+  }
+  getSelectedItem(item){
+    console.log(item);
   }
 }
