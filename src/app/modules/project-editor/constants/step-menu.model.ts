@@ -1,4 +1,4 @@
-export interface StepList {
+export interface StepMenu {
     id: number,
     name: string
  }

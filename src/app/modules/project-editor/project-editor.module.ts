@@ -24,7 +24,7 @@ import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@
 import { ProjectEntityService } from './services/project-entity.service';
 import { ProjectsResolver } from './services/projects.resolver';
 import { ProjectsDataService } from './services/projects-data.service';
-import { compareProjects } from 'src/app/shared/constants/compare-projects';
+import { compareProjects } from 'src/app/shared/constants/project.model';
 import { NewProjectResService } from './services/new-project-res.service';
 
 const entityMetadata: EntityMetadataMap = {

@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NewProjectResService } from '../../services/new-project-res.service';
 import { ProjectEntityService } from '../../services/project-entity.service';
 import { Project } from 'src/app/shared/constants/project.model';
-import { StepList } from 'src/app/modules/project-editor/constants/step-list.model'
+import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.model'
 
 
 
@@ -27,7 +27,7 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
   projectUrl;
   subscription: Subscription;
   status = '';
-  items: Array<StepList>;
+  items: Array<StepMenu>;
 
   constructor(
     private projectsService: ProjectEntityService,
