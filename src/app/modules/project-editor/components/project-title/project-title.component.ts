@@ -44,4 +44,5 @@ export class ProjectTitleComponent implements OnInit {
       this.blur.emit(event);
     }
   }
+  
 }

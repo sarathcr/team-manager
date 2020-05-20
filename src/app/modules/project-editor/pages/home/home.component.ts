@@ -11,7 +11,7 @@ import { ProjectEntityService } from '../../services/project-entity.service';
 })
 export class HomeComponent implements OnInit {
 
-  title = 'Tus plantillas';
+  title:string = 'Tus plantillas';
   projects$: Observable<Project[]>;
 
   constructor(

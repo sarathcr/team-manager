@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-project-editor-header',
-  templateUrl: './project-editor-header.component.html',
-  styleUrls: ['./project-editor-header.component.scss']
+  selector: 'app-editor-header',
+  templateUrl: './editor-header.component.html',
+  styleUrls: ['./editor-header.component.scss']
 })
-export class ProjectEditorHeaderComponent implements OnInit {
+export class EditorHeaderComponent implements OnInit {
 
   @Input() projectTitle: string;
   @Input() projectId: number;
