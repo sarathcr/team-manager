@@ -1,3 +1,3 @@
-interface StepList {
-    [index: number]: { id: number; name: string; };
-}
+export interface StepList {
+    id: number,
+    name: string; }
