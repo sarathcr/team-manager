@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data';
-import { Subject } from 'src/app/shared/models/subject.model';
+import { Subject } from 'src/app/shared/constants/subject.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

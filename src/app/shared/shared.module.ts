@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -34,7 +33,6 @@ import { DropdownComponent } from './form/components/dropdown/dropdown.component
         TranslateModule.forChild(),
         ReactiveFormsModule,
         NgMultiSelectDropDownModule,
-        AngularMultiSelectModule
     ],
     entryComponents: [
       FormButtonComponent,

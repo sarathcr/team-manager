@@ -17,10 +17,10 @@ import { SubjectEntityService } from '../../services/subject/subject-entity.serv
 import { RegionDataService } from '../../services/region/region-data.service';
 import { GradeDataService } from '../../services/grade/grade-data.service';
 import { SubjectDataService } from '../../services/subject/subject-data.service';
-import { Region } from 'src/app/shared/models/region.model';
-import { AcademicYear } from 'src/app/shared/models/academic-year.model';
-import { Grade } from 'src/app/shared/models/grade.model';
-import { Subject } from 'src/app/shared/models/subject.model';
+import { Region } from 'src/app/shared/constants/region.model';
+import { AcademicYear } from 'src/app/shared/constants/academic-year.model';
+import { Grade } from 'src/app/shared/constants/grade.model';
+import { Subject } from 'src/app/shared/constants/subject.model';
 
 @Component({
   selector: 'app-start-point',
