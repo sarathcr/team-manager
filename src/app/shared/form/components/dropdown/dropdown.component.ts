@@ -22,8 +22,6 @@ export class DropdownComponent implements OnInit, Field {
   constructor() { }
 
   ngOnInit(): void {
-    // this.dropdownList  = this.config.options;
-    console.log(this.config.name)
     this.dropdownSettings = {
       singleSelection: !this.config.multiselect || false,
       textField: this.config.textField || 'name',

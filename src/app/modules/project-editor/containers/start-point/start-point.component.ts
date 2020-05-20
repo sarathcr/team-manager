@@ -121,16 +121,14 @@ export class StartPointComponent implements OnInit, AfterViewInit {
 
   }
   ngAfterViewInit() {
-    // let previousValid = this.form.valid;
-    // this.form.changes.subscribe(() => {
-    //   if (this.form.valid !== previousValid) {
-    //     previousValid = this.form.valid;
-    //     this.form.setDisabled('submit', !previousValid);
-    //   }
-    // });
-
-    // this.form.setDisabled('submit', true);
-    // this.form.setValue('name', 'Todd Motto');
+    let previousValid = this.form.valid;
+    this.form.changes.subscribe((ev) => {
+      if (this.form.valid !== previousValid) {
+        previousValid = this.form.valid;
+        this.form.setDisabled('submit', !previousValid);
+      }
+      // this.form.setValue('name', 'Todd Motto');
+    });
     this.countries$.subscribe(country => {
       this.countryDropdown.options = country;
     });
