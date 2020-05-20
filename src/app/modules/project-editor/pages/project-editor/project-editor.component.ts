@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Project } from 'src/app/shared/models/project.model';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectEntityService } from '../../services/project-entity.service';
+import { ProjectEntityService } from '../../services/project-services/project-entity.service';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NewProjectResService } from '../../services/new-project-res.service';
+import { NewProjectResService } from '../../services/project-services/new-project-res.service';
 
 @Component({
   selector: 'app-project-editor',
@@ -50,7 +50,7 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.projectUrl = this.route.snapshot.paramMap.get('id');
-    this.reload()
+    this.reload();
   }
 
   ngOnDestroy() {

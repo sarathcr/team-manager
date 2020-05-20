@@ -1,7 +1,12 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { FieldConfig } from '../../../../shared/form/models/field-config.interface';
 import { FormComponent } from '../../../../shared/form/containers/form/form.component';
+import { CountryEntityService } from '../../services/country-services/country-entity.service';
+import { Country } from 'src/app/shared/models/country.model';
+
 @Component({
   selector: 'app-start-point',
   templateUrl: './start-point.component.html',
@@ -9,6 +14,7 @@ import { FormComponent } from '../../../../shared/form/containers/form/form.comp
 })
 export class StartPointComponent implements OnInit, AfterViewInit {
   @ViewChild(FormComponent) form: FormComponent;
+  country$: Observable<Country[]>;
   buttonConfig: FieldConfig = {
       label: 'MARCAR COMO HECHO',
       name: 'submit',
@@ -88,9 +94,10 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     },
     this.buttonConfig
   ];
-  constructor() { }
+  constructor(private countryService: CountryEntityService) { }
 
   ngOnInit(): void {
+    this.getCountryList();
   }
   ngAfterViewInit() {
     // let previousValid = this.form.valid;
@@ -104,7 +111,11 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     // this.form.setDisabled('submit', true);
     // this.form.setValue('name', 'Todd Motto');
   }
-
+  getCountryList() {
+    console.log('Hi')
+    this.country$ = this.countryService.entities$;
+    console.log(this.country$)
+  }
   formSubmit(value: {[name: string]: any}) {
     // this.config.map( item => item.submitted = true);
     this.buttonConfig.submitted = true;

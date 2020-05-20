@@ -17,11 +17,14 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
 // NgRx
 import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
-import { ProjectEntityService } from './services/project-entity.service';
-import { ProjectsResolver } from './services/projects.resolver';
-import { ProjectsDataService } from './services/projects-data.service';
+import { ProjectEntityService } from './services/project-services/project-entity.service';
+import { ProjectsResolver } from './services/project-services/projects.resolver';
+import { ProjectsDataService } from './services/project-services/projects-data.service';
 import { compareProjects } from 'src/app/shared/models/project.model';
-import { NewProjectResService } from './services/new-project-res.service';
+import { NewProjectResService } from './services/project-services/new-project-res.service';
+import { CountryEntityService } from './services/country-services/country-entity.service';
+import { CountryResolver } from './services/country-services/country.resolver';
+import { CountryDataService } from './services/country-services/country-data.service';
 
 const entityMetadata: EntityMetadataMap = {
     Project: {
@@ -53,7 +56,10 @@ const entityMetadata: EntityMetadataMap = {
         ProjectsResolver,
         ProjectEntityService,
         ProjectsDataService,
-        NewProjectResService
+        NewProjectResService,
+        CountryEntityService,
+        CountryResolver,
+        CountryDataService
     ]
 })
 
@@ -62,10 +68,12 @@ export class ProjectEditorModule {
     constructor(
         private eds: EntityDefinitionService,
         private entityDataService: EntityDataService,
-        private projectsDataService: ProjectsDataService) {
+        private projectsDataService: ProjectsDataService,
+        private countryDataService: CountryDataService) {
 
         eds.registerMetadataMap(entityMetadata);
         entityDataService.registerService('Project', projectsDataService);
+        entityDataService.registerService('Country', countryDataService);
     }
 
 }

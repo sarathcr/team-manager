@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { ProjectEntityService } from '../../services/project-entity.service';
+import { ProjectEntityService } from '../../services/project-services/project-entity.service';
 import { Project, initialProject } from 'src/app/shared/models/project.model';
-import { NewProjectResService } from '../../services/new-project-res.service';
+import { NewProjectResService } from '../../services/project-services/new-project-res.service';
 
 @Component({
   selector: 'app-project-title',
@@ -14,7 +14,7 @@ export class ProjectTitleComponent implements OnInit {
   @Input() project: any;
   @Input() maxLength: number;
   @Input() placeholder: any;
-  @Output() blur = new EventEmitter()
+  @Output() blur = new EventEmitter();
   projectTitle: string;
   showInputfield = true;
   projectId: number;
@@ -43,7 +43,7 @@ export class ProjectTitleComponent implements OnInit {
     } else {
       this.showInputfield = true;
     }
-    this.blur.emit(event)
+    this.blur.emit(event);
     // create mode
     if (!this.project) {
       if (title == "") return // if not have the value
