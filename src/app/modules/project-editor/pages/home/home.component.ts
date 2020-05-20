@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Project } from 'src/app/shared/models/project.model';
 import { ProjectEntityService } from '../../services/project-services/project-entity.service';
+import { Project } from 'src/app/shared/constants/project.model';
 
 @Component({
   selector: 'app-home',
