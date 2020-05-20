@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreatorHeaderComponent } from './creator-header.component';
+import { EditorHeaderComponent } from './editor-header.component';
 
-describe('CreatorHeaderComponent', () => {
-  let component: CreatorHeaderComponent;
-  let fixture: ComponentFixture<CreatorHeaderComponent>;
+describe('EditorHeaderComponent', () => {
+  let component: EditorHeaderComponent;
+  let fixture: ComponentFixture<EditorHeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreatorHeaderComponent ]
+      declarations: [ EditorHeaderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreatorHeaderComponent);
+    fixture = TestBed.createComponent(EditorHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

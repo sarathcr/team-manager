@@ -6,12 +6,12 @@ import { ProjectEditorRoutingModule } from './project-editor-routing.module';
 // containers
 import { StartPointComponent } from './containers/start-point/start-point.component';
 // components
-import { ListProjectComponent } from './components/list-project/list-project.component';
-import { AddProjectComponent } from './components/add-project/add-project.component';
-import { ProjectEditorHeaderComponent } from './components/project-editor-header/project-editor-header.component';
-import { ProjectEditorSidebarComponent } from './components/project-editor-sidebar/project-editor-sidebar.component';
+import { ProjectThumbnailComponent } from './components/project-thumbnail/project-thumbnail.component';
+import { CreateProjectComponent } from './components/create-project/create-project.component';
+import { EditorHeaderComponent } from './components/editor-header/editor-header.component';
+import { EditorSidebarComponent } from './components/editor-sidebar/editor-sidebar.component';
 import { ProjectTitleComponent } from './components/project-title/project-title.component';
-import { LeftMenuComponent } from './components/left-menu/left-menu.component';
+import { StepMenuComponent } from './components/step-menu/step-menu.component';
 // pages
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
@@ -76,12 +76,12 @@ const entityMetadata: EntityMetadataMap = {
         HomeComponent,
         ProjectEditorComponent,
         StartPointComponent,
-        ListProjectComponent,
-        AddProjectComponent,
-        ProjectEditorHeaderComponent,
-        ProjectEditorSidebarComponent,
+        ProjectThumbnailComponent,
+        CreateProjectComponent,
+        EditorHeaderComponent,
+        EditorSidebarComponent,
         ProjectTitleComponent,
-        LeftMenuComponent
+        StepMenuComponent
     ],
     imports: [
         CommonModule,

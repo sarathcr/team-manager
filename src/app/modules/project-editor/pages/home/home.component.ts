@@ -11,7 +11,7 @@ import { Project } from 'src/app/shared/constants/project.model';
 })
 export class HomeComponent implements OnInit {
 
-  title = 'Tus plantillas';
+  title:string = 'Tus plantillas';
   projects$: Observable<Project[]>;
 
   constructor(private projectsService: ProjectEntityService) {

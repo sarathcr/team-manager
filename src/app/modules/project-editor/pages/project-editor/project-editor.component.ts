@@ -22,7 +22,11 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
   notFound$: Observable<number>;
   projectUrl;
   subscription: Subscription;
-  status = '';
+  status:string = '';
+  selected:boolean = true;
+  title = 'crea paso apaso';
+  view = 'Ver ficha estructura';
+  notifyGrandParent:number;
   items: Array<StepMenu>;
 
   constructor(
@@ -65,16 +69,16 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
         ).subscribe(
         translations => {
          this.items=[
-              {id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint']},
-              {id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic']},
-              {id: 3, name:'Objetivos competenciales'}, // add localization
-              {id: 4, name:'Contenidos'}, // add localization
-              {id: 5, name:'Evaluación'}, // add localization
-              {id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle']},
-              {id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion']},
-              {id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct']},
-              {id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis']},
-              {id: 10, name:'Interacción con alumnos'} // add localization
+              {id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], status:'selected', selected: true},
+              {id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], status:'pending', selected: false},
+              {id: 3, name:'Objetivos competenciales', status:'pending', selected: false}, // add localization
+              {id: 4, name:'Contenidos', status:'pending', selected: false}, // add localization
+              {id: 5, name:'Evaluación', status:'pending', selected: false}, // add localization
+              {id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], status:'pending', selected: false},
+              {id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], status:'pending', selected: false},
+              {id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], status:'pending', selected: false },
+              {id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], status:'pending', selected: false},
+              {id: 10, name:'Interacción con alumnos', status:'pending', selected: false} // add localization
             ];
         }
      );
@@ -99,4 +103,10 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
     console.log(formValue);
     console.log(this.project$)
   }
+
+  //function to scroll to the step section
+  grandmaHandleClick(value) {
+    document.querySelector('#step-' + value).scrollIntoView();
+  }
+
 }
