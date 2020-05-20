@@ -3,16 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'projects',
     loadChildren: () => import('./modules/project-editor/project-editor.module').then(m => m.ProjectEditorModule)
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'projects' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
     initialNavigation: 'enabled'
-})],
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

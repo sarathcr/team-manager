@@ -87,11 +87,18 @@
 
 //Common body content styles
 p,p em,a{
-    font-size: $font-size-body;
-    letter-spacing: 0.2px;
+    font-family: $font-family-tertiary;
+    font-size: $font-size-default;
+    letter-spacing: 0;
+    line-height: $line-height-24px;
+    margin-bottom: $grid-gutter-width/2;
+}
+div{
+    font-family: $font-family-tertiary;
+    font-size: $font-size-default;
+    letter-spacing: 0;
     line-height: $line-height-32px;
 }
-
 //Highlight content
 blockquote{
     position: relative;

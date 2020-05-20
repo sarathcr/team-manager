@@ -1,23 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { Project, LocalStorageService } from 'src/app/services/localStorage.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Project } from 'src/app/shared/models/project.model';
+import { ProjectEntityService } from '../../services/project-entity.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
+
   title = 'Tus plantillas';
-  allProjects: Project[];
-  constructor(private localStorageService: LocalStorageService) { }
-  ngOnInit(): void {
-    this.allProjects = this.localStorageService.projectsList;
-    if (this.allProjects && this.allProjects.length > 1){
-      this.allProjects.sort((a, b) => {
-        a.date = new Date(a.date);
-        b.date = new Date(b.date);
-        return  b.date.getTime() - a.date.getTime();
-      });
-    }
+  projects$: Observable<Project[]>;
+
+  constructor(
+    private projectsService: ProjectEntityService) {
   }
+
+  ngOnInit() {
+    this.reload();
+  }
+
+  reload() {
+    this.projects$ = this.projectsService.entities$
+  }
+
 }

@@ -6,6 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./project-editor-sidebar.component.scss']
 })
 export class ProjectEditorSidebarComponent implements OnInit {
+
   @Input() title;
   @Input() view;
   @Input() items;
@@ -15,13 +16,9 @@ export class ProjectEditorSidebarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    
   }
   
 childEvent(value) {
-  // var target = event.currentTarget;
-  // var value = target.attributes.id;
-  // console.log(value);
   this.notifyGrandParent.emit(value);
 }
 
