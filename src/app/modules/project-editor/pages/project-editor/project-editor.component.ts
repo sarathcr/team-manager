@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { NewProjectResService } from '../../services/new-project-res.service';
 import { ProjectEntityService } from '../../services/project-entity.service';
-import { Project } from 'src/app/shared/models/project.model';
+import { Project } from 'src/app/shared/constants/project.model';
 
 
 
@@ -26,8 +26,7 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
   projectUrl;
   subscription: Subscription;
   status = '';
-  items: object[];
-
+  items: StepList;
 
   constructor(
     private projectsService: ProjectEntityService,

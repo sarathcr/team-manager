@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { Project } from 'src/app/shared/models/project.model';
+import { Project } from 'src/app/shared/constants/project.model';
 
 @Injectable()
 export class NewProjectResService {
