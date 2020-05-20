@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data';
+import { Country } from 'src/app/shared/constants/country.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Country } from 'src/app/shared/models/country.model';
 
 @Injectable()
 export class CountryDataService extends DefaultDataService<Country> {
