@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
-import { Project } from 'src/app/shared/models/project.model';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectEntityService } from '../../services/project-entity.service';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NewProjectResService } from '../../services/new-project-res.service';
+import { Project } from 'src/app/shared/models/project.model';
+import { ProjectEntityService } from '../../services/project-entity.service';
+
 
 @Component({
   selector: 'app-project-editor',
@@ -14,7 +14,7 @@ import { NewProjectResService } from '../../services/new-project-res.service';
 })
 export class ProjectEditorComponent implements OnInit, OnDestroy {
 
-  project$: Observable<Project>;
+  project:Project;
   notFound$: Observable<number>;
   projectUrl;
   subscription: Subscription;
@@ -38,23 +38,53 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
     private projectsService: ProjectEntityService,
     private route: ActivatedRoute,
     private location: Location,
-    private newProjectRes: NewProjectResService,
-  ) {
-    this.subscription = this.newProjectRes.getResponse().subscribe(res => {
-      console.log(res.id, 'router new parm');
-      this.location.go('projects/' + res.id);
-      this.projectUrl = res.id;
-      this.reload();
-    })
-  }
+  ) { }
 
   ngOnInit(): void {
     this.projectUrl = this.route.snapshot.paramMap.get('id');
     this.reload()
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  ngOnDestroy() {}
+
+  // Function to handle blur of title field 
+  handleTitleBlur(event: Event){
+    const title = (<HTMLInputElement>event.target).value;
+    if(!this.project?.id){
+      this.handleSubmit({title});
+    }else {
+      if (title == this.project.title) return // check if value is same
+      this.handleSubmit({title})
+    }
+  }
+
+  // Function create or update the project
+  handleSubmit(projectData: object){
+    if(!this.project?.id){
+      // create mode
+      const newProject = {
+        id:null,
+        title:"",
+        ...projectData
+      }
+      console.log(newProject)
+      this.projectsService.add(newProject)
+        .subscribe(
+          newProject => {
+            console.log('New Course', newProject);
+            this.location.go('projects/' + newProject.id);
+            this.projectUrl = newProject.id;
+            this.reload();
+          }
+        );
+    }else{
+      // update mode
+      const updateProject = {
+        id: this.project.id,
+        ...projectData
+      }
+      this.projectsService.update(updateProject);
+    }
   }
 
   reload() {
@@ -64,12 +94,14 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
       );
 
     if (this.projectUrl !== 'create') {
-      this.project$ = this.projectsService.entities$
+      this.projectsService.entities$
         .pipe(
           map(projects => projects.find(project => {
             return project.id === Number(this.projectUrl);
           }))
-        );
+        ).subscribe(project=>{
+          this.project=project
+        });
     }
   }
 }

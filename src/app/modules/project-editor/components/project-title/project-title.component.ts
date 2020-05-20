@@ -1,7 +1,4 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { ProjectEntityService } from '../../services/project-entity.service';
-import { Project, initialProject } from 'src/app/shared/models/project.model';
-import { NewProjectResService } from '../../services/new-project-res.service';
 
 @Component({
   selector: 'app-project-title',
@@ -11,20 +8,19 @@ import { NewProjectResService } from '../../services/new-project-res.service';
 export class ProjectTitleComponent implements OnInit {
 
   @ViewChild('titleInput') inputElement: ElementRef;
-  @Input() project: any;
+  @Input() value: any;
+  @Input() projectId: number;
   @Input() maxLength: number;
   @Input() placeholder: any;
   @Output() blur = new EventEmitter()
-  projectTitle: string;
+  tempValue: string;
   showInputfield = true;
-  projectId: number;
 
-  constructor(
-    private projectsService: ProjectEntityService,
-    private newProjectRes: NewProjectResService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    if (this.project?.title) {
+    if (this.value) {
+      this.tempValue = this.value
       this.showInputfield = false;
     }
   }
@@ -37,35 +33,15 @@ export class ProjectTitleComponent implements OnInit {
 
   // Function to handle blur event of input field.
   handleBlur(event: Event): void {
-    const title = (<HTMLInputElement>event.target).value;
-    if (title) {
+    const inputValue = (<HTMLInputElement>event.target).value;
+    this.tempValue = inputValue;
+    if (inputValue) {
       this.showInputfield = false;
     } else {
       this.showInputfield = true;
     }
-    this.blur.emit(event)
-    // create mode
-    if (!this.project) {
-      if (title == "") return // if not have the value
-      const newProject: Project = {
-        ...initialProject,
-        title
-      }
-      this.projectsService.add(newProject)
-        .subscribe(
-          newProject => {
-            console.log('New Course', newProject);
-            this.newProjectRes.sendResponse(newProject)
-          }
-        );
-    } else {
-      // update mode
-      if (title == this.project.title) return // check if value is same
-      const updateProject = {
-        id: this.project.id,
-        title
-      }
-      this.projectsService.update(updateProject);
+    if(inputValue || this.projectId){
+      this.blur.emit(event);
     }
   }
 }

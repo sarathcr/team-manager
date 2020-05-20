@@ -1,7 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-// import { LocalStorageService, Project } from 'src/app/services/localStorage.service';
-import { Observable } from 'rxjs';
-import { Project } from 'src/app/shared/models/project.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-project-editor-header',
@@ -10,12 +7,12 @@ import { Project } from 'src/app/shared/models/project.model';
 })
 export class ProjectEditorHeaderComponent implements OnInit {
 
-  @Input() project: string;
+  @Input() projectTitle: string;
+  @Input() projectId: number;
   @Input() newProject: any;
-  projectTitle: string;
+  @Output() titleBlur = new EventEmitter();
   showInputfield = false;
-  projectId: number;
-
+  
   constructor() { }
 
   ngOnInit(): void {
@@ -24,13 +21,9 @@ export class ProjectEditorHeaderComponent implements OnInit {
   ngOnDestroy(): void {
   }
 
-  // Function to handle the blur in title fiels
+  // Function to handle the blur in title field
   handleTitleBlur(event: Event) {
-    const title = (<HTMLInputElement>event.target).value;
-    if (this.projectTitle != title) {
-      this.projectTitle = title;
-      // this.handleSubmit(this.projectId,'title',this.projectTitle)
-    }
+    this.titleBlur.emit(event);
   }
 
 }
