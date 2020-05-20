@@ -1,5 +1,12 @@
 <div class="project-editor" id="project-editor">
     <app-project-editor-header id="project-editor-header"></app-project-editor-header>
-    <app-project-editor-sidebar id="project-editor-sidebar" [title]="title" [view]="view" [items]="items" [status]="status"></app-project-editor-sidebar>
-    <p>Project Editor</p>
+    <app-project-editor-sidebar id="project-editor-sidebar" [title]="title" [view]="view" [items]="items" [status]="status" 
+    (notifyGrandParent)="grandmaHandleClick($event)"></app-project-editor-sidebar>
+    <div class="project-editor__form">
+        <div id="content-0" style="height: 600px;width: 100%;background-color: #000000;scroll-margin-top: 100px;"><h1 style="color:#fff;">Section1</h1></div>
+        <div id="content-1" style="height: 600px;width: 100%;background-color:blue;scroll-margin-top: 100px;"><h1 style="color:#fff;">Section2</h1></div>
+        <div id="content-2" style="height: 600px;width: 100%;background-color:rgb(138, 114, 161);scroll-margin-top: 100px;"><h1 style="color:#fff;">Section3</h1></div>
+        <div id="content-3" style="height: 600px;width: 100%;background-color:brown;scroll-margin-top: 100px;"><h1 style="color:#fff;">Section4</h1></div>
+        <div id="content-4" style="height: 600px;width: 100%;background-color:chartreuse;scroll-margin-top: 100px;"><h1 style="color:#fff;">Section5</h1></div>
+    </div>
 </div>

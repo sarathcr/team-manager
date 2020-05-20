@@ -21,9 +21,13 @@ export class ProjectEditorComponent implements OnInit {
     {id: 9, name:'Sinopsis'},
     {id: 10, name:'Interacción con alumnos'}
   ];
+  notifyGrandParent;
   constructor() { }
 
   ngOnInit(): void {
-  }
 
+  }
+  grandmaHandleClick(value) {
+    document.querySelector('#content-' + value).scrollIntoView();
+  }
 }

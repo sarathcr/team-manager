@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-project-editor-sidebar',
@@ -10,11 +10,20 @@ export class ProjectEditorSidebarComponent implements OnInit {
   @Input() view;
   @Input() items;
   @Input() status;
+  @Output() notifyGrandParent= new EventEmitter();
+  
   constructor() { }
 
   ngOnInit(): void {
-    // console.log(this.status);
+    
   }
+  
+childEvent(value) {
+  // var target = event.currentTarget;
+  // var value = target.attributes.id;
+  // console.log(value);
+  this.notifyGrandParent.emit(value);
+}
 
 }
 
