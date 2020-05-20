@@ -32,7 +32,12 @@ const entityMetadata: EntityMetadataMap = {
         entityDispatcherOptions: {
             optimisticUpdate: true
         }
-    }
+    },
+    Country: {
+      entityDispatcherOptions: {
+          optimisticUpdate: true
+      }
+  }
 };
 
 @NgModule({
@@ -75,5 +80,4 @@ export class ProjectEditorModule {
         entityDataService.registerService('Project', projectsDataService);
         entityDataService.registerService('Country', countryDataService);
     }
-
 }
