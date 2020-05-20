@@ -20,7 +20,7 @@ import { EntityDataModule } from '@ngrx/data';
 
 // AoT requires an exported function for factories
 export function rootLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'assets/i18n/main/', '.json');
+  return new TranslateHttpLoader(http, 'assets/i18n/project-editor/', '.json');
 }
 @NgModule({
   declarations: [
