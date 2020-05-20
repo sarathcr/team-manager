@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 // import { LocalStorageService, Project } from 'src/app/services/localStorage.service';
 import { Observable } from 'rxjs';
-import { Project } from 'src/app/shared/models/project.model';
+import { Project } from 'src/app/shared/constants/project.model';
 
 @Component({
   selector: 'app-editor-header',

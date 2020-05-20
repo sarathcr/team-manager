@@ -1,7 +1,8 @@
 <div class="project-editor" id="project-editor" *ngIf="(notFound$ | async) > 0 || projectUrl == 'create'">
     <div class="project-editor__bg"></div>
     <app-editor-header [project]="project$ | async" id="project-editor-header"></app-editor-header>
-    <app-editor-sidebar id="project-editor-sidebar" [title]="title" [view]="view" [items]="items" [status]="status" [selected]="selected" (notifyGrandParent)="grandmaHandleClick($event)"></app-editor-sidebar>
+    <app-editor-sidebar id="project-editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
+     [items]="items" [status]="status" [selected]="selected" (notifyGrandParent)="grandmaHandleClick($event)"></app-editor-sidebar>
     <div class="app">
       <div class="project-editor__form">
         <app-start-point id="step-0" class="step-section"></app-start-point>

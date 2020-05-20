@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Project } from 'src/app/shared/models/project.model';
+import { Project } from 'src/app/shared/constants/project.model';
 import { ProjectEntityService } from '../../services/project-entity.service';
 
 @Component({

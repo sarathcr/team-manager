@@ -15,12 +15,16 @@ import { StepMenuComponent } from './components/step-menu/step-menu.component';
 // pages
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
+
+// ngx translate
+import { TranslateModule } from '@ngx-translate/core';
+ 
 // NgRx
 import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
 import { ProjectEntityService } from './services/project-entity.service';
 import { ProjectsResolver } from './services/projects.resolver';
 import { ProjectsDataService } from './services/projects-data.service';
-import { compareProjects } from 'src/app/shared/models/project.model';
+import { compareProjects } from 'src/app/shared/constants/project.model';
 import { NewProjectResService } from './services/new-project-res.service';
 
 const entityMetadata: EntityMetadataMap = {
@@ -48,6 +52,7 @@ const entityMetadata: EntityMetadataMap = {
         CommonModule,
         SharedModule,
         ProjectEditorRoutingModule,
+        TranslateModule.forChild()
     ],
     providers: [
         ProjectsResolver,
