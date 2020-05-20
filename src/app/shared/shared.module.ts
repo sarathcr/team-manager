@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { CreatorHeaderComponent } from './components/creator-header/creator-header.component';
+import { HeaderComponent } from './components/header/header.component';
 import { NavComponent } from './components/nav/nav.component';
 // Components
 import { FormButtonComponent } from './form/components/form-button/form-button.component';
@@ -18,7 +18,7 @@ import { DropdownComponent } from './form/components/dropdown/dropdown.component
 @NgModule({
     declarations: [
         SidebarComponent,
-        CreatorHeaderComponent,
+        HeaderComponent,
         NavComponent,
         FormButtonComponent,
         FormInputComponent,
@@ -38,7 +38,7 @@ import { DropdownComponent } from './form/components/dropdown/dropdown.component
     ],
     exports: [
         SidebarComponent,
-        CreatorHeaderComponent,
+        HeaderComponent,
         NavComponent,
         FormComponent,
         DropdownComponent

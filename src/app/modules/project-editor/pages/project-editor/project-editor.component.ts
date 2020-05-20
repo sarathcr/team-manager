@@ -18,21 +18,23 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
   notFound$: Observable<number>;
   projectUrl;
   subscription: Subscription;
-  status = '';
+  status:string = '';
+  selected:boolean = true;
   title = 'crea paso apaso';
   view = 'Ver ficha estructura';
   items = [
-    { id: 1, name: 'Punto de partida' },
-    { id: 2, name: 'Temática' },
-    { id: 3, name: 'Objetivos competenciales' },
-    { id: 4, name: 'Contenidos' },
-    { id: 5, name: 'Evaluación' },
-    { id: 6, name: 'Título creativo' },
-    { id: 7, name: 'Preguntas guía' },
-    { id: 8, name: 'Producto final' },
-    { id: 9, name: 'Sinopsis' },
-    { id: 10, name: 'Interacción con alumnos' }
+    { id: 1, name: 'Punto de partida', status:'selected', selected: true },
+    { id: 2, name: 'Temática',status:'pending', selected: false },
+    { id: 3, name: 'Objetivos competenciales',status:'pending', selected: false },
+    { id: 4, name: 'Contenidos',status:'pending', selected: false },
+    { id: 5, name: 'Evaluación' ,status:'pending', selected: false},
+    { id: 6, name: 'Título creativo',status:'pending', selected: false },
+    { id: 7, name: 'Preguntas guía' ,status:'pending' , selected: false },
+    { id: 8, name: 'Producto final' ,status:'pending', selected: false},
+    { id: 9, name: 'Sinopsis' ,status:'pending', selected: false},
+    { id: 10, name: 'Interacción con alumnos' ,status:'pending', selected: false}
   ];
+  notifyGrandParent:number;
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -72,4 +74,10 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
         );
     }
   }
+
+  //function to scroll to the step section
+  grandmaHandleClick(value) {
+    document.querySelector('#step-' + value).scrollIntoView();
+  }
+
 }

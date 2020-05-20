@@ -3,11 +3,28 @@
   width: 100%;
   padding: 75px 15px 0 236px;
   margin: 0;
+  position: relative;
+  height: 100%;
   &__form{
     display: flex;
     width: 55%;
     padding: $grid-gutter-width/2;
     padding-left: 40px;
+    flex-direction: column;
+  }
+  &__bg{
+    background-image:url('../../../../../../images/img_background_shapes.png');
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: contain;
+    position: absolute;
+    top: 75px;
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 75px);
+  }
+  .step-section{
+    scroll-margin-top: 110px;
   }
 }
 
