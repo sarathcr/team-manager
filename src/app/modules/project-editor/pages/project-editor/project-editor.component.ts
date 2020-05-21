@@ -101,7 +101,6 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
   }
   updateProject(formValue){
     console.log(formValue);
-    console.log(this.project$)
   }
   updateStatus(update){
     this.items = this.items.map(item => item.id === update.id ? {...item, status: update.status} : item);

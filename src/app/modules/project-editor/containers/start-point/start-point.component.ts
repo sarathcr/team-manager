@@ -172,6 +172,9 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   handleSubmit(event: Event) {
     event.preventDefault();
     event.stopPropagation();
+    this.buttonConfig.submitted = true;
+    this.buttonConfig.label = 'hencho';
+    this.statusUpdate.emit({id: 1, status: 'done'});
     this.formSubmit.emit(this.stratPointForm.value);
   }
   formUpdate(res){
