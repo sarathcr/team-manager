@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 // Interfaces
 import { Field } from '../../models/field.interface';
@@ -11,18 +11,15 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   styleUrls: ['./dropdown.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DropdownComponent implements OnInit, Field {
+export class DropdownComponent implements OnInit, Field, AfterViewInit {
   @Output() formUpdate: EventEmitter<any> = new EventEmitter();
   @Input() config: FieldConfig;
   @Input() group: FormGroup;
   active = false;
-  dropdownList = [];
-  selectedItems = [];
   dropdownSettings: IDropdownSettings = {};
   constructor() { }
 
   ngOnInit(): void {
-    this.dropdownList  = this.config.options;
     this.dropdownSettings = {
       singleSelection: !this.config.multiselect || false,
       textField: this.config.textField || 'name',
@@ -32,13 +29,18 @@ export class DropdownComponent implements OnInit, Field {
       enableCheckAll: false,
     };
   }
+  ngAfterViewInit() {
+    if(this.config.selectedItems){
+      this.formUpdate.emit({controller: this.config.name, val: this.config.selectedItems});
+    }
+  }
   onItemSelect(item: any) {
     this.active = true;
-    this.formUpdate.emit({controller: this.config.name, val: this.selectedItems});
+    this.formUpdate.emit({controller: this.config.name, val: this.config.selectedItems});
   }
   onItemDeSelect(item: any) {
     this.active = true;
-    this.formUpdate.emit(this.selectedItems);
+    this.formUpdate.emit(this.config.selectedItems);
   }
   onSelectAll(items: any) {
     console.log(items);

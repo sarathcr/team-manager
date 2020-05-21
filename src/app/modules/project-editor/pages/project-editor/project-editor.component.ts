@@ -134,19 +134,34 @@ export class ProjectEditorComponent implements OnInit {
         });
     }
   }
-  updateProject(formValue){
-    const projectUpdate = {
-      academicYear: formValue.academicYear[0],
-      country: formValue.country[0],
-      grades: formValue.grades,
-      region: formValue.region[0],
-      subjects: formValue.subjects
-    }
-    this.handleSubmit(projectUpdate);
+  // updateProject(formValue){
+  //   const projectUpdate = {
+  //     academicYear: formValue.academicYear[0],
+  //     country: formValue.country[0],
+  //     grades: formValue.grades,
+  //     region: formValue.region[0],
+  //     subjects: formValue.subjects
+  //   }
+  //   this.handleSubmit(projectUpdate);
+  // }
+
+  // Function to save starting point data
+  updateProject(formValue: object) {
+    console.log(formValue)
+    const formData = {};
+    const formKeys = Object.keys(formValue);
+    formKeys.forEach(key => {
+        (key !== 'grades' && key !== 'subjects')
+        ? formData[key] = formValue[key][0]
+        : formData[key] = formValue[key];
+    });
+    this.handleSubmit(formData);
   }
-  updateStatus(update){
-    this.items = this.items.map(item => item.id === update.id ? {...item, status: update.status} : item);
+
+  updateStatus(update) {
+    this.items = this.items.map(item => item.id === update.id ? { ...item, status: update.status } : item);
   }
+
   // function to scroll to the step section
   grandmaHandleClick(value) {
     document.querySelector('#step-' + value).scrollIntoView();

@@ -64,7 +64,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     label: 'Territorio',
     name: 'region',
     id: 'region',
-    placeholder: '',
+    placeholder: 'Territorio',
     multiselect: false,
     options: [],
     selectedItems: []
@@ -111,7 +111,6 @@ export class StartPointComponent implements OnInit, AfterViewInit {
               ) { }
 
   ngOnInit(): void {
-    console.log(this.project);
     this.stratPointForm = new FormGroup({
       country: new FormControl(null),
       region: new FormControl(null),
@@ -134,29 +133,29 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     // this.academicYears$ = this.academicYearService.entities$;
     // this.grades$ = this.gradeService.entities$;
     // this.subjects$ = this.subjectService.entities$;
+    if(this.project){
+      console.log(this.project)
+      if (this.project.country) {
+        this.countryDropdown.selectedItems = [{id: this.project.country.id, name: this.project.country.name}];
+      }
+      if (this.project.region) {
+        this.regionDropdown.selectedItems = [{id: this.project.region?.id, name: this.project.region?.name}];
+      }
+      if (this.project.academicYear) {
+        this.academicYearDropdown.selectedItems = [{id: this.project.academicYear?.id, name: this.project.academicYear?.academicYear}];
+      }
+      if (this.project.grades) {
+        this.gradesDropdown.selectedItems.push(this.project.grades.map( grade => {grade.id, grade.name}))
+      }
+      if (this.project.subjects) {
+        this.subjectsDropdown.selectedItems.push(this.project.subjects.map( subject => {subject.id, subject.name}))
+      }
+    }
   }
   ngAfterViewInit() {
     this.countries$.subscribe(country => {
       this.countryDropdown.options = country;
     });
-    if (this.project.country) {
-      this.countryDropdown.selectedItems = [{id: this.project.country.id, name: this.project.country.name}];
-      console.log(this.countryDropdown.selectedItems)
-    }
-    if (this.project.region) {
-      this.regionDropdown.selectedItems = [{id: this.project.region?.id, name: this.project.region?.name}];
-      console.log(this.regionDropdown.selectedItems)
-    }
-    if (this.project.academicYear) {
-      this.academicYearDropdown.selectedItems = [{id: this.project.academicYear?.id, name: this.project.academicYear?.academicYear}];
-    }
-    if (this.project.grades) {
-      this.gradesDropdown.selectedItems.push(this.project.grades.map( grade => {grade.id, grade.name}))
-      console.log(this.gradesDropdown.selectedItems)
-    }
-    if (this.project.subjects) {
-      this.subjectsDropdown.selectedItems.push(this.project.subjects.map( subject => {subject.id, subject.name}))
-    }
   }
   getAllCountries() {
     return this.countryService.getAll();
@@ -179,10 +178,10 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     this.buttonConfig.submitted = true;
     this.buttonConfig.label = 'hencho';
     this.statusUpdate.emit({id: 1, status: 'done'});
-    console.log(this.stratPointForm.value)
     this.formSubmit.emit(this.stratPointForm.value);
   }
   formUpdate(res){
+    console.log(res)
     if  (res.val.length > 0) {
       this.buttonConfig.disabled = false;
       switch (res.controller) {
@@ -192,6 +191,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
           this.getAllRegions();
           this.regions$ = this.regionService.entities$;
           this.regions$.subscribe(region => {
+            console.log(region)
             this.regionDropdown.options = region.filter( item => item.country.id === this.countryId);
           });
           this.regionDropdown.disabled = false;
