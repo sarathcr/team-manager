@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { StepMenu } from '../../constants/step-menu.model';
 
 @Component({
   selector: 'app-editor-sidebar',
@@ -7,11 +8,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class EditorSidebarComponent implements OnInit {
   
-  @Input() title;
-  @Input() view;
-  @Input() items;
-  @Input() status;
-  @Input() selected;
+  @Input() title:string;
+  @Input() view:string;
+  @Input() items:Array<StepMenu>;
+  @Input() status:string;
+  @Input() selected:boolean;
   @Output() notifyGrandParent= new EventEmitter();
   
   constructor() { }
