@@ -7,8 +7,6 @@ import { Country } from 'src/app/shared/constants/country.model';
 
 import { FieldConfig } from '../../../../shared/form/models/field-config.interface';
 
-import { FormComponent } from '../../../../shared/form/containers/form/form.component';
-
 import { CountryEntityService } from '../../services/country/country-entity.service';
 import { RegionEntityService } from '../../services/region/region-entity.service';
 import { AcademicYearEntityService } from '../../services/academic-year/academic-year-entity.service';
@@ -32,7 +30,6 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   @Output() statusUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Output() formSubmit: EventEmitter<any> = new EventEmitter<any>();
   // @Output() formUpdate: EventEmitter<any> = new EventEmitter<any>();
-  @ViewChild(FormComponent) form: FormComponent;
   stratPointForm: FormGroup;
   countries$: Observable<Country[]>;
   regions$: Observable<Region[]>;
@@ -127,7 +124,6 @@ export class StartPointComponent implements OnInit, AfterViewInit {
       academicYear: new FormControl(null),
       grades: new FormControl(null),
       subjects: new FormControl(null),
-      submit: new FormControl(null)
     });
     this.getAllCountries();
     this.countries$ = this.countryService.entities$;
@@ -137,16 +133,16 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     this.subjects$ = this.subjectService.entities$;
   }
   ngAfterViewInit() {
-    let previousValid = this.form.valid;
-    this.form.changes.subscribe((ev) => {
-      if (this.form.valid !== previousValid) {
-        previousValid = this.form.valid;
-        this.form.setDisabled('submit', !previousValid);
-      }
+    // let previousValid = this.form.valid;
+    // this.form.changes.subscribe((ev) => {
+    //   if (this.form.valid !== previousValid) {
+    //     previousValid = this.form.valid;
+    //     this.form.setDisabled('submit', !previousValid);
+    //   }
 
-      console.log(ev)
-      // this.form.setValue('name', 'Todd Motto');
-    });
+    //   console.log(ev)
+    //   // this.form.setValue('name', 'Todd Motto');
+    // });
     this.countries$.subscribe(country => {
       this.countryDropdown.options = country;
     });
@@ -180,6 +176,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     this.formSubmit.emit(this.stratPointForm);
   }
   formUpdate(res){
+    console.log(res)
     if  (res.val.length > 0) {
       this.buttonConfig.disabled = false;
       switch (res.controller) {

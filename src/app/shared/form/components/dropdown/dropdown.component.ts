@@ -12,7 +12,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   encapsulation: ViewEncapsulation.None
 })
 export class DropdownComponent implements OnInit, Field {
-  @Output() getSelectedItem: EventEmitter<any> = new EventEmitter();
+  @Output() formUpdate: EventEmitter<any> = new EventEmitter();
   @Input() config: FieldConfig;
   @Input() group: FormGroup;
   active = false;
@@ -34,11 +34,11 @@ export class DropdownComponent implements OnInit, Field {
   }
   onItemSelect(item: any) {
     this.active = true;
-    this.getSelectedItem.emit(this.selectedItems);
+    this.formUpdate.emit(this.selectedItems);
   }
   onItemDeSelect(item: any) {
     this.active = true;
-    this.getSelectedItem.emit(this.selectedItems);
+    this.formUpdate.emit(this.selectedItems);
   }
   onSelectAll(items: any) {
     console.log(items);

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectEditorRoutingModule } from './project-editor-routing.module';
@@ -87,7 +88,9 @@ const entityMetadata: EntityMetadataMap = {
         CommonModule,
         SharedModule,
         ProjectEditorRoutingModule,
-        TranslateModule.forChild()
+        TranslateModule.forChild(),
+        FormsModule,
+        ReactiveFormsModule
     ],
     providers: [
         ProjectsResolver,
