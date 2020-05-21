@@ -69,17 +69,6 @@ export class ProjectEditorComponent implements OnInit {
       );
   }
 
-  // Function to handle blur of title field 
-  handleTitleBlur(event: Event) {
-    const title = (<HTMLInputElement>event.target).value;
-    if (!this.project?.id) {
-      this.handleSubmit({ title });
-    } else {
-      if (title == this.project.title) return // check if value is same
-      this.handleSubmit({ title })
-    }
-  }
-
   // Function create or update the project
   handleSubmit(projectData: object) {
     if (!this.project?.id) {
