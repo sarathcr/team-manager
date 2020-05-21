@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 // Interfaces
 import { Field } from '../../models/field.interface';
@@ -13,8 +13,8 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 })
 export class DropdownComponent implements OnInit, Field {
   @Output() getSelectedItem: EventEmitter<any> = new EventEmitter();
-  config: FieldConfig;
-  group: FormGroup;
+  @Input() config: FieldConfig;
+  @Input() group: FormGroup;
   active = false;
   dropdownList = [];
   selectedItems = [];

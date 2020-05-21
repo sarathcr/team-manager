@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
@@ -30,7 +30,10 @@ import { Subject } from 'src/app/shared/constants/subject.model';
 export class StartPointComponent implements OnInit, AfterViewInit {
   @Output() projectUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Output() statusUpdate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() formSubmit: EventEmitter<any> = new EventEmitter<any>();
+  // @Output() formUpdate: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(FormComponent) form: FormComponent;
+  stratPointForm: FormGroup;
   countries$: Observable<Country[]>;
   regions$: Observable<Region[]>;
   academicYears$: Observable<AcademicYear[]>;
@@ -52,7 +55,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   countryDropdown: FieldConfig = {
     field: 'dropdown',
     label: 'Pais',
-    name: 'Pais',
+    name: 'country',
     id: 'country',
     placeholder: 'País',
     multiselect: false,
@@ -61,7 +64,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   regionDropdown: FieldConfig = {
     field: 'dropdown',
     label: 'Territorio',
-    name: 'Territorio',
+    name: 'region',
     id: 'region',
     placeholder: '',
     multiselect: false,
@@ -71,7 +74,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   academicYearDropdown: FieldConfig = {
     field: 'dropdown',
     label: 'Año académico',
-    name: 'Año académico',
+    name: 'academicYear',
     id: 'academicYear',
     textField: 'academicYear',
     placeholder: 'Selecciona el año académico',
@@ -82,7 +85,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   gradesDropdown: FieldConfig = {
     field: 'dropdown',
     label: 'Curso(s)',
-    name: 'Curso',
+    name: 'grades',
     id: 'grade',
     placeholder: 'Selecciona uno o más cursos',
     multiselect: true,
@@ -92,21 +95,21 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   subjectsDropdown: FieldConfig = {
     field: 'dropdown',
     label: 'Asignatura(s)',
-    name: 'Asignatura',
+    name: 'subjects',
     id: 'subject',
     placeholder: 'Selecciona una o más asignaturas',
     multiselect: true,
     disabled: true,
     options: []
   };
-  config: FieldConfig[] = [
-    this.countryDropdown,
-    this.regionDropdown,
-    this.academicYearDropdown,
-    this.gradesDropdown,
-    this.subjectsDropdown,
-    this.buttonConfig
-  ];
+  // config: FieldConfig[] = [
+  //   this.countryDropdown,
+  //   this.regionDropdown,
+  //   this.academicYearDropdown,
+  //   this.gradesDropdown,
+  //   this.subjectsDropdown,
+  //   this.buttonConfig
+  // ];
   constructor(private countryService: CountryEntityService,
               private regionService: RegionEntityService,
               private academicYearService: AcademicYearEntityService,
@@ -118,6 +121,14 @@ export class StartPointComponent implements OnInit, AfterViewInit {
               ) { }
 
   ngOnInit(): void {
+    this.stratPointForm = new FormGroup({
+      country: new FormControl(null),
+      region: new FormControl(null),
+      academicYear: new FormControl(null),
+      grades: new FormControl(null),
+      subjects: new FormControl(null),
+      submit: new FormControl(null)
+    });
     this.getAllCountries();
     this.countries$ = this.countryService.entities$;
     this.regions$ = this.regionService.entities$;
@@ -155,13 +166,18 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   getAllSubjects() {
     return this.subjectService.getAll();
   }
-  formSubmit(value: {[name: string]: any}) {
-    // this.config.map( item => item.submitted = true);
-    this.buttonConfig.submitted = true;
-    this.buttonConfig.label = 'hencho';
-    this.projectUpdate.emit(value);
-    this.statusUpdate.emit({id: 1, status: 'done'});
-    console.log(value)
+  // formSubmit(value: {[name: string]: any}) {
+  //   // this.config.map( item => item.submitted = true);
+  //   this.buttonConfig.submitted = true;
+  //   this.buttonConfig.label = 'hencho';
+  //   this.projectUpdate.emit(value);
+  //   this.statusUpdate.emit({id: 1, status: 'done'});
+  //   console.log(value)
+  // }
+  handleSubmit(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.formSubmit.emit(this.stratPointForm);
   }
   formUpdate(res){
     if  (res.val.length > 0) {
