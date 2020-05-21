@@ -56,7 +56,8 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     id: 'country',
     placeholder: 'País',
     multiselect: false,
-    options: []
+    options: [],
+    selectedItems: []
   };
   regionDropdown: FieldConfig = {
     field: 'dropdown',
@@ -65,8 +66,8 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     id: 'region',
     placeholder: '',
     multiselect: false,
-    disabled: true,
-    options: []
+    options: [],
+    selectedItems: []
   };
   academicYearDropdown: FieldConfig = {
     field: 'dropdown',
@@ -76,8 +77,8 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     textField: 'academicYear',
     placeholder: 'Selecciona el año académico',
     multiselect: false,
-    disabled: true,
-    options: []
+    options: [],
+    selectedItems: []
   };
   gradesDropdown: FieldConfig = {
     field: 'dropdown',
@@ -86,8 +87,8 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     id: 'grade',
     placeholder: 'Selecciona uno o más cursos',
     multiselect: true,
-    disabled: true,
-    options: []
+    options: [],
+    selectedItems: []
   };
   subjectsDropdown: FieldConfig = {
     field: 'dropdown',
@@ -96,8 +97,8 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     id: 'subject',
     placeholder: 'Selecciona una o más asignaturas',
     multiselect: true,
-    disabled: true,
-    options: []
+    options: [],
+    selectedItems: []
   };
   constructor(private countryService: CountryEntityService,
               private regionService: RegionEntityService,
@@ -113,10 +114,10 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     console.log(this.project);
     this.stratPointForm = new FormGroup({
       country: new FormControl(null),
-      region: new FormControl({disabled: this.regionDropdown.disabled}),
-      academicYear: new FormControl({disabled: this.academicYearDropdown.disabled}),
-      grades: new FormControl({disabled: this.gradesDropdown.disabled}),
-      subjects: new FormControl({disabled: this.subjectsDropdown.disabled}),
+      region: new FormControl(null),
+      academicYear: new FormControl(null),
+      grades: new FormControl(null),
+      subjects: new FormControl(null),
     });
     Object.keys(this.stratPointForm.controls).forEach(control => {
       this.stratPointForm.get(control).valueChanges.subscribe(val => {
@@ -127,21 +128,6 @@ export class StartPointComponent implements OnInit, AfterViewInit {
         this.statusUpdate.emit(modifiedVal);
       });
     });
-    if (this.project.country) {
-      this.countryDropdown.selectedItems = [{id: this.project.country.id, name: this.project.country.name}];
-      if (this.project.region) {
-        this.regionDropdown.selectedItems = [{id: this.project.region.id, name: this.project.region.name}];
-        if (this.project.academicYear) {
-          this.academicYearDropdown.selectedItems = [{id: this.project.academicYear.id, name: this.project.academicYear.academicYear}];
-          if (this.project.grades) {
-            this.gradesDropdown.selectedItems = [this.project.grades];
-          }
-          if (this.project.subjects) {
-            this.subjectsDropdown.selectedItems = [this.project.subjects];
-          }
-        }
-      }
-    }
     this.getAllCountries();
     this.countries$ = this.countryService.entities$;
     // this.regions$ = this.regionService.entities$;
@@ -153,6 +139,24 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     this.countries$.subscribe(country => {
       this.countryDropdown.options = country;
     });
+    if (this.project.country) {
+      this.countryDropdown.selectedItems = [{id: this.project.country.id, name: this.project.country.name}];
+      console.log(this.countryDropdown.selectedItems)
+    }
+    if (this.project.region) {
+      this.regionDropdown.selectedItems = [{id: this.project.region?.id, name: this.project.region?.name}];
+      console.log(this.regionDropdown.selectedItems)
+    }
+    if (this.project.academicYear) {
+      this.academicYearDropdown.selectedItems = [{id: this.project.academicYear?.id, name: this.project.academicYear?.academicYear}];
+    }
+    if (this.project.grades) {
+      this.gradesDropdown.selectedItems.push(this.project.grades.map( grade => {grade.id, grade.name}))
+      console.log(this.gradesDropdown.selectedItems)
+    }
+    if (this.project.subjects) {
+      this.subjectsDropdown.selectedItems.push(this.project.subjects.map( subject => {subject.id, subject.name}))
+    }
   }
   getAllCountries() {
     return this.countryService.getAll();

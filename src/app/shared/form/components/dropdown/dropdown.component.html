@@ -1,7 +1,7 @@
 <div class="dropdown dropdown_multiple {{active ? 'active':''}}" [formGroup]="group">
   <div class="dropdown__wrap" >
     <label class="dropdown__label" for='config.name'>{{config.label}}</label>
-    <ng-multiselect-dropdown [placeholder]="config.placeholder" [settings] ="dropdownSettings" [data]="config.options" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" [formControlName]='config.name' (onDropDownClose)="onDropDownClose()" [(ngModel)]="selectedItems">
+    <ng-multiselect-dropdown [placeholder]="config.placeholder" [settings] ="dropdownSettings" [data]="config.options" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" [formControlName]='config.name' (onDropDownClose)="onDropDownClose()" [(ngModel)]="config.selectedItems">
     </ng-multiselect-dropdown>
     <!-- <angular2-multiselect [settings] ="dropdownSettings"  [data]="config.options" [formControlName]='config.name'
     (onSelect)="onItemSelect($event)"

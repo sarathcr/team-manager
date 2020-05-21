@@ -132,11 +132,17 @@ export class ProjectEditorComponent implements OnInit {
             this.notFound = 0;
           }
         });
-      this.loadProject = this.project;
     }
   }
   updateProject(formValue){
-    console.log(formValue);
+    const projectUpdate = {
+      academicYear: formValue.academicYear[0],
+      country: formValue.country[0],
+      grades: formValue.grades,
+      region: formValue.region[0],
+      subjects: formValue.subjects
+    }
+    this.handleSubmit(projectUpdate);
   }
   updateStatus(update){
     this.items = this.items.map(item => item.id === update.id ? {...item, status: update.status} : item);

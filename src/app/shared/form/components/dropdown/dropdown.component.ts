@@ -29,7 +29,7 @@ export class DropdownComponent implements OnInit, Field {
       itemsShowLimit: 3,
       closeDropDownOnSelection: true,
       maxHeight: 265,
-      enableCheckAll: false
+      enableCheckAll: false,
     };
   }
   onItemSelect(item: any) {
