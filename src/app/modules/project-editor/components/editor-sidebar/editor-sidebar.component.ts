@@ -13,7 +13,7 @@ export class EditorSidebarComponent implements OnInit {
   @Input() items:Array<StepMenu>;
   @Input() status:string;
   @Input() selected:boolean;
-  @Output() notifyGrandParent= new EventEmitter();
+  @Output() childClick= new EventEmitter();
   
   constructor() { }
 
@@ -22,7 +22,7 @@ export class EditorSidebarComponent implements OnInit {
   
   //Function to emit menu item number to output
   childEvent(value) {
-    this.notifyGrandParent.emit(value);
+    this.childClick.emit(value);
   }
 }
 

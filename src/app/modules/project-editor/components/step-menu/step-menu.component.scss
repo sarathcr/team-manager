@@ -18,15 +18,15 @@
         color:$sidebar-text-active;
         font-weight: normal;
     }
+    &-active{
+        color:$sidebar-text-active;
+        font-weight: bold;
+            
+    }
     .icon-ic_check{
         color:$icon-green;
         font-size: $font-size-icon;
     }
 }
-.active{
-    .menu{
-          color:$sidebar-text-active !important;
-          font-weight: bold !important;
-        }
-  }
+
 

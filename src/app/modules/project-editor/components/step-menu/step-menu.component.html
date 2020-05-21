@@ -1,4 +1,4 @@
-<div class="menu" [ngClass]="{'menu-inprocess' : status == 'inprocess'}">
+<div class="menu" [ngClass]="{'menu-inprocess' : status == 'inprocess', 'menu-active' : selected == true}">
     <span class="menu__step" *ngIf="status == 'done'">
         <span class="icon icon-ic_check"></span>
     </span>
