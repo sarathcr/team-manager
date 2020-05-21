@@ -127,7 +127,7 @@ export class ProjectEditorComponent implements OnInit {
   }
 
   //function to scroll to the step section
-  grandmaHandleClick(value) {
+  handleScroll(value) {
     document.querySelector('#step-' + value).scrollIntoView();
   }
 

@@ -27,7 +27,7 @@ export class ProjectTitleComponent implements OnInit {
 
   // Function to show or hide the input text field.
   toggleInputfield(): void {
-    this.showInputfield = true;
+    // this.showInputfield = true;
     setTimeout(() => this.inputElement.nativeElement.focus(), 0);
   }
 
