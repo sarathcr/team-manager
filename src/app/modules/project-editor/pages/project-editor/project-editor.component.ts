@@ -135,12 +135,23 @@ export class ProjectEditorComponent implements OnInit {
       this.loadProject = this.project;
     }
   }
-  updateProject(formValue){
-    console.log(formValue);
+
+  // Function to save starting point data
+  updateProject(formValue: object) {
+    let formData = {};
+    const formKeys = Object.keys(formValue);
+    formKeys.forEach(key => {
+      (key != 'grades' && key != 'subjects')
+        ? formData[key] = formValue[key][0]
+        : formData[key] = formValue[key];
+    })
+    this.handleSubmit(formData);
   }
-  updateStatus(update){
-    this.items = this.items.map(item => item.id === update.id ? {...item, status: update.status} : item);
+
+  updateStatus(update) {
+    this.items = this.items.map(item => item.id === update.id ? { ...item, status: update.status } : item);
   }
+
   // function to scroll to the step section
   grandmaHandleClick(value) {
     document.querySelector('#step-' + value).scrollIntoView();
