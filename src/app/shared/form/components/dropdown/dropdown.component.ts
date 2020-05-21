@@ -30,9 +30,9 @@ export class DropdownComponent implements OnInit, Field, AfterViewInit {
     };
   }
   ngAfterViewInit() {
-    if(this.config.selectedItems){
-      this.formUpdate.emit({controller: this.config.name, val: this.config.selectedItems});
-    }
+    // if(this.config.selectedItems){
+    //   this.formUpdate.emit({controller: this.config.name, val: this.config.selectedItems});
+    // }
   }
   onItemSelect(item: any) {
     this.active = true;
