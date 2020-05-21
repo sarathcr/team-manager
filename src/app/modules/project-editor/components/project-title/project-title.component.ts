@@ -32,9 +32,9 @@ export class ProjectTitleComponent implements OnInit {
   }
 
   // check title for initial space
-  checkTitle(title: string){
+  checkTitle(title: string) {
     const regex = /^\s*$/;
-    if(regex.test(title)){
+    if (regex.test(title)) {
       return "";  // return if the string contains only white spaces
     }
     return title;
@@ -49,10 +49,10 @@ export class ProjectTitleComponent implements OnInit {
     } else {
       this.showInputfield = true;
     }
-    (<HTMLInputElement>event.target).value=inputValue
-    if(inputValue || this.projectData?.id){
+    (<HTMLInputElement>event.target).value = inputValue
+    if (inputValue || this.projectData?.id) {
       this.titleBlur.emit(event);
     }
   }
-  
+
 }
