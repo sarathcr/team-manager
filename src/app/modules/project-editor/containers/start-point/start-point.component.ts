@@ -98,14 +98,6 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     disabled: true,
     options: []
   };
-  // config: FieldConfig[] = [
-  //   this.countryDropdown,
-  //   this.regionDropdown,
-  //   this.academicYearDropdown,
-  //   this.gradesDropdown,
-  //   this.subjectsDropdown,
-  //   this.buttonConfig
-  // ];
   constructor(private countryService: CountryEntityService,
               private regionService: RegionEntityService,
               private academicYearService: AcademicYearEntityService,
@@ -132,16 +124,6 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     this.subjects$ = this.subjectService.entities$;
   }
   ngAfterViewInit() {
-    // let previousValid = this.form.valid;
-    // this.form.changes.subscribe((ev) => {
-    //   if (this.form.valid !== previousValid) {
-    //     previousValid = this.form.valid;
-    //     this.form.setDisabled('submit', !previousValid);
-    //   }
-
-    //   console.log(ev)
-    //   // this.form.setValue('name', 'Todd Motto');
-    // });
     this.countries$.subscribe(country => {
       this.countryDropdown.options = country;
     });
@@ -161,14 +143,6 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   getAllSubjects() {
     return this.subjectService.getAll();
   }
-  // formSubmit(value: {[name: string]: any}) {
-  //   // this.config.map( item => item.submitted = true);
-  //   this.buttonConfig.submitted = true;
-  //   this.buttonConfig.label = 'hencho';
-  //   this.projectUpdate.emit(value);
-  //   this.statusUpdate.emit({id: 1, status: 'done'});
-  //   console.log(value)
-  // }
   handleSubmit(event: Event) {
     event.preventDefault();
     event.stopPropagation();

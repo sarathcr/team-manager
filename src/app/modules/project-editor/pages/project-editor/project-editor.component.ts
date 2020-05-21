@@ -22,11 +22,11 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
   notFound$: Observable<number>;
   projectUrl;
   subscription: Subscription;
-  status:string;
-  selected:boolean = true;
-  title:string = 'crea paso apaso';
-  view:string = 'Ver ficha estructura';
-  notifyGrandParent:number;
+  status: string;
+  selected = true;
+  title = 'crea paso apaso';
+  view = 'Ver ficha estructura';
+  notifyGrandParent: number;
   items: Array<StepMenu>;
 
   constructor(
