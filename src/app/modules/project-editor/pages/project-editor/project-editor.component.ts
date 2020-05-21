@@ -22,11 +22,9 @@ export class ProjectEditorComponent implements OnInit {
   titleData: TitleData;
   projectUrl: any;
   subscription: Subscription;
-  status: string = '';
-  selected: boolean = true;
-  title = 'crea paso apaso';
-  view = 'Ver ficha estructura';
-  notifyGrandParent: number;
+  status:string;
+  selected:boolean = true;
+  notifyGrandParent:number;
   items: Array<StepMenu>;
 
   constructor(
