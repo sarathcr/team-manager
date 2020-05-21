@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { StepMenu } from '../../constants/step-menu.model';
 
 @Component({
   selector: 'app-step-menu',
@@ -7,9 +8,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class StepMenuComponent implements OnInit {
 
-  @Input() item;
-  @Input() status;
-  @Input() selected;
+  @Input() item:any;
+  @Input() status:string;
+  @Input() selected:boolean;
   
   constructor() { }
 
