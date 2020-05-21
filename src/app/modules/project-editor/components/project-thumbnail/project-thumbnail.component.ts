@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Project } from 'src/app/shared/constants/project.model';
 
 @Component({
-  selector: 'app-list-project',
-  templateUrl: './list-project.component.html',
-  styleUrls: ['./list-project.component.scss']
+  selector: 'app-project-thumbnail',
+  templateUrl: './project-thumbnail.component.html',
+  styleUrls: ['./project-thumbnail.component.scss']
 })
-export class ListProjectComponent implements OnInit {
+export class ProjectThumbnailComponent implements OnInit {
 
   constructor() { }
 

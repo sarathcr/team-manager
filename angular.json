@@ -171,7 +171,7 @@
   "defaultProject": "thinko-creator",
   "cli": {
     "defaultCollection": "@ngrx/schematics",
-    "analytics": "04c4f271-f938-4ea6-bb94-71065d874e46"
+    "analytics": "6ced185b-d2e2-47fb-80b0-ff8be19f3a11"
   },
   "schematics": {
     "@schematics/angular:component": {

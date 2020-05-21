@@ -14,5 +14,19 @@
         position: absolute;
         left: 0;
     }
+    &-inprocess{
+        color:$sidebar-text-active;
+        font-weight: normal;
+    }
+    .icon-ic_check{
+        color:$icon-green;
+        font-size: $font-size-icon;
+    }
 }
+.active{
+    .menu{
+          color:$sidebar-text-active !important;
+          font-weight: bold !important;
+        }
+  }
 
