@@ -31,15 +31,25 @@ export class ProjectTitleComponent implements OnInit {
     setTimeout(() => this.inputElement.nativeElement.focus(), 0);
   }
 
+  // check title for initial space
+  checkTitle(title: string){
+    const regex = /^\s*$/;
+    if(regex.test(title)){
+      return "";  // return if the string contains only white spaces
+    }
+    return title;
+  }
+
   // Function to handle blur event of input field.
   handleBlur(event: Event): void {
-    const inputValue = (<HTMLInputElement>event.target).value;
+    const inputValue = this.checkTitle((<HTMLInputElement>event.target).value);
     this.tempTitle = inputValue;
     if (inputValue) {
       this.showInputfield = false;
     } else {
       this.showInputfield = true;
     }
+    (<HTMLInputElement>event.target).value=inputValue
     if(inputValue || this.projectData?.id){
       this.titleBlur.emit(event);
     }
