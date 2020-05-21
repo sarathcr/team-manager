@@ -24,13 +24,8 @@
     border-color: transparent;
   }
   &__edit{
-    font-size: $font-size-default;
-    margin: 0 30px;
-    display: none;
-  }
-  &__edit-img{
-    margin-left: 10px;
-    font-size:$font-size-xs;
-    color: $edit-icon;
+    font-size: $font-size-large;
+    margin: 0 24px;
+    opacity: 0.4;
   }
 }

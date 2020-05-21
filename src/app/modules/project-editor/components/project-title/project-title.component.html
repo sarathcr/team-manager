@@ -1,11 +1,10 @@
 <div class="project-title d-flex align-items-center">
   <input type="text" class=" project-title__input" *ngIf="showInputfield; else hideInputfield"
-    [placeholder]="placeholder" value={{project?.title}} [maxLength]="maxLength" #titleInput
+    [placeholder]="placeholder" value={{this.projectData?.title?this.projectData.title:tempTitle}} [maxLength]="maxLength" #titleInput
     (blur)="handleBlur($event)">
   <ng-template #hideInputfield>
-    <h1 class="project-title__text" (click)="toggleInputfield()">{{project?.title}}</h1>
+    <h1 class="project-title__text" (click)="toggleInputfield()">{{this.projectData?.title?this.projectData.title:tempTitle}}</h1>
   </ng-template>
-  <div class="project-title__edit">
+  <div class="icon-ic_edit_small project-title__edit">
   </div>
-  <span class="project-title__edit-img icon icon-ic_edit_small"></span>
 </div>
