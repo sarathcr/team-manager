@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectEntityService } from '../../services/project/project-entity.service';
@@ -18,7 +18,6 @@ import { TitleData } from '../../constants/title-data.model';
   styleUrls: ['./project-editor.component.scss']
 })
 export class ProjectEditorComponent implements OnInit {
-
   project: Project;
   notFound: number;
   titleData: TitleData;
@@ -64,7 +63,7 @@ export class ProjectEditorComponent implements OnInit {
       ])
       .subscribe(translations => {
         this.items = [
-          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], status: 'selected', selected: true },
+          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], status: 'pending', selected: true },
           { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], status: 'pending', selected: false },
           { id: 3, name: 'Objetivos competenciales', status: 'pending', selected: false }, // add localization
           { id: 4, name: 'Contenidos', status: 'pending', selected: false }, // add localization
@@ -81,12 +80,12 @@ export class ProjectEditorComponent implements OnInit {
 
   // Function to handle blur of title field
   handleTitleBlur(event: Event) {
-    const title = (<HTMLInputElement>event.target).value;
+    const title = (event.target as HTMLInputElement).value;
     if (!this.project?.id) {
       this.handleSubmit({ title });
     } else {
       if (title == this.project.title) return // check if value is same
-      this.handleSubmit({ title })
+      this.handleSubmit({ title });
     }
   }
 
@@ -96,7 +95,7 @@ export class ProjectEditorComponent implements OnInit {
       // create mode
       const newProject = {
         id: null,
-        title: "",
+        title: '',
         ...projectData
       }
       this.projectsService.add(newProject)
@@ -133,6 +132,7 @@ export class ProjectEditorComponent implements OnInit {
             this.notFound = 0;
           }
         });
+      this.loadProject = this.project;
     }
   }
   updateProject(formValue){

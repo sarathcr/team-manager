@@ -11,7 +11,7 @@
           <div class="status-indicator__ball status-indicator__ball_bottom"></div>
           <div class="status-indicator__bar status-indicator__bar_bottom"></div>
         </div>
-        <app-start-point id="step-0" class="step-section"  (formSubmit)='updateProject($event)' (statusUpdate)='updateStatus($event)'></app-start-point>
+        <app-start-point id="step-0" class="step-section" [project] = 'project'  (formSubmit)='updateProject($event)' (statusUpdate)='updateStatus($event)'></app-start-point>
       </div>
 
     </div>

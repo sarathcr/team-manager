@@ -19,6 +19,7 @@ import { Region } from 'src/app/shared/constants/region.model';
 import { AcademicYear } from 'src/app/shared/constants/academic-year.model';
 import { Grade } from 'src/app/shared/constants/grade.model';
 import { Subject } from 'src/app/shared/constants/subject.model';
+import { Project } from 'src/app/shared/constants/project.model';
 
 @Component({
   selector: 'app-start-point',
@@ -26,7 +27,7 @@ import { Subject } from 'src/app/shared/constants/subject.model';
   styleUrls: ['./start-point.component.scss']
 })
 export class StartPointComponent implements OnInit, AfterViewInit {
-  @Output() projectUpdate: EventEmitter<any> = new EventEmitter<any>();
+  @Input() project: Project;
   @Output() statusUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Output() formSubmit: EventEmitter<any> = new EventEmitter<any>();
   stratPointForm: FormGroup;
@@ -109,19 +110,44 @@ export class StartPointComponent implements OnInit, AfterViewInit {
               ) { }
 
   ngOnInit(): void {
+    console.log(this.project);
     this.stratPointForm = new FormGroup({
       country: new FormControl(null),
-      region: new FormControl(null),
-      academicYear: new FormControl(null),
-      grades: new FormControl(null),
-      subjects: new FormControl(null),
+      region: new FormControl({disabled: this.regionDropdown.disabled}),
+      academicYear: new FormControl({disabled: this.academicYearDropdown.disabled}),
+      grades: new FormControl({disabled: this.gradesDropdown.disabled}),
+      subjects: new FormControl({disabled: this.subjectsDropdown.disabled}),
     });
+    Object.keys(this.stratPointForm.controls).forEach(control => {
+      this.stratPointForm.get(control).valueChanges.subscribe(val => {
+        const modifiedVal = {
+          controller: control,
+          val
+        }
+        this.statusUpdate.emit(modifiedVal);
+      });
+    });
+    if (this.project.country) {
+      this.countryDropdown.selectedItems = [{id: this.project.country.id, name: this.project.country.name}];
+      if (this.project.region) {
+        this.regionDropdown.selectedItems = [{id: this.project.region.id, name: this.project.region.name}];
+        if (this.project.academicYear) {
+          this.academicYearDropdown.selectedItems = [{id: this.project.academicYear.id, name: this.project.academicYear.academicYear}];
+          if (this.project.grades) {
+            this.gradesDropdown.selectedItems = [this.project.grades];
+          }
+          if (this.project.subjects) {
+            this.subjectsDropdown.selectedItems = [this.project.subjects];
+          }
+        }
+      }
+    }
     this.getAllCountries();
     this.countries$ = this.countryService.entities$;
-    this.regions$ = this.regionService.entities$;
-    this.academicYears$ = this.academicYearService.entities$;
-    this.grades$ = this.gradeService.entities$;
-    this.subjects$ = this.subjectService.entities$;
+    // this.regions$ = this.regionService.entities$;
+    // this.academicYears$ = this.academicYearService.entities$;
+    // this.grades$ = this.gradeService.entities$;
+    // this.subjects$ = this.subjectService.entities$;
   }
   ngAfterViewInit() {
     this.countries$.subscribe(country => {
@@ -149,6 +175,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     this.buttonConfig.submitted = true;
     this.buttonConfig.label = 'hencho';
     this.statusUpdate.emit({id: 1, status: 'done'});
+    console.log(this.stratPointForm.value)
     this.formSubmit.emit(this.stratPointForm.value);
   }
   formUpdate(res){
