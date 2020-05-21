@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { TitleData } from '../../constants/title-data.model';
 
 @Component({
   selector: 'app-editor-header',
@@ -7,19 +8,19 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class EditorHeaderComponent implements OnInit {
 
-  @Input() projectTitle: string;
-  @Input() projectId: number;
-  @Input() newProject: any;
-  @Output() titleBlur = new EventEmitter();
-  
+  @Input() projectData: TitleData;
+  @Output() titleBlur = new EventEmitter()
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  // Function to handle the blur in title field
+  ngOnDestroy(): void {
+  }
+
   handleTitleBlur(event: Event) {
-    this.titleBlur.emit(event);
+   this.titleBlur.emit(event)
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { TitleData } from '../../constants/title-data.model';
 
 @Component({
   selector: 'app-project-title',
@@ -8,19 +9,18 @@ import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter }
 export class ProjectTitleComponent implements OnInit {
 
   @ViewChild('titleInput') inputElement: ElementRef;
-  @Input() value: any;
-  @Input() projectId: number;
+  @Input() projectData: TitleData;
   @Input() maxLength: number;
   @Input() placeholder: any;
-  @Output() blur = new EventEmitter()
-  tempValue: string;
+  @Output() titleBlur = new EventEmitter()
+  tempTitle: string;
   showInputfield = true;
 
   constructor() { }
 
   ngOnInit(): void {
-    if (this.value) {
-      this.tempValue = this.value
+    if (this.projectData?.title) {
+      this.tempTitle = this.projectData?.title
       this.showInputfield = false;
     }
   }
@@ -34,14 +34,14 @@ export class ProjectTitleComponent implements OnInit {
   // Function to handle blur event of input field.
   handleBlur(event: Event): void {
     const inputValue = (<HTMLInputElement>event.target).value;
-    this.tempValue = inputValue;
+    this.tempTitle = inputValue;
     if (inputValue) {
       this.showInputfield = false;
     } else {
       this.showInputfield = true;
     }
-    if(inputValue || this.projectId){
-      this.blur.emit(event);
+    if(inputValue || this.projectData?.id){
+      this.titleBlur.emit(event);
     }
   }
   

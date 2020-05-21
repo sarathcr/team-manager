@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
 import { ProjectEntityService } from '../../services/project-entity.service';
 import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.model'
+import { TitleData } from '../../constants/title-data.model';
 
 @Component({
   selector: 'app-project-editor',
@@ -17,7 +18,8 @@ import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.mod
 export class ProjectEditorComponent implements OnInit {
 
   project: Project;
-  notFound$: Observable<number>;
+  notFound: number;
+  titleData: TitleData;
   projectUrl: any;
   subscription: Subscription;
   status: string = '';
@@ -89,7 +91,6 @@ export class ProjectEditorComponent implements OnInit {
         title: "",
         ...projectData
       }
-      console.log(newProject)
       this.projectsService.add(newProject)
         .subscribe(
           newProject => {
@@ -109,11 +110,6 @@ export class ProjectEditorComponent implements OnInit {
   }
 
   reload() {
-    this.notFound$ = this.projectsService.entities$
-      .pipe(
-        map(projects => projects.filter(project => project.id === Number(this.projectUrl)).length)
-      );
-
     if (this.projectUrl !== 'create') {
       this.projectsService.entities$
         .pipe(
@@ -121,7 +117,13 @@ export class ProjectEditorComponent implements OnInit {
             return project.id === Number(this.projectUrl);
           }))
         ).subscribe(project => {
-          this.project = project
+          this.project = project;
+          if (project) {
+            this.notFound = 1;
+            this.titleData = { id: project.id, title: project.title };
+          } else {
+            this.notFound = 0;
+          }
         });
     }
   }
