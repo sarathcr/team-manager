@@ -21,14 +21,14 @@ export class ProjectsDataService extends DefaultDataService<Project> {
             );
     }
 
-    add(project): Observable<Project> {
+    add(project: object): Observable<any> {
         return this.http.post<any>(`${environment.apiUrl}/projects`, project)
             .pipe(
                 map(res => res)
             );
     }
 
-    update(data): Observable<any> {
+    update(data: any): Observable<any> {
         return this.http.put<any>(`${environment.apiUrl}/projects`, data.changes)
             .pipe(
                 map(res => res)

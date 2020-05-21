@@ -5,7 +5,7 @@
         <img class="app-logo__img" src="../../../../../assets/images/thinko_logo.png" alt="thinko" />
       </a>
     </div>
-    <app-project-title [project]="project" [maxLength]="75" (blur)="handleTitleBlur($event)"
+    <app-project-title [projectData]="projectData" [maxLength]="75" (titleBlur)="handleTitleBlur($event)"
       [placeholder]="'Nombre del proyecto'" id="'project-title'">
     </app-project-title>
   </div>
