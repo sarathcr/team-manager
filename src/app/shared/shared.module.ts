@@ -10,10 +10,6 @@ import { TranslateModule } from '@ngx-translate/core';
 // Components
 import { FormButtonComponent } from './form/components/form-button/form-button.component';
 import { FormInputComponent } from './form/components/form-input/form-input.component';
-// import { FormComponent } from './form/containers/form/form.component';
-// Directives
-// import { DynamicFieldComponent } from './components/dynamic-field/dynamic-field.component';
-// import { FieldDirective } from './form/components/field/field.directive';
 import { DropdownComponent } from './form/components/dropdown/dropdown.component';
 
 @NgModule({
@@ -24,8 +20,6 @@ import { DropdownComponent } from './form/components/dropdown/dropdown.component
         LanguageSelectorComponent,
         FormButtonComponent,
         FormInputComponent,
-        // FieldDirective,
-        // FormComponent,
         DropdownComponent,
     ],
     imports: [
@@ -35,17 +29,11 @@ import { DropdownComponent } from './form/components/dropdown/dropdown.component
         ReactiveFormsModule,
         NgMultiSelectDropDownModule,
     ],
-    // entryComponents: [
-    //   FormButtonComponent,
-    //   FormInputComponent,
-    //   DropdownComponent
-    // ],
     exports: [
         SidebarComponent,
         HeaderComponent,
         NavComponent,
         LanguageSelectorComponent,
-        // FormComponent,
         DropdownComponent,
         FormInputComponent,
         FormButtonComponent

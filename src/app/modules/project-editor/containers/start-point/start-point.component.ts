@@ -29,7 +29,6 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   @Output() projectUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Output() statusUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Output() formSubmit: EventEmitter<any> = new EventEmitter<any>();
-  // @Output() formUpdate: EventEmitter<any> = new EventEmitter<any>();
   stratPointForm: FormGroup;
   countries$: Observable<Country[]>;
   regions$: Observable<Region[]>;
@@ -173,10 +172,9 @@ export class StartPointComponent implements OnInit, AfterViewInit {
   handleSubmit(event: Event) {
     event.preventDefault();
     event.stopPropagation();
-    this.formSubmit.emit(this.stratPointForm);
+    this.formSubmit.emit(this.stratPointForm.value);
   }
   formUpdate(res){
-    console.log(res)
     if  (res.val.length > 0) {
       this.buttonConfig.disabled = false;
       switch (res.controller) {
@@ -186,7 +184,7 @@ export class StartPointComponent implements OnInit, AfterViewInit {
           this.getAllRegions();
           this.regions$ = this.regionService.entities$;
           this.regions$.subscribe(region => {
-            this.regionDropdown.options = region;
+            this.regionDropdown.options = region.filter( item => item.country.id === this.countryId);
           });
           this.regionDropdown.disabled = false;
           this.statusUpdate.emit({id: 1, status: 'inprocess'});

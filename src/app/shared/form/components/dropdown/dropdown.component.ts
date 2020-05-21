@@ -34,7 +34,7 @@ export class DropdownComponent implements OnInit, Field {
   }
   onItemSelect(item: any) {
     this.active = true;
-    this.formUpdate.emit(this.selectedItems);
+    this.formUpdate.emit({controller: this.config.name, val: this.selectedItems});
   }
   onItemDeSelect(item: any) {
     this.active = true;

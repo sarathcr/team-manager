@@ -104,9 +104,7 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
     console.log(this.project$)
   }
   updateStatus(update){
-    console.log(update)
-    this.items = this.items.map(item => item.id === update.id ? {...item, [status]: update.status} : item);
-    console.log(this.items)
+    this.items = this.items.map(item => item.id === update.id ? {...item, status: update.status} : item);
   }
   // function to scroll to the step section
   grandmaHandleClick(value) {
