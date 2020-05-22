@@ -11,16 +11,17 @@ export class RegionDataService extends DefaultDataService<Region> {
     countryId: number;
     constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
         super('Region', http, httpUrlGenerator);
-
     }
-    setParam(param){
-      this.countryId = param;
-    }
-    getAll(): Observable<Region[]> {
-
-      return this.http.get<Region[]>(`${environment.apiUrl}/countries/${this.countryId}/regions`)
-          .pipe(
-              map(res => res)
-          );
-    }
+    // getAll(): Observable<Region[]> {
+    //   return this.http.get<Region[]>(`${environment.apiUrl}/countries/${this.countryId}/regions`)
+    //       .pipe(
+    //           map(res => res)
+    //       );
+    // }
+    getWithQuery(parm:any): Observable<Region[]> {
+        return this.http.get<Region[]>(`${environment.apiUrl}/countries/${parm}/regions`)
+            .pipe(
+                map(res => res)
+            );
+      }
 }

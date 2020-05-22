@@ -9,9 +9,8 @@ import { FieldConfig } from '../../models/field-config.interface';
   templateUrl: './form-button.component.html',
   styleUrls: ['./form-button.component.scss']
 })
-export class FormButtonComponent implements Field, OnInit {
+export class FormButtonComponent implements OnInit {
   @Input() config: FieldConfig;
-  @Input() group: FormGroup;
   constructor() { }
 
   ngOnInit(): void {

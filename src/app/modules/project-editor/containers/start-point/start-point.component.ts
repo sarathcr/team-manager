@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { filter, first, map, tap } from 'rxjs/operators';
 
@@ -26,12 +25,11 @@ import { Project } from 'src/app/shared/constants/project.model';
   templateUrl: './start-point.component.html',
   styleUrls: ['./start-point.component.scss']
 })
-export class StartPointComponent implements OnInit, AfterViewInit {
+export class StartPointComponent implements OnInit {
   @Input() project: Project;
   @Output() statusUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Output() formSubmit: EventEmitter<any> = new EventEmitter<any>();
-  stratPointForm: FormGroup;
-  countries$: Observable<Country[]>;
+  countries: Country[];
   regions$: Observable<Region[]>;
   academicYears$: Observable<AcademicYear[]>;
   grades$: Observable<Grade[]>;
@@ -100,69 +98,39 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     options: [],
     selectedItems: []
   };
-  constructor(private countryService: CountryEntityService,
-              private regionService: RegionEntityService,
-              private academicYearService: AcademicYearEntityService,
-              private gradeService: GradeEntityService,
-              private subjectService: SubjectEntityService,
-              private regionDataService: RegionDataService,
-              private gradesDataService: GradeDataService,
-              private subjectsDataService: SubjectDataService
-              ) { }
+  constructor(
+    private countryService: CountryEntityService,
+    private regionService: RegionEntityService,
+    private academicYearService: AcademicYearEntityService,
+    private gradeService: GradeEntityService,
+    private subjectService: SubjectEntityService,
+    private regionDataService: RegionDataService,
+    private gradesDataService: GradeDataService,
+    private subjectsDataService: SubjectDataService
+  ) { }
 
   ngOnInit(): void {
-    this.stratPointForm = new FormGroup({
-      country: new FormControl(null),
-      region: new FormControl(null),
-      academicYear: new FormControl(null),
-      grades: new FormControl(null),
-      subjects: new FormControl(null),
-    });
-    Object.keys(this.stratPointForm.controls).forEach(control => {
-      this.stratPointForm.get(control).valueChanges.subscribe(val => {
-        const modifiedVal = {
-          controller: control,
-          val
-        }
-        this.statusUpdate.emit(modifiedVal);
-      });
-    });
-    this.getAllCountries();
-    this.countries$ = this.countryService.entities$;
-    // this.regions$ = this.regionService.entities$;
-    // this.academicYears$ = this.academicYearService.entities$;
-    // this.grades$ = this.gradeService.entities$;
-    // this.subjects$ = this.subjectService.entities$;
-    if(this.project){
-      console.log(this.project)
-      if (this.project.country) {
-        this.countryDropdown.selectedItems = [{id: this.project.country.id, name: this.project.country.name}];
-      }
-      if (this.project.region) {
-        this.regionDropdown.selectedItems = [{id: this.project.region?.id, name: this.project.region?.name}];
-      }
-      if (this.project.academicYear) {
-        this.academicYearDropdown.selectedItems = [{id: this.project.academicYear?.id, name: this.project.academicYear?.academicYear}];
-      }
-      if (this.project.grades) {
-        this.gradesDropdown.selectedItems.push(this.project.grades.map( grade => {grade.id, grade.name}))
-      }
-      if (this.project.subjects) {
-        this.subjectsDropdown.selectedItems.push(this.project.subjects.map( subject => {subject.id, subject.name}))
-      }
-    }
+    this.getAllCountries()
   }
-  ngAfterViewInit() {
-    this.countries$.subscribe(country => {
-      this.countryDropdown.options = country;
-    });
-  }
+
   getAllCountries() {
-    return this.countryService.getAll();
+    this.countryService.getAll();
+    this.countryService.entities$
+    .subscribe( data => this.countryDropdown.options = data);
   }
-  getAllRegions() {
-    return this.regionService.getAll();
+
+  getRegions(selectedCountry) {
+    const countryId = selectedCountry.val.filter(reg => reg.id).map(data => data.id)
+    this.regionService.entities$
+    .pipe(
+      map(regions => regions.filter(region => region.country.id == countryId[0]))
+    )
+    .subscribe(newData => {
+      if (!newData.length) this.regionService.getWithQuery(countryId) //trigger API after checking the store
+      this.regionDropdown.options = newData
+    })
   }
+
   getAllGrades() {
     return this.gradeService.getAll();
   }
@@ -173,29 +141,20 @@ export class StartPointComponent implements OnInit, AfterViewInit {
     return this.subjectService.getAll();
   }
   handleSubmit(event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.buttonConfig.submitted = true;
-    this.buttonConfig.label = 'hencho';
-    this.statusUpdate.emit({id: 1, status: 'done'});
-    this.formSubmit.emit(this.stratPointForm.value);
+    // event.preventDefault();
+    // event.stopPropagation();
+    // this.buttonConfig.submitted = true;
+    // this.buttonConfig.label = 'hencho';
+    // this.statusUpdate.emit({id: 1, status: 'done'});
+    // this.formSubmit.emit(this.stratPointForm.value);
   }
   formUpdate(res){
-    console.log(res)
-    if  (res.val.length > 0) {
-      this.buttonConfig.disabled = false;
+    // console.log(res)
+    this.buttonConfig.disabled = false;
+    if  (res.val.length) {
       switch (res.controller) {
         case 'country': {
-          this.countryId = res.val[0].id;
-          this.regionDataService.setParam(this.countryId);
-          this.getAllRegions();
-          this.regions$ = this.regionService.entities$;
-          this.regions$.subscribe(region => {
-            console.log(region)
-            this.regionDropdown.options = region.filter( item => item.country.id === this.countryId);
-          });
-          this.regionDropdown.disabled = false;
-          this.statusUpdate.emit({id: 1, status: 'inprocess'});
+          this.getRegions(res);
           break;
         }
         case 'region': {

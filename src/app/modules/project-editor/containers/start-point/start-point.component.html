@@ -3,14 +3,12 @@
     <h1 class="project-form__title title_s"><span>1. </span>Punto de partida<span class="project-form__title-icon"><span class="icon-ic_info"></span></span></h1>
     <p class="project-form__description">Escoge las áreas o asignaturas que van a estar implicadas en tu proyecto. Para ofrecerte solo las áreas que te interesan, necesitamos saber qué curso impartes. Te hemos asignado un país y un territorio, pero puedes cambiarlos.</p>
 
-      <form class="form" (ngSubmit)="handleSubmit($event)" [formGroup]='stratPointForm'>
-        <app-dropdown [config]='countryDropdown' [group]='stratPointForm' (formUpdate)='formUpdate($event)'></app-dropdown>
-        <app-dropdown [config]='regionDropdown' [group]='stratPointForm' (formUpdate)='formUpdate($event)'></app-dropdown>
-        <app-dropdown [config]='academicYearDropdown' [group]='stratPointForm' (formUpdate)='formUpdate($event)'></app-dropdown>
-        <app-dropdown [config]='gradesDropdown' [group]='stratPointForm' (formUpdate)='formUpdate($event)'></app-dropdown>
-        <app-dropdown [config]='subjectsDropdown' [group]='stratPointForm' (formUpdate)='formUpdate($event)'></app-dropdown>
-        <app-form-button [config]='buttonConfig' [group]='stratPointForm' (formUpdate)='formUpdate($event)'></app-form-button>
-      </form>
-    <!-- <app-form id="start-point-form"  ></app-form> -->
+    
+        <app-dropdown [config]='countryDropdown' (formUpdate)='formUpdate($event)'></app-dropdown>
+        <app-dropdown [config]='regionDropdown' (formUpdate)='formUpdate($event)'></app-dropdown>
+        <app-dropdown [config]='academicYearDropdown' (formUpdate)='formUpdate($event)'></app-dropdown>
+        <app-dropdown [config]='gradesDropdown' (formUpdate)='formUpdate($event)'></app-dropdown>
+        <app-dropdown [config]='subjectsDropdown' (formUpdate)='formUpdate($event)'></app-dropdown>
+        <app-form-button [config]='buttonConfig' (formUpdate)='formUpdate($event)'></app-form-button>
   </div>
 </div>

@@ -8,13 +8,11 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 @Component({
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./dropdown.component.scss']
 })
-export class DropdownComponent implements OnInit, Field, AfterViewInit {
+export class DropdownComponent implements OnInit, AfterViewInit {
   @Output() formUpdate: EventEmitter<any> = new EventEmitter();
   @Input() config: FieldConfig;
-  @Input() group: FormGroup;
   active = false;
   dropdownSettings: IDropdownSettings = {};
   constructor() { }
