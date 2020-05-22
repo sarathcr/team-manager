@@ -95,9 +95,13 @@
           position: absolute;
         }
         &:first-child{
+          margin-left: 0 !important;
           &::before{
             content: none;
           }
+        }
+        &:hover{
+          box-shadow: none !important;
         }
       }
     }
