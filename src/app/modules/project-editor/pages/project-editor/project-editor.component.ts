@@ -2,10 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectEntityService } from '../../services/project/project-entity.service';
-import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { NewProjectResService } from '../../services/project/new-project-res.service';
-
 // ngx-translate
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
@@ -22,7 +19,6 @@ export class ProjectEditorComponent implements OnInit {
   notFound: number;
   titleData: TitleData;
   projectUrl: any;
-  subscription: Subscription;
   status: string;
   selected = true;
   notifyGrandParent: number;
@@ -32,16 +28,8 @@ export class ProjectEditorComponent implements OnInit {
     private projectsService: ProjectEntityService,
     private route: ActivatedRoute,
     private location: Location,
-    private newProjectRes: NewProjectResService,
     private translate: TranslateService
-  ) {
-    this.subscription = this.newProjectRes.getResponse().subscribe(res => {
-      console.log(res.id, 'router new parm');
-      this.location.go('projects/' + res.id);
-      this.projectUrl = res.id;
-      this.reload();
-    })
-  }
+  ) { }
 
   ngOnInit(): void {
     this.projectUrl = this.route.snapshot.paramMap.get('id');
@@ -76,17 +64,6 @@ export class ProjectEditorComponent implements OnInit {
         ];
       }
       );
-  }
-
-  // Function to handle blur of title field
-  handleTitleBlur(event: Event) {
-    const title = (event.target as HTMLInputElement).value;
-    if (!this.project?.id) {
-      this.handleSubmit({ title });
-    } else {
-      if (title == this.project.title) return // check if value is same
-      this.handleSubmit({ title });
-    }
   }
 
   // Function create or update the project
@@ -134,16 +111,6 @@ export class ProjectEditorComponent implements OnInit {
         });
     }
   }
-  // updateProject(formValue){
-  //   const projectUpdate = {
-  //     academicYear: formValue.academicYear[0],
-  //     country: formValue.country[0],
-  //     grades: formValue.grades,
-  //     region: formValue.region[0],
-  //     subjects: formValue.subjects
-  //   }
-  //   this.handleSubmit(projectUpdate);
-  // }
 
   // Function to save starting point data
   updateProject(formValue: object) {
@@ -162,8 +129,8 @@ export class ProjectEditorComponent implements OnInit {
     this.items = this.items.map(item => item.id === update.id ? { ...item, status: update.status } : item);
   }
 
-  // function to scroll to the step section
-  grandmaHandleClick(value) {
+  //function to scroll to the step section
+  handleScroll(value) {
     document.querySelector('#step-' + value).scrollIntoView();
   }
 

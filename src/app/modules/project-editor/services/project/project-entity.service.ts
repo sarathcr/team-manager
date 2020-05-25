@@ -3,7 +3,7 @@ import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } f
 import { Project } from 'src/app/shared/constants/project.model';
 
 @Injectable()
-export class ProjectEntityService extends EntityCollectionServiceBase<Project> {
+export class ProjectEntityService extends EntityCollectionServiceBase<any> {
 
     constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
         super('Project', serviceElementsFactory);
