@@ -18,7 +18,6 @@ import { Region } from 'src/app/shared/constants/region.model';
 import { AcademicYear } from 'src/app/shared/constants/academic-year.model';
 import { Grade } from 'src/app/shared/constants/grade.model';
 import { Subject } from 'src/app/shared/constants/subject.model';
-import { Project } from 'src/app/shared/constants/project.model';
 
 @Component({
   selector: 'app-start-point',
@@ -26,7 +25,6 @@ import { Project } from 'src/app/shared/constants/project.model';
   styleUrls: ['./start-point.component.scss']
 })
 export class StartPointComponent implements OnInit {
-  @Input() project: Project;
   @Output() statusUpdate: EventEmitter<any> = new EventEmitter<any>();
   @Output() formSubmit: EventEmitter<any> = new EventEmitter<any>();
   countries: Country[];
@@ -113,33 +111,58 @@ export class StartPointComponent implements OnInit {
     this.getAllCountries()
   }
 
+  formInIt() {
+  }
+
   getAllCountries() {
     this.countryService.getAll();
     this.countryService.entities$
     .subscribe( data => this.countryDropdown.options = data);
   }
 
-  getRegions(selectedCountry) {
-    const countryId = selectedCountry.val.filter(reg => reg.id).map(data => data.id)
+  getRegions(countryId: number) {
     this.regionService.entities$
     .pipe(
-      map(regions => regions.filter(region => region.country.id == countryId[0]))
+      map(regions => regions.filter(region => region.country.id == countryId))
     )
     .subscribe(newData => {
-      if (!newData.length) this.regionService.getWithQuery(countryId) //trigger API after checking the store
+      if (!newData.length) this.regionService.getWithQuery(countryId.toString()) //trigger API after checking the store
       this.regionDropdown.options = newData
     })
   }
 
-  getAllGrades() {
-    return this.gradeService.getAll();
-  }
   getAcademicYears() {
-    return this.academicYearService.getAll();
+    this.academicYearService.entities$
+    .subscribe(newData => {
+      if (!newData.length) this.academicYearService.getAll() //trigger API after checking the store
+      this.academicYearDropdown.options = newData
+    })
   }
-  getAllSubjects() {
-    return this.subjectService.getAll();
+
+  getAllGrades(academicyearId: number, regionId?: number) {
+    const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id;
+    this.gradeService.entities$
+    .pipe(
+      map(grades => grades.filter(grade => grade.academicYear.id == academicyearId && grade.region.id == selectedRegionId))
+    )
+    .subscribe(newData => {
+      if (!newData.length) this.gradeService.getWithQuery(`/regions/${selectedRegionId}/academicyears/${academicyearId}/grades`) //trigger API after checking the store
+      this.gradesDropdown.options = newData
+    });
   }
+
+  getAllSubjects(academicyearId: number, regionId?: number) {
+    const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id;
+    this.subjectService.entities$
+    .pipe(
+      map(subjects => subjects.filter(subject => subject.academicYear.id == academicyearId && subject.region.id == selectedRegionId))
+    )
+    .subscribe(newData => {
+      if (!newData.length) this.subjectService.getWithQuery(`/regions/${selectedRegionId}/academicyears/${academicyearId}/subjects`) //trigger API after checking the store
+      this.subjectsDropdown.options = newData
+    });
+  }
+
   handleSubmit(event: Event) {
     // event.preventDefault();
     // event.stopPropagation();
@@ -148,48 +171,49 @@ export class StartPointComponent implements OnInit {
     // this.statusUpdate.emit({id: 1, status: 'done'});
     // this.formSubmit.emit(this.stratPointForm.value);
   }
-  formUpdate(res){
-    // console.log(res)
+
+  formUpdate(dropdownData: any){
+    console.log(dropdownData)
     this.buttonConfig.disabled = false;
-    if  (res.val.length) {
-      switch (res.controller) {
+    const selectedId = dropdownData.val[0]?.id;
+    if (dropdownData) {
+      switch (dropdownData.controller) {
         case 'country': {
-          this.getRegions(res);
+          let rest = ()=> {
+            this.regionDropdown.selectedItems = [] // reset Regions
+            this.academicYearDropdown.selectedItems = [] // reset Academic Year
+            this.gradesDropdown.selectedItems = [] // reset Grade
+            this.subjectsDropdown.selectedItems = [] // reset Subject
+          }
+          rest()
+          if (selectedId) this.getRegions(selectedId)
           break;
         }
         case 'region': {
-          this.regionId = res.val[0].id;
-          this.getAcademicYears();
-          this.academicYears$ = this.academicYearService.entities$;
-          this.academicYears$.subscribe(year => {
-            this.academicYearDropdown.options = year;
-          });
-          this.academicYearDropdown.disabled = false;
-          this.statusUpdate.emit({id: 1, status: 'inprocess'});
+          let rest = ()=> {
+            this.academicYearDropdown.selectedItems = [] 
+            this.gradesDropdown.selectedItems = [] 
+            this.subjectsDropdown.selectedItems = [] 
+          }
+          rest()
+          if (selectedId) this.getAcademicYears();
           break;
         }
         case 'academicYear': {
-          this.yearId = res.val[0].id;
-          this.gradesDataService.setParam(this.regionId, this.yearId);
-          this.getAllGrades();
-          this.grades$ = this.gradeService.entities$;
-          this.grades$.subscribe(grade => {
-            this.gradesDropdown.options = grade;
-          });
-          this.gradesDropdown.disabled = false;
-          this.subjectsDataService.setParam(this.regionId, this.yearId);
-          this.getAllSubjects();
-          this.subjects$ = this.subjectService.entities$;
-          this.subjects$.subscribe(subject => {
-            this.subjectsDropdown.options = subject;
-          });
-          this.subjectsDropdown.disabled = false;
-          this.statusUpdate.emit({id: 1, status: 'inprocess'});
+          let rest = ()=> {
+            this.gradesDropdown.selectedItems = []
+            this.subjectsDropdown.selectedItems = []
+          }
+          rest()
+          if (selectedId) {
+            this.getAllGrades(selectedId);
+            this.getAllSubjects(selectedId);
+          }
           break;
         }
         default: {
-          this.getAllCountries();
-          this.statusUpdate.emit({id: 1, status: 'inprocess'});
+          // this.getAllCountries();
+          // this.statusUpdate.emit({id: 1, status: 'inprocess'});
           break;
         }
       }

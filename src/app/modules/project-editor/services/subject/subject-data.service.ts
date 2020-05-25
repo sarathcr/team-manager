@@ -13,12 +13,8 @@ export class SubjectDataService extends DefaultDataService<Subject> {
     constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
         super('Subject', http, httpUrlGenerator);
     }
-    setParam(rId, yId){
-      this.regionId = rId;
-      this.academicyearId = yId;
-    }
-    getAll(): Observable<Subject[]> {
-      return this.http.get<Subject[]>(`${environment.apiUrl}/regions/${this.regionId}/academicyears/${this.academicyearId}/subjects`)
+    getWithQuery(query: any): Observable<Subject[]> {
+      return this.http.get<Subject[]>(`${environment.apiUrl + query}`)
           .pipe(
               map(res => res)
           );

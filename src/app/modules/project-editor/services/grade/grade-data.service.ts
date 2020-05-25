@@ -14,12 +14,8 @@ export class GradeDataService extends DefaultDataService<Grade> {
         super('Country', http, httpUrlGenerator);
 
     }
-    setParam(rId, yId){
-      this.regionId = rId;
-      this.academicyearId = yId;
-    }
-    getAll(): Observable<Grade[]> {
-      return this.http.get<Grade[]>(`${environment.apiUrl}/regions/${this.regionId}/academicyears/${this.academicyearId}/grades`)
+    getWithQuery(query: any): Observable<Grade[]> {
+      return this.http.get<Grade[]>(`${environment.apiUrl + query}`)
           .pipe(
               map(res => res)
           );

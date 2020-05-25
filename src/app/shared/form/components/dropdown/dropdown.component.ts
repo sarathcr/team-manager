@@ -10,7 +10,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss']
 })
-export class DropdownComponent implements OnInit, AfterViewInit {
+export class DropdownComponent implements OnInit {
   @Output() formUpdate: EventEmitter<any> = new EventEmitter();
   @Input() config: FieldConfig;
   active = false;
@@ -27,18 +27,13 @@ export class DropdownComponent implements OnInit, AfterViewInit {
       enableCheckAll: false,
     };
   }
-  ngAfterViewInit() {
-    // if(this.config.selectedItems){
-    //   this.formUpdate.emit({controller: this.config.name, val: this.config.selectedItems});
-    // }
-  }
   onItemSelect(item: any) {
     this.active = true;
     this.formUpdate.emit({controller: this.config.name, val: this.config.selectedItems});
   }
   onItemDeSelect(item: any) {
     this.active = true;
-    this.formUpdate.emit(this.config.selectedItems);
+    this.formUpdate.emit({controller: this.config.name, val: this.config.selectedItems});
   }
   onSelectAll(items: any) {
     console.log(items);
