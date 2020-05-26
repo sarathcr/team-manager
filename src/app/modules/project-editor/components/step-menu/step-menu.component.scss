@@ -1,4 +1,4 @@
-@import '../../../../../assets/helpers/_helpers-master';
+@import '../../../../../styles/helpers/_helpers-master';
 .menu{
     font-family: $font-family-tertiary;
     font-size: $font-size-body-s;
@@ -14,14 +14,14 @@
         position: absolute;
         left: 0;
     }
-    &-inprocess{
-        color:$sidebar-text-active;
-        font-weight: normal;
-    }
     &-active{
         color:$sidebar-text-active;
         font-weight: bold;
             
+    }
+    &-inprocess{
+        color:$sidebar-text-active;
+        font-weight: normal;
     }
     .icon-ic_check{
         color:$icon-green;

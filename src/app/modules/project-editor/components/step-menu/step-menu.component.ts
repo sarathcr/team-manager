@@ -9,7 +9,8 @@ import { StepMenu } from '../../constants/step-menu.model';
 export class StepMenuComponent implements OnInit {
 
   @Input() item:any;
-  @Input() status:string;
+  @Input() inprogress:boolean;
+  @Input() done:boolean;
   @Input() selected:boolean;
   
   constructor() { }

@@ -1,4 +1,4 @@
-@import '../../../../../assets/helpers/_helpers-master';
+@import '../../../../../styles/helpers/_helpers-master';
 .project-editor{
   width: 100%;
   padding: 75px 15px 0 236px;
@@ -12,7 +12,7 @@
     padding: $grid-gutter-width/2;
     padding-left: 40px;
     flex-direction: column;
-
+    position: relative;
   }
   &__bg{
     background-image:url('../../../../../../images/img_background_shapes.png');
@@ -28,6 +28,29 @@
   }
   .step-section{
     scroll-margin-top: 110px;
+  }
+}
+.status-indicator{
+  position: absolute;
+  left: -5px;
+  width: 10px;
+  height: 100%;
+  padding: 1px;
+  display: flex;
+  flex-direction: column;
+  &__ball{
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: $primary;
+  }
+  &__bar{
+    height: 100%;
+    margin:3px;
+    border-left: 1px dotted $frenchgray;
+    &_bottom{
+      border-color: $secondary;
+    }
   }
 }
 

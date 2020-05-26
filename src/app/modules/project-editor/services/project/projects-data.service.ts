@@ -29,10 +29,18 @@ export class ProjectsDataService extends DefaultDataService<Project> {
     }
 
     update(data: any): Observable<any> {
+        console.log(data.changes, '++++')
         return this.http.put<any>(`${environment.apiUrl}/projects`, data.changes)
             .pipe(
                 map(res => res)
             );
+    }
+
+    getWithQuery(query: any): Observable<any> {
+        return this.http.get<any>(`${environment.apiUrl + query}`)
+          .pipe(
+              map(res => res)
+          );
     }
 
 }

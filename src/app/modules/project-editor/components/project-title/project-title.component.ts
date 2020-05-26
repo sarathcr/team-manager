@@ -1,4 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+
+// import { ProjectEntityService } from '../../services/project/project-entity.service';
+// import { NewProjectResService } from '../../services/project/new-project-res.service';
+// import { Project } from 'src/app/shared/constants/project.model';
+// import { initialProject } from 'src/app/shared/constants/project.data';
 import { TitleData } from '../../constants/title-data.model';
 
 @Component({
@@ -12,7 +17,7 @@ export class ProjectTitleComponent implements OnInit {
   @Input() projectData: TitleData;
   @Input() maxLength: number;
   @Input() placeholder: any;
-  @Output() titleBlur = new EventEmitter()
+  @Output() titleBlur = new EventEmitter();
   tempTitle: string;
   showInputfield = true;
 
@@ -20,7 +25,7 @@ export class ProjectTitleComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.projectData?.title) {
-      this.tempTitle = this.projectData?.title
+      this.tempTitle = this.projectData?.title;
       this.showInputfield = false;
     }
   }

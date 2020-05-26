@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
-import { Project } from 'src/app/shared/constants/project.model';
+import { AcademicYear } from 'src/app/shared/constants/academic-year.model';
 
 @Injectable()
-export class ProjectEntityService extends EntityCollectionServiceBase<Project> {
-
+export class AcademicYearEntityService extends EntityCollectionServiceBase<AcademicYear> {
     constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
-        super('Project', serviceElementsFactory);
+        super('AcademicYear', serviceElementsFactory);
     }
-
 }

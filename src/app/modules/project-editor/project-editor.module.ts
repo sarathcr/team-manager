@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectEditorRoutingModule } from './project-editor-routing.module';
@@ -18,14 +19,23 @@ import { ProjectEditorComponent } from './pages/project-editor/project-editor.co
 
 // ngx translate
 import { TranslateModule } from '@ngx-translate/core';
- 
+
 // NgRx
 import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
-import { ProjectEntityService } from './services/project-entity.service';
-import { ProjectsResolver } from './services/projects.resolver';
-import { ProjectsDataService } from './services/projects-data.service';
+import { ProjectEntityService } from './services/project/project-entity.service';
+import { ProjectsResolver } from './services/project/projects.resolver';
+import { ProjectsDataService } from './services/project/projects-data.service';
 import { compareProjects } from 'src/app/shared/constants/project.model';
-import { NewProjectResService } from './services/new-project-res.service';
+import { CountryEntityService } from './services/country/country-entity.service';
+import { CountryDataService } from './services/country/country-data.service';
+import { SubjectDataService } from './services/subject/subject-data.service';
+import { SubjectEntityService } from './services/subject/subject-entity.service';
+import { RegionEntityService } from './services/region/region-entity.service';
+import { RegionDataService } from './services/region/region-data.service';
+import { GradeDataService } from './services/grade/grade-data.service';
+import { AcademicYearDataService } from './services/academic-year/academic-year-data.service';
+import { AcademicYearEntityService } from './services/academic-year/academic-year-entity.service';
+import { GradeEntityService } from './services/grade/grade-entity.service';
 
 const entityMetadata: EntityMetadataMap = {
     Project: {
@@ -33,6 +43,31 @@ const entityMetadata: EntityMetadataMap = {
         entityDispatcherOptions: {
             optimisticUpdate: true
         }
+    },
+    Country: {
+      entityDispatcherOptions: {
+          optimisticUpdate: true
+      }
+    },
+    Subject: {
+      entityDispatcherOptions: {
+        optimisticUpdate: true
+      }
+    },
+    Region: {
+      entityDispatcherOptions: {
+        optimisticUpdate: true
+      }
+    },
+    Grade: {
+      entityDispatcherOptions: {
+        optimisticUpdate: true
+      }
+    },
+    AcademicYear: {
+      entityDispatcherOptions: {
+        optimisticUpdate: true
+      }
     }
 };
 
@@ -52,13 +87,24 @@ const entityMetadata: EntityMetadataMap = {
         CommonModule,
         SharedModule,
         ProjectEditorRoutingModule,
-        TranslateModule.forChild()
+        TranslateModule.forChild(),
+        FormsModule,
+        ReactiveFormsModule
     ],
     providers: [
         ProjectsResolver,
         ProjectEntityService,
         ProjectsDataService,
-        NewProjectResService
+        CountryEntityService,
+        CountryDataService,
+        SubjectDataService,
+        SubjectEntityService,
+        RegionEntityService,
+        RegionDataService,
+        GradeDataService,
+        GradeEntityService,
+        AcademicYearDataService,
+        AcademicYearEntityService
     ]
 })
 
@@ -67,10 +113,19 @@ export class ProjectEditorModule {
     constructor(
         private eds: EntityDefinitionService,
         private entityDataService: EntityDataService,
-        private projectsDataService: ProjectsDataService) {
+        private projectsDataService: ProjectsDataService,
+        private countryDataService: CountryDataService,
+        private regionDataService: RegionDataService,
+        private subjectDataService: SubjectDataService,
+        private gradeDataService: GradeDataService,
+        private academicYearDataService: AcademicYearDataService) {
 
         eds.registerMetadataMap(entityMetadata);
         entityDataService.registerService('Project', projectsDataService);
+        entityDataService.registerService('Country', countryDataService);
+        entityDataService.registerService('Subject', subjectDataService);
+        entityDataService.registerService('Region', regionDataService);
+        entityDataService.registerService('Grade', gradeDataService);
+        entityDataService.registerService('AcademicYear', academicYearDataService);
     }
-
 }

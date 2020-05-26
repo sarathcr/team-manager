@@ -4,7 +4,8 @@ export interface FieldConfig {
   disabled?: boolean;
   label?: string;
   name: string;
-  options?: Array<{ id: number; value: string; }>;
+  options?: Array<{ id: number; name: string; }>;
+  selectedItems?: Array<{ id: number; name: string; }>;
   placeholder?: string;
   type?: string;
   field: string;
@@ -12,4 +13,6 @@ export interface FieldConfig {
   value?: any;
   multiselect?: boolean;
   submitted?: boolean;
+  id: string;
+  textField?: string;
 }

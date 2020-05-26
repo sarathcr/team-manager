@@ -1,4 +1,4 @@
-@import '../../../../../assets/helpers/_helpers-master';
+@import '../../../../../styles/helpers/_helpers-master';
 .dropdown{
   width: 100%;
   margin-bottom: $m-36px;
@@ -37,6 +37,12 @@
     z-index: 2;
   }
   .multiselect-dropdown{
+    .disabled{
+      .dropdown-btn{
+        background-color: inherit !important;
+        border-color: $creator-border !important;
+      }
+    }
     .dropdown-btn{
       height: 48px;
       display: flex !important;

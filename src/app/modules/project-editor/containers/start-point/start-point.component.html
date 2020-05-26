@@ -1,8 +1,17 @@
 <div class="start-point">
   <div class="project-form">
-    <h1 class="project-form__title title_s"><span>1. </span>Punto de partida<span class="project-form__title-icon"><span class="icon-ic_info"></span></span></h1>
-    <p class="project-form__description">Escoge las áreas o asignaturas que van a estar implicadas en tu proyecto. Para ofrecerte solo las áreas que te interesan, necesitamos saber qué curso impartes. Te hemos asignado un país y un territorio, pero puedes cambiarlos.</p>
-    <app-form id="start-point-form" [config]="config" #form="Form"  (formSubmit)="formSubmit($event)">
-    </app-form>
+    <h1 class="project-form__title title_s"><span>1. </span>Punto de partida<span class="project-form__title-icon"><span
+          class="icon-ic_info"></span></span></h1>
+    <p class="project-form__description">
+      Escoge las áreas o asignaturas que van a estar implicadas en tu proyecto. Para ofrecerte solo las áreas que te
+      interesan, necesitamos saber qué curso impartes. Te hemos asignado un país y un territorio, pero puedes
+      cambiarlos.
+    </p>
+    <app-dropdown [config]='countryDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
+    <app-dropdown [config]='regionDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
+    <app-dropdown [config]='academicYearDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
+    <app-dropdown [config]='gradesDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
+    <app-dropdown [config]='subjectsDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
+    <app-form-button [config]='buttonConfig' (click)='handleSubmit()'></app-form-button>
   </div>
 </div>
