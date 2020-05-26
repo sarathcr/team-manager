@@ -6,6 +6,7 @@
   position: relative;
   height: 100%;
   z-index: 1;
+  overflow: hidden;
   &__form{
     display: flex;
     width: 55%;
@@ -30,27 +31,5 @@
     scroll-margin-top: 110px;
   }
 }
-.status-indicator{
-  position: absolute;
-  left: -5px;
-  width: 10px;
-  height: 100%;
-  padding: 1px;
-  display: flex;
-  flex-direction: column;
-  &__ball{
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background-color: $primary;
-  }
-  &__bar{
-    height: 100%;
-    margin:3px;
-    border-left: 1px dotted $frenchgray;
-    &_bottom{
-      border-color: $secondary;
-    }
-  }
-}
+
 

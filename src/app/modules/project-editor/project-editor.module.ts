@@ -36,6 +36,7 @@ import { GradeDataService } from './services/grade/grade-data.service';
 import { AcademicYearDataService } from './services/academic-year/academic-year-data.service';
 import { AcademicYearEntityService } from './services/academic-year/academic-year-entity.service';
 import { GradeEntityService } from './services/grade/grade-entity.service';
+import { StatusComponent } from './components/status/status.component';
 
 const entityMetadata: EntityMetadataMap = {
     Project: {
@@ -81,7 +82,8 @@ const entityMetadata: EntityMetadataMap = {
         EditorHeaderComponent,
         EditorSidebarComponent,
         ProjectTitleComponent,
-        StepMenuComponent
+        StepMenuComponent,
+        StatusComponent
     ],
     imports: [
         CommonModule,

@@ -7,7 +7,8 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 @Component({
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.scss']
+  styleUrls: ['./dropdown.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DropdownComponent implements OnInit {
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
@@ -40,7 +41,7 @@ export class DropdownComponent implements OnInit {
   onSelectAll(items: any) {
     console.log(items);
   }
-  
+
   onDropDownClose(){
     this.active = false;
   }

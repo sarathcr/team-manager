@@ -43,6 +43,11 @@
         border-color: $creator-border !important;
       }
     }
+    &:active, &:focus, &:focus-within{
+      .dropdown-btn{
+        border: 2px solid $primary !important;
+      }
+    }
     .dropdown-btn{
       height: 48px;
       display: flex !important;
@@ -50,9 +55,7 @@
       border-radius: 3px !important;
       padding: $padding-input !important;
       border: 1px solid $creator-border !important;
-      &:active, &:focus{
-        border: 2px solid $primary !important;
-      }
+
       >span:last-child{
         justify-self: end;
         margin-left: auto;

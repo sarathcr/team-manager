@@ -1,0 +1,49 @@
+@import '../../../../../styles/helpers/_helpers-master';
+.status-indicator{
+  $root: &;
+  position: absolute;
+  left: -5px;
+  width: 10px;
+  height: 100%;
+  padding: 1px;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  &__ball{
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: $primary;
+    position: absolute;
+    &_top{
+      top:40px;
+    }
+    &_bottom{
+      bottom: 90px;
+    }
+  }
+  &__bar{
+    height: calc(100% - 135px);
+    margin:3px;
+    // border-left: 1px dotted $frenchgray;
+    margin-top: 45px;
+    width: 1px;
+    background-image: linear-gradient($frenchgray 33%, rgba(255,255,255,0) 0%);
+    background-position: right;
+    background-size: 1px 3px;
+    background-repeat: repeat-y;
+    &_bottom{
+      // border-color: $secondary;
+      background-image: linear-gradient($secondary 33%, rgba(255,255,255,0) 0%);
+      position: absolute;
+      bottom: 90px;
+      transform: rotate(180deg);
+      transform-origin: bottom;
+    }
+  }
+  &_done{
+    #{$root}__ball{
+      background-color: $success;
+    }
+  }
+}
