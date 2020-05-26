@@ -1,4 +1,4 @@
-<div class="project-editor" id="project-editor" *ngIf="notFound > 0 || projectUrl == 'create'">
+<div class="project-editor" id="project-editor" *ngIf="!notFound || projectUrl == 'create'">
     <div class="project-editor__bg"></div>
     <app-editor-header [projectData]="titleData" id="project-editor-header" (titleBlur)="handleSubmit($event)"></app-editor-header>
     <app-editor-sidebar id="project-editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
@@ -11,11 +11,11 @@
           <div class="status-indicator__ball status-indicator__ball_bottom"></div>
           <div class="status-indicator__bar status-indicator__bar_bottom"></div>
         </div>
-        <app-start-point id="step-0" class="step-section" (formSubmit)='updateProject($event)' (statusUpdate)='updateStatus($event)'></app-start-point>
+        <app-start-point id="step-0" class="step-section" [project$]="project$" (onSubmit)='handleFormSubmit($event)' (inProgress)='updateInProgress($event)'></app-start-point>
       </div>
 
     </div>
 </div>
-<div *ngIf="notFound == 0">
+<div *ngIf="notFound">
     Project not found
 </div>

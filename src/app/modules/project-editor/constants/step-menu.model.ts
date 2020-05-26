@@ -1,6 +1,7 @@
 export interface StepMenu {
     id: number;
     name: string;
-    status: string;
+    inprogress: boolean;
+    done: boolean;
     selected: boolean;
- }
+}

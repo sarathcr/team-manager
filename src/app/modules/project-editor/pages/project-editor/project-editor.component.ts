@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
 import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.model'
 import { TitleData } from '../../constants/title-data.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-project-editor',
@@ -16,7 +17,8 @@ import { TitleData } from '../../constants/title-data.model';
 })
 export class ProjectEditorComponent implements OnInit {
   project: Project;
-  notFound: number;
+  project$: Observable<Project>;
+  notFound: boolean;
   titleData: TitleData;
   projectUrl: any;
   status: string;
@@ -51,16 +53,16 @@ export class ProjectEditorComponent implements OnInit {
       ])
       .subscribe(translations => {
         this.items = [
-          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], status: 'pending', selected: true },
-          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], status: 'pending', selected: false },
-          { id: 3, name: 'Objetivos competenciales', status: 'pending', selected: false }, // add localization
-          { id: 4, name: 'Contenidos', status: 'pending', selected: false }, // add localization
-          { id: 5, name: 'Evaluación', status: 'pending', selected: false }, // add localization
-          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], status: 'pending', selected: false },
-          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], status: 'pending', selected: false },
-          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], status: 'pending', selected: false },
-          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], status: 'pending', selected: false },
-          { id: 10, name: 'Interacción con alumnos', status: 'pending', selected: false } // add localization
+          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], done: false, selected: true, inprogress: false },
+          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], done: false, selected: false, inprogress: false },
+          { id: 3, name: 'Objetivos competenciales', done: true, selected: false, inprogress: false }, // add localization
+          { id: 4, name: 'Contenidos', done: false, selected: false, inprogress: false }, // add localization
+          { id: 5, name: 'Evaluación', done: false, selected: false, inprogress: false }, // add localization
+          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], done: false, selected: false, inprogress: false },
+          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], done: false, selected: false, inprogress: false },
+          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], done: false, selected: false, inprogress: false },
+          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], done: false, selected: false, inprogress: false },
+          { id: 10, name: 'Interacción con alumnos', done: false, selected: false, inprogress: false } // add localization
         ];
       }
       );
@@ -68,18 +70,18 @@ export class ProjectEditorComponent implements OnInit {
 
   // Function create or update the project
   handleSubmit(projectData: object) {
+    console.log(projectData)
     if (!this.project?.id) {
       // create mode
       const newProject = {
-        id: null,
         title: '',
         ...projectData
       }
       this.projectsService.add(newProject)
         .subscribe(
-          newProject => {
-            this.location.go('projects/' + newProject.id);
-            this.projectUrl = newProject.id;
+          newResProject => {
+            this.location.go('projects/' + newResProject.id);
+            this.projectUrl = newResProject.id;
             this.reload();
           }
         );
@@ -93,45 +95,42 @@ export class ProjectEditorComponent implements OnInit {
     }
   }
 
+  handleFormSubmit(data: any) {
+    console.log(data, "from form")
+    this.handleSubmit(data.data)
+  }
+
   reload() {
     if (this.projectUrl !== 'create') {
-      this.projectsService.entities$
+      this.project$ = this.projectsService.entities$
         .pipe(
           map(projects => projects.find(project => {
             return project.id === Number(this.projectUrl);
           }))
-        ).subscribe(project => {
-          this.project = project;
-          if (project) {
-            this.notFound = 1;
-            this.titleData = { id: project.id, title: project.title };
-          } else {
-            this.notFound = 0;
-          }
-        });
+        )
+      this.project$.subscribe(project => {
+        this.project = project;
+        if (project) {
+          this.notFound = false;
+          this.titleData = { id: project.id, title: project.title };
+        } else {
+          // WIP
+          // this.projectsService.getWithQuery(`/projects/${this.projectUrl.toString()}`);
+          this.notFound = true;
+        }
+      })
     }
   }
 
-  // Function to save starting point data
-  updateProject(formValue: object) {
-    console.log(formValue)
-    const formData = {};
-    const formKeys = Object.keys(formValue);
-    formKeys.forEach(key => {
-        (key !== 'grades' && key !== 'subjects')
-        ? formData[key] = formValue[key][0]
-        : formData[key] = formValue[key];
-    });
-    this.handleSubmit(formData);
-  }
-
-  updateStatus(update) {
-    this.items = this.items.map(item => item.id === update.id ? { ...item, status: update.status } : item);
+  // inprogress
+  updateInProgress(data: boolean) {
+    console.log(data, "==> in progress") // WIP
+    this.items[0].inprogress = data
   }
 
   //function to scroll to the step section
   handleScroll(value) {
-    document.querySelector('#step-' + value).scrollIntoView();
+    document.querySelector('#step-' + value).scrollIntoView()
   }
 
 }

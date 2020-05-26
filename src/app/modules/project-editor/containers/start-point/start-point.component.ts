@@ -1,23 +1,15 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { filter, first, map, tap } from 'rxjs/operators';
-
-import { Country } from 'src/app/shared/constants/country.model';
-
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { FieldConfig } from '../../../../shared/form/models/field-config.interface';
-
 import { CountryEntityService } from '../../services/country/country-entity.service';
 import { RegionEntityService } from '../../services/region/region-entity.service';
 import { AcademicYearEntityService } from '../../services/academic-year/academic-year-entity.service';
 import { GradeEntityService } from '../../services/grade/grade-entity.service';
 import { SubjectEntityService } from '../../services/subject/subject-entity.service';
-import { RegionDataService } from '../../services/region/region-data.service';
-import { GradeDataService } from '../../services/grade/grade-data.service';
-import { SubjectDataService } from '../../services/subject/subject-data.service';
-import { Region } from 'src/app/shared/constants/region.model';
-import { AcademicYear } from 'src/app/shared/constants/academic-year.model';
-import { Grade } from 'src/app/shared/constants/grade.model';
-import { Subject } from 'src/app/shared/constants/subject.model';
+import { Project } from 'src/app/shared/constants/project.model';
+import { stepForm1, stepForm1InitData } from '../../constants/step-forms.data';
+import { StepForm1InitData } from '../../constants/step-forms.model';
 
 @Component({
   selector: 'app-start-point',
@@ -25,25 +17,21 @@ import { Subject } from 'src/app/shared/constants/subject.model';
   styleUrls: ['./start-point.component.scss']
 })
 export class StartPointComponent implements OnInit {
-  @Output() statusUpdate: EventEmitter<any> = new EventEmitter<any>();
-  @Output() formSubmit: EventEmitter<any> = new EventEmitter<any>();
-  countries: Country[];
-  regions$: Observable<Region[]>;
-  academicYears$: Observable<AcademicYear[]>;
-  grades$: Observable<Grade[]>;
-  subjects$: Observable<Subject[]>;
-  countryId: number;
-  regionId: number;
-  yearId: number;
-  subjectId: number;
+  @Output() inProgress: EventEmitter<any> = new EventEmitter<any>()
+  @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
+  @Input() project$: Observable<Project>
+  initialFormData: StepForm1InitData
+  updatedForm: StepForm1InitData
+  isInpsogress: boolean = false
+  isDone: boolean = true
 
   buttonConfig: FieldConfig = {
-      label: 'MARCAR COMO HECHO',
-      name: 'submit',
-      field: 'button',
-      id: 'submitButton',
-      disabled: true,
-      submitted: false,
+    label: 'MARCAR COMO HECHO',
+    name: 'submit',
+    field: 'button',
+    id: 'submitButton',
+    disabled: true,
+    submitted: false,
   };
   countryDropdown: FieldConfig = {
     field: 'dropdown',
@@ -101,113 +89,136 @@ export class StartPointComponent implements OnInit {
     private regionService: RegionEntityService,
     private academicYearService: AcademicYearEntityService,
     private gradeService: GradeEntityService,
-    private subjectService: SubjectEntityService,
-    private regionDataService: RegionDataService,
-    private gradesDataService: GradeDataService,
-    private subjectsDataService: SubjectDataService
+    private subjectService: SubjectEntityService
   ) { }
 
   ngOnInit(): void {
     this.getAllCountries()
+    this.formInIt()
   }
 
   formInIt() {
+    if (this.project$)
+      this.project$
+        .subscribe(data => {
+          this.initialFormData = new stepForm1InitData;
+          if (data?.country?.id) {
+            this.countryDropdown.selectedItems.push({ ...data.country })
+            this.initialFormData.country.push({ ...data.country })
+            this.getRegions(data.country.id)
+          }
+          if (data?.region?.id) {
+            this.regionDropdown.selectedItems.push({ ...data.region })
+            this.initialFormData.region.push({ ...data.region })
+            this.getAcademicYears()
+          }
+          if (data?.academicYear?.id) {
+            this.academicYearDropdown.selectedItems.push({ ...data.academicYear })
+            this.initialFormData.academicYear.push({ ...data.academicYear })
+            this.getGrades(data.academicYear.id, data.region.id)
+            this.getSubjects(data.academicYear.id, data.region.id)
+          }
+          if (data?.grades?.length) {
+            data.grades.forEach(data => {
+              this.gradesDropdown.selectedItems.push({ ...data })
+              this.initialFormData.grades.push({ ...data })
+            })
+          }
+          if (data?.subjects?.length) {
+            data.subjects.forEach(data => {
+              this.subjectsDropdown.selectedItems.push({ ...data })
+              this.initialFormData.subjects.push({ ...data })
+            })
+          }
+        })
   }
 
   getAllCountries() {
     this.countryService.getAll();
     this.countryService.entities$
-    .subscribe( data => this.countryDropdown.options = data);
+      .subscribe(data => this.countryDropdown.options = data);
   }
 
   getRegions(countryId: number) {
     this.regionService.entities$
-    .pipe(
-      map(regions => regions.filter(region => region.country.id == countryId))
-    )
-    .subscribe(newData => {
-      if (!newData.length) this.regionService.getWithQuery(countryId.toString()) //trigger API after checking the store
-      this.regionDropdown.options = newData
-    })
+      .pipe(
+        map(regions => regions.filter(region => region.country.id == countryId))
+      )
+      .subscribe(newData => {
+        if (!newData.length) this.regionService.getWithQuery(countryId.toString()) //trigger API after checking the store
+        this.regionDropdown.options = newData
+      })
   }
 
   getAcademicYears() {
     this.academicYearService.entities$
-    .subscribe(newData => {
-      if (!newData.length) this.academicYearService.getAll() //trigger API after checking the store
-      this.academicYearDropdown.options = newData
-    })
+      .subscribe(newData => {
+        if (!newData.length) this.academicYearService.getAll() //trigger API after checking the store
+        this.academicYearDropdown.options = newData
+      })
   }
 
-  getAllGrades(academicyearId: number, regionId?: number) {
+  getGrades(academicyearId: number, regionId?: number) {
     const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id;
     this.gradeService.entities$
-    .pipe(
-      map(grades => grades.filter(grade => grade.academicYear.id == academicyearId && grade.region.id == selectedRegionId))
-    )
-    .subscribe(newData => {
-      if (!newData.length) this.gradeService.getWithQuery(`/regions/${selectedRegionId}/academicyears/${academicyearId}/grades`) //trigger API after checking the store
-      this.gradesDropdown.options = newData
-    });
+      .pipe(
+        map(grades => grades.filter(grade => grade.academicYear.id == academicyearId && grade.region.id == selectedRegionId))
+      )
+      .subscribe(newData => {
+        if (!newData.length) this.gradeService.getWithQuery(`/regions/${selectedRegionId}/academicyears/${academicyearId}/grades`) //trigger API after checking the store
+        this.gradesDropdown.options = newData
+      });
   }
 
-  getAllSubjects(academicyearId: number, regionId?: number) {
+  getSubjects(academicyearId: number, regionId?: number) {
     const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id;
     this.subjectService.entities$
-    .pipe(
-      map(subjects => subjects.filter(subject => subject.academicYear.id == academicyearId && subject.region.id == selectedRegionId))
-    )
-    .subscribe(newData => {
-      if (!newData.length) this.subjectService.getWithQuery(`/regions/${selectedRegionId}/academicyears/${academicyearId}/subjects`) //trigger API after checking the store
-      this.subjectsDropdown.options = newData
-    });
+      .pipe(
+        map(subjects => subjects.filter(subject => subject.academicYear.id == academicyearId && subject.region.id == selectedRegionId))
+      )
+      .subscribe(newData => {
+        if (!newData.length) this.subjectService.getWithQuery(`/regions/${selectedRegionId}/academicyears/${academicyearId}/subjects`) //trigger API after checking the store
+        this.subjectsDropdown.options = newData
+      });
   }
 
-  handleSubmit(event: Event) {
-    // event.preventDefault();
-    // event.stopPropagation();
-    // this.buttonConfig.submitted = true;
-    // this.buttonConfig.label = 'hencho';
-    // this.statusUpdate.emit({id: 1, status: 'done'});
-    // this.formSubmit.emit(this.stratPointForm.value);
+  checkInProgress(data: any, type: string) {
+    if (!this.updatedForm) this.updatedForm = { ...this.initialFormData }
+    this.updatedForm[type] = [...data]
+    for (var key of Object.keys(this.updatedForm)) {
+      if (this.initialFormData) {
+        if (JSON.stringify(this.updatedForm[key]) !== JSON.stringify(this.initialFormData[key])) {
+          this.isInpsogress = true
+        }
+      } else {
+        this.isInpsogress = true
+      }
+    }
+    this.inProgress.emit({ isInpsogress: this.isInpsogress, type: 'stepForm1' })
+    this.buttonConfig.disabled = !this.isInpsogress
   }
 
-  formUpdate(dropdownData: any){
-    console.log(dropdownData)
-    this.buttonConfig.disabled = false;
-    const selectedId = dropdownData.val[0]?.id;
-    if (dropdownData) {
-      switch (dropdownData.controller) {
+  onDropdownSelect(selectedData: any) {
+    console.log(selectedData)
+    this.checkInProgress(selectedData.val, selectedData.controller)
+    const selectedId = selectedData.val[0]?.id;
+    if (selectedData) {
+      switch (selectedData.controller) {
         case 'country': {
-          let rest = ()=> {
-            this.regionDropdown.selectedItems = [] // reset Regions
-            this.academicYearDropdown.selectedItems = [] // reset Academic Year
-            this.gradesDropdown.selectedItems = [] // reset Grade
-            this.subjectsDropdown.selectedItems = [] // reset Subject
-          }
-          rest()
+          this.resetFromCountry()
           if (selectedId) this.getRegions(selectedId)
           break;
         }
         case 'region': {
-          let rest = ()=> {
-            this.academicYearDropdown.selectedItems = [] 
-            this.gradesDropdown.selectedItems = [] 
-            this.subjectsDropdown.selectedItems = [] 
-          }
-          rest()
+          this.resetFromRegion()
           if (selectedId) this.getAcademicYears();
           break;
         }
         case 'academicYear': {
-          let rest = ()=> {
-            this.gradesDropdown.selectedItems = []
-            this.subjectsDropdown.selectedItems = []
-          }
-          rest()
+          this.resetFromAcademicYear()
           if (selectedId) {
-            this.getAllGrades(selectedId);
-            this.getAllSubjects(selectedId);
+            this.getGrades(selectedId);
+            this.getSubjects(selectedId);
           }
           break;
         }
@@ -217,6 +228,65 @@ export class StartPointComponent implements OnInit {
           break;
         }
       }
+      this.checkInProgress(selectedData.val, selectedData.controller)
+    }
+  }
+
+  handleSubmit() {
+    const formData = new stepForm1
+    for (var key of Object.keys(this.updatedForm)) {
+      switch (key) {
+        case 'country':
+          formData.data[key] = this.updatedForm[key][0] ? this.updatedForm[key][0] : null
+          break;
+        case 'region':
+          formData.data[key] = this.updatedForm[key][0] ? this.updatedForm[key][0] : null
+          break;
+        case 'academicYear':
+          formData.data[key] = this.updatedForm[key][0] ? this.updatedForm[key][0] : null
+          break;
+        default:
+          formData.data[key] = this.updatedForm[key]
+          break;
+      }
+    }
+    formData.done = this.isDone
+    formData.inProgress = this.isInpsogress
+    console.log(formData, "formData ==!!")
+    this.onSubmit.emit(formData);
+  }
+
+  resetFromCountry() {
+    this.regionDropdown.selectedItems = []
+    this.academicYearDropdown.selectedItems = []
+    this.gradesDropdown.selectedItems = []
+    this.subjectsDropdown.selectedItems = []
+    // if (this.updatedForm) {
+    console.log(this.updatedForm, "==+++")
+    this.updatedForm.region = []
+    this.updatedForm.academicYear = []
+    this.updatedForm.grades = []
+    this.updatedForm.subjects = []
+    // }
+  }
+
+  resetFromRegion() {
+    this.academicYearDropdown.selectedItems = []
+    this.gradesDropdown.selectedItems = []
+    this.subjectsDropdown.selectedItems = []
+    if (this.updatedForm) {
+      this.updatedForm.academicYear = [];
+      this.updatedForm.grades = []
+      this.updatedForm.subjects = []
+    }
+  }
+
+  resetFromAcademicYear() {
+    this.gradesDropdown.selectedItems = []
+    this.subjectsDropdown.selectedItems = []
+    if (this.updatedForm) {
+      this.updatedForm.grades = []
+      this.updatedForm.subjects = []
     }
   }
 }
