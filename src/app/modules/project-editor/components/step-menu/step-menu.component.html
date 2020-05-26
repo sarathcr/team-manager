@@ -1,8 +1,8 @@
-<div class="menu" [ngClass]="{'menu-inprocess' : inprogress, 'menu-active' : selected == true}">
-    <span class="menu__step" *ngIf="done && !inprogress">
+<div class="menu" [ngClass]="{'menu-inprocess' : status == 'inprogress', 'menu-active' : selected == true}">
+    <span class="menu__step" *ngIf="status == 'done'">
         <span class="icon icon-ic_check"></span>
     </span>
-    <span class="menu__step" *ngIf="!done">
+    <span class="menu__step" *ngIf="status !== 'done'">
         {{item.id}}.
     </span>{{item.name}}
 </div>
