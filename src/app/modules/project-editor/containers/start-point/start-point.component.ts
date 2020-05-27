@@ -8,8 +8,8 @@ import { AcademicYearEntityService } from '../../services/academic-year/academic
 import { GradeEntityService } from '../../services/grade/grade-entity.service';
 import { SubjectEntityService } from '../../services/subject/subject-entity.service';
 import { Project } from 'src/app/shared/constants/project.model';
-import { stepForm1, stepForm1InitData } from '../../constants/step-forms.data';
-import { StepForm1InitData } from '../../constants/step-forms.model';
+import { formOneInitData } from '../../constants/step-forms.data';
+import { FormOneInitData, FormOne, FormStatus } from '../../constants/step-forms.model';
 
 @Component({
   selector: 'app-start-point',
@@ -20,10 +20,8 @@ export class StartPointComponent implements OnInit {
   @Output() inProgress: EventEmitter<any> = new EventEmitter<any>()
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
-  initialFormData: StepForm1InitData
-  updatedForm: StepForm1InitData
-  isInpsogress: boolean = false
-  isDone: boolean = true
+  initialFormData: FormOneInitData = new formOneInitData
+  status: 'inprogress' | 'done' | 'pending' = "pending"
 
   buttonConfig: FieldConfig = {
     label: 'MARCAR COMO HECHO',
@@ -101,35 +99,34 @@ export class StartPointComponent implements OnInit {
     if (this.project$)
       this.project$
         .subscribe(data => {
-          this.initialFormData = new stepForm1InitData;
-          if (data?.country?.id) {
+          let tempinitialFormData = new formOneInitData;
+          if (data?.country) {
             this.countryDropdown.selectedItems.push({ ...data.country })
-            this.initialFormData.country.push({ ...data.country })
+            tempinitialFormData.country.push({ ...data.country })
             this.getRegions(data.country.id)
           }
-          if (data?.region?.id) {
+          if (data?.region) {
             this.regionDropdown.selectedItems.push({ ...data.region })
-            this.initialFormData.region.push({ ...data.region })
+            tempinitialFormData.region.push({ ...data.region })
             this.getAcademicYears()
           }
-          if (data?.academicYear?.id) {
+          if (data?.academicYear) {
             this.academicYearDropdown.selectedItems.push({ ...data.academicYear })
-            this.initialFormData.academicYear.push({ ...data.academicYear })
+            tempinitialFormData.academicYear.push({ ...data.academicYear })
             this.getGrades(data.academicYear.id, data.region.id)
             this.getSubjects(data.academicYear.id, data.region.id)
           }
-          if (data?.grades?.length) {
-            data.grades.forEach(data => {
-              this.gradesDropdown.selectedItems.push({ ...data })
-              this.initialFormData.grades.push({ ...data })
-            })
+          if (data?.grades) {
+            this.gradesDropdown.selectedItems = []
+            this.gradesDropdown.selectedItems.push(...data.grades)
+            tempinitialFormData.grades.push({ ...data })
           }
           if (data?.subjects?.length) {
-            data.subjects.forEach(data => {
-              this.subjectsDropdown.selectedItems.push({ ...data })
-              this.initialFormData.subjects.push({ ...data })
-            })
+            this.subjectsDropdown.selectedItems = []
+            this.subjectsDropdown.selectedItems.push(...data.subjects)
+            tempinitialFormData.subjects.push({ ...data })
           }
+          this.initialFormData = tempinitialFormData;
         })
   }
 
@@ -182,20 +179,49 @@ export class StartPointComponent implements OnInit {
       });
   }
 
+  checkStatus() {
+    if (this.countryDropdown.selectedItems.length &&
+      this.regionDropdown.selectedItems.length &&
+      this.academicYearDropdown.selectedItems.length &&
+      this.gradesDropdown.selectedItems.length &&
+      this.subjectsDropdown.selectedItems.length
+      ) { this.status = "done" }
+    if (!this.countryDropdown.selectedItems.length &&
+      !this.regionDropdown.selectedItems.length &&
+      !this.academicYearDropdown.selectedItems.length &&
+      !this.gradesDropdown.selectedItems.length &&
+      !this.subjectsDropdown.selectedItems.length
+      ) { this.status = "pending" }
+  }
+  
   checkInProgress(data: any, type: string) {
-    if (!this.updatedForm) this.updatedForm = { ...this.initialFormData }
-    this.updatedForm[type] = [...data]
-    for (var key of Object.keys(this.updatedForm)) {
-      if (this.initialFormData) {
-        if (JSON.stringify(this.updatedForm[key]) !== JSON.stringify(this.initialFormData[key])) {
-          this.isInpsogress = true
-        }
-      } else {
-        this.isInpsogress = true
+    let values: Array<any> = [];
+    for (var key of Object.keys(this.initialFormData)) {
+      // let value: any;
+      switch (key) {
+        case 'country':
+          values.push(this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems))
+          break;
+        case 'region':
+          values.push(this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems))
+          break;
+        case 'academicYear':
+          values.push(this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems))
+          break;
+        case 'grades':
+          values.push(this.isEqual(this.initialFormData.grades, this.gradesDropdown.selectedItems))
+          break;
+        default:
+          values.push(this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems))
+          break;
       }
     }
-    this.inProgress.emit({ isInpsogress: this.isInpsogress, type: 'stepForm1' })
-    this.buttonConfig.disabled = !this.isInpsogress
+    console.log(values, "is equal")
+    if (values.includes(false)) {
+      this.status = 'inprogress'
+    } 
+    this.inProgress.emit(this.status)
+    this.buttonConfig.disabled = this.status !== 'inprogress'
   }
 
   onDropdownSelect(selectedData: any) {
@@ -222,37 +248,25 @@ export class StartPointComponent implements OnInit {
           }
           break;
         }
-        default: {
-          // this.getAllCountries();
-          // this.statusUpdate.emit({id: 1, status: 'inprocess'});
-          break;
-        }
       }
       this.checkInProgress(selectedData.val, selectedData.controller)
     }
   }
 
   handleSubmit() {
-    const formData = new stepForm1
-    for (var key of Object.keys(this.updatedForm)) {
-      switch (key) {
-        case 'country':
-          formData.data[key] = this.updatedForm[key][0] ? this.updatedForm[key][0] : null
-          break;
-        case 'region':
-          formData.data[key] = this.updatedForm[key][0] ? this.updatedForm[key][0] : null
-          break;
-        case 'academicYear':
-          formData.data[key] = this.updatedForm[key][0] ? this.updatedForm[key][0] : null
-          break;
-        default:
-          formData.data[key] = this.updatedForm[key]
-          break;
-      }
+    this.checkStatus();
+    let formData: FormOne = {
+      data: {
+        country: this.countryDropdown.selectedItems[0] ? this.countryDropdown.selectedItems[0] : null,
+        region: this.regionDropdown.selectedItems[0] ? this.regionDropdown.selectedItems[0] : null,
+        academicYear: this.academicYearDropdown.selectedItems[0] ? this.academicYearDropdown.selectedItems[0] : null,
+        grades: this.gradesDropdown.selectedItems,
+        subjects : this.subjectsDropdown.selectedItems
+      },
+      status: this.status
     }
-    formData.done = this.isDone
-    formData.inProgress = this.isInpsogress
     console.log(formData, "formData ==!!")
+    this.buttonConfig.submitted = this.status == 'done'
     this.onSubmit.emit(formData);
   }
 
@@ -261,33 +275,22 @@ export class StartPointComponent implements OnInit {
     this.academicYearDropdown.selectedItems = []
     this.gradesDropdown.selectedItems = []
     this.subjectsDropdown.selectedItems = []
-    // if (this.updatedForm) {
-    console.log(this.updatedForm, "==+++")
-    this.updatedForm.region = []
-    this.updatedForm.academicYear = []
-    this.updatedForm.grades = []
-    this.updatedForm.subjects = []
-    // }
   }
 
   resetFromRegion() {
     this.academicYearDropdown.selectedItems = []
     this.gradesDropdown.selectedItems = []
     this.subjectsDropdown.selectedItems = []
-    if (this.updatedForm) {
-      this.updatedForm.academicYear = [];
-      this.updatedForm.grades = []
-      this.updatedForm.subjects = []
-    }
   }
 
   resetFromAcademicYear() {
     this.gradesDropdown.selectedItems = []
     this.subjectsDropdown.selectedItems = []
-    if (this.updatedForm) {
-      this.updatedForm.grades = []
-      this.updatedForm.subjects = []
-    }
   }
+
+  isEqual(d1: any[], d2: any[]) {
+    return JSON.stringify(d1) === JSON.stringify(d2)
+  }
+
 }
 

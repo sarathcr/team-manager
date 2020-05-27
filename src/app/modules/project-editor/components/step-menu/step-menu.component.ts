@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { StepMenu } from '../../constants/step-menu.model';
+import { Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'app-step-menu',
@@ -9,8 +8,7 @@ import { StepMenu } from '../../constants/step-menu.model';
 export class StepMenuComponent implements OnInit {
 
   @Input() item:any;
-  @Input() inprogress:boolean;
-  @Input() done:boolean;
+  @Input() status: 'inprogress' | 'done' | 'pending';
   @Input() selected:boolean;
   
   constructor() { }

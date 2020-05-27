@@ -4,19 +4,27 @@ import { AcademicYear } from 'src/app/shared/constants/academic-year.model';
 import { Grade } from 'src/app/shared/constants/grade.model';
 import { Subject } from 'src/app/shared/constants/subject.model';
 
-export interface StepForm1 {
-    data: StepForm1Data,
-    inProgress: boolean,
-    done: boolean,
+export interface FormOne extends FormStatus {
+    data: {
+        country: Country,
+        region: Region,
+        academicYear: AcademicYear,
+        grades: Grade[],
+        subjects: Subject[]
+    }
 }
-export interface StepForm1Data {
+
+export interface FormStatus {
+    status: 'inprogress' | 'done' | 'pending'
+}
+export interface FormOneData {
     country: Country,
     region: Region,
     academicYear: AcademicYear,
     grades: Grade[],
     subjects: Subject[]
 }
-export interface StepForm1InitData {
+export interface FormOneInitData {
     country: Country[],
     region: Region[],
     academicYear: AcademicYear[],

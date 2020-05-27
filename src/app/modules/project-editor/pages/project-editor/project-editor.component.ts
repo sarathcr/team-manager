@@ -21,10 +21,8 @@ export class ProjectEditorComponent implements OnInit {
   notFound: boolean;
   titleData: TitleData;
   projectUrl: any;
+  items: StepMenu[];
   status: string;
-  selected = true;
-  notifyGrandParent: number;
-  items: Array<StepMenu>;
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -53,20 +51,21 @@ export class ProjectEditorComponent implements OnInit {
       ])
       .subscribe(translations => {
         this.items = [
-          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], done: false, selected: true, inprogress: false },
-          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], done: false, selected: false, inprogress: false },
-          { id: 3, name: 'Objetivos competenciales', done: true, selected: false, inprogress: false }, // add localization
-          { id: 4, name: 'Contenidos', done: false, selected: false, inprogress: false }, // add localization
-          { id: 5, name: 'Evaluación', done: false, selected: false, inprogress: false }, // add localization
-          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], done: false, selected: false, inprogress: false },
-          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], done: false, selected: false, inprogress: false },
-          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], done: false, selected: false, inprogress: false },
-          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], done: false, selected: false, inprogress: false },
-          { id: 10, name: 'Interacción con alumnos', done: false, selected: false, inprogress: false } // add localization
+          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], selected: true, status: 'pending' },
+          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], selected: false, status: 'pending' },
+          { id: 3, name: 'Objetivos competenciales', selected: false, status: 'pending' }, // add localization
+          { id: 4, name: 'Contenidos', selected: false, status: 'pending' }, // add localization
+          { id: 5, name: 'Evaluación', selected: false, status: 'pending' }, // add localization
+          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], selected: false, status: 'pending' },
+          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], selected: false, status: 'pending' },
+          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], selected: false, status: 'pending' },
+          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], selected: false, status: 'pending' },
+          { id: 10, name: 'Interacción con alumnos', selected: false, status: 'pending' } // add localization
         ];
       }
       );
   }
+
 
   // Function create or update the project
   handleSubmit(projectData: object) {
@@ -95,11 +94,6 @@ export class ProjectEditorComponent implements OnInit {
     }
   }
 
-  handleFormSubmit(data: any) {
-    console.log(data, "from form")
-    this.handleSubmit(data.data)
-  }
-
   reload() {
     if (this.projectUrl !== 'create') {
       this.project$ = this.projectsService.entities$
@@ -122,15 +116,28 @@ export class ProjectEditorComponent implements OnInit {
     }
   }
 
-  // inprogress
-  updateInProgress(data: boolean) {
-    console.log(data, "==> in progress") // WIP
-    this.items[0].inprogress = data
+  //function to handle the click of step menu
+  handleStepClick(id: number) {
+    // document.querySelector('#step-' + value).scrollIntoView();
+    this.items.forEach(item => {
+      if (item.selected && item.id != id) {
+        item.selected = false;
+      }
+      if (item.id == id) {
+        item.selected = true;
+      }
+    })
   }
 
-  //function to scroll to the step section
-  handleScroll(value) {
-    document.querySelector('#step-' + value).scrollIntoView()
+  handleFormSubmit(data: any) {
+    console.log(data.status, "from form++++")
+    this.handleSubmit(data.data)
+  }
+
+  // inprogress
+  updateInProgress(data:any) {
+    console.log(data, "==> in progress") // WIP
+    this.items[0].status = data
   }
 
 }
