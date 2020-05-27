@@ -8,11 +8,10 @@ import { Region } from 'src/app/shared/constants/region.model';
 
 @Injectable()
 export class RegionDataService extends DefaultDataService<Region> {
-    countryId: number;
     constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
         super('Region', http, httpUrlGenerator);
     }
-    
+
     getWithQuery(parm:any): Observable<Region[]> {
         return this.http.get<Region[]>(`${environment.apiUrl}/countries/${parm}/regions`)
             .pipe(

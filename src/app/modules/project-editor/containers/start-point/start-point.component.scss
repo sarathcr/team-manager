@@ -2,23 +2,24 @@
 .project-form{
   &__title{
     &-icon{
-      font-size: 24px;
-      width: 16px;
-      height: 16px;
+      width: 17px;
+      height: 17px;
       border-radius: 50%;
       border: 1px solid $primary-font-color;
       position: relative;
       display: inline-block;
       margin-left: $spacer-sm;
+      overflow: hidden;
+      vertical-align: middle;
+      margin-bottom: 2px;
       cursor: pointer;
       .icon-ic_info {
-        line-height: 0;
-        position: absolute;
-        top: 7px;
-        left: -5px;
-        display: inline-block;
-        height: 100%;
-        width: 100%;
+        font-size: 24px;
+        margin-left: -4px;
+        margin-top: -4px;
+        width: 24px;
+        height: 24px;
+        display: block;
       }
     }
   }
