@@ -13,4 +13,12 @@
     padding-left: $padding-m;
     padding-right: $padding-m;
   }
+  .btn-success{
+    padding-left: 20px;
+    padding-right: 20px;
+    min-width: unset;
+    .form-button__icon{
+      margin-left: -8px;
+    }
+  }
 }

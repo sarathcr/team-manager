@@ -9,12 +9,13 @@
   overflow: hidden;
   &__form{
     display: flex;
-    width: 55%;
+    width: 100%;
     padding: $grid-gutter-width/2;
     padding-left: 40px;
+    padding-right: 40px;
     flex-direction: column;
     position: relative;
-    max-width: 680px;
+    max-width: 760px;
   }
   &__bg{
     background-image:url('../../../../../../images/img_background_shapes.png');
