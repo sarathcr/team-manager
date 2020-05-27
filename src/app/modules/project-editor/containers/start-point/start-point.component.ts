@@ -243,7 +243,56 @@ export class StartPointComponent implements OnInit {
   }
 
   createFormConfig() {
-    this.translateService.stream([  //translation
+    this.buttonConfig = {
+      name: 'submit',
+      field: 'button',
+      id: 'submitButton',
+      disabled: true,
+      submitted: false,
+    }
+    this.countryDropdown = {
+      field: 'dropdown',
+      name: 'country',
+      id: 'country',
+      multiselect: false,
+      options: [],
+      selectedItems: []
+    }
+    this.regionDropdown = {
+      field: 'dropdown',
+      name: 'region',
+      id: 'region',
+      multiselect: false,
+      options: [],
+      selectedItems: []
+    }
+    this.academicYearDropdown = {
+      field: 'dropdown',
+      name: 'academicYear',
+      id: 'academicYear',
+      textField: 'academicYear',
+      multiselect: false,
+      options: [],
+      selectedItems: []
+    }
+    this.gradesDropdown = {
+      field: 'dropdown',
+      name: 'grades',
+      id: 'grade',
+      multiselect: true,
+      options: [],
+      selectedItems: []
+    }
+    this.subjectsDropdown = {
+      field: 'dropdown',
+      name: 'subjects',
+      id: 'subject',
+      multiselect: true,
+      options: [],
+      selectedItems: []
+    }
+    // Translation
+    this.translateService.stream([
       'PROJECT.project_button_markdone',
       'PROJECT.project_button_done',
       'STARTING_POINT.project_startingpoint_year',
@@ -257,66 +306,18 @@ export class StartPointComponent implements OnInit {
       'STARTING_POINT.project_startingpoint_country_placeholder',
       'STARTING_POINT.project_startingpoint_subjects_placeholder',
     ]).subscribe(translations => {
-      this.buttonConfig = {
-        label: translations['PROJECT.project_button_markdone'],
-        successLabel:  translations['PROJECT.project_button_done'],
-        name: 'submit',
-        field: 'button',
-        id: 'submitButton',
-        disabled: true,
-        submitted: false,
-      }
-      this.countryDropdown = {
-        field: 'dropdown',
-        label: translations['STARTING_POINT.project_startingpoint_country'],
-        name: 'country',
-        id: 'country',
-        placeholder: translations['STARTING_POINT.project_startingpoint_country_placeholder'],
-        multiselect: false,
-        options: [],
-        selectedItems: []
-      }
-      this.regionDropdown = {
-        field: 'dropdown',
-        label: translations['STARTING_POINT.project_startingpoint_region'],
-        name: 'region',
-        id: 'region',
-        placeholder: translations['STARTING_POINT.project_startingpoint_region_placeholder'],
-        multiselect: false,
-        options: [],
-        selectedItems: []
-      }
-      this.academicYearDropdown = {
-        field: 'dropdown',
-        label: translations['STARTING_POINT.project_startingpoint_year'],
-        name: 'academicYear',
-        id: 'academicYear',
-        textField: 'academicYear',
-        placeholder: translations['STARTING_POINT.project_startingpoint_year_placeholder'],
-        multiselect: false,
-        options: [],
-        selectedItems: []
-      }
-      this.gradesDropdown = {
-        field: 'dropdown',
-        label: translations['STARTING_POINT.project_startingpoint_grades'],
-        name: 'grades',
-        id: 'grade',
-        placeholder: translations['STARTING_POINT.project_startingpoint_grades_placeholder'],
-        multiselect: true,
-        options: [],
-        selectedItems: []
-      }
-      this.subjectsDropdown = {
-        field: 'dropdown',
-        label: translations['STARTING_POINT.project_startingpoint_subjects'],
-        name: 'subjects',
-        id: 'subject',
-        placeholder: translations['STARTING_POINT.project_startingpoint_subjects_placeholder'],
-        multiselect: true,
-        options: [],
-        selectedItems: []
-      }
+      this.buttonConfig.label = translations['PROJECT.project_button_markdone']
+      this.buttonConfig.successLabel= translations['PROJECT.project_button_done']
+      this.countryDropdown.label = translations['STARTING_POINT.project_startingpoint_country']
+      this.countryDropdown.placeholder = translations['STARTING_POINT.project_startingpoint_country_placeholder']
+      this.regionDropdown.label = translations['STARTING_POINT.project_startingpoint_region']
+      this.regionDropdown.placeholder = translations['STARTING_POINT.project_startingpoint_region_placeholder']
+      this.academicYearDropdown.label = translations['STARTING_POINT.project_startingpoint_year']
+      this.academicYearDropdown.placeholder = translations['STARTING_POINT.project_startingpoint_year_placeholder']
+      this.gradesDropdown.label = translations['STARTING_POINT.project_startingpoint_grades']
+      this.gradesDropdown.placeholder = translations['STARTING_POINT.project_startingpoint_grades_placeholder']
+      this.subjectsDropdown.label = translations['STARTING_POINT.project_startingpoint_subjects']
+      this.subjectsDropdown.placeholder = translations['STARTING_POINT.project_startingpoint_subjects_placeholder']
     })
   }
 
