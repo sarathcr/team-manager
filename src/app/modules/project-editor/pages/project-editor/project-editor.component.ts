@@ -131,12 +131,14 @@ export class ProjectEditorComponent implements OnInit {
 
   handleFormSubmit(data: any) {
     console.log(data.status, "from form++++")
+    this.status = data.status;
     this.handleSubmit(data.data)
   }
 
   // inprogress
   updateInProgress(data:any) {
     console.log(data, "==> in progress") // WIP
+    this.status = data.status;
     this.items[0].status = data
   }
 

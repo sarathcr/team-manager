@@ -1,8 +1,8 @@
 @import '../../../../../styles/helpers/_helpers-master';
 
 .project-title{
-    padding: 0px 30px;
-    &__input,&__text{
+  padding: 0px 30px;
+  &__input, &__text{
     color:$blue-whale;
     font-family: $font-family-pt-sans;
     font-size: $font-size-default;
@@ -12,7 +12,7 @@
     padding: 6px 0;
     border: none;
     border-bottom: 1px solid $black;
-    }
+  }
 
   &__input {
     max-width: 212px;

@@ -5,7 +5,7 @@
      [items]="items" (onStepClick)="handleStepClick($event)"></app-editor-sidebar>
     <div class="app">
       <div class="project-editor__form {{status === 'done' ? 'project-editor__form' : ''}}">
-        <app-status [isDone] = false></app-status>
+        <app-status [status] = 'status'></app-status>
         <app-start-point id="step-0" class="step-section" [project$]="project$" (onSubmit)='handleFormSubmit($event)' (inProgress)='updateInProgress($event)'></app-start-point>
       </div>
     </div>

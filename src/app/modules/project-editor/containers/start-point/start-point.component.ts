@@ -101,18 +101,18 @@ export class StartPointComponent implements OnInit {
         .subscribe(data => {
           let tempinitialFormData = new formOneInitData;
           if (data?.country) {
-            this.countryDropdown.selectedItems.push({ ...data.country })
+            this.countryDropdown.selectedItems.push({ ...data.country})
             tempinitialFormData.country.push({ ...data.country })
             this.getRegions(data.country.id)
           }
           if (data?.region) {
-            this.regionDropdown.selectedItems.push({ ...data.region })
+            this.regionDropdown.selectedItems.push({ ...data.region})
             tempinitialFormData.region.push({ ...data.region })
             this.getAcademicYears()
           }
           if (data?.academicYear) {
-            this.academicYearDropdown.selectedItems.push({ ...data.academicYear })
-            tempinitialFormData.academicYear.push({ ...data.academicYear })
+            this.academicYearDropdown.selectedItems.push({ ...data.academicYear})
+            tempinitialFormData.academicYear.push({ ...data.academicYear})
             this.getGrades(data.academicYear.id, data.region.id)
             this.getSubjects(data.academicYear.id, data.region.id)
           }
@@ -193,7 +193,7 @@ export class StartPointComponent implements OnInit {
       !this.subjectsDropdown.selectedItems.length
       ) { this.status = "pending" }
   }
-  
+
   checkInProgress(data: any, type: string) {
     let values: Array<any> = [];
     for (var key of Object.keys(this.initialFormData)) {
@@ -219,7 +219,7 @@ export class StartPointComponent implements OnInit {
     console.log(values, "is equal")
     if (values.includes(false)) {
       this.status = 'inprogress'
-    } 
+    }
     this.inProgress.emit(this.status)
     this.buttonConfig.disabled = this.status !== 'inprogress'
   }
@@ -267,7 +267,8 @@ export class StartPointComponent implements OnInit {
     }
     console.log(formData, "formData ==!!")
     this.buttonConfig.submitted = this.status == 'done'
-    this.onSubmit.emit(formData);
+    this.buttonConfig.label = 'hecho'
+    this.onSubmit.emit(formData)
   }
 
   resetFromCountry() {

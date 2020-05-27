@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./status.component.scss']
 })
 export class StatusComponent implements OnInit {
-  @Input() isDone: boolean;
+  @Input() status: 'inprogress' | 'done' | 'pending';
   constructor() { }
 
   ngOnInit(): void {
