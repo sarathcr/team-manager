@@ -14,8 +14,8 @@ import { EditorSidebarComponent } from './components/editor-sidebar/editor-sideb
 import { ProjectTitleComponent } from './components/project-title/project-title.component';
 import { StepMenuComponent } from './components/step-menu/step-menu.component';
 // pages
-import { HomeComponent } from './pages/home/home.component';
-import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
+import { HomeComponent } from './containers/home/home.component';
+import { ProjectEditorComponent } from './containers/project-editor/project-editor.component';
 
 // ngx translate
 import { TranslateModule } from '@ngx-translate/core';

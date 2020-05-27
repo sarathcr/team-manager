@@ -66,5 +66,15 @@
   }
 }
 
-
-
+.project-editor__form {
+  &:first-child{
+    .status-indicator__bar_top{
+      display: none;
+    }
+  }
+  // &:last-child{
+  //   .status-indicator__bar_bottom{
+  //     display: none;
+  //   }
+  // }
+}

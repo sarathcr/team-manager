@@ -7,9 +7,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
 import { TranslateModule } from '@ngx-translate/core';
 // Components
-import { FormButtonComponent } from './form/components/form-button/form-button.component';
-import { FormInputComponent } from './form/components/form-input/form-input.component';
-import { DropdownComponent } from './form/components/dropdown/dropdown.component';
+import { FormButtonComponent } from './components/form-button/form-button.component';
+import { FormInputComponent } from './components/form-input/form-input.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 @NgModule({
     declarations: [
