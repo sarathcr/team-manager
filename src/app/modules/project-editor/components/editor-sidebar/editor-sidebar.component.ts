@@ -7,22 +7,20 @@ import { StepMenu } from '../../constants/step-menu.model';
   styleUrls: ['./editor-sidebar.component.scss']
 })
 export class EditorSidebarComponent implements OnInit {
-  
-  @Input() title:string;
-  @Input() view:string;
-  @Input() items:Array<StepMenu>;
-  @Input() status:string;
-  @Input() selected:boolean;
-  @Output() childClick= new EventEmitter();
-  
+
+  @Input() title: string;
+  @Input() view: string;
+  @Input() items: StepMenu[];
+  @Output() onStepClick = new EventEmitter();
+
   constructor() { }
 
   ngOnInit(): void {
   }
-  
+
   //Function to emit menu item number to output
-  childEvent(value) {
-    this.childClick.emit(value);
+  handleStepClick(id: number) {
+    this.onStepClick.emit(id);
   }
 }
 

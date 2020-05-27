@@ -24,8 +24,11 @@
         font-weight: normal;
     }
     .icon-ic_check{
+        position: absolute;
         color:$icon-green;
-        font-size: $font-size-icon;
+        font-size: $font-size-xs;
+        left: -10px;
+        top: 4px;
     }
 }
 
