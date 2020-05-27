@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { StepMenu } from '../../constants/step-menu.model';
+import { Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'app-step-menu',

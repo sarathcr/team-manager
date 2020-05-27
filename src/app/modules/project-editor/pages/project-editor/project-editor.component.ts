@@ -21,10 +21,8 @@ export class ProjectEditorComponent implements OnInit {
   notFound: boolean;
   titleData: TitleData;
   projectUrl: any;
+  items: StepMenu[];
   status: string;
-  selected = true;
-  notifyGrandParent: number;
-  items: Array<StepMenu>;
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -67,6 +65,7 @@ export class ProjectEditorComponent implements OnInit {
       }
       );
   }
+
 
   // Function create or update the project
   handleSubmit(projectData: object) {
@@ -117,6 +116,19 @@ export class ProjectEditorComponent implements OnInit {
     }
   }
 
+  //function to handle the click of step menu
+  handleStepClick(id: number) {
+    // document.querySelector('#step-' + value).scrollIntoView();
+    this.items.forEach(item => {
+      if (item.selected && item.id != id) {
+        item.selected = false;
+      }
+      if (item.id == id) {
+        item.selected = true;
+      }
+    })
+  }
+
   handleFormSubmit(data: any) {
     console.log(data.status, "from form++++")
     this.handleSubmit(data.data)
@@ -126,11 +138,6 @@ export class ProjectEditorComponent implements OnInit {
   updateInProgress(data:any) {
     console.log(data, "==> in progress") // WIP
     this.items[0].status = data
-  }
-
-  //function to scroll to the step section
-  handleScroll(value) {
-    document.querySelector('#step-' + value).scrollIntoView()
   }
 
 }
