@@ -1,3 +1,3 @@
 <div class="dynamic-field form-button">
-  <button class="btn btn-primary {{config.submitted ? 'btn-success':''}}" [disabled]="config.disabled" type="submit"  ><span class="form-button__icon icon-ic_check"></span> {{ config.label }} </button>
+  <button class="btn btn-primary {{config.submitted ? 'btn-success':''}}" [disabled]="config.disabled" type="submit"  ><span class="form-button__icon icon-ic_check"></span> {{ config.submitted ? config.successLabel : config.label }} </button>
 </div>

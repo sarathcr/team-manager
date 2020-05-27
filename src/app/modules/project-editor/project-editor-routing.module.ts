@@ -4,7 +4,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
 import { ProjectsResolver } from './services/project/projects.resolver';
 
-
 const routes: Routes = [
   {
     path: '',

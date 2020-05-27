@@ -4,16 +4,10 @@
     <app-editor-sidebar id="project-editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
      [items]="items" (onStepClick)="handleStepClick($event)"></app-editor-sidebar>
     <div class="app">
-      <div class="project-editor__form">
-        <div class="status-indicator">
-          <div class="status-indicator__ball"></div>
-          <div class="status-indicator__bar"></div>
-          <div class="status-indicator__ball status-indicator__ball_bottom"></div>
-          <div class="status-indicator__bar status-indicator__bar_bottom"></div>
-        </div>
+      <div class="project-editor__form {{status === 'done' ? 'project-editor__form' : ''}}">
+        <app-status [status] = 'status'></app-status>
         <app-start-point id="step-0" class="step-section" [project$]="project$" (onSubmit)='handleFormSubmit($event)' (inProgress)='updateInProgress($event)'></app-start-point>
       </div>
-
     </div>
 </div>
 <div *ngIf="notFound">

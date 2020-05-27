@@ -1,15 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { FieldConfig } from '../../../../shared/form/models/field-config.interface';
-import { CountryEntityService } from '../../services/country/country-entity.service';
-import { RegionEntityService } from '../../services/region/region-entity.service';
-import { AcademicYearEntityService } from '../../services/academic-year/academic-year-entity.service';
-import { GradeEntityService } from '../../services/grade/grade-entity.service';
-import { SubjectEntityService } from '../../services/subject/subject-entity.service';
-import { Project } from 'src/app/shared/constants/project.model';
-import { formOneInitData } from '../../constants/step-forms.data';
-import { FormOneInitData, FormOne, FormStatus } from '../../constants/step-forms.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Observable } from 'rxjs'
+import { TranslateService } from '@ngx-translate/core'
+import { map } from 'rxjs/operators'
+import { FieldConfig } from '../../../../shared/form/models/field-config.interface'
+import { CountryEntityService } from '../../services/country/country-entity.service'
+import { RegionEntityService } from '../../services/region/region-entity.service'
+import { AcademicYearEntityService } from '../../services/academic-year/academic-year-entity.service'
+import { GradeEntityService } from '../../services/grade/grade-entity.service'
+import { SubjectEntityService } from '../../services/subject/subject-entity.service'
+import { Project } from 'src/app/shared/constants/project.model'
+import { formOneInitData } from '../../constants/step-forms.data'
+import { FormOneInitData, FormOne, FormStatus } from '../../constants/step-forms.model'
 
 @Component({
   selector: 'app-start-point',
@@ -22,75 +23,24 @@ export class StartPointComponent implements OnInit {
   @Input() project$: Observable<Project>
   initialFormData: FormOneInitData = new formOneInitData
   status: 'inprogress' | 'done' | 'pending' = "pending"
+  buttonConfig: FieldConfig
+  countryDropdown: FieldConfig
+  regionDropdown: FieldConfig
+  academicYearDropdown: FieldConfig
+  gradesDropdown: FieldConfig
+  subjectsDropdown: FieldConfig
 
-  buttonConfig: FieldConfig = {
-    label: 'MARCAR COMO HECHO',
-    name: 'submit',
-    field: 'button',
-    id: 'submitButton',
-    disabled: true,
-    submitted: false,
-  };
-  countryDropdown: FieldConfig = {
-    field: 'dropdown',
-    label: 'Pais',
-    name: 'country',
-    id: 'country',
-    placeholder: 'País',
-    multiselect: false,
-    options: [],
-    selectedItems: []
-  };
-  regionDropdown: FieldConfig = {
-    field: 'dropdown',
-    label: 'Territorio',
-    name: 'region',
-    id: 'region',
-    placeholder: 'Territorio',
-    multiselect: false,
-    options: [],
-    selectedItems: []
-  };
-  academicYearDropdown: FieldConfig = {
-    field: 'dropdown',
-    label: 'Año académico',
-    name: 'academicYear',
-    id: 'academicYear',
-    textField: 'academicYear',
-    placeholder: 'Selecciona el año académico',
-    multiselect: false,
-    options: [],
-    selectedItems: []
-  };
-  gradesDropdown: FieldConfig = {
-    field: 'dropdown',
-    label: 'Curso(s)',
-    name: 'grades',
-    id: 'grade',
-    placeholder: 'Selecciona uno o más cursos',
-    multiselect: true,
-    options: [],
-    selectedItems: []
-  };
-  subjectsDropdown: FieldConfig = {
-    field: 'dropdown',
-    label: 'Asignatura(s)',
-    name: 'subjects',
-    id: 'subject',
-    placeholder: 'Selecciona una o más asignaturas',
-    multiselect: true,
-    options: [],
-    selectedItems: []
-  };
   constructor(
     private countryService: CountryEntityService,
     private regionService: RegionEntityService,
     private academicYearService: AcademicYearEntityService,
     private gradeService: GradeEntityService,
-    private subjectService: SubjectEntityService
+    private subjectService: SubjectEntityService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
+    this.createFormConfig()
     this.getAllCountries()
     this.formInIt()
   }
@@ -99,20 +49,20 @@ export class StartPointComponent implements OnInit {
     if (this.project$)
       this.project$
         .subscribe(data => {
-          let tempinitialFormData = new formOneInitData;
+          let tempinitialFormData = new formOneInitData
           if (data?.country) {
-            this.countryDropdown.selectedItems.push({ ...data.country })
+            this.countryDropdown.selectedItems.push({ ...data.country})
             tempinitialFormData.country.push({ ...data.country })
             this.getRegions(data.country.id)
           }
           if (data?.region) {
-            this.regionDropdown.selectedItems.push({ ...data.region })
+            this.regionDropdown.selectedItems.push({ ...data.region})
             tempinitialFormData.region.push({ ...data.region })
             this.getAcademicYears()
           }
           if (data?.academicYear) {
-            this.academicYearDropdown.selectedItems.push({ ...data.academicYear })
-            tempinitialFormData.academicYear.push({ ...data.academicYear })
+            this.academicYearDropdown.selectedItems.push({ ...data.academicYear})
+            tempinitialFormData.academicYear.push({ ...data.academicYear})
             this.getGrades(data.academicYear.id, data.region.id)
             this.getSubjects(data.academicYear.id, data.region.id)
           }
@@ -126,14 +76,14 @@ export class StartPointComponent implements OnInit {
             this.subjectsDropdown.selectedItems.push(...data.subjects)
             tempinitialFormData.subjects.push({ ...data })
           }
-          this.initialFormData = tempinitialFormData;
+          this.initialFormData = tempinitialFormData
         })
   }
 
   getAllCountries() {
-    this.countryService.getAll();
+    this.countryService.getAll()
     this.countryService.entities$
-      .subscribe(data => this.countryDropdown.options = data);
+      .subscribe(data => this.countryDropdown.options = data)
   }
 
   getRegions(countryId: number) {
@@ -156,7 +106,7 @@ export class StartPointComponent implements OnInit {
   }
 
   getGrades(academicyearId: number, regionId?: number) {
-    const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id;
+    const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id
     this.gradeService.entities$
       .pipe(
         map(grades => grades.filter(grade => grade.academicYear.id == academicyearId && grade.region.id == selectedRegionId))
@@ -164,11 +114,11 @@ export class StartPointComponent implements OnInit {
       .subscribe(newData => {
         if (!newData.length) this.gradeService.getWithQuery(`/regions/${selectedRegionId}/academicyears/${academicyearId}/grades`) //trigger API after checking the store
         this.gradesDropdown.options = newData
-      });
+      })
   }
 
   getSubjects(academicyearId: number, regionId?: number) {
-    const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id;
+    const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id
     this.subjectService.entities$
       .pipe(
         map(subjects => subjects.filter(subject => subject.academicYear.id == academicyearId && subject.region.id == selectedRegionId))
@@ -176,7 +126,7 @@ export class StartPointComponent implements OnInit {
       .subscribe(newData => {
         if (!newData.length) this.subjectService.getWithQuery(`/regions/${selectedRegionId}/academicyears/${academicyearId}/subjects`) //trigger API after checking the store
         this.subjectsDropdown.options = newData
-      });
+      })
   }
 
   checkStatus() {
@@ -193,33 +143,33 @@ export class StartPointComponent implements OnInit {
       !this.subjectsDropdown.selectedItems.length
       ) { this.status = "pending" }
   }
-  
+
   checkInProgress(data: any, type: string) {
-    let values: Array<any> = [];
+    let values: Array<any> = []
     for (var key of Object.keys(this.initialFormData)) {
-      // let value: any;
+      // let value: any
       switch (key) {
         case 'country':
           values.push(this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems))
-          break;
+          break
         case 'region':
           values.push(this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems))
-          break;
+          break
         case 'academicYear':
           values.push(this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems))
-          break;
+          break
         case 'grades':
           values.push(this.isEqual(this.initialFormData.grades, this.gradesDropdown.selectedItems))
-          break;
+          break
         default:
           values.push(this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems))
-          break;
+          break
       }
     }
     console.log(values, "is equal")
     if (values.includes(false)) {
       this.status = 'inprogress'
-    } 
+    }
     this.inProgress.emit(this.status)
     this.buttonConfig.disabled = this.status !== 'inprogress'
   }
@@ -227,26 +177,26 @@ export class StartPointComponent implements OnInit {
   onDropdownSelect(selectedData: any) {
     console.log(selectedData)
     this.checkInProgress(selectedData.val, selectedData.controller)
-    const selectedId = selectedData.val[0]?.id;
+    const selectedId = selectedData.val[0]?.id
     if (selectedData) {
       switch (selectedData.controller) {
         case 'country': {
           this.resetFromCountry()
           if (selectedId) this.getRegions(selectedId)
-          break;
+          break
         }
         case 'region': {
           this.resetFromRegion()
-          if (selectedId) this.getAcademicYears();
-          break;
+          if (selectedId) this.getAcademicYears()
+          break
         }
         case 'academicYear': {
           this.resetFromAcademicYear()
           if (selectedId) {
-            this.getGrades(selectedId);
-            this.getSubjects(selectedId);
+            this.getGrades(selectedId)
+            this.getSubjects(selectedId)
           }
-          break;
+          break
         }
       }
       this.checkInProgress(selectedData.val, selectedData.controller)
@@ -254,7 +204,7 @@ export class StartPointComponent implements OnInit {
   }
 
   handleSubmit() {
-    this.checkStatus();
+    this.checkStatus()
     let formData: FormOne = {
       data: {
         country: this.countryDropdown.selectedItems[0] ? this.countryDropdown.selectedItems[0] : null,
@@ -267,7 +217,7 @@ export class StartPointComponent implements OnInit {
     }
     console.log(formData, "formData ==!!")
     this.buttonConfig.submitted = this.status == 'done'
-    this.onSubmit.emit(formData);
+    this.onSubmit.emit(formData)
   }
 
   resetFromCountry() {
@@ -290,6 +240,84 @@ export class StartPointComponent implements OnInit {
 
   isEqual(d1: any[], d2: any[]) {
     return JSON.stringify(d1) === JSON.stringify(d2)
+  }
+
+  createFormConfig() {
+    this.translateService.stream([  //translation
+      'PROJECT.project_button_markdone',
+      'PROJECT.project_button_done',
+      'STARTING_POINT.project_startingpoint_year',
+      'STARTING_POINT.project_startingpoint_grades',
+      'STARTING_POINT.project_startingpoint_region',
+      'STARTING_POINT.project_startingpoint_country',
+      'STARTING_POINT.project_startingpoint_subjects',
+      'STARTING_POINT.project_startingpoint_year_placeholder',
+      'STARTING_POINT.project_startingpoint_grades_placeholder',
+      'STARTING_POINT.project_startingpoint_region_placeholder',
+      'STARTING_POINT.project_startingpoint_country_placeholder',
+      'STARTING_POINT.project_startingpoint_subjects_placeholder',
+    ]).subscribe(translations => {
+      this.buttonConfig = {
+        label: translations['PROJECT.project_button_markdone'],
+        successLabel:  translations['PROJECT.project_button_done'],
+        name: 'submit',
+        field: 'button',
+        id: 'submitButton',
+        disabled: true,
+        submitted: false,
+      }
+      this.countryDropdown = {
+        field: 'dropdown',
+        label: translations['STARTING_POINT.project_startingpoint_country'],
+        name: 'country',
+        id: 'country',
+        placeholder: translations['STARTING_POINT.project_startingpoint_country_placeholder'],
+        multiselect: false,
+        options: [],
+        selectedItems: []
+      }
+      this.regionDropdown = {
+        field: 'dropdown',
+        label: translations['STARTING_POINT.project_startingpoint_region'],
+        name: 'region',
+        id: 'region',
+        placeholder: translations['STARTING_POINT.project_startingpoint_region_placeholder'],
+        multiselect: false,
+        options: [],
+        selectedItems: []
+      }
+      this.academicYearDropdown = {
+        field: 'dropdown',
+        label: translations['STARTING_POINT.project_startingpoint_year'],
+        name: 'academicYear',
+        id: 'academicYear',
+        textField: 'academicYear',
+        placeholder: translations['STARTING_POINT.project_startingpoint_year_placeholder'],
+        multiselect: false,
+        options: [],
+        selectedItems: []
+      }
+      this.gradesDropdown = {
+        field: 'dropdown',
+        label: translations['STARTING_POINT.project_startingpoint_grades'],
+        name: 'grades',
+        id: 'grade',
+        placeholder: translations['STARTING_POINT.project_startingpoint_grades_placeholder'],
+        multiselect: true,
+        options: [],
+        selectedItems: []
+      }
+      this.subjectsDropdown = {
+        field: 'dropdown',
+        label: translations['STARTING_POINT.project_startingpoint_subjects'],
+        name: 'subjects',
+        id: 'subject',
+        placeholder: translations['STARTING_POINT.project_startingpoint_subjects_placeholder'],
+        multiselect: true,
+        options: [],
+        selectedItems: []
+      }
+    })
   }
 
 }
