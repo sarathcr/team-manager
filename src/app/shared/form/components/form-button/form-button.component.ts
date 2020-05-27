@@ -1,8 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-
-import { Field } from '../../models/field.interface';
-import { FieldConfig } from '../../models/field-config.interface';
+import { Component, OnInit, Input } from '@angular/core'
+import { FieldConfig } from '../../models/field-config.interface'
 
 @Component({
   selector: 'app-form-button',
@@ -10,10 +7,9 @@ import { FieldConfig } from '../../models/field-config.interface';
   styleUrls: ['./form-button.component.scss']
 })
 export class FormButtonComponent implements OnInit {
-  @Input() config: FieldConfig;
+  @Input() config: FieldConfig
   constructor() { }
 
   ngOnInit(): void {
-
   }
 }
