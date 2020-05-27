@@ -1,7 +1,7 @@
-export interface StepMenu {
+import { FormStatus } from './step-forms.model';
+
+export interface StepMenu extends FormStatus {
     id: number;
     name: string;
-    inprogress: boolean;
-    done: boolean;
     selected: boolean;
 }
