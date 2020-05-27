@@ -83,7 +83,7 @@ const entityMetadata: EntityMetadataMap = {
         EditorSidebarComponent,
         ProjectTitleComponent,
         StepMenuComponent,
-        StatusComponent
+        StatusComponent,
     ],
     imports: [
         CommonModule,
