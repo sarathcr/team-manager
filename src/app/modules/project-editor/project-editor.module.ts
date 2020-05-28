@@ -16,8 +16,8 @@ import { StepMenuComponent } from './components/step-menu/step-menu.component';
 import { StepTwoComponent } from './containers/step-two/step-two.component';
 import { TextareaBulletsComponent } from './components/textarea-bullets/textarea-bullets.component';
 import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.component';
-import { GuideQuestionsComponent } from './components/guide-questions/guide-questions.component';
-import { FinalProductComponent } from './components/final-product/final-product.component';
+import { StepThreeComponent } from './containers/step-three/step-three.component';
+import { StepFourComponent } from './containers/step-four/step-four.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
 // pages
 import { HomeComponent } from './containers/home/home.component';
@@ -93,8 +93,8 @@ const entityMetadata: EntityMetadataMap = {
         TextareaBulletsComponent,
         StatusComponent,
         InfoToolTipComponent,
-        GuideQuestionsComponent,
-        FinalProductComponent,
+        StepThreeComponent,
+        StepFourComponent,
         TextareaComponent
     ],
     imports: [

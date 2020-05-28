@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/constants/field.model';
 
 @Component({
-  selector: 'app-final-product',
-  templateUrl: './final-product.component.html',
-  styleUrls: ['./final-product.component.scss']
+  selector: 'app-step-four',
+  templateUrl: './step-four.component.html',
+  styleUrls: ['./step-four.component.scss']
 })
-export class FinalProductComponent implements OnInit {
+export class StepFourComponent implements OnInit {
 
+  status: 'inprogress' | 'done' | 'pending' = "pending"
   buttonConfig: FieldConfig = {
     label: 'MARCAR COMO HECHO',
     name: 'submit',
