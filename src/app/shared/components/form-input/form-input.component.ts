@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 // Interfaces
-import { Field, FieldConfig} from '../../constants/field.interface';
+import { Field, FieldConfig} from '../../constants/field.model';
 
 @Component({
   selector: 'app-form-input',
