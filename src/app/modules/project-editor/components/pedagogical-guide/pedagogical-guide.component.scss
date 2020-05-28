@@ -1,0 +1,21 @@
+@import '../../../../../styles/helpers/_helpers-master';
+.pedagogical-guide{
+    width: 62px;
+    height: 65px;
+    box-shadow:(0 20px 50px -10px rgba(0,0,0,0.1));
+    position: absolute;
+    top: 0;
+    left: -62px;
+    cursor: pointer;
+    &__icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        width: 62px;
+        height: 82px;
+        background-color:  $background-primary;
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 80%);
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 80%);
+    }
+}

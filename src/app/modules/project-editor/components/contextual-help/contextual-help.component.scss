@@ -1,0 +1,20 @@
+@import '../../../../../styles/helpers/_helpers-master';
+.contextual-help{
+    width: 470px;
+    min-height: 100vh;
+    position: fixed;
+    top: 75px;
+    right: -450px;
+    background-color: $background-primary;
+    padding: 35px 0 35px 40px;
+    box-shadow:(0 20px 50px -10px rgba(0,0,0,0.1));
+    &_expanded{
+        right: 0;
+    }
+    &__title{
+        font-size: $font-size-body-s;
+        color:$overtitle-grey;
+        letter-spacing: 1px;
+        line-height: 24px;
+    }
+}
