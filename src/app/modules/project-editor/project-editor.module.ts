@@ -19,8 +19,6 @@ import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.com
 import { GuideQuestionsComponent } from './components/guide-questions/guide-questions.component';
 import { FinalProductComponent } from './components/final-product/final-product.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
-import { ContextualHelpComponent } from './components/contextual-help/contextual-help.component';
-import { PedagogicalGuideComponent } from './components/pedagogical-guide/pedagogical-guide.component';
 // pages
 import { HomeComponent } from './containers/home/home.component';
 import { ProjectEditorComponent } from './containers/project-editor/project-editor.component';
@@ -97,9 +95,7 @@ const entityMetadata: EntityMetadataMap = {
         InfoToolTipComponent,
         GuideQuestionsComponent,
         FinalProductComponent,
-        TextareaComponent,
-        ContextualHelpComponent,
-        PedagogicalGuideComponent
+        TextareaComponent
     ],
     imports: [
         CommonModule,
