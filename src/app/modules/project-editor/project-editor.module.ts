@@ -13,6 +13,9 @@ import { EditorHeaderComponent } from './components/editor-header/editor-header.
 import { EditorSidebarComponent } from './components/editor-sidebar/editor-sidebar.component';
 import { ProjectTitleComponent } from './components/project-title/project-title.component';
 import { StepMenuComponent } from './components/step-menu/step-menu.component';
+import { TematicaComponent } from './components/tematica/tematica.component';
+import { TextareaBulletsComponent } from './components/textarea-bullets/textarea-bullets.component';
+import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.component';
 // pages
 import { HomeComponent } from './pages/home/home.component';
 import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
@@ -83,7 +86,10 @@ const entityMetadata: EntityMetadataMap = {
         EditorSidebarComponent,
         ProjectTitleComponent,
         StepMenuComponent,
-        StatusComponent
+        TematicaComponent,
+        TextareaBulletsComponent,
+        StatusComponent,
+        InfoToolTipComponent
     ],
     imports: [
         CommonModule,
