@@ -20,7 +20,8 @@
     border-radius: 3px;
     z-index: 1;
     &:active, &:focus{
-      border: 2px solid $primary;
+      border: 1px solid $primary;
+      box-shadow: 0 0 0 1px $primary;
     }
   }
   &__label{
@@ -45,7 +46,8 @@
     }
     &:active, &:focus, &:focus-within{
       .dropdown-btn{
-        border: 2px solid $primary !important;
+        border: 1px solid $primary !important;
+        box-shadow: 0 0 0 1px $primary;
       }
     }
     .dropdown-btn{
@@ -55,7 +57,10 @@
       border-radius: 3px !important;
       padding: $padding-input !important;
       border: 1px solid $creator-border !important;
-
+      &:active, &:focus{
+        border: 1px solid $primary !important;
+        box-shadow: 0 0 0 1px $primary;
+      }
       >span:last-child{
         justify-self: end;
         margin-left: auto;
@@ -89,7 +94,7 @@
         transform-origin: center ;
       }
       .selected-item{
-        background: unset !important;
+        background: transparent !important;
         border: none !important;
         color: inherit !important;
         padding: 0 !important;
@@ -119,7 +124,7 @@
       background-color: $background-primary;
       box-shadow: 0 20px 50px -10px $transparent-shadow;
       border: none;
-      margin-top: 0;
+      margin-top: 1px;
       padding-bottom: 5px;
       .multiselect-item-checkbox{
         padding: 10px 15px;
@@ -167,7 +172,8 @@
   }
   &.active{
     .dropdown-btn{
-      border: 2px solid $primary !important;
+      border: 1px solid $primary !important;
+      box-shadow: 0 0 0 1px $primary;
     }
   }
   ::-webkit-scrollbar {
