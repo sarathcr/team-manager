@@ -8,6 +8,7 @@
   left: 0;
   height: 100%;
   padding: 24px 20px 24px 30px;
+  overflow: hidden;
   &__title, &__view{
     font-family: $font-family-tertiary;
     font-size: $font-size-body-s;

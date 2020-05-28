@@ -17,8 +17,8 @@ import { TematicaComponent } from './components/tematica/tematica.component';
 import { TextareaBulletsComponent } from './components/textarea-bullets/textarea-bullets.component';
 import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.component';
 // pages
-import { HomeComponent } from './pages/home/home.component';
-import { ProjectEditorComponent } from './pages/project-editor/project-editor.component';
+import { HomeComponent } from './containers/home/home.component';
+import { ProjectEditorComponent } from './containers/project-editor/project-editor.component';
 
 // ngx translate
 import { TranslateModule } from '@ngx-translate/core';

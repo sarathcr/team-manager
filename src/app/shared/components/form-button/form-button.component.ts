@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { FieldConfig } from '../../models/field-config.interface'
+import { FieldConfig } from '../../constants/field.model'
 
 @Component({
   selector: 'app-form-button',

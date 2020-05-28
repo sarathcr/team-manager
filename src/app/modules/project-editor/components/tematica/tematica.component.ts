@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FieldConfig } from 'src/app/shared/form/models/field-config.interface';
+import { FieldConfig } from '../../../../shared/constants/field.model';
 
 @Component({
   selector: 'app-tematica',
@@ -16,7 +16,7 @@ export class TematicaComponent implements OnInit {
     disabled: false,
     submitted: false,
   };
-  
+
   constructor() { }
 
   ngOnInit(): void {

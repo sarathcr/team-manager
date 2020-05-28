@@ -175,7 +175,8 @@
   },
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss"
+      "styleext": "scss",
+      "style": "scss"
     },
     "@nrwl/schematics:component": {
       "styleext": "scss"

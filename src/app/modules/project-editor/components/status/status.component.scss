@@ -17,6 +17,7 @@
     background-color: $primary;
     position: absolute;
     z-index: 2;
+    transition: all 0.2s ease;
     &_top{
       top:42px;
     }
@@ -39,6 +40,13 @@
       bottom: 90px;
       transform: rotate(180deg);
       transform-origin: bottom;
+    }
+    &_top{
+      background-image: linear-gradient($secondary 33%, rgba(255,255,255,0) 0%);
+      position: absolute;
+      top: 0px;
+      transform: rotate(180deg);
+      transform-origin: top;
     }
   }
   &_done{
