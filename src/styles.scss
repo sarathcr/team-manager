@@ -66,14 +66,23 @@
 }
 
 .project-editor__form {
+  display: flex;
+  width: 100%;
+  padding: $grid-gutter-width/2;
+  padding-left: 40px;
+  padding-right: 40px;
+  flex-direction: column;
+  position: relative;
+}
+.step-section{
   &:first-child{
     .status-indicator__bar_top{
       display: none;
     }
   }
-  // &:last-child{
-  //   .status-indicator__bar_bottom{
-  //     display: none;
-  //   }
-  // }
+  &:last-child{
+    .status-indicator__bar_bottom{
+      display: none;
+    }
+  }
 }

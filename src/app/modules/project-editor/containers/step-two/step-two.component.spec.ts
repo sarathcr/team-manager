@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TematicaComponent } from './tematica.component';
+import { StepTwoComponent } from './step-two.component';
 
 describe('TematicaComponent', () => {
-  let component: TematicaComponent;
-  let fixture: ComponentFixture<TematicaComponent>;
+  let component: StepTwoComponent;
+  let fixture: ComponentFixture<StepTwoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TematicaComponent ]
+      declarations: [ StepTwoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TematicaComponent);
+    fixture = TestBed.createComponent(StepTwoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,16 +3,13 @@
     <app-editor-header [projectData]="titleData" id="project-editor-header" (titleBlur)="handleSubmit($event)"></app-editor-header>
     <app-editor-sidebar id="project-editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
      [items]="items" (onStepClick)="handleStepClick($event)"></app-editor-sidebar>
-    <div class="app">
-      <div class="project-editor__form {{status === 'done' ? 'project-editor__form' : ''}}">
-        <app-status [status] = 'status'></app-status>
-        <app-start-point id="step-0" class="step-section" [project$]="project$" (onSubmit)='handleFormSubmit($event)' (inProgress)='updateInProgress($event)'></app-start-point>
-        <app-tematica></app-tematica>
-        <app-guide-questions></app-guide-questions>
-        <app-final-product></app-final-product>
-      </div>
+    <div class="project-editor__forms">
+      <app-step-one id="step-0" class="step-section" [project$]="project$" (onSubmit)='handleFormSubmit($event)' (inProgress)='updateInProgress($event)'></app-step-one>
+      <app-tematica class="step-section"></app-tematica>
+      <app-guide-questions></app-guide-questions>
+      <app-final-product></app-final-product>
     </div>
-    <app-contextual-help></app-contextual-help>
+
 </div>
 <div *ngIf="notFound">
     Project not found
