@@ -9,6 +9,7 @@ import { Project } from 'src/app/shared/constants/project.model';
 import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.model'
 import { TitleData } from '../../constants/title-data.model';
 import { Observable } from 'rxjs';
+import { Steps } from '../../constants/steps.model';
 
 @Component({
   selector: 'app-project-editor',
@@ -23,6 +24,7 @@ export class ProjectEditorComponent implements OnInit {
   projectUrl: any;
   items: StepMenu[];
   status: string;
+  scrollSpyActive: Steps = 'stepOne'
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -35,6 +37,7 @@ export class ProjectEditorComponent implements OnInit {
     this.projectUrl = this.route.snapshot.paramMap.get('id');
     this.createStepList();
     this.reload();
+    console.log('scrollSpyActive', this.scrollSpyActive)
   }
 
   // to create step list
@@ -138,6 +141,11 @@ export class ProjectEditorComponent implements OnInit {
     console.log(data, "==> in progress") // WIP
     this.status = data.status;
     this.items[0].status = data
+  }
+
+  onScrollSpyChange(sectionId: Steps) {
+    this.scrollSpyActive = sectionId;
+    console.log('====> scroll spy', sectionId)
   }
 
 }

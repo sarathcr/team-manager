@@ -1,6 +1,6 @@
 <div class="project-editor-sidebar">
     <div class="project-editor-sidebar__title">{{title}}</div>
-    <app-step-menu *ngFor="let item of items; index as i" id="menu-{{i}}" [item]="item" [status]="item.status" [selected]="item.selected" [ngClass]="{'active': item.selected == true }"
+    <app-step-menu *ngFor="let item of items; index as i" [i]="i" [item]="item" [status]="item.status" [scrollSpyActive]="scrollSpyActive" [ngClass]="{'active': item.selected == true }"
     (click)="handleStepClick(item.id)">
     </app-step-menu>
     <div class="project-editor-sidebar__view">
