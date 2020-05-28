@@ -51,16 +51,16 @@ export class ProjectEditorComponent implements OnInit {
       ])
       .subscribe(translations => {
         this.items = [
-          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], selected: true, status: 'pending' },
-          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], selected: false, status: 'pending' },
-          { id: 3, name: 'Objetivos competenciales', selected: false, status: 'pending' }, // add localization
-          { id: 4, name: 'Contenidos', selected: false, status: 'pending' }, // add localization
-          { id: 5, name: 'Evaluación', selected: false, status: 'pending' }, // add localization
-          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], selected: false, status: 'pending' },
-          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], selected: false, status: 'pending' },
-          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], selected: false, status: 'pending' },
-          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], selected: false, status: 'pending' },
-          { id: 10, name: 'Interacción con alumnos', selected: false, status: 'pending' } // add localization
+          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], selected: true, status: 'PENDING' },
+          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], selected: false, status: 'PENDING' },
+          { id: 3, name: 'Objetivos competenciales', selected: false, status: 'PENDING' }, // add localization
+          { id: 4, name: 'Contenidos', selected: false, status: 'PENDING' }, // add localization
+          { id: 5, name: 'Evaluación', selected: false, status: 'PENDING' }, // add localization
+          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], selected: false, status: 'PENDING' },
+          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], selected: false, status: 'PENDING' },
+          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], selected: false, status: 'PENDING' },
+          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], selected: false, status: 'PENDING' },
+          { id: 10, name: 'Interacción con alumnos', selected: false, status: 'PENDING' } // add localization
         ];
       }
       );

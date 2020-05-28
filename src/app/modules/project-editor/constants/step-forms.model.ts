@@ -15,7 +15,7 @@ export interface FormOne extends FormStatus {
 }
 
 export interface FormStatus {
-    status: 'inprogress' | 'done' | 'pending'
+    status: 'INPROCESS' | 'DONE' | 'PENDING'
 }
 export interface FormOneData {
     country: Country,

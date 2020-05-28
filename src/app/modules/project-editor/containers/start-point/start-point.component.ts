@@ -11,6 +11,7 @@ import { SubjectEntityService } from '../../services/subject/subject-entity.serv
 import { Project } from 'src/app/shared/constants/project.model'
 import { formOneInitData } from '../../constants/step-forms.data'
 import { FormOneInitData, FormOne, FormStatus } from '../../constants/step-forms.model'
+import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
 
 @Component({
   selector: 'app-start-point',
@@ -22,13 +23,14 @@ export class StartPointComponent implements OnInit {
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
   initialFormData: FormOneInitData = new formOneInitData
-  status: 'inprogress' | 'done' | 'pending' = "pending"
+  status: 'INPROCESS' | 'DONE' | 'PENDING' = "PENDING"
   buttonConfig: FieldConfig
   countryDropdown: FieldConfig
   regionDropdown: FieldConfig
   academicYearDropdown: FieldConfig
   gradesDropdown: FieldConfig
   subjectsDropdown: FieldConfig
+  projectId: number;
 
   constructor(
     private countryService: CountryEntityService,
@@ -36,7 +38,8 @@ export class StartPointComponent implements OnInit {
     private academicYearService: AcademicYearEntityService,
     private gradeService: GradeEntityService,
     private subjectService: SubjectEntityService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private stepStatusService: StepStatusEntityService
   ) { }
 
   ngOnInit(): void {
@@ -50,19 +53,20 @@ export class StartPointComponent implements OnInit {
       this.project$
         .subscribe(data => {
           let tempinitialFormData = new formOneInitData
+          this.projectId = data?.id
           if (data?.country) {
-            this.countryDropdown.selectedItems.push({ ...data.country})
+            this.countryDropdown.selectedItems.push({ ...data.country })
             tempinitialFormData.country.push({ ...data.country })
             this.getRegions(data.country.id)
           }
           if (data?.region) {
-            this.regionDropdown.selectedItems.push({ ...data.region})
+            this.regionDropdown.selectedItems.push({ ...data.region })
             tempinitialFormData.region.push({ ...data.region })
             this.getAcademicYears()
           }
           if (data?.academicYear) {
-            this.academicYearDropdown.selectedItems.push({ ...data.academicYear})
-            tempinitialFormData.academicYear.push({ ...data.academicYear})
+            this.academicYearDropdown.selectedItems.push({ ...data.academicYear })
+            tempinitialFormData.academicYear.push({ ...data.academicYear })
             this.getGrades(data.academicYear.id, data.region.id)
             this.getSubjects(data.academicYear.id, data.region.id)
           }
@@ -77,7 +81,20 @@ export class StartPointComponent implements OnInit {
             tempinitialFormData.subjects.push({ ...data })
           }
           this.initialFormData = tempinitialFormData
+          this.getFormStatus()
         })
+  }
+
+  getFormStatus() {
+    this.stepStatusService.getWithQuery(this.projectId.toString())
+    this.stepStatusService.entities$
+      .pipe(
+        map(statuses => statuses.filter(status => status?.stepid == 1))
+      )
+      .subscribe(data => {
+        this.status = data[0].state
+        this.buttonConfig.submitted = this.status == 'DONE'
+      })
   }
 
   getAllCountries() {
@@ -135,13 +152,13 @@ export class StartPointComponent implements OnInit {
       this.academicYearDropdown.selectedItems.length &&
       this.gradesDropdown.selectedItems.length &&
       this.subjectsDropdown.selectedItems.length
-      ) { this.status = "done" }
+    ) { this.status = "DONE" }
     if (!this.countryDropdown.selectedItems.length &&
       !this.regionDropdown.selectedItems.length &&
       !this.academicYearDropdown.selectedItems.length &&
       !this.gradesDropdown.selectedItems.length &&
       !this.subjectsDropdown.selectedItems.length
-      ) { this.status = "pending" }
+    ) { this.status = "PENDING" }
   }
 
   checkInProgress(data: any, type: string) {
@@ -168,10 +185,10 @@ export class StartPointComponent implements OnInit {
     }
     console.log(values, "is equal")
     if (values.includes(false)) {
-      this.status = 'inprogress'
+      this.status = 'INPROCESS'
     }
     this.inProgress.emit(this.status)
-    this.buttonConfig.disabled = this.status !== 'inprogress'
+    this.buttonConfig.disabled = this.status !== 'INPROCESS'
   }
 
   onDropdownSelect(selectedData: any) {
@@ -211,13 +228,23 @@ export class StartPointComponent implements OnInit {
         region: this.regionDropdown.selectedItems[0] ? this.regionDropdown.selectedItems[0] : null,
         academicYear: this.academicYearDropdown.selectedItems[0] ? this.academicYearDropdown.selectedItems[0] : null,
         grades: this.gradesDropdown.selectedItems,
-        subjects : this.subjectsDropdown.selectedItems
+        subjects: this.subjectsDropdown.selectedItems
       },
       status: this.status
     }
     console.log(formData, "formData ==!!")
-    this.buttonConfig.submitted = this.status == 'done'
+    this.submitFormStatus()
+    this.buttonConfig.submitted = this.status == 'DONE'
     this.onSubmit.emit(formData)
+  }
+
+  submitFormStatus() {
+    const payload = {
+      id: this.projectId,
+      stepid: 1,
+      state: this.status
+    }
+    this.stepStatusService.add(payload)
   }
 
   resetFromCountry() {
@@ -307,7 +334,7 @@ export class StartPointComponent implements OnInit {
       'STARTING_POINT.project_startingpoint_subjects_placeholder',
     ]).subscribe(translations => {
       this.buttonConfig.label = translations['PROJECT.project_button_markdone']
-      this.buttonConfig.successLabel= translations['PROJECT.project_button_done']
+      this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
       this.countryDropdown.label = translations['STARTING_POINT.project_startingpoint_country']
       this.countryDropdown.placeholder = translations['STARTING_POINT.project_startingpoint_country_placeholder']
       this.regionDropdown.label = translations['STARTING_POINT.project_startingpoint_region']
