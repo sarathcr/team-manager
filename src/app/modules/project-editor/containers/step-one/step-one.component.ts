@@ -13,11 +13,11 @@ import { formOneInitData } from '../../constants/step-forms.data'
 import { FormOneInitData, FormOne, FormStatus } from '../../constants/step-forms.model'
 
 @Component({
-  selector: 'app-start-point',
-  templateUrl: './start-point.component.html',
-  styleUrls: ['./start-point.component.scss']
+  selector: 'app-step-one',
+  templateUrl: './step-one.component.html',
+  styleUrls: ['./step-one.component.scss']
 })
-export class StartPointComponent implements OnInit {
+export class StepOneComponent implements OnInit {
   @Output() inProgress: EventEmitter<any> = new EventEmitter<any>()
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
