@@ -8,6 +8,8 @@
         <app-status [status] = 'status'></app-status>
         <app-start-point id="step-0" class="step-section" [project$]="project$" (onSubmit)='handleFormSubmit($event)' (inProgress)='updateInProgress($event)'></app-start-point>
         <app-tematica></app-tematica>
+        <app-guide-questions></app-guide-questions>
+        <app-final-product></app-final-product>
       </div>
     </div>
 </div>
