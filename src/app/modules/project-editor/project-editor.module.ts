@@ -16,6 +16,9 @@ import { StepMenuComponent } from './components/step-menu/step-menu.component';
 import { StepTwoComponent } from './containers/step-two/step-two.component';
 import { TextareaBulletsComponent } from './components/textarea-bullets/textarea-bullets.component';
 import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.component';
+import { StepThreeComponent } from './containers/step-three/step-three.component';
+import { StepFourComponent } from './containers/step-four/step-four.component';
+import { TextareaComponent } from './components/textarea/textarea.component';
 // pages
 import { HomeComponent } from './containers/home/home.component';
 import { ProjectEditorComponent } from './containers/project-editor/project-editor.component';
@@ -89,7 +92,10 @@ const entityMetadata: EntityMetadataMap = {
         StepTwoComponent,
         TextareaBulletsComponent,
         StatusComponent,
-        InfoToolTipComponent
+        InfoToolTipComponent,
+        StepThreeComponent,
+        StepFourComponent,
+        TextareaComponent
     ],
     imports: [
         CommonModule,
