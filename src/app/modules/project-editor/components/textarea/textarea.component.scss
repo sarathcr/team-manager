@@ -1,0 +1,45 @@
+@import '../../../../../styles/helpers/_helpers-master';
+.textarea{
+    width: 100%;
+    min-height: 388px;
+    border: 1px solid $creator-border-active;
+    border-radius: 3px;
+    padding: 22px;
+    margin-bottom: 69px;
+    position: relative;
+    &__description{
+        background: none;
+        border: none;
+        width: 100%;
+        font-family: $font-family-tertiary;
+        font-size: $font-size-body-s;
+        color: $blue-whale;
+        line-height: 24px;
+        padding: 0;
+        height:-webkit-fill-available;
+        overflow: hidden;
+        resize: none;
+        &:placeholder{
+            color: $overtitle-grey;
+        }
+    }
+    &__label{
+        position: absolute;
+        font-size: $font-size-small;
+        font-weight: bold;
+        letter-spacing: 0.2px;
+        line-height: $font-size-small;
+        top: 0;
+        transform: translateY(-50%);
+        padding: 2px 5px;
+        background-color: $creator-background;
+        left: $padding-m;
+        z-index: 2;
+    }
+    &_active{
+        border: 1px solid $creator-border;
+        &__label{
+            display: none;
+        }
+    }
+}
