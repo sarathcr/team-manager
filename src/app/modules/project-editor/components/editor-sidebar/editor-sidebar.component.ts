@@ -11,7 +11,7 @@ export class EditorSidebarComponent implements OnInit {
 
   @Input() title: string;
   @Input() view: string;
-  @Input() scrollSpyActive: Steps;
+  @Input() spyActive: Steps;
   @Input() items: StepMenu[];
   @Output() onStepClick = new EventEmitter();
 

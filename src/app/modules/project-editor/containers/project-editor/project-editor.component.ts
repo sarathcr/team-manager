@@ -3,7 +3,6 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectEntityService } from '../../services/project/project-entity.service';
 import { map } from 'rxjs/operators';
-// ngx-translate
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
 import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.model'
@@ -24,7 +23,7 @@ export class ProjectEditorComponent implements OnInit {
   projectUrl: any;
   items: StepMenu[];
   status: string;
-  scrollSpyActive: Steps = 'stepOne'
+  spyActive: Steps = 'stepOne'
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -37,7 +36,6 @@ export class ProjectEditorComponent implements OnInit {
     this.projectUrl = this.route.snapshot.paramMap.get('id');
     this.createStepList();
     this.reload();
-    console.log('scrollSpyActive', this.scrollSpyActive)
   }
 
   // to create step list
@@ -54,16 +52,16 @@ export class ProjectEditorComponent implements OnInit {
       ])
       .subscribe(translations => {
         this.items = [
-          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], selected: true, status: 'pending' },
-          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], selected: false, status: 'pending' },
-          { id: 3, name: 'Objetivos competenciales', selected: false, status: 'pending' }, // add localization
-          { id: 4, name: 'Contenidos', selected: false, status: 'pending' }, // add localization
-          { id: 5, name: 'Evaluación', selected: false, status: 'pending' }, // add localization
-          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], selected: false, status: 'pending' },
-          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], selected: false, status: 'pending' },
-          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], selected: false, status: 'pending' },
-          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], selected: false, status: 'pending' },
-          { id: 10, name: 'Interacción con alumnos', selected: false, status: 'pending' } // add localization
+          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], status: 'pending' },
+          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], status: 'pending' },
+          { id: 3, name: 'Objetivos competenciales', status: 'pending' }, // add localization
+          { id: 4, name: 'Contenidos', status: 'pending' }, // add localization
+          { id: 5, name: 'Evaluación', status: 'pending' }, // add localization
+          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], status: 'pending' },
+          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], status: 'pending' },
+          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], status: 'pending' },
+          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], status: 'pending' },
+          { id: 10, name: 'Interacción con alumnos', status: 'pending' } // add localization
         ];
       }
       );
@@ -118,19 +116,6 @@ export class ProjectEditorComponent implements OnInit {
     }
   }
 
-  //function to handle the click of step menu
-  handleStepClick(id: number) {
-    // document.querySelector('#step-' + value).scrollIntoView();
-    this.items.forEach(item => {
-      if (item.selected && item.id != id) {
-        item.selected = false;
-      }
-      if (item.id == id) {
-        item.selected = true;
-      }
-    })
-  }
-
   handleFormSubmit(data: any) {
     this.status = data.status;
     this.handleSubmit(data.data)
@@ -144,8 +129,7 @@ export class ProjectEditorComponent implements OnInit {
   }
 
   onScrollSpyChange(sectionId: Steps) {
-    this.scrollSpyActive = sectionId;
-    console.log('====> scroll spy', sectionId)
+    this.spyActive = sectionId;
   }
 
 }

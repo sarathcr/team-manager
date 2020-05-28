@@ -10,10 +10,8 @@ import { steps } from '../../constants/steps.data';
 export class StepMenuComponent implements OnInit {
 
   @Input() item:any;
-  @Input() status: 'inprogress' | 'done' | 'pending';
-  @Input() selected:boolean;
   @Input() i: number;
-  @Input() scrollSpyActive: Steps;
+  @Input() spyActive: Steps;
   steps: Steps[] =  [...steps]
   
   constructor() { }
