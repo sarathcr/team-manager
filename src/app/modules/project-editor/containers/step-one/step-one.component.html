@@ -1,4 +1,5 @@
-<div class="start-point">
+<div class="project-editor__form step-one">
+  <app-status [status] = 'status'></app-status>
   <div class="project-form">
     <h1 class="project-form__title title_s"><span>1. </span>Punto de partida<app-info-tooltip></app-info-tooltip></h1>
     <p class="project-form__description">
@@ -11,6 +12,6 @@
     <app-dropdown [config]='academicYearDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
     <app-dropdown [config]='gradesDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
     <app-dropdown [config]='subjectsDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
-    <app-form-button [config]='buttonConfig' (click)='handleSubmit()'></app-form-button>
+    <app-form-button [config]='buttonConfig' (onClick)='handleSubmit()'></app-form-button>
   </div>
 </div>

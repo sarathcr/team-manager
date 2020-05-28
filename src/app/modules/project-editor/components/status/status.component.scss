@@ -40,6 +40,7 @@
       bottom: 90px;
       transform: rotate(180deg);
       transform-origin: bottom;
+      display: none;
     }
     &_top{
       background-image: linear-gradient($secondary 33%, rgba(255,255,255,0) 0%);
@@ -47,6 +48,7 @@
       top: 0px;
       transform: rotate(180deg);
       transform-origin: top;
+      height: 140px;
     }
   }
   &_done{

@@ -14,11 +14,11 @@ import { FormOneInitData, FormOne, FormStatus } from '../../constants/step-forms
 import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
 
 @Component({
-  selector: 'app-start-point',
-  templateUrl: './start-point.component.html',
-  styleUrls: ['./start-point.component.scss']
+  selector: 'app-step-one',
+  templateUrl: './step-one.component.html',
+  styleUrls: ['./step-one.component.scss']
 })
-export class StartPointComponent implements OnInit {
+export class StepOneComponent implements OnInit {
   @Output() inProgress: EventEmitter<any> = new EventEmitter<any>()
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
@@ -45,6 +45,7 @@ export class StartPointComponent implements OnInit {
   ngOnInit(): void {
     this.createFormConfig()
     this.getAllCountries()
+    this.getAcademicYears()
     this.formInIt()
   }
 
@@ -60,25 +61,29 @@ export class StartPointComponent implements OnInit {
             this.getRegions(data.country.id)
           }
           if (data?.region) {
-            this.regionDropdown.selectedItems.push({ ...data.region })
-            tempinitialFormData.region.push({ ...data.region })
-            this.getAcademicYears()
+            const regionData = { id: data.region?.id, name: data.region?.name }
+            this.regionDropdown.selectedItems.push(regionData)
+            tempinitialFormData.region.push(regionData)
           }
           if (data?.academicYear) {
             this.academicYearDropdown.selectedItems.push({ ...data.academicYear })
             tempinitialFormData.academicYear.push({ ...data.academicYear })
+          }
+          if (data?.region && data?.academicYear) {
             this.getGrades(data.academicYear.id, data.region.id)
             this.getSubjects(data.academicYear.id, data.region.id)
           }
           if (data?.grades) {
+            const gradesData = this.changeResponseFormat(data.grades)
             this.gradesDropdown.selectedItems = []
-            this.gradesDropdown.selectedItems.push(...data.grades)
-            tempinitialFormData.grades.push({ ...data })
+            this.gradesDropdown.selectedItems.push(...gradesData)
+            tempinitialFormData.grades.push(...gradesData)
           }
           if (data?.subjects?.length) {
+            const subjectData = this.changeResponseFormat(data.subjects)
             this.subjectsDropdown.selectedItems = []
-            this.subjectsDropdown.selectedItems.push(...data.subjects)
-            tempinitialFormData.subjects.push({ ...data })
+            this.subjectsDropdown.selectedItems.push(...subjectData)
+            tempinitialFormData.subjects.push(...subjectData)
           }
           this.initialFormData = tempinitialFormData
           this.getFormStatus()
@@ -92,9 +97,13 @@ export class StartPointComponent implements OnInit {
         map(statuses => statuses.filter(status => status?.stepid == 1))
       )
       .subscribe(data => {
-        this.status = data[0].state
+        this.status = data[0]?.state
         this.buttonConfig.submitted = this.status == 'DONE'
       })
+    }
+    
+  changeResponseFormat(data) {
+    return data.map(({ id, name }) => ({ id, name }))
   }
 
   getAllCountries() {
@@ -183,32 +192,30 @@ export class StartPointComponent implements OnInit {
           break
       }
     }
-    console.log(values, "is equal")
     if (values.includes(false)) {
       this.status = 'INPROCESS'
     }
     this.inProgress.emit(this.status)
-    this.buttonConfig.disabled = this.status !== 'INPROCESS'
+    // this.buttonConfig.disabled = this.status !== 'inprogress'
   }
 
   onDropdownSelect(selectedData: any) {
-    console.log(selectedData)
     this.checkInProgress(selectedData.val, selectedData.controller)
     const selectedId = selectedData.val[0]?.id
     if (selectedData) {
       switch (selectedData.controller) {
         case 'country': {
-          this.resetFromCountry()
+          this.resetForm(selectedData.controller)
           if (selectedId) this.getRegions(selectedId)
           break
         }
         case 'region': {
-          this.resetFromRegion()
+          this.resetForm(selectedData.controller)
           if (selectedId) this.getAcademicYears()
           break
         }
         case 'academicYear': {
-          this.resetFromAcademicYear()
+          this.resetForm(selectedData.controller)
           if (selectedId) {
             this.getGrades(selectedId)
             this.getSubjects(selectedId)
@@ -217,6 +224,26 @@ export class StartPointComponent implements OnInit {
         }
       }
       this.checkInProgress(selectedData.val, selectedData.controller)
+    }
+    this.handleButtonDisable()
+  }
+
+  handleButtonDisable() {
+    if ((!this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems) ||
+      !this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems) ||
+      !this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems) ||
+      !this.isEqual(this.initialFormData.grades, this.gradesDropdown.selectedItems) ||
+      !this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems)
+    ) && (this.countryDropdown.selectedItems.length &&
+      this.regionDropdown.selectedItems.length &&
+      this.academicYearDropdown.selectedItems.length &&
+      this.gradesDropdown.selectedItems.length &&
+      this.subjectsDropdown.selectedItems.length)) {
+      this.buttonConfig.disabled = false
+      // this.buttonConfig.submitted = false  //WIP
+    } else {
+      this.buttonConfig.disabled = true
+      // this.buttonConfig.submitted = true  //WIP
     }
   }
 
@@ -247,22 +274,17 @@ export class StartPointComponent implements OnInit {
     this.stepStatusService.add(payload)
   }
 
-  resetFromCountry() {
-    this.regionDropdown.selectedItems = []
-    this.academicYearDropdown.selectedItems = []
-    this.gradesDropdown.selectedItems = []
-    this.subjectsDropdown.selectedItems = []
-  }
-
-  resetFromRegion() {
-    this.academicYearDropdown.selectedItems = []
-    this.gradesDropdown.selectedItems = []
-    this.subjectsDropdown.selectedItems = []
-  }
-
-  resetFromAcademicYear() {
-    this.gradesDropdown.selectedItems = []
-    this.subjectsDropdown.selectedItems = []
+  resetForm(field: string) {
+    if (field == 'country' || field == 'region' || field == 'academicYear') {
+      this.gradesDropdown.selectedItems = []
+      this.subjectsDropdown.selectedItems = []
+    }
+    if (field == 'country' || field == 'region') {
+      this.academicYearDropdown.selectedItems = []
+    }
+    if (field == 'country') {
+      this.regionDropdown.selectedItems = []
+    }
   }
 
   isEqual(d1: any[], d2: any[]) {

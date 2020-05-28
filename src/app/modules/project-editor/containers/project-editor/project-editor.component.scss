@@ -6,14 +6,9 @@
   position: relative;
   height: 100%;
   z-index: 1;
-  &__form{
-    display: flex;
+  &__forms{
     width: 100%;
-    padding: $grid-gutter-width/2;
-    padding-left: 40px;
-    padding-right: 40px;
-    flex-direction: column;
-    position: relative;
+    // flex-direction: column;
     max-width: 760px;
   }
   &__bg{

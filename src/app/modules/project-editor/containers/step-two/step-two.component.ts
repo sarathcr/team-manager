@@ -3,11 +3,11 @@ import { FieldConfig } from '../../../../shared/constants/field.model';
 
 @Component({
   selector: 'app-tematica',
-  templateUrl: './tematica.component.html',
-  styleUrls: ['./tematica.component.scss']
+  templateUrl: './step-two.component.html',
+  styleUrls: ['./step-two.component.scss']
 })
-export class TematicaComponent implements OnInit {
-
+export class StepTwoComponent implements OnInit {
+  status: 'inprogress' | 'done' | 'pending' = "pending"
   buttonConfig: FieldConfig = {
     label: 'MARCAR COMO HECHO',
     name: 'submit',

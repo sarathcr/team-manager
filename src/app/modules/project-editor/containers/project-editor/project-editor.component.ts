@@ -69,7 +69,6 @@ export class ProjectEditorComponent implements OnInit {
 
   // Function create or update the project
   handleSubmit(projectData: object) {
-    console.log(projectData)
     if (!this.project?.id) {
       // create mode
       const newProject = {
@@ -130,7 +129,6 @@ export class ProjectEditorComponent implements OnInit {
   }
 
   handleFormSubmit(data: any) {
-    console.log(data.status, "from form++++")
     this.status = data.status;
     this.handleSubmit(data.data)
   }

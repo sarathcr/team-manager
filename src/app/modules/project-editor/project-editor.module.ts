@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectEditorRoutingModule } from './project-editor-routing.module';
 // containers
-import { StartPointComponent } from './containers/start-point/start-point.component';
+import { StepOneComponent } from './containers/step-one/step-one.component';
 // components
 import { ProjectThumbnailComponent } from './components/project-thumbnail/project-thumbnail.component';
 import { CreateProjectComponent } from './components/create-project/create-project.component';
@@ -13,7 +13,7 @@ import { EditorHeaderComponent } from './components/editor-header/editor-header.
 import { EditorSidebarComponent } from './components/editor-sidebar/editor-sidebar.component';
 import { ProjectTitleComponent } from './components/project-title/project-title.component';
 import { StepMenuComponent } from './components/step-menu/step-menu.component';
-import { TematicaComponent } from './components/tematica/tematica.component';
+import { StepTwoComponent } from './containers/step-two/step-two.component';
 import { TextareaBulletsComponent } from './components/textarea-bullets/textarea-bullets.component';
 import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.component';
 // pages
@@ -86,14 +86,14 @@ const entityMetadata: EntityMetadataMap = {
     declarations: [
         HomeComponent,
         ProjectEditorComponent,
-        StartPointComponent,
+        StepOneComponent,
         ProjectThumbnailComponent,
         CreateProjectComponent,
         EditorHeaderComponent,
         EditorSidebarComponent,
         ProjectTitleComponent,
         StepMenuComponent,
-        TematicaComponent,
+        StepTwoComponent,
         TextareaBulletsComponent,
         StatusComponent,
         InfoToolTipComponent
