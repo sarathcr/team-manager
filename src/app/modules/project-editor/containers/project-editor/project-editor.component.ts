@@ -9,6 +9,8 @@ import { Project } from 'src/app/shared/constants/project.model';
 import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.model'
 import { TitleData } from '../../constants/title-data.model';
 import { Observable } from 'rxjs';
+import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service';
+import { StepStatus } from '../../constants/step-status.model';
 
 @Component({
   selector: 'app-project-editor',
@@ -18,17 +20,20 @@ import { Observable } from 'rxjs';
 export class ProjectEditorComponent implements OnInit {
   project: Project;
   project$: Observable<Project>;
+  formStatus$: Observable<any>
   notFound: boolean;
   titleData: TitleData;
   projectUrl: any;
   items: StepMenu[];
-  status: string;
+  status: 'INPROCESS' | 'DONE' | 'PENDING';
+  stepId: number
 
   constructor(
     private projectsService: ProjectEntityService,
     private route: ActivatedRoute,
     private location: Location,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private stepStatusService: StepStatusEntityService
   ) { }
 
   ngOnInit(): void {
@@ -69,6 +74,7 @@ export class ProjectEditorComponent implements OnInit {
 
   // Function create or update the project
   handleSubmit(projectData: object) {
+    console.log(projectData)
     if (!this.project?.id) {
       // create mode
       const newProject = {
@@ -81,6 +87,7 @@ export class ProjectEditorComponent implements OnInit {
             this.location.go('projects/' + newResProject.id);
             this.projectUrl = newResProject.id;
             this.reload();
+            this.submitFormStatus();
           }
         );
     } else {
@@ -90,6 +97,7 @@ export class ProjectEditorComponent implements OnInit {
         ...projectData
       }
       this.projectsService.update(updateProject);
+      this.submitFormStatus();
     }
   }
 
@@ -106,6 +114,7 @@ export class ProjectEditorComponent implements OnInit {
         if (project) {
           this.notFound = false;
           this.titleData = { id: project.id, title: project.title };
+          this.stepStatusService.getWithQuery(project.id.toString())
         } else {
           // WIP
           // this.projectsService.getWithQuery(`/projects/${this.projectUrl.toString()}`);
@@ -113,6 +122,7 @@ export class ProjectEditorComponent implements OnInit {
         }
       })
     }
+    // this.formStatus$ = this.stepStatusService.entities$
   }
 
   //function to handle the click of step menu
@@ -130,14 +140,24 @@ export class ProjectEditorComponent implements OnInit {
 
   handleFormSubmit(data: any) {
     this.status = data.status;
+    this.stepId = data.stepid
     this.handleSubmit(data.data)
   }
 
   // inprogress
-  updateInProgress(data:any) {
+  updateInProgress(data: any) {
     console.log(data, "==> in progress") // WIP
     this.status = data.status;
     this.items[0].status = data
+  }
+
+  submitFormStatus(){
+    const formStatus: StepStatus = {
+      id: this.project?.id,
+      stepid: this.stepId,
+      state: this.status
+    }
+    this.stepStatusService.add(formStatus)
   }
 
 }

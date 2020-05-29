@@ -12,6 +12,7 @@ import { Project } from 'src/app/shared/constants/project.model'
 import { formOneInitData } from '../../constants/step-forms.data'
 import { FormOneInitData, FormOne, FormStatus } from '../../constants/step-forms.model'
 import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
+import { StepStatus } from '../../constants/step-status.model'
 
 @Component({
   selector: 'app-step-one',
@@ -22,6 +23,7 @@ export class StepOneComponent implements OnInit {
   @Output() inProgress: EventEmitter<any> = new EventEmitter<any>()
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
+  @Input() formStatus$: Observable<StepStatus[]>
   initialFormData: FormOneInitData = new formOneInitData
   status: 'INPROCESS' | 'DONE' | 'PENDING' = "PENDING"
   buttonConfig: FieldConfig
@@ -45,8 +47,8 @@ export class StepOneComponent implements OnInit {
   ngOnInit(): void {
     this.createFormConfig()
     this.getAllCountries()
-    this.getAcademicYears()
     this.formInIt()
+    this.getFormStatus()
   }
 
   formInIt() {
@@ -64,12 +66,11 @@ export class StepOneComponent implements OnInit {
             const regionData = { id: data.region?.id, name: data.region?.name }
             this.regionDropdown.selectedItems.push(regionData)
             tempinitialFormData.region.push(regionData)
+            this.getAcademicYears()
           }
           if (data?.academicYear) {
             this.academicYearDropdown.selectedItems.push({ ...data.academicYear })
             tempinitialFormData.academicYear.push({ ...data.academicYear })
-          }
-          if (data?.region && data?.academicYear) {
             this.getGrades(data.academicYear.id, data.region.id)
             this.getSubjects(data.academicYear.id, data.region.id)
           }
@@ -86,24 +87,22 @@ export class StepOneComponent implements OnInit {
             tempinitialFormData.subjects.push(...subjectData)
           }
           this.initialFormData = tempinitialFormData
-          this.getFormStatus()
         })
   }
 
+  changeResponseFormat(data) {
+    return data.map(({ id, name }) => ({ id, name }))
+  }
+
   getFormStatus() {
-    this.stepStatusService.getWithQuery(this.projectId.toString())
     this.stepStatusService.entities$
-      .pipe(
-        map(statuses => statuses.filter(status => status?.stepid == 1))
-      )
+      .pipe(map(statuses => {
+        return statuses.filter(status => status?.stepid == 1)
+      }))
       .subscribe(data => {
         this.status = data[0]?.state
         this.buttonConfig.submitted = this.status == 'DONE'
       })
-    }
-    
-  changeResponseFormat(data) {
-    return data.map(({ id, name }) => ({ id, name }))
   }
 
   getAllCountries() {
@@ -156,18 +155,21 @@ export class StepOneComponent implements OnInit {
   }
 
   checkStatus() {
+    if (this.checkNonEmptyField) {
+      this.status = "DONE"
+    } else {
+      this.status = "PENDING"
+    }
+  }
+
+  checkNonEmptyField() {
     if (this.countryDropdown.selectedItems.length &&
       this.regionDropdown.selectedItems.length &&
       this.academicYearDropdown.selectedItems.length &&
       this.gradesDropdown.selectedItems.length &&
       this.subjectsDropdown.selectedItems.length
-    ) { this.status = "DONE" }
-    if (!this.countryDropdown.selectedItems.length &&
-      !this.regionDropdown.selectedItems.length &&
-      !this.academicYearDropdown.selectedItems.length &&
-      !this.gradesDropdown.selectedItems.length &&
-      !this.subjectsDropdown.selectedItems.length
-    ) { this.status = "PENDING" }
+    ) { return true }
+    return false
   }
 
   checkInProgress(data: any, type: string) {
@@ -196,7 +198,6 @@ export class StepOneComponent implements OnInit {
       this.status = 'INPROCESS'
     }
     this.inProgress.emit(this.status)
-    // this.buttonConfig.disabled = this.status !== 'inprogress'
   }
 
   onDropdownSelect(selectedData: any) {
@@ -229,21 +230,22 @@ export class StepOneComponent implements OnInit {
   }
 
   handleButtonDisable() {
-    if ((!this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems) ||
+    if (!this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.grades, this.gradesDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems)
-    ) && (this.countryDropdown.selectedItems.length &&
-      this.regionDropdown.selectedItems.length &&
-      this.academicYearDropdown.selectedItems.length &&
-      this.gradesDropdown.selectedItems.length &&
-      this.subjectsDropdown.selectedItems.length)) {
-      this.buttonConfig.disabled = false
-      // this.buttonConfig.submitted = false  //WIP
-    } else {
+    ) {
+      if (this.checkNonEmptyField()) {
+        this.buttonConfig.disabled = false
+        this.buttonConfig.submitted = false
+      } else {
+        this.buttonConfig.disabled = true
+        this.buttonConfig.submitted = false
+      }
+    } else if (this.checkNonEmptyField()) {
       this.buttonConfig.disabled = true
-      // this.buttonConfig.submitted = true  //WIP
+      this.buttonConfig.submitted = true
     }
   }
 
@@ -257,21 +259,14 @@ export class StepOneComponent implements OnInit {
         grades: this.gradesDropdown.selectedItems,
         subjects: this.subjectsDropdown.selectedItems
       },
-      status: this.status
-    }
-    console.log(formData, "formData ==!!")
-    this.submitFormStatus()
-    this.buttonConfig.submitted = this.status == 'DONE'
-    this.onSubmit.emit(formData)
-  }
-
-  submitFormStatus() {
-    const payload = {
-      id: this.projectId,
+      status: this.status,
       stepid: 1,
-      state: this.status
+
     }
-    this.stepStatusService.add(payload)
+    this.buttonConfig.submitted = this.status == 'DONE'
+    this.buttonConfig.disabled = this.status == "DONE"
+    console.log(formData)
+    this.onSubmit.emit(formData)
   }
 
   resetForm(field: string) {

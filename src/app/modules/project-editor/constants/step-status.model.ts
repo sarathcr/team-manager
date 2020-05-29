@@ -1,5 +1,5 @@
 export class StepStatus {
-    id: number;
+    id?: number;
     stepid?: number;
     state?: 'INPROCESS' | 'DONE' | 'PENDING';
 }
