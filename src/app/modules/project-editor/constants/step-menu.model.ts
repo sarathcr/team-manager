@@ -5,3 +5,4 @@ export interface StepMenu extends FormStatus {
     name: string;
     selected: boolean;
 }
+

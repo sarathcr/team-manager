@@ -5,7 +5,7 @@
      [items]="items" (onStepClick)="handleStepClick($event)"></app-editor-sidebar>
     <div class="project-editor__forms">
       <app-step-one id="step-0" class="step-section" [project$]="project$" (onSubmit)='handleFormSubmit($event)' (inProgress)='updateInProgress($event)'></app-step-one>
-      <app-tematica class="step-section"></app-tematica>
+      <app-tematica class="step-section"  [project$]="project$"></app-tematica>
       <app-step-three></app-step-three>
       <app-step-four></app-step-four>
     </div>

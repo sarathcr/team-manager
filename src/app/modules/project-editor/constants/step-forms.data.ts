@@ -1,4 +1,4 @@
-import { FormOneInitData, FormOne } from './step-forms.model'
+import { FormOneInitData, FormOne, FormTwoInitData } from './step-forms.model'
 
 export class formOneInitData implements FormOneInitData {
     country = [];
@@ -6,4 +6,8 @@ export class formOneInitData implements FormOneInitData {
     academicYear = [];
     grades = [];
     subjects = [];
+}
+
+export class formTwoInitData implements FormTwoInitData {
+  themes = []
 }
