@@ -3,7 +3,6 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectEntityService } from '../../services/project/project-entity.service';
 import { map } from 'rxjs/operators';
-// ngx-translate
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
 import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.model'
@@ -11,6 +10,7 @@ import { TitleData } from '../../constants/title-data.model';
 import { Observable } from 'rxjs';
 import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service';
 import { StepStatus } from '../../constants/step-status.model';
+import { Steps } from '../../constants/steps.model';
 
 @Component({
   selector: 'app-project-editor',
@@ -27,6 +27,7 @@ export class ProjectEditorComponent implements OnInit {
   items: StepMenu[];
   status: 'INPROCESS' | 'DONE' | 'PENDING';
   stepId: number
+  spyActive: Steps = 'stepOne'
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -56,16 +57,16 @@ export class ProjectEditorComponent implements OnInit {
       ])
       .subscribe(translations => {
         this.items = [
-          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], selected: true, status: 'PENDING' },
-          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], selected: false, status: 'PENDING' },
-          { id: 3, name: 'Objetivos competenciales', selected: false, status: 'PENDING' }, // add localization
-          { id: 4, name: 'Contenidos', selected: false, status: 'PENDING' }, // add localization
-          { id: 5, name: 'Evaluación', selected: false, status: 'PENDING' }, // add localization
-          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], selected: false, status: 'PENDING' },
-          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], selected: false, status: 'PENDING' },
-          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], selected: false, status: 'PENDING' },
-          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], selected: false, status: 'PENDING' },
-          { id: 10, name: 'Interacción con alumnos', selected: false, status: 'PENDING' } // add localization
+          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], status: 'PENDING' },
+          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], status: 'PENDING' },
+          { id: 3, name: 'Objetivos competenciales', status: 'PENDING' }, // add localization
+          { id: 4, name: 'Contenidos', status: 'PENDING' }, // add localization
+          { id: 5, name: 'Evaluación', status: 'PENDING' }, // add localization
+          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], status: 'PENDING' },
+          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], status: 'PENDING' },
+          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], status: 'PENDING' },
+          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], status: 'PENDING' },
+          { id: 10, name: 'Interacción con alumnos', status: 'PENDING' } // add localization
         ];
       }
       );
@@ -125,19 +126,6 @@ export class ProjectEditorComponent implements OnInit {
     // this.formStatus$ = this.stepStatusService.entities$
   }
 
-  //function to handle the click of step menu
-  handleStepClick(id: number) {
-    // document.querySelector('#step-' + value).scrollIntoView();
-    this.items.forEach(item => {
-      if (item.selected && item.id != id) {
-        item.selected = false;
-      }
-      if (item.id == id) {
-        item.selected = true;
-      }
-    })
-  }
-
   handleFormSubmit(data: any) {
     this.status = data.status;
     this.stepId = data.stepid
@@ -158,6 +146,10 @@ export class ProjectEditorComponent implements OnInit {
       state: this.status
     }
     this.stepStatusService.add(formStatus)
+  }
+  
+  onScrollSpyChange(sectionId: Steps) {
+    this.spyActive = sectionId;
   }
 
 }
