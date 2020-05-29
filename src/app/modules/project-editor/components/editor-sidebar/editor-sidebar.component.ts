@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { StepMenu } from '../../constants/step-menu.model';
-import { Steps } from '../../constants/steps.model';
+import { StepId, Step } from '../../constants/step.model';
 
 @Component({
   selector: 'app-editor-sidebar',
@@ -11,19 +10,14 @@ export class EditorSidebarComponent implements OnInit {
 
   @Input() title: string;
   @Input() view: string;
-  @Input() spyActive: Steps;
-  @Input() items: StepMenu[];
-  @Output() onStepClick = new EventEmitter();
+  @Input() spyActive: StepId;
+  @Input() steps: Step[];
 
   constructor() { }
 
   ngOnInit(): void {
   }
-
-  //Function to emit menu item number to output
-  handleStepClick(id: number) {
-    this.onStepClick.emit(id);
-  }
+  
 }
 
 

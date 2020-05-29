@@ -1,8 +1,8 @@
-<div class="menu" [ngClass]="{'menu-inprocess' : item.status == 'inprogress', 'menu-active' : spyActive == this.steps[this.i]}">
-    <span class="menu__step" *ngIf="item.status == 'done'">
+<div class="menu" [ngClass]="{'menu-inprocess' : step.status == 'INPROCESS', 'menu-active' : spyActive == this.step.id}">
+    <span class="menu__step" *ngIf="step.status == 'DONE'">
         <span class="icon icon-ic_check"></span>
     </span>
-    <span class="menu__step" *ngIf="item.status !== 'done'">
-        {{this.i + 1 }}.
-    </span>{{item.name}}
+    <span class="menu__step" *ngIf="step.status !== 'DONE'">
+        {{this.step.stepid}}.
+    </span>{{step.name}}
 </div>

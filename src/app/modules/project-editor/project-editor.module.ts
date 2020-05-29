@@ -43,6 +43,8 @@ import { AcademicYearDataService } from './services/academic-year/academic-year-
 import { AcademicYearEntityService } from './services/academic-year/academic-year-entity.service';
 import { GradeEntityService } from './services/grade/grade-entity.service';
 import { StatusComponent } from './components/status/status.component';
+import { StepStatusEntityService } from './services/step-status/step-status-entity.service';
+import { StepStatusDataService } from './services/step-status/step-status-data.service';
 import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive';
 
 const entityMetadata: EntityMetadataMap = {
@@ -73,6 +75,11 @@ const entityMetadata: EntityMetadataMap = {
       }
     },
     AcademicYear: {
+      entityDispatcherOptions: {
+        optimisticUpdate: true
+      }
+    },
+    StepStatus: {
       entityDispatcherOptions: {
         optimisticUpdate: true
       }
@@ -120,7 +127,9 @@ const entityMetadata: EntityMetadataMap = {
         GradeDataService,
         GradeEntityService,
         AcademicYearDataService,
-        AcademicYearEntityService
+        AcademicYearEntityService,
+        StepStatusEntityService,
+        StepStatusDataService
     ]
 })
 
@@ -134,7 +143,8 @@ export class ProjectEditorModule {
         private regionDataService: RegionDataService,
         private subjectDataService: SubjectDataService,
         private gradeDataService: GradeDataService,
-        private academicYearDataService: AcademicYearDataService) {
+        private academicYearDataService: AcademicYearDataService,
+        private stepStatusDataService: StepStatusDataService) {
 
         eds.registerMetadataMap(entityMetadata);
         entityDataService.registerService('Project', projectsDataService);
@@ -143,5 +153,6 @@ export class ProjectEditorModule {
         entityDataService.registerService('Region', regionDataService);
         entityDataService.registerService('Grade', gradeDataService);
         entityDataService.registerService('AcademicYear', academicYearDataService);
+        entityDataService.registerService('StepStatus',stepStatusDataService)
     }
 }
