@@ -98,6 +98,7 @@ export class StepOneComponent implements OnInit {
     return data.map(({ id, name }) => ({ id, name }))
   }
 
+  // to get the form status
   getFormStatus() {
     this.stepStatusService.entities$
       .pipe(map(statuses => {
@@ -166,6 +167,7 @@ export class StepOneComponent implements OnInit {
     }
   }
 
+  // checks the form is completely filled or not
   checkNonEmptyField() {
     if (this.countryDropdown.selectedItems.length &&
       this.regionDropdown.selectedItems.length &&
@@ -233,10 +235,11 @@ export class StepOneComponent implements OnInit {
       }
       this.checkInProgress(selectedData.val, selectedData.controller)
     }
-    this.handleButtonDisable()
+    this.handleButtonType()
   }
 
-  handleButtonDisable() {
+  // Changes the button according to form status
+  handleButtonType() {
     if (!this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems) ||
@@ -276,6 +279,7 @@ export class StepOneComponent implements OnInit {
     this.onSubmit.emit(formData)
   }
 
+  // reset form fields
   resetForm(field: string) {
     if (field == 'country' || field == 'region' || field == 'academicYear') {
       this.gradesDropdown.selectedItems = []
@@ -293,7 +297,8 @@ export class StepOneComponent implements OnInit {
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
-  handleDropdownDisable(type) {
+  // disable or enable dropdown field
+  handleDropdownDisable(type: string) {
     let fields = [];
     switch (type) {
       case 'country': fields.splice(0, 0, "gradesDropdown", "subjectsDropdown", "academicYearDropdown")

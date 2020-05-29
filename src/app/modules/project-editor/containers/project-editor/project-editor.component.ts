@@ -139,15 +139,18 @@ export class ProjectEditorComponent implements OnInit {
     this.items[0].status = data
   }
 
-  submitFormStatus(){
-    const formStatus: StepStatus = {
-      id: this.project?.id,
-      stepid: this.stepId,
-      state: this.status
+  // function to submit form status
+  submitFormStatus() {
+    if (this.stepId && this.status) {
+      const formStatus: StepStatus = {
+        id: this.project?.id,
+        stepid: this.stepId,
+        state: this.status
+      }
+      this.stepStatusService.add(formStatus)
     }
-    this.stepStatusService.add(formStatus)
   }
-  
+
   onScrollSpyChange(sectionId: Steps) {
     this.spyActive = sectionId;
   }
