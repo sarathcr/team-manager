@@ -59,18 +59,22 @@ export class StepOneComponent implements OnInit {
             this.countryDropdown.selectedItems.push({ ...data.country })
             tempinitialFormData.country.push({ ...data.country })
             this.getRegions(data.country.id)
+            this.regionDropdown.disabled = false
           }
           if (data?.region) {
             const regionData = { id: data.region?.id, name: data.region?.name }
             this.regionDropdown.selectedItems.push(regionData)
             tempinitialFormData.region.push(regionData)
             this.getAcademicYears()
+            this.academicYearDropdown.disabled = false
           }
           if (data?.academicYear) {
             this.academicYearDropdown.selectedItems.push({ ...data.academicYear })
             tempinitialFormData.academicYear.push({ ...data.academicYear })
             this.getGrades(data.academicYear.id, data.region.id)
             this.getSubjects(data.academicYear.id, data.region.id)
+            this.gradesDropdown.disabled = false
+            this.subjectsDropdown.disabled = false
           }
           if (data?.grades) {
             const gradesData = this.changeResponseFormat(data.grades)
@@ -149,6 +153,7 @@ export class StepOneComponent implements OnInit {
     }
   }
 
+  // checks the form is completely filled or not
   checkNonEmptyField() {
     if (this.countryDropdown.selectedItems.length &&
       this.regionDropdown.selectedItems.length &&
@@ -193,16 +198,19 @@ export class StepOneComponent implements OnInit {
       switch (selectedData.controller) {
         case 'country': {
           this.resetForm(selectedData.controller)
+          this.handleDropdownDisable(selectedData.controller)
           if (selectedId) this.getRegions(selectedId)
           break
         }
         case 'region': {
           this.resetForm(selectedData.controller)
+          this.handleDropdownDisable(selectedData.controller)
           if (selectedId) this.getAcademicYears()
           break
         }
         case 'academicYear': {
           this.resetForm(selectedData.controller)
+          this.handleDropdownDisable(selectedData.controller)
           if (selectedId) {
             this.getGrades(selectedId)
             this.getSubjects(selectedId)
@@ -212,10 +220,11 @@ export class StepOneComponent implements OnInit {
       }
       this.checkInProgress(selectedData.val, selectedData.controller)
     }
-    this.handleButtonDisable()
+    this.handleButtonType()
   }
 
-  handleButtonDisable() {
+  // Changes the button according to form status
+  handleButtonType() {
     if (!this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems) ||
@@ -253,6 +262,7 @@ export class StepOneComponent implements OnInit {
     this.onSubmit.emit(formData)
   }
 
+  // reset form fields
   resetForm(field: string) {
     if (field == 'country' || field == 'region' || field == 'academicYear') {
       this.gradesDropdown.selectedItems = []
@@ -268,6 +278,24 @@ export class StepOneComponent implements OnInit {
 
   isEqual(d1: any[], d2: any[]) {
     return JSON.stringify(d1) === JSON.stringify(d2)
+  }
+
+  // disable or enable dropdown field
+  handleDropdownDisable(type: string) {
+    let fields = [];
+    switch (type) {
+      case 'country': fields.splice(0, 0, "gradesDropdown", "subjectsDropdown", "academicYearDropdown")
+        this.regionDropdown.disabled = this.countryDropdown.selectedItems.length == 0
+        break
+      case 'region': fields.splice(0, 0, "gradesDropdown", "subjectsDropdown")
+        this.academicYearDropdown.disabled = this.regionDropdown.selectedItems.length == 0
+        break
+      case 'academicYear': this.gradesDropdown.disabled = this.academicYearDropdown.selectedItems.length == 0
+        this.subjectsDropdown.disabled = this.academicYearDropdown.selectedItems.length == 0
+        break
+    }
+    if (fields.length)
+      fields.forEach(field => this[field].disabled = true)
   }
 
   createFormConfig() {
@@ -292,6 +320,7 @@ export class StepOneComponent implements OnInit {
       id: 'region',
       multiselect: false,
       options: [],
+      disabled: true,
       selectedItems: []
     }
     this.academicYearDropdown = {
@@ -301,12 +330,14 @@ export class StepOneComponent implements OnInit {
       textField: 'academicYear',
       multiselect: false,
       options: [],
+      disabled: true,
       selectedItems: []
     }
     this.gradesDropdown = {
       field: 'dropdown',
       name: 'grades',
       id: 'grade',
+      disabled: true,
       multiselect: true,
       options: [],
       selectedItems: []
@@ -315,6 +346,7 @@ export class StepOneComponent implements OnInit {
       field: 'dropdown',
       name: 'subjects',
       id: 'subject',
+      disabled: true,
       multiselect: true,
       options: [],
       selectedItems: []
