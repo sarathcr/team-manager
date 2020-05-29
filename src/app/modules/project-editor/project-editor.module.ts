@@ -43,6 +43,7 @@ import { AcademicYearDataService } from './services/academic-year/academic-year-
 import { AcademicYearEntityService } from './services/academic-year/academic-year-entity.service';
 import { GradeEntityService } from './services/grade/grade-entity.service';
 import { StatusComponent } from './components/status/status.component';
+import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive';
 
 const entityMetadata: EntityMetadataMap = {
     Project: {
@@ -93,6 +94,7 @@ const entityMetadata: EntityMetadataMap = {
         TextareaBulletsComponent,
         StatusComponent,
         InfoToolTipComponent,
+        ScrollSpyDirective,
         StepThreeComponent,
         StepFourComponent,
         TextareaComponent

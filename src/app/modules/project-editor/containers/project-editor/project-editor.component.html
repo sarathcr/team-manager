@@ -1,16 +1,15 @@
 <div class="project-editor" id="project-editor" *ngIf="!notFound || projectUrl == 'create'">
     <div class="project-editor__bg"></div>
     <app-editor-header [projectData]="titleData" id="project-editor-header" (titleBlur)="handleSubmit($event)"></app-editor-header>
-    <app-editor-sidebar id="project-editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
-     [items]="items" (onStepClick)="handleStepClick($event)"></app-editor-sidebar>
-    <div class="project-editor__forms">
-      <app-step-one id="step-0" class="step-section" [project$]="project$" (onSubmit)='handleFormSubmit($event)' (inProgress)='updateInProgress($event)'></app-step-one>
-      <app-tematica class="step-section"  [project$]="project$"></app-tematica>
-      <app-step-three></app-step-three>
-      <app-step-four></app-step-four>
+    <app-editor-sidebar [spyActive]="spyActive" id="project-editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
+     [items]="items"></app-editor-sidebar>
+    <div class="project-editor__forms" scrollSpy (scrollSpyChange)="onScrollSpyChange($event)">
+      <app-step-one data-scrollSpy id="stepOne" class="step-section" [project$]="project$" (onSubmit)='handleFormSubmit($event)' (inProgress)='updateInProgress($event)'></app-step-one>
+      <app-tematica data-scrollSpy id="stepTwo" class="step-section"  [project$]="project$"></app-tematica>
+      <app-step-three data-scrollSpy id="stepEight"></app-step-three>
+      <app-step-four data-scrollSpy id="stepNine"></app-step-four>
     </div>
-
 </div>
 <div *ngIf="notFound">
-    Project not found
+  Project not found
 </div>
