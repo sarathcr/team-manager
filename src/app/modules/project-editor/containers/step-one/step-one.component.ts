@@ -275,7 +275,6 @@ export class StepOneComponent implements OnInit {
     }
     this.buttonConfig.submitted = this.status == 'DONE'
     this.buttonConfig.disabled = this.status == "DONE"
-    console.log(formData)
     this.onSubmit.emit(formData)
   }
 

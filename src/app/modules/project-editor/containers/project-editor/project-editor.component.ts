@@ -75,7 +75,6 @@ export class ProjectEditorComponent implements OnInit {
 
   // Function create or update the project
   handleSubmit(projectData: object) {
-    console.log(projectData)
     if (!this.project?.id) {
       // create mode
       const newProject = {
