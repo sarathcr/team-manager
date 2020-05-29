@@ -5,10 +5,12 @@ import { ProjectEntityService } from '../../services/project/project-entity.serv
 import { map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
-import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.model'
-import { TitleData } from '../../constants/title-data.model';
+import { ProjectTitle } from '../../constants/title-data.model';
 import { Observable } from 'rxjs';
-import { Steps } from '../../constants/steps.model';
+import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service';
+import { StepId, Status } from '../../constants/step.model';
+import { Step } from '../../constants/step.model';
+import { steps } from '../../constants/step.data';
 
 @Component({
   selector: 'app-project-editor',
@@ -19,17 +21,18 @@ export class ProjectEditorComponent implements OnInit {
   project: Project;
   project$: Observable<Project>;
   notFound: boolean;
-  titleData: TitleData;
+  titleData: ProjectTitle;
   projectUrl: any;
-  items: StepMenu[];
-  status: string;
-  spyActive: Steps = 'stepOne'
+  steps: Step[] = [...steps];
+  status: Status
+  spyActive: StepId = 'stepOne'
 
   constructor(
     private projectsService: ProjectEntityService,
     private route: ActivatedRoute,
     private location: Location,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private stepStatusService: StepStatusEntityService
   ) { }
 
   ngOnInit(): void {
@@ -51,18 +54,16 @@ export class ProjectEditorComponent implements OnInit {
         'STEPS_MENU.project_structure_stepsmenu_sinopsis',
       ])
       .subscribe(translations => {
-        this.items = [
-          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], status: 'pending' },
-          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], status: 'pending' },
-          { id: 3, name: 'Objetivos competenciales', status: 'pending' }, // add localization
-          { id: 4, name: 'Contenidos', status: 'pending' }, // add localization
-          { id: 5, name: 'Evaluación', status: 'pending' }, // add localization
-          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], status: 'pending' },
-          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], status: 'pending' },
-          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], status: 'pending' },
-          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], status: 'pending' },
-          { id: 10, name: 'Interacción con alumnos', status: 'pending' } // add localization
-        ];
+        this.steps[0].name = translations['STEPS_MENU.project_structure_stepsmenu_startingpoint']
+        this.steps[1].name = translations['STEPS_MENU.project_structure_stepsmenu_topic']
+        this.steps[2].name = 'Objetivos competenciales' // WIP localization
+        this.steps[3].name = 'Contenidos' // WIP localization
+        this.steps[4].name = 'Evaluación' // WIP localization
+        this.steps[5].name = translations['STEPS_MENU.project_structure_stepsmenu_creativetitle']
+        this.steps[6].name = translations['STEPS_MENU.project_stepsmenu_drivingquestion']
+        this.steps[7].name = translations['STEPS_MENU.project_structure_stepsmenu_finalproduct']
+        this.steps[8].name = translations['STEPS_MENU.project_structure_stepsmenu_sinopsis']
+        this.steps[8].name = 'Interacción con alumnos'  // WIP localization
       }
       );
   }
@@ -82,6 +83,7 @@ export class ProjectEditorComponent implements OnInit {
             this.location.go('projects/' + newResProject.id);
             this.projectUrl = newResProject.id;
             this.reload();
+            this.submitFormStatus();
           }
         );
     } else {
@@ -91,6 +93,7 @@ export class ProjectEditorComponent implements OnInit {
         ...projectData
       }
       this.projectsService.update(updateProject);
+      this.submitFormStatus();
     }
   }
 
@@ -107,6 +110,7 @@ export class ProjectEditorComponent implements OnInit {
         if (project) {
           this.notFound = false;
           this.titleData = { id: project.id, title: project.title };
+          this.stepStatusService.getWithQuery(project.id.toString())
         } else {
           // WIP
           // this.projectsService.getWithQuery(`/projects/${this.projectUrl.toString()}`);
@@ -117,18 +121,26 @@ export class ProjectEditorComponent implements OnInit {
   }
 
   handleFormSubmit(data: any) {
-    this.status = data.status;
     this.handleSubmit(data.data)
   }
 
   // inprogress
-  updateInProgress(data:any) {
+  updateInProgress(data: any) {
     console.log(data, "==> in progress") // WIP
     this.status = data.status;
-    this.items[0].status = data
+    // this.items[0].status = data
   }
 
-  onScrollSpyChange(sectionId: Steps) {
+  submitFormStatus(){
+    // const formStatus: StepStatus = {
+    //   id: this.project?.id,
+    //   stepid: this.stepId,
+    //   state: this.status
+    // }
+    // this.stepStatusService.add(formStatus)
+  }
+
+  onScrollSpyChange(sectionId: StepId) {
     this.spyActive = sectionId;
   }
 
