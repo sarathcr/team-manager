@@ -43,6 +43,13 @@
         background-color: inherit !important;
         border-color: $creator-border !important;
       }
+      +.dropdown-list{
+        display: none !important;
+      }
+      .dropdown-up{
+        transform: rotate(0deg) !important;
+        transform-origin: center ;
+      }
     }
     &:active, &:focus, &:focus-within{
       .dropdown-btn{
