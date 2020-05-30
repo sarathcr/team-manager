@@ -1,8 +1,8 @@
-<div class="menu" [ngClass]="{'menu-inprocess' : step.status == 'INPROCESS', 'menu-active' : spyActive == this.step.id}">
-    <span class="menu__step" *ngIf="step.status == 'DONE'">
+<div class="menu" [ngClass]="{'menu-inprocess' : step.state == 'INPROCESS', 'menu-active' : spyActive == this.step.sectionid}">
+    <span class="menu__step" *ngIf="step.state == 'DONE'">
         <span class="icon icon-ic_check"></span>
     </span>
-    <span class="menu__step" *ngIf="step.status !== 'DONE'">
+    <span class="menu__step" *ngIf="step.state !== 'DONE'">
         {{this.step.stepid}}.
     </span>{{step.name}}
 </div>

@@ -4,10 +4,10 @@
     <app-editor-sidebar [spyActive]="spyActive" id="project-editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
      [steps]="steps"></app-editor-sidebar>
     <div class="project-editor__forms" scrollSpy (scrollSpyChange)="onScrollSpyChange($event)">
-      <app-step-one data-scrollSpy id="stepOne" class="step-section" [step]="steps[0]" [project$]="project$" (onSubmit)='handleFormSubmit($event)' (inProgress)='updateInProgress($event)'></app-step-one>
-      <app-tematica data-scrollSpy id="stepTwo" class="step-section"></app-tematica>
-      <app-step-three data-scrollSpy id="stepEight"></app-step-three>
-      <app-step-four data-scrollSpy id="stepNine"></app-step-four>
+      <app-step-one data-scrollSpy id="{{steps[0].sectionid}}" class="step-section" [step]="steps[0]" [project$]="project$" (onSubmit)='handleFormSubmit($event)'></app-step-one>
+      <app-tematica data-scrollSpy id="{{steps[1].sectionid}}" class="step-section"></app-tematica>
+      <app-step-three data-scrollSpy id="{{steps[6].sectionid}}"></app-step-three>
+      <app-step-four data-scrollSpy id="{{steps[7].sectionid}}"></app-step-four>
     </div>
 </div>
 <div *ngIf="notFound">

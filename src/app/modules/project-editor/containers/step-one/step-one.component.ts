@@ -11,8 +11,7 @@ import { SubjectEntityService } from '../../services/subject/subject-entity.serv
 import { Project } from 'src/app/shared/constants/project.model'
 import { formOneInitData } from '../../constants/step-forms.data'
 import { FormOneInitData, FormOne } from '../../constants/step-forms.model'
-import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
-import { Step, Status } from '../../constants/step.model'
+import { Step } from '../../constants/step.model'
 
 @Component({
   selector: 'app-step-one',
@@ -20,17 +19,15 @@ import { Step, Status } from '../../constants/step.model'
   styleUrls: ['./step-one.component.scss']
 })
 export class StepOneComponent implements OnInit {
-  @Output() inProgress: EventEmitter<any> = new EventEmitter<any>()
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
   @Input() step: Step
   initialFormData: FormOneInitData = new formOneInitData
-  status: Status
   buttonConfig: FieldConfig
   countryDropdown: FieldConfig
   regionDropdown: FieldConfig
   academicYearDropdown: FieldConfig
-  gradesDropdown: FieldConfig 
+  gradesDropdown: FieldConfig
   subjectsDropdown: FieldConfig
   projectId: number
 
@@ -97,9 +94,11 @@ export class StepOneComponent implements OnInit {
   }
 
   getAllCountries() {
-    this.countryService.getAll()
     this.countryService.entities$
-      .subscribe(data => this.countryDropdown.options = data)
+      .subscribe(data => {
+        this.countryDropdown.options = data
+        if (!data.length) this.countryService.getAll()
+      })
   }
 
   getRegions(countryId: number) {
@@ -147,9 +146,9 @@ export class StepOneComponent implements OnInit {
 
   checkStatus() {
     if (this.checkNonEmptyField) {
-      this.step.status = "DONE"
+      this.step.state = "DONE"
     } else {
-      this.step.status = "INPROCESS"
+      this.step.state = "INPROCESS"
     }
   }
 
@@ -187,7 +186,7 @@ export class StepOneComponent implements OnInit {
       }
     }
     if (values.includes(false)) {
-      this.step.status = 'INPROCESS'
+      this.step.state = 'INPROCESS'
     }
   }
 
@@ -253,12 +252,20 @@ export class StepOneComponent implements OnInit {
         academicYear: this.academicYearDropdown.selectedItems[0] ? this.academicYearDropdown.selectedItems[0] : null,
         grades: this.gradesDropdown.selectedItems,
         subjects: this.subjectsDropdown.selectedItems,
-        // status: this.step$,
+        status: 'INPROCESS', // WIP
+      },
+      stepStatus: {
+        id: this.projectId,
+        state: [
+          {
+            state: this.step.state,
+            stepid: this.step.stepid
+          }
+        ]
       }
     }
-    // this.buttonConfig.submitted = this.status == 'DONE'
-    // this.buttonConfig.disabled = this.status == "DONE"
-    console.log(formData)
+    this.buttonConfig.submitted = this.step.state == 'DONE'
+    this.buttonConfig.disabled = this.step.state == "DONE"
     this.onSubmit.emit(formData)
   }
 

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { StepId, Step } from '../../constants/step.model';
-import { steps } from '../../constants/step.data';
 
 @Component({
   selector: 'app-step-menu',

@@ -29,7 +29,6 @@ export class ProjectsDataService extends DefaultDataService<Project> {
     }
 
     update(data: any): Observable<any> {
-        console.log(data.changes, '++++')
         return this.http.put<any>(`${environment.apiUrl}/projects`, data.changes)
             .pipe(
                 map(res => res)
