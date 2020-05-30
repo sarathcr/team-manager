@@ -27,7 +27,7 @@ export class StepOneComponent implements OnInit {
   countryDropdown: FieldConfig
   regionDropdown: FieldConfig
   academicYearDropdown: FieldConfig
-  gradesDropdown: FieldConfig
+  gradesDropdown: FieldConfig 
   subjectsDropdown: FieldConfig
   projectId: number
 

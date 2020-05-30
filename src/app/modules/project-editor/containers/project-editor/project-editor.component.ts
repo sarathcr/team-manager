@@ -8,7 +8,7 @@ import { Project } from 'src/app/shared/constants/project.model';
 import { ProjectTitle } from '../../constants/title-data.model';
 import { Observable } from 'rxjs';
 import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service';
-import { StepId, Status, StepState } from '../../constants/step.model';
+import { StepId, Status } from '../../constants/step.model';
 import { Step } from '../../constants/step.model';
 import { FormOne } from '../../constants/step-forms.model';
 
@@ -55,7 +55,6 @@ export class ProjectEditorComponent implements OnInit {
             this.location.go('projects/' + newResProject.id);
             this.projectUrl = newResProject.id;
             this.getProject();
-            // this.submitFormStatus();
           }
         );
     } else {
@@ -65,7 +64,6 @@ export class ProjectEditorComponent implements OnInit {
         ...projectData
       }
       this.projectsService.update(updateProject);
-      // this.submitFormStatus();
     }
   }
 
