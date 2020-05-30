@@ -11,7 +11,7 @@ import { SubjectEntityService } from '../../services/subject/subject-entity.serv
 import { Project } from 'src/app/shared/constants/project.model'
 import { formOneInitData } from '../../constants/step-forms.data'
 import { FormOneInitData, FormOne } from '../../constants/step-forms.model'
-import { Step } from '../../constants/step.model'
+import { Step, StepId } from '../../constants/step.model'
 
 @Component({
   selector: 'app-step-one',
@@ -21,6 +21,7 @@ import { Step } from '../../constants/step.model'
 export class StepOneComponent implements OnInit {
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
+  @Input() spyActive$: Observable<StepId>
   @Input() step: Step
   initialFormData: FormOneInitData = new formOneInitData
   buttonConfig: FieldConfig
@@ -30,6 +31,7 @@ export class StepOneComponent implements OnInit {
   gradesDropdown: FieldConfig 
   subjectsDropdown: FieldConfig
   projectId: number
+  active: boolean = false
 
   constructor(
     private countryService: CountryEntityService,
@@ -43,6 +45,7 @@ export class StepOneComponent implements OnInit {
   ngOnInit(): void {
     this.createFormConfig()
     this.getAllCountries()
+    this.onScrollSubmit()
     this.formInIt()
   }
 
@@ -89,7 +92,27 @@ export class StepOneComponent implements OnInit {
         })
   }
 
-  changeResponseFormat(data) {
+  onScrollSubmit() {
+    this.spyActive$
+    .subscribe(sectionId => {
+      if (sectionId === this.step.sectionid && !this.active) {
+        this.active = true
+      }
+      if (sectionId !== this.step.sectionid && this.active) {
+        if (!this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems) ||
+        !this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems) ||
+        !this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems) ||
+        !this.isEqual(this.initialFormData.grades, this.gradesDropdown.selectedItems) ||
+        !this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems)) {
+          this.handleSubmit()
+          this.active = false
+        } else {
+          this.active = true
+        }
+      }
+    })
+  }
+  changeResponseFormat(data: any) {
     return data.map(({ id, name }) => ({ id, name }))
   }
 
@@ -145,7 +168,7 @@ export class StepOneComponent implements OnInit {
   }
 
   checkStatus() {
-    if (this.checkNonEmptyField) {
+    if (this.checkNonEmptyField() === true) {
       this.step.state = "DONE"
     } else {
       this.step.state = "INPROCESS"
@@ -159,8 +182,10 @@ export class StepOneComponent implements OnInit {
       this.academicYearDropdown.selectedItems.length &&
       this.gradesDropdown.selectedItems.length &&
       this.subjectsDropdown.selectedItems.length
-    ) { return true }
-    return false
+    ) { return true } 
+    else {
+      return false
+    }
   }
 
   checkInProgress(data: any, type: string) {

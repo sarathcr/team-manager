@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
 import { ProjectTitle } from '../../constants/title-data.model';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service';
 import { StepId, Status } from '../../constants/step.model';
 import { Step } from '../../constants/step.model';
@@ -20,12 +20,13 @@ import { FormOne } from '../../constants/step-forms.model';
 export class ProjectEditorComponent implements OnInit {
   project: Project;
   project$: Observable<Project>;
+  spyActive$ = new BehaviorSubject<StepId>('stepOne')
   notFound: boolean;
   titleData: ProjectTitle;
   projectUrl: any;
   steps: Step[]
   status: Status
-  spyActive: StepId = 'stepOne'
+  tempStatus: any // saving the status for non created projects
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -38,7 +39,7 @@ export class ProjectEditorComponent implements OnInit {
   ngOnInit(): void {
     this.createSteps()
     this.projectUrl = this.route.snapshot.paramMap.get('id');
-    this.getProject();
+    this.getProject()
   }
 
   // Function create or update the project
@@ -55,6 +56,11 @@ export class ProjectEditorComponent implements OnInit {
             this.location.go('projects/' + newResProject.id);
             this.projectUrl = newResProject.id;
             this.getProject();
+            if (this.tempStatus) {
+              this.tempStatus.id = newResProject.id
+              this.stepStatusService.update(this.tempStatus)
+              this.tempStatus = null
+            }
           }
         );
     } else {
@@ -123,11 +129,17 @@ export class ProjectEditorComponent implements OnInit {
   }
 
   submitFormStatus(data: any){
-    this.stepStatusService.update(data)
+    if (data.id) {
+      this.stepStatusService.update(data)
+    } else {
+      this.tempStatus = data;
+    }
+    
+    
   }
 
   onScrollSpyChange(sectionId: StepId) {
-    this.spyActive = sectionId;
+    this.spyActive$.next(sectionId);
   }
 
   createSteps() {

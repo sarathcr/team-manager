@@ -1,10 +1,10 @@
 <div class="project-editor" id="project-editor" *ngIf="!notFound || projectUrl == 'create'">
     <div class="project-editor__bg"></div>
     <app-editor-header [projectData]="titleData" id="project-editor-header" (titleBlur)="handleSubmit($event)"></app-editor-header>
-    <app-editor-sidebar [spyActive]="spyActive" id="project-editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
+    <app-editor-sidebar [spyActive]="spyActive$ | async" id="project-editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
      [steps]="steps"></app-editor-sidebar>
     <div class="project-editor__forms" scrollSpy (scrollSpyChange)="onScrollSpyChange($event)">
-      <app-step-one data-scrollSpy id="{{steps[0].sectionid}}" class="step-section" [step]="steps[0]" [project$]="project$" (onSubmit)='handleFormSubmit($event)'></app-step-one>
+      <app-step-one data-scrollSpy id="{{steps[0].sectionid}}" class="step-section"[spyActive$]="spyActive$" [step]="steps[0]" [project$]="project$" (onSubmit)='handleFormSubmit($event)'></app-step-one>
       <app-tematica data-scrollSpy id="{{steps[1].sectionid}}" class="step-section"></app-tematica>
       <app-step-three data-scrollSpy id="{{steps[6].sectionid}}"></app-step-three>
       <app-step-four data-scrollSpy id="{{steps[7].sectionid}}"></app-step-four>
