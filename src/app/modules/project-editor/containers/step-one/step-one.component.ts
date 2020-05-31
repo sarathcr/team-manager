@@ -28,7 +28,7 @@ export class StepOneComponent implements OnInit {
   countryDropdown: FieldConfig
   regionDropdown: FieldConfig
   academicYearDropdown: FieldConfig
-  gradesDropdown: FieldConfig 
+  gradesDropdown: FieldConfig
   subjectsDropdown: FieldConfig
   projectId: number
   active: boolean = false
@@ -56,20 +56,20 @@ export class StepOneComponent implements OnInit {
           let tempinitialFormData = new formOneInitData
           this.projectId = data?.id
           if (data?.country) {
-            this.countryDropdown.selectedItems.push({ ...data.country })
+            this.countryDropdown.selectedItems = [{ ...data.country }]
             tempinitialFormData.country.push({ ...data.country })
             this.getRegions(data.country.id)
             this.regionDropdown.disabled = false
           }
           if (data?.region) {
             const regionData = { id: data.region?.id, name: data.region?.name }
-            this.regionDropdown.selectedItems.push(regionData)
+            this.regionDropdown.selectedItems = [{ ...regionData }]
             tempinitialFormData.region.push(regionData)
             this.getAcademicYears()
             this.academicYearDropdown.disabled = false
           }
           if (data?.academicYear) {
-            this.academicYearDropdown.selectedItems.push({ ...data.academicYear })
+            this.academicYearDropdown.selectedItems = [{ ...data.academicYear }]
             tempinitialFormData.academicYear.push({ ...data.academicYear })
             this.getGrades(data.academicYear.id, data.region.id)
             this.getSubjects(data.academicYear.id, data.region.id)
@@ -94,23 +94,19 @@ export class StepOneComponent implements OnInit {
 
   onScrollSubmit() {
     this.spyActive$
-    .subscribe(sectionId => {
-      if (sectionId === this.step.sectionid && !this.active) {
-        this.active = true
-      }
-      if (sectionId !== this.step.sectionid && this.active) {
-        if (!this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems) ||
-        !this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems) ||
-        !this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems) ||
-        !this.isEqual(this.initialFormData.grades, this.gradesDropdown.selectedItems) ||
-        !this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems)) {
-          this.handleSubmit()
-          this.active = false
-        } else {
+      .subscribe(sectionId => {
+        if (sectionId === this.step.sectionid && !this.active) {
           this.active = true
         }
-      }
-    })
+        if (sectionId !== this.step.sectionid && this.active) {
+          if (this.isFormUpdated()) {
+            this.handleSubmit()
+            this.active = false
+          } else {
+            this.active = true
+          }
+        }
+      })
   }
   changeResponseFormat(data: any) {
     return data.map(({ id, name }) => ({ id, name }))
@@ -182,8 +178,21 @@ export class StepOneComponent implements OnInit {
       this.academicYearDropdown.selectedItems.length &&
       this.gradesDropdown.selectedItems.length &&
       this.subjectsDropdown.selectedItems.length
-    ) { return true } 
-    else {
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  isFormUpdated() {
+    if (!this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems) ||
+      !this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems) ||
+      !this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems) ||
+      !this.isEqual(this.initialFormData.grades, this.gradesDropdown.selectedItems) ||
+      !this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems)) {
+      return true
+    } else {
       return false
     }
   }
@@ -249,12 +258,7 @@ export class StepOneComponent implements OnInit {
 
   // Changes the button according to form status
   handleButtonType() {
-    if (!this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems) ||
-      !this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems) ||
-      !this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems) ||
-      !this.isEqual(this.initialFormData.grades, this.gradesDropdown.selectedItems) ||
-      !this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems)
-    ) {
+    if (this.isFormUpdated()) {
       if (this.checkNonEmptyField()) {
         this.buttonConfig.disabled = false
         this.buttonConfig.submitted = false
