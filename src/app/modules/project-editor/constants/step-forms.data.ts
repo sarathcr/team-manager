@@ -6,4 +6,5 @@ export class formOneInitData implements FormOneInitData {
     academicYear = [];
     grades = [];
     subjects = [];
+    finalProduct = [];
 }

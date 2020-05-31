@@ -3,13 +3,14 @@ import { Region } from './region.model';
 import { AcademicYear } from './academic-year.model';
 import { Grade } from './grade.model';
 import { Subject } from './subject.model';
+import { FinalProduct } from './finalProduct.model';
 
 export class Project {
   id: number | null;
   title: string;
   creativeTitle?: string;
   name?: string;
-  finalProduct?: Object;
+  finalProduct?: FinalProduct;
   country?: Country;
   region?: Region;
   academicYear?: AcademicYear;

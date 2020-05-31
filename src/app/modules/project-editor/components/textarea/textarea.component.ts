@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 @Component({
   selector: 'app-textarea',
   templateUrl: './textarea.component.html',
@@ -7,9 +6,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TextareaComponent implements OnInit {
 
+  @Input() value: string
+  @Output() onChange = new EventEmitter()
+  @Output() onBlur = new EventEmitter()
+
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  handleChange(value: string) {
+    this.onChange.emit(value)
   }
 
+  handleBlur(value: string) {
+    this.onBlur.emit(value)
+  }
 }
