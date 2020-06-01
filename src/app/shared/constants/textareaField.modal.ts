@@ -1,5 +1,6 @@
+import { Theme } from './theme.model'
+
 export class TextareaField {
-  id: number
-  name: string
+  data: Theme[]
   placeholder?: string
 }

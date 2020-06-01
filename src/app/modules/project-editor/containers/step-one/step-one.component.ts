@@ -311,7 +311,8 @@ export class StepOneComponent implements OnInit {
       id: 'subject',
       multiselect: true,
       options: [],
-      selectedItems: []
+      selectedItems: [],
+      disabled: true,
     }
     // Translation
     this.translateService.stream([

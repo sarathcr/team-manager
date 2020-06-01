@@ -1,7 +1,7 @@
 <div class="textarea-bullets textarea-bullets_active">
-    <ul class="bullet-list textarea-bullets__list">
-        <li class="textarea-bullets__item" *ngFor="let string of config" id="{{string.id}}">
-            <textarea class="textarea-bullets__textarea" id="list-item-1" rows="1" placeholder="Especifica uno o más temas" name='textArea'>{{string.name}}</textarea>
+    <ul class="bullet-list textarea-bullets__list" *ngIf="config">
+        <li class="textarea-bullets__item" *ngFor="let text of config.options" id="{{text.id}}">
+            <textarea class="textarea-bullets__textarea" id="list-item-1" rows="1" placeholder={{config.placeholder}} name='textArea' (keydown)='keyAction($event)' (keyup)='keyUpAction($event)'[(ngModel)]=text.name></textarea>
         </li>
     </ul>
 </div>

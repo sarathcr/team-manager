@@ -6,7 +6,7 @@
           Escoge uno o más temas, los asuntos que quieres trabajar con tus alumnos. Este apartado responde al sobre qué tratará el proyecto. Elige libremente,
           que no te condicione el currículum. Más adelante te ayudaremos a conectarlos.
       </p>
-      <app-textarea-bullets [config]='textAreaConfig'></app-textarea-bullets>
-      <app-form-button [config]='buttonConfig'></app-form-button>
+      <app-textarea-bullets [config]='textAreaConfig' (onUpdate)='textAreaUpdate($event)' (onEnter)='addTheme($event)' (onDelete)='deleteTheme($event)'></app-textarea-bullets>
+      <app-form-button [config]='buttonConfig'  (onClick)='handleSubmit()'></app-form-button>
     </div>
 </div>

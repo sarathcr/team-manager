@@ -43,4 +43,5 @@ export interface FormTwoData {
 }
 export interface FormTwoInitData {
   themes: Theme[],
+  placeholder?: string
 }

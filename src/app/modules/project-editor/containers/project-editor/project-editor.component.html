@@ -5,7 +5,7 @@
      [items]="items"></app-editor-sidebar>
     <div class="project-editor__forms" scrollSpy (scrollSpyChange)="onScrollSpyChange($event)">
       <app-step-one data-scrollSpy id="stepOne" class="step-section" [project$]="project$" (onSubmit)='handleFormSubmit($event)' (inProgress)='updateInProgress($event)'></app-step-one>
-      <app-tematica data-scrollSpy id="stepTwo" class="step-section"  [project$]="project$"></app-tematica>
+      <app-step-two data-scrollSpy id="stepTwo" class="step-section"  [project$]="project$"  (onSubmit)='handleFormSubmit($event)'></app-step-two>
       <app-step-three data-scrollSpy id="stepEight"></app-step-three>
       <app-step-four data-scrollSpy id="stepNine"></app-step-four>
     </div>
