@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChildren, QueryList, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChildren, QueryList, AfterViewInit, Input, ElementRef } from '@angular/core';
 // import { Theme } from 'src/app/shared/constants/theme.model';
 // import { FormTwoInitData } from '../../constants/step-forms.model';
 // import { TextareaField } from 'src/app/shared/constants/textareaField.modal';
@@ -14,11 +14,15 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
   @Output() onEnter: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<any> = new EventEmitter();
   @Input() config: FieldConfig;
+  @ViewChildren('textArea') textArea: QueryList<ElementRef>;
   constructor() { }
 
   ngOnInit(): void {
   }
   ngAfterViewInit(){
+    this.textArea.changes.subscribe(()=>{
+      this.textArea.last.nativeElement.focus();
+   })
   }
   keyAction(event) {
     const element = event.target;
@@ -28,9 +32,6 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
         event.preventDefault();
         if(this.fieldValidation(this.config.options[element.parentNode.id-1].name)){
           this.onEnter.emit({controller: this.config.name, val: this.config.options, index: element.parentNode.id-1})
-          setTimeout(()=>{
-            element.parentNode.nextSibling.firstChild.focus();
-          })
         }
         break;
       case 46 :

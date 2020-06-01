@@ -31,7 +31,8 @@
             color: $overtitle-grey;
         }
     }
-    &_active{
-        border: 2px solid $border-color-active;
+    &:focus-within{
+        border-color: $border-color-active;
+        box-shadow: 0 0 0 1px $border-color-active;
     }
 }

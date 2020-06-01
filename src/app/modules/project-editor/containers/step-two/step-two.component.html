@@ -7,6 +7,6 @@
           que no te condicione el currículum. Más adelante te ayudaremos a conectarlos.
       </p>
       <app-textarea-bullets [config]='textAreaConfig' (onUpdate)='textAreaUpdate($event)' (onEnter)='addTheme($event)' (onDelete)='deleteTheme($event)'></app-textarea-bullets>
-      <app-form-button [config]='buttonConfig'  (onClick)='handleSubmit()'></app-form-button>
+      <app-form-button scrollTo scrollToId="stepThree"  [config]='buttonConfig'  (onClick)='handleSubmit()'></app-form-button>
     </div>
 </div>

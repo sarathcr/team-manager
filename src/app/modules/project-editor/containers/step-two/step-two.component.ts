@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core'
+import { Component, OnInit, Output, Input, EventEmitter, OnDestroy } from '@angular/core'
 import { FieldConfig } from '../../../../shared/constants/field.model'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
+import { map } from 'rxjs/operators'
 import { Project } from 'src/app/shared/constants/project.model'
 import { formTwoInitData } from '../../constants/step-forms.data'
 import { FormTwoInitData, FormTwo } from '../../constants/step-forms.model'
@@ -12,18 +13,18 @@ import { StepState, StepId, Step } from '../../constants/step.model'
   templateUrl: './step-two.component.html',
   styleUrls: ['./step-two.component.scss']
 })
-export class StepTwoComponent implements OnInit {
+export class StepTwoComponent implements OnInit, OnDestroy {
   @Output() inProgress: EventEmitter<any> = new EventEmitter<any>()
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
   @Input() spyActive$: Observable<StepId>
   @Input() stepStatus$: Observable<StepState>
   @Input() step: Step
-  projectId: number
   initialFormData: FormTwoInitData = new formTwoInitData
   finalFormData: FormTwoInitData = new formTwoInitData
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
+  projectId: number
   active: boolean = false
   constructor() { }
 
@@ -59,21 +60,31 @@ export class StepTwoComponent implements OnInit {
     if (this.project$)
       this.project$
         .subscribe( data => {
-          let tempinitialFormData: FormTwoInitData = new formTwoInitData
+          // let tempinitialFormData: FormTwoInitData = new formTwoInitData
           this.projectId = data?.id
           let project = Object.assign(data)
-          console.log(project)
-          tempinitialFormData.themes = []
-          // tempinitialFormData.themes.push({ id: 1, name: null })
+          this.initialFormData.themes = []
+          // tempinitialFormData.themes.push({ id: 1, name: null }) // Uncomment this if no need to have a placeholder if data already exist
           if (project?.themes.length>0) {
-            this.initialFormData.themes.push(...project.themes)
-            tempinitialFormData.themes.push(...project.themes)
+            this.initialFormData.themes = project.themes
           }
-          this.textAreaConfig.options = tempinitialFormData.themes
-          if (project?.themes.length < 5) {
-            this.textAreaConfig.options.push({ id: tempinitialFormData.themes.length+1, name: null})
+          this.textAreaConfig.options = this.initialFormData.themes
+          if (project?.themes.length < 5) {// Comment this if no need to have a placeholder if data already exist
+            this.textAreaConfig.options.push({ id: this.initialFormData.themes.length+1, name: null})
           }
+          this.finalFormData.themes = project.themes
         })
+    if (this.stepStatus$) {
+      this.stepStatus$.pipe(
+        map(data => data?.state?.filter(statusData => statusData.stepid == this.step.stepid)))
+        .subscribe(
+          formStatus => {
+            if (formStatus) {
+              this.buttonConfig.submitted = formStatus[1].state == "DONE"
+            }
+          }
+        )
+    }
   }
   onScrollSubmit() {
     this.spyActive$
@@ -91,11 +102,6 @@ export class StepTwoComponent implements OnInit {
         }
       })
   }
-
-  changeResponseFormat(data: any) {
-    return data.map(({ id, name }) => ({ id, name }))
-  }
-
 
   checkStatus() {
     if (this.checkEmptyForm()) {
@@ -118,13 +124,13 @@ export class StepTwoComponent implements OnInit {
 
   // checks the form is completely filled or not
   checkNonEmptyForm() {
-    if (this.initialFormData.themes.length) {
+    if (this.initialFormData.themes.length  && this.finalFormData.themes === this.initialFormData.themes) {
       return true
     }
     return false
   }
   isFormUpdated() {
-    if (!this.isEqual(this.initialFormData.themes, this.textAreaConfig.options)) {
+    if (!this.isEqual(this.initialFormData.themes, this.finalFormData.themes)) {
       return true
     } else {
       return false
@@ -135,10 +141,9 @@ export class StepTwoComponent implements OnInit {
   }
   handleSubmit() {
     this.checkStatus()
-    // this.initialFormData.themes = this.initialFormData.themes.filter( theme => theme.name !== null)
-    // this.initialFormData.themes.forEach( (theme, index) => { theme.id = index+1})
-    this.finalFormData.themes = this.finalFormData.themes.filter( theme => theme.name !== null)
-    this.finalFormData.themes.forEach( (theme, index) => { theme.id = index+1})
+    let tempData = this.finalFormData.themes.filter( theme => theme.name !== null)
+    tempData.forEach( (theme, index) => { theme.id = index+1})
+    this.finalFormData.themes = tempData
     let formData: FormTwo = {
       data: {
         themes:  this.finalFormData.themes,
@@ -157,28 +162,53 @@ export class StepTwoComponent implements OnInit {
       this.buttonConfig.submitted = this.step.state == 'DONE'
       this.buttonConfig.disabled = this.step.state == "DONE"
     }
+    this.handleButtonType()
     this.onSubmit.emit(formData)
   }
-
+  checkInProgress() {
+    let values: Array<any> = []
+    values.push(this.isEqual(this.initialFormData.themes, this.finalFormData.themes))
+    if (values.includes(false)) {
+      this.step.state = 'INPROCESS'
+    }
+    this.buttonConfig.submitted = this.step.state == 'DONE'
+  }
   textAreaUpdate(data){
-    (data.val[0].name === null || data.val[0].name === undefined || data.val[0].name.length == 0)? this.buttonConfig.disabled = true: this.buttonConfig.disabled = false
+    // (data.val[0].name === null || data.val[0].name === undefined || data.val[0].name.length == 0)? this.buttonConfig.disabled = true: this.buttonConfig.disabled = false
+    this.checkInProgress()
   }
   addTheme(data){
-    this.initialFormData.themes = Object.assign(data.val)
-    // this.finalFormData = Object.assign(this.finalFormData,this.initialFormData)
-    this.initialFormData.themes.forEach( (theme, index) => {
+    this.textAreaConfig.options = Object.assign(data.val)
+    this.finalFormData.themes = []
+    this.textAreaConfig.options.forEach( (theme, index) => {
       this.finalFormData.themes.push({id: index+1,name: theme.name})
-      // this.finalFormData.themes[index].name = theme.name
     })
-    console.log(this.finalFormData.themes)
-    this.initialFormData.themes = this.finalFormData.themes
+    this.textAreaConfig.options = this.finalFormData.themes
+    this.handleButtonType()
+  }
+  deleteTheme(data){
+    this.textAreaConfig.options = this.textAreaConfig.options.filter( theme => theme.id !== data.val[data.index].id)
+    this.finalFormData.themes = []
+    this.textAreaConfig.options.forEach( (theme, index) => {
+      if(theme.name !== null){
+        this.finalFormData.themes.push({id: index+1,name: theme.name})
+      }
+    })
+    this.textAreaConfig.options = this.finalFormData.themes
+    this.handleButtonType()
+  }
+  handleButtonType() {
+    this.checkInProgress()
+    if(this.step.state == 'INPROCESS'){
+      this.buttonConfig.submitted = false
+      this.buttonConfig.disabled = false
+    } else if(this.step.state == 'PENDING') {
+      this.buttonConfig.disabled = true
+    } else if(this.step.state == 'DONE'){
+      this.buttonConfig.submitted = false
+    }
     if(this.textAreaConfig.options.length < 5 && this.textAreaConfig.options[this.textAreaConfig.options.length-1].name !== null){
       this.textAreaConfig.options.push({id: this.textAreaConfig.options[this.textAreaConfig.options.length-1].id+1, name: null})
     }
-  }
-  deleteTheme(data){
-    this.initialFormData.themes = this.initialFormData.themes.filter( theme => theme.id !== data.val[data.index].id)
-    this.initialFormData.themes.forEach( (theme, index) => { theme.id = index+1})
-    this.textAreaConfig.options = this.initialFormData.themes
   }
 }
