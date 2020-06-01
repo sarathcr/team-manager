@@ -21,6 +21,7 @@ export class ProjectEditorComponent implements OnInit {
   project: Project;
   project$: Observable<Project>;
   spyActive$ = new BehaviorSubject<StepId>('stepOne')
+  stepStatus$: Observable<StepState>
   notFound: boolean;
   titleData: ProjectTitle;
   projectUrl: any;
@@ -98,19 +99,19 @@ export class ProjectEditorComponent implements OnInit {
 
   getStepStatus(projectId: number) {
     // status state management
-    this.stepStatusService.entities$
+    this.stepStatus$ = this.stepStatusService.entities$
       .pipe(
         map(stepStates => stepStates.find(state => {
           return state.id === Number(this.projectUrl);
         }))
       )
-      .subscribe(data => {
-        if (data) {
-          this.updateStepStatus(data)
-        } else {
-          this.stepStatusService.getWithQuery(projectId.toString())
-        }
-      })
+    this.stepStatus$.subscribe(data => {
+      if (data) {
+        this.updateStepStatus(data)
+      } else {
+        this.stepStatusService.getWithQuery(projectId.toString())
+      }
+    })
   }
 
   updateStepStatus(stepstatus: any) {
@@ -134,7 +135,6 @@ export class ProjectEditorComponent implements OnInit {
         ...data,
         id: this.project.id
       }
-      console.log(dataWithId)
       this.stepStatusService.update(dataWithId)
     } else {
       this.tempStatus = data;
