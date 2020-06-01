@@ -3,7 +3,7 @@ import { Region } from 'src/app/shared/constants/region.model';
 import { AcademicYear } from 'src/app/shared/constants/academic-year.model';
 import { Grade } from 'src/app/shared/constants/grade.model';
 import { Subject } from 'src/app/shared/constants/subject.model';
-import { Status } from './step.model';
+import { Status, StepState } from './step.model';
 
 export interface FormOne {
     data: {
@@ -14,6 +14,7 @@ export interface FormOne {
         subjects: Subject[]
         status?: Status
     }
+    stepStatus: StepState
 }
 
 export interface FormOneInitData {

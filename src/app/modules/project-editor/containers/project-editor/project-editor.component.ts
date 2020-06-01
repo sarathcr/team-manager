@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectEntityService } from '../../services/project/project-entity.service';
@@ -6,11 +6,11 @@ import { map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
 import { ProjectTitle } from '../../constants/title-data.model';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service';
 import { StepId, Status } from '../../constants/step.model';
 import { Step } from '../../constants/step.model';
-import { steps } from '../../constants/step.data';
+import { FormOne } from '../../constants/step-forms.model';
 
 @Component({
   selector: 'app-project-editor',
@@ -20,12 +20,13 @@ import { steps } from '../../constants/step.data';
 export class ProjectEditorComponent implements OnInit {
   project: Project;
   project$: Observable<Project>;
+  spyActive$ = new BehaviorSubject<StepId>('stepOne')
   notFound: boolean;
   titleData: ProjectTitle;
   projectUrl: any;
-  steps: Step[] = [...steps];
+  steps: Step[]
   status: Status
-  spyActive: StepId = 'stepOne'
+  tempStatus: any // saving the status for non created projects
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -36,14 +37,124 @@ export class ProjectEditorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.createSteps()
     this.projectUrl = this.route.snapshot.paramMap.get('id');
-    this.createStepList();
-    this.reload();
+    this.getProject()
   }
 
-  // to create step list
-  createStepList() {
-    // localization for step menu
+  // Function create or update the project
+  handleSubmit(projectData: object) {
+    if (!this.project?.id) {
+      // create mode
+      const newProject = {
+        title: '',
+        ...projectData
+      }
+      this.projectsService.add(newProject)
+        .subscribe(
+          newResProject => {
+            this.location.go('projects/' + newResProject.id);
+            this.projectUrl = newResProject.id;
+            this.getProject();
+            if (this.tempStatus) {
+              this.tempStatus.id = newResProject.id
+              this.stepStatusService.update(this.tempStatus)
+              this.tempStatus = null
+            }
+          }
+        );
+    } else {
+      // update mode
+      const updateProject = {
+        id: this.project.id,
+        ...projectData
+      }
+      this.projectsService.update(updateProject);
+    }
+  }
+
+  getProject() {
+    if (this.projectUrl !== 'create') {
+      this.project$ = this.projectsService.entities$
+        .pipe(
+          map(projects => projects.find(project => {
+            return project.id === Number(this.projectUrl)
+          }))
+        )
+      this.project$.subscribe(project => {
+        this.project = project;
+        if (project) {
+          this.notFound = false;
+          this.titleData = { id: project.id, title: project.title }
+          this.getStepStatus(project.id)
+        } else {
+          // WIP
+          // this.projectsService.getWithQuery(`/projects/${this.projectUrl.toString()}`);
+          this.notFound = true;
+        }
+      })
+    }
+  }
+  
+  getStepStatus(projectId: number) {
+    // status state management
+    this.stepStatusService.entities$
+    .pipe(
+      map(stepStates => stepStates.find(state => {
+        return state.id === Number(this.projectUrl);
+      }))
+    )
+    .subscribe(data => {
+      if (data) {
+        this.updateStepStatus(data)
+      } else {
+        this.stepStatusService.getWithQuery(projectId.toString())
+      }
+    })
+  }
+
+  updateStepStatus(stepstatus: any) {
+    stepstatus.state?.forEach(newState => {
+      this.steps.forEach(step => {
+        if (step.stepid == newState.stepid) {
+          step.state = newState.state
+        }
+      });
+    });
+  }
+
+  handleFormSubmit(data: FormOne) {
+    this.handleSubmit(data.data)
+    this.submitFormStatus(data.stepStatus)
+  }
+
+  submitFormStatus(data: any){
+    if (data.id) {
+      this.stepStatusService.update(data)
+    } else {
+      this.tempStatus = data;
+    }
+    
+    
+  }
+
+  onScrollSpyChange(sectionId: StepId) {
+    this.spyActive$.next(sectionId);
+  }
+
+  createSteps() {
+    this.steps = [
+        { sectionid: 'stepOne', stepid: 1, state: 'PENDING', name: '' },
+        { sectionid: 'stepTwo', stepid: 2, state: 'PENDING', name: '' },
+        { sectionid: 'stepThree', stepid: 3, state: 'PENDING', name: '' },
+        { sectionid: 'stepFour', stepid: 4, state: 'PENDING', name: '' },
+        { sectionid: 'stepFive', stepid: 5, state: 'PENDING', name: '' },
+        { sectionid: 'stepSix', stepid: 6, state: 'PENDING', name: '' },
+        { sectionid: 'stepSeven', stepid: 7, state: 'PENDING', name: '' },
+        { sectionid: 'stepEight', stepid: 8, state: 'PENDING', name: '' },
+        { sectionid: 'stepNine', stepid: 9, state: 'PENDING', name: '' },
+        { sectionid: 'stepTen', stepid: 10, state: 'PENDING', name: '' }
+    ]
     this.translate.stream(
       [
         'STEPS_MENU.project_structure_stepsmenu_startingpoint',
@@ -66,82 +177,6 @@ export class ProjectEditorComponent implements OnInit {
         this.steps[8].name = 'Interacción con alumnos'  // WIP localization
       }
       );
-  }
-
-
-  // Function create or update the project
-  handleSubmit(projectData: object) {
-    if (!this.project?.id) {
-      // create mode
-      const newProject = {
-        title: '',
-        ...projectData
-      }
-      this.projectsService.add(newProject)
-        .subscribe(
-          newResProject => {
-            this.location.go('projects/' + newResProject.id);
-            this.projectUrl = newResProject.id;
-            this.reload();
-            this.submitFormStatus();
-          }
-        );
-    } else {
-      // update mode
-      const updateProject = {
-        id: this.project.id,
-        ...projectData
-      }
-      this.projectsService.update(updateProject);
-      this.submitFormStatus();
-    }
-  }
-
-  reload() {
-    if (this.projectUrl !== 'create') {
-      this.project$ = this.projectsService.entities$
-        .pipe(
-          map(projects => projects.find(project => {
-            return project.id === Number(this.projectUrl);
-          }))
-        )
-      this.project$.subscribe(project => {
-        this.project = project;
-        if (project) {
-          this.notFound = false;
-          this.titleData = { id: project.id, title: project.title };
-          this.stepStatusService.getWithQuery(project.id.toString())
-        } else {
-          // WIP
-          // this.projectsService.getWithQuery(`/projects/${this.projectUrl.toString()}`);
-          this.notFound = true;
-        }
-      })
-    }
-  }
-
-  handleFormSubmit(data: any) {
-    this.handleSubmit(data.data)
-  }
-
-  // inprogress
-  updateInProgress(data: any) {
-    console.log(data, "==> in progress") // WIP
-    this.status = data.status;
-    // this.items[0].status = data
-  }
-
-  submitFormStatus(){
-    // const formStatus: StepStatus = {
-    //   id: this.project?.id,
-    //   stepid: this.stepId,
-    //   state: this.status
-    // }
-    // this.stepStatusService.add(formStatus)
-  }
-
-  onScrollSpyChange(sectionId: StepId) {
-    this.spyActive = sectionId;
   }
 
 }

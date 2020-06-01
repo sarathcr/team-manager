@@ -46,6 +46,7 @@ import { StatusComponent } from './components/status/status.component';
 import { StepStatusEntityService } from './services/step-status/step-status-entity.service';
 import { StepStatusDataService } from './services/step-status/step-status-data.service';
 import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive';
+import { ScrollToDirective } from './directives/scroll-to/scroll-to.directive';
 
 const entityMetadata: EntityMetadataMap = {
     Project: {
@@ -104,7 +105,8 @@ const entityMetadata: EntityMetadataMap = {
         ScrollSpyDirective,
         StepThreeComponent,
         StepFourComponent,
-        TextareaComponent
+        TextareaComponent,
+        ScrollToDirective
     ],
     imports: [
         CommonModule,
