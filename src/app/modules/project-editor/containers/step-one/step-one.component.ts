@@ -101,15 +101,15 @@ export class StepOneComponent implements OnInit, OnDestroy {
           this.initialFormData = tempinitialFormData
         })
     if (this.stepStatus$) {
-      this.stepStatus$.subscribe(
-        statusData => {
-          if (statusData) {
-            statusData.state?.forEach(status => {
-              if (status.stepid == 1) this.buttonConfig.submitted = status.state == "DONE"
-            })
+      this.stepStatus$.pipe(
+        map(data => data?.state?.filter(statusData => statusData.stepid == this.step.stepid)))
+        .subscribe(
+          formStatus => {
+            if (formStatus) {
+              this.buttonConfig.submitted = formStatus[0].state == "DONE"
+            }
           }
-        }
-      )
+        )
     }
   }
 
