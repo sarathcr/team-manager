@@ -4,15 +4,15 @@ import { Project } from 'src/app/shared/constants/project.model';
 import { StepId, Step, StepState } from '../../constants/step.model';
 import { buttonSubmitConfig } from '../../constants/form-config.data';
 import { TranslateService } from '@ngx-translate/core';
-import { FormSevenInitData, FormSeven } from '../../constants/step-forms.model';
-import { formSevenInitData } from '../../constants/step-forms.data';
+import { FormEightInitData, FormEight } from '../../constants/step-forms.model';
+import { formEightInitData } from '../../constants/step-forms.data';
 
 @Component({
   selector: 'app-step-eight',
   templateUrl: './step-eight.component.html',
   styleUrls: ['./step-eight.component.scss']
 })
-export class StepEightComponent implements OnInit {
+export class StepFourComponent implements OnInit {
 
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
@@ -20,7 +20,7 @@ export class StepEightComponent implements OnInit {
   @Input() step: Step
   finalProduct: any
   buttonConfig = new buttonSubmitConfig
-  initialFormData: FormSevenInitData = formSevenInitData
+  initialFormData: FormEightInitData = formEightInitData
   active: boolean = false
 
   constructor(private translateService: TranslateService) { }
@@ -86,7 +86,7 @@ export class StepEightComponent implements OnInit {
   handleSubmit() {
     this.step.state = 'DONE'
     this.handleButtonType()
-    const formData: FormSeven = {
+    const formData: FormEight = {
       data: {
         finalProduct: this.finalProduct
       },

@@ -25,7 +25,7 @@ export interface FormOneInitData {
     subjects: Subject[]
 }
 
-export interface FormSeven {
+export interface FormEight {
     data: {
         finalProduct?: string;
         status?: Status
@@ -33,7 +33,7 @@ export interface FormSeven {
     stepStatus: StepState
 }
 
-export type FormSevenInitData = string
+export type FormEightInitData = string
 
 
 

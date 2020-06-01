@@ -1,4 +1,4 @@
-import { FormOneInitData, FormOne, FormSevenInitData } from './step-forms.model'
+import { FormOneInitData,  FormEightInitData } from './step-forms.model'
 
 export class formOneInitData implements FormOneInitData {
     country = [];
@@ -9,4 +9,4 @@ export class formOneInitData implements FormOneInitData {
     finalProduct = [];
 }
 
-export const formSevenInitData: FormSevenInitData  = ''
+export const formEightInitData: FormEightInitData  = ''
