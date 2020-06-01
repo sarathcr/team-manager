@@ -1,4 +1,4 @@
-export interface TitleData {
+export interface ProjectTitle {
     id: number,
     title: string
  }

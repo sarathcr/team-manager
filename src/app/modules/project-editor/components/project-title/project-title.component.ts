@@ -1,10 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-
-// import { ProjectEntityService } from '../../services/project/project-entity.service';
-// import { NewProjectResService } from '../../services/project/new-project-res.service';
-// import { Project } from 'src/app/shared/constants/project.model';
-// import { initialProject } from 'src/app/shared/constants/project.data';
-import { TitleData } from '../../constants/title-data.model';
+import { ProjectTitle } from '../../constants/title-data.model';
 
 @Component({
   selector: 'app-project-title',
@@ -14,7 +9,7 @@ import { TitleData } from '../../constants/title-data.model';
 export class ProjectTitleComponent implements OnInit {
 
   @ViewChild('titleInput') inputElement: ElementRef;
-  @Input() projectData: TitleData;
+  @Input() projectData: ProjectTitle;
   @Input() maxLength: number;
   @Input() placeholder: any;
   @Output() titleBlur = new EventEmitter();

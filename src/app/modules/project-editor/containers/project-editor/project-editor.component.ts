@@ -1,14 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectEntityService } from '../../services/project/project-entity.service';
 import { map } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
-import { StepMenu } from 'src/app/modules/project-editor/constants/step-menu.model'
-import { TitleData } from '../../constants/title-data.model';
-import { Observable } from 'rxjs';
-import { Steps } from '../../constants/steps.model';
+import { ProjectTitle } from '../../constants/title-data.model';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service';
+import { StepId, Status } from '../../constants/step.model';
+import { Step } from '../../constants/step.model';
+import { FormOne } from '../../constants/step-forms.model';
 
 @Component({
   selector: 'app-project-editor',
@@ -18,55 +20,27 @@ import { Steps } from '../../constants/steps.model';
 export class ProjectEditorComponent implements OnInit {
   project: Project;
   project$: Observable<Project>;
+  spyActive$ = new BehaviorSubject<StepId>('stepOne')
   notFound: boolean;
-  titleData: TitleData;
+  titleData: ProjectTitle;
   projectUrl: any;
-  items: StepMenu[];
-  status: string;
-  spyActive: Steps = 'stepOne'
+  steps: Step[]
+  status: Status
+  tempStatus: any // saving the status for non created projects
 
   constructor(
     private projectsService: ProjectEntityService,
     private route: ActivatedRoute,
     private location: Location,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private stepStatusService: StepStatusEntityService
   ) { }
 
   ngOnInit(): void {
+    this.createSteps()
     this.projectUrl = this.route.snapshot.paramMap.get('id');
-    this.createStepList();
-    this.reload();
+    this.getProject()
   }
-
-  // to create step list
-  createStepList() {
-    // localization for step menu
-    this.translate.stream(
-      [
-        'STEPS_MENU.project_structure_stepsmenu_startingpoint',
-        'STEPS_MENU.project_structure_stepsmenu_topic',
-        'STEPS_MENU.project_structure_stepsmenu_creativetitle',
-        'STEPS_MENU.project_stepsmenu_drivingquestion',
-        'STEPS_MENU.project_structure_stepsmenu_finalproduct',
-        'STEPS_MENU.project_structure_stepsmenu_sinopsis',
-      ])
-      .subscribe(translations => {
-        this.items = [
-          { id: 1, name: translations['STEPS_MENU.project_structure_stepsmenu_startingpoint'], status: 'pending' },
-          { id: 2, name: translations['STEPS_MENU.project_structure_stepsmenu_topic'], status: 'pending' },
-          { id: 3, name: 'Objetivos competenciales', status: 'pending' }, // add localization
-          { id: 4, name: 'Contenidos', status: 'pending' }, // add localization
-          { id: 5, name: 'Evaluación', status: 'pending' }, // add localization
-          { id: 6, name: translations['STEPS_MENU.project_structure_stepsmenu_creativetitle'], status: 'pending' },
-          { id: 7, name: translations['STEPS_MENU.project_stepsmenu_drivingquestion'], status: 'pending' },
-          { id: 8, name: translations['STEPS_MENU.project_structure_stepsmenu_finalproduct'], status: 'pending' },
-          { id: 9, name: translations['STEPS_MENU.project_structure_stepsmenu_sinopsis'], status: 'pending' },
-          { id: 10, name: 'Interacción con alumnos', status: 'pending' } // add localization
-        ];
-      }
-      );
-  }
-
 
   // Function create or update the project
   handleSubmit(projectData: object) {
@@ -81,7 +55,12 @@ export class ProjectEditorComponent implements OnInit {
           newResProject => {
             this.location.go('projects/' + newResProject.id);
             this.projectUrl = newResProject.id;
-            this.reload();
+            this.getProject();
+            if (this.tempStatus) {
+              this.tempStatus.id = newResProject.id
+              this.stepStatusService.update(this.tempStatus)
+              this.tempStatus = null
+            }
           }
         );
     } else {
@@ -94,19 +73,20 @@ export class ProjectEditorComponent implements OnInit {
     }
   }
 
-  reload() {
+  getProject() {
     if (this.projectUrl !== 'create') {
       this.project$ = this.projectsService.entities$
         .pipe(
           map(projects => projects.find(project => {
-            return project.id === Number(this.projectUrl);
+            return project.id === Number(this.projectUrl)
           }))
         )
       this.project$.subscribe(project => {
         this.project = project;
         if (project) {
           this.notFound = false;
-          this.titleData = { id: project.id, title: project.title };
+          this.titleData = { id: project.id, title: project.title }
+          this.getStepStatus(project.id)
         } else {
           // WIP
           // this.projectsService.getWithQuery(`/projects/${this.projectUrl.toString()}`);
@@ -115,21 +95,88 @@ export class ProjectEditorComponent implements OnInit {
       })
     }
   }
+  
+  getStepStatus(projectId: number) {
+    // status state management
+    this.stepStatusService.entities$
+    .pipe(
+      map(stepStates => stepStates.find(state => {
+        return state.id === Number(this.projectUrl);
+      }))
+    )
+    .subscribe(data => {
+      if (data) {
+        this.updateStepStatus(data)
+      } else {
+        this.stepStatusService.getWithQuery(projectId.toString())
+      }
+    })
+  }
 
-  handleFormSubmit(data: any) {
-    this.status = data.status;
+  updateStepStatus(stepstatus: any) {
+    stepstatus.state?.forEach(newState => {
+      this.steps.forEach(step => {
+        if (step.stepid == newState.stepid) {
+          step.state = newState.state
+        }
+      });
+    });
+  }
+
+  handleFormSubmit(data: FormOne) {
     this.handleSubmit(data.data)
+    this.submitFormStatus(data.stepStatus)
   }
 
-  // inprogress
-  updateInProgress(data:any) {
-    console.log(data, "==> in progress") // WIP
-    this.status = data.status;
-    this.items[0].status = data
+  submitFormStatus(data: any){
+    if (data.id) {
+      this.stepStatusService.update(data)
+    } else {
+      this.tempStatus = data;
+    }
+    
+    
   }
 
-  onScrollSpyChange(sectionId: Steps) {
-    this.spyActive = sectionId;
+  onScrollSpyChange(sectionId: StepId) {
+    this.spyActive$.next(sectionId);
+  }
+
+  createSteps() {
+    this.steps = [
+        { sectionid: 'stepOne', stepid: 1, state: 'PENDING', name: '' },
+        { sectionid: 'stepTwo', stepid: 2, state: 'PENDING', name: '' },
+        { sectionid: 'stepThree', stepid: 3, state: 'PENDING', name: '' },
+        { sectionid: 'stepFour', stepid: 4, state: 'PENDING', name: '' },
+        { sectionid: 'stepFive', stepid: 5, state: 'PENDING', name: '' },
+        { sectionid: 'stepSix', stepid: 6, state: 'PENDING', name: '' },
+        { sectionid: 'stepSeven', stepid: 7, state: 'PENDING', name: '' },
+        { sectionid: 'stepEight', stepid: 8, state: 'PENDING', name: '' },
+        { sectionid: 'stepNine', stepid: 9, state: 'PENDING', name: '' },
+        { sectionid: 'stepTen', stepid: 10, state: 'PENDING', name: '' }
+    ]
+    this.translate.stream(
+      [
+        'STEPS_MENU.project_structure_stepsmenu_startingpoint',
+        'STEPS_MENU.project_structure_stepsmenu_topic',
+        'STEPS_MENU.project_structure_stepsmenu_creativetitle',
+        'STEPS_MENU.project_stepsmenu_drivingquestion',
+        'STEPS_MENU.project_structure_stepsmenu_finalproduct',
+        'STEPS_MENU.project_structure_stepsmenu_sinopsis',
+      ])
+      .subscribe(translations => {
+        this.steps[0].name = translations['STEPS_MENU.project_structure_stepsmenu_startingpoint']
+        this.steps[1].name = translations['STEPS_MENU.project_structure_stepsmenu_topic']
+        this.steps[2].name = 'Objetivos competenciales' // WIP localization
+        this.steps[3].name = 'Contenidos' // WIP localization
+        this.steps[4].name = 'Evaluación' // WIP localization
+        this.steps[5].name = translations['STEPS_MENU.project_structure_stepsmenu_creativetitle']
+        this.steps[6].name = translations['STEPS_MENU.project_stepsmenu_drivingquestion']
+        this.steps[7].name = translations['STEPS_MENU.project_structure_stepsmenu_finalproduct']
+        this.steps[8].name = translations['STEPS_MENU.project_structure_stepsmenu_sinopsis']
+        this.steps[8].name = 'Interacción con alumnos'  // WIP localization
+      }
+      );
   }
 
 }

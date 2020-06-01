@@ -2,12 +2,12 @@
   <div class="dropdown__wrap" >
     <label class="dropdown__label" for='config.name'>{{config.label}}</label>
     <ng-multiselect-dropdown 
-      [placeholder]="config.placeholder" 
+      [placeholder]="config.placeholder"
+      [disabled] ="config.disabled" 
       [settings] ="dropdownSettings" 
       [data]="config.options" 
       (onSelect)="onItemSelect($event)" 
       (onDeSelect)="onItemDeSelect($event)"
-      (onSelectAll)="onSelectAll($event)" 
       (onDropDownClose)="onDropDownClose()" 
       [(ngModel)]="config.selectedItems">
     </ng-multiselect-dropdown>

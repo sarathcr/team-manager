@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { TitleData } from '../../constants/title-data.model';
+import { ProjectTitle } from '../../constants/title-data.model';
 
 @Component({
   selector: 'app-editor-header',
@@ -8,7 +8,7 @@ import { TitleData } from '../../constants/title-data.model';
 })
 export class EditorHeaderComponent implements OnInit {
 
-  @Input() projectData: TitleData;
+  @Input() projectData: ProjectTitle;
   @Output() titleBlur = new EventEmitter()
 
   constructor() { }
