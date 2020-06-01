@@ -17,6 +17,7 @@ import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
 import { metaReducers, appReducers } from './state';
 import { EffectsModule } from '@ngrx/effects';
 import { EntityDataModule } from '@ngrx/data';
+import { AccordionComponent } from './accordion/accordion.component';
 
 // AoT requires an exported function for factories
 export function rootLoaderFactory(http: HttpClient) {
@@ -24,7 +25,8 @@ export function rootLoaderFactory(http: HttpClient) {
 }
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AccordionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

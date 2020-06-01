@@ -1,11 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+//ngx bootstrap
+import { setTheme } from 'ngx-bootstrap/utils';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectEditorRoutingModule } from './project-editor-routing.module';
 // containers
 import { StepOneComponent } from './containers/step-one/step-one.component';
+import { ContextualHelpComponent } from './containers/contextual-help/contextual-help.component';
 // components
 import { ProjectThumbnailComponent } from './components/project-thumbnail/project-thumbnail.component';
 import { CreateProjectComponent } from './components/create-project/create-project.component';
@@ -106,7 +113,8 @@ const entityMetadata: EntityMetadataMap = {
         StepThreeComponent,
         StepFourComponent,
         TextareaComponent,
-        ScrollToDirective
+        ScrollToDirective,
+        ContextualHelpComponent
     ],
     imports: [
         CommonModule,
@@ -114,7 +122,9 @@ const entityMetadata: EntityMetadataMap = {
         ProjectEditorRoutingModule,
         TranslateModule.forChild(),
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        TabsModule.forRoot(),
+        AccordionModule.forRoot()
     ],
     providers: [
         ProjectsResolver,
@@ -147,6 +157,9 @@ export class ProjectEditorModule {
         private gradeDataService: GradeDataService,
         private academicYearDataService: AcademicYearDataService,
         private stepStatusDataService: StepStatusDataService) {
+
+        // ngx-bootstrap theme
+        setTheme('bs4');
 
         eds.registerMetadataMap(entityMetadata);
         entityDataService.registerService('Project', projectsDataService);

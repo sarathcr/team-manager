@@ -1,0 +1,99 @@
+@import '../../../../../styles/helpers/_helpers-master';
+
+.contextual-help{
+    $root: &;
+    top: 75px;
+    width: 532px;
+    position: fixed;
+    right: 0;
+    height: 100%;
+    overflow: hidden;
+
+    &__tabset{
+        $tab-root: &;
+        width: 100%;
+        height: 100%;
+        display: block;
+
+        ul{
+            display: inline-flex;
+            flex-direction: column;
+            border: none;
+            margin-top: -7px;
+
+            #{$tab-root}-item{
+                @include upper-card-box-shadow;
+                width: 62px;
+                height: 89px;
+                border-radius: 0;
+                transform: skewY(20deg);
+                position: relative;
+
+                a{
+                    margin: 0;
+                    border-radius: 0;
+                    font-size: 24px;
+                    position: absolute;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 100%;
+                    color: $primary-font-color;
+
+                    .icon{
+                        transform: skewY(-20deg);
+                    }
+                }
+
+                &.active, & a{
+                    border: none;
+                }
+            }
+        }
+
+        & > div{
+            display: inline-flex;
+            padding: 30px 40px;
+            width: calc(100% - 62px);
+            height: 100%;
+            background-color: #fff;
+            float: right;
+
+            #{$tab-root}-item{
+                width: 100%;
+
+                #{$root}__content{
+                    &-head{
+                        display: flex;
+                        flex-direction: row;
+                        border-bottom: 1px solid rgba($primary-font-color,0.1);
+                        align-items: center;
+                        padding-bottom: 28px;
+                    }
+        
+                    &-title{
+                        width: 100%;
+                        font-family: $font-family-secondary;
+                        font-size: 14px;
+                        letter-spacing: 1px;
+                        line-height: 24px;
+                        font-weight: 900;
+                        color: rgba($primary-font-color,0.5);
+                        display: inline-flex;
+                        margin-bottom: 0;
+                    }
+        
+                    &-close{
+                        display: inline-flex;
+                        justify-self: flex-end;
+                        background-color: transparent;
+                        border: none;
+                        font-size: 14px;
+                        color: rgba($primary-font-color,0.6);
+                    }
+                }
+            }
+        }
+    }
+}
