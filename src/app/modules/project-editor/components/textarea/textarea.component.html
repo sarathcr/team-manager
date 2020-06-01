@@ -1,4 +1,4 @@
 <div class="textarea textarea_active">
-    <textarea class="textarea__description" id="list-item-1" rows="1" placeholder="Especifica uno o más temas" [value]="value" (change)="handleChange($event.target.value)" (blur)="handleBlur($event.target.value)">
-    </textarea>
+    <textarea class="textarea__description" id="list-item-1" rows="1" maxlength="500"
+        placeholder="Especifica uno o más temas" [(ngModel)]="value" (ngModelChange)="onValueChange($event)"></textarea>
 </div>

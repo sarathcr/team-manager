@@ -8,7 +8,7 @@ import { Project } from 'src/app/shared/constants/project.model';
 import { ProjectTitle } from '../../constants/title-data.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service';
-import { StepId, Status } from '../../constants/step.model';
+import { StepId, Status, StepState } from '../../constants/step.model';
 import { Step } from '../../constants/step.model';
 import { FormOne } from '../../constants/step-forms.model';
 
@@ -95,22 +95,22 @@ export class ProjectEditorComponent implements OnInit {
       })
     }
   }
-  
+
   getStepStatus(projectId: number) {
     // status state management
     this.stepStatusService.entities$
-    .pipe(
-      map(stepStates => stepStates.find(state => {
-        return state.id === Number(this.projectUrl);
-      }))
-    )
-    .subscribe(data => {
-      if (data) {
-        this.updateStepStatus(data)
-      } else {
-        this.stepStatusService.getWithQuery(projectId.toString())
-      }
-    })
+      .pipe(
+        map(stepStates => stepStates.find(state => {
+          return state.id === Number(this.projectUrl);
+        }))
+      )
+      .subscribe(data => {
+        if (data) {
+          this.updateStepStatus(data)
+        } else {
+          this.stepStatusService.getWithQuery(projectId.toString())
+        }
+      })
   }
 
   updateStepStatus(stepstatus: any) {
@@ -128,14 +128,17 @@ export class ProjectEditorComponent implements OnInit {
     this.submitFormStatus(data.stepStatus)
   }
 
-  submitFormStatus(data: any){
-    if (data.id) {
-      this.stepStatusService.update(data)
+  submitFormStatus(data: any) {
+    if (this.project.id) {
+      const dataWithId: any = {
+        ...data,
+        id: this.project.id
+      }
+      console.log(dataWithId)
+      this.stepStatusService.update(dataWithId)
     } else {
       this.tempStatus = data;
     }
-    
-    
   }
 
   onScrollSpyChange(sectionId: StepId) {
@@ -144,16 +147,16 @@ export class ProjectEditorComponent implements OnInit {
 
   createSteps() {
     this.steps = [
-        { sectionid: 'stepOne', stepid: 1, state: 'PENDING', name: '' },
-        { sectionid: 'stepTwo', stepid: 2, state: 'PENDING', name: '' },
-        { sectionid: 'stepThree', stepid: 3, state: 'PENDING', name: '' },
-        { sectionid: 'stepFour', stepid: 4, state: 'PENDING', name: '' },
-        { sectionid: 'stepFive', stepid: 5, state: 'PENDING', name: '' },
-        { sectionid: 'stepSix', stepid: 6, state: 'PENDING', name: '' },
-        { sectionid: 'stepSeven', stepid: 7, state: 'PENDING', name: '' },
-        { sectionid: 'stepEight', stepid: 8, state: 'PENDING', name: '' },
-        { sectionid: 'stepNine', stepid: 9, state: 'PENDING', name: '' },
-        { sectionid: 'stepTen', stepid: 10, state: 'PENDING', name: '' }
+      { sectionid: 'stepOne', stepid: 1, state: 'PENDING', name: '' },
+      { sectionid: 'stepTwo', stepid: 2, state: 'PENDING', name: '' },
+      { sectionid: 'stepThree', stepid: 3, state: 'PENDING', name: '' },
+      { sectionid: 'stepFour', stepid: 4, state: 'PENDING', name: '' },
+      { sectionid: 'stepFive', stepid: 5, state: 'PENDING', name: '' },
+      { sectionid: 'stepSix', stepid: 6, state: 'PENDING', name: '' },
+      { sectionid: 'stepSeven', stepid: 7, state: 'PENDING', name: '' },
+      { sectionid: 'stepEight', stepid: 8, state: 'PENDING', name: '' },
+      { sectionid: 'stepNine', stepid: 9, state: 'PENDING', name: '' },
+      { sectionid: 'stepTen', stepid: 10, state: 'PENDING', name: '' }
     ]
     this.translate.stream(
       [
@@ -174,7 +177,7 @@ export class ProjectEditorComponent implements OnInit {
         this.steps[6].name = translations['STEPS_MENU.project_stepsmenu_drivingquestion']
         this.steps[7].name = translations['STEPS_MENU.project_structure_stepsmenu_finalproduct']
         this.steps[8].name = translations['STEPS_MENU.project_structure_stepsmenu_sinopsis']
-        this.steps[8].name = 'Interacción con alumnos'  // WIP localization
+        this.steps[9].name = 'Interacción con alumnos'  // WIP localization
       }
       );
   }

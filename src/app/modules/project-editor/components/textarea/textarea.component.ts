@@ -9,16 +9,15 @@ export class TextareaComponent implements OnInit {
   @Input() value: string
   @Output() onChange = new EventEmitter()
   @Output() onBlur = new EventEmitter()
-
+  valueModel: string
   constructor() { }
 
   ngOnInit(): void { }
 
-  handleChange(value: string) {
+  // Function to get and emit value on textarea
+  onValueChange(value: string) {
+    this.value = this.valueModel
     this.onChange.emit(value)
   }
 
-  handleBlur(value: string) {
-    this.onBlur.emit(value)
-  }
 }

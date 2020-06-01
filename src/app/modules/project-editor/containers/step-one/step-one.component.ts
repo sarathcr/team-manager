@@ -30,7 +30,6 @@ export class StepOneComponent implements OnInit {
   academicYearDropdown: FieldConfig
   gradesDropdown: FieldConfig
   subjectsDropdown: FieldConfig
-  projectId: number
   active: boolean = false
 
   constructor(
@@ -54,7 +53,6 @@ export class StepOneComponent implements OnInit {
       this.project$
         .subscribe(data => {
           let tempinitialFormData = new formOneInitData
-          this.projectId = data?.id
           if (data?.country) {
             this.countryDropdown.selectedItems = [{ ...data.country }]
             tempinitialFormData.country.push({ ...data.country })
@@ -284,7 +282,6 @@ export class StepOneComponent implements OnInit {
         status: 'INPROCESS', // WIP
       },
       stepStatus: {
-        id: this.projectId,
         state: [
           {
             state: this.step.state,

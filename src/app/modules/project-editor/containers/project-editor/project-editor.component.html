@@ -7,9 +7,20 @@
       <app-step-one data-scrollSpy id="{{steps[0].sectionid}}" class="step-section"[spyActive$]="spyActive$" [step]="steps[0]" [project$]="project$" (onSubmit)='handleFormSubmit($event)'></app-step-one>
       <app-tematica data-scrollSpy id="{{steps[1].sectionid}}" class="step-section"></app-tematica>
       <app-step-three data-scrollSpy id="{{steps[6].sectionid}}"></app-step-three>
-      <app-step-four data-scrollSpy id="{{steps[7].sectionid}}" (onSubmit)="handleFormSubmit($event)" [project$]="project$"></app-step-four>
+      <app-step-four data-scrollSpy id="{{steps[7].sectionid}}" class="step-section"[spyActive$]="spyActive$" [step]="steps[7]" [project$]="project$" (onSubmit)='handleFormSubmit($event)'></app-step-four>
+      <app-tematica data-scrollSpy id="{{steps[8].sectionid}}" class="step-section"></app-tematica>
     </div>
 </div>
 <div *ngIf="notFound">
   Project not found
 </div>
+
+
+
+ 
+ 
+  
+  
+ 
+      
+

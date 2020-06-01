@@ -2,7 +2,7 @@
 .textarea{
     width: 100%;
     min-height: 388px;
-    border: 1px solid $creator-border-active;
+    border: 1px solid $creator-textarea-border;
     border-radius: 3px;
     padding: 22px;
     margin-bottom: 69px;
@@ -23,10 +23,8 @@
             color: $overtitle-grey;
         }
     }
-    &_active{
-        border: 1px solid $creator-border;
-        &__label{
-            display: none;
-        }
+    &:active, &:focus, &:focus-within{
+        border: 1px solid transparent;
+        box-shadow: 0 0 0 3px $primary;
     }
 }

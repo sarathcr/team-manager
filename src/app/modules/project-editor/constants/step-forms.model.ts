@@ -25,4 +25,15 @@ export interface FormOneInitData {
     subjects: Subject[]
 }
 
+export interface FormSeven {
+    data: {
+        finalProduct?: string;
+        status?: Status
+    }
+    stepStatus: StepState
+}
+
+export type FormSevenInitData = string
+
+
 
