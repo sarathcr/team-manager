@@ -11,7 +11,8 @@ import { SubjectEntityService } from '../../services/subject/subject-entity.serv
 import { Project } from 'src/app/shared/constants/project.model'
 import { formOneInitData } from '../../constants/step-forms.data'
 import { FormOneInitData, FormOne } from '../../constants/step-forms.model'
-import { Step, StepId } from '../../constants/step.model'
+import { Step, StepId, StepState } from '../../constants/step.model'
+import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
 
 @Component({
   selector: 'app-step-one',
@@ -22,6 +23,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
   @Input() spyActive$: Observable<StepId>
+  @Input() stepStatus$: Observable<StepState>
   @Input() step: Step
   initialFormData: FormOneInitData = new formOneInitData
   buttonConfig: FieldConfig
@@ -39,7 +41,9 @@ export class StepOneComponent implements OnInit, OnDestroy {
     private academicYearService: AcademicYearEntityService,
     private gradeService: GradeEntityService,
     private subjectService: SubjectEntityService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private stepStatusService: StepStatusEntityService
+
   ) { }
 
   ngOnInit(): void {
@@ -96,6 +100,19 @@ export class StepOneComponent implements OnInit, OnDestroy {
           }
           this.initialFormData = tempinitialFormData
         })
+    if (this.stepStatus$) {
+      this.stepStatus$.subscribe(
+        statusData => {
+          if (statusData) {
+            statusData.state?.forEach(status => {
+              if (status.stepid == 1) this.buttonConfig.submitted = status.state == "DONE"
+            })
+          } else {
+            this.stepStatusService.getWithQuery(this.projectId.toString())
+          }
+        }
+      )
+    }
   }
 
   onScrollSubmit() {
@@ -171,15 +188,32 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   checkStatus() {
-    if (this.checkNonEmptyField() === true) {
-      this.step.state = "DONE"
+    if (this.checkEmptyForm()) {
+      this.step.state = "PENDING"
     } else {
-      this.step.state = "INPROCESS"
+      if (this.checkNonEmptyForm() === true) {
+        this.step.state = "DONE"
+      } else {
+        this.step.state = "INPROCESS"
+      }
     }
   }
 
+  // checks if the form is empty
+  checkEmptyForm() {
+    if (!this.countryDropdown.selectedItems.length &&
+      !this.regionDropdown.selectedItems.length &&
+      !this.academicYearDropdown.selectedItems.length &&
+      !this.gradesDropdown.selectedItems.length &&
+      !this.subjectsDropdown.selectedItems.length
+    ) {
+      return true
+    }
+    return false
+  }
+
   // checks the form is completely filled or not
-  checkNonEmptyField() {
+  checkNonEmptyForm() {
     if (this.countryDropdown.selectedItems.length &&
       this.regionDropdown.selectedItems.length &&
       this.academicYearDropdown.selectedItems.length &&
@@ -266,16 +300,16 @@ export class StepOneComponent implements OnInit, OnDestroy {
   // Changes the button according to form status
   handleButtonType() {
     if (this.isFormUpdated()) {
-      if (this.checkNonEmptyField()) {
+      if (this.checkNonEmptyForm()) {
         this.buttonConfig.disabled = false
         this.buttonConfig.submitted = false
       } else {
         this.buttonConfig.disabled = true
         this.buttonConfig.submitted = false
       }
-    } else if (this.checkNonEmptyField()) {
+    } else if (this.checkNonEmptyForm()) {
       this.buttonConfig.disabled = true
-      this.buttonConfig.submitted = true
+      this.buttonConfig.submitted = false
     }
   }
 
@@ -300,8 +334,10 @@ export class StepOneComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.buttonConfig.submitted = this.step.state == 'DONE'
-    this.buttonConfig.disabled = this.step.state == "DONE"
+    if (this.checkNonEmptyForm()) {
+      this.buttonConfig.submitted = this.step.state == 'DONE'
+      this.buttonConfig.disabled = this.step.state == "DONE"
+    }
     this.onSubmit.emit(formData)
   }
 

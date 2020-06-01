@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
-import { Step } from '../../constants/step.model';
+import { StepState } from '../../constants/step.model';
 
 @Injectable()
-export class StepStatusEntityService extends EntityCollectionServiceBase<Step> {
+export class StepStatusEntityService extends EntityCollectionServiceBase<StepState> {
     constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
         super('StepStatus', serviceElementsFactory);
     }
