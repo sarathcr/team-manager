@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
@@ -18,7 +18,7 @@ import { Step, StepId } from '../../constants/step.model'
   templateUrl: './step-one.component.html',
   styleUrls: ['./step-one.component.scss']
 })
-export class StepOneComponent implements OnInit {
+export class StepOneComponent implements OnInit, OnDestroy {
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
   @Input() spyActive$: Observable<StepId>
@@ -47,6 +47,12 @@ export class StepOneComponent implements OnInit {
     this.getAllCountries()
     this.onScrollSubmit()
     this.formInIt()
+  }
+
+  ngOnDestroy(): void {
+    if (this.isFormUpdated()) {
+      this.handleSubmit()
+    }
   }
 
   formInIt() {
@@ -108,6 +114,7 @@ export class StepOneComponent implements OnInit {
         }
       })
   }
+
   changeResponseFormat(data: any) {
     return data.map(({ id, name }) => ({ id, name }))
   }
