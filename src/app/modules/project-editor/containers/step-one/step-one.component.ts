@@ -97,7 +97,6 @@ export class StepOneComponent implements OnInit, OnDestroy {
           }
           this.initialFormData = tempinitialFormData
         })
-    const emptyKeys = Object.keys(this.initialFormData).filter(key => JSON.stringify(this.initialFormData[key]) === '[]')
     if (this.stepStatus$) {
       this.stepStatus$.pipe(
         map(data => data?.state?.filter(statusData => statusData.stepid == this.step.stepid)))
@@ -105,7 +104,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
           formStatus => {
             if (formStatus) {
               this.buttonConfig.submitted = formStatus[0].state == "DONE"
-              if (formStatus[0].state != "DONE" && emptyKeys.length === 0)
+              if (formStatus[0].state != "DONE" && this.checkNonEmptyForm())
                 this.buttonConfig.disabled = false
             }
           }
