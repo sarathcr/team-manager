@@ -8,11 +8,11 @@ import { FormSevenInitData, FormSeven } from '../../constants/step-forms.model';
 import { formSevenInitData } from '../../constants/step-forms.data';
 
 @Component({
-  selector: 'app-step-four',
-  templateUrl: './step-four.component.html',
-  styleUrls: ['./step-four.component.scss']
+  selector: 'app-step-eight',
+  templateUrl: './step-eight.component.html',
+  styleUrls: ['./step-eight.component.scss']
 })
-export class StepFourComponent implements OnInit {
+export class StepEightComponent implements OnInit {
 
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
