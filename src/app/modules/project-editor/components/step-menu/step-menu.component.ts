@@ -1,6 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
-import { Steps } from '../../constants/steps.model';
-import { steps } from '../../constants/steps.data';
+import { StepId, Step } from '../../constants/step.model';
 
 @Component({
   selector: 'app-step-menu',
@@ -9,10 +8,8 @@ import { steps } from '../../constants/steps.data';
 })
 export class StepMenuComponent implements OnInit {
 
-  @Input() item:any;
-  @Input() i: number;
-  @Input() spyActive: Steps;
-  steps: Steps[] =  [...steps]
+  @Input() step: Step;
+  @Input() spyActive: StepId;
   
   constructor() { }
 

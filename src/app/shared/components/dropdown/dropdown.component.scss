@@ -36,12 +36,20 @@
     background-color: inherit;
     left: $padding-m;
     z-index: 2;
+    text-transform: capitalize;
   }
   .multiselect-dropdown{
     .disabled{
       .dropdown-btn{
         background-color: inherit !important;
         border-color: $creator-border !important;
+      }
+      +.dropdown-list{
+        display: none !important;
+      }
+      .dropdown-up{
+        transform: rotate(0deg) !important;
+        transform-origin: center ;
       }
     }
     &:active, &:focus, &:focus-within{
@@ -60,6 +68,9 @@
       &:active, &:focus{
         border: 1px solid $primary !important;
         box-shadow: 0 0 0 1px $primary;
+      }
+      >span:first-child{
+        opacity: 0.6;
       }
       >span:last-child{
         justify-self: end;
@@ -100,6 +111,7 @@
         padding: 0 !important;
         margin-left: 5px;
         position: relative;
+        opacity: 1 !important;
         a{
           display: none !important;
         }

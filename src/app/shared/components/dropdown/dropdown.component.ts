@@ -38,10 +38,6 @@ export class DropdownComponent implements OnInit {
     this.onSelect.emit({controller: this.config.name, val: this.config.selectedItems});
   }
 
-  onSelectAll(items: any) {
-    console.log(items);
-  }
-
   onDropDownClose(){
     this.active = false;
   }
