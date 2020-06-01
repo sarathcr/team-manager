@@ -12,7 +12,6 @@ import { Project } from 'src/app/shared/constants/project.model'
 import { formOneInitData } from '../../constants/step-forms.data'
 import { FormOneInitData, FormOne } from '../../constants/step-forms.model'
 import { Step, StepId, StepState } from '../../constants/step.model'
-import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
 
 @Component({
   selector: 'app-step-one',
@@ -41,9 +40,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     private academicYearService: AcademicYearEntityService,
     private gradeService: GradeEntityService,
     private subjectService: SubjectEntityService,
-    private translateService: TranslateService,
-    private stepStatusService: StepStatusEntityService
-
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
