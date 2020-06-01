@@ -26,6 +26,8 @@ import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.com
 import { StepThreeComponent } from './containers/step-three/step-three.component';
 import { StepFourComponent } from './containers/step-four/step-four.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
+import { AccordionComponent } from './components/accordion/accordion.component';
+
 // pages
 import { HomeComponent } from './containers/home/home.component';
 import { ProjectEditorComponent } from './containers/project-editor/project-editor.component';
@@ -114,7 +116,8 @@ const entityMetadata: EntityMetadataMap = {
         StepFourComponent,
         TextareaComponent,
         ScrollToDirective,
-        ContextualHelpComponent
+        ContextualHelpComponent,
+        AccordionComponent
     ],
     imports: [
         CommonModule,
