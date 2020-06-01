@@ -8,7 +8,7 @@ import { Project } from 'src/app/shared/constants/project.model';
 import { ProjectTitle } from '../../constants/title-data.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service';
-import { StepId, Status } from '../../constants/step.model';
+import { StepId, Status, StepState } from '../../constants/step.model';
 import { Step } from '../../constants/step.model';
 import { FormOne } from '../../constants/step-forms.model';
 
@@ -21,6 +21,7 @@ export class ProjectEditorComponent implements OnInit {
   project: Project;
   project$: Observable<Project>;
   spyActive$ = new BehaviorSubject<StepId>('stepOne')
+  stepStatus$: Observable<StepState>
   notFound: boolean;
   titleData: ProjectTitle;
   projectUrl: any;
@@ -95,16 +96,16 @@ export class ProjectEditorComponent implements OnInit {
       })
     }
   }
-  
+
   getStepStatus(projectId: number) {
     // status state management
-    this.stepStatusService.entities$
-    .pipe(
-      map(stepStates => stepStates.find(state => {
-        return state.id === Number(this.projectUrl);
-      }))
-    )
-    .subscribe(data => {
+    this.stepStatus$ = this.stepStatusService.entities$
+      .pipe(
+        map(stepStates => stepStates.find(state => {
+          return state.id === Number(this.projectUrl);
+        }))
+      )
+    this.stepStatus$.subscribe(data => {
       if (data) {
         this.updateStepStatus(data)
       } else {
@@ -128,14 +129,12 @@ export class ProjectEditorComponent implements OnInit {
     this.submitFormStatus(data.stepStatus)
   }
 
-  submitFormStatus(data: any){
+  submitFormStatus(data: any) {
     if (data.id) {
       this.stepStatusService.update(data)
     } else {
       this.tempStatus = data;
     }
-    
-    
   }
 
   onScrollSpyChange(sectionId: StepId) {
@@ -144,16 +143,16 @@ export class ProjectEditorComponent implements OnInit {
 
   createSteps() {
     this.steps = [
-        { sectionid: 'stepOne', stepid: 1, state: 'PENDING', name: '' },
-        { sectionid: 'stepTwo', stepid: 2, state: 'PENDING', name: '' },
-        { sectionid: 'stepThree', stepid: 3, state: 'PENDING', name: '' },
-        { sectionid: 'stepFour', stepid: 4, state: 'PENDING', name: '' },
-        { sectionid: 'stepFive', stepid: 5, state: 'PENDING', name: '' },
-        { sectionid: 'stepSix', stepid: 6, state: 'PENDING', name: '' },
-        { sectionid: 'stepSeven', stepid: 7, state: 'PENDING', name: '' },
-        { sectionid: 'stepEight', stepid: 8, state: 'PENDING', name: '' },
-        { sectionid: 'stepNine', stepid: 9, state: 'PENDING', name: '' },
-        { sectionid: 'stepTen', stepid: 10, state: 'PENDING', name: '' }
+      { sectionid: 'stepOne', stepid: 1, state: 'PENDING', name: '' },
+      { sectionid: 'stepTwo', stepid: 2, state: 'PENDING', name: '' },
+      { sectionid: 'stepThree', stepid: 3, state: 'PENDING', name: '' },
+      { sectionid: 'stepFour', stepid: 4, state: 'PENDING', name: '' },
+      { sectionid: 'stepFive', stepid: 5, state: 'PENDING', name: '' },
+      { sectionid: 'stepSix', stepid: 6, state: 'PENDING', name: '' },
+      { sectionid: 'stepSeven', stepid: 7, state: 'PENDING', name: '' },
+      { sectionid: 'stepEight', stepid: 8, state: 'PENDING', name: '' },
+      { sectionid: 'stepNine', stepid: 9, state: 'PENDING', name: '' },
+      { sectionid: 'stepTen', stepid: 10, state: 'PENDING', name: '' }
     ]
     this.translate.stream(
       [
