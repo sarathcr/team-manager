@@ -107,8 +107,6 @@ export class StepOneComponent implements OnInit, OnDestroy {
             statusData.state?.forEach(status => {
               if (status.stepid == 1) this.buttonConfig.submitted = status.state == "DONE"
             })
-          } else {
-            this.stepStatusService.getWithQuery(this.projectId.toString())
           }
         }
       )
