@@ -64,14 +64,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           this.projectId = data?.id
           let project = Object.assign(data)
           this.initialFormData.themes = []
-          // tempinitialFormData.themes.push({ id: 1, name: null }) // Uncomment this if no need to have a placeholder if data already exist
+          this.textAreaConfig.options = [{ id: 1, name: null }] // Uncomment this if no need to have a placeholder if data already exist
           if (project?.themes.length>0) {
             this.initialFormData.themes = project.themes
           }
           this.textAreaConfig.options = this.initialFormData.themes
-          if (project?.themes.length < 5) {// Comment this if no need to have a placeholder if data already exist
-            this.textAreaConfig.options.push({ id: this.initialFormData.themes.length+1, name: null})
-          }
+          // if (project?.themes.length < 5) {// Comment this if no need to have a placeholder if data already exist
+          //   this.textAreaConfig.options.push({ id: this.initialFormData.themes.length+1, name: null})
+          // }
           this.finalFormData.themes = project.themes
         })
     if (this.stepStatus$) {
