@@ -173,8 +173,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
     this.buttonConfig.submitted = this.step.state == 'DONE'
   }
-  textAreaUpdate(data){
-    // (data.val[0].name === null || data.val[0].name === undefined || data.val[0].name.length == 0)? this.buttonConfig.disabled = true: this.buttonConfig.disabled = false
+  textAreaUpdate(data){ // call on each update
+    (data.val[0].name === null || data.val[0].name === undefined || data.val[0].name.length == 0)? this.buttonConfig.disabled = true: this.buttonConfig.disabled = false
     this.checkInProgress()
   }
   addTheme(data){
