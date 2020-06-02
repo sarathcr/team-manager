@@ -1,13 +1,18 @@
-@import '../../../../../styles/helpers/_helpers-master';
+@import 'helpers/_helpers-master';
 
 .contextual-help{
     $root: &;
     top: 75px;
     width: 532px;
     position: fixed;
-    right: 0;
+    right: -460px;
     height: 100%;
     overflow: hidden;
+    @include transitions(all, 1.0s, ease-in-out);
+    
+    &_open{
+        right: 0;
+    }
 
     &__tabset{
         $tab-root: &;
@@ -19,15 +24,16 @@
             display: inline-flex;
             flex-direction: column;
             border: none;
-            margin-top: -7px;
+            margin-top: -12px;
 
             #{$tab-root}-item{
-                @include upper-card-box-shadow;
+                @include contextual-list;
                 width: 62px;
                 height: 89px;
                 border-radius: 0;
                 transform: skewY(20deg);
                 position: relative;
+                background-color: $context-bg-color;
 
                 a{
                     margin: 0;
@@ -42,22 +48,49 @@
                     color: $primary-font-color;
 
                     .icon{
-                        transform: skewY(-20deg);
+                        @include skewY(-20);
                     }
                 }
 
                 &.active, & a{
                     border: none;
                 }
+
+                &:first-child{
+                    a .icon{
+                        padding-top: 10px;
+                    }
+                }
+
+                &_multi-icon{
+                    &:not(.active){
+                        .icon{
+                            &:last-child{
+                                display: none;
+                            }
+                        }
+                    }
+
+                    &.active{
+                        .icon{
+                            display: none;
+
+                            &:last-child{
+                                display: inline-block;
+                            }
+                        }
+                    }
+                }
             }
         }
 
         & > div{
+            @include upper-card-box-shadow;
             display: inline-flex;
-            padding: 30px 40px;
+            padding: 30px 0 30px 40px;
             width: calc(100% - 62px);
             height: 100%;
-            background-color: #fff;
+            background-color: $context-bg-color;
             float: right;
 
             #{$tab-root}-item{
@@ -67,9 +100,10 @@
                     &-head{
                         display: flex;
                         flex-direction: row;
-                        border-bottom: 1px solid rgba($primary-font-color,0.1);
+                        border-bottom: 1px solid $context-border-color;
                         align-items: center;
                         padding-bottom: 28px;
+                        padding-right: 40px;
                     }
         
                     &-title{
@@ -79,7 +113,7 @@
                         letter-spacing: 1px;
                         line-height: 24px;
                         font-weight: 900;
-                        color: rgba($primary-font-color,0.5);
+                        color: $context-content-title;
                         display: inline-flex;
                         margin-bottom: 0;
                     }
@@ -89,8 +123,9 @@
                         justify-self: flex-end;
                         background-color: transparent;
                         border: none;
-                        font-size: 14px;
-                        color: rgba($primary-font-color,0.6);
+                        color: $context-close-color;
+                        font-size: 20px;
+                        margin-right: -8px;
                     }
                 }
             }

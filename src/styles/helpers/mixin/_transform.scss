@@ -23,4 +23,11 @@
        -moz-transform: translate3d($x, $y, $z);
          -o-transform: translate3d($x, $y, $z);
             transform: translate3d($x, $y, $z);
-  }
+}
+@mixin skewY($degrees) {
+    -moz-transform: skewY(#{$degrees}deg);
+    -webkit-transform: skewY(#{$degrees}deg);
+    -o-transform: skewY(#{$degrees}deg);
+    -ms-transform: skewY(#{$degrees}deg);
+    transform: skewY(#{$degrees}deg);
+}

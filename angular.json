@@ -20,6 +20,11 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "crossOrigin": "anonymous",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -172,7 +177,7 @@
   "defaultProject": "thinko-creator",
   "cli": {
     "defaultCollection": "@ngrx/schematics",
-    "analytics": "6ced185b-d2e2-47fb-80b0-ff8be19f3a11"
+    "analytics": false
   },
   "schematics": {
     "@schematics/angular:component": {

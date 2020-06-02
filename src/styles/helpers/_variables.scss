@@ -234,3 +234,9 @@ $icon-green:#37D4C8;
 $border-color-active:$electric-indigo;
 //Cookies
 $cookies-bg-color:  $white !default;
+
+//Contextual Help
+$context-bg-color: $white !default;
+$context-border-color: rgba($primary-font-color,0.1) !default;
+$context-close-color: rgba($primary-font-color,0.6) !default;
+$context-content-title: rgba($primary-font-color,0.5) !default;

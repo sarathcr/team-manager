@@ -26,3 +26,9 @@
     -moz-box-shadow: 0 0 50px -10px rgba($desktop-shadow-color, 0.1);
     box-shadow: 0 0 50px -10px rgba($desktop-shadow-color, 0.1);
 }
+
+@mixin contextual-list(){
+    -webkit-box-shadow: -15px 0 50px -10px rgba($desktop-shadow-color, 0.1);
+    -moz-box-shadow: -15px 0 50px -10px rgba($desktop-shadow-color, 0.1);
+    box-shadow: -15px 0 50px -10px rgba($desktop-shadow-color, 0.1);
+}

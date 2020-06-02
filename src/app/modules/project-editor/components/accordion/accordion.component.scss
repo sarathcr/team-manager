@@ -1,0 +1,93 @@
+@import 'helpers/_helpers-master';
+
+.accordion{
+    $root: &;
+    border: none;
+    border-radius: 0;
+    background-color: $context-bg-color;
+    border-top: 1px solid $context-border-color;
+
+    &__heading{
+        $root-head: &;
+        border: none;
+        background-color: $context-bg-color;
+        padding: 14px 40px 18px 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        
+        &-icon,
+        &-title,
+        &-arrow{
+            display: inline-flex;
+        }
+
+        &-icon{
+            font-size: 27px;
+            margin-right: 14px;
+           
+            .icon:last-child{
+                display: none;
+            }
+        }
+
+        #{$root}_active &-icon_multi-icon{
+            .icon{
+                display: none;
+            
+                &:last-child{
+                    display: block;
+                }
+            }
+        }
+
+        &-title{
+            width: 100%;
+            font-family: $font-family-secondary;
+            font-size: $font-size-body-overtitle;
+            line-height: $line-height-24px;
+            letter-spacing: 1px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        &-arrow{
+            float: right;
+            cursor: pointer;
+            margin-right: -5px;
+
+            .icon{
+                letter-spacing: 1px;
+                line-height: 24px;
+                font-size: 22px;
+            }
+
+            #{$root}_active &{
+                .icon{
+                    @include rotate(180);
+                }
+            }
+        }
+    }
+
+    &__body{
+        padding-right: 40px;
+
+        &-title{
+            font-family: $font-family-tertiary;
+            font-size: $font-size-body;
+            line-height: $line-height-28px;
+            letter-spacing: 0.2px;
+            font-weight: 700;
+        }
+
+        &-desc{
+            font-family: $font-family-tertiary;
+            font-size: $font-size-body-s;
+            line-height: $line-height-24px;
+            letter-spacing: normal;
+            font-weight: 400;
+        }
+    }
+}
