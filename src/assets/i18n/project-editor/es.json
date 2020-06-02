@@ -47,12 +47,12 @@
     },
     "DRIVING_QUESTIONS":{
       "project_drivingquestions_title": "Preguntas guía",
-      "project_drivingquestions_description": "Formula las cuestiones esenciales a las que l@s alumn@s intentarán dar respuesta durante el proyecto.  Estas preguntas reflejan el para qué del proyecto.",
+      "project_drivingquestions_description": "Formula las cuestiones esenciales a las que l@s alumn@s intentarán dar respuesta durante el proyecto.  Estas preguntas reflejan el <em>para qué</em> del proyecto.",
       "project_drivingquestions_placeholder": "Escribe la primera pregunta..."
     },
     "FINAL_PRODUCT":{
       "project_finalproduct_title": "Producto final",
-      "project_finalproduct_description": "El producto es el resultado, tangible o no, de los aprendizajes de tu alumnado a través del proyecto. Refleja qué serán capaces de hacer los alumnos con los aprendizajes que adquirirán. ",
+      "project_finalproduct_description": "El producto es el resultado, tangible o no, de los aprendizajes de tu alumnado a través del proyecto. Refleja <em>qué serán</em> capaces de hacer los alumnos con los aprendizajes que adquirirán. ",
       "project_finalproduct_placeholder": "Describe la propuesta de producto final"
     },
     "SINOPSIS":{
