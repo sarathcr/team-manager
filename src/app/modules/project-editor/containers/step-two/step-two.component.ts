@@ -147,7 +147,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
   handleSubmit() {
     this.checkStatus()
-    // this.finalFormData.themes = this.finalFormData.themes.filter( theme => theme.name !== null)
     let tempData = []
     this.finalFormData.themes.forEach( (theme, index) => {
       tempData.push({id: theme.id,name: theme.name})
@@ -191,8 +190,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     } else {
       this.finalFormData.themes[index] = data
     }
-
-    // (this.finalFormData.themes[0].name === null || this.finalFormData.themes[0].name === undefined || this.finalFormData.themes[0].name.length == 0)? this.buttonConfig.disabled = true: this.buttonConfig.disabled = false
     this.checkInProgress()
   }
   addTheme(data){
@@ -201,7 +198,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
   deleteTheme(data){
     let temp:Theme[] = []
-    // this.finalFormData.themes = this.finalFormData.themes.filter( theme => theme.id !== data.val[data.index].id)
     this.finalFormData.themes.forEach( theme => {
       if(theme.id === data.val[data.index].id){
         temp.push({id: theme.id})
@@ -209,9 +205,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         temp.push(theme)
       }
     })
-    // this.finalFormData.themes.forEach( (theme, index) => {
-    //   temp.push({name: theme.name})
-    // })
     this.textAreaConfig.options = this.finalFormData.themes = temp
     this.handleButtonType()
   }

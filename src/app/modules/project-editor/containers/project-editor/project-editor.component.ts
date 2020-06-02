@@ -70,7 +70,6 @@ export class ProjectEditorComponent implements OnInit {
         id: this.project.id,
         ...projectData
       }
-      console.log(updateProject)
       this.projectsService.update(updateProject);
     }
   }
@@ -127,7 +126,6 @@ export class ProjectEditorComponent implements OnInit {
   }
 
   handleFormSubmit(data: FormOne) {
-    console.log(data)
     this.handleSubmit(data.data)
     this.submitFormStatus(data.stepStatus)
   }
@@ -138,7 +136,6 @@ export class ProjectEditorComponent implements OnInit {
         ...data,
         id: this.project.id
       }
-      console.log(dataWithId)
       this.stepStatusService.update(dataWithId)
     } else {
       this.tempStatus = data;
