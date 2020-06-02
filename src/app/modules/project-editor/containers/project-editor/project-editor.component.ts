@@ -70,6 +70,7 @@ export class ProjectEditorComponent implements OnInit {
         id: this.project.id,
         ...projectData
       }
+      console.log(updateProject)
       this.projectsService.update(updateProject);
     }
   }
@@ -84,6 +85,7 @@ export class ProjectEditorComponent implements OnInit {
         )
       this.project$.subscribe(project => {
         this.project = project;
+        console.log(this.project)
         if (project) {
           this.notFound = false;
           this.titleData = { id: project.id, title: project.title }
@@ -136,6 +138,7 @@ export class ProjectEditorComponent implements OnInit {
         ...data,
         id: this.project.id
       }
+      console.log(dataWithId)
       this.stepStatusService.update(dataWithId)
     } else {
       this.tempStatus = data;

@@ -53,7 +53,7 @@ export class StepEightComponent implements OnInit {
         map(data => data?.state?.filter(statusData => statusData.stepid == this.step.stepid)))
         .subscribe(
           formStatus => {
-            if (formStatus) {
+            if (formStatus && formStatus.length) {
               this.buttonConfig.submitted = formStatus[0].state == "DONE"
               this.initialFormStatus = formStatus[0].state
               if (formStatus[0].state != "DONE" && this.finalProduct?.length)

@@ -30,20 +30,21 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
     switch(event.keyCode) {
       case 13 :
         event.preventDefault();
-        if(this.fieldValidation(this.config.options[element.parentNode.id-1].name)){
-          this.onEnter.emit({controller: this.config.name, val: this.config.options, index: element.parentNode.id-1})
+        console.log(element.parentNode.dataset.index)
+        if(this.fieldValidation(this.config.options[element.parentNode.dataset.index].name)){
+          this.onEnter.emit({controller: this.config.name, val: this.config.options, index: element.parentNode.dataset.index})
         }
         break;
       case 46 :
         event.preventDefault();
-        this.onDelete.emit({controller: this.config.name, val: this.config.options, index: element.parentNode.id-1})
+        this.onDelete.emit({controller: this.config.name, val: this.config.options, index: element.parentNode.dataset.index})
         break;
       default:
         break
     }
   }
-  keyUpAction(event){
-    this.onUpdate.emit({controller: this.config.name, val: this.config.options})
+  onTextUpdate(event,index){
+    this.onUpdate.emit({id: index, name: event})
   }
   fieldValidation(value: string) {
     if (value == null || value == undefined || value.length == 0) {

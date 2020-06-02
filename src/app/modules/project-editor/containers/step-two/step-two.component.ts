@@ -7,6 +7,7 @@ import { Project } from 'src/app/shared/constants/project.model'
 import { formTwoInitData } from '../../constants/step-forms.data'
 import { FormTwoInitData, FormTwo } from '../../constants/step-forms.model'
 import { StepState, StepId, Step } from '../../constants/step.model'
+import { Theme } from 'src/app/shared/constants/theme.model'
 
 @Component({
   selector: 'app-step-two',
@@ -21,6 +22,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   @Input() stepStatus$: Observable<StepState>
   @Input() step: Step
   initialFormData: FormTwoInitData = new formTwoInitData
+  updatedThemes: Theme[] = []
   finalFormData: FormTwoInitData = new formTwoInitData
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
@@ -62,26 +64,28 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.project$
         .subscribe( data => {
           this.projectId = data?.id
-          let project = Object.assign(data)
+          let tempinitialFormData = new formTwoInitData
           this.initialFormData.themes = []
-          if (project?.themes.length>0) {
-            this.initialFormData.themes = project.themes
+          if (data?.themes) {
+            tempinitialFormData.themes.push(...data.themes)
+            this.textAreaConfig.options = []
+            this.textAreaConfig.options.push(...data.themes)
           }
-          this.textAreaConfig.options = this.initialFormData.themes
-          if(this.textAreaConfig.options.length<1){ // Uncomment this if no need to have a placeholder if data already exist
+          this.initialFormData = tempinitialFormData
+          if(!this.textAreaConfig.options.length){ // Uncomment this if no need to have a placeholder if data already exist
             this.textAreaConfig.options = [{ id: 1, name: null }]
           }
           // if (project?.themes.length < 5) {// Comment this if no need to have a placeholder if data already exist
           //   this.textAreaConfig.options.push({ id: this.initialFormData.themes.length+1, name: null})
           // }
-          this.finalFormData.themes = project.themes
+          this.finalFormData.themes = [...tempinitialFormData.themes]
         })
     if (this.stepStatus$) {
       this.stepStatus$.pipe(
         map(data => data?.state?.filter(statusData => statusData.stepid == this.step.stepid)))
         .subscribe(
           formStatus => {
-            if (formStatus) {
+            if (formStatus && formStatus.length) {
               this.buttonConfig.submitted = formStatus[0].state == "DONE"
             }
           }
@@ -107,7 +111,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   checkStatus() {
     if (this.checkEmptyForm()) {
-      console.log('emptyForm')
       this.step.state = "PENDING"
     } else {
       if (this.checkNonEmptyForm() === true) {
@@ -119,7 +122,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
   // checks if the form is empty
   checkEmptyForm() {
-    if (!this.initialFormData.themes.length) {
+    if (!this.finalFormData.themes.length) {
       return true
     }
     return false
@@ -127,7 +130,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   // checks the form is completely filled or not
   checkNonEmptyForm() {
-    if (this.initialFormData.themes.length  && this.finalFormData.themes === this.initialFormData.themes) {
+    if (this.initialFormData.themes.length  && this.isEqual(this.initialFormData.themes, this.finalFormData.themes)) {
       return true
     }
     return false
@@ -144,7 +147,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
   handleSubmit() {
     this.checkStatus()
-    console.log(this.step.state)
     this.finalFormData.themes = this.finalFormData.themes.filter( theme => theme.name !== null)
     let tempData = []
     this.finalFormData.themes.forEach( (theme, index) => {
@@ -156,7 +158,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         themes:  this.finalFormData.themes,
       },
       stepStatus: {
-        id: this.projectId,
         state: [
           {
             state: this.step.state,
@@ -180,30 +181,30 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.step.state = 'INPROCESS'
     }
     this.buttonConfig.submitted = this.step.state == 'DONE'
-    // this.initialFormData.themes = this.finalFormData.themes
   }
-  textAreaUpdate(data){ // call on each update
-    (data.val[0].name === null || data.val[0].name === undefined || data.val[0].name.length == 0)? this.buttonConfig.disabled = true: this.buttonConfig.disabled = false
+  textAreaUpdate(data) { // call on each update
+    const index = this.finalFormData.themes.findIndex((e) => e.id === data.id);
+    if (index === -1) {
+      this.finalFormData.themes.push(data);
+    } else {
+      this.finalFormData.themes[index] = data;
+    }
+    (this.finalFormData.themes[0].name === null || this.finalFormData.themes[0].name === undefined || this.finalFormData.themes[0].name.length == 0)? this.buttonConfig.disabled = true: this.buttonConfig.disabled = false
     this.checkInProgress()
   }
   addTheme(data){
-    this.finalFormData.themes = []
-    data.val.forEach( (theme, index) => {
-      this.finalFormData.themes.push({id: index+1,name: theme.name})
-    })
     this.textAreaConfig.options = this.finalFormData.themes
     this.handleButtonType()
   }
   deleteTheme(data){
-    console.log(data)
-    this.textAreaConfig.options = this.textAreaConfig.options.filter( theme => theme.id !== data.val[data.index].id)
-    this.finalFormData.themes = []
-    this.textAreaConfig.options.forEach( (theme, index) => {
+    this.finalFormData.themes = this.finalFormData.themes.filter( theme => theme.id !== data.val[data.index].id)
+    let temp:Theme[] = []
+    this.finalFormData.themes.forEach( (theme, index) => {
       if(theme.name !== null){
-        this.finalFormData.themes.push({id: index+1,name: theme.name})
+        temp.push({id: index+1,name: theme.name})
       }
     })
-    this.textAreaConfig.options = this.finalFormData.themes
+    this.textAreaConfig.options = this.finalFormData.themes = temp
     this.handleButtonType()
   }
   handleButtonType() {
