@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/constants/field.model';
+import { Status } from '../../constants/step.model';
 
 @Component({
-  selector: 'app-step-four',
-  templateUrl: './step-four.component.html',
-  styleUrls: ['./step-four.component.scss']
+  selector: 'app-step-seven',
+  templateUrl: './step-seven.component.html',
+  styleUrls: ['./step-seven.component.scss']
 })
-export class StepFourComponent implements OnInit {
-
-  status: 'inprogress' | 'done' | 'pending' = "pending"
+export class StepSevenComponent implements OnInit {
+  
+  status: Status
   buttonConfig: FieldConfig = {
     label: 'MARCAR COMO HECHO',
     name: 'submit',

@@ -31,8 +31,8 @@ export class StepOneComponent implements OnInit, OnDestroy {
   academicYearDropdown: FieldConfig
   gradesDropdown: FieldConfig
   subjectsDropdown: FieldConfig
-  projectId: number
   active: boolean = false
+  initialFormStatus: Status
 
   constructor(
     private countryService: CountryEntityService,
@@ -61,7 +61,6 @@ export class StepOneComponent implements OnInit, OnDestroy {
       this.project$
         .subscribe(data => {
           let tempinitialFormData = new formOneInitData
-          this.projectId = data?.id
           if (data?.country) {
             this.countryDropdown.selectedItems = [{ ...data.country }]
             tempinitialFormData.country.push({ ...data.country })
@@ -104,6 +103,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
           formStatus => {
             if (formStatus) {
               this.buttonConfig.submitted = formStatus[0].state == "DONE"
+              this.initialFormStatus = formStatus[0].state
               if (formStatus[0].state != "DONE" && this.checkNonEmptyForm())
                 this.buttonConfig.disabled = false
             }
@@ -301,8 +301,10 @@ export class StepOneComponent implements OnInit, OnDestroy {
         this.buttonConfig.submitted = false
       }
     } else if (this.checkNonEmptyForm()) {
-      this.buttonConfig.disabled = true
-      this.buttonConfig.submitted = true
+      if (this.initialFormStatus == 'DONE') {
+        this.buttonConfig.disabled = true
+        this.buttonConfig.submitted = true
+      }
     } else {
       this.buttonConfig.disabled = true
       this.buttonConfig.submitted = false
@@ -324,7 +326,6 @@ export class StepOneComponent implements OnInit, OnDestroy {
         status: 'INPROCESS', // WIP
       },
       stepStatus: {
-        id: this.projectId,
         state: [
           {
             state: this.step.state,

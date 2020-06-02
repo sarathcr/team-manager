@@ -1,4 +1,4 @@
 <div class="textarea textarea_active">
-    <label class="textarea_active__label">Propuesta</label>
-    <textarea class="textarea__description" id="list-item-1" rows="1" placeholder="Especifica uno o más temas">Construcción con programa en 3D CIUDAD, CATEDRAL Y MONASTERIO y recreación en Plástica de los escenarios con una historia en el programa Scratch, recreando situaciones de la vida cotidiana de aquella época.</textarea>
+    <textarea class="textarea__description" rows="1" maxlength="500"
+        placeholder="Especifica uno o más temas" [(ngModel)]="value" (ngModelChange)="onValueChange($event)"></textarea>
 </div>

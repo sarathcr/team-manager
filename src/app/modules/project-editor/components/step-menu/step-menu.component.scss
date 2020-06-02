@@ -14,11 +14,11 @@
         position: absolute;
         left: 0;
     }
-    &-inprocess{
+    &_inprocess,&_done{
         color:$sidebar-text-active;
         font-weight: normal;
     }
-    &-active{
+    &_active{
         color:$sidebar-text-active;
         font-weight: bold;
             

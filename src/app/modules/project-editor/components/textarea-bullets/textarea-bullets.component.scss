@@ -2,6 +2,7 @@
 .textarea-bullets{
     width: 100%;
     min-height: 388px;
+    border: none;
     border: 1px solid $creator-border-active;
     border-radius: 3px;
     padding: 22px;
@@ -27,7 +28,8 @@
             color: $overtitle-grey;
         }
     }
-    &_active{
-        border: 2px solid $border-color-active;
+    &:focus-within{
+        border: 1px solid transparent;
+        box-shadow: 0 0 0 3px $primary;
     }
 }

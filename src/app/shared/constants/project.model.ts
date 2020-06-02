@@ -9,7 +9,7 @@ export class Project {
   title: string;
   creativeTitle?: string;
   name?: string;
-  finalProduct?: Object;
+  finalProduct?: string;
   country?: Country;
   region?: Region;
   academicYear?: AcademicYear;

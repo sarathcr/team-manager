@@ -24,3 +24,16 @@ export interface FormOneInitData {
     grades: Grade[],
     subjects: Subject[]
 }
+
+export interface FormEight {
+    data: {
+        finalProduct?: string;
+        status?: Status
+    }
+    stepStatus: StepState
+}
+
+export type FormEightInitData = string
+
+
+

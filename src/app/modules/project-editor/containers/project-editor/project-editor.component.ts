@@ -130,8 +130,12 @@ export class ProjectEditorComponent implements OnInit {
   }
 
   submitFormStatus(data: any) {
-    if (data.id) {
-      this.stepStatusService.update(data)
+    if (this.project.id) {
+      const dataWithId: any = {
+        ...data,
+        id: this.project.id
+      }
+      this.stepStatusService.update(dataWithId)
     } else {
       this.tempStatus = data;
     }
@@ -173,7 +177,7 @@ export class ProjectEditorComponent implements OnInit {
         this.steps[6].name = translations['STEPS_MENU.project_stepsmenu_drivingquestion']
         this.steps[7].name = translations['STEPS_MENU.project_structure_stepsmenu_finalproduct']
         this.steps[8].name = translations['STEPS_MENU.project_structure_stepsmenu_sinopsis']
-        this.steps[8].name = 'Interacción con alumnos'  // WIP localization
+        this.steps[9].name = 'Interacción con alumnos'  // WIP localization
       }
       );
   }
