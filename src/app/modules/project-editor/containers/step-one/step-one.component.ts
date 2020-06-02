@@ -304,6 +304,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
       if (this.initialFormStatus == 'DONE') {
         this.buttonConfig.disabled = true
         this.buttonConfig.submitted = true
+        this.step.state = "DONE"
       }
     } else {
       this.buttonConfig.disabled = true

@@ -68,7 +68,7 @@ export class StepEightComponent implements OnInit {
     if (this.finalProduct.length && this.finalProduct !== this.initialFormData) {
       this.step.state = 'INPROCESS'
     }
-    if (!this.finalProduct.length || this.finalProduct === this.initialFormData) {
+    if (!this.finalProduct.length) {
       this.step.state = 'PENDING'
     }
     if (this.finalProduct.length && this.finalProduct === this.initialFormData && this.initialFormStatus == 'DONE') {
@@ -95,7 +95,7 @@ export class StepEightComponent implements OnInit {
 
   // Function to trigger the value in the textarea
   onValueChange(value: string) {
-    this.finalProduct = value.trim()
+    this.finalProduct = value
     this.checkStatus()
   }
 
