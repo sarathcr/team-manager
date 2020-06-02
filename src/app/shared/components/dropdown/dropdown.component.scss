@@ -26,10 +26,10 @@
   }
   &__label{
     position: absolute;
-    font-size: $font-size-small;
+    font-size: $font-size-body-input;
     font-weight: bold;
     letter-spacing: 0.2px;
-    line-height: $font-size-small;
+    line-height: $font-size-body-input;
     top: 0;
     transform: translateY(-50%);
     padding: 2px 5px;
@@ -71,6 +71,7 @@
       }
       >span:first-child{
         opacity: 0.6;
+        line-height: 24px;
       }
       >span:last-child{
         justify-self: end;
@@ -110,6 +111,7 @@
         color: inherit !important;
         padding: 0 !important;
         margin-left: 5px;
+        line-height: 24px;
         position: relative;
         opacity: 1 !important;
         a{

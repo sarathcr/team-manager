@@ -95,7 +95,7 @@ export class StepEightComponent implements OnInit {
 
   // Function to trigger the value in the textarea
   onValueChange(value: string) {
-    this.finalProduct = value
+    this.finalProduct = value.trim()
     this.checkStatus()
   }
 
