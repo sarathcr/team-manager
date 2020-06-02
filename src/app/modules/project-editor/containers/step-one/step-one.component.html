@@ -12,6 +12,6 @@
     <app-dropdown [config]='academicYearDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
     <app-dropdown [config]='gradesDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
     <app-dropdown [config]='subjectsDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
-    <app-form-button scrollTo scrollToId="stepTwo" [config]='buttonConfig' (onClick)='handleSubmit()'></app-form-button>
+    <app-form-button scrollTo scrollToId="stepTwo" [config]='buttonConfig' (onClick)='handleSubmit("DONE")'></app-form-button>
   </div>
 </div>

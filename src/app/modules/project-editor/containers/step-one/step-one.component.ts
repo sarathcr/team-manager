@@ -11,7 +11,7 @@ import { SubjectEntityService } from '../../services/subject/subject-entity.serv
 import { Project } from 'src/app/shared/constants/project.model'
 import { formOneInitData } from '../../constants/step-forms.data'
 import { FormOneInitData, FormOne } from '../../constants/step-forms.model'
-import { Step, StepId, StepState } from '../../constants/step.model'
+import { Step, StepId, StepState, Status } from '../../constants/step.model'
 
 @Component({
   selector: 'app-step-one',
@@ -102,6 +102,8 @@ export class StepOneComponent implements OnInit, OnDestroy {
           formStatus => {
             if (formStatus) {
               this.buttonConfig.submitted = formStatus[0].state == "DONE"
+              if (formStatus[0].state != "DONE" && this.checkNonEmptyForm())
+                this.buttonConfig.disabled = false
             }
           }
         )
@@ -184,11 +186,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     if (this.checkEmptyForm()) {
       this.step.state = "PENDING"
     } else {
-      if (this.checkNonEmptyForm() === true) {
-        this.step.state = "DONE"
-      } else {
-        this.step.state = "INPROCESS"
-      }
+      this.step.state = "INPROCESS"
     }
   }
 
@@ -302,12 +300,18 @@ export class StepOneComponent implements OnInit, OnDestroy {
       }
     } else if (this.checkNonEmptyForm()) {
       this.buttonConfig.disabled = true
+      this.buttonConfig.submitted = true
+    } else {
+      this.buttonConfig.disabled = true
       this.buttonConfig.submitted = false
     }
   }
 
-  handleSubmit() {
-    this.checkStatus()
+  handleSubmit(formStatus?: Status) {
+    if (formStatus == 'DONE')
+      this.step.state = formStatus
+    else
+      this.checkStatus()
     let formData: FormOne = {
       data: {
         country: this.countryDropdown.selectedItems[0] ? this.countryDropdown.selectedItems[0] : null,
@@ -326,7 +330,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    if (this.checkNonEmptyForm()) {
+    if (formStatus == 'DONE' && this.checkNonEmptyForm()) {
       this.buttonConfig.submitted = this.step.state == 'DONE'
       this.buttonConfig.disabled = this.step.state == "DONE"
     }
