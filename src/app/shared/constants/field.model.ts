@@ -12,7 +12,7 @@ export interface FieldConfig {
   label?: string
   successLabel?: string
   name: string
-  options?: Array<{ id: number; name: string; }>
+  options?: Array<{ id?: number; name?: string; }>
   selectedItems?: Array<{ id: number; name: string; }>
   placeholder?: string
   type?: string
