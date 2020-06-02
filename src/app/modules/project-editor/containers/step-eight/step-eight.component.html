@@ -8,7 +8,7 @@
             Refleja <em>qué serán</em> capaces de hacer los alumnos con los aprendizajes que adquirirán.
         </p>
         <app-textarea [(value)]="finalProduct" (onChange)="onValueChange($event)"></app-textarea>
-        <app-form-button scrollTo scrollToId="stepNine" [config]='buttonConfig' (onClick)='handleSubmit()'>
+        <app-form-button scrollTo scrollToId="stepNine" [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>
         </app-form-button>
     </div>
 </div>

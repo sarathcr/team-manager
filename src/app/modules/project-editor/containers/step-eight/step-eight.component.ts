@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Project } from 'src/app/shared/constants/project.model';
-import { StepId, Step, StepState } from '../../constants/step.model';
+import { StepId, Step, StepState, Status } from '../../constants/step.model';
 import { buttonSubmitConfig } from '../../constants/form-config.data';
 import { TranslateService } from '@ngx-translate/core';
 import { FormEightInitData, FormEight } from '../../constants/step-forms.model';
@@ -17,11 +18,13 @@ export class StepEightComponent implements OnInit {
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
   @Input() spyActive$: Observable<StepId>
+  @Input() stepStatus$: Observable<StepState>
   @Input() step: Step
   finalProduct: any
   buttonConfig = new buttonSubmitConfig
   initialFormData: FormEightInitData = formEightInitData
   active: boolean = false
+  initialFormStatus: Status
 
   constructor(private translateService: TranslateService) { }
 
@@ -45,6 +48,19 @@ export class StepEightComponent implements OnInit {
           this.initialFormData = data.finalProduct
         }
       })
+    if (this.stepStatus$)
+      this.stepStatus$.pipe(
+        map(data => data?.state?.filter(statusData => statusData.stepid == this.step.stepid)))
+        .subscribe(
+          formStatus => {
+            if (formStatus) {
+              this.buttonConfig.submitted = formStatus[0].state == "DONE"
+              this.initialFormStatus = formStatus[0].state
+              if (formStatus[0].state != "DONE" && this.finalProduct?.length)
+                this.buttonConfig.disabled = false
+            }
+          }
+        )
   }
 
   // Function to check status of step
@@ -55,7 +71,7 @@ export class StepEightComponent implements OnInit {
     if (!this.finalProduct.length || this.finalProduct === this.initialFormData) {
       this.step.state = 'PENDING'
     }
-    if (this.finalProduct.length && this.finalProduct === this.initialFormData) {
+    if (this.finalProduct.length && this.finalProduct === this.initialFormData && this.initialFormStatus == 'DONE') {
       this.step.state = 'DONE'
     }
     this.handleButtonType()
@@ -65,9 +81,11 @@ export class StepEightComponent implements OnInit {
   handleButtonType() {
     if (this.step.state == 'INPROCESS') {
       this.buttonConfig.disabled = false
+      this.buttonConfig.submitted = false
     }
     if (this.step.state == 'PENDING') {
       this.buttonConfig.disabled = true
+      this.buttonConfig.submitted = false
     }
     if (this.step.state == 'DONE') {
       this.buttonConfig.submitted = true
@@ -82,8 +100,9 @@ export class StepEightComponent implements OnInit {
   }
 
   //Handle submit functionality
-  handleSubmit() {
-    this.step.state = 'DONE'
+  handleSubmit(formStatus?: Status) {
+    if (formStatus == 'DONE')
+      this.step.state = 'DONE'
     this.handleButtonType()
     const formData: FormEight = {
       data: {

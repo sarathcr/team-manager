@@ -32,6 +32,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   gradesDropdown: FieldConfig
   subjectsDropdown: FieldConfig
   active: boolean = false
+  initialFormStatus: Status
 
   constructor(
     private countryService: CountryEntityService,
@@ -102,6 +103,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
           formStatus => {
             if (formStatus) {
               this.buttonConfig.submitted = formStatus[0].state == "DONE"
+              this.initialFormStatus = formStatus[0].state
               if (formStatus[0].state != "DONE" && this.checkNonEmptyForm())
                 this.buttonConfig.disabled = false
             }
@@ -299,8 +301,10 @@ export class StepOneComponent implements OnInit, OnDestroy {
         this.buttonConfig.submitted = false
       }
     } else if (this.checkNonEmptyForm()) {
-      this.buttonConfig.disabled = true
-      this.buttonConfig.submitted = true
+      if (this.initialFormStatus == 'DONE') {
+        this.buttonConfig.disabled = true
+        this.buttonConfig.submitted = true
+      }
     } else {
       this.buttonConfig.disabled = true
       this.buttonConfig.submitted = false
