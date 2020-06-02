@@ -4,6 +4,7 @@ import { AcademicYear } from 'src/app/shared/constants/academic-year.model';
 import { Grade } from 'src/app/shared/constants/grade.model';
 import { Subject } from 'src/app/shared/constants/subject.model';
 import { Status, StepState } from './step.model';
+import { DrivingGuestion } from 'src/app/shared/constants/driving-questions.model';
 
 export interface FormOne {
     data: {
@@ -24,7 +25,12 @@ export interface FormOneInitData {
     grades: Grade[],
     subjects: Subject[]
 }
-
+export interface FormSeven {
+  drivingQuestions: DrivingGuestion[];
+}
+export interface FormSevenInitData {
+  drivingQuestions: DrivingGuestion[];
+}
 export interface FormEight {
     data: {
         finalProduct?: string;
