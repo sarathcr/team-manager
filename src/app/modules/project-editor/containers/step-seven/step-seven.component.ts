@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/constants/field.model';
+import { Status } from '../../constants/step.model';
 
 @Component({
   selector: 'app-step-seven',
@@ -7,8 +8,8 @@ import { FieldConfig } from 'src/app/shared/constants/field.model';
   styleUrls: ['./step-seven.component.scss']
 })
 export class StepSevenComponent implements OnInit {
-
-  status: 'inprogress' | 'done' | 'pending' = "pending"
+  
+  status: Status
   buttonConfig: FieldConfig = {
     label: 'MARCAR COMO HECHO',
     name: 'submit',

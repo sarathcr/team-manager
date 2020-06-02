@@ -8,7 +8,6 @@ export class TextareaComponent implements OnInit {
 
   @Input() value: string
   @Output() onChange = new EventEmitter()
-  @Output() onBlur = new EventEmitter()
   valueModel: string
   constructor() { }
 

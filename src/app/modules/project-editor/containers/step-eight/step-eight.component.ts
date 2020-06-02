@@ -26,7 +26,6 @@ export class StepEightComponent implements OnInit {
   constructor(private translateService: TranslateService) { }
 
   ngOnInit(): void {
-    this.finalProduct = ''
     this.formInit()
     this.translate()
     this.onScrollSubmit()
