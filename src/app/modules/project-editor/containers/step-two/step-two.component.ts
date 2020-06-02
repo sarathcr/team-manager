@@ -192,7 +192,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
   checkInProgress() {
     let values: Array<any> = []
-    console.log(this.initialFormData.themes,this.finalFormData.themes)
     values.push(this.isEqual(this.initialFormData.themes, this.finalFormData.themes))
     if (values.includes(false)) {
       this.step.state = 'INPROCESS'
