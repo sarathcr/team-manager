@@ -39,3 +39,12 @@ export interface FormTwoInitData {
   themes: Theme[],
   placeholder?: string
 }
+export interface FormEight {
+  data: {
+      finalProduct?: string;
+      status?: Status
+  }
+  stepStatus: StepState
+}
+
+export type FormEightInitData = string

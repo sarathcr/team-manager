@@ -82,7 +82,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         .subscribe(
           formStatus => {
             if (formStatus) {
-              this.buttonConfig.submitted = formStatus[1].state == "DONE"
+              this.buttonConfig.submitted = formStatus[0].state == "DONE"
             }
           }
         )
@@ -107,6 +107,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   checkStatus() {
     if (this.checkEmptyForm()) {
+      console.log('emptyForm')
       this.step.state = "PENDING"
     } else {
       if (this.checkNonEmptyForm() === true) {

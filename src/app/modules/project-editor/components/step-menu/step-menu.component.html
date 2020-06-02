@@ -1,4 +1,5 @@
-<div class="menu" scrollTo scrollToId="{{this.step.sectionid}}" [ngClass]="{'menu-inprocess' : this.step.state == 'INPROCESS', 'menu-active' : spyActive == this.step.sectionid}">
+<div class="menu" scrollTo scrollToId="{{this.step.sectionid}}"
+    [ngClass]="{'menu_inprocess' : this.step.state == 'INPROCESS', 'menu_active' : spyActive == this.step.sectionid, 'menu_done': this.step.state == 'DONE'}">
     <span class="menu__step" *ngIf="this.step.state == 'DONE'">
         <span class="icon icon-ic_check"></span>
     </span>

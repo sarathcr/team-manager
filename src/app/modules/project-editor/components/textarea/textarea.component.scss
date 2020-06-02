@@ -2,7 +2,7 @@
 .textarea{
     width: 100%;
     min-height: 388px;
-    border: 1px solid $creator-border-active;
+    border: 1px solid $creator-textarea-border;
     border-radius: 3px;
     padding: 22px;
     margin-bottom: 69px;
@@ -23,23 +23,8 @@
             color: $overtitle-grey;
         }
     }
-    &__label{
-        position: absolute;
-        font-size: $font-size-small;
-        font-weight: bold;
-        letter-spacing: 0.2px;
-        line-height: $font-size-small;
-        top: 0;
-        transform: translateY(-50%);
-        padding: 2px 5px;
-        background-color: $creator-background;
-        left: $padding-m;
-        z-index: 2;
-    }
-    &_active{
-        border: 1px solid $creator-border;
-        &__label{
-            display: none;
-        }
+    &:active, &:focus, &:focus-within{
+        border: 1px solid transparent;
+        box-shadow: 0 0 0 3px $primary;
     }
 }
