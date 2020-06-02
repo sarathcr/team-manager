@@ -26,9 +26,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   finalFormData: FormTwoInitData = new formTwoInitData
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
+  thematicTitle: string
+  thematicDescription: string
+  thematicPlaceholder: string
   projectId: number
   active: boolean = false
-  constructor() { }
+  constructor(private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.createFormConfig()
@@ -42,8 +45,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
   createFormConfig() {
     this.buttonConfig = {
-      label: 'MARCAR COMO HECHO',
-      successLabel: 'Hecho',
       name: 'submit',
       field: 'button',
       id: 'submitButton',
@@ -51,13 +52,29 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       submitted: false,
     };
     this.textAreaConfig = {
-      label: 'Especifica uno o más temas',
+      label: '',
       name: 'textarea',
       field: 'themes',
-      placeholder: 'Especifica uno o más temas',
+      placeholder: '',
       id: 'themes',
       options: [{id: 1, name: null}]
     }
+    // Translation
+    this.translateService.stream([
+      'PROJECT.project_button_markdone',
+      'PROJECT.project_button_done',
+      'THEMATIC.project_thematic_title',
+      'THEMATIC.project_thematic_description',
+      'THEMATIC.project_thematic_placeholder'
+    ]).subscribe(translations => {
+      this.buttonConfig.label = translations['PROJECT.project_button_markdone']
+      this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
+      this.thematicTitle = translations['THEMATIC.project_thematic_title']
+      this.thematicDescription = translations['THEMATIC.project_thematic_description']
+      this.thematicPlaceholder = translations['THEMATIC.project_thematic_placeholder']
+      this.textAreaConfig.placeholder = this.thematicPlaceholder
+      this.textAreaConfig.label = this.thematicPlaceholder
+    })
   }
   formInIt() {
     if (this.project$)
