@@ -7,7 +7,7 @@ export class Step {
 }
 export class StepState {
     id?: ProjectId
-    state: Step[]
+    steps: Step[]
 }
 
 export type ProjectId = number
