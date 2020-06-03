@@ -1,10 +1,5 @@
 import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
-import { FieldConfig } from 'src/app/shared/constants/field.model';
-
-interface Option {
-  id?: number;
-  name?: string;
-}
+import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
 
 @Component({
   selector: 'app-textarea-bullets',

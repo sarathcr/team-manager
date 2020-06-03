@@ -25,3 +25,8 @@ export interface FieldConfig {
   textField?: string,
   maxLength?: number
 }
+
+export interface Option {
+  id?: number;
+  name?: string;
+}

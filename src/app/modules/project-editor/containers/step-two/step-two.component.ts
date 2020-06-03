@@ -91,12 +91,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
             this.textAreaConfig.options.push(...data.themes)
           }
           this.initialFormData.themes = [...tempinitialFormData.themes]
-          if(!this.textAreaConfig.options.length){ // Uncomment this if no need to have a placeholder if data already exist
+          if(!this.textAreaConfig.options.length){
             this.textAreaConfig.options = [{ id: 1, name: null }]
           }
-          // if (project?.themes.length < 5) {// Comment this if no need to have a placeholder if data already exist
-          //   this.textAreaConfig.options.push({ id: this.initialFormData.themes.length+1, name: null})
-          // }
         })
     if (this.stepStatus$) {
       this.stepStatus$.pipe(
@@ -209,7 +206,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.buttonConfig.submitted = this.step.state == 'DONE'
   }
 
-  textAreaUpdate(data) { // call on each update
+  textAreaUpdate(data) { // calls on every update
     this.textAreaConfig.options = data
     this.checkInProgress()
   }
