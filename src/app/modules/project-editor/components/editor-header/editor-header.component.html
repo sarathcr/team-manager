@@ -2,9 +2,7 @@
   <div class="container-fluid d-flex align-items-center">
     <div class="app-logo">
       <a class="app-logo__link" routerLink="/">
-        <object class="app-logo__object" data="../../../../../assets/images/thinko_logo.svg" type="image/svg+xml">
-          <img class="app-logo__img" src="../../../../../assets/images/thinko_logo.png" alt="thinko" />
-        </object>
+        <img class="app-logo__img" src="../../../../../assets/images/thinko_logo.svg" alt="thinko" />
       </a>
     </div>
     <app-project-title [projectData]="projectData" [maxLength]="75" (titleBlur)="handleTitleBlur($event)"

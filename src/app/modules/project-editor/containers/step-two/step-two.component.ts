@@ -7,7 +7,6 @@ import { Project } from 'src/app/shared/constants/project.model'
 import { formTwoInitData } from '../../constants/step-forms.data'
 import { FormTwoInitData, FormTwo } from '../../constants/step-forms.model'
 import { StepState, StepId, Step, Status } from '../../constants/step.model'
-import { Theme } from 'src/app/shared/constants/theme.model'
 
 @Component({
   selector: 'app-step-two',
@@ -58,7 +57,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       field: 'themes',
       id: 'themes',
       maxLength: 150,
-      options: [{id: null, name: null}]
+      options: [{id: null, name: null}],
+      limit: 5
     }
     // Translation
     this.translateService.stream([
@@ -119,7 +119,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         }
         if (sectionId !== this.step.sectionid && this.active) {
           if (this.isFormUpdated()) {
-            this.handleSubmit()
+            this.handleSubmit('INPROCESS')
             this.active = false
           } else {
             this.active = true
@@ -171,6 +171,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   handleSubmit(formStatus?: Status) {
     this.checkStatus()
     let tempData = []
+    if(formStatus){
+      this.step.state = formStatus
+    }
     this.textAreaConfig.options.forEach( (theme, index) => {
       tempData.push({id: theme.id,name: theme.name})
     })

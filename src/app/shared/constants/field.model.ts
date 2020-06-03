@@ -24,6 +24,7 @@ export interface FieldConfig {
   id: string
   textField?: string,
   maxLength?: number
+  limit?: number
 }
 
 export interface Option {

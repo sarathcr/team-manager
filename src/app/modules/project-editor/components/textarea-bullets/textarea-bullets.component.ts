@@ -10,6 +10,7 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
   private _config;
   sampleOption: Option = { id: null, name: null };
   configOptions: Option[] = [];
+  limit = 0
 
   get config(): FieldConfig {
     return this._config;
@@ -27,6 +28,7 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.limit = this.config.limit;
   }
 
   ngAfterViewInit(){
@@ -38,7 +40,10 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
 
       case 13 :
         event.preventDefault();
-        if (this.configOptions.length < 5) {
+        if(this.config.limit == 0){
+          this.limit = this.configOptions.length + 1
+        }
+        if (this.configOptions.length < this.limit) {
           this.configOptions.push({ ...this.sampleOption });
           this.index++
         }
