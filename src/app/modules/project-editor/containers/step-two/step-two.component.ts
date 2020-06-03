@@ -26,15 +26,15 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   finalFormData: FormTwoInitData = new formTwoInitData
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  tempTextAreaConfig: FieldConfig = {
-    label: '',
-    name: 'textarea',
-    field: 'themes',
-    placeholder: 'placeholder',
-    id: 'themes',
-    maxLength: 150,
-    options: [{id: null, name: 'Sample'}]
-  }
+  // tempTextAreaConfig: FieldConfig = {
+  //   label: '',
+  //   name: 'textarea',
+  //   field: 'themes',
+  //   placeholder: 'placeholder',
+  //   id: 'themes',
+  //   maxLength: 150,
+  //   options: [{id: null, name: 'Sample'}]
+  // }
   thematicTitle: string
   thematicDescription: string
   thematicPlaceholder: string
@@ -63,10 +63,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       submitted: false,
     };
     this.textAreaConfig = {
-      label: '',
       name: 'textarea',
       field: 'themes',
-      placeholder: '',
       id: 'themes',
       maxLength: 150,
       options: [{id: null, name: null}]
@@ -154,7 +152,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   // checks if the form is empty
   checkEmptyForm() {
-    if (!this.finalFormData.themes.length) {
+    if (!this.textAreaConfig.options.length) {
       return true
     }
     return false
