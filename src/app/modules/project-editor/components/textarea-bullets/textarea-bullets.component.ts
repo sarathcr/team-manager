@@ -66,6 +66,7 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
         else {
           this.configOptions[0].name = ''
         }
+        this.onChange.emit([...this.configOptions]);
         break;
 
       default:

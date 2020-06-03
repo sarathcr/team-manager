@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators'
 import { Project } from 'src/app/shared/constants/project.model'
 import { formTwoInitData } from '../../constants/step-forms.data'
 import { FormTwoInitData, FormTwo } from '../../constants/step-forms.model'
-import { StepState, StepId, Step } from '../../constants/step.model'
+import { StepState, StepId, Step, Status } from '../../constants/step.model'
 import { Theme } from 'src/app/shared/constants/theme.model'
 
 @Component({
@@ -29,6 +29,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   thematicPlaceholder: string
   projectId: number
   active: boolean = false
+  initialFormStatus: Status
+
   constructor(private translateService: TranslateService) { }
 
   ngOnInit(): void {
@@ -98,11 +100,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         })
     if (this.stepStatus$) {
       this.stepStatus$.pipe(
-        map(data => data?.state?.filter(statusData => statusData.stepid == this.step.stepid)))
+        map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
         .subscribe(
           formStatus => {
             if (formStatus && formStatus.length) {
               this.buttonConfig.submitted = formStatus[0].state == "DONE"
+              this.initialFormStatus = formStatus[0].state
+              if (formStatus[0].state != "DONE" && this.checkNonEmptyForm())
+                this.buttonConfig.disabled = false
             }
           }
         )
@@ -166,7 +171,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
-  handleSubmit() {
+  handleSubmit(formStatus?: Status) {
     this.checkStatus()
     let tempData = []
     this.textAreaConfig.options.forEach( (theme, index) => {
@@ -178,7 +183,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         themes:  this.textAreaConfig.options,
       },
       stepStatus: {
-        state: [
+        steps: [
           {
             state: this.step.state,
             stepid: this.step.stepid
@@ -186,7 +191,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    if (this.checkNonEmptyForm()) {
+    if (formStatus == 'DONE' && this.checkNonEmptyForm()) {
       this.buttonConfig.submitted = this.step.state == 'DONE'
       this.buttonConfig.disabled = this.step.state == "DONE"
     }
@@ -210,17 +215,23 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   handleButtonType() {
-    this.checkInProgress()
-    if(this.step.state == 'INPROCESS'){
-      this.buttonConfig.submitted = false
-      this.buttonConfig.disabled = false
-    } else if(this.step.state == 'PENDING') {
+    if (this.isFormUpdated()) {
+      if (this.checkNonEmptyForm()) {
+        this.buttonConfig.disabled = false
+        this.buttonConfig.submitted = false
+      } else {
+        this.buttonConfig.disabled = true
+        this.buttonConfig.submitted = false
+      }
+    } else if (this.checkNonEmptyForm()) {
+      if (this.initialFormStatus == 'DONE') {
+        this.buttonConfig.disabled = true
+        this.buttonConfig.submitted = true
+        this.step.state = "DONE"
+      }
+    } else {
       this.buttonConfig.disabled = true
-    } else if(this.step.state == 'DONE'){
       this.buttonConfig.submitted = false
-    }
-    if(this.textAreaConfig.options.length < 5 && this.textAreaConfig.options[this.textAreaConfig.options.length-1].name !== null){
-      this.textAreaConfig.options.push({id: this.textAreaConfig.options[this.textAreaConfig.options.length-1].id+1, name: null})
     }
   }
 }
