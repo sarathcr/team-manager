@@ -19,28 +19,25 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
   get config(): FieldConfig {
     return this._config;
   }
-  
+
   @Input() set config(val: FieldConfig) {
     this.configOptions = val.options.map(option => ({ name: option.name, id: option.id }));
     this._config = val;
   };
-  
+
   @Output() onChange = new EventEmitter()
-  
+
   @ViewChildren('textArea') textArea: QueryList<ElementRef>;
+  index = 0
   constructor() { }
-  
+
   ngOnInit(): void {
   }
 
   ngAfterViewInit(){
-    this.textArea.changes.subscribe(() => {
-      this.textArea.toArray().forEach( item => {
-        item.nativeElement.style.height = (item.nativeElement.scrollHeight)+"px";
-      } )
-    })
+
   }
-  
+
   keyAction(event, id) {
     switch(event.keyCode) {
 
@@ -48,6 +45,7 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
         event.preventDefault();
         if (this.configOptions.length < 5) {
           this.configOptions.push({ ...this.sampleOption });
+          this.index++
         }
         setTimeout(() => {
           this.textArea.last.nativeElement.focus()
@@ -58,6 +56,7 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
         event.preventDefault();
         if (this.configOptions.length > 1) {
           this.configOptions.splice(id, 1)
+          this.index = this.textArea.toArray().length > id ? id : id - 1
           setTimeout(() => {
             const textAreas = this.textArea.toArray()
             const index = textAreas.length > id ? id : id - 1
@@ -69,11 +68,17 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
         }
         break;
 
-      default: 
+      default:
         break
     }
+
+  }
+
+  onValueChange(value, i){
+    this.index = i
     const newConfigOptions = [...this.configOptions];
     this.onChange.emit(newConfigOptions);
+    this.textArea.toArray()[i].nativeElement.style.height = (this.textArea.toArray()[i].nativeElement.scrollHeight)+"px";
   }
 
   fieldValidation(value: string) {

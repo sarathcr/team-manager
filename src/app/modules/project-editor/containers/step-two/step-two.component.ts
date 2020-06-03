@@ -22,19 +22,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   @Input() stepStatus$: Observable<StepState>
   @Input() step: Step
   initialFormData: FormTwoInitData = new formTwoInitData
-  updatedThemes: Theme[] = []
-  finalFormData: FormTwoInitData = new formTwoInitData
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  // tempTextAreaConfig: FieldConfig = {
-  //   label: '',
-  //   name: 'textarea',
-  //   field: 'themes',
-  //   placeholder: 'placeholder',
-  //   id: 'themes',
-  //   maxLength: 150,
-  //   options: [{id: null, name: 'Sample'}]
-  // }
   thematicTitle: string
   thematicDescription: string
   thematicPlaceholder: string
@@ -106,7 +95,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           // if (project?.themes.length < 5) {// Comment this if no need to have a placeholder if data already exist
           //   this.textAreaConfig.options.push({ id: this.initialFormData.themes.length+1, name: null})
           // }
-          // this.finalFormData.themes = [...tempinitialFormData.themes]
         })
     if (this.stepStatus$) {
       this.stepStatus$.pipe(
@@ -208,7 +196,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   checkInProgress() {
     let values: Array<any> = []
-    // console.log(this.initialFormData.themes, this.textAreaConfig.options)
     values.push(this.isEqual(this.initialFormData.themes, this.textAreaConfig.options))
     if (values.includes(false)) {
       this.step.state = 'INPROCESS'
@@ -219,35 +206,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   textAreaUpdate(data) { // call on each update
     this.textAreaConfig.options = data
-    // const index = this.textAreaConfig.options.findIndex((e) => e.id === data.id);
-    // if (index === -1) {
-    //   let innerObj = {name: data.name}
-    //   this.textAreaConfig.options.push({...innerObj});
-    // } else {
-    //   this.textAreaConfig.options[index] = {...data}
-    // }
-    // // this.textAreaConfig.options = [...this.finalFormData.themes]
     this.checkInProgress()
-  }
-
-  addTheme(data){
-    this.textAreaConfig.options = []
-    this.textAreaConfig.options.push(...this.textAreaConfig.options, { id: null, name: null })
-    console.log(this.textAreaConfig.options)
-    this.handleButtonType()
-  }
-
-  deleteTheme(data){
-    let temp:Theme[] = []
-    this.finalFormData.themes.forEach( theme => {
-      if(theme.id === data.val[data.index].id){
-        temp.push({id: theme.id})
-      } else{
-        temp.push(theme)
-      }
-    })
-    this.textAreaConfig.options = this.finalFormData.themes = temp
-    this.handleButtonType()
   }
 
   handleButtonType() {

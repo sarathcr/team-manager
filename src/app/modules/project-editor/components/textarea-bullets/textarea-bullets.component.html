@@ -18,6 +18,7 @@
                 [(ngModel)]=text.name
                 #textArea
                 [maxLength]='config.maxLength'
+                (ngModelChange)='onValueChange($event, i)'
             ></textarea>
         </li>
     </ul>
