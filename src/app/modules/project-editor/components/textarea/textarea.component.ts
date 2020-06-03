@@ -8,6 +8,7 @@ export class TextareaComponent implements OnInit {
 
   @Input() value: string
   @Input() placeholder: string
+  @Input() maxlength: number
   @Output() onChange = new EventEmitter()
   valueModel: string
   constructor() { }

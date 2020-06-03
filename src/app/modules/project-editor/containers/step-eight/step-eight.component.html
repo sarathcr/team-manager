@@ -4,7 +4,7 @@
         <h1 class="title_s"><span>8. </span>{{'FINAL_PRODUCT.project_finalproduct_title' | translate}}<app-info-tooltip></app-info-tooltip>
         </h1>
         <p class="project-form__description"  [innerHTML]="'FINAL_PRODUCT.project_finalproduct_description' | translate"></p>
-        <app-textarea placeholder="{{'FINAL_PRODUCT.project_finalproduct_placeholder' | translate }}" [(value)]="finalProduct" (onChange)="onValueChange($event)"></app-textarea>
+        <app-textarea placeholder="{{'FINAL_PRODUCT.project_finalproduct_placeholder' | translate }}" [(value)]="finalProduct" maxlength="500" (onChange)="onValueChange($event)"></app-textarea>
         <app-form-button scrollTo scrollToId="stepNine" [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>
         </app-form-button>
     </div>
