@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-contextual-help',
@@ -8,20 +7,20 @@ import { ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class ContextualHelpComponent implements OnInit {
-  closeContext:boolean =  false;
+  closeContext: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  closeTab(){
+  closeTab() {
     this.closeContext = false;
   }
 
-  openTab(){
+  openTab() {
     console.log(this.closeContext);
-    if(!this.closeContext){
+    if (!this.closeContext) {
       this.closeContext = true;
     }
   }

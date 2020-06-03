@@ -1,0 +1,42 @@
+@import 'helpers/_helpers-master';
+
+.app-modal{
+    max-width: 1010px;
+    max-height: 750px;
+
+    &__header{
+        display: flex;
+        flex-direction: row;
+        padding: 30px 35px;
+
+        &-title{
+            width: 100%;
+            display: inline-flex;
+            font-family: $font-family-secondary;
+            font-size: $font-size-body-overtitle;
+            line-height: $line-height-24px;
+            letter-spacing: 1px;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: $context-content-title;
+            margin: 0;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &-close{
+            display: inline-flex;
+            justify-self: flex-end;
+            background-color: transparent;
+            border: none;
+            color: $context-close-color;
+            font-size: 20px;
+            margin-right: -8px;
+            cursor: pointer;
+        }
+    }
+
+    &__body{
+        padding: 0 75px 40px 75px;
+    }
+}

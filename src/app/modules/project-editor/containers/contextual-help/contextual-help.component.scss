@@ -24,17 +24,17 @@
             display: inline-flex;
             flex-direction: column;
             border: none;
-            margin-top: -12px;
 
             #{$tab-root}-item{
-                @include contextual-list;
+                margin-top: -12px;
+                @include contextual-list-shadow;
                 width: 62px;
                 height: 89px;
                 border-radius: 0;
                 transform: skewY(20deg);
                 position: relative;
                 background-color: $context-bg-color;
-
+                
                 a{
                     margin: 0;
                     border-radius: 0;
@@ -48,18 +48,22 @@
                     color: $primary-font-color;
 
                     .icon{
+                        padding-top: 10px;
                         @include skewY(-20);
                     }
                 }
 
-                &.active, & a{
+                &.active,
+                & a{
                     border: none;
                 }
 
+                &.active{
+                    z-index: 2;
+                }
+
                 &:first-child{
-                    a .icon{
-                        padding-top: 10px;
-                    }
+                    z-index: 1;
                 }
 
                 &_multi-icon{
@@ -126,6 +130,7 @@
                         color: $context-close-color;
                         font-size: 20px;
                         margin-right: -8px;
+                        cursor: pointer;
                     }
                 }
             }

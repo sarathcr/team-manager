@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { setTheme } from 'ngx-bootstrap/utils';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -27,6 +28,7 @@ import { StepThreeComponent } from './containers/step-three/step-three.component
 import { StepFourComponent } from './containers/step-four/step-four.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
+import { ModalContentComponent } from './components/modal-content/modal-content.component';
 
 // pages
 import { HomeComponent } from './containers/home/home.component';
@@ -58,119 +60,122 @@ import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive
 import { ScrollToDirective } from './directives/scroll-to/scroll-to.directive';
 
 const entityMetadata: EntityMetadataMap = {
-    Project: {
-        sortComparer: compareProjects,
-        entityDispatcherOptions: {
-            optimisticUpdate: true
-        }
-    },
-    Country: {
-      entityDispatcherOptions: {
-          optimisticUpdate: true
-      }
-    },
-    Subject: {
-      entityDispatcherOptions: {
-        optimisticUpdate: true
-      }
-    },
-    Region: {
-      entityDispatcherOptions: {
-        optimisticUpdate: true
-      }
-    },
-    Grade: {
-      entityDispatcherOptions: {
-        optimisticUpdate: true
-      }
-    },
-    AcademicYear: {
-      entityDispatcherOptions: {
-        optimisticUpdate: true
-      }
-    },
-    StepStatus: {
-      entityDispatcherOptions: {
-        optimisticUpdate: true
-      }
+  Project: {
+    sortComparer: compareProjects,
+    entityDispatcherOptions: {
+      optimisticUpdate: true
     }
+  },
+  Country: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  Subject: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  Region: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  Grade: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  AcademicYear: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  StepStatus: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  }
 };
 
 @NgModule({
-    declarations: [
-        HomeComponent,
-        ProjectEditorComponent,
-        StepOneComponent,
-        ProjectThumbnailComponent,
-        CreateProjectComponent,
-        EditorHeaderComponent,
-        EditorSidebarComponent,
-        ProjectTitleComponent,
-        StepMenuComponent,
-        StepTwoComponent,
-        TextareaBulletsComponent,
-        StatusComponent,
-        InfoToolTipComponent,
-        ScrollSpyDirective,
-        StepThreeComponent,
-        StepFourComponent,
-        TextareaComponent,
-        ScrollToDirective,
-        ContextualHelpComponent,
-        AccordionComponent
-    ],
-    imports: [
-        CommonModule,
-        SharedModule,
-        ProjectEditorRoutingModule,
-        TranslateModule.forChild(),
-        FormsModule,
-        ReactiveFormsModule,
-        TabsModule.forRoot(),
-        AccordionModule.forRoot()
-    ],
-    providers: [
-        ProjectsResolver,
-        ProjectEntityService,
-        ProjectsDataService,
-        CountryEntityService,
-        CountryDataService,
-        SubjectDataService,
-        SubjectEntityService,
-        RegionEntityService,
-        RegionDataService,
-        GradeDataService,
-        GradeEntityService,
-        AcademicYearDataService,
-        AcademicYearEntityService,
-        StepStatusEntityService,
-        StepStatusDataService
-    ]
+  declarations: [
+    HomeComponent,
+    ProjectEditorComponent,
+    StepOneComponent,
+    ProjectThumbnailComponent,
+    CreateProjectComponent,
+    EditorHeaderComponent,
+    EditorSidebarComponent,
+    ProjectTitleComponent,
+    StepMenuComponent,
+    StepTwoComponent,
+    TextareaBulletsComponent,
+    StatusComponent,
+    InfoToolTipComponent,
+    ScrollSpyDirective,
+    StepThreeComponent,
+    StepFourComponent,
+    TextareaComponent,
+    ScrollToDirective,
+    ContextualHelpComponent,
+    AccordionComponent,
+    ModalContentComponent,
+  ],
+  imports: [
+    CommonModule,
+    SharedModule,
+    ProjectEditorRoutingModule,
+    TranslateModule.forChild(),
+    FormsModule,
+    ReactiveFormsModule,
+    TabsModule.forRoot(),
+    AccordionModule.forRoot(),
+    ModalModule.forRoot()
+  ],
+  providers: [
+    ProjectsResolver,
+    ProjectEntityService,
+    ProjectsDataService,
+    CountryEntityService,
+    CountryDataService,
+    SubjectDataService,
+    SubjectEntityService,
+    RegionEntityService,
+    RegionDataService,
+    GradeDataService,
+    GradeEntityService,
+    AcademicYearDataService,
+    AcademicYearEntityService,
+    StepStatusEntityService,
+    StepStatusDataService,
+    BsModalRef
+  ]
 })
 
 export class ProjectEditorModule {
 
-    constructor(
-        private eds: EntityDefinitionService,
-        private entityDataService: EntityDataService,
-        private projectsDataService: ProjectsDataService,
-        private countryDataService: CountryDataService,
-        private regionDataService: RegionDataService,
-        private subjectDataService: SubjectDataService,
-        private gradeDataService: GradeDataService,
-        private academicYearDataService: AcademicYearDataService,
-        private stepStatusDataService: StepStatusDataService) {
+  constructor(
+    private eds: EntityDefinitionService,
+    private entityDataService: EntityDataService,
+    private projectsDataService: ProjectsDataService,
+    private countryDataService: CountryDataService,
+    private regionDataService: RegionDataService,
+    private subjectDataService: SubjectDataService,
+    private gradeDataService: GradeDataService,
+    private academicYearDataService: AcademicYearDataService,
+    private stepStatusDataService: StepStatusDataService) {
 
-        // ngx-bootstrap theme
-        setTheme('bs4');
+    // ngx-bootstrap theme
+    setTheme('bs4');
 
-        eds.registerMetadataMap(entityMetadata);
-        entityDataService.registerService('Project', projectsDataService);
-        entityDataService.registerService('Country', countryDataService);
-        entityDataService.registerService('Subject', subjectDataService);
-        entityDataService.registerService('Region', regionDataService);
-        entityDataService.registerService('Grade', gradeDataService);
-        entityDataService.registerService('AcademicYear', academicYearDataService);
-        entityDataService.registerService('StepStatus',stepStatusDataService)
-    }
+    eds.registerMetadataMap(entityMetadata);
+    entityDataService.registerService('Project', projectsDataService);
+    entityDataService.registerService('Country', countryDataService);
+    entityDataService.registerService('Subject', subjectDataService);
+    entityDataService.registerService('Region', regionDataService);
+    entityDataService.registerService('Grade', gradeDataService);
+    entityDataService.registerService('AcademicYear', academicYearDataService);
+    entityDataService.registerService('StepStatus', stepStatusDataService)
+  }
 }

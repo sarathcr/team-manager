@@ -1,9 +1,12 @@
 <accordion [isAnimated]="true" [closeOthers]="oneAtATime">
-    <accordion-group [isOpen]="isFirstOpen" [panelClass]="customClass" #accordionGroup1 [ngClass]="{ 'accordion_active' : accordionGroup1.isOpen }">
+    <accordion-group [isOpen]="isFirstOpen" [panelClass]="customClass" #accordionGroup1
+        [ngClass]="{ 'accordion_active' : accordionGroup1.isOpen }">
         <div accordion-heading class="accordion__heading" [ngClass]="{ 'accordion_active' : accordionGroup1.isOpen }">
             <div class="accordion__heading-icon accordion__heading-icon_multi-icon">
-                <span class="icon icon-ic_motivate_off"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
-                <span class="icon icon-ic_motivate_on"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+                <span class="icon icon-ic_motivate_off"><span class="path1"></span><span class="path2"></span><span
+                        class="path3"></span></span>
+                <span class="icon icon-ic_motivate_on"><span class="path1"></span><span class="path2"></span><span
+                        class="path3"></span></span>
             </div>
             <h5 class="accordion__heading-title">MOTÍVATE</h5>
             <div class="accordion__heading-arrow">
@@ -12,15 +15,22 @@
         </div>
         <div class="accordion__body">
             <h6 class="accordion__body-title">Intenta que tu proyecto conecte varias asignaturas.</h6>
-            <p class="accordion__body-desc">Cuando vas a comprar el pan, utilizas las matemáticas para saber si el cambio es correcto. También la expresión oral, para pedir exactamente la barra que quieres. En un gesto tan sencillo integras dos áreas. </p>
-            <p class="accordion__body-desc">Los retos de la vida real no se presentan por compartimentos, sino combinados. El ABP intenta acercar el aprendizaje a los desafíos de la vida real. Por eso, idealmente, los proyectos son transdisciplinares o interdisciplinares. </p>
+            <p class="accordion__body-desc">Cuando vas a comprar el pan, utilizas las matemáticas para saber si el
+                cambio es correcto. También la expresión oral, para pedir exactamente la barra que quieres. En un gesto
+                tan sencillo integras dos áreas. </p>
+            <p class="accordion__body-desc">Los retos de la vida real no se presentan por compartimentos, sino
+                combinados. El ABP intenta acercar el aprendizaje a los desafíos de la vida real. Por eso, idealmente,
+                los proyectos son transdisciplinares o interdisciplinares. </p>
         </div>
     </accordion-group>
-    <accordion-group [panelClass]="customClass" #accordionGroup2 [ngClass]="{ 'accordion_last accordion_active' : accordionGroup2.isOpen }">
+    <accordion-group [panelClass]="customClass" #accordionGroup2
+        [ngClass]="{ 'accordion_last accordion_active' : accordionGroup2.isOpen }">
         <div accordion-heading class="accordion__heading">
             <div class="accordion__heading-icon accordion__heading-icon_multi-icon">
-                <span class="icon icon-ic_inspirate_off"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>  
-                <span class="icon icon-ic_inspirate_on"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+                <span class="icon icon-ic_inspirate_off"><span class="path1"></span><span class="path2"></span><span
+                        class="path3"></span></span>
+                <span class="icon icon-ic_inspirate_on"><span class="path1"></span><span class="path2"></span><span
+                        class="path3"></span></span>
             </div>
             <h5 class="accordion__heading-title">InspÍRATE</h5>
             <div class="accordion__heading-arrow">
@@ -28,7 +38,52 @@
             </div>
         </div>
         <div class="accordion__body">
-            <p class="accordion__body-desc">Las Lenguas (Castellana, Catalana, Inglés) son las que mejor conectan con otras áreas. Desde cualquier asignatura se puede implicar la expresión oral o escrita en un idioma. Por eso son muy comunes los proyectos que parten de Ciencias Naturales o Sociales e integran las Lenguas. </p>
+            <p class="accordion__body-desc">Las Lenguas (Castellana, Catalana, Inglés) son las que mejor conectan con
+                otras áreas. Desde cualquier asignatura se puede implicar la expresión oral o escrita en un idioma. Por
+                eso son muy comunes los proyectos que parten de Ciencias Naturales o Sociales e integran las Lenguas.
+            </p>
+            <ul class="accordion__body-list">
+                <li class="accordion__body-list-item">Neque porro quisquam est, qui dolorem.</li>
+                <li class="accordion__body-list-item">Duis aute irure dolor in reprehender in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur
+                    mollit anim.</li>
+                <li class="accordion__body-list-item">nemo enim ipsam voluptatem quia voluptas occaecat.</li>
+                <li class="accordion__body-list-item">Excepteur sint occaecat cupidatat.</li>
+                <li class="accordion__body-list-item">nemo enim ipsam voluptatem quia voluptas occaecat.</li>
+                <li class="accordion__body-list-item">Excepteur sint occaecat cupidatat.</li>
+                <li class="accordion__body-list-item">nemo enim ipsam voluptatem quia voluptas occaecat.</li>
+                <li class="accordion__body-list-item">Excepteur sint occaecat cupidatat.</li>
+                <li class="accordion__body-list-item">Excepteur sint occaecat cupidatat.</li>
+                <li class="accordion__body-list-item">nemo enim ipsam voluptatem quia voluptas occaecat.</li>
+                <li class="accordion__body-list-item">Excepteur sint occaecat cupidatat.</li>
+            </ul>
+        </div>
+    </accordion-group>
+    <accordion-group [panelClass]="customClass" #accordionGroup3
+        [ngClass]="{ 'accordion_last accordion_active' : accordionGroup3.isOpen }">
+        <div accordion-heading class="accordion__heading">
+            <div class="accordion__heading-icon accordion__heading-icon_multi-icon">
+                <span class="icon icon-ic_ejemplos_off"><span class="path1"></span><span class="path2"></span><span
+                        class="path3"></span><span class="path4"></span><span class="path5"></span><span
+                        class="path6"></span><span class="path7"></span></span>
+                <span class="icon icon-ic_ejemplos_on"><span class="path1"></span><span class="path2"></span><span
+                        class="path3"></span><span class="path4"></span><span class="path5"></span><span
+                        class="path6"></span><span class="path7"></span></span>
+            </div>
+            <h5 class="accordion__heading-title">ejemplos</h5>
+            <div class="accordion__heading-arrow">
+                <span class="icon icon-ic_dropdown"></span>
+            </div>
+        </div>
+        <div class="accordion__body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-primary" (click)="openModalWithComponent()">Modal 1</button>
+                </div>
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-primary" (click)="openModalWithComponent()">Modal 2</button>
+                </div>
+            </div>
         </div>
     </accordion-group>
 </accordion>
