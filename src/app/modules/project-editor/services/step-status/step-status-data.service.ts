@@ -15,7 +15,6 @@ export class StepStatusDataService extends DefaultDataService<StepState[]> {
     update(data: any): Observable<any> {
         const { id: projectId,state: stateData } = data.changes
         const { stepid, state } = stateData[0]
-        console.log(data.changes)
         return this.http.post<any>(`${environment.apiUrl}/projects/${data.id}/assignStepState`, { stepid, state, projectId })
             .pipe(
                 map(res => {
