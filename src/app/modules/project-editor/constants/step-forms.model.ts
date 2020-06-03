@@ -26,9 +26,12 @@ export interface FormOneInitData {
     subjects: Subject[]
 }
 export interface FormSeven {
-  drivingQuestions: DrivingGuestion[];
+  data: {
+    drivingQuestions: DrivingGuestion[]
+  }
+  stepStatus: StepState
 }
-export interface FormSevenInitData {
+export interface FormSevenData {
   drivingQuestions: DrivingGuestion[];
 }
 export interface FormEight {

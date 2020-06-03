@@ -3,6 +3,7 @@ import { Region } from './region.model';
 import { AcademicYear } from './academic-year.model';
 import { Grade } from './grade.model';
 import { Subject } from './subject.model';
+import { DrivingGuestion } from './driving-questions.model';
 
 export class Project {
   id: number | null;
@@ -15,7 +16,7 @@ export class Project {
   academicYear?: AcademicYear;
   commonThreads?: Array<object>;
   themes?: Array<object>;
-  guideQuestions?: Array<object>;
+  drivingQuestions?: DrivingGuestion[];
   grades?: Array<Grade>;
   subjects?: Array<Subject>;
   createdAt?: string;

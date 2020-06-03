@@ -1,10 +1,7 @@
 <div class="textarea-bullets textarea-bullets_active">
-    <ul class="bullet-list textarea-bullets__list">
-        <li class="textarea-bullets__item">
-            <textarea class="textarea-bullets__textarea" id="list-item-1" rows="1" placeholder="Especifica uno o más temas">La Baja Edad Media</textarea>
-        </li>
-        <li class="textarea-bullets__item">
-            <textarea class="textarea-bullets__textarea" id="list-item-2" rows="1" placeholder="Especifica uno o más temas">Construir un edificio de la Baja Edad Media</textarea>
+    <ul class="bullet-list textarea-bullets__list" *ngIf="values" >
+        <li class="textarea-bullets__item" *ngFor="let value of values; let i = index" [attr.data-index]='i'>
+            <textarea class="textarea-bullets__textarea" id="list-item-{{value.id}}" rows="1" placeholder={{placeholder}} name='textArea' (keydown)='keyAction($event)' (ngModelChange)='onTextUpdate($event,value.id,i)' [(ngModel)]=value.name #textArea [maxLength]='maxLength'></textarea>
         </li>
     </ul>
 </div>
