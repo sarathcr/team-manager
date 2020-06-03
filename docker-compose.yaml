@@ -19,7 +19,7 @@ services:
     user: node
     command: >
       sh -c "npm install
-      && ng build --configuration ${ENV}
+      && npm run prerender
       && id -g"
     volumes:
       - .:/home/node/app
