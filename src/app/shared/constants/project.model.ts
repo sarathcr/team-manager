@@ -4,6 +4,7 @@ import { AcademicYear } from './academic-year.model';
 import { Grade } from './grade.model';
 import { Subject } from './subject.model';
 import { DrivingGuestion } from './driving-questions.model';
+import { Theme } from './theme.model';
 
 export class Project {
   id: number | null;

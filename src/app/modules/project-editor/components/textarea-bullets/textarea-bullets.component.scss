@@ -12,6 +12,10 @@
     }
     &__item{
         margin-bottom: 0;
+        &::before{
+          top: unset;
+          line-height:  24px;
+        }
     }
     &__textarea{
         background: none;

@@ -1,4 +1,5 @@
-import { Component, OnInit, EventEmitter, Output, Input, ViewChildren, QueryList, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
+import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
 
 @Component({
   selector: 'app-textarea-bullets',
@@ -6,47 +7,76 @@ import { Component, OnInit, EventEmitter, Output, Input, ViewChildren, QueryList
   styleUrls: ['./textarea-bullets.component.scss']
 })
 export class TextareaBulletsComponent implements OnInit,AfterViewInit {
-  @Output() onUpdate: EventEmitter<any> = new EventEmitter();
-  @Output() onEnter: EventEmitter<any> = new EventEmitter();
-  @Output() onDelete: EventEmitter<any> = new EventEmitter();
-  @Input() values = []
-  @Input() placeholder: string
-  @Input() maxLength: number
-  index = 0
+  private _config;
+  sampleOption: Option = { id: null, name: null };
+  configOptions: Option[] = [];
+
+  get config(): FieldConfig {
+    return this._config;
+  }
+
+  @Input() set config(val: FieldConfig) {
+    this.configOptions = val.options.map(option => ({ name: option.name, id: option.id }));
+    this._config = val;
+  };
+
+  @Output() onChange = new EventEmitter()
+
   @ViewChildren('textArea') textArea: QueryList<ElementRef>;
+  index = 0
   constructor() { }
 
   ngOnInit(): void {
   }
+
   ngAfterViewInit(){
-    this.textArea.changes.subscribe(()=>{
-      this.textArea.toArray()[this.index].nativeElement.style.height = (this.textArea.toArray()[this.index].nativeElement.scrollHeight)+"px"
-      this.textArea.toArray()[this.index].nativeElement.focus()
-    })
+
   }
-  keyAction(event) {
-    const element = event.target;
+
+  keyAction(event, id) {
     switch(event.keyCode) {
+
       case 13 :
         event.preventDefault();
-        if(this.fieldValidation(this.values[element.parentNode.dataset.index].name)){
-          this.onEnter.emit({val: this.values, index: element.parentNode.dataset.index})
+        if (this.configOptions.length < 5) {
+          this.configOptions.push({ ...this.sampleOption });
+          this.index++
         }
-        this.index++
+        setTimeout(() => {
+          this.textArea.last.nativeElement.focus()
+        }, 0)
         break;
+
       case 46 :
         event.preventDefault();
-        this.onDelete.emit({val: this.values, index: element.parentNode.dataset.index})
+        if (this.configOptions.length > 1) {
+          this.configOptions.splice(id, 1)
+          this.index = this.textArea.toArray().length > id ? id : id - 1
+          setTimeout(() => {
+            const textAreas = this.textArea.toArray()
+            const index = textAreas.length > id ? id : id - 1
+            textAreas[index].nativeElement.focus();
+          }, 0)
+        }
+        else {
+          this.configOptions[0].name = ''
+        }
+        this.onChange.emit([...this.configOptions]);
         break;
+
       default:
         break
     }
+
   }
-  onTextUpdate(data,id,index){
-    this.index = index
-    this.values[index] = {id: id, name: data}
-    this.onUpdate.emit([...this.values])
+
+  onValueChange(value, i){
+    this.index = i
+    const newConfigOptions = [...this.configOptions];
+    this.onChange.emit(newConfigOptions);
+    this.textArea.toArray()[i].nativeElement.style.height = (this.textArea.toArray()[i].nativeElement.scrollHeight)+"px";
   }
+
   fieldValidation(value: string) {
     if (value == null || value == undefined || value.length == 0) {
       return false;
@@ -54,7 +84,4 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
       return true;
     }
   }
-
-
-
 }

@@ -10,11 +10,11 @@ import { Project } from 'src/app/shared/constants/project.model'
 import { DrivingGuestion } from 'src/app/shared/constants/driving-questions.model';
 
 @Component({
-  selector: 'app-step-two',
-  templateUrl: './step-two.component.html',
-  styleUrls: ['./step-two.component.scss']
+  selector: 'app-step-seven',
+  templateUrl: './step-seven.component.html',
+  styleUrls: ['./step-seven.component.scss']
 })
-export class StepTwoComponent implements OnInit, OnDestroy {
+export class StepSevenComponent implements OnInit, OnDestroy {
   @Output() inProgress: EventEmitter<any> = new EventEmitter<any>()
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
