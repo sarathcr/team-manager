@@ -3,29 +3,31 @@ import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
 import { formSevenInitData } from '../../constants/step-forms.data'
-import { FormSevenData, FormSeven } from '../../constants/step-forms.model'
+import { FormSevenInitData, FormSeven } from '../../constants/step-forms.model'
 import { Step, StepId, StepState, Status } from '../../constants/step.model'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
 import { Project } from 'src/app/shared/constants/project.model'
 import { DrivingGuestion } from 'src/app/shared/constants/driving-questions.model';
 
 @Component({
-  selector: 'app-step-seven',
-  templateUrl: './step-seven.component.html',
-  styleUrls: ['./step-seven.component.scss']
+  selector: 'app-step-two',
+  templateUrl: './step-two.component.html',
+  styleUrls: ['./step-two.component.scss']
 })
-export class StepSevenComponent implements OnInit, OnDestroy {
+export class StepTwoComponent implements OnInit, OnDestroy {
+  @Output() inProgress: EventEmitter<any> = new EventEmitter<any>()
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
   @Input() spyActive$: Observable<StepId>
   @Input() stepStatus$: Observable<StepState>
   @Input() step: Step
-  textPlaceholder: string
-  formTitle: string
-  formDescription: string
-  drivingQuestions: DrivingGuestion[]
-  initialFormData: FormSevenData = new formSevenInitData
+  initialFormData: FormSevenInitData = new formSevenInitData
   buttonConfig: FieldConfig
+  textAreaConfig: FieldConfig
+  thematicTitle: string
+  thematicDescription: string
+  thematicPlaceholder: string
+  projectId: number
   active: boolean = false
   initialFormStatus: Status
 
@@ -33,6 +35,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createFormConfig()
+    this.onScrollSubmit()
     this.formInIt()
   }
 

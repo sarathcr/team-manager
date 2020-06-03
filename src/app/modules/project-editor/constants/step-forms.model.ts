@@ -31,7 +31,7 @@ export interface FormSeven {
   }
   stepStatus: StepState
 }
-export interface FormSevenData {
+export interface FormSevenInitData {
   drivingQuestions: DrivingGuestion[];
 }
 export interface FormEight {
