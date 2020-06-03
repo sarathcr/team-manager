@@ -26,6 +26,15 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   finalFormData: FormTwoInitData = new formTwoInitData
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
+  tempTextAreaConfig: FieldConfig = {
+    label: '',
+    name: 'textarea',
+    field: 'themes',
+    placeholder: 'placeholder',
+    id: 'themes',
+    maxLength: 150,
+    options: [{id: null, name: 'Sample'}]
+  }
   thematicTitle: string
   thematicDescription: string
   thematicPlaceholder: string
@@ -211,8 +220,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   textAreaUpdate(data) { // call on each update
-    console.log(data)
-    this.textAreaConfig = data
+    this.textAreaConfig.options = data
     // const index = this.textAreaConfig.options.findIndex((e) => e.id === data.id);
     // if (index === -1) {
     //   let innerObj = {name: data.name}

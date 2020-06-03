@@ -1,5 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, ViewChildren, QueryList, AfterViewInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/constants/field.model';
+
+interface Option {
+  id?: number;
+  name?: string;
+}
 
 @Component({
   selector: 'app-textarea-bullets',
@@ -7,60 +12,68 @@ import { FieldConfig } from 'src/app/shared/constants/field.model';
   styleUrls: ['./textarea-bullets.component.scss']
 })
 export class TextareaBulletsComponent implements OnInit,AfterViewInit {
-  @Output() onUpdate: EventEmitter<any> = new EventEmitter();
-  @Output() onEnter: EventEmitter<any> = new EventEmitter();
-  @Output() onDelete: EventEmitter<any> = new EventEmitter();
-  @Input() config: FieldConfig;
-  textAreaConfig = {
-    label: '',
-    name: 'textarea',
-    field: 'themes',
-    placeholder: '',
-    id: 'themes',
-    maxLength: 150,
-    options: [{id: null, name: null}]
+  private _config;
+  sampleOption: Option = { id: null, name: null };
+  configOptions: Option[] = [];
+
+  get config(): FieldConfig {
+    return this._config;
   }
+  
+  @Input() set config(val: FieldConfig) {
+    this.configOptions = val.options.map(option => ({ name: option.name, id: option.id }));
+    this._config = val;
+  };
+  
+  @Output() onChange = new EventEmitter()
+  
   @ViewChildren('textArea') textArea: QueryList<ElementRef>;
   constructor() { }
-
+  
   ngOnInit(): void {
-    this.textAreaConfig = {...this.config}
   }
 
   ngAfterViewInit(){
-    this.textArea.changes.subscribe((item)=>{
-      // console.log(this.textArea)
-      // this.textArea.last.nativeElement.focus();
+    this.textArea.changes.subscribe(() => {
       this.textArea.toArray().forEach( item => {
-        item.nativeElement.style.height = (item.nativeElement.scrollHeight)+"px"
+        item.nativeElement.style.height = (item.nativeElement.scrollHeight)+"px";
       } )
-   })
+    })
   }
-
-  keyAction(event) {
-    const element = event.target;
-    // element.style.height = (element.scrollHeight)+"px"
-    // element.focus()
+  
+  keyAction(event, id) {
     switch(event.keyCode) {
+
       case 13 :
         event.preventDefault();
-        if(this.fieldValidation(this.config.options[element.parentNode.dataset.index].name)){
-          this.onEnter.emit({controller: this.config.name, val: this.config.options, index: element.parentNode.dataset.index})
+        if (this.configOptions.length < 5) {
+          this.configOptions.push({ ...this.sampleOption });
         }
+        setTimeout(() => {
+          this.textArea.last.nativeElement.focus()
+        }, 0)
         break;
+
       case 46 :
         event.preventDefault();
-        this.onDelete.emit({controller: this.config.name, val: this.config.options, index: element.parentNode.dataset.index})
+        if (this.configOptions.length > 1) {
+          this.configOptions.splice(id, 1)
+          setTimeout(() => {
+            const textAreas = this.textArea.toArray()
+            const index = textAreas.length > id ? id : id - 1
+            textAreas[index].nativeElement.focus();
+          }, 0)
+        }
+        else {
+          this.configOptions[0].name = ''
+        }
         break;
-      default:
+
+      default: 
         break
     }
-  }
-
-  onTextUpdate(event,index,i){
-    // this.config.options[i]={id: index, name: event}
-    this.onUpdate.emit({...this.textAreaConfig})
-    // this.onUpdate.emit({...this.config})
+    const newConfigOptions = [...this.configOptions];
+    this.onChange.emit(newConfigOptions);
   }
 
   fieldValidation(value: string) {
