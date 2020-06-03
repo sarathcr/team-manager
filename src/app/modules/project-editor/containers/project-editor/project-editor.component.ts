@@ -84,7 +84,6 @@ export class ProjectEditorComponent implements OnInit {
         )
       this.project$.subscribe(project => {
         this.project = project;
-        console.log(this.project)
         if (project) {
           this.notFound = false;
           this.titleData = { id: project.id, title: project.title }

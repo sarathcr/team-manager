@@ -38,11 +38,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.onScrollSubmit()
     this.formInIt()
   }
+
   ngOnDestroy(): void {
     if (this.isFormUpdated()) {
       this.handleSubmit()
     }
   }
+
   createFormConfig() {
     this.buttonConfig = {
       name: 'submit',
@@ -58,7 +60,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       placeholder: '',
       id: 'themes',
       maxLength: 150,
-      options: [{id: 1, name: null}]
+      options: [{id: null, name: null}]
     }
     // Translation
     this.translateService.stream([
@@ -77,6 +79,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.textAreaConfig.label = this.thematicPlaceholder
     })
   }
+
   formInIt() {
     if (this.project$)
       this.project$
@@ -96,7 +99,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           // if (project?.themes.length < 5) {// Comment this if no need to have a placeholder if data already exist
           //   this.textAreaConfig.options.push({ id: this.initialFormData.themes.length+1, name: null})
           // }
-          this.finalFormData.themes = [...tempinitialFormData.themes]
+          // this.finalFormData.themes = [...tempinitialFormData.themes]
         })
     if (this.stepStatus$) {
       this.stepStatus$.pipe(
@@ -110,6 +113,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         )
     }
   }
+
   onScrollSubmit() {
     this.spyActive$
       .subscribe(sectionId => {
@@ -138,6 +142,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   // checks if the form is empty
   checkEmptyForm() {
     if (!this.finalFormData.themes.length) {
@@ -153,26 +158,29 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
     return false
   }
+
   isFormUpdated() {
-    if (!this.isEqual(this.initialFormData.themes, this.finalFormData.themes)) {
+    if (!this.isEqual(this.initialFormData.themes, this.textAreaConfig.options)) {
       return true
     } else {
       return false
     }
   }
+
   isEqual(d1: any[], d2: any[]) {
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
+
   handleSubmit() {
     this.checkStatus()
     let tempData = []
-    this.finalFormData.themes.forEach( (theme, index) => {
+    this.textAreaConfig.options.forEach( (theme, index) => {
       tempData.push({id: theme.id,name: theme.name})
     })
-    this.finalFormData.themes = tempData
+    this.textAreaConfig.options = tempData
     let formData: FormTwo = {
       data: {
-        themes:  this.finalFormData.themes,
+        themes:  this.textAreaConfig.options,
       },
       stepStatus: {
         state: [
@@ -190,30 +198,39 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.onSubmit.emit(formData)
     this.buttonConfig.submitted = true
   }
+
   checkInProgress() {
     let values: Array<any> = []
-    values.push(this.isEqual(this.initialFormData.themes, this.finalFormData.themes))
+    // console.log(this.initialFormData.themes, this.textAreaConfig.options)
+    values.push(this.isEqual(this.initialFormData.themes, this.textAreaConfig.options))
     if (values.includes(false)) {
       this.step.state = 'INPROCESS'
       this.buttonConfig.disabled = false
     }
     this.buttonConfig.submitted = this.step.state == 'DONE'
   }
+
   textAreaUpdate(data) { // call on each update
-    const index = this.finalFormData.themes.findIndex((e) => e.id === data.id);
-    if (index === -1) {
-      let innerObj = {name: data.name}
-      this.finalFormData.themes.push(innerObj);
-    } else {
-      this.finalFormData.themes[index] = data
-    }
-    this.textAreaConfig.options = this.finalFormData.themes
+    console.log(data)
+    this.textAreaConfig = data
+    // const index = this.textAreaConfig.options.findIndex((e) => e.id === data.id);
+    // if (index === -1) {
+    //   let innerObj = {name: data.name}
+    //   this.textAreaConfig.options.push({...innerObj});
+    // } else {
+    //   this.textAreaConfig.options[index] = {...data}
+    // }
+    // // this.textAreaConfig.options = [...this.finalFormData.themes]
     this.checkInProgress()
   }
+
   addTheme(data){
-    this.textAreaConfig.options = this.finalFormData.themes
+    this.textAreaConfig.options = []
+    this.textAreaConfig.options.push(...this.textAreaConfig.options, { id: null, name: null })
+    console.log(this.textAreaConfig.options)
     this.handleButtonType()
   }
+
   deleteTheme(data){
     let temp:Theme[] = []
     this.finalFormData.themes.forEach( theme => {
@@ -226,6 +243,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.textAreaConfig.options = this.finalFormData.themes = temp
     this.handleButtonType()
   }
+
   handleButtonType() {
     this.checkInProgress()
     if(this.step.state == 'INPROCESS'){
