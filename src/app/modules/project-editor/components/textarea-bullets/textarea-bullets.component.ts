@@ -22,6 +22,7 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
   ngAfterViewInit(){
     this.textArea.changes.subscribe(()=>{
       this.textArea.last.nativeElement.focus();
+      this.textArea.last.nativeElement.style.height = (this.textArea.last.nativeElement.scrollHeight)+"px"
    })
   }
   keyAction(event) {
@@ -30,7 +31,6 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
     switch(event.keyCode) {
       case 13 :
         event.preventDefault();
-        console.log(element.parentNode.dataset.index)
         if(this.fieldValidation(this.config.options[element.parentNode.dataset.index].name)){
           this.onEnter.emit({controller: this.config.name, val: this.config.options, index: element.parentNode.dataset.index})
         }

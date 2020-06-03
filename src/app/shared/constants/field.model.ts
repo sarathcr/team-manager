@@ -22,5 +22,6 @@ export interface FieldConfig {
   multiselect?: boolean
   submitted?: boolean
   id: string
-  textField?: string
+  textField?: string,
+  maxLength?: number
 }

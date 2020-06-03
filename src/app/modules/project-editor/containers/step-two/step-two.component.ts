@@ -57,6 +57,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       field: 'themes',
       placeholder: '',
       id: 'themes',
+      maxLength: 150,
       options: [{id: 1, name: null}]
     }
     // Translation
@@ -147,7 +148,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   // checks the form is completely filled or not
   checkNonEmptyForm() {
-    if (this.initialFormData.themes.length  && this.isEqual(this.initialFormData.themes, this.finalFormData.themes)) {
+    if (this.initialFormData.themes.length) {
       return true
     }
     return false
@@ -186,7 +187,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.buttonConfig.submitted = this.step.state == 'DONE'
       this.buttonConfig.disabled = this.step.state == "DONE"
     }
-    this.handleButtonType()
     this.onSubmit.emit(formData)
     this.buttonConfig.submitted = true
   }
@@ -195,6 +195,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     values.push(this.isEqual(this.initialFormData.themes, this.finalFormData.themes))
     if (values.includes(false)) {
       this.step.state = 'INPROCESS'
+      this.buttonConfig.disabled = false
     }
     this.buttonConfig.submitted = this.step.state == 'DONE'
   }
@@ -206,6 +207,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     } else {
       this.finalFormData.themes[index] = data
     }
+    this.textAreaConfig.options = this.finalFormData.themes
     this.checkInProgress()
   }
   addTheme(data){
