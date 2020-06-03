@@ -115,7 +115,7 @@ export class ProjectEditorComponent implements OnInit {
   }
 
   updateStepStatus(stepstatus: any) {
-    stepstatus.state?.forEach(newState => {
+    stepstatus.steps?.forEach(newState => {
       this.steps.forEach(step => {
         if (step.stepid == newState.stepid) {
           step.state = newState.state
@@ -131,7 +131,7 @@ export class ProjectEditorComponent implements OnInit {
 
   submitFormStatus(data: any) {
     if (this.project.id) {
-      const dataWithId: any = {
+      const dataWithId: StepState = {
         ...data,
         id: this.project.id
       }
