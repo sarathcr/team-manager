@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormButtonComponent } from './components/form-button/form-button.component';
 import { FormInputComponent } from './components/form-input/form-input.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
         FormButtonComponent,
         FormInputComponent,
         DropdownComponent,
+        LoaderComponent,
     ],
     imports: [
         CommonModule,
@@ -33,7 +35,8 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
         LanguageSelectorComponent,
         DropdownComponent,
         FormInputComponent,
-        FormButtonComponent
+        FormButtonComponent,
+        LoaderComponent
     ]
 })
 
