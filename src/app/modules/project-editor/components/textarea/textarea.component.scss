@@ -23,7 +23,7 @@
             color: $overtitle-grey;
         }
     }
-    &:active, &:focus, &:focus-within{
+    &:active,&:focus-within{
         border: 1px solid transparent;
         box-shadow: 0 0 0 3px $primary;
     }
