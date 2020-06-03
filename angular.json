@@ -27,7 +27,12 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles/"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -160,7 +165,12 @@
             "serverTarget": "thinko-creator:server:production",
             "routes": [
               "/"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles/"
+              ]
+            }
           },
           "configurations": {
             "production": {}

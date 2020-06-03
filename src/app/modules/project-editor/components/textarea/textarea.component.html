@@ -1,4 +1,4 @@
 <div class="textarea textarea_active">
-    <textarea class="textarea__description" rows="1" maxlength="500"
-        [placeholder]="placeholder" [(ngModel)]="value" (ngModelChange)="onValueChange($event)"></textarea>
+    <textarea class="textarea__description" rows="1" [maxlength]="maxlength"
+        [placeholder]="placeholder" ngModel="value" (ngModelChange)="onValueChange($event)"></textarea>
 </div>
