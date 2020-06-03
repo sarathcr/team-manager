@@ -16,7 +16,7 @@ export class Project {
   region?: Region;
   academicYear?: AcademicYear;
   commonThreads?: Array<object>;
-  themes?: Array<object>;
+  themes?: Theme[];
   drivingQuestions?: DrivingGuestion[];
   grades?: Array<Grade>;
   subjects?: Array<Subject>;
