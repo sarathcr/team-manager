@@ -36,8 +36,8 @@ export class TextareaBulletsComponent implements OnInit, AfterViewInit {
   }
 
   keyAction(event, id) {
+    console.log(event.keyCode)
     switch (event.keyCode) {
-
       case 13:
         event.preventDefault();
         if (this.config.limit == 0) {
@@ -50,7 +50,7 @@ export class TextareaBulletsComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           this.textArea.last.nativeElement.focus()
         }, 0)
-        break;
+        break
 
       case 46:
         event.preventDefault();
@@ -67,7 +67,15 @@ export class TextareaBulletsComponent implements OnInit, AfterViewInit {
           this.configOptions[0].name = ''
         }
         this.onChange.emit([...this.configOptions]);
-        break;
+        break
+
+      case 32:
+        if(this.configOptions[this.index].name.length == 1){
+          this.configOptions[this.index].name = ""
+        } else{
+          this.configOptions[this.index].name = ''+this.configOptions[this.index].name.replace(/ +(?= )/g,'')
+        }
+        break
 
       default:
         break
