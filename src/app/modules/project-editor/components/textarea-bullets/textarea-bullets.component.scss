@@ -5,13 +5,14 @@
     border: none;
     border: 1px solid $creator-border-active;
     border-radius: 3px;
-    padding: 22px;
+    padding:14px 22px;
     margin-bottom: 69px;
     &__list{
         padding-left: 0;
     }
     &__item{
-        margin-bottom: 0;
+        display: flex;
+        margin-bottom: 8px;
         &::before{
           top: unset;
           line-height:  24px;
