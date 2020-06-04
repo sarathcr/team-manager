@@ -13,11 +13,13 @@
     line-height: $line-height-24px;
     padding: 6px 0;
     border: none;
-    border-bottom: 1px solid $black;
+    &:focus{
+      border-bottom: 1px solid $black;
+    }
   }
 
   &__input {
-    max-width: 212px;
+    max-width: 145px;
 
     &::placeholder {
       opacity: 0.5;
