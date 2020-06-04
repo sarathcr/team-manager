@@ -17,7 +17,10 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   }
 
   @Input() set config(val: FieldConfig) {
-    this.configOptions = val.options.map(option => ({ id: option.id, name: option.name }));
+    if (val.options.length)
+      this.configOptions = val.options.map(option => ({ id: option.id, name: option.name }));
+    else
+      this.configOptions.push({ ...this.sampleOption })
     this._config = val;
   };
 
