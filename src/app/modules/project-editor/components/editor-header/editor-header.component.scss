@@ -16,13 +16,7 @@
   height: 26px;
   width: 88px;
 
-  &__link,
-  &__img,
-  &__object {
+  &__link{
     display: block;
-  }
-
-  &__object {
-    pointer-events: none;
   }
 }
