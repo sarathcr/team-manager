@@ -56,7 +56,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       field: 'drivingQuestions',
       id: 'drivingQuestions',
       maxLength: 150,
-      options: [{ id: null, name: null }],
+      options: [],
       limit: 0
     }
     // Translation
@@ -180,7 +180,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       this.initialFormData.drivingQuestions = tempData
     }
     else {
-      this.textAreaConfig.options = [{ id: null, name: null }]
+      this.textAreaConfig.options = []
       this.initialFormData.drivingQuestions = this.textAreaConfig.options
     }
     let formData: FormSeven = {
