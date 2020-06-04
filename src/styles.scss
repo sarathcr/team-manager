@@ -68,6 +68,7 @@
 .project-editor__form {
   display: flex;
   width: 100%;
+  min-height: calc(100vh - 75px);
   padding: 28px 40px;
   padding-left: 40px;
   padding-right: 40px;
@@ -88,7 +89,13 @@
 }
 
 .project-form{
+  min-height: calc(100vh - 160px);
   &__title{
-    line-height: 28px;
+    line-height: 32px;
   }
+}
+
+.textarea_focus{
+  border: 1px solid transparent !important;
+  box-shadow: 0 0 0 3px $primary;
 }
