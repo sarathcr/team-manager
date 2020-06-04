@@ -2,14 +2,13 @@ import { Directive, HostListener, ElementRef, Input } from '@angular/core';
 import { StepId } from '../../constants/step.model';
 import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 
-
 @Directive({
   selector: '[scrollTo]'
 })
 export class ScrollToDirective {
   @Input() public scrollToId: StepId
 
-  constructor(private el: ElementRef,private scrollToService: ScrollToService) { }
+  constructor(private el: ElementRef, private scrollToService: ScrollToService) { }
 
   @HostListener('click')
   click() {
@@ -28,4 +27,5 @@ export class ScrollToDirective {
       this.scrollToService.scrollTo(config);
     }, timeout)
   }
+  
 }
