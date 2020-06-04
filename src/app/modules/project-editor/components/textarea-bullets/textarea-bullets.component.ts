@@ -6,7 +6,7 @@ import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
   templateUrl: './textarea-bullets.component.html',
   styleUrls: ['./textarea-bullets.component.scss']
 })
-export class TextareaBulletsComponent implements OnInit,AfterViewInit {
+export class TextareaBulletsComponent implements OnInit, AfterViewInit {
   private _config;
   sampleOption: Option = { id: null, name: null };
   configOptions: Option[] = [];
@@ -17,7 +17,7 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
   }
 
   @Input() set config(val: FieldConfig) {
-    this.configOptions = val.options.map(option => ({ name: option.name, id: option.id }));
+    this.configOptions = val.options.map(option => ({id: option.id , name: option.name}));
     this._config = val;
   };
 
@@ -31,19 +31,19 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
     this.limit = this.config.limit;
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
 
   }
 
   keyAction(event, id) {
-    switch(event.keyCode) {
+    switch (event.keyCode) {
 
-      case 13 :
+      case 13:
         event.preventDefault();
-        if(this.config.limit == 0){
+        if (this.config.limit == 0) {
           this.limit = this.configOptions.length + 1
         }
-        if (this.configOptions.length < this.limit) {
+        if (this.configOptions.length < this.limit && this.configOptions[this.configOptions.length - 1].name != null) {
           this.configOptions.push({ ...this.sampleOption });
           this.index++
         }
@@ -52,7 +52,7 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
         }, 0)
         break;
 
-      case 46 :
+      case 46:
         event.preventDefault();
         if (this.configOptions.length > 1) {
           this.configOptions.splice(id, 1)
@@ -75,11 +75,11 @@ export class TextareaBulletsComponent implements OnInit,AfterViewInit {
 
   }
 
-  onValueChange(value, i){
+  onValueChange(value, i) {
     this.index = i
     const newConfigOptions = [...this.configOptions];
     this.onChange.emit(newConfigOptions);
-    this.textArea.toArray()[i].nativeElement.style.height = (this.textArea.toArray()[i].nativeElement.scrollHeight)+"px";
+    this.textArea.toArray()[i].nativeElement.style.height = (this.textArea.toArray()[i].nativeElement.scrollHeight) + "px";
   }
 
   fieldValidation(value: string) {
