@@ -19,6 +19,14 @@ Check the logs to assure that static files rendering has finished:
 
 Access at http://localhost:8080
 
+For generating specific environment files, use:
+
+```shell script
+export UID; export ENV=qa; docker-compose up -d
+export UID; export ENV=dev; docker-compose up -d
+export UID; export ENV=pre; docker-compose up -d
+export UID; export ENV=pro; docker-compose up -d
+```
 
 ## Upload to S3
 
