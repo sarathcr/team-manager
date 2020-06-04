@@ -1,6 +1,7 @@
 @import 'helpers/_helpers-master';
 .form-button{
-  margin: $m-36px*2 0 $m-36px 0;
+  position: absolute;
+  bottom: 57px;
   .btn{
     display: flex;
     align-items: center;
