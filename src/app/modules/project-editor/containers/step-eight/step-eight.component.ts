@@ -50,7 +50,7 @@ export class StepEightComponent implements OnInit {
       })
     if (this.stepStatus$)
       this.stepStatus$.pipe(
-        map(data => data?.state?.filter(statusData => statusData.stepid == this.step.stepid)))
+        map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
         .subscribe(
           formStatus => {
             if (formStatus && formStatus.length) {
@@ -109,7 +109,7 @@ export class StepEightComponent implements OnInit {
         finalProduct: this.finalProduct
       },
       stepStatus: {
-        state: [
+        steps: [
           {
             state: this.step.state,
             stepid: this.step.stepid

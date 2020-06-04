@@ -13,25 +13,19 @@ export class StepStatusDataService extends DefaultDataService<StepState[]> {
         super('StepStatus', http, httpUrlGenerator);
     }
     update(data: any): Observable<any> {
-        const { id: projectId,state: stateData } = data.changes
+        const { id: projectId, steps: stateData } = data.changes
         const { stepid, state } = stateData[0]
         return this.http.post<any>(`${environment.apiUrl}/projects/${data.id}/assignStepState`, { stepid, state, projectId })
             .pipe(
-                map(res => {
-                    const stepstate: any = {
-                        state: [],
-                        id: Number(data.id)
-                    }
-                    stepstate.state.push({ ...res })
-                    return [stepstate]
-                })
+                map(res => res)
             );
     }
 
     getWithQuery(param: string): Observable<any[]> {
         return this.http.get<StepState[]>(`${environment.apiUrl}/projects/${param}/getAllStepState`)
             .pipe(
-                map(res => [{ state: [...res], id: Number(param) }])
+                map(res => [{ steps: res['steps'], id: Number(param) }])
             );
     }
+
 }

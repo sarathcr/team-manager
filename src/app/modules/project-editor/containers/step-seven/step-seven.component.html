@@ -1,11 +1,19 @@
-<div class="project-editor__form step-three">
-    <app-status [status] = 'status'></app-status>
-    <div class="project-form">
-        <h1 class="title_s"><span>7. </span>{{'DRIVING_QUESTIONS.project_drivingquestions_title' | translate}}<app-info-tooltip></app-info-tooltip></h1>
-        <p class="project-form__description" [innerHTML]="'DRIVING_QUESTIONS.project_drivingquestions_description' | translate"></p>
-        <app-textarea-bullets></app-textarea-bullets>
-        <app-form-button [config]='buttonConfig'></app-form-button>
-    </div>
+<div class="project-editor__form step-seven">
+  <app-status [status] = 'step.state'></app-status>
+  <div class="project-form">
+    <h2 class="project-form__title title_s"><span>7. </span>{{formTitle}}<app-info-tooltip></app-info-tooltip></h2>
+    <p class="project-form__description"  [innerHTML]='formDescription'></p>
+    <app-textarea-bullets
+      [(config)]='textAreaConfig'
+      (onChange)="textAreaUpdate($event)"
+    >
+  </app-textarea-bullets>
+    <app-form-button
+      scrollTo
+      scrollToId="stepEight"
+      [config]='buttonConfig'
+      (onClick)='handleSubmit()'
+    >
+    </app-form-button>
 </div>
 
-      
