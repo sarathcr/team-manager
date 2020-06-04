@@ -89,7 +89,13 @@
 }
 
 .project-form{
+  min-height: calc(100vh - 160px);
   &__title{
     line-height: 32px;
   }
+}
+
+.textarea_focus{
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 3px $primary;
 }
