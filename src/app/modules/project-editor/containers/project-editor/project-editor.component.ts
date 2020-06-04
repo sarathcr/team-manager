@@ -130,7 +130,7 @@ export class ProjectEditorComponent implements OnInit {
   }
 
   submitFormStatus(data: any) {
-    if (this.project?.id) {
+    if (this.project && this.project.id) {
       const dataWithId: StepState = {
         ...data,
         id: this.project.id

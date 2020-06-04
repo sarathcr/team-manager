@@ -53,7 +53,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       field: 'themes',
       id: 'themes',
       maxLength: 150,
-      options: [{ id: null, name: null }],
+      options: [],
       limit: 5
     }
     // Translation
@@ -176,7 +176,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.initialFormData.themes = tempData
     }
     else {
-      this.textAreaConfig.options = [{ id: null, name: null }]
+      this.textAreaConfig.options = []
       this.initialFormData.themes = this.textAreaConfig.options
     }
     this.textAreaConfig.options = tempData
