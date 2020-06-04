@@ -48,7 +48,6 @@ export class StepEightComponent implements OnInit {
           this.initialFormData = data.finalProduct
         }
       })
-    console.log(this.initialFormData)
     if (this.stepStatus$)
       this.stepStatus$.pipe(
         map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))

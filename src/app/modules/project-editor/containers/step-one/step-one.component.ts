@@ -85,8 +85,10 @@ export class StepOneComponent implements OnInit, OnDestroy {
             this.gradesDropdown.selectedItems = []
             this.gradesDropdown.selectedItems.push(...gradesData)
             tempinitialFormData.grades.push(...gradesData)
-            if (data.grades.length) this.getSubjects(data.grades[0].id)
-            this.subjectsDropdown.disabled = false
+            if (data.grades.length) {
+              this.getSubjects(data.grades[0].id)
+              this.subjectsDropdown.disabled = false
+            }
           }
           if (data?.subjects?.length) {
             const subjectData = this.changeResponseFormat(data.subjects)
