@@ -2,9 +2,7 @@
     <app-status [status] = 'step.state'></app-status>
     <div class="project-form">
       <h2 class="project-form__title title_s"><span>2. </span>{{thematicTitle}}<app-info-tooltip></app-info-tooltip></h2>
-      <p class="project-form__description">
-          {{thematicDescription}}
-      </p>
+      <p class="project-form__description" [innerHTML]='thematicDescription'></p>
       <app-textarea-bullets
         [(config)]='textAreaConfig'
         (onChange)="textAreaUpdate($event)"
@@ -12,8 +10,8 @@
     </app-textarea-bullets>
       <app-form-button
         scrollTo
-        scrollToId="stepThree" 
-        [config]='buttonConfig' 
+        scrollToId="stepThree"
+        [config]='buttonConfig'
         (onClick)='handleSubmit()'
       >
       </app-form-button>
