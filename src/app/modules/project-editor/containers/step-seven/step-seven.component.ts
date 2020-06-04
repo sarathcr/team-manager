@@ -26,7 +26,6 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   formTitle: string
   formDescription: string
   formPlaceholder: string
-  projectId: number
   active: boolean = false
   initialFormStatus: Status
 
@@ -57,7 +56,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       field: 'drivingQuestions',
       id: 'drivingQuestions',
       maxLength: 150,
-      options: [{id: null, name: null}],
+      options: [{ id: null, name: null }],
       limit: 0
     }
     // Translation
@@ -77,22 +76,19 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     })
   }
 
-  formInIt(){
+  formInIt() {
     if (this.project$)
       this.project$.subscribe(data => {
-        this.projectId = data?.id
         let tempinitialFormData = new formSevenInitData
         this.initialFormData.drivingQuestions = []
-        if (data?.drivingQuestions) {
-          tempinitialFormData.drivingQuestions.push(...data.drivingQuestions)
+        if (data?.drivingQuestions.length) {
           this.textAreaConfig.options = []
+          tempinitialFormData.drivingQuestions.push(...data.drivingQuestions)
           this.textAreaConfig.options.push(...data.drivingQuestions)
         }
         this.initialFormData.drivingQuestions = [...tempinitialFormData.drivingQuestions]
-        if(!this.textAreaConfig.options.length){
-          this.textAreaConfig.options = [{ id: 1, name: null }]
-        }
       })
+
     if (this.stepStatus$) {
       this.stepStatus$.pipe(
         map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
@@ -107,6 +103,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
           }
         )
     }
+
   }
 
   onScrollSubmit() {
@@ -117,7 +114,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
         }
         if (sectionId !== this.step.sectionid && this.active) {
           if (this.isFormUpdated()) {
-            this.handleSubmit('INPROCESS')
+            this.handleSubmit()
             this.active = false
           } else {
             this.active = true
@@ -128,30 +125,33 @@ export class StepSevenComponent implements OnInit, OnDestroy {
 
   // Function to check status of step
   checkStatus() {
-    if (this.checkEmptyForm()) {
+    if (this.checkEmptyForm())
       this.step.state = "PENDING"
-    } else {
-      if (this.checkNonEmptyForm() === true) {
-        this.step.state = "DONE"
-      } else {
+    else {
+      if (this.isFormUpdated()) {
         this.step.state = "INPROCESS"
-      }
+      } else if (this.initialFormStatus == 'DONE')
+        this.step.state = "DONE"
     }
+    this.handleButtonType()
   }
 
   // checks if the form is empty
   checkEmptyForm() {
     if (!this.textAreaConfig.options.length) {
       return true
+    } else {
+      const tempData = this.textAreaConfig.options.map(item => (item.name != null && item.name.length) ? 'true' : 'false')
+      if (tempData.includes('false'))
+        return true
     }
     return false
   }
 
   // checks the form is completely filled or not
   checkNonEmptyForm() {
-    if (this.initialFormData.drivingQuestions.length) {
+    if (this.textAreaConfig.options.length && (this.textAreaConfig.options[this.textAreaConfig.options.length - 1].name != null))
       return true
-    }
     return false
   }
 
@@ -165,22 +165,29 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   }
 
   isEqual(d1: any[], d2: any[]) {
+    d1=d1.map(item=>item.name)
+    d2=d2.map(item=>item.name)
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
   handleSubmit(formStatus?: Status) {
-    this.checkStatus()
-    let tempData = []
-    if(formStatus){
-      this.step.state = formStatus
+    if (formStatus == 'DONE') {
+      this.step.state = 'DONE'
+      this.initialFormStatus = "DONE"
     }
-    this.textAreaConfig.options.forEach( (item, index) => {
-      tempData.push({id: item.id,name: item.name})
-    })
-    this.textAreaConfig.options = tempData
+    else
+      this.checkStatus()
+    let tempData = this.textAreaConfig.options.filter(item => item.name != null && item.name.length)
+    if (tempData.length) {
+      tempData = tempData.map(item => item.id == null ? { name: item.name } : item)
+      this.textAreaConfig.options = tempData
+      this.initialFormData.drivingQuestions = tempData
+    }
+    else
+      this.textAreaConfig.options = [{ id: null, name: null }]
     let formData: FormSeven = {
       data: {
-        drivingQuestions:  this.textAreaConfig.options,
+        drivingQuestions: tempData.length ? this.textAreaConfig.options : [],
       },
       stepStatus: {
         steps: [
@@ -192,22 +199,12 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       }
     }
     this.onSubmit.emit(formData)
-    this.buttonConfig.submitted = true
-  }
-
-  checkInProgress() {
-    let values: Array<any> = []
-    values.push(this.isEqual(this.initialFormData.drivingQuestions, this.textAreaConfig.options))
-    if (values.includes(false)) {
-      this.step.state = 'INPROCESS'
-      this.buttonConfig.disabled = false
-    }
-    this.buttonConfig.submitted = this.step.state == 'DONE'
+    this.handleButtonType()
   }
 
   textAreaUpdate(data) { // calls on every update
     this.textAreaConfig.options = data
-    this.checkInProgress()
+    this.checkStatus()
   }
 
   // Changes the button according to form status
