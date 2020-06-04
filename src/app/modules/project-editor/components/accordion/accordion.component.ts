@@ -13,7 +13,7 @@ export class AccordionComponent implements OnInit {
   isFirstOpen: boolean = true;
   customClass: string = 'accordion';
   bsModalRef: BsModalRef;
-  link: object = { 'title': 'Los Objetivos de Desarrollo Sostenible y su vínculo con la educación.', 'img': '../../../../../assets/images/150.png' };
+  link: object = { 'title': 'Los Objetivos de Desarrollo Sostenible y su vínculo con la educación.', 'img': '../../../../../assets/images/150.png', 'url': '' };
 
   constructor(private modalService: BsModalService) { }
 
@@ -22,14 +22,10 @@ export class AccordionComponent implements OnInit {
 
   openModalWithComponent() {
     const initialState = {
-      list: [
-        'Open a modal with component',
-        'Pass your data',
-        'Do something else',
-        '...'
-      ],
-      title: 'Modal with component'
+      title: 'Modal with component',
+      img: '../../../../../assets/images/150.png'
     };
+
     this.bsModalRef = this.modalService.show(ModalContentComponent, { class: 'app-modal', initialState });
     this.bsModalRef.content.closeBtnName = 'Close';
   }

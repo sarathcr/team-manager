@@ -40,24 +40,18 @@
         </div>
         <div class="accordion__body">
             <p class="accordion__body-desc">Las Lenguas (Castellana, Catalana, Inglés) son las que mejor conectan con
-                otras áreas. Desde cualquier asignatura se puede implicar la expresión oral o escrita en un idioma. Por
-                eso son muy comunes los proyectos que parten de Ciencias Naturales o Sociales e integran las Lenguas.
+                otras áreas.
             </p>
             <ul class="accordion__body-list">
                 <li class="accordion__body-list-item">Neque porro quisquam est, qui dolorem.</li>
                 <li class="accordion__body-list-item">Duis aute irure dolor in reprehender in voluptate velit esse
                     cillum dolore eu fugiat nulla pariatur
                     mollit anim.</li>
-                <li class="accordion__body-list-item">nemo enim ipsam voluptatem quia voluptas occaecat.</li>
-                <li class="accordion__body-list-item">Excepteur sint occaecat cupidatat.</li>
-                <li class="accordion__body-list-item">nemo enim ipsam voluptatem quia voluptas occaecat.</li>
-                <li class="accordion__body-list-item">Excepteur sint occaecat cupidatat.</li>
-                <li class="accordion__body-list-item">nemo enim ipsam voluptatem quia voluptas occaecat.</li>
-                <li class="accordion__body-list-item">Excepteur sint occaecat cupidatat.</li>
-                <li class="accordion__body-list-item">Excepteur sint occaecat cupidatat.</li>
-                <li class="accordion__body-list-item">nemo enim ipsam voluptatem quia voluptas occaecat.</li>
-                <li class="accordion__body-list-item">Excepteur sint occaecat cupidatat.</li>
             </ul>
+            <p class="accordion__body-desc">Las Lenguas (Castellana, Catalana, Inglés) son las que mejor conectan con
+                otras áreas. Desde cualquier asignatura se puede implicar la expresión oral o escrita en un idioma.
+            </p>
+            <img src="../../../../../assets/images/150.png" alt="image" class="accordion__body-img">
         </div>
     </accordion-group>
     <accordion-group [panelClass]="customClass" #accordionGroup3
@@ -77,14 +71,22 @@
             </div>
         </div>
         <div class="accordion__body">
-            <div class="row">
-                <div class="col-sm-6">
-                    <button type="button" class="btn btn-primary" (click)="openModalWithComponent()">Modal 1</button>
-                </div>
-                <div class="col-sm-6">
-                    <button type="button" class="btn btn-primary" (click)="openModalWithComponent()">Modal 2</button>
-                </div>
-            </div>
+            <a class="accordion__body-btn" (click)="openModalWithComponent()">
+                <img src="../../../../../assets/images/150.png" class="accordion__body-btn-img" alt="Modal 1">
+                <span class="accordion__body-btn-title">Ciclo incial primaria</span>
+            </a>
+            <a class="accordion__body-btn" (click)="openModalWithComponent()">
+                <img src="../../../../../assets/images/150.png" class="accordion__body-btn-img" alt="Modal 1">
+                <span class="accordion__body-btn-title">Ciclo incial primaria</span>
+            </a>
+            <a class="accordion__body-btn" (click)="openModalWithComponent()">
+                <img src="../../../../../assets/images/150.png" class="accordion__body-btn-img" alt="Modal 1">
+                <span class="accordion__body-btn-title">Ciclo incial primaria</span>
+            </a>
+            <a class="accordion__body-btn" (click)="openModalWithComponent()">
+                <img src="../../../../../assets/images/150.png" class="accordion__body-btn-img" alt="Modal 1">
+                <span class="accordion__body-btn-title">Ciclo incial primaria</span>
+            </a>
         </div>
     </accordion-group>
 </accordion>
