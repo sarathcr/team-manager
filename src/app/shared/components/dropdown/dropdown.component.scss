@@ -23,7 +23,7 @@
     border: 1px solid $creator-border;
     border-radius: 3px;
     z-index: 1;
-
+    box-shadow: 0 0 0 0 transparent;
     &:active,
     &:focus {
       border: 1px solid $primary;
@@ -51,6 +51,7 @@
       .dropdown-btn {
         background-color: inherit !important;
         border-color: $creator-border !important;
+        box-shadow: 0 0 0 0 transparent;
       }
 
       +.dropdown-list {

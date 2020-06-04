@@ -1,4 +1,4 @@
-export interface DrivingGuestion {
+export interface DrivingQuestion {
   id?: number
   name?: string
 }

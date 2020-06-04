@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Input, ElementRef, Output, EventEmitter, AfterContentChecked } from '@angular/core';
 import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
   templateUrl: './textarea-bullets.component.html',
   styleUrls: ['./textarea-bullets.component.scss']
 })
-export class TextareaBulletsComponent implements OnInit, AfterViewInit {
+export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   private _config;
   sampleOption: Option = { id: null, name: null };
   configOptions: Option[] = [];
@@ -25,16 +25,21 @@ export class TextareaBulletsComponent implements OnInit, AfterViewInit {
 
   @ViewChildren('textArea') textArea: QueryList<ElementRef>;
   index = 0
+  initResize = false;
+  initialScrollHeight: number;
   constructor() { }
 
   ngOnInit(): void {
     this.limit = this.config.limit;
   }
 
-  ngAfterViewInit() {
-    this.textArea.toArray().forEach(item => {
-      item.nativeElement.height = (item.nativeElement.scrollHeight) + "px";
-    })
+  ngAfterContentChecked() {
+    if(this.textArea){
+      this.textArea.toArray().forEach(item => {
+        item.nativeElement.style.height = (item.nativeElement.scrollHeight) + "px";
+      })
+    }
+
   }
 
   keyAction(event, id) {
@@ -73,15 +78,7 @@ export class TextareaBulletsComponent implements OnInit, AfterViewInit {
       case 32:
         if (event.target.selectionStart === 0 || (event.target.value[event.target.selectionEnd - 1] == " " || event.target.value[event.target.selectionEnd] == " ")) {
           event.preventDefault();
-          // this.configOptions[this.index].name = ""
         }
-        // else {
-        //   let end = this.textArea.toArray()[this.index].nativeElement.selectionEnd;
-        //   if((this.configOptions[this.index].name[end - 1] == " " || this.configOptions[this.index].name[end] == " ")) {
-        //     event.preventDefault();
-        //   }
-        //   // this.configOptions[this.index].name = '' + this.configOptions[this.index].name.replace(/ +(?= )/g, '')
-        // }
         break
 
       default:

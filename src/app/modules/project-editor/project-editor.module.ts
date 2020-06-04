@@ -53,6 +53,7 @@ import { StepStatusEntityService } from './services/step-status/step-status-enti
 import { StepStatusDataService } from './services/step-status/step-status-data.service';
 import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive';
 import { ScrollToDirective } from './directives/scroll-to/scroll-to.directive';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
 const entityMetadata: EntityMetadataMap = {
     Project: {
@@ -118,7 +119,7 @@ const entityMetadata: EntityMetadataMap = {
         StepFiveComponent,
         StepSixComponent,
         StepNineComponent,
-        StepTenComponent
+        StepTenComponent,
     ],
     imports: [
         CommonModule,
@@ -126,7 +127,8 @@ const entityMetadata: EntityMetadataMap = {
         ProjectEditorRoutingModule,
         TranslateModule.forChild(),
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ScrollToModule.forRoot()
     ],
     providers: [
         ProjectsResolver,

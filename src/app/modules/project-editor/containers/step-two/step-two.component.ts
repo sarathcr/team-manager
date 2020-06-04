@@ -23,9 +23,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   initialFormData: FormTwoInitData = new formTwoInitData
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  formTitle: string
-  formDescription: string
-  formPlaceholder: string
   active: boolean = false
   initialFormStatus: Status
 
@@ -56,7 +53,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       field: 'themes',
       id: 'themes',
       maxLength: 150,
-      options: [{id: null, name: null}],
+      options: [{ id: null, name: null }],
       limit: 5
     }
     // Translation
@@ -69,24 +66,19 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     ]).subscribe(translations => {
       this.buttonConfig.label = translations['PROJECT.project_button_markdone']
       this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
-      this.formTitle = translations['THEMATIC.project_thematic_title']
-      this.formDescription = translations['THEMATIC.project_thematic_description']
-      this.formPlaceholder = translations['THEMATIC.project_thematic_placeholder']
-      this.textAreaConfig.placeholder = this.formPlaceholder
-      this.textAreaConfig.label = this.formPlaceholder
+      this.textAreaConfig.placeholder = translations['THEMATIC.project_thematic_placeholder']
     })
   }
 
   formInIt() {
+    let tempinitialFormData = new formTwoInitData
     if (this.project$)
       this.project$
-        .subscribe( data => {
-          let tempinitialFormData = new formTwoInitData
+        .subscribe(data => {
           this.initialFormData.themes = []
           if (data?.themes.length) {
-            this.textAreaConfig.options = []
-            tempinitialFormData.themes.push(...data.themes)
-            this.textAreaConfig.options.push(...data.themes)
+            tempinitialFormData.themes = [...data.themes]
+            this.textAreaConfig.options = [...data.themes]
           }
           this.initialFormData.themes = [...tempinitialFormData.themes]
         })
@@ -141,8 +133,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     if (!this.textAreaConfig.options.length) {
       return true
     } else {
-      const tempData = this.textAreaConfig.options.map(item => (item.name != null && item.name.length) ? 'true' : 'false')
-      if (tempData.includes('false'))
+      const tempData = this.textAreaConfig.options.filter(item => item.name != null && item.name.length && item)
+      if (!tempData.length)
         return true
     }
     return false
@@ -165,8 +157,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   isEqual(d1: any[], d2: any[]) {
-    d1=d1.map(item=>item.name)
-    d2=d2.map(item=>item.name)
+    d1 = d1.map(item => item.name)
+    d2 = d2.map(item => item.name)
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
@@ -183,12 +175,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.textAreaConfig.options = tempData
       this.initialFormData.themes = tempData
     }
-    else
+    else {
       this.textAreaConfig.options = [{ id: null, name: null }]
+      this.initialFormData.themes = this.textAreaConfig.options
+    }
     this.textAreaConfig.options = tempData
     let formData: FormTwo = {
       data: {
-        themes:  tempData.length ? this.textAreaConfig.options : []
+        themes: tempData.length ? this.textAreaConfig.options : []
       },
       stepStatus: {
         steps: [

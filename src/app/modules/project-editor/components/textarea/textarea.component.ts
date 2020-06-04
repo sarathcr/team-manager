@@ -10,15 +10,21 @@ export class TextareaComponent implements OnInit {
   @Input() placeholder: string
   @Input() maxlength: number
   @Output() onChange = new EventEmitter()
-  valueModel: string
   constructor() { }
 
   ngOnInit(): void { }
 
   // Function to get and emit value on textarea
   onValueChange(value: string) {
-    this.value = this.valueModel
-    this.onChange.emit(value)
+    this.value = value;
+    this.onChange.emit(value.trim());
+  }
+
+  onBlur() {
+    if(!this.value.trim()) {
+      this.value = '';
+      this.onChange.emit('');
+    }
   }
 
 }
