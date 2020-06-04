@@ -13,6 +13,7 @@ export class AccordionComponent implements OnInit {
   isFirstOpen: boolean = true;
   customClass: string = 'accordion';
   bsModalRef: BsModalRef;
+  link: object = { 'title': 'Los Objetivos de Desarrollo Sostenible y su vínculo con la educación.', 'img': '../../../../../assets/images/150.png' };
 
   constructor(private modalService: BsModalService) { }
 

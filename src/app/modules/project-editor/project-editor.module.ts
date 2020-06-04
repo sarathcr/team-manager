@@ -29,6 +29,7 @@ import { StepFourComponent } from './containers/step-four/step-four.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { ModalContentComponent } from './components/modal-content/modal-content.component';
+import { LinkComponent } from './components/link/link.component';
 
 // pages
 import { HomeComponent } from './containers/home/home.component';
@@ -121,6 +122,7 @@ const entityMetadata: EntityMetadataMap = {
     ContextualHelpComponent,
     AccordionComponent,
     ModalContentComponent,
+    LinkComponent,
   ],
   imports: [
     CommonModule,
