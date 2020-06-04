@@ -69,22 +69,18 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     ]).subscribe(translations => {
       this.buttonConfig.label = translations['PROJECT.project_button_markdone']
       this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
-      this.formPlaceholder = translations['DRIVING_QUESTIONS.project_drivingquestions_placeholder']
-      this.formTitle = translations['DRIVING_QUESTIONS.project_drivingquestions_title']
-      this.formDescription = translations['DRIVING_QUESTIONS.project_drivingquestions_description']
-      this.textAreaConfig.placeholder = this.formPlaceholder
+      this.textAreaConfig.placeholder = translations['DRIVING_QUESTIONS.project_drivingquestions_placeholder']
     })
   }
 
   formInIt() {
+    let tempinitialFormData = new formSevenInitData
     if (this.project$)
       this.project$.subscribe(data => {
-        let tempinitialFormData = new formSevenInitData
         this.initialFormData.drivingQuestions = []
         if (data?.drivingQuestions.length) {
-          this.textAreaConfig.options = []
-          tempinitialFormData.drivingQuestions.push(...data.drivingQuestions)
-          this.textAreaConfig.options.push(...data.drivingQuestions)
+          tempinitialFormData.drivingQuestions = [...data.drivingQuestions]
+          this.textAreaConfig.options = [...data.drivingQuestions]
         }
         this.initialFormData.drivingQuestions = [...tempinitialFormData.drivingQuestions]
       })
@@ -141,8 +137,8 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     if (!this.textAreaConfig.options.length) {
       return true
     } else {
-      const tempData = this.textAreaConfig.options.map(item => (item.name != null && item.name.length) ? 'true' : 'false')
-      if (tempData.includes('false'))
+      const tempData = this.textAreaConfig.options.filter(item => item.name != null && item.name.length && item)
+      if (!tempData.length)
         return true
     }
     return false
@@ -165,8 +161,8 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   }
 
   isEqual(d1: any[], d2: any[]) {
-    d1=d1.map(item=>item.name)
-    d2=d2.map(item=>item.name)
+    d1 = d1.map(item => item.name)
+    d2 = d2.map(item => item.name)
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
@@ -183,8 +179,10 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       this.textAreaConfig.options = tempData
       this.initialFormData.drivingQuestions = tempData
     }
-    else
+    else {
       this.textAreaConfig.options = [{ id: null, name: null }]
+      this.initialFormData.drivingQuestions = this.textAreaConfig.options
+    }
     let formData: FormSeven = {
       data: {
         drivingQuestions: tempData.length ? this.textAreaConfig.options : [],
