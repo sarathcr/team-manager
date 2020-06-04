@@ -17,7 +17,7 @@
       },
       "STARTING_POINT":{
         "project_startingpoint_title": "Curso y asignatura(s)",
-        "project_startingpoint_description": "Escoge las áreas o asignaturas que van a estar implicadas en tu proyecto. \nPara ofrecerte solo las áreas que te interesan, necesitamos saber qué curso impartes y en qué territorio.",
+        "project_startingpoint_description": "Escoge las áreas o asignaturas que van a estar implicadas en tu proyecto. Para ofrecerte solo las áreas que te interesan, necesitamos saber qué curso impartes y en qué territorio.",
         "project_startingpoint_year": "Año académico",
         "project_startingpoint_year_placeholder": "Selecciona el año académico",
         "project_startingpoint_year_example": "aaaa-aaaa",
