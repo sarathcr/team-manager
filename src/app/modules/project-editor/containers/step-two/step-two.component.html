@@ -2,7 +2,7 @@
     <app-status [status] = 'step.state'></app-status>
     <div class="project-form">
       <h2 class="project-form__title title_s"><span>2. </span>{{formTitle}}<app-info-tooltip></app-info-tooltip></h2>
-      <p class="project-form__description" [innerHTML]='formPlaceholder'></p>
+      <p class="project-form__description" [innerHTML]='formDescription'></p>
       <app-textarea-bullets
         [(config)]='textAreaConfig'
         (onChange)="textAreaUpdate($event)"
