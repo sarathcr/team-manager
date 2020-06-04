@@ -17,7 +17,10 @@ export class TextareaBulletsComponent implements OnInit, AfterViewInit {
   }
 
   @Input() set config(val: FieldConfig) {
-    this.configOptions = val.options.map(option => ({id: option.id , name: option.name}));
+    if (val.options.length)
+      this.configOptions = val.options.map(option => ({ id: option.id, name: option.name }));
+    else
+      this.configOptions.push({ ...this.sampleOption })
     this._config = val;
   };
 
@@ -69,10 +72,10 @@ export class TextareaBulletsComponent implements OnInit, AfterViewInit {
         break
 
       case 32:
-        if(this.configOptions[this.index].name.length == 1){
+        if (this.configOptions[this.index].name.length == 1) {
           this.configOptions[this.index].name = ""
-        } else{
-          this.configOptions[this.index].name = ''+this.configOptions[this.index].name.replace(/ +(?= )/g,'')
+        } else {
+          this.configOptions[this.index].name = '' + this.configOptions[this.index].name.replace(/ +(?= )/g, '')
         }
         break
 
