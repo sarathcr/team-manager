@@ -15,7 +15,7 @@ export class ScrollSpyDirective {
     const children = this._el.nativeElement.children
     const childrenArray = [...children].filter(child => child.hasAttribute('data-scrollSpy'))
     const scrollTop = window.pageYOffset;
-    const offsetTop = 75 + 125 // header height + section padding top
+    const offsetTop = 75 + 67 // header height + button bottom height
     for (let i = 0; i < childrenArray.length; i++) {
       const element = childrenArray[i];
       if ((element.offsetTop - offsetTop) <= scrollTop) {
