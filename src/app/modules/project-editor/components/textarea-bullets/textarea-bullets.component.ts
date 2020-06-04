@@ -36,7 +36,6 @@ export class TextareaBulletsComponent implements OnInit, AfterViewInit {
   }
 
   keyAction(event, id) {
-    console.log(event.keyCode)
     switch (event.keyCode) {
       case 13:
         event.preventDefault();
