@@ -19,6 +19,12 @@ import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.com
 import { StepSevenComponent } from './containers/step-seven/step-seven.component';
 import { StepEightComponent } from './containers/step-eight/step-eight.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
+import { StepThreeComponent } from './containers/step-three/step-three.component';
+import { StepFourComponent } from './containers/step-four/step-four.component';
+import { StepFiveComponent } from './containers/step-five/step-five.component';
+import { StepSixComponent } from './containers/step-six/step-six.component';
+import { StepNineComponent } from './containers/step-nine/step-nine.component';
+import { StepTenComponent } from './containers/step-ten/step-ten.component';
 // pages
 import { HomeComponent } from './containers/home/home.component';
 import { ProjectEditorComponent } from './containers/project-editor/project-editor.component';
@@ -106,7 +112,13 @@ const entityMetadata: EntityMetadataMap = {
         StepSevenComponent,
         StepEightComponent,
         TextareaComponent,
-        ScrollToDirective
+        ScrollToDirective,
+        StepThreeComponent,
+        StepFourComponent,
+        StepFiveComponent,
+        StepSixComponent,
+        StepNineComponent,
+        StepTenComponent
     ],
     imports: [
         CommonModule,
