@@ -20,7 +20,7 @@ export class StepEightComponent implements OnInit {
   @Input() spyActive$: Observable<StepId>
   @Input() stepStatus$: Observable<StepState>
   @Input() step: Step
-  finalProduct: any
+  finalProduct: any = ""
   buttonConfig = new buttonSubmitConfig
   initialFormData: FormEightInitData = formEightInitData
   active: boolean = false
@@ -48,6 +48,7 @@ export class StepEightComponent implements OnInit {
           this.initialFormData = data.finalProduct
         }
       })
+    console.log(this.initialFormData)
     if (this.stepStatus$)
       this.stepStatus$.pipe(
         map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
@@ -103,6 +104,7 @@ export class StepEightComponent implements OnInit {
   handleSubmit(formStatus?: Status) {
     if (formStatus == 'DONE')
       this.step.state = 'DONE'
+    this.initialFormData = this.finalProduct
     this.handleButtonType()
     const formData: FormEight = {
       data: {

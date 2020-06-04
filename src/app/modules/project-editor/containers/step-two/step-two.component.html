@@ -1,8 +1,8 @@
 <div class="project-editor__form step-two">
     <app-status [status] = 'step.state'></app-status>
     <div class="project-form">
-      <h2 class="project-form__title title_s"><span>2. </span>{{thematicTitle}}<app-info-tooltip></app-info-tooltip></h2>
-      <p class="project-form__description" [innerHTML]='thematicDescription'></p>
+      <h2 class="project-form__title title_s"><span>2. </span>{{formTitle}}<app-info-tooltip></app-info-tooltip></h2>
+      <p class="project-form__description" [innerHTML]='formPlaceholder'></p>
       <app-textarea-bullets
         [(config)]='textAreaConfig'
         (onChange)="textAreaUpdate($event)"
@@ -12,7 +12,7 @@
         scrollTo
         scrollToId="stepThree"
         [config]='buttonConfig'
-        (onClick)='handleSubmit()'
+        (onClick)='handleSubmit("DONE")'
       >
       </app-form-button>
     </div>
