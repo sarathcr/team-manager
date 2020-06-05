@@ -119,7 +119,7 @@ const entityMetadata: EntityMetadataMap = {
         StepFiveComponent,
         StepSixComponent,
         StepNineComponent,
-        StepTenComponent
+        StepTenComponent,
     ],
     imports: [
         CommonModule,
