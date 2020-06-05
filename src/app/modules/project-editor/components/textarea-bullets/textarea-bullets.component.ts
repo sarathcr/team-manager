@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Input, ElementRef, Output, EventEmitter, AfterContentChecked } from '@angular/core';
 import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
   templateUrl: './textarea-bullets.component.html',
   styleUrls: ['./textarea-bullets.component.scss']
 })
-export class TextareaBulletsComponent implements OnInit, AfterViewInit {
+export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   private _config;
   sampleOption: Option = { id: null, name: null };
   configOptions: Option[] = [];
@@ -28,13 +28,20 @@ export class TextareaBulletsComponent implements OnInit, AfterViewInit {
 
   @ViewChildren('textArea') textArea: QueryList<ElementRef>;
   index = 0
+  initResize = false;
+  initialScrollHeight: number;
   constructor() { }
 
   ngOnInit(): void {
     this.limit = this.config.limit;
   }
 
-  ngAfterViewInit() {
+  ngAfterContentChecked() {
+    if(this.textArea){
+      this.textArea.toArray().forEach(item => {
+        item.nativeElement.style.height = (item.nativeElement.scrollHeight) + "px";
+      })
+    }
 
   }
 
@@ -72,10 +79,8 @@ export class TextareaBulletsComponent implements OnInit, AfterViewInit {
         break
 
       case 32:
-        if (this.configOptions[this.index].name.length == 1) {
-          this.configOptions[this.index].name = ""
-        } else {
-          this.configOptions[this.index].name = '' + this.configOptions[this.index].name.replace(/ +(?= )/g, '')
+        if (event.target.selectionStart === 0 || (event.target.value[event.target.selectionEnd - 1] == " " || event.target.value[event.target.selectionEnd] == " ")) {
+          event.preventDefault();
         }
         break
 
@@ -89,14 +94,5 @@ export class TextareaBulletsComponent implements OnInit, AfterViewInit {
     this.index = i
     const newConfigOptions = [...this.configOptions];
     this.onChange.emit(newConfigOptions);
-    this.textArea.toArray()[i].nativeElement.style.height = (this.textArea.toArray()[i].nativeElement.scrollHeight) + "px";
-  }
-
-  fieldValidation(value: string) {
-    if (value == null || value == undefined || value.length == 0) {
-      return false;
-    } else {
-      return true;
-    }
   }
 }
