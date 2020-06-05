@@ -1,0 +1,22 @@
+@import 'helpers/_helpers-master';
+
+.project-editor-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 75px;
+  display: flex;
+  background: $background-primary;
+  border-bottom: 1px solid $creator-border;
+  z-index: 99999;
+}
+
+.app-logo {
+  height: 26px;
+  width: 88px;
+
+  &__link{
+    display: block;
+  }
+}

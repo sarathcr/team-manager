@@ -1,0 +1,126 @@
+//Common styles
+.subtitle {
+    //Font size and styles common for both Mobile and Desktop
+    &_m{
+        font-family: $font-family-primary;
+        font-size: $font-size-sub-m;
+        line-height: 28px;
+        letter-spacing: 0.3px;
+        font-weight: 700;
+    }
+
+    &_s{
+        font-family: $font-family-secondary;
+        font-size: $font-size-sub-s;
+        line-height: $line-height-24px;
+        letter-spacing: 0.5px;
+        font-weight: 900;
+    }
+
+    &_upper-case{
+        text-transform: uppercase;
+    }
+}
+
+.body {
+    //Font size and styles common for both Mobile and Desktop
+    &_m{
+        font-family: $font-family-tertiary;
+        font-size: $font-size-body;
+        line-height: $line-height-32px;
+        letter-spacing: 0.2px;
+        font-weight: 400;
+    }
+
+    &_s{
+        font-family: $font-family-tertiary;
+        font-size: $font-size-body-s;
+        line-height: $line-height-24px;
+        letter-spacing: normal;
+        font-weight: 400;
+    }
+}
+
+.overtitle {
+    font-family: $font-family-secondary;
+    font-size: $font-size-body-overtitle;
+    line-height: $line-height-24px;
+    letter-spacing: 1px;
+    font-weight: 900;
+
+    &_upper-case{
+        text-transform: uppercase;
+    }
+
+    &_grey{
+        color: $tertiary-font-color;
+    }
+}
+
+.caption {
+    font-family: $font-family-tertiary;
+    font-weight: 400;
+    font-size: $font-size-body-caption;
+    line-height: 24px;
+    letter-spacing: normal;
+    color: $tertiary-font-color;
+}
+
+.input {
+    font-family: $font-family-tertiary;
+    color: $tertiary-font-color;
+    font-weight: 400;
+    font-size: $font-size-body-input;
+    line-height: 12px;
+    letter-spacing: 0.2px;
+}
+
+.quote {
+    font-family: $font-family-tertiary;
+    font-style: italic;
+    font-weight: 400;
+    font-size: $font-size-q;
+    line-height: 40px;
+    letter-spacing: normal;
+    color: $primary-font-color;
+}
+
+//Common body content styles
+p,p em,a{
+    font-family: $font-family-tertiary;
+    font-size: $font-size-default;
+    letter-spacing: 0;
+    line-height: $line-height-24px;
+}
+
+p{
+    margin-bottom: $grid-gutter-width/2;
+}
+
+div{
+    font-family: $font-family-tertiary;
+    font-size: $font-size-default;
+    letter-spacing: 0;
+    line-height: $line-height-32px;
+}
+//Highlight content
+blockquote{
+    position: relative;
+    padding-left: 24px;
+    margin: 24px 0;
+    @extend .title_xs;
+    &:before{
+        content:'';
+        position: absolute;
+        left:0;
+        top:0;
+        width:4px;
+        height: 100%;
+        background-color: $primary;
+    }
+    @include media-breakpoint-down (md){
+        margin: 28px 0;
+    }
+}
+
+

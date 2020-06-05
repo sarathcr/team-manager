@@ -1,0 +1,50 @@
+@import 'helpers/_helpers-master';
+
+.textarea-bullets {
+  width: 100%;
+  min-height: 388px;
+  border: none;
+  border: 1px solid $creator-border-active;
+  border-radius: 3px;
+  padding: 14px 22px;
+  margin-bottom: 69px;
+  box-shadow: 0 0 0 0 transparent;
+  &__list {
+    padding-left: 0;
+  }
+
+  &__item {
+    display: flex;
+    margin-bottom: 8px;
+
+    &::before {
+      top: unset;
+      line-height: 24px;
+    }
+  }
+
+  &__textarea {
+    background: none;
+    border: none;
+    width: 100%;
+    font-family: $font-family-tertiary;
+    font-size: $font-size-body-s;
+    color: $blue-whale;
+    line-height: 24px;
+    height: 24px;
+    // height: auto;
+    padding: 0;
+    overflow: hidden;
+    resize: none;
+
+    &:placeholder {
+      color: $overtitle-grey;
+    }
+  }
+
+  //WIP
+  // &:focus-within {
+  //   border: 1px solid transparent;
+  //   box-shadow: 0 0 0 3px $primary;
+  // }
+}

@@ -1,0 +1,28 @@
+@mixin icon-button($color: $primary-font-color) {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    background-color: transparent;
+    font-size: 24px;
+    border: none;
+    outline: none;
+    color: $color;
+}
+
+@mixin card-box-shadow(){
+    -webkit-box-shadow: 0 20px 50px -10px rgba($desktop-shadow-color, 0.1);
+    -moz-box-shadow: 0 20px 50px -10px rgba($desktop-shadow-color, 0.1);
+    box-shadow: 0 20px 50px -10px rgba($desktop-shadow-color, 0.1);
+}
+
+@mixin floating-btn-shadow(){
+    -webkit-box-shadow: 0 10px 40px 0 rgba($desktop-shadow-color, 0.2);
+    -moz-box-shadow: 0 10px 40px 0 rgba($desktop-shadow-color, 0.2);
+    box-shadow: 0 10px 40px 0 rgba($desktop-shadow-color, 0.2);
+}
+
+@mixin upper-card-box-shadow(){
+    -webkit-box-shadow: 0 0 50px -10px rgba($desktop-shadow-color, 0.1);
+    -moz-box-shadow: 0 0 50px -10px rgba($desktop-shadow-color, 0.1);
+    box-shadow: 0 0 50px -10px rgba($desktop-shadow-color, 0.1);
+}

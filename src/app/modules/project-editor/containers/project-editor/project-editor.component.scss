@@ -1,0 +1,31 @@
+@import 'helpers/_helpers-master';
+.project-editor{
+  width: 100%;
+  padding: 75px 15px 0 236px;
+  margin: 0;
+  position: relative;
+  height: 100%;
+  z-index: 1;
+  &__forms{
+    width: 100%;
+    // flex-direction: column;
+    max-width: 760px;
+  }
+  &__bg{
+    background-image:url('../../../../../../images/img_background_shapes.png');
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: contain;
+    position: absolute;
+    top: 75px;
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 75px);
+    z-index: -1;
+  }
+  .step-section{
+    scroll-margin-top: 110px;
+    display: block;
+  }
+}
+

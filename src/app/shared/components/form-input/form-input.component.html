@@ -1,0 +1,6 @@
+<div class="form-input" [formGroup]="group">
+  <div class="form-input__wrap">
+    <label for="" class="form-input__label">{{ config.label }}</label>
+    <input class="form-control form-input__field" [type]="config.type" #input  [attr.placeholder]="config.placeholder"  [formControlName]="config.name" [disabled]="config.disabled">
+  </div>
+</div>

@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: 'https://api.dev.abp.thinkoeducation.com/project-service'
 };

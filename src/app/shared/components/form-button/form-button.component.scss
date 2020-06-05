@@ -1,0 +1,36 @@
+@import 'helpers/_helpers-master';
+.form-button{
+  .btn{
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+  }
+  &__icon{
+    font-size: 24px;
+    line-height: 1;
+    margin-left: -7px;
+    margin-right: 7px;
+  }
+  .btn-primary{
+    padding-left: 20px;
+    padding-right: 17px;
+    min-width: 241px;
+  }
+  .btn-success{
+    padding-left: 20px;
+    padding-right: 20px;
+    min-width: 120px;
+    .form-button__icon{
+      margin-left: -8px;
+    }
+    &:disabled{
+      background-color: $success;
+      border-color: $success;
+      cursor: default;
+    }
+  }
+}
+
+:host{
+  align-self: flex-start;
+}

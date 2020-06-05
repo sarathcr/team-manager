@@ -1,0 +1,37 @@
+@import 'helpers/_helpers-master';
+.form-input{
+  width: 100%;
+  margin-bottom: $m-36px;
+  &__wrap{
+    position: relative;
+    font-family: $font-family-pt-sans;
+    color: $primary-font-color;
+    background-color: $background-primary;
+  }
+  &__field{
+    padding: $padding-input;
+    font-size: $font-size-default;
+    letter-spacing: 0;
+    line-height: $line-height-24px;
+    border: none;
+    outline: none;
+    width: 100%;
+    border: 1px solid $creator-border;
+    border-radius: 3px;
+    &:active, &:focus{
+      border: 2px solid $primary;
+    }
+  }
+  &__label{
+    position: absolute;
+    font-size: $font-size-small;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+    line-height: $font-size-small;
+    top: 0;
+    transform: translateY(-50%);
+    padding: 2px 5px;
+    background-color: inherit;
+    left: $spacer-sm;
+  }
+}

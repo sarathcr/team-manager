@@ -1,0 +1,12 @@
+<div class="project-editor-header">
+  <div class="container-fluid d-flex align-items-center">
+    <div class="app-logo">
+      <a class="app-logo__link" routerLink="/">
+        <img class="app-logo__img" src="../../../../../assets/images/thinko_logo.svg" alt="thinko" />
+      </a>
+    </div>
+    <app-project-title [projectData]="projectData" [maxLength]="75" (titleBlur)="handleTitleBlur($event)"
+      [placeholder]="'Titulo de la experiencia'" id="'project-title'">
+    </app-project-title>
+  </div>
+</div>
