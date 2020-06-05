@@ -12,6 +12,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   configOptions: Option[] = [];
   limit = 0
   isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+  focus = false;
 
   get config(): FieldConfig {
     return this._config;
@@ -99,4 +100,13 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     const newConfigOptions = [...this.configOptions];
     this.onChange.emit(newConfigOptions);
   }
+
+  setFocus() {
+    this.focus = true;
+  }
+
+  onBlur() {
+    this.focus = false;
+  }
+
 }
