@@ -28,6 +28,7 @@ export class ProjectEditorComponent implements OnInit {
   steps: Step[]
   status: Status
   tempStatus: any // saving the status for non created projects
+  contextualStatus: boolean = false
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -180,6 +181,10 @@ export class ProjectEditorComponent implements OnInit {
         this.steps[9].name = 'Interacción'  // WIP localization
       }
       );
+  }
+
+  getContextualStatus($event) {
+    this.contextualStatus = $event
   }
 
 }

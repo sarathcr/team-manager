@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-contextual-help',
@@ -7,18 +7,28 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class ContextualHelpComponent implements OnInit {
+  @Output() status = new EventEmitter<boolean>();
   closeContext: boolean = false;
+  activeTab: any;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  //Close tab 
   closeTab() {
     this.closeContext = false;
+    this.status.emit(false);
+    setTimeout(() => {
+      this.activeTab.active = false;
+    }, 1000);
   }
 
-  openTab() {
+  //Open tab
+  openTab($event) {
+    this.activeTab = $event;
+    this.status.emit(true)
     if (!this.closeContext) {
       this.closeContext = true;
     }

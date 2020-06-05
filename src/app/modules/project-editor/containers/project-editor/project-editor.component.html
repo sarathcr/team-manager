@@ -5,7 +5,8 @@
   <app-editor-sidebar [spyActive]="spyActive$ | async" id="project-editor-sidebar"
     title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}"
     view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}" [steps]="steps"></app-editor-sidebar>
-  <div class="project-editor__forms" scrollSpy (scrollSpyChange)="onScrollSpyChange($event)">
+  <div class="project-editor__forms" scrollSpy (scrollSpyChange)="onScrollSpyChange($event)"
+    [ngClass]="{ 'project-editor__forms_short' : contextualStatus }">
     <app-step-one data-scrollSpy id="{{steps[0].sectionid}}" class="step-section" [spyActive$]="spyActive$"
       [step]="steps[0]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'>
     </app-step-one>
@@ -25,7 +26,7 @@
     <app-step-nine data-scrollSpy id="{{steps[8].sectionid}}" class="step-section"></app-step-nine>
     <app-step-ten data-scrollSpy id="{{steps[9].sectionid}}" class="step-section"></app-step-ten>
   </div>
-  <app-contextual-help></app-contextual-help>
-  <div *ngIf="notFound">
+  <app-contextual-help (status)="getContextualStatus($event)"></app-contextual-help>
+  <div *ngIf=" notFound">
     Project not found
   </div>

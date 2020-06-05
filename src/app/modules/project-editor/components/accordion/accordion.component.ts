@@ -22,7 +22,7 @@ export class AccordionComponent implements OnInit {
 
   video: object = {
     type: 'external',
-    src: 'https://www.youtube.com/embed/bTqVqk7FSmY?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1',
+    src: 'bTqVqk7FSmY',
     poster: '../../../../../assets/images/150.png',
     caption: 'fds'
   };
@@ -32,6 +32,7 @@ export class AccordionComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //Open Modal
   openModalWithComponent() {
     const initialState = {
       title: 'Modal with component',
