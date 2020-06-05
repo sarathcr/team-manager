@@ -4,7 +4,7 @@
       <textarea class="textarea-bullets__textarea" id="list-item-{{text.id}}" placeholder={{config.placeholder}}
         name='textArea' (keydown)='keyAction($event, i)' [(ngModel)]=text.name #textArea [maxLength]='config.maxLength'
         (ngModelChange)='onValueChange($event, i)'
-        oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+        oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' (focus)="setFocus()" (blur)="onBlur()"></textarea>
     </li>
   </ul>
 </div>

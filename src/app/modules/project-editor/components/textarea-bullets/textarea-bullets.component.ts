@@ -100,5 +100,9 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   setFocus() {
     this.focus = true;
   }
+
+  onBlur() {
+    this.focus = false;
+  }
   
 }

@@ -42,8 +42,9 @@
     }
   }
 
-  &:focus-within {
-    border: 1px solid transparent;
-    box-shadow: 0 0 0 3px $primary;
-  }
+  //WIP
+  // &:focus-within {
+  //   border: 1px solid transparent;
+  //   box-shadow: 0 0 0 3px $primary;
+  // }
 }
