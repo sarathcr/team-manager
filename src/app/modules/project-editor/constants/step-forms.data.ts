@@ -11,19 +11,9 @@ export class formOneInitData implements FormOneInitData {
   finalProduct = [];
 }
 export class formSevenInitData implements FormSevenInitData {
-  drivingQuestions: DrivingQuestion[] = [
-    {
-      id: null,
-      name: null
-    }
-  ]
+  drivingQuestions = []
 }
 export class formTwoInitData implements FormTwoInitData {
-  themes: Theme[] = [
-    {
-      id: null,
-      name: null
-    }
-  ]
+  themes= []
 }
 export const formEightInitData: FormEightInitData = ''

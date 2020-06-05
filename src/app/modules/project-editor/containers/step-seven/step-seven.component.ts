@@ -78,7 +78,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     if (this.project$)
       this.project$.subscribe(data => {
         this.initialFormData.drivingQuestions = []
-        if (data?.drivingQuestions.length) {
+        if (data?.drivingQuestions) {
           tempinitialFormData.drivingQuestions = [...data.drivingQuestions]
           this.textAreaConfig.options = [...data.drivingQuestions]
         }
