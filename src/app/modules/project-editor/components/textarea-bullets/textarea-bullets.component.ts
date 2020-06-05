@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, AfterViewInit, Input, ElementRef, Output, EventEmitter, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, Input, ElementRef, Output, EventEmitter, AfterContentChecked } from '@angular/core';
 import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
 
 @Component({
@@ -11,6 +11,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   sampleOption: Option = { id: null, name: null };
   configOptions: Option[] = [];
   limit = 0
+  isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
   get config(): FieldConfig {
     return this._config;
@@ -42,7 +43,6 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         item.nativeElement.style.height = (item.nativeElement.scrollHeight) + "px";
       })
     }
-
   }
 
   keyAction(event, id) {
@@ -92,6 +92,10 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
   onValueChange(value, i) {
     this.index = i
+    if (this.isFirefox && value.length > this.config.maxLength) {
+      value = value.substring(0, this.config.maxLength)
+      this.configOptions[i].name = value
+    }
     const newConfigOptions = [...this.configOptions];
     this.onChange.emit(newConfigOptions);
   }
