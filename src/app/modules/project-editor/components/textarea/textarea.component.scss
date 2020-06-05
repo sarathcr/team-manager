@@ -24,4 +24,8 @@
             color: $overtitle-grey;
         }
     }
+    &:active, &:focus-within, &_focus{
+        border: 1px solid transparent !important;
+        box-shadow: 0 0 0 3px $primary;
+    }
 }
