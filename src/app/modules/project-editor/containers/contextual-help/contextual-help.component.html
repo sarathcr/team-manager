@@ -1,6 +1,7 @@
-<div class="contextual-help" [ngClass]="{ 'contextual-help_open' : closeContext}" >
+<div class="contextual-help" [ngClass]="{ 'contextual-help_open' : closeContext}">
     <tabset class="contextual-help__tabset">
-        <tab customClass="contextual-help__tabset-item contextual-help__tabset-item_multi-icon" [active]="false" (selectTab)="openTab()">
+        <tab customClass="contextual-help__tabset-item contextual-help__tabset-item_multi-icon" #tabset1
+            [active]="false" (selectTab)="openTab()">
             <ng-template tabHeading>
                 <span class="icon icon-ic_guia"></span>
                 <span class="icon icon-ic_guia_on"><span class="path1"></span><span class="path2"></span></span>
@@ -15,7 +16,7 @@
                 <app-accordion></app-accordion>
             </div>
         </tab>
-        <tab customClass="contextual-help__tabset-item" (selectTab)="openTab()">
+        <tab customClass="contextual-help__tabset-item" #tabset2 (selectTab)="openTab()">
             <ng-template tabHeading>
                 <span class="icon icon-ic_message"></span>
             </ng-template>

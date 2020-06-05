@@ -5,13 +5,14 @@
     border: none;
     border-radius: 0;
     background-color: $context-bg-color;
-    border-top: 1px solid $context-border-color;
 
     &__heading{
         $root-head: &;
         border: none;
         background-color: $context-bg-color;
         padding: 14px 40px 18px 0;
+        margin-left: 40px;
+        border-top: 1px solid $context-border-color;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -72,10 +73,9 @@
     }
 
     &__body{
-        padding-right: 40px;
-        padding-bottom: 25px;
-        // max-height: 420px;
-        // overflow-y: scroll;
+        padding: 0 40px 25px 40px;
+        max-height: 420px;
+        overflow-y: scroll;
 
         &-title{
             font-family: $font-family-tertiary;

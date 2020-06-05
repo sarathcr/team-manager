@@ -32,7 +32,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/plyr/dist/plyr.polyfilled.min.js"
+            ]
           },
           "configurations": {
             "production": {

@@ -19,7 +19,6 @@ export class ContextualHelpComponent implements OnInit {
   }
 
   openTab() {
-    console.log(this.closeContext);
     if (!this.closeContext) {
       this.closeContext = true;
     }
