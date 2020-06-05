@@ -8,5 +8,7 @@ ARG GID=1000
 RUN usermod -u $UID node
 RUN groupmod -g $UID node
 
+RUN npm install -g @angular/cli
+
 WORKDIR /home/node/app
 

@@ -1,9 +1,11 @@
-@import '../../../../../styles/helpers/_helpers-master';
+@import 'helpers/_helpers-master';
 
-.project-title{
+.project-title {
   padding: 0px 30px;
-  &__input, &__text{
-    color:$blue-whale;
+
+  &__input,
+  &__text {
+    color: $blue-whale;
     font-family: $font-family-pt-sans;
     font-size: $font-size-default;
     font-weight: bold;
@@ -11,20 +13,27 @@
     line-height: $line-height-24px;
     padding: 6px 0;
     border: none;
-    border-bottom: 1px solid $black;
+    &:focus{
+      border-bottom: 1px solid $black;
+    }
   }
 
   &__input {
-    max-width: 212px;
+    max-width: 145px;
+
+    &::placeholder {
+      opacity: 0.5;
+    }
   }
 
   &__text {
     float: left;
-    margin:0;
+    margin: 0;
     border-color: transparent;
   }
-  &__edit{
-    font-size: $font-size-large;
+
+  &__edit {
+    font-size: $font-size-sub-m;
     margin: 0 10px;
     opacity: 0.4;
   }

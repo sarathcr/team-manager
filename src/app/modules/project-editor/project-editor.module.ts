@@ -24,14 +24,19 @@ import { StepMenuComponent } from './components/step-menu/step-menu.component';
 import { StepTwoComponent } from './containers/step-two/step-two.component';
 import { TextareaBulletsComponent } from './components/textarea-bullets/textarea-bullets.component';
 import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.component';
+import { StepSevenComponent } from './containers/step-seven/step-seven.component';
+import { StepEightComponent } from './containers/step-eight/step-eight.component';
+import { TextareaComponent } from './components/textarea/textarea.component';
 import { StepThreeComponent } from './containers/step-three/step-three.component';
 import { StepFourComponent } from './containers/step-four/step-four.component';
-import { TextareaComponent } from './components/textarea/textarea.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { ModalContentComponent } from './components/modal-content/modal-content.component';
 import { LinkComponent } from './components/link/link.component';
 import { VideoComponent } from './components/video/video.component';
-
+import { StepFiveComponent } from './containers/step-five/step-five.component';
+import { StepSixComponent } from './containers/step-six/step-six.component';
+import { StepNineComponent } from './containers/step-nine/step-nine.component';
+import { StepTenComponent } from './containers/step-ten/step-ten.component';
 // pages
 import { HomeComponent } from './containers/home/home.component';
 import { ProjectEditorComponent } from './containers/project-editor/project-editor.component';
@@ -60,6 +65,7 @@ import { StepStatusEntityService } from './services/step-status/step-status-enti
 import { StepStatusDataService } from './services/step-status/step-status-data.service';
 import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive';
 import { ScrollToDirective } from './directives/scroll-to/scroll-to.directive';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
 const entityMetadata: EntityMetadataMap = {
   Project: {
@@ -116,10 +122,16 @@ const entityMetadata: EntityMetadataMap = {
     StatusComponent,
     InfoToolTipComponent,
     ScrollSpyDirective,
-    StepThreeComponent,
-    StepFourComponent,
+    StepSevenComponent,
+    StepEightComponent,
     TextareaComponent,
     ScrollToDirective,
+    StepThreeComponent,
+    StepFourComponent,
+    StepFiveComponent,
+    StepSixComponent,
+    StepNineComponent,
+    StepTenComponent,
     ContextualHelpComponent,
     AccordionComponent,
     ModalContentComponent,
@@ -133,6 +145,7 @@ const entityMetadata: EntityMetadataMap = {
     TranslateModule.forChild(),
     FormsModule,
     ReactiveFormsModule,
+    ScrollToModule.forRoot(),
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
     ModalModule.forRoot()

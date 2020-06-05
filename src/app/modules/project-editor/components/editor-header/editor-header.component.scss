@@ -1,5 +1,6 @@
-@import '../../../../../styles/helpers/_helpers-master';
-.project-editor-header  {
+@import 'helpers/_helpers-master';
+
+.project-editor-header {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,17 +9,14 @@
   display: flex;
   background: $background-primary;
   border-bottom: 1px solid $creator-border;
-  z-index:999;
+  z-index: 99999;
 }
 
-.app-logo{
+.app-logo {
   height: 26px;
   width: 88px;
-  &__link,&__img,&__object{
-    height: 100%;
-    width: 100%;
-  }
-  &__object{
-    pointer-events: none;
+
+  &__link{
+    display: block;
   }
 }

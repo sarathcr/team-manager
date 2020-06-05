@@ -1,27 +1,27 @@
-@import '../../../../../styles/helpers/_helpers-master';
+@import 'helpers/_helpers-master';
 .menu{
     font-family: $font-family-tertiary;
     font-size: $font-size-body-s;
     color: $sidebar-text;
     font-weight: normal;
     letter-spacing: 0.16px;
-    line-height: 32px;
+    line-height: 28px;
     position: relative;
-    padding-left: 25px;
+    padding-left: 21px;
     margin-bottom: 10px;
     cursor: pointer;
     &__step{
         position: absolute;
         left: 0;
     }
-    &-inprocess{
+    &_inprocess,&_done{
         color:$sidebar-text-active;
         font-weight: normal;
     }
-    &-active{
+    &_active{
         color:$sidebar-text-active;
         font-weight: bold;
-            
+
     }
     .icon-ic_check{
         position: absolute;

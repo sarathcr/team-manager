@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StepFourComponent } from './step-four.component';
 
-describe('FinalProductComponent', () => {
+describe('StepFourComponent', () => {
   let component: StepFourComponent;
   let fixture: ComponentFixture<StepFourComponent>;
 

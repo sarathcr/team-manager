@@ -11,7 +11,7 @@ import { SubjectEntityService } from '../../services/subject/subject-entity.serv
 import { Project } from 'src/app/shared/constants/project.model'
 import { formOneInitData } from '../../constants/step-forms.data'
 import { FormOneInitData, FormOne } from '../../constants/step-forms.model'
-import { Step, StepId } from '../../constants/step.model'
+import { Step, StepId, StepState, Status } from '../../constants/step.model'
 
 @Component({
   selector: 'app-step-one',
@@ -22,6 +22,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
   @Input() project$: Observable<Project>
   @Input() spyActive$: Observable<StepId>
+  @Input() stepStatus$: Observable<StepState>
   @Input() step: Step
   initialFormData: FormOneInitData = new formOneInitData
   buttonConfig: FieldConfig
@@ -30,8 +31,8 @@ export class StepOneComponent implements OnInit, OnDestroy {
   academicYearDropdown: FieldConfig
   gradesDropdown: FieldConfig
   subjectsDropdown: FieldConfig
-  projectId: number
   active: boolean = false
+  initialFormStatus: Status
 
   constructor(
     private countryService: CountryEntityService,
@@ -60,7 +61,6 @@ export class StepOneComponent implements OnInit, OnDestroy {
       this.project$
         .subscribe(data => {
           let tempinitialFormData = new formOneInitData
-          this.projectId = data?.id
           if (data?.country) {
             this.countryDropdown.selectedItems = [{ ...data.country }]
             tempinitialFormData.country.push({ ...data.country })
@@ -78,15 +78,17 @@ export class StepOneComponent implements OnInit, OnDestroy {
             this.academicYearDropdown.selectedItems = [{ ...data.academicYear }]
             tempinitialFormData.academicYear.push({ ...data.academicYear })
             this.getGrades(data.academicYear.id, data.region.id)
-            this.getSubjects(data.academicYear.id, data.region.id)
             this.gradesDropdown.disabled = false
-            this.subjectsDropdown.disabled = false
           }
           if (data?.grades) {
             const gradesData = this.changeResponseFormat(data.grades)
             this.gradesDropdown.selectedItems = []
             this.gradesDropdown.selectedItems.push(...gradesData)
             tempinitialFormData.grades.push(...gradesData)
+            if (data.grades.length) {
+              this.getSubjects(data.grades[0].id)
+              this.subjectsDropdown.disabled = false
+            }
           }
           if (data?.subjects?.length) {
             const subjectData = this.changeResponseFormat(data.subjects)
@@ -96,6 +98,20 @@ export class StepOneComponent implements OnInit, OnDestroy {
           }
           this.initialFormData = tempinitialFormData
         })
+    if (this.stepStatus$) {
+      this.stepStatus$.pipe(
+        map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
+        .subscribe(
+          formStatus => {
+            if (formStatus && formStatus.length) {
+              this.buttonConfig.submitted = formStatus[0].state == "DONE"
+              this.initialFormStatus = formStatus[0].state
+              if (formStatus[0].state != "DONE" && this.checkNonEmptyForm())
+                this.buttonConfig.disabled = false
+            }
+          }
+        )
+    }
   }
 
   onScrollSubmit() {
@@ -158,28 +174,41 @@ export class StepOneComponent implements OnInit, OnDestroy {
       })
   }
 
-  getSubjects(academicyearId: number, regionId?: number) {
-    const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id
+  getSubjects(gradeId: number) {
     this.subjectService.entities$
-      .pipe(
-        map(subjects => subjects.filter(subject => subject.academicYear.id == academicyearId && subject.region.id == selectedRegionId))
-      )
       .subscribe(newData => {
-        if (!newData.length) this.subjectService.getWithQuery(`/regions/${selectedRegionId}/academicyears/${academicyearId}/subjects`) //trigger API after checking the store
+        if (!newData.length) this.subjectService.getWithQuery(`/grades/${gradeId}/subjects`) //trigger API after checking the store
         this.subjectsDropdown.options = newData
       })
   }
 
   checkStatus() {
-    if (this.checkNonEmptyField() === true) {
-      this.step.state = "DONE"
+    if (this.checkEmptyForm()) {
+      this.step.state = "PENDING"
     } else {
-      this.step.state = "INPROCESS"
+      if (this.isFormUpdated()) {
+        this.step.state = "INPROCESS"
+      } else {
+        this.step.state = "DONE"
+      }
     }
   }
 
+  // checks if the form is empty
+  checkEmptyForm() {
+    if (!this.countryDropdown.selectedItems.length &&
+      !this.regionDropdown.selectedItems.length &&
+      !this.academicYearDropdown.selectedItems.length &&
+      !this.gradesDropdown.selectedItems.length &&
+      !this.subjectsDropdown.selectedItems.length
+    ) {
+      return true
+    }
+    return false
+  }
+
   // checks the form is completely filled or not
-  checkNonEmptyField() {
+  checkNonEmptyForm() {
     if (this.countryDropdown.selectedItems.length &&
       this.regionDropdown.selectedItems.length &&
       this.academicYearDropdown.selectedItems.length &&
@@ -251,11 +280,13 @@ export class StepOneComponent implements OnInit, OnDestroy {
         case 'academicYear': {
           this.resetForm(selectedData.controller)
           this.handleDropdownDisable(selectedData.controller)
-          if (selectedId) {
-            this.getGrades(selectedId)
-            this.getSubjects(selectedId)
-          }
+          if (selectedId) this.getGrades(selectedId)
           break
+        }
+        case 'grades': {
+          this.resetForm(selectedData.controller)
+          this.handleDropdownDisable(selectedData.controller)
+          if (selectedId) this.getSubjects(selectedId)
         }
       }
       this.checkInProgress(selectedData.val, selectedData.controller)
@@ -266,21 +297,32 @@ export class StepOneComponent implements OnInit, OnDestroy {
   // Changes the button according to form status
   handleButtonType() {
     if (this.isFormUpdated()) {
-      if (this.checkNonEmptyField()) {
+      if (this.checkNonEmptyForm()) {
         this.buttonConfig.disabled = false
         this.buttonConfig.submitted = false
       } else {
         this.buttonConfig.disabled = true
         this.buttonConfig.submitted = false
       }
-    } else if (this.checkNonEmptyField()) {
+    } else if (this.checkNonEmptyForm()) {
+      if (this.initialFormStatus == 'DONE') {
+        this.buttonConfig.disabled = true
+        this.buttonConfig.submitted = true
+        this.step.state = "DONE"
+      }
+    } else {
       this.buttonConfig.disabled = true
-      this.buttonConfig.submitted = true
+      this.buttonConfig.submitted = false
     }
   }
 
-  handleSubmit() {
-    this.checkStatus()
+  handleSubmit(formStatus?: Status) {
+    if (formStatus == 'DONE') {
+      this.step.state = formStatus
+      this.initialFormStatus = formStatus
+    }
+    else
+      this.checkStatus()
     let formData: FormOne = {
       data: {
         country: this.countryDropdown.selectedItems[0] ? this.countryDropdown.selectedItems[0] : null,
@@ -291,8 +333,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
         status: 'INPROCESS', // WIP
       },
       stepStatus: {
-        id: this.projectId,
-        state: [
+        steps: [
           {
             state: this.step.state,
             stepid: this.step.stepid
@@ -300,8 +341,11 @@ export class StepOneComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.buttonConfig.submitted = this.step.state == 'DONE'
-    this.buttonConfig.disabled = this.step.state == "DONE"
+    this.updateInitialData();
+    if (formStatus == 'DONE' && this.checkNonEmptyForm()) {
+      this.buttonConfig.submitted = this.step.state == 'DONE'
+      this.buttonConfig.disabled = this.step.state == "DONE"
+    }
     this.onSubmit.emit(formData)
   }
 
@@ -333,12 +377,24 @@ export class StepOneComponent implements OnInit, OnDestroy {
       case 'region': fields.splice(0, 0, "gradesDropdown", "subjectsDropdown")
         this.academicYearDropdown.disabled = this.regionDropdown.selectedItems.length == 0
         break
-      case 'academicYear': this.gradesDropdown.disabled = this.academicYearDropdown.selectedItems.length == 0
-        this.subjectsDropdown.disabled = this.academicYearDropdown.selectedItems.length == 0
+      case 'academicYear': fields.push("subjectsDropdown")
+        this.gradesDropdown.disabled = this.academicYearDropdown.selectedItems.length == 0
+        break
+      case 'grades': this.subjectsDropdown.disabled = this.academicYearDropdown.selectedItems.length == 0
         break
     }
     if (fields.length)
       fields.forEach(field => this[field].disabled = true)
+  }
+
+  updateInitialData() {
+    this.initialFormData = {
+      country: this.countryDropdown.selectedItems,
+      region: this.regionDropdown.selectedItems,
+      academicYear: this.academicYearDropdown.selectedItems,
+      grades: this.gradesDropdown.selectedItems,
+      subjects: this.subjectsDropdown.selectedItems
+    }
   }
 
   createFormConfig() {

@@ -3,19 +3,21 @@ import { Region } from './region.model';
 import { AcademicYear } from './academic-year.model';
 import { Grade } from './grade.model';
 import { Subject } from './subject.model';
+import { DrivingQuestion } from './driving-questions.model';
+import { Theme } from './theme.model';
 
 export class Project {
   id: number | null;
   title: string;
   creativeTitle?: string;
   name?: string;
-  finalProduct?: Object;
+  finalProduct?: string;
   country?: Country;
   region?: Region;
   academicYear?: AcademicYear;
   commonThreads?: Array<object>;
-  themes?: Array<object>;
-  guideQuestions?: Array<object>;
+  themes?: Theme[];
+  drivingQuestions?: DrivingQuestion[];
   grades?: Array<Grade>;
   subjects?: Array<Subject>;
   createdAt?: string;
