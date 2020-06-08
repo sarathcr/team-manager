@@ -32,6 +32,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   index = 0
   initResize = false;
   initialScrollHeight: number;
+  timeOut: any
   constructor() { }
 
   ngOnInit(): void {
@@ -57,7 +58,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
           this.configOptions.push({ ...this.sampleOption });
           this.index++
         }
-        setTimeout(() => {
+        this.timeOut = setTimeout(() => {
           this.textArea.last.nativeElement.focus()
         }, 0)
         break
@@ -67,7 +68,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         if (this.configOptions.length > 1) {
           this.configOptions.splice(id, 1)
           this.index = this.textArea.toArray().length > id ? id : id - 1
-          setTimeout(() => {
+          this.timeOut = setTimeout(() => {
             const textAreas = this.textArea.toArray()
             const index = textAreas.length > id ? id : id - 1
             textAreas[index].nativeElement.focus();
@@ -99,6 +100,11 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     }
     const newConfigOptions = [...this.configOptions];
     this.onChange.emit(newConfigOptions);
+    if(value == '' && this.configOptions.length !== 0){
+      this.configOptions.splice(i, 1)
+      this.textArea.toArray()[i-1].nativeElement.focus();
+      clearTimeout(this.timeOut);
+    }
   }
 
   setFocus() {
