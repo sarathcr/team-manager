@@ -24,7 +24,7 @@ export class StepEightComponent implements OnInit {
   buttonConfig = new buttonSubmitConfig
   initialFormData: FormEightInitData = formEightInitData
   active: boolean = false
-  initialFormStatus: Status
+  initialFormStatus: Status = "PENDING"
 
   constructor(private translateService: TranslateService) { }
 
@@ -70,9 +70,6 @@ export class StepEightComponent implements OnInit {
     }
     if (!this.finalProduct.length) {
       this.step.state = 'PENDING'
-    }
-    if (this.finalProduct.length && this.finalProduct === this.initialFormData && this.initialFormStatus == 'DONE') {
-      this.step.state = 'DONE'
     }
     this.handleButtonType()
   }
@@ -136,9 +133,10 @@ export class StepEightComponent implements OnInit {
   isFormUpdated() {
     if (this.initialFormData !== this.finalProduct) {
       return true
-    } else {
-      return false
+    } else if (this.initialFormStatus !== this.step.state) {
+      return true
     }
+    return false
   }
 
   // Function to submit data on scroll

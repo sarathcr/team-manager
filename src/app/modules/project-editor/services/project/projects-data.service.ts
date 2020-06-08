@@ -29,7 +29,13 @@ export class ProjectsDataService extends DefaultDataService<Project> {
     }
 
     update(data: any): Observable<any> {
-        return this.http.put<any>(`${environment.apiUrl}/projects`, data.changes)
+        let dataChanges = { ...data.changes }
+        let validator = ['country', 'region', 'academicYear']
+        for (let item of validator) {
+            if (dataChanges[item] === null)
+                dataChanges[item] = { id: -1 }  //replaces null value
+        }
+        return this.http.put<any>(`${environment.apiUrl}/projects`, dataChanges)
             .pipe(
                 map(res => res)
             );
@@ -37,9 +43,9 @@ export class ProjectsDataService extends DefaultDataService<Project> {
 
     getWithQuery(query: any): Observable<any> {
         return this.http.get<any>(`${environment.apiUrl + query}`)
-          .pipe(
-              map(res => res)
-          );
+            .pipe(
+                map(res => res)
+            );
     }
 
 }
