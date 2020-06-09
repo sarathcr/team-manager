@@ -169,7 +169,13 @@ export class StepOneComponent implements OnInit, OnDestroy {
         map(grades => grades.filter(grade => grade.academicYear.id == academicyearId && grade.region.id == selectedRegionId))
       )
       .subscribe(newData => {
-        if (!newData.length) this.gradeService.getWithQuery(`/regions/${selectedRegionId}/academicyears/${academicyearId}/grades`) //trigger API after checking the store
+        if (!newData.length) {
+          let parms = {
+            regionId: selectedRegionId.toString(),
+            academicyearId: academicyearId.toString()
+          }
+          this.gradeService.getWithQuery(parms) //trigger API after checking the store
+        }
         this.gradesDropdown.options = newData
       })
   }
@@ -177,7 +183,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   getSubjects(gradeId: number) {
     this.subjectService.entities$
       .subscribe(newData => {
-        if (!newData.length) this.subjectService.getWithQuery(`/grades/${gradeId}/subjects`) //trigger API after checking the store
+        if (!newData.length) this.subjectService.getWithQuery(gradeId.toString()) //trigger API after checking the store
         this.subjectsDropdown.options = newData
       })
   }

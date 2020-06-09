@@ -36,16 +36,21 @@ export class ProjectsDataService extends DefaultDataService<Project> {
     }
 
     update(data: any): Observable<any> {
-        let dataChanges = { ...data.changes }
+        let dataChanges = this.dataValidator(data.changes)
+        return this.http.put<any>(`${environment.apiUrl}/projects`, dataChanges)
+            .pipe(
+                map(res => res)
+            );
+    }
+
+    private dataValidator(data: any) {
+        let dataChanges = { ...data }
         let validator = ['country', 'region', 'academicYear']
         for (let item of validator) {
             if (dataChanges[item] === null)
                 dataChanges[item] = { id: -1 }  //replaces null value
         }
-        return this.http.put<any>(`${environment.apiUrl}/projects`, dataChanges)
-            .pipe(
-                map(res => res)
-            );
+        return dataChanges
     }
 
 }
