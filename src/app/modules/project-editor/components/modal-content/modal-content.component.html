@@ -6,4 +6,5 @@
 </div>
 <div class="app-modal__body">
     <img src="{{img}}" alt="image" class="app-modal__body-img" *ngIf="!video">
+    <app-video-player [options]="{ autoplay: true, controls: true, sources: [{ src: 'https://www.youtube.com/watch?v=6tDdr467GiE', type: 'video/mp4' }]}"  *ngIf="video"></app-video-player>
 </div>
