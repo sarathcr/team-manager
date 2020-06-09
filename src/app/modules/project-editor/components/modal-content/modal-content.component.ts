@@ -8,9 +8,13 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   encapsulation: ViewEncapsulation.None
 })
 export class ModalContentComponent implements OnInit {
-  title: string;
-  img: string;
-  closeBtnName: string;
+  title: string
+  img: string
+  video: boolean
+  externalVideo: boolean
+  externalVideoSources: any
+  internalVideoSoiurces: any
+  closeBtnName: string
 
   constructor(public bsModalRef: BsModalRef) { }
 

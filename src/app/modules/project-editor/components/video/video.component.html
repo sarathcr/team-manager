@@ -1,9 +1,4 @@
-<div plyr class="video-player" plyrTitle="Video 1" [plyrPlaysInline]="true" [plyrSources]="videoSources"></div>
-<div class="video" *ngIf="details['type'] == 'internal'">
-    <video id="player" playsinline controls data-poster="{{ details['poster'] }}">
-        <source src="{{ details['src'] }}" type="video/mp4" />
-
-        <!-- Captions are optional -->
-        <track kind="captions" label="English captions" src="{{ details['caption'] }}" srclang="en" default />
-    </video>
-</div>
+<a class="video" (click)="videoModal()">
+    <img src="../../../../../assets/images/150.png" alt="image" class="video__img">
+    <button class="video__btn"><span class="icon icon-ic_play_white"></span></button>
+</a>
