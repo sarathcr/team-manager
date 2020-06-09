@@ -8,8 +8,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 
-//ngx-plyr
-import { PlyrModule } from 'ngx-plyr';
+//video.js
+// import videojs from 'video.js';
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectEditorRoutingModule } from './project-editor-routing.module';
@@ -69,6 +69,7 @@ import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive
 import { ScrollToDirective } from './directives/scroll-to/scroll-to.directive';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { ProjectEditorComponent } from './project-editor.component';
+import { VideoPlayerComponent } from './components/video-player/video-player.component';
 
 const entityMetadata: EntityMetadataMap = {
   Project: {
@@ -141,6 +142,7 @@ const entityMetadata: EntityMetadataMap = {
     ModalContentComponent,
     LinkComponent,
     VideoComponent,
+    VideoPlayerComponent,
   ],
   imports: [
     CommonModule,
@@ -152,8 +154,7 @@ const entityMetadata: EntityMetadataMap = {
     ScrollToModule.forRoot(),
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
-    ModalModule.forRoot(),
-    PlyrModule
+    ModalModule.forRoot()
   ],
   providers: [
     ProjectsResolver,

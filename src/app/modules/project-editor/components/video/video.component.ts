@@ -11,12 +11,12 @@ export class VideoComponent implements OnInit {
   @Input() details: object;
   bsModalRef: BsModalRef;
 
-  videoSources: Plyr.Source[] = [
-    {
-      src: 'bTqVqk7FSmY',
-      provider: 'youtube',
-    },
-  ];
+  // videoSources: Plyr.Source[] = [
+  //   {
+  //     src: 'bTqVqk7FSmY',
+  //     provider: 'youtube',
+  //   },
+  // ];
 
   constructor(private modalService: BsModalService) { }
 
