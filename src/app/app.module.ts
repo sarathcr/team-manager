@@ -17,6 +17,7 @@ import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
 import { metaReducers, appReducers } from './state';
 import { EffectsModule } from '@ngrx/effects';
 import { EntityDataModule } from '@ngrx/data';
+import { CoreModule } from './core/core.module';
 
 // AoT requires an exported function for factories
 export function rootLoaderFactory(http: HttpClient) {
@@ -27,6 +28,7 @@ export function rootLoaderFactory(http: HttpClient) {
     AppComponent
   ],
   imports: [
+    CoreModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     SharedModule,

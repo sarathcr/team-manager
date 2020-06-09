@@ -3,10 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'projects',
+    path: 'editor',
     loadChildren: () => import('./modules/project-editor/project-editor.module').then(m => m.ProjectEditorModule)
   },
-  { path: '**', redirectTo: 'projects' }
+  { path: '**', redirectTo: 'editor' }
 ];
 
 @NgModule({
