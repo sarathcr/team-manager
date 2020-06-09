@@ -77,8 +77,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         .subscribe(data => {
           this.initialFormData.themes = []
           if (data?.themes) {
-            tempinitialFormData.themes = [...data.themes]
-            this.textAreaConfig.options = [...data.themes]
+            tempinitialFormData.themes = data.themes.map(option => ({ id: option.id, name: option.name }))
+            this.textAreaConfig.options = data.themes.map(option => ({ id: option.id, name: option.name }))
           }
           this.initialFormData.themes = [...tempinitialFormData.themes]
         })

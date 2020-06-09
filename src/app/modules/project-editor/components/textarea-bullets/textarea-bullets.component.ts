@@ -20,7 +20,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
   @Input() set config(val: FieldConfig) {
     if (val.options.length)
-      this.configOptions = val.options.map(option => ({ id: option.id, name: option.name }));
+      this.configOptions = [...val.options]
     else
       this.configOptions.push({ ...this.sampleOption })
     this._config = val;
@@ -96,15 +96,15 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     this.index = i
     if (this.isFirefox && value.length > this.config.maxLength) {
       value = value.substring(0, this.config.maxLength)
-      this.configOptions[i].name = value
     }
-    const newConfigOptions = [...this.configOptions];
-    this.onChange.emit(newConfigOptions);
-    if(value == '' && this.configOptions.length !== 0){
+    this.configOptions[i].name = value
+    if(value == '' && this.configOptions.length > 0){
       this.configOptions.splice(i, 1)
       this.textArea.toArray()[i-1].nativeElement.focus();
       clearTimeout(this.timeOut);
     }
+    const newConfigOptions = [...this.configOptions];
+    this.onChange.emit(newConfigOptions);
   }
 
   setFocus() {
