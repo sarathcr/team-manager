@@ -11,19 +11,32 @@ export class TextareaComponent implements OnInit {
   @Input() maxlength: number
   @Output() onChange = new EventEmitter()
   focus = false;
-  isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+  browser = navigator.userAgent.toLowerCase();
+  isFirefox = false;
+  isEdge = false;
+  
 
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.isFirefox = this.browser.indexOf('firefox') > -1;
+    this.isEdge = this.browser.indexOf('edge') > -1;
+   }
 
   // Function to get and emit value on textarea
   onValueChange(value: string) {
-    if (this.isFirefox && value.length > this.maxlength) {
+    if ((this.isFirefox || this.isEdge) && value.length > this.maxlength) {
       value = value.substring(0, this.maxlength)
     }
     this.value = value;
     this.onChange.emit(value.trim());
+  }
+
+  onKeyDown(event): any {
+    const text = event.target.value;
+    if (this.isEdge && event.keyCode === 13 && text.length > this.maxlength) {
+      event.preventDefault();
+    }
   }
 
   setFocus() {
@@ -38,14 +51,4 @@ export class TextareaComponent implements OnInit {
     }
   }
 
-  onKeyDown(event): any {
-    if (!!this.maxlength) {
-      const text = event.target.value;
-      if (text.length > this.maxlength) {
-        // truncate excess text (in the case of a paste)
-        this.value = (text.substring(0, this.maxlength));
-        event.preventDefault();
-      }
-    }
-  }
 }
