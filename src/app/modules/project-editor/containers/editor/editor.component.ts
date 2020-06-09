@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectEntityService } from '../../services/project/project-entity.service';
@@ -13,11 +13,11 @@ import { Step } from '../../constants/step.model';
 import { FormOne } from '../../constants/step-forms.model';
 
 @Component({
-  selector: 'app-project-editor',
-  templateUrl: './project-editor.component.html',
-  styleUrls: ['./project-editor.component.scss']
+  selector: 'app-editor',
+  templateUrl: './editor.component.html',
+  styleUrls: ['./editor.component.scss']
 })
-export class ProjectEditorComponent implements OnInit {
+export class EditorComponent implements OnInit {
   project: Project;
   project$: Observable<Project>;
   spyActive$ = new BehaviorSubject<StepId>('stepOne')
@@ -40,7 +40,7 @@ export class ProjectEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.createSteps()
-    this.projectUrl = this.route.snapshot.paramMap.get('id');
+    this.projectUrl = this.route.snapshot.paramMap.get('id')
     this.getProject()
   }
 
@@ -55,8 +55,8 @@ export class ProjectEditorComponent implements OnInit {
       this.projectsService.add(newProject)
         .subscribe(
           newResProject => {
-            this.location.go('projects/' + newResProject.id);
-            this.projectUrl = newResProject.id;
+            this.location.go('editor/project/' + newResProject.id)
+            this.projectUrl = newResProject.id
             this.getProject();
             if (this.tempStatus) {
               this.tempStatus.id = newResProject.id
@@ -90,8 +90,7 @@ export class ProjectEditorComponent implements OnInit {
           this.titleData = { id: project.id, title: project.title }
           this.getStepStatus(project.id)
         } else {
-          // WIP
-          // this.projectsService.getWithQuery(`/projects/${this.projectUrl.toString()}`);
+          this.projectsService.getByKey(this.projectUrl.toString());
           this.notFound = true;
         }
       })

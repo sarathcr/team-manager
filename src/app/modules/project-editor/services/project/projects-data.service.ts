@@ -21,6 +21,13 @@ export class ProjectsDataService extends DefaultDataService<Project> {
             );
     }
 
+    getById(id: any): Observable<Project> {
+        return this.http.get<Project>(`${environment.apiUrl}/projects/${id}`)
+            .pipe(
+                map(res => res)
+            );
+    }
+
     add(project: object): Observable<any> {
         return this.http.post<any>(`${environment.apiUrl}/projects`, project)
             .pipe(
@@ -33,13 +40,6 @@ export class ProjectsDataService extends DefaultDataService<Project> {
             .pipe(
                 map(res => res)
             );
-    }
-
-    getWithQuery(query: any): Observable<any> {
-        return this.http.get<any>(`${environment.apiUrl + query}`)
-          .pipe(
-              map(res => res)
-          );
     }
 
 }

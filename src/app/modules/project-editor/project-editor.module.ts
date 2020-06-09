@@ -41,7 +41,7 @@ import { StepNineComponent } from './containers/step-nine/step-nine.component';
 import { StepTenComponent } from './containers/step-ten/step-ten.component';
 // pages
 import { HomeComponent } from './containers/home/home.component';
-import { ProjectEditorComponent } from './containers/project-editor/project-editor.component';
+import { EditorComponent } from './containers/editor/editor.component';
 
 // ngx translate
 import { TranslateModule } from '@ngx-translate/core';
@@ -68,6 +68,7 @@ import { StepStatusDataService } from './services/step-status/step-status-data.s
 import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive';
 import { ScrollToDirective } from './directives/scroll-to/scroll-to.directive';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+import { ProjectEditorComponent } from './project-editor.component';
 
 const entityMetadata: EntityMetadataMap = {
   Project: {
@@ -111,7 +112,7 @@ const entityMetadata: EntityMetadataMap = {
 @NgModule({
   declarations: [
     HomeComponent,
-    ProjectEditorComponent,
+    EditorComponent,
     StepOneComponent,
     ProjectThumbnailComponent,
     CreateProjectComponent,
@@ -134,6 +135,7 @@ const entityMetadata: EntityMetadataMap = {
     StepSixComponent,
     StepNineComponent,
     StepTenComponent,
+    ProjectEditorComponent,
     ContextualHelpComponent,
     AccordionComponent,
     ModalContentComponent,

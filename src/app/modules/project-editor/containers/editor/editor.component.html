@@ -1,12 +1,12 @@
-<div class="project-editor" id="project-editor" *ngIf="!notFound || projectUrl == 'create'">
-  <div class="project-editor__bg"></div>
-  <app-editor-header [projectData]="titleData" id="project-editor-header" (titleBlur)="handleSubmit($event)">
+<div class="editor" id="editor" *ngIf="!notFound || projectUrl == 'create'">
+  <div class="editor__bg"></div>
+  <app-editor-header [projectData]="titleData" id="editor-header" (titleBlur)="handleSubmit($event)">
   </app-editor-header>
-  <app-editor-sidebar [spyActive]="spyActive$ | async" id="project-editor-sidebar"
+  <app-editor-sidebar [spyActive]="spyActive$ | async" id="editor-sidebar"
     title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}"
     view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}" [steps]="steps"></app-editor-sidebar>
-  <div class="project-editor__forms" scrollSpy (scrollSpyChange)="onScrollSpyChange($event)"
-    [ngClass]="{ 'project-editor__forms_short' : contextualStatus }">
+  <div class="editor__forms" scrollSpy (scrollSpyChange)="onScrollSpyChange($event)"
+    [ngClass]="{ 'editor__forms_short' : contextualStatus }">
     <app-step-one data-scrollSpy id="{{steps[0].sectionid}}" class="step-section" [spyActive$]="spyActive$"
       [step]="steps[0]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'>
     </app-step-one>
@@ -27,6 +27,6 @@
     <app-step-ten data-scrollSpy id="{{steps[9].sectionid}}" class="step-section"></app-step-ten>
   </div>
   <app-contextual-help (status)="getContextualStatus($event)"></app-contextual-help>
-  <div *ngIf=" notFound">
+  <div *ngIf="notFound">
     Project not found
   </div>
