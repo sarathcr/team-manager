@@ -1,6 +1,4 @@
-<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="bTqVqk7FSmY" *ngIf="details['type'] == 'external'">
-</div>
-
+<div plyr style="width: 640px;" plyrTitle="Video 1" [plyrPlaysInline]="true" [plyrSources]="videoSources"></div>
 <div class="video" *ngIf="details['type'] == 'internal'">
     <video id="player" playsinline controls data-poster="{{ details['poster'] }}">
         <source src="{{ details['src'] }}" type="video/mp4" />

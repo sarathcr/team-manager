@@ -8,6 +8,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 
+//ngx-plyr
+import { PlyrModule } from 'ngx-plyr';
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectEditorRoutingModule } from './project-editor-routing.module';
@@ -148,7 +150,8 @@ const entityMetadata: EntityMetadataMap = {
     ScrollToModule.forRoot(),
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    PlyrModule
   ],
   providers: [
     ProjectsResolver,

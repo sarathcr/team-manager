@@ -27,9 +27,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [
-              "./node_modules/plyr/dist/plyr.polyfilled.min.js"
-            ],
+            "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/styles/"
