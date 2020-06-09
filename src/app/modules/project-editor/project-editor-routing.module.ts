@@ -1,24 +1,26 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './containers/home/home.component';
-import { ProjectEditorComponent } from './containers/project-editor/project-editor.component';
-import { ProjectsResolver } from './services/project/projects.resolver';
+import { EditorComponent } from './containers/editor/editor.component';
+import { ProjectEditorComponent } from './project-editor.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-    resolve: {
-      projects: ProjectsResolver
-    }
-  },
-  {
-    path: ':id',
     component: ProjectEditorComponent,
-    resolve: {
-      projects: ProjectsResolver
-    }
-  }
+    children: [
+      {
+        path: 'projects',
+        component: HomeComponent
+      },
+      {
+        path: 'project/:id',
+        component: EditorComponent
+      },
+      { path: '**', redirectTo: 'projects' }
+    ]
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
