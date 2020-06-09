@@ -32,7 +32,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   gradesDropdown: FieldConfig
   subjectsDropdown: FieldConfig
   active: boolean = false
-  initialFormStatus: Status
+  initialFormStatus: Status = "PENDING"
 
   constructor(
     private countryService: CountryEntityService,
@@ -169,7 +169,13 @@ export class StepOneComponent implements OnInit, OnDestroy {
         map(grades => grades.filter(grade => grade.academicYear.id == academicyearId && grade.region.id == selectedRegionId))
       )
       .subscribe(newData => {
-        if (!newData.length) this.gradeService.getWithQuery(`/regions/${selectedRegionId}/academicyears/${academicyearId}/grades`) //trigger API after checking the store
+        if (!newData.length) {
+          let parms = {
+            regionId: selectedRegionId.toString(),
+            academicyearId: academicyearId.toString()
+          }
+          this.gradeService.getWithQuery(parms) //trigger API after checking the store
+        }
         this.gradesDropdown.options = newData
       })
   }
@@ -177,21 +183,16 @@ export class StepOneComponent implements OnInit, OnDestroy {
   getSubjects(gradeId: number) {
     this.subjectService.entities$
       .subscribe(newData => {
-        if (!newData.length) this.subjectService.getWithQuery(`/grades/${gradeId}/subjects`) //trigger API after checking the store
+        if (!newData.length) this.subjectService.getWithQuery(gradeId.toString()) //trigger API after checking the store
         this.subjectsDropdown.options = newData
       })
   }
 
   checkStatus() {
-    if (this.checkEmptyForm()) {
+    if (this.checkEmptyForm())
       this.step.state = "PENDING"
-    } else {
-      if (this.isFormUpdated()) {
-        this.step.state = "INPROCESS"
-      } else {
-        this.step.state = "DONE"
-      }
-    }
+    else
+      this.step.state = "INPROCESS"
   }
 
   // checks if the form is empty
@@ -228,9 +229,10 @@ export class StepOneComponent implements OnInit, OnDestroy {
       !this.isEqual(this.initialFormData.grades, this.gradesDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems)) {
       return true
-    } else {
-      return false
+    } else if (this.initialFormStatus !== this.step.state) {
+      return true
     }
+    return false
   }
 
   checkInProgress(data: any, type: string) {
@@ -296,20 +298,9 @@ export class StepOneComponent implements OnInit, OnDestroy {
 
   // Changes the button according to form status
   handleButtonType() {
-    if (this.isFormUpdated()) {
-      if (this.checkNonEmptyForm()) {
-        this.buttonConfig.disabled = false
-        this.buttonConfig.submitted = false
-      } else {
-        this.buttonConfig.disabled = true
-        this.buttonConfig.submitted = false
-      }
-    } else if (this.checkNonEmptyForm()) {
-      if (this.initialFormStatus == 'DONE') {
-        this.buttonConfig.disabled = true
-        this.buttonConfig.submitted = true
-        this.step.state = "DONE"
-      }
+    if (this.checkNonEmptyForm()) {
+      this.buttonConfig.disabled = false
+      this.buttonConfig.submitted = false
     } else {
       this.buttonConfig.disabled = true
       this.buttonConfig.submitted = false
@@ -351,16 +342,19 @@ export class StepOneComponent implements OnInit, OnDestroy {
 
   // reset form fields
   resetForm(field: string) {
-    if (field == 'country' || field == 'region' || field == 'academicYear') {
+    if (field == 'country' || field == 'region') {
+      this.gradesDropdown.selectedItems = []
+      this.subjectsDropdown.selectedItems = []
+      this.academicYearDropdown.selectedItems = []
+      if (field == 'country')
+        this.regionDropdown.selectedItems = []
+    }
+    if (field == 'academicYear') {
       this.gradesDropdown.selectedItems = []
       this.subjectsDropdown.selectedItems = []
     }
-    if (field == 'country' || field == 'region') {
-      this.academicYearDropdown.selectedItems = []
-    }
-    if (field == 'country') {
-      this.regionDropdown.selectedItems = []
-    }
+    if (field == 'grades' && !this.gradesDropdown.selectedItems.length)
+      this.subjectsDropdown.selectedItems = []
   }
 
   isEqual(d1: any[], d2: any[]) {
@@ -380,13 +374,14 @@ export class StepOneComponent implements OnInit, OnDestroy {
       case 'academicYear': fields.push("subjectsDropdown")
         this.gradesDropdown.disabled = this.academicYearDropdown.selectedItems.length == 0
         break
-      case 'grades': this.subjectsDropdown.disabled = this.academicYearDropdown.selectedItems.length == 0
+      case 'grades': this.subjectsDropdown.disabled = this.gradesDropdown.selectedItems.length == 0
         break
     }
     if (fields.length)
       fields.forEach(field => this[field].disabled = true)
   }
 
+  // fuction updates the initial form data on form submit
   updateInitialData() {
     this.initialFormData = {
       country: this.countryDropdown.selectedItems,
