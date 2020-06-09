@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DefaultDataService, HttpUrlGenerator, QueryParams } from '@ngrx/data';
+import { DefaultDataService, HttpUrlGenerator} from '@ngrx/data';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
