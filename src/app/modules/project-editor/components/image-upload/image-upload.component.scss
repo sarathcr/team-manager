@@ -1,0 +1,16 @@
+@import 'helpers/_helpers-master';
+.image-upload{
+    width: 424px;
+    min-height: 238px;
+    border: 1px dashed $article-border;
+    border-radius: 4px;
+    &__input{
+        width: 100%;
+       
+        cursor: pointer;
+        // display: none;
+        
+        
+    }
+ }
+ 

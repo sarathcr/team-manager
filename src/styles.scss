@@ -93,6 +93,12 @@
   &__title{
     line-height: 32px;
   }
+  &__subtitle{
+    line-height: 28px;
+    letter-spacing: .2px;
+    font-size: $font-size-body;
+    margin-bottom: 21px;
+  }
 }
 
 .textarea_focus, .textarea-bullets_focus{

@@ -131,11 +131,9 @@ export class StepEightComponent implements OnInit {
 
   // Function to check whether the form is updated
   isFormUpdated() {
-    if (this.initialFormData !== this.finalProduct) {
+    if (this.initialFormData !== this.finalProduct || this.initialFormStatus !== this.step.state) {
       return true
-    } else if (this.initialFormStatus !== this.step.state) {
-      return true
-    }
+    } 
     return false
   }
 

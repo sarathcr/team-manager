@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Step } from '../../constants/step.model';
+import { buttonSubmitConfig } from '../../constants/form-config.data';
 
 @Component({
   selector: 'app-step-six',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StepSixComponent implements OnInit {
 
+  @Input() step: Step
+  buttonConfig = new buttonSubmitConfig
+  
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  
 }

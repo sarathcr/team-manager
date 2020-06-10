@@ -25,6 +25,8 @@ import { StepFiveComponent } from './containers/step-five/step-five.component';
 import { StepSixComponent } from './containers/step-six/step-six.component';
 import { StepNineComponent } from './containers/step-nine/step-nine.component';
 import { StepTenComponent } from './containers/step-ten/step-ten.component';
+import { InputComponent } from './components/input/input.component';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 // pages
 import { HomeComponent } from './containers/home/home.component';
 import { EditorComponent } from './containers/editor/editor.component';
@@ -122,6 +124,8 @@ const entityMetadata: EntityMetadataMap = {
         StepNineComponent,
         StepTenComponent,
         ProjectEditorComponent,
+        InputComponent,
+        ImageUploadComponent,
     ],
     imports: [
         CommonModule,
