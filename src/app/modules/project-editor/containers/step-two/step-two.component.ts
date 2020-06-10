@@ -7,6 +7,7 @@ import { Project } from 'src/app/shared/constants/project.model'
 import { formTwoInitData } from '../../constants/step-forms.data'
 import { FormTwoInitData, FormTwo } from '../../constants/step-forms.model'
 import { StepState, StepId, Step, Status } from '../../constants/step.model'
+import { Theme } from 'src/app/shared/constants/theme.model'
 
 @Component({
   selector: 'app-step-two',
@@ -20,6 +21,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   @Input() spyActive$: Observable<StepId>
   @Input() stepStatus$: Observable<StepState>
   @Input() step: Step
+  themes$: Observable<Theme[]>
+  InputFormData: FormTwoInitData = new formTwoInitData
   initialFormData: FormTwoInitData = new formTwoInitData
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
@@ -53,7 +56,6 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       field: 'themes',
       id: 'themes',
       maxLength: 150,
-      options: [],
       limit: 5
     }
     // Translation
@@ -72,16 +74,18 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   formInIt() {
     let tempinitialFormData = new formTwoInitData
-    if (this.project$)
-      this.project$
-        .subscribe(data => {
+    if (this.project$) {
+      this.themes$ = this.project$.pipe(map(project => project.themes.map(theme => ({ id: theme.id, name: theme.name }))))
+      this.themes$
+        .subscribe(themes => {
           this.initialFormData.themes = []
-          if (data?.themes) {
-            tempinitialFormData.themes = data.themes.map(option => ({ id: option.id, name: option.name }))
-            this.textAreaConfig.options = data.themes.map(option => ({ id: option.id, name: option.name }))
+          if (themes) {
+            tempinitialFormData.themes = [...themes]
+            this.InputFormData.themes = [...themes]
           }
           this.initialFormData.themes = [...tempinitialFormData.themes]
         })
+    }
     if (this.stepStatus$) {
       this.stepStatus$.pipe(
         map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
@@ -130,10 +134,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   // checks if the form is empty
   checkEmptyForm() {
-    if (!this.textAreaConfig.options.length) {
+    if (!this.InputFormData.themes.length) {
       return true
     } else {
-      const tempData = this.textAreaConfig.options.filter(item => item.name != null && item.name.length && item)
+      const tempData = this.InputFormData.themes.filter(item => item.name != null && item.name.length && item)
       if (!tempData.length)
         return true
     }
@@ -142,14 +146,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   // checks the form is completely filled or not
   checkNonEmptyForm() {
-    if (this.textAreaConfig.options.length && (this.textAreaConfig.options[this.textAreaConfig.options.length - 1].name != null))
+    if (this.InputFormData.themes.length && (this.InputFormData.themes[this.InputFormData.themes.length - 1].name != null))
       return true
     return false
   }
 
   // Function to check whether the form is updated
   isFormUpdated() {
-    if (!this.isEqual(this.initialFormData.themes, this.textAreaConfig.options)) {
+    if (!this.isEqual(this.initialFormData.themes, this.InputFormData.themes)) {
       return true
     } else {
       return false
@@ -169,20 +173,20 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
     else
       this.checkStatus()
-    let tempData = this.textAreaConfig.options.filter(item => item.name != null && item.name.length)
+    let tempData = this.InputFormData.themes.filter(item => item.name != null && item.name.length)
     if (tempData.length) {
       tempData = tempData.map(item => item.id == null ? { name: item.name } : item)
-      this.textAreaConfig.options = tempData
+      this.InputFormData.themes = tempData
       this.initialFormData.themes = tempData
     }
     else {
-      this.textAreaConfig.options = []
-      this.initialFormData.themes = this.textAreaConfig.options
+      this.InputFormData.themes = []
+      this.initialFormData.themes = this.InputFormData.themes
     }
-    this.textAreaConfig.options = tempData
+    this.InputFormData.themes = tempData
     let formData: FormTwo = {
       data: {
-        themes: tempData.length ? this.textAreaConfig.options : []
+        themes: tempData.length ? this.InputFormData.themes : []
       },
       stepStatus: {
         steps: [
@@ -198,7 +202,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   textAreaUpdate(data) { // calls on every update
-    this.textAreaConfig.options = data
+    this.InputFormData.themes = data
     this.checkStatus()
   }
 

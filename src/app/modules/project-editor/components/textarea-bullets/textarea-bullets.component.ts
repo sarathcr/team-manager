@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChildren, QueryList, Input, ElementRef, Output, EventEmitter, AfterContentChecked } from '@angular/core';
 import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-textarea-bullets',
@@ -7,40 +8,45 @@ import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
   styleUrls: ['./textarea-bullets.component.scss']
 })
 export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
-  private _config;
+
+  @Input() config: FieldConfig
+  @Input() options: Option[]
+  @Input() options$: Observable<Object[]>
+  @Output() onChange = new EventEmitter()
+  @ViewChildren('textArea') textArea: QueryList<ElementRef>;
+  index = 0
+  initResize = false;
+  initialScrollHeight: number;
+  timeOut: any
   sampleOption: Option = { id: null, name: null };
   configOptions: Option[] = [];
   limit = 0
   isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
   focus = false;
 
-  get config(): FieldConfig {
-    return this._config;
-  }
-
-  @Input() set config(val: FieldConfig) {
-    if (val.options.length)
-      this.configOptions = [...val.options]
-    else
-      this.configOptions.push({ ...this.sampleOption })
-    this._config = val;
-  };
-
-  @Output() onChange = new EventEmitter()
-
-  @ViewChildren('textArea') textArea: QueryList<ElementRef>;
-  index = 0
-  initResize = false;
-  initialScrollHeight: number;
-  timeOut: any
   constructor() { }
 
   ngOnInit(): void {
     this.limit = this.config.limit;
+    this.optionInit()
+  }
+
+  optionInit() {
+    if (this.options$) {
+      this.options$.subscribe(data => {
+        if (data?.length) {
+          this.configOptions = data
+        } else {
+          this.configOptions = [{ ...this.sampleOption }]
+        }
+      })
+    } else {
+      this.configOptions = [{ ...this.sampleOption }]
+    }
   }
 
   ngAfterContentChecked() {
-    if(this.textArea){
+    if (this.textArea) {
       this.textArea.toArray().forEach(item => {
         item.nativeElement.style.height = (item.nativeElement.scrollHeight) + "px";
       })
@@ -54,7 +60,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         if (this.config.limit == 0) {
           this.limit = this.configOptions.length + 1
         }
-        if (this.configOptions.length < this.limit && this.configOptions[this.configOptions.length - 1].name != null) {
+        if (this.configOptions.length < this.limit && this.configOptions[this.configOptions.length - 1].name) {
           this.configOptions.push({ ...this.sampleOption });
           this.index++
         }
@@ -85,6 +91,11 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
           event.preventDefault();
         }
         break
+      case 8: if (!event.target.value && this.configOptions.length > 1) {
+        this.configOptions.splice(id, 1)
+        this.textArea.toArray()[id - 1].nativeElement.focus();
+        clearTimeout(this.timeOut);
+      }
 
       default:
         break
@@ -98,12 +109,8 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
       value = value.substring(0, this.config.maxLength)
     }
     this.configOptions[i].name = value
-    if(value == '' && this.configOptions.length > 0){
-      this.configOptions.splice(i, 1)
-      this.textArea.toArray()[i-1].nativeElement.focus();
-      clearTimeout(this.timeOut);
-    }
-    const newConfigOptions = [...this.configOptions];
+    let newConfigOptions = [...this.configOptions];
+    if (this.configOptions.length == 1 && !this.configOptions[0].name) newConfigOptions = []
     this.onChange.emit(newConfigOptions);
   }
 
