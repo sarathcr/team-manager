@@ -9,7 +9,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 
 //video.js
-// import videojs from 'video.js';
+import videojs from 'video.js';
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectEditorRoutingModule } from './project-editor-routing.module';
@@ -142,7 +142,7 @@ const entityMetadata: EntityMetadataMap = {
     ModalContentComponent,
     LinkComponent,
     VideoComponent,
-    VideoPlayerComponent,
+    VideoPlayerComponent
   ],
   imports: [
     CommonModule,
@@ -154,7 +154,8 @@ const entityMetadata: EntityMetadataMap = {
     ScrollToModule.forRoot(),
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    videojs
   ],
   providers: [
     ProjectsResolver,

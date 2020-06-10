@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy, ElementRef, ViewChild, Input } from '@angular/core';
 import videojs from 'video.js';
+import '@devmobiliza/videojs-vimeo/dist/videojs-vimeo.cjs';
+import 'videojs-youtube';
+import { VideoOptions } from 'src/app/shared/constants/video.model';
+
 @Component({
   selector: 'app-video-player',
   templateUrl: './video-player.component.html',
@@ -9,27 +13,18 @@ import videojs from 'video.js';
 export class VideoPlayerComponent implements OnInit, OnDestroy {
   player: videojs.Player;
   @ViewChild('target', {static: true}) target: ElementRef;
-  // see options: https://github.com/videojs/video.js/blob/mastertutorial-options.html
-  @Input() options: {
-      fluid: boolean,
-      aspectRatio: string,
-      autoplay: boolean,
-      sources: {
-          src: string,
-          type: string,
-      }[],
-  };
+  @Input() videoOptions: VideoOptions
+
   constructor( private elementRef: ElementRef,) { }
 
   ngOnInit(): void {
-    this.player = videojs(this.target.nativeElement, this.options, function onPlayerReady() {
-      console.log('onPlayerReady', this);
-    });
+    this.player = videojs(this.target.nativeElement, this.videoOptions, function onPlayerReady() {});
   }
+
   ngOnDestroy() {
-    // destroy player
+
     if (this.player) {
-      this.player.dispose();
+      this.player.dispose(); // destroy player
     }
   }
 }
