@@ -11,7 +11,6 @@ export class TextareaComponent implements OnInit {
   @Input() maxlength: number
   @Output() onChange = new EventEmitter()
   focus = false;
-  browser = navigator.userAgent.toLowerCase();
   
   constructor() { }
 
@@ -20,7 +19,7 @@ export class TextareaComponent implements OnInit {
 
   // Function to get and emit value on textarea
   onValueChange(value: string) {
-    if ((this.browser.indexOf('firefox') > -1 || this.browser.indexOf('edge') > -1) && value.length > this.maxlength) {
+    if ((this.isFirefox() || this.isEdge()) && value.length > this.maxlength) {
       value = value.substring(0, this.maxlength)
     }
     this.value = value;
@@ -29,7 +28,7 @@ export class TextareaComponent implements OnInit {
 
   onKeyDown(event): any {
     const text = event.target.value;
-    if (this.browser.indexOf('edge') > -1 && event.keyCode === 13 && text.length > this.maxlength) {
+    if (this.isEdge() && event.keyCode === 13 && text.length > this.maxlength) {
       event.preventDefault();
     }
   }
@@ -44,6 +43,18 @@ export class TextareaComponent implements OnInit {
       this.value = '';
       this.onChange.emit('');
     }
+  }
+
+  //function to check the browser is Firefox
+  isFirefox() {
+    let isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+    return isFirefox
+  }
+
+  //function to check the browser is Edge
+  isEdge() {
+    let isEdge = navigator.userAgent.toLowerCase().indexOf('edge') > -1
+    return isEdge
   }
 
 }
