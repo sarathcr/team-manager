@@ -8,10 +8,10 @@ import { RegionEntityService } from '../../services/region/region-entity.service
 import { AcademicYearEntityService } from '../../services/academic-year/academic-year-entity.service'
 import { GradeEntityService } from '../../services/grade/grade-entity.service'
 import { SubjectEntityService } from '../../services/subject/subject-entity.service'
-import { Project } from 'src/app/shared/constants/project.model'
 import { formOneInitData } from '../../constants/step-forms.data'
 import { FormOneInitData, FormOne } from '../../constants/step-forms.model'
-import { Step, StepId, StepState, Status } from '../../constants/step.model'
+import { Step, Status } from '../../constants/step.model'
+import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
   selector: 'app-step-one',
@@ -20,10 +20,9 @@ import { Step, StepId, StepState, Status } from '../../constants/step.model'
 })
 export class StepOneComponent implements OnInit, OnDestroy {
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
-  @Input() project$: Observable<Project>
-  @Input() spyActive$: Observable<StepId>
-  @Input() stepStatus$: Observable<StepState>
-  @Input() step: Step
+  step$: Observable<Step>
+  step: Step
+  project$: Observable<any>
   initialFormData: FormOneInitData = new formOneInitData
   buttonConfig: FieldConfig
   countryDropdown: FieldConfig
@@ -40,13 +39,16 @@ export class StepOneComponent implements OnInit, OnDestroy {
     private academicYearService: AcademicYearEntityService,
     private gradeService: GradeEntityService,
     private subjectService: SubjectEntityService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private editor: EditorService
   ) { }
 
   ngOnInit(): void {
+    this.project$ = this.editor.getStepData('stepOne');
+    this.step = this.editor.steps.one;
+    this.step$ = this.editor.getStepStatus(1);
     this.createFormConfig()
     this.getAllCountries()
-    this.onScrollSubmit()
     this.formInIt()
   }
 
@@ -57,7 +59,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   formInIt() {
-    if (this.project$)
+    if (this.project$) {
       this.project$
         .subscribe(data => {
           let tempinitialFormData = new formOneInitData
@@ -98,37 +100,19 @@ export class StepOneComponent implements OnInit, OnDestroy {
           }
           this.initialFormData = tempinitialFormData
         })
-    if (this.stepStatus$) {
-      this.stepStatus$.pipe(
-        map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
-        .subscribe(
-          formStatus => {
-            if (formStatus && formStatus.length) {
-              this.buttonConfig.submitted = formStatus[0].state == "DONE"
-              this.initialFormStatus = formStatus[0].state
-              if (formStatus[0].state != "DONE" && this.checkNonEmptyForm())
+    }
+    if (this.step$) {
+      this.step$.subscribe(
+        formStatus => {
+            if (formStatus) {
+              this.buttonConfig.submitted = formStatus.state == "DONE"
+              this.initialFormStatus = formStatus.state
+              if (formStatus.state != "DONE" && this.checkNonEmptyForm())
                 this.buttonConfig.disabled = false
             }
           }
         )
     }
-  }
-
-  onScrollSubmit() {
-    this.spyActive$
-      .subscribe(sectionId => {
-        if (sectionId === this.step.sectionid && !this.active) {
-          this.active = true
-        }
-        if (sectionId !== this.step.sectionid && this.active) {
-          if (this.isFormUpdated()) {
-            this.handleSubmit()
-            this.active = false
-          } else {
-            this.active = true
-          }
-        }
-      })
   }
 
   changeResponseFormat(data: any) {
@@ -227,11 +211,11 @@ export class StepOneComponent implements OnInit, OnDestroy {
       !this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.grades, this.gradesDropdown.selectedItems) ||
-      !this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems)) {
+      !this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems) ||
+      this.initialFormStatus !== this.step.state
+      )  {
       return true
-    } else if (this.initialFormStatus !== this.step.state) {
-      return true
-    }
+    } 
     return false
   }
 
@@ -337,7 +321,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
       this.buttonConfig.submitted = this.step.state == 'DONE'
       this.buttonConfig.disabled = this.step.state == "DONE"
     }
-    this.onSubmit.emit(formData)
+    this.editor.handleFormSubmit(formData)
   }
 
   // reset form fields

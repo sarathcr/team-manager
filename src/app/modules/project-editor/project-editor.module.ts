@@ -55,6 +55,7 @@ import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive
 import { ScrollToDirective } from './directives/scroll-to/scroll-to.directive';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { ProjectEditorComponent } from './project-editor.component';
+import { EditorService } from './services/editor/editor.service';
 
 const entityMetadata: EntityMetadataMap = {
     Project: {
@@ -147,7 +148,8 @@ const entityMetadata: EntityMetadataMap = {
         AcademicYearDataService,
         AcademicYearEntityService,
         StepStatusEntityService,
-        StepStatusDataService
+        StepStatusDataService,
+        EditorService
     ]
 })
 
