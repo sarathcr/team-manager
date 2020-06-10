@@ -1,13 +1,12 @@
-import { Component, OnInit, Output, Input, EventEmitter, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { FieldConfig } from '../../../../shared/constants/field.model'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
-import { map } from 'rxjs/operators'
-import { Project } from 'src/app/shared/constants/project.model'
 import { formTwoInitData } from '../../constants/step-forms.data'
 import { FormTwoInitData, FormTwo } from '../../constants/step-forms.model'
-import { StepState, StepId, Step, Status } from '../../constants/step.model'
+import { Step, Status } from '../../constants/step.model'
 import { Theme } from 'src/app/shared/constants/theme.model'
+import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
   selector: 'app-step-two',
@@ -15,32 +14,31 @@ import { Theme } from 'src/app/shared/constants/theme.model'
   styleUrls: ['./step-two.component.scss']
 })
 export class StepTwoComponent implements OnInit, OnDestroy {
-  @Output() inProgress: EventEmitter<any> = new EventEmitter<any>()
-  @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
-  @Input() project$: Observable<Project>
-  @Input() spyActive$: Observable<StepId>
-  @Input() stepStatus$: Observable<StepState>
-  @Input() step: Step
+
+  project$: Observable<any>
+  step$: Observable<Step>
+  step: Step
   themes$: Observable<Theme[]>
   InputFormData: FormTwoInitData = new formTwoInitData
   initialFormData: FormTwoInitData = new formTwoInitData
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  active: boolean = false
   initialFormStatus: Status = "PENDING"
 
-  constructor(private translateService: TranslateService) { }
+  constructor(
+    private translateService: TranslateService,
+    private editor: EditorService
+  ) { }
 
   ngOnInit(): void {
     this.createFormConfig()
-    this.onScrollSubmit()
     this.formInIt()
   }
 
   ngOnDestroy(): void {
-    if (this.isFormUpdated()) {
-      this.handleSubmit()
-    }
+    // if (this.isFormUpdated()) {
+    //   this.handleSubmit()
+    // }
   }
 
   createFormConfig() {
@@ -73,9 +71,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   formInIt() {
+    this.project$ = this.editor.getStepData('stepTwo')
+    this.step$ = this.editor.getStepStatus(2)
+    this.step = this.editor.steps.two
     let tempinitialFormData = new formTwoInitData
     if (this.project$) {
-      this.themes$ = this.project$.pipe(map(project => project.themes.map(theme => ({ id: theme.id, name: theme.name }))))
+      this.themes$ = this.project$
       this.themes$
         .subscribe(themes => {
           this.initialFormData.themes = []
@@ -86,37 +87,18 @@ export class StepTwoComponent implements OnInit, OnDestroy {
           this.initialFormData.themes = [...tempinitialFormData.themes]
         })
     }
-    if (this.stepStatus$) {
-      this.stepStatus$.pipe(
-        map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
-        .subscribe(
-          formStatus => {
-            if (formStatus && formStatus.length) {
-              this.buttonConfig.submitted = formStatus[0].state == "DONE"
-              this.initialFormStatus = formStatus[0].state
-              if (formStatus[0].state != "DONE" && this.checkNonEmptyForm())
-                this.buttonConfig.disabled = false
-            }
+    if (this.step$) {
+      this.step$.subscribe(
+        formStatus => {
+          if (formStatus) {
+            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.initialFormStatus = formStatus.state
+            if (formStatus.state != "DONE" && this.checkNonEmptyForm())
+              this.buttonConfig.disabled = false
           }
-        )
+        }
+      )
     }
-  }
-
-  onScrollSubmit() {
-    this.spyActive$
-      .subscribe(sectionId => {
-        if (sectionId === this.step.sectionid && !this.active) {
-          this.active = true
-        }
-        if (sectionId !== this.step.sectionid && this.active) {
-          if (this.isFormUpdated()) {
-            this.handleSubmit()
-            this.active = false
-          } else {
-            this.active = true
-          }
-        }
-      })
   }
 
   // Function to check status of step
@@ -194,7 +176,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.onSubmit.emit(formData)
+    this.editor.handleFormSubmit(formData)
     this.handleButtonType()
   }
 

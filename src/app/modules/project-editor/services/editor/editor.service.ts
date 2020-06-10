@@ -16,6 +16,7 @@ import { FormOne } from '../../constants/step-forms.model';
 export class EditorService {
   projectId: number;
   project$: Observable<Project>;
+  step$: Observable<Step>
   notFound: boolean;
   titleData: ProjectTitle;
   steps: Steps;
@@ -53,18 +54,21 @@ export class EditorService {
   }
 
   getStepData(step: StepId) {
-    if(this.project$) {
+    if (this.project$) {
       return this.project$.pipe(map(
         (data) => {
-          switch(data && step) {
+          switch (data && step) {
             case 'stepOne':
               return ({
                 country: data?.country ? { id: data?.country.id, name: data?.country.name } : null,
                 region: data?.region ? { id: data?.region.id, name: data?.region.name } : null,
                 academicYear: data?.academicYear ? { id: data?.academicYear.id, academicYear: data?.academicYear?.academicYear } : null,
-                grades: data?.grades.map(({ id, name}) => ({ id, name })),
-                subjects: data?.subjects.map(({ id, name}) => ({ id, name }))
+                grades: data?.grades.map(({ id, name }) => ({ id, name })),
+                subjects: data?.subjects.map(({ id, name }) => ({ id, name }))
               })
+            case 'stepTwo': return data?.themes.map(({ id, name }) => ({ id, name }))
+            case 'stepSeven': return data?.drivingQuestions.map(({ id, name }) => ({ id, name }))
+            case 'stepEight': return data?.finalProduct
           }
         }
       ))
@@ -95,7 +99,7 @@ export class EditorService {
           return state.id === +(this.projectId);
         }))
       )
-    if(this.stepStatus$) {
+    if (this.stepStatus$) {
       return this.stepStatus$.pipe(map(data => (
         data?.steps.find(item => item.stepid == stepId)
       )))
@@ -103,7 +107,7 @@ export class EditorService {
   }
 
   updateStepStatus(stepstatus: any) {
-    for(const newState of stepstatus.steps) {
+    for (const newState of stepstatus.steps) {
       for (const step in this.steps) {
         if (this.steps[step].stepid == newState.stepid) {
           this.steps[step].state = newState.state
@@ -142,7 +146,7 @@ export class EditorService {
     }
   }
 
-  handleFormSubmit(data: FormOne) {
+  handleFormSubmit(data) {
     this.handleSubmit(data.data)
     this.submitFormStatus(data.stepStatus)
   }
@@ -193,7 +197,7 @@ export class EditorService {
         this.steps.nine.name = translations['STEPS_MENU.project_structure_stepsmenu_sinopsis']
         this.steps.ten.name = 'Interacción'  // WIP localization
       }
-    );
+      );
     return this.steps;
   }
 }

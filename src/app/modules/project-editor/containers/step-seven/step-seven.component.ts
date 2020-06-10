@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
-import { map } from 'rxjs/operators'
 import { formSevenInitData } from '../../constants/step-forms.data'
 import { FormSevenInitData, FormSeven } from '../../constants/step-forms.model'
-import { Step, StepId, StepState, Status } from '../../constants/step.model'
+import { Step, Status } from '../../constants/step.model'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
-import { Project } from 'src/app/shared/constants/project.model'
 import { DrivingQuestion } from 'src/app/shared/constants/driving-questions.model'
+import { EditorService } from '../../services/editor/editor.service'
+import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
 
 @Component({
   selector: 'app-step-seven',
@@ -15,12 +15,10 @@ import { DrivingQuestion } from 'src/app/shared/constants/driving-questions.mode
   styleUrls: ['./step-seven.component.scss']
 })
 export class StepSevenComponent implements OnInit, OnDestroy {
-  @Output() inProgress: EventEmitter<any> = new EventEmitter<any>()
-  @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
-  @Input() project$: Observable<Project>
-  @Input() spyActive$: Observable<StepId>
-  @Input() stepStatus$: Observable<StepState>
-  @Input() step: Step
+
+  project$: Observable<any>
+  step$: Observable<Step>
+  step: Step
   drivingQuestions$: Observable<DrivingQuestion[]>
   initialFormData: FormSevenInitData = new formSevenInitData
   inputFormData: FormSevenInitData = new formSevenInitData
@@ -32,18 +30,21 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   active: boolean = false
   initialFormStatus: Status = "PENDING"
 
-  constructor(private translateService: TranslateService) { }
+  constructor(
+    private translateService: TranslateService,
+    private editor: EditorService,
+    private stepStatusService: StepStatusEntityService
+  ) { }
 
   ngOnInit(): void {
     this.createFormConfig()
-    this.onScrollSubmit()
     this.formInIt()
   }
 
   ngOnDestroy(): void {
-    if (this.isFormUpdated()) {
-      this.handleSubmit()
-    }
+    // if (this.isFormUpdated()) {
+    //   this.handleSubmit()
+    // }
   }
 
   createFormConfig() {
@@ -76,9 +77,12 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   }
 
   formInIt() {
+    this.project$ = this.editor.getStepData('stepSeven')
+    this.step$ = this.editor.getStepStatus(7)
+    this.step = this.editor.steps.seven
     let tempinitialFormData = new formSevenInitData
     if (this.project$) {
-      this.drivingQuestions$ = this.project$.pipe(map(project => project.drivingQuestions.map(data => ({ id: data.id, name: data.name }))))
+      this.drivingQuestions$ = this.project$
       this.drivingQuestions$.subscribe(drivingQuestions => {
         this.initialFormData.drivingQuestions = []
         if (drivingQuestions) {
@@ -88,38 +92,18 @@ export class StepSevenComponent implements OnInit, OnDestroy {
         this.initialFormData.drivingQuestions = [...tempinitialFormData.drivingQuestions]
       })
     }
-    if (this.stepStatus$) {
-      this.stepStatus$.pipe(
-        map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
-        .subscribe(
-          formStatus => {
-            if (formStatus && formStatus.length) {
-              this.buttonConfig.submitted = formStatus[0].state == "DONE"
-              this.initialFormStatus = formStatus[0].state
-              if (formStatus[0].state != "DONE" && this.checkNonEmptyForm())
-                this.buttonConfig.disabled = false
-            }
+    if (this.step$) {
+      this.step$.subscribe(
+        formStatus => {
+          if (formStatus) {
+            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.initialFormStatus = formStatus.state
+            if (formStatus.state != "DONE" && this.checkNonEmptyForm())
+              this.buttonConfig.disabled = false
           }
-        )
+        }
+      )
     }
-
-  }
-
-  onScrollSubmit() {
-    this.spyActive$
-      .subscribe(sectionId => {
-        if (sectionId === this.step.sectionid && !this.active) {
-          this.active = true
-        }
-        if (sectionId !== this.step.sectionid && this.active) {
-          if (this.isFormUpdated()) {
-            this.handleSubmit()
-            this.active = false
-          } else {
-            this.active = true
-          }
-        }
-      })
   }
 
   // Function to check status of step
@@ -196,7 +180,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.onSubmit.emit(formData)
+    this.editor.handleFormSubmit(formData)
     this.handleButtonType()
   }
 

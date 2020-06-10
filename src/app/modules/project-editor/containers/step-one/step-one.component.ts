@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
@@ -19,10 +19,10 @@ import { EditorService } from '../../services/editor/editor.service'
   styleUrls: ['./step-one.component.scss']
 })
 export class StepOneComponent implements OnInit, OnDestroy {
-  @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
+
+  project$: Observable<any>
   step$: Observable<Step>
   step: Step
-  project$: Observable<any>
   initialFormData: FormOneInitData = new formOneInitData
   buttonConfig: FieldConfig
   countryDropdown: FieldConfig
@@ -44,21 +44,21 @@ export class StepOneComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.project$ = this.editor.getStepData('stepOne');
-    this.step = this.editor.steps.one;
-    this.step$ = this.editor.getStepStatus(1);
     this.createFormConfig()
     this.getAllCountries()
     this.formInIt()
   }
 
   ngOnDestroy(): void {
-    if (this.isFormUpdated()) {
-      this.handleSubmit()
-    }
+    // if (this.isFormUpdated()) {
+    //   this.handleSubmit()
+    // }
   }
 
   formInIt() {
+    this.project$ = this.editor.getStepData('stepOne')
+    this.step$ = this.editor.getStepStatus(1)
+    this.step = this.editor.steps.one
     if (this.project$) {
       this.project$
         .subscribe(data => {
@@ -104,14 +104,14 @@ export class StepOneComponent implements OnInit, OnDestroy {
     if (this.step$) {
       this.step$.subscribe(
         formStatus => {
-            if (formStatus) {
-              this.buttonConfig.submitted = formStatus.state == "DONE"
-              this.initialFormStatus = formStatus.state
-              if (formStatus.state != "DONE" && this.checkNonEmptyForm())
-                this.buttonConfig.disabled = false
-            }
+          if (formStatus) {
+            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.initialFormStatus = formStatus.state
+            if (formStatus.state != "DONE" && this.checkNonEmptyForm())
+              this.buttonConfig.disabled = false
           }
-        )
+        }
+      )
     }
   }
 
@@ -213,9 +213,9 @@ export class StepOneComponent implements OnInit, OnDestroy {
       !this.isEqual(this.initialFormData.grades, this.gradesDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.subjects, this.subjectsDropdown.selectedItems) ||
       this.initialFormStatus !== this.step.state
-      )  {
+    ) {
       return true
-    } 
+    }
     return false
   }
 

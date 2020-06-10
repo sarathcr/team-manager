@@ -1,12 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Project } from 'src/app/shared/constants/project.model';
-import { StepId, Step, StepState, Status } from '../../constants/step.model';
+import { Step, Status } from '../../constants/step.model';
 import { buttonSubmitConfig } from '../../constants/form-config.data';
-import { TranslateService } from '@ngx-translate/core';
 import { FormEightInitData, FormEight } from '../../constants/step-forms.model';
 import { formEightInitData } from '../../constants/step-forms.data';
+import { EditorService } from '../../services/editor/editor.service';
 
 @Component({
   selector: 'app-step-eight',
@@ -15,51 +13,53 @@ import { formEightInitData } from '../../constants/step-forms.data';
 })
 export class StepEightComponent implements OnInit {
 
-  @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
-  @Input() project$: Observable<Project>
-  @Input() spyActive$: Observable<StepId>
-  @Input() stepStatus$: Observable<StepState>
-  @Input() step: Step
+  project$: Observable<any>
+  step$: Observable<Step>
+  step: Step
   finalProduct: any = ""
   buttonConfig = new buttonSubmitConfig
   initialFormData: FormEightInitData = formEightInitData
   active: boolean = false
   initialFormStatus: Status = "PENDING"
 
-  constructor(private translateService: TranslateService) { }
+  constructor(
+    private editor: EditorService
+  ) { }
 
   ngOnInit(): void {
     this.formInit()
-    this.onScrollSubmit()
   }
 
   ngOnDestroy(): void {
-    if (this.isFormUpdated()) {
-      this.handleSubmit()
-    }
+    // if (this.isFormUpdated()) {
+    //   this.handleSubmit()
+    // }
   }
 
   formInit() {
-    if (this.project$)
+    this.project$ = this.editor.getStepData('stepEight')
+    this.step$ = this.editor.getStepStatus(8)
+    this.step = this.editor.steps.eight
+    if (this.project$) {
       this.project$.subscribe(data => {
         if (data?.finalProduct) {
           this.finalProduct = data.finalProduct
           this.initialFormData = data.finalProduct
         }
       })
-    if (this.stepStatus$)
-      this.stepStatus$.pipe(
-        map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
-        .subscribe(
-          formStatus => {
-            if (formStatus && formStatus.length) {
-              this.buttonConfig.submitted = formStatus[0].state == "DONE"
-              this.initialFormStatus = formStatus[0].state
-              if (formStatus[0].state != "DONE" && this.finalProduct?.length)
-                this.buttonConfig.disabled = false
-            }
+    }
+    if (this.step$) {
+      this.step$.subscribe(
+        formStatus => {
+          if (formStatus) {
+            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.initialFormStatus = formStatus.state
+            if (formStatus.state != "DONE" && this.finalProduct?.length)
+              this.buttonConfig.disabled = false
           }
-        )
+        }
+      )
+    }
   }
 
   // Function to check status of step
@@ -114,7 +114,7 @@ export class StepEightComponent implements OnInit {
         ]
       }
     }
-    this.onSubmit.emit(formData);
+    this.editor.handleFormSubmit(formData)
   }
 
   // Function to check whether the form is updated
@@ -125,23 +125,6 @@ export class StepEightComponent implements OnInit {
     return false
   }
 
-  // Function to submit data on scroll
-  onScrollSubmit() {
-    this.spyActive$
-      .subscribe(sectionId => {
-        if (sectionId === this.step.sectionid && !this.active) {
-          this.active = true
-        }
-        if (sectionId !== this.step.sectionid && this.active) {
-          if (this.isFormUpdated()) {
-            this.handleSubmit()
-            this.active = false
-          } else {
-            this.active = true
-          }
-        }
-      })
-  }
 }
 
 
