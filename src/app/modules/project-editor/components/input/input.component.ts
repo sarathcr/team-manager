@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/constants/field.model';
 import { FormGroup } from '@angular/forms';
 
@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class InputComponent implements OnInit {
 
+  @Input() placeholder: string
   config: FieldConfig;
   group: FormGroup;
   

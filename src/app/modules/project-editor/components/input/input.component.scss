@@ -7,5 +7,10 @@
         width: 100%;
         border: 1px solid $creator-border-active;
         border-radius: 3px;
+        &::placeholder{
+            color: $overtitle-grey;
+            font-size: $font-size-body-s;
+            line-height: 24px;
+        }
     }
 }

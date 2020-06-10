@@ -5,12 +5,13 @@
     border: 1px dashed $article-border;
     border-radius: 4px;
     &__input{
-        width: 100%;
-       
+        visibility: hidden;
+    }
+    &__label{
+        width: 424px;
+        font-size: $font-size-body-s;
+        line-height: 24px;
         cursor: pointer;
-        // display: none;
-        
-        
     }
  }
  
