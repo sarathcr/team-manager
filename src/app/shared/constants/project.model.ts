@@ -12,6 +12,7 @@ export class Project {
   creativeTitle?: string;
   name?: string;
   finalProduct?: string;
+  synopsis?: string
   country?: Country;
   region?: Region;
   academicYear?: AcademicYear;
