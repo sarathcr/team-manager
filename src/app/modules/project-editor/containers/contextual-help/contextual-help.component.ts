@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
-
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-contextual-help',
   templateUrl: './contextual-help.component.html',

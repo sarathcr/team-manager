@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VideoThumbComponent } from './video.component';
+import { VideoThumbComponent } from './video-thumb.component';
 
-describe('VideoComponent', () => {
+describe('VideoThumbComponent', () => {
   let component: VideoThumbComponent;
   let fixture: ComponentFixture<VideoThumbComponent>;
 
