@@ -22,7 +22,7 @@ export class ContextualHelpComponent implements OnInit {
     this.status.emit(false);
     setTimeout(() => {
       this.activeTab.active = false;
-    }, 1000);
+    }, 500);
   }
 
   //Open tab

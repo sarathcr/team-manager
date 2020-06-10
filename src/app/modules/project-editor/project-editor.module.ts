@@ -32,7 +32,7 @@ import { StepFourComponent } from './containers/step-four/step-four.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { ModalContentComponent } from './components/modal-content/modal-content.component';
 import { LinkComponent } from './components/link/link.component';
-import { VideoComponent } from './components/video/video.component';
+import { VideoThumbComponent } from './components/video-thumb/video-thumb.component';
 import { StepFiveComponent } from './containers/step-five/step-five.component';
 import { StepSixComponent } from './containers/step-six/step-six.component';
 import { StepNineComponent } from './containers/step-nine/step-nine.component';
@@ -139,7 +139,7 @@ const entityMetadata: EntityMetadataMap = {
     AccordionComponent,
     ModalContentComponent,
     LinkComponent,
-    VideoComponent,
+    VideoThumbComponent,
     VideoPlayerComponent
   ],
   imports: [

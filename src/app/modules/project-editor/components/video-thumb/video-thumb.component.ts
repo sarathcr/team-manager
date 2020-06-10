@@ -3,11 +3,11 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalContentComponent } from '../modal-content/modal-content.component';
 
 @Component({
-  selector: 'app-video',
-  templateUrl: './video.component.html',
-  styleUrls: ['./video.component.scss']
+  selector: 'app-video-thumb',
+  templateUrl: './video-thumb.component.html',
+  styleUrls: ['./video-thumb.component.scss']
 })
-export class VideoComponent implements OnInit {
+export class VideoThumbComponent implements OnInit {
   @Input() details: object;
   bsModalRef: BsModalRef;
 
