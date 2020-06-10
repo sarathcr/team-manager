@@ -15,11 +15,13 @@ export class ModalContentComponent implements OnInit {
   videoSources: any
   closeBtnName: string
   videoOptions: VideoOptions
-  constructor(public bsModalRef: BsModalRef) {
-
-  }
+  constructor(public bsModalRef: BsModalRef) {}
 
   ngOnInit() {
+    this.videoInit()
+  }
+
+  videoInit(){
     if(this.video){
       this.videoOptions = {
         fluid: true,
@@ -35,8 +37,7 @@ export class ModalContentComponent implements OnInit {
         youtube: {
           iv_load_policy: 3,
           ytRel: 0,
-          ytControls: 0,
-
+          ytControls: 0
         }
       }
     }
