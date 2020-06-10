@@ -1,11 +1,11 @@
 <div class="editor" id="editor" *ngIf="!notFound || projectUrl == 'create'">
   <div class="editor__bg"></div>
-  <app-editor-header [projectData]="titleData" id="editor-header" (titleBlur)="handleSubmit($event)">
-  </app-editor-header>
-  <app-editor-sidebar [spyActive]="spyActive$ | async" id="editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}" [steps]="steps"></app-editor-sidebar>
+  <app-editor-header [projectData]="titleData" id="editor-header" (titleBlur)="handleSubmit($event)"></app-editor-header>
+  <app-editor-sidebar [spyActive]="spyActive$ | async" id="editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
+   [steps]="steps"></app-editor-sidebar>
   <div class="editor__forms" scrollSpy (scrollSpyChange)="onScrollSpyChange($event)" [ngClass]="{ 'editor__forms_short' : contextualStatus }">
-    <app-step-one data-scrollSpy id="{{steps[0].sectionid}}" class="step-section" [spyActive$]="spyActive$" [step]="steps[0]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'></app-step-one>
-    <app-step-two data-scrollSpy id="{{steps[1].sectionid}}" class="step-section" [spyActive$]="spyActive$" [step]="steps[1]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'></app-step-two>
+    <app-step-one data-scrollSpy id="{{steps[0].sectionid}}" class="step-section"[spyActive$]="spyActive$" [step]="steps[0]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'></app-step-one>
+    <app-step-two data-scrollSpy id="{{steps[1].sectionid}}" class="step-section"  [spyActive$]="spyActive$" [step]="steps[1]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'></app-step-two>
     <app-step-three data-scrollSpy id="{{steps[2].sectionid}}" class="step-section"></app-step-three>
     <app-step-four data-scrollSpy id="{{steps[3].sectionid}}" class="step-section"></app-step-four>
     <app-step-five data-scrollSpy id="{{steps[4].sectionid}}" class="step-section"></app-step-five>
@@ -16,6 +16,7 @@
     <app-step-ten data-scrollSpy id="{{steps[9].sectionid}}" class="step-section"></app-step-ten>
   </div>
   <app-contextual-help (status)="getContextualStatus($event)"></app-contextual-help>
-  <div *ngIf="notFound">
-    Project not found
-  </div>
+</div>
+<div *ngIf="notFound">
+Project not found
+</div>
