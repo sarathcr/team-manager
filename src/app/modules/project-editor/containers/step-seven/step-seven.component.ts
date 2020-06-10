@@ -7,6 +7,7 @@ import { FormSevenInitData, FormSeven } from '../../constants/step-forms.model'
 import { Step, StepId, StepState, Status } from '../../constants/step.model'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
 import { Project } from 'src/app/shared/constants/project.model'
+import { DrivingQuestion } from 'src/app/shared/constants/driving-questions.model'
 
 @Component({
   selector: 'app-step-seven',
@@ -20,7 +21,9 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   @Input() spyActive$: Observable<StepId>
   @Input() stepStatus$: Observable<StepState>
   @Input() step: Step
+  drivingQuestions$: Observable<DrivingQuestion[]>
   initialFormData: FormSevenInitData = new formSevenInitData
+  inputFormData: FormSevenInitData = new formSevenInitData
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
   formTitle: string
@@ -56,7 +59,6 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       field: 'drivingQuestions',
       id: 'drivingQuestions',
       maxLength: 150,
-      options: [],
       limit: 0
     }
     // Translation
@@ -75,16 +77,17 @@ export class StepSevenComponent implements OnInit, OnDestroy {
 
   formInIt() {
     let tempinitialFormData = new formSevenInitData
-    if (this.project$)
-      this.project$.subscribe(data => {
+    if (this.project$) {
+      this.drivingQuestions$ = this.project$.pipe(map(project => project.drivingQuestions.map(data => ({ id: data.id, name: data.name }))))
+      this.drivingQuestions$.subscribe(drivingQuestions => {
         this.initialFormData.drivingQuestions = []
-        if (data?.drivingQuestions) {
-          tempinitialFormData.drivingQuestions = [...data.drivingQuestions]
-          this.textAreaConfig.options = [...data.drivingQuestions]
+        if (drivingQuestions) {
+          tempinitialFormData.drivingQuestions = [...drivingQuestions]
+          this.inputFormData.drivingQuestions = [...drivingQuestions]
         }
         this.initialFormData.drivingQuestions = [...tempinitialFormData.drivingQuestions]
       })
-
+    }
     if (this.stepStatus$) {
       this.stepStatus$.pipe(
         map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
@@ -130,10 +133,10 @@ export class StepSevenComponent implements OnInit, OnDestroy {
 
   // checks if the form is empty
   checkEmptyForm() {
-    if (!this.textAreaConfig.options.length) {
+    if (!this.inputFormData.drivingQuestions.length) {
       return true
     } else {
-      const tempData = this.textAreaConfig.options.filter(item => item.name != null && item.name.length && item)
+      const tempData = this.inputFormData.drivingQuestions.filter(item => item.name != null && item.name.length && item)
       if (!tempData.length)
         return true
     }
@@ -142,14 +145,14 @@ export class StepSevenComponent implements OnInit, OnDestroy {
 
   // checks the form is completely filled or not
   checkNonEmptyForm() {
-    if (this.textAreaConfig.options.length && (this.textAreaConfig.options[this.textAreaConfig.options.length - 1].name != null))
+    if (this.inputFormData.drivingQuestions.length && (this.inputFormData.drivingQuestions[this.inputFormData.drivingQuestions.length - 1].name != null))
       return true
     return false
   }
 
   // Function to check whether the form is updated
   isFormUpdated() {
-    if (!this.isEqual(this.initialFormData.drivingQuestions, this.textAreaConfig.options)) {
+    if (!this.isEqual(this.initialFormData.drivingQuestions, this.inputFormData.drivingQuestions)) {
       return true
     } else if (this.initialFormStatus !== this.step.state) {
       return true
@@ -170,19 +173,19 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     }
     else
       this.checkStatus()
-    let tempData = this.textAreaConfig.options.filter(item => item.name != null && item.name.length)
+    let tempData = this.inputFormData.drivingQuestions.filter(item => item.name != null && item.name.length)
     if (tempData.length) {
       tempData = tempData.map(item => item.id == null ? { name: item.name } : item)
-      this.textAreaConfig.options = tempData
+      this.inputFormData.drivingQuestions = tempData
       this.initialFormData.drivingQuestions = tempData
     }
     else {
-      this.textAreaConfig.options = []
-      this.initialFormData.drivingQuestions = this.textAreaConfig.options
+      this.inputFormData.drivingQuestions = []
+      this.initialFormData.drivingQuestions = this.inputFormData.drivingQuestions
     }
     let formData: FormSeven = {
       data: {
-        drivingQuestions: tempData.length ? this.textAreaConfig.options : [],
+        drivingQuestions: tempData.length ? this.inputFormData.drivingQuestions : [],
       },
       stepStatus: {
         steps: [
@@ -198,7 +201,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   }
 
   textAreaUpdate(data) { // calls on every update
-    this.textAreaConfig.options = data
+    this.inputFormData.drivingQuestions = data
     this.checkStatus()
   }
 
