@@ -36,10 +36,22 @@ export class ProjectsDataService extends DefaultDataService<Project> {
     }
 
     update(data: any): Observable<any> {
-        return this.http.put<any>(`${environment.apiUrl}/projects`, data.changes)
+        let dataChanges = this.nullValidator(data.changes)
+        return this.http.put<any>(`${environment.apiUrl}/projects`, dataChanges)
             .pipe(
                 map(res => res)
             );
+    }
+
+    // Replaces the null value with {id:-1} 
+    private nullValidator(data: any) {
+        let dataChanges = { ...data }
+        let validator = ['country', 'region', 'academicYear']
+        for (let item of validator) {
+            if (dataChanges[item] === null)
+                dataChanges[item] = { id: -1 } //passing {id:-1} to remove the data from backend 
+        }
+        return dataChanges 
     }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { VideoOptions } from 'src/app/shared/constants/video.model';
 
 @Component({
   selector: 'app-modal',
@@ -11,13 +12,33 @@ export class ModalContentComponent implements OnInit {
   title: string
   img: string
   video: boolean
-  externalVideo: boolean
-  externalVideoSources: any
-  internalVideoSoiurces: any
+  videoSources: any
   closeBtnName: string
+  videoOptions: VideoOptions
+  constructor(public bsModalRef: BsModalRef) {
 
-  constructor(public bsModalRef: BsModalRef) { }
+  }
 
   ngOnInit() {
+    if(this.video){
+      this.videoOptions = {
+        fluid: true,
+        autoplay: true,
+        controls: true,
+        techOrder: ["html5","youtube","vimeo"],
+        sources: [{
+          src: this.videoSources.src,
+          type: "video/"+this.videoSources.type,
+        }],
+        aspectRatio: "16:9",
+        muted: false,
+        youtube: {
+          iv_load_policy: 3,
+          ytRel: 0,
+          ytControls: 0,
+
+        }
+      }
+    }
   }
 }

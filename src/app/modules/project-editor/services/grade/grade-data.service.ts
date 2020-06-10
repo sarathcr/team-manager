@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data';
+import { DefaultDataService, HttpUrlGenerator} from '@ngrx/data';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,10 +14,10 @@ export class GradeDataService extends DefaultDataService<Grade> {
         super('Country', http, httpUrlGenerator);
 
     }
-    getWithQuery(query: any): Observable<Grade[]> {
-      return this.http.get<Grade[]>(`${environment.apiUrl + query}`)
-          .pipe(
-              map(res => res)
-          );
+    getWithQuery(parm: any): Observable<Grade[]> {
+        return this.http.get<Grade[]>(`${environment.apiUrl}/regions/${parm.regionId}/academicyears/${parm.academicyearId}/grades`)
+            .pipe(
+                map(res => res)
+            );
     }
 }

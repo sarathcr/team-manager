@@ -11,13 +11,6 @@ export class VideoComponent implements OnInit {
   @Input() details: object;
   bsModalRef: BsModalRef;
 
-  videoSources: Plyr.Source[] = [
-    {
-      src: 'bTqVqk7FSmY',
-      provider: 'youtube',
-    },
-  ];
-
   constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
@@ -25,18 +18,12 @@ export class VideoComponent implements OnInit {
 
   videoModal() {
     const initialState = {
-      title: '',
+      title: 'Some dummy title', // Title goes here
       video: true,
-      externalVideo: true,
-      externalVideoSources: [
-        {
-          src: 'bTqVqk7FSmY',
-          provider: 'youtube',
-        }
-      ],
-      internalVideoSoiurces: [
-
-      ]
+      videoSources: {
+        src: 'https://youtu.be/f4cstWWgOh0', // 'https://vimeo.com/347119375', // Set video url here
+        type: 'youtube' // 'vimeo', // Set video type here:- youtube,vimeo,html5,flash,mp4 etc
+      }
     };
 
     this.bsModalRef = this.modalService.show(ModalContentComponent, { class: 'app-modal', initialState });

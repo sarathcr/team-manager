@@ -5,5 +5,6 @@
     </button>
 </div>
 <div class="app-modal__body">
-    <img src="{{img}}" alt="image" class="app-modal__body-img" *ngIf="!video">
+    <img src='{{img}}' alt='image' class='app-modal__body-img' *ngIf='!video'>
+    <app-video-player [videoOptions]='videoOptions'  *ngIf='video'></app-video-player>
 </div>
