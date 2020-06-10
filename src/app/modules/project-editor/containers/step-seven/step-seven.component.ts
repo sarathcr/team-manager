@@ -30,7 +30,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   formDescription: string
   formPlaceholder: string
   active: boolean = false
-  initialFormStatus: Status
+  initialFormStatus: Status = "PENDING"
 
   constructor(private translateService: TranslateService) { }
 
@@ -126,12 +126,8 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   checkStatus() {
     if (this.checkEmptyForm())
       this.step.state = "PENDING"
-    else {
-      if (this.isFormUpdated()) {
-        this.step.state = "INPROCESS"
-      } else if (this.initialFormStatus == 'DONE')
-        this.step.state = "DONE"
-    }
+    else
+      this.step.state = "INPROCESS"
     this.handleButtonType()
   }
 
@@ -158,9 +154,10 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   isFormUpdated() {
     if (!this.isEqual(this.initialFormData.drivingQuestions, this.inputFormData.drivingQuestions)) {
       return true
-    } else {
-      return false
+    } else if (this.initialFormStatus !== this.step.state) {
+      return true
     }
+    return false
   }
 
   isEqual(d1: any[], d2: any[]) {
