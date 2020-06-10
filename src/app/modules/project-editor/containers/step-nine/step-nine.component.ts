@@ -29,7 +29,6 @@ export class StepNineComponent implements OnInit {
 
   ngOnInit(): void {
     this.formInit()
-    this.translate()
   }
 
   ngOnDestroy(): void {
@@ -107,9 +106,6 @@ export class StepNineComponent implements OnInit {
     if (!this.synopsis.length) {
       this.step.state = 'PENDING'
     }
-    if (this.synopsis.length && this.synopsis === this.initialFormData && this.initialFormStatus == 'DONE') {
-      this.step.state = 'DONE'
-    }
     this.handleButtonType()
   }
 
@@ -119,24 +115,12 @@ export class StepNineComponent implements OnInit {
     this.checkStatus()
   }
 
-  // Function to translate button label
-  translate() {
-    this.translateService.stream([
-      'PROJECT.project_button_markdone',
-      'PROJECT.project_button_done'
-    ]).subscribe(translations => {
-      this.buttonConfig.label = translations['PROJECT.project_button_markdone']
-      this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
-    })
-  }
-
-  // Function to check whether the form is updated
-  isFormUpdated() {
-    if (this.initialFormData !== this.synopsis) {
+   // Function to check whether the form is updated
+   isFormUpdated() {
+    if (this.initialFormData !== this.synopsis || this.initialFormStatus !== this.step.state) {
       return true
-    } else {
-      return false
     }
+    return false
   }
 
 }
