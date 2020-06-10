@@ -30,7 +30,6 @@ export class StepEightComponent implements OnInit {
 
   ngOnInit(): void {
     this.formInit()
-    this.translate()
     this.onScrollSubmit()
   }
 
@@ -118,22 +117,9 @@ export class StepEightComponent implements OnInit {
     this.onSubmit.emit(formData);
   }
 
-  // Function to translate button label
-  translate() {
-    this.translateService.stream([
-      'PROJECT.project_button_markdone',
-      'PROJECT.project_button_done'
-    ]).subscribe(translations => {
-      this.buttonConfig.label = translations['PROJECT.project_button_markdone']
-      this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
-    })
-  }
-
   // Function to check whether the form is updated
   isFormUpdated() {
-    if (this.initialFormData !== this.finalProduct) {
-      return true
-    } else if (this.initialFormStatus !== this.step.state) {
+    if (this.initialFormData !== this.finalProduct || this.initialFormStatus !== this.step.state) {
       return true
     }
     return false
