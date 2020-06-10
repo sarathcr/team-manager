@@ -8,8 +8,6 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 
-//video.js
-import videojs from 'video.js';
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectEditorRoutingModule } from './project-editor-routing.module';
@@ -154,8 +152,7 @@ const entityMetadata: EntityMetadataMap = {
     ScrollToModule.forRoot(),
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
-    ModalModule.forRoot(),
-    videojs
+    ModalModule.forRoot()
   ],
   providers: [
     ProjectsResolver,
