@@ -28,7 +28,7 @@ export class TextareaComponent implements OnInit {
 
   onKeyDown(event): any {
     const text = event.target.value;
-    if (this.isEdge() && event.keyCode === 13 && text.length > this.maxlength) {
+    if (this.isEdge() && event.keyCode === 13 && text.length > this.maxlength - 1) {
       event.preventDefault();
     }
   }
