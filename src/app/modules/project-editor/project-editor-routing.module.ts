@@ -7,6 +7,7 @@ import { StepOneComponent } from './containers/step-one/step-one.component';
 import { StepTwoComponent } from './containers/step-two/step-two.component';
 import { StepSevenComponent } from './containers/step-seven/step-seven.component';
 import { StepEightComponent } from './containers/step-eight/step-eight.component';
+import { StepNineComponent } from './containers/step-nine/step-nine.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
           {
             path: 'stepEight',
             component: StepEightComponent,
+          },
+          {
+            path: 'stepNine',
+            component: StepNineComponent,
           },
           {
             path: '**',

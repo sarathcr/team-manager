@@ -12,7 +12,7 @@
       <app-dropdown [config]='gradesDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
       <app-dropdown [config]='subjectsDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
     </div>
-    <app-form-button scrollTo scrollToId="stepTwo" [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>
+    <app-form-button [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>
     </app-form-button>
   </div>
 </div>

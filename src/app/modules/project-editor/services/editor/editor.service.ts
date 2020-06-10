@@ -69,6 +69,7 @@ export class EditorService {
             case 'stepTwo': return data?.themes.map(({ id, name }) => ({ id, name }))
             case 'stepSeven': return data?.drivingQuestions.map(({ id, name }) => ({ id, name }))
             case 'stepEight': return data?.finalProduct
+            case 'stepNine': return data?.synopsis
           }
         }
       ))
