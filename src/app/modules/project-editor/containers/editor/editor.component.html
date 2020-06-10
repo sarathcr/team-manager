@@ -2,30 +2,17 @@
   <div class="editor__bg"></div>
   <app-editor-header [projectData]="titleData" id="editor-header" (titleBlur)="handleSubmit($event)">
   </app-editor-header>
-  <app-editor-sidebar [spyActive]="spyActive$ | async" id="editor-sidebar"
-    title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}"
-    view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}" [steps]="steps"></app-editor-sidebar>
-  <div class="editor__forms" scrollSpy (scrollSpyChange)="onScrollSpyChange($event)"
-    [ngClass]="{ 'editor__forms_short' : contextualStatus }">
-    <app-step-one data-scrollSpy id="{{steps[0].sectionid}}" class="step-section" [spyActive$]="spyActive$"
-      [step]="steps[0]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'>
-    </app-step-one>
-    <app-step-two data-scrollSpy id="{{steps[1].sectionid}}" class="step-section" [spyActive$]="spyActive$"
-      [step]="steps[1]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'>
-    </app-step-two>
+  <app-editor-sidebar [spyActive]="spyActive$ | async" id="editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}" [steps]="steps"></app-editor-sidebar>
+  <div class="editor__forms" scrollSpy (scrollSpyChange)="onScrollSpyChange($event)" [ngClass]="{ 'editor__forms_short' : contextualStatus }">
+    <app-step-one data-scrollSpy id="{{steps[0].sectionid}}" class="step-section" [spyActive$]="spyActive$" [step]="steps[0]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'></app-step-one>
+    <app-step-two data-scrollSpy id="{{steps[1].sectionid}}" class="step-section" [spyActive$]="spyActive$" [step]="steps[1]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'></app-step-two>
     <app-step-three data-scrollSpy id="{{steps[2].sectionid}}" class="step-section"></app-step-three>
     <app-step-four data-scrollSpy id="{{steps[3].sectionid}}" class="step-section"></app-step-four>
     <app-step-five data-scrollSpy id="{{steps[4].sectionid}}" class="step-section"></app-step-five>
     <app-step-six data-scrollSpy id="{{steps[5].sectionid}}" class="step-section"></app-step-six>
-    <app-step-seven data-scrollSpy id="{{steps[6].sectionid}}" class="step-section" [spyActive$]="spyActive$"
-      [step]="steps[6]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'>
-    </app-step-seven>
-    <app-step-eight data-scrollSpy id="{{steps[7].sectionid}}" class="step-section" [spyActive$]="spyActive$"
-      [step]="steps[7]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'>
-    </app-step-eight>
-    <app-step-nine data-scrollSpy id="{{steps[8].sectionid}}" class="step-section" [spyActive$]="spyActive$"
-      [step]="steps[8]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'>
-    </app-step-nine>
+    <app-step-seven data-scrollSpy id="{{steps[6].sectionid}}" class="step-section" [spyActive$]="spyActive$" [step]="steps[6]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'></app-step-seven>
+    <app-step-eight data-scrollSpy id="{{steps[7].sectionid}}" class="step-section" [spyActive$]="spyActive$" [step]="steps[7]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'></app-step-eight>
+    <app-step-nine data-scrollSpy id="{{steps[8].sectionid}}" class="step-section" [spyActive$]="spyActive$" [step]="steps[8]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'></app-step-nine>
     <app-step-ten data-scrollSpy id="{{steps[9].sectionid}}" class="step-section"></app-step-ten>
   </div>
   <app-contextual-help (status)="getContextualStatus($event)"></app-contextual-help>
