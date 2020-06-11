@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 import { ProjectTitle } from '../../constants/title-data.model';
 import { StepStatusEntityService } from '../step-status/step-status-entity.service';
 import { FormOne } from '../../constants/step-forms.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,14 @@ export class EditorService {
   steps: Steps;
   stepStatus$: Observable<StepState>;
   tempStatus: any;
+  currentSectionId: StepId
 
   constructor(
     private projectsService: ProjectEntityService,
     private translate: TranslateService,
     private stepStatusService: StepStatusEntityService,
     private location: Location,
+    private router: Router
   ) { }
 
   getProject(projectId) {
@@ -50,10 +53,14 @@ export class EditorService {
         }
       })
     }
-    else this.project$ = null
+    else {
+      this.projectId = null
+      this.project$ = null
+    }
   }
 
   getStepData(step: StepId) {
+    this.currentSectionId = step
     if (this.project$) {
       return this.project$.pipe(map(
         (data) => {
@@ -127,7 +134,8 @@ export class EditorService {
       this.projectsService.add(newProject)
         .subscribe(
           newResProject => {
-            this.location.go('editor/project/' + newResProject.id)
+            // this.location.go(`editor/project/${newResProject.id}/${this.currentSectionId}`)
+            this.router.navigate([`editor/project/${newResProject.id}/${this.currentSectionId}`])
             this.projectId = newResProject.id
             this.getProject(this.projectId);
             if (this.tempStatus) {
@@ -147,9 +155,10 @@ export class EditorService {
     }
   }
 
-  handleFormSubmit(data) {
+  handleFormSubmit(data, isDone = false) {
     this.handleSubmit(data.data)
     this.submitFormStatus(data.stepStatus)
+    this.handleNavigate()
   }
 
   submitFormStatus(data: any) {
@@ -162,6 +171,25 @@ export class EditorService {
     } else {
       this.tempStatus = data;
     }
+  }
+
+  handleNavigate(data?) {
+    let nextSectionId
+    const keys = Object.keys(this.steps)
+    keys.forEach((step, index) => {
+      if (this.steps[step].sectionid === this.currentSectionId) {
+        if (index != keys.length - 1) {
+          nextSectionId = this.steps[keys[index + 1]].sectionid
+        } else {
+          nextSectionId = this.steps[step].sectionid
+        }
+      }
+    })
+    console.log(nextSectionId)
+    // if (this.projectId) {
+
+    // }
+
   }
 
   createSteps(): Steps {

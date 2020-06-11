@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { ProjectEntityService } from '../../services/project/project-entity.service';
-import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
 import { ProjectTitle } from '../../constants/title-data.model';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service';
 import { StepId, Status, StepState, Steps } from '../../constants/step.model';
 import { EditorService } from '../../services/editor/editor.service';
 
