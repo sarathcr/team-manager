@@ -176,7 +176,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.editor.handleFormSubmit(formData, this.step.state == "DONE")
+    this.editor.handleStepSubmit(formData, this.step.state == "DONE")
     this.handleButtonType()
   }
 

@@ -77,7 +77,7 @@ export class StepNineComponent implements OnInit {
         ]
       }
     }
-    this.editor.handleFormSubmit(formData, this.step.state == "DONE");
+    this.editor.handleStepSubmit(formData, this.step.state == "DONE");
   }
 
   // Changes the button according to form status

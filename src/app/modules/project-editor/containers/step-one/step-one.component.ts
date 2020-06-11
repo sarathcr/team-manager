@@ -321,7 +321,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
       this.buttonConfig.submitted = this.step.state == 'DONE'
       this.buttonConfig.disabled = this.step.state == "DONE"
     }
-    this.editor.handleFormSubmit(formData, this.step.state == "DONE")
+    this.editor.handleStepSubmit(formData, this.step.state == "DONE")
   }
 
   // reset form fields

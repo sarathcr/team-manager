@@ -58,6 +58,7 @@ export class EditorService {
     }
   }
 
+  // filter data for each step
   getStepData(step: StepId) {
     this.currentSectionId = step
     if (this.project$) {
@@ -82,7 +83,7 @@ export class EditorService {
     }
   }
 
-  getStepsStatus() {
+  private getStepsStatus() {
     // status state management
     this.stepStatus$ = this.stepStatusService.entities$
       .pipe(
@@ -99,6 +100,7 @@ export class EditorService {
     })
   }
 
+  // filter status for each step
   getStepStatus(stepId: statusId): Observable<Step> {
     this.stepStatus$ = this.stepStatusService.entities$
       .pipe(
@@ -113,7 +115,7 @@ export class EditorService {
     }
   }
 
-  updateStepStatus(stepstatus: any) {
+  private updateStepStatus(stepstatus: any) {
     for (const newState of stepstatus.steps) {
       for (const step in this.steps) {
         if (this.steps[step].stepid == newState.stepid) {
@@ -154,14 +156,14 @@ export class EditorService {
     }
   }
 
-  handleFormSubmit(data, isDone = false) {
+  handleStepSubmit(data, isDone = false) {
     this.handleSubmit(data.data)
-    this.submitFormStatus(data.stepStatus)
+    this.submitStepStatus(data.stepStatus)
     this.isStepDone = isDone
     this.handleNavigate()
   }
 
-  submitFormStatus(data: any) {
+  private submitStepStatus(data: any) {
     if (this.projectId) {
       const dataWithId: StepState = {
         ...data,
@@ -173,6 +175,7 @@ export class EditorService {
     }
   }
 
+  // Navigates to next step after a 1s delay
   private handleNavigate() {
     this.getNextSectionId()
     if (this.isStepDone) {
@@ -184,6 +187,7 @@ export class EditorService {
     }
   }
 
+  //Finds the next step sectionId
   private getNextSectionId() {
     const stepkeys = Object.keys(this.steps)
     stepkeys.forEach((step, index) => {
