@@ -21,6 +21,13 @@ export class ProjectsDataService extends DefaultDataService<Project> {
             );
     }
 
+    getById(id: any): Observable<Project> {
+        return this.http.get<Project>(`${environment.apiUrl}/projects/${id}`)
+            .pipe(
+                map(res => res)
+            );
+    }
+
     add(project: object): Observable<any> {
         return this.http.post<any>(`${environment.apiUrl}/projects`, project)
             .pipe(
@@ -29,17 +36,22 @@ export class ProjectsDataService extends DefaultDataService<Project> {
     }
 
     update(data: any): Observable<any> {
-        return this.http.put<any>(`${environment.apiUrl}/projects`, data.changes)
+        let dataChanges = this.nullValidator(data.changes)
+        return this.http.put<any>(`${environment.apiUrl}/projects`, dataChanges)
             .pipe(
                 map(res => res)
             );
     }
 
-    getWithQuery(query: any): Observable<any> {
-        return this.http.get<any>(`${environment.apiUrl + query}`)
-          .pipe(
-              map(res => res)
-          );
+    // Replaces the null value with {id:-1} 
+    private nullValidator(data: any) {
+        let dataChanges = { ...data }
+        let validator = ['country', 'region', 'academicYear']
+        for (let item of validator) {
+            if (dataChanges[item] === null)
+                dataChanges[item] = { id: -1 } //passing {id:-1} to remove the data from backend 
+        }
+        return dataChanges 
     }
 
 }

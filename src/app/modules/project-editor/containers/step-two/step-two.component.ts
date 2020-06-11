@@ -24,7 +24,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
   active: boolean = false
-  initialFormStatus: Status
+  initialFormStatus: Status = "PENDING"
 
   constructor(private translateService: TranslateService) { }
 
@@ -119,12 +119,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   checkStatus() {
     if (this.checkEmptyForm())
       this.step.state = "PENDING"
-    else {
-      if (this.isFormUpdated()) {
-        this.step.state = "INPROCESS"
-      } else if (this.initialFormStatus == 'DONE')
-        this.step.state = "DONE"
-    }
+    else
+      this.step.state = "INPROCESS"
     this.handleButtonType()
   }
 
@@ -151,9 +147,10 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   isFormUpdated() {
     if (!this.isEqual(this.initialFormData.themes, this.textAreaConfig.options)) {
       return true
-    } else {
-      return false
+    } else if (this.initialFormStatus !== this.step.state) {
+      return true
     }
+    return false
   }
 
   isEqual(d1: any[], d2: any[]) {

@@ -24,13 +24,12 @@ export class StepEightComponent implements OnInit {
   buttonConfig = new buttonSubmitConfig
   initialFormData: FormEightInitData = formEightInitData
   active: boolean = false
-  initialFormStatus: Status
+  initialFormStatus: Status = "PENDING"
 
   constructor(private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.formInit()
-    this.translate()
     this.onScrollSubmit()
   }
 
@@ -70,9 +69,6 @@ export class StepEightComponent implements OnInit {
     }
     if (!this.finalProduct.length) {
       this.step.state = 'PENDING'
-    }
-    if (this.finalProduct.length && this.finalProduct === this.initialFormData && this.initialFormStatus == 'DONE') {
-      this.step.state = 'DONE'
     }
     this.handleButtonType()
   }
@@ -121,24 +117,12 @@ export class StepEightComponent implements OnInit {
     this.onSubmit.emit(formData);
   }
 
-  // Function to translate button label
-  translate() {
-    this.translateService.stream([
-      'PROJECT.project_button_markdone',
-      'PROJECT.project_button_done'
-    ]).subscribe(translations => {
-      this.buttonConfig.label = translations['PROJECT.project_button_markdone']
-      this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
-    })
-  }
-
   // Function to check whether the form is updated
   isFormUpdated() {
-    if (this.initialFormData !== this.finalProduct) {
+    if (this.initialFormData !== this.finalProduct || this.initialFormStatus !== this.step.state) {
       return true
-    } else {
-      return false
     }
+    return false
   }
 
   // Function to submit data on scroll

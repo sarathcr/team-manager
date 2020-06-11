@@ -6,7 +6,7 @@ export class buttonSubmitConfig implements FieldConfig {
     id = 'submitButton'
     disabled = true
     submitted = false
-    label = ''
-    successLabel = ''
+    label = 'PROJECT.project_button_markdone'
+    successLabel = 'PROJECT.project_button_done'
 }
 

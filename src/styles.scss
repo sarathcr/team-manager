@@ -1,6 +1,7 @@
 @import "./styles/main";
+@import '~video.js/dist/video-js.css';
 
-.creator-home,.project-editor{
+.creator-home,.editor{
   width: calc(100% - 187px);
   min-height: 100vh;
   background-color: $creator-background;
@@ -98,4 +99,14 @@
 .textarea_focus, .textarea-bullets_focus{
   border: 1px solid transparent !important;
   box-shadow: 0 0 0 3px $primary !important;
+}
+.modal{
+  &.show{
+    padding: 15px;
+    .modal-dialog{
+      transform: translateY(-50%);
+      top: 50%;
+      margin: 0 auto;
+    }
+  }
 }

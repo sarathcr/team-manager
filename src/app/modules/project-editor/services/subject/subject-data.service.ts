@@ -13,8 +13,8 @@ export class SubjectDataService extends DefaultDataService<Subject> {
     constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
         super('Subject', http, httpUrlGenerator);
     }
-    getWithQuery(query: any): Observable<Subject[]> {
-      return this.http.get<Subject[]>(`${environment.apiUrl + query}`)
+    getWithQuery(parm: any): Observable<Subject[]> {
+      return this.http.get<Subject[]>(`${environment.apiUrl}/grades/${parm}/subjects`)
           .pipe(
               map(res => res)
           );
