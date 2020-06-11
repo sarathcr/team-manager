@@ -1,0 +1,74 @@
+<accordion [isAnimated]="true" [closeOthers]="oneAtATime">
+  <accordion-group [isOpen]="isFirstOpen" [panelClass]="customClass" #accordionGroup1 [ngClass]="{ 'accordion_active' : accordionGroup1.isOpen }">
+    <div accordion-heading class="accordion__heading" [ngClass]="{ 'accordion_active' : accordionGroup1.isOpen }">
+      <div class="accordion__heading-icon accordion__heading-icon_multi-icon">
+        <span class="icon icon-ic_motivate_off"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+        <span class="icon icon-ic_motivate_on"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+      </div>
+      <h5 class="accordion__heading-title">MOTÍVATE</h5>
+      <div class="accordion__heading-arrow">
+        <span class="icon icon-ic_dropdown"></span>
+      </div>
+    </div>
+    <div class="accordion__body">
+      <h6 class="accordion__body-title">Intenta que tu proyecto conecte varias asignaturas.</h6>
+      <p class="accordion__body-desc">Cuando vas a comprar el pan, utilizas las matemáticas para saber si el cambio es correcto. También la expresión oral, para pedir exactamente la barra que quieres. En un gesto tan sencillo integras dos áreas. </p>
+      <p class="accordion__body-desc">Los retos de la vida real no se presentan por compartimentos, sino combinados. El ABP intenta acercar el aprendizaje a los desafíos de la vida real. Por eso, idealmente, los proyectos son transdisciplinares o interdisciplinares. </p>
+      <app-link [details]="link"></app-link>
+    </div>
+  </accordion-group>
+  <accordion-group [panelClass]="customClass" #accordionGroup2 [ngClass]="{ 'accordion_last accordion_active' : accordionGroup2.isOpen }">
+    <div accordion-heading class="accordion__heading">
+      <div class="accordion__heading-icon accordion__heading-icon_multi-icon">
+        <span class="icon icon-ic_inspirate_off"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+        <span class="icon icon-ic_inspirate_on"><span class="path1"></span><span class="path2"></span><span class="path3"></span></span>
+      </div>
+      <h5 class="accordion__heading-title">InspÍRATE</h5>
+      <div class="accordion__heading-arrow">
+        <span class="icon icon-ic_dropdown"></span>
+      </div>
+    </div>
+    <div class="accordion__body">
+      <p class="accordion__body-desc">Las Lenguas (Castellana, Catalana, Inglés) son las que mejor conectan conotras áreas.</p>
+      <h6 class="accordion__body-title">Intenta que tu proyecto conecte varias asignaturas.</h6>
+      <p class="accordion__body-desc">Las Lenguas (Castellana, Catalana, Inglés) son las que</p>
+      <ul class="accordion__body-list">
+        <li class="accordion__body-list-item">Neque porro quisquam est, qui dolorem.</li>
+        <li class="accordion__body-list-item">Duis aute irure dolor in reprehender in voluptate velit esse cillum dolore eu fugiat nulla pariatur mollit anim.</li>
+      </ul>
+      <app-video-thumb [details]="video"></app-video-thumb>
+      <p class="accordion__body-desc">Las Lenguas (Castellana, Catalana, Inglés) son las que mejor conectan conotras áreas. Desde cualquier asignatura se puede implicar la expresión oral o escrita en un idioma.</p>
+      <img src="../../../../../assets/images/150.png" alt="image" class="accordion__body-img">
+    </div>
+  </accordion-group>
+  <accordion-group [panelClass]="customClass" #accordionGroup3 [ngClass]="{ 'accordion_last accordion_active' : accordionGroup3.isOpen }">
+    <div accordion-heading class="accordion__heading">
+        <div class="accordion__heading-icon accordion__heading-icon_multi-icon">
+          <span class="icon icon-ic_ejemplos_off"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span></span>
+          <span class="icon icon-ic_ejemplos_on"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span></span>
+        </div>
+        <h5 class="accordion__heading-title">ejemplos</h5>
+        <div class="accordion__heading-arrow">
+          <span class="icon icon-ic_dropdown"></span>
+        </div>
+    </div>
+    <div class="accordion__body">
+      <a class="accordion__body-btn" (click)="openModalWithComponent()">
+        <img src="../../../../../assets/images/150.png" class="accordion__body-btn-img" alt="Modal 1">
+        <span class="accordion__body-btn-title">Ciclo incial primaria</span>
+      </a>
+      <a class="accordion__body-btn" (click)="openModalWithComponent()">
+        <img src="../../../../../assets/images/150.png" class="accordion__body-btn-img" alt="Modal 1">
+        <span class="accordion__body-btn-title">Ciclo incial primaria</span>
+      </a>
+      <a class="accordion__body-btn" (click)="openModalWithComponent()">
+        <img src="../../../../../assets/images/150.png" class="accordion__body-btn-img" alt="Modal 1">
+        <span class="accordion__body-btn-title">Ciclo incial primaria</span>
+      </a>
+      <a class="accordion__body-btn" (click)="openModalWithComponent()">
+        <img src="../../../../../assets/images/150.png" class="accordion__body-btn-img" alt="Modal 1">
+        <span class="accordion__body-btn-title">Ciclo incial primaria</span>
+      </a>
+    </div>
+  </accordion-group>
+</accordion>

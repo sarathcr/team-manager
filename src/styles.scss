@@ -99,3 +99,13 @@
   border: 1px solid transparent !important;
   box-shadow: 0 0 0 3px $primary !important;
 }
+.modal{
+  &.show{
+    padding: 15px;
+    .modal-dialog{
+      transform: translateY(-50%);
+      top: 50%;
+      margin: 0 auto;
+    }
+  }
+}
