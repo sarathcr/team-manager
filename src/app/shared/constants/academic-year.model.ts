@@ -1,4 +1,5 @@
 export class AcademicYear {
   id: number;
-  name: string;
+  name?: string;
+  academicYear?: string;
 }
