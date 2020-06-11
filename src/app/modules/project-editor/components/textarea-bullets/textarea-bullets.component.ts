@@ -52,8 +52,8 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  checkBrowser(browser: string) {
-    if (navigator.userAgent.toLowerCase().indexOf(browser) > -1) {
+  isFirefox() {
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
       return true
     }
     return false
@@ -112,7 +112,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
   onValueChange(value, i) {
     this.index = i
-    if (this.checkBrowser('firefox') && value.length > this.config.maxLength) {
+    if (this.isFirefox() && value.length > this.config.maxLength) {
       value = value.substring(0, this.config.maxLength)
     }
     this.configOptions[i].name = value
