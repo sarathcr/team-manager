@@ -52,10 +52,6 @@ export class EditorService {
         }
       })
     }
-    else {
-      this.projectId = null
-      this.project$ = null
-    }
   }
 
   // filter data for each step
@@ -203,6 +199,17 @@ export class EditorService {
         }
       }
     })
+  }
+
+  clearData() {
+    this.projectId = null
+    this.project$ = null
+    this.titleData = null
+    this.stepStatus$ = null
+    this.tempStatus = null
+    this.currentSectionId = null
+    this.nextSectionId = null
+    this.isStepDone = null
   }
 
   createSteps(): Steps {
