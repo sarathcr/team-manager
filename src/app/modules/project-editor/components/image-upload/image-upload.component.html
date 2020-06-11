@@ -1,7 +1,12 @@
-<div class="image-upload d-flex">
-    <div class="image-upload__file d-flex align-items-center justify-content-center">
-
-        <label for="file" class="image-upload__label d-flex align-items-center justify-content-center m-0 h-100">Cargar archivo</label>
+<div class="image-upload d-flex" [ngClass]="{'image-upload_border' : imgURL}">
+    <div class="image-upload__file d-flex align-items-center justify-content-center" *ngIf="!imgURL">
+        <label for="file" class="image-upload__label d-flex align-items-center justify-content-center m-0 h-100">Cargar
+            archivo</label>
     </div>
-    <input type='file' class="image-upload__input" accept="image/jpeg, image/png" name="image" id="file" >
+    <div class="image-upload__preview" *ngIf="imgURL" [ngStyle]="{'background-image' : 'url('+ imgURL +')'}">
+        <div class="image-upload__close d-flex align-items-center justify-content-center">
+            <span class="icon icon-ic_share_close image-upload__icon"></span></div>
+    </div>
+    <input type='file' class="image-upload__input" accept="image/jpeg, image/png" name="image" id="file"
+        (change)="preview(file.files)" #file [ngModel]="imgURL" (ngModelChange)="onValueChange($event)">
 </div>

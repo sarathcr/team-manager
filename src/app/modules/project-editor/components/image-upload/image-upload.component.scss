@@ -4,6 +4,7 @@
     min-height: 238px;
     border: 1px dashed $article-border;
     border-radius: 4px;
+    margin-bottom: 69px;
     &__input{
         visibility: hidden;
     }
@@ -12,6 +13,30 @@
         font-size: $font-size-body-s;
         line-height: 24px;
         cursor: pointer;
+    }
+    &__preview{
+        min-width: 424px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 4px;
+        position: relative;
+    }
+    &_border{
+        border: none;
+    }
+    &__close{
+        width: 34px;
+        height: 34px;   
+        background: $background-primary; 
+        border-radius: 50%;
+        position: absolute;
+        top: 18px;
+        right: 18px;
+    }
+    &__icon{
+        font-size: $font-size-sub-m;
+        color: $overtitle-grey;
     }
  }
  

@@ -1,12 +1,18 @@
 @import 'helpers/_helpers-master';
 .input{
     margin-bottom: 43px;
+    border: 1px solid $creator-border-active;
+    box-shadow: 0 0 0 0 transparent;
+    border-radius: 3px;
     &__field{
         min-height: 48px;
         padding: 12px 20px;
+        font-size: $font-size-body-s;
+        line-height: 24px;
         width: 100%;
-        border: 1px solid $creator-border-active;
-        border-radius: 3px;
+        border: none;
+        background: transparent;
+        caret-color: $electric-indigo;
         &::placeholder{
             color: $overtitle-grey;
             font-size: $font-size-body-s;

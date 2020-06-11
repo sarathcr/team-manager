@@ -48,6 +48,18 @@ export interface FormTwoInitData {
   themes?: Theme[],
   placeholder?: string
 }
+
+export interface FormSix {
+  data: {
+    creativeTitle?: string;
+    creativeImage?: string;
+    status?: Status
+  }
+  stepStatus: StepState
+}
+
+export type FormSixInitData = string
+
 export interface FormEight {
   data: {
       finalProduct?: string;
@@ -67,3 +79,5 @@ export interface FormNine {
 }
 
 export type FormNineInitData = string
+
+
