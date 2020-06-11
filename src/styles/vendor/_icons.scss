@@ -1,6 +1,6 @@
 
 [class^="icon-"],
-[class*="icon-"] {
+[class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'icomoon' !important;
     speak: none;
@@ -42,6 +42,30 @@
 }
 
 //icons from icomoon
+.icon-ic_web2:before {
+    content: "\e940";
+}
+
+.icon-ic_index_empty .path1:before {
+    content: "\e93c";
+    color: #fff;
+}
+
+.icon-ic_index_empty .path2:before {
+    content: "\e93d";
+    color: #6400e4;
+    margin-left: -1em;
+}
+
+.icon-ic_index_full:before {
+    content: "\e93e";
+    color: #6400e4;
+}
+
+.icon-ic_index:before {
+    content: "\e93f";
+}
+
 .icon-ic_add_person:before {
     content: "\e916";
 }

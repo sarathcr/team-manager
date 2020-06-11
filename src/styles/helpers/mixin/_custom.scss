@@ -26,3 +26,9 @@
     -moz-box-shadow: 0 0 50px -10px rgba($desktop-shadow-color, 0.1);
     box-shadow: 0 0 50px -10px rgba($desktop-shadow-color, 0.1);
 }
+
+@mixin contextual-list-shadow(){
+    box-shadow: -44px 0 50px -10px rgba($desktop-shadow-color, 0.1), inset -16px 20px 16px -17px rgba($desktop-shadow-color, 0.1);
+    box-shadow: -44px 0 50px -10px rgba($desktop-shadow-color, 0.1), inset -16px 20px 16px -17px rgba($desktop-shadow-color, 0.1);
+    box-shadow: -44px 0 50px -10px rgba($desktop-shadow-color, 0.1), inset -16px 20px 16px -17px rgba($desktop-shadow-color, 0.1);
+}

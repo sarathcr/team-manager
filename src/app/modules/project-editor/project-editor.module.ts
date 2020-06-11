@@ -1,11 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+//ngx bootstrap
+import { setTheme } from 'ngx-bootstrap/utils';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectEditorRoutingModule } from './project-editor-routing.module';
 // containers
 import { StepOneComponent } from './containers/step-one/step-one.component';
+import { ContextualHelpComponent } from './containers/contextual-help/contextual-help.component';
 // components
 import { ProjectThumbnailComponent } from './components/project-thumbnail/project-thumbnail.component';
 import { CreateProjectComponent } from './components/create-project/create-project.component';
@@ -21,6 +29,10 @@ import { StepEightComponent } from './containers/step-eight/step-eight.component
 import { TextareaComponent } from './components/textarea/textarea.component';
 import { StepThreeComponent } from './containers/step-three/step-three.component';
 import { StepFourComponent } from './containers/step-four/step-four.component';
+import { AccordionComponent } from './components/accordion/accordion.component';
+import { ModalContentComponent } from './components/modal-content/modal-content.component';
+import { LinkComponent } from './components/link/link.component';
+import { VideoThumbComponent } from './components/video-thumb/video-thumb.component';
 import { StepFiveComponent } from './containers/step-five/step-five.component';
 import { StepSixComponent } from './containers/step-six/step-six.component';
 import { StepNineComponent } from './containers/step-nine/step-nine.component';
@@ -53,44 +65,45 @@ import { StepStatusEntityService } from './services/step-status/step-status-enti
 import { StepStatusDataService } from './services/step-status/step-status-data.service';
 import { ProjectEditorComponent } from './project-editor.component';
 import { EditorService } from './services/editor/editor.service';
+import { VideoPlayerComponent } from './components/video-player/video-player.component';
 
 const entityMetadata: EntityMetadataMap = {
-    Project: {
-        sortComparer: compareProjects,
-        entityDispatcherOptions: {
-            optimisticUpdate: true
-        }
-    },
-    Country: {
-      entityDispatcherOptions: {
-          optimisticUpdate: true
-      }
-    },
-    Subject: {
-      entityDispatcherOptions: {
-        optimisticUpdate: true
-      }
-    },
-    Region: {
-      entityDispatcherOptions: {
-        optimisticUpdate: true
-      }
-    },
-    Grade: {
-      entityDispatcherOptions: {
-        optimisticUpdate: true
-      }
-    },
-    AcademicYear: {
-      entityDispatcherOptions: {
-        optimisticUpdate: true
-      }
-    },
-    StepStatus: {
-      entityDispatcherOptions: {
-        optimisticUpdate: true
-      }
+  Project: {
+    sortComparer: compareProjects,
+    entityDispatcherOptions: {
+      optimisticUpdate: true
     }
+  },
+  Country: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  Subject: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  Region: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  Grade: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  AcademicYear: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  StepStatus: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  }
 };
 
 @NgModule({
@@ -118,6 +131,12 @@ const entityMetadata: EntityMetadataMap = {
         StepNineComponent,
         StepTenComponent,
         ProjectEditorComponent,
+        ContextualHelpComponent,
+        AccordionComponent,
+        ModalContentComponent,
+        LinkComponent,
+        VideoThumbComponent,
+        VideoPlayerComponent
     ],
     imports: [
         CommonModule,
@@ -126,6 +145,9 @@ const entityMetadata: EntityMetadataMap = {
         TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule,
+        TabsModule.forRoot(),
+        AccordionModule.forRoot(),
+        ModalModule.forRoot()
     ],
     providers: [
         ProjectsResolver,
@@ -143,30 +165,34 @@ const entityMetadata: EntityMetadataMap = {
         AcademicYearEntityService,
         StepStatusEntityService,
         StepStatusDataService,
-        EditorService
+        EditorService,
+        BsModalRef
     ]
 })
 
 export class ProjectEditorModule {
 
-    constructor(
-        private eds: EntityDefinitionService,
-        private entityDataService: EntityDataService,
-        private projectsDataService: ProjectsDataService,
-        private countryDataService: CountryDataService,
-        private regionDataService: RegionDataService,
-        private subjectDataService: SubjectDataService,
-        private gradeDataService: GradeDataService,
-        private academicYearDataService: AcademicYearDataService,
-        private stepStatusDataService: StepStatusDataService) {
+  constructor(
+    private eds: EntityDefinitionService,
+    private entityDataService: EntityDataService,
+    private projectsDataService: ProjectsDataService,
+    private countryDataService: CountryDataService,
+    private regionDataService: RegionDataService,
+    private subjectDataService: SubjectDataService,
+    private gradeDataService: GradeDataService,
+    private academicYearDataService: AcademicYearDataService,
+    private stepStatusDataService: StepStatusDataService) {
 
-        eds.registerMetadataMap(entityMetadata);
-        entityDataService.registerService('Project', projectsDataService);
-        entityDataService.registerService('Country', countryDataService);
-        entityDataService.registerService('Subject', subjectDataService);
-        entityDataService.registerService('Region', regionDataService);
-        entityDataService.registerService('Grade', gradeDataService);
-        entityDataService.registerService('AcademicYear', academicYearDataService);
-        entityDataService.registerService('StepStatus',stepStatusDataService)
-    }
+    // ngx-bootstrap theme
+    setTheme('bs4');
+
+    eds.registerMetadataMap(entityMetadata);
+    entityDataService.registerService('Project', projectsDataService);
+    entityDataService.registerService('Country', countryDataService);
+    entityDataService.registerService('Subject', subjectDataService);
+    entityDataService.registerService('Region', regionDataService);
+    entityDataService.registerService('Grade', gradeDataService);
+    entityDataService.registerService('AcademicYear', academicYearDataService);
+    entityDataService.registerService('StepStatus', stepStatusDataService)
+  }
 }

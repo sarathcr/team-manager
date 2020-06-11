@@ -5,7 +5,9 @@
      [steps]="steps"></app-editor-sidebar>
     <div class="editor__forms">
       <router-outlet></router-outlet>
+  </div>
+  <app-contextual-help (status)="getContextualStatus($event)"></app-contextual-help>
 </div>
 <div *ngIf="notFound">
-  Project not found
+Project not found
 </div>

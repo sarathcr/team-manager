@@ -22,6 +22,7 @@ export class EditorComponent implements OnInit {
   steps: Steps
   status: Status
   tempStatus: any // saving the status for non created projects
+  contextualStatus: boolean = false
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +33,10 @@ export class EditorComponent implements OnInit {
     this.steps = this.editor.createSteps()
     this.projectUrl = this.route.snapshot.paramMap.get('id')
     this.editor.getProject(this.projectUrl)
+  }
+
+  getContextualStatus($event) {
+    this.contextualStatus = $event
   }
 
 }
