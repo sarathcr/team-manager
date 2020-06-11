@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalContentComponent } from './modal-content.component';
+import { HelpAccordionComponent } from './help-accordion.component';
 
-describe('ModalContentComponent', () => {
-  let component: ModalContentComponent;
-  let fixture: ComponentFixture<ModalContentComponent>;
+describe('HelpAccordionComponent', () => {
+  let component: HelpAccordionComponent;
+  let fixture: ComponentFixture<HelpAccordionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ModalContentComponent]
+      declarations: [ HelpAccordionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModalContentComponent);
+    fixture = TestBed.createComponent(HelpAccordionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
