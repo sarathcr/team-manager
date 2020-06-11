@@ -138,7 +138,9 @@ const entityMetadata: EntityMetadataMap = {
         ModalContentComponent,
         LinkComponent,
         VideoThumbComponent,
-        VideoPlayerComponent
+        VideoPlayerComponent,
+        InputComponent,
+        ImageUploadComponent
     ],
     imports: [
         CommonModule,

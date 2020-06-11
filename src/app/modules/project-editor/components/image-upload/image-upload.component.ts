@@ -9,7 +9,7 @@ import { EventEmitter } from 'events';
 export class ImageUploadComponent implements OnInit {
 
   @Input() imageURL: string
-  @Output() onChange = new EventEmitter()
+  // @Output() onChange = new EventEmitter()
   public imagePath;
   imgURL: any;
   public message: string;
@@ -40,7 +40,7 @@ export class ImageUploadComponent implements OnInit {
   // Function to get and emit value on textarea
   onValueChange(imgURL: string) {
     this.imageURL = imgURL;
-    this.onChange.emit(this.imageURL);
+    // this.onChange.emit(this.imageURL);
   }
 
 }

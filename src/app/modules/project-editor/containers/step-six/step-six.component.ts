@@ -38,26 +38,26 @@ export class StepSixComponent implements OnInit {
   }
 
   formInit() {
-    if (this.project$)
-      this.project$.subscribe(data => {
-        if (data?.creativeTitle) {
-          this.creativeTitle = data.creativeTitle
-          this.initialFormData = data.creativeTitle
-        }
-      })
-    if (this.stepStatus$)
-      this.stepStatus$.pipe(
-        map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
-        .subscribe(
-          formStatus => {
-            if (formStatus && formStatus.length) {
-              this.buttonConfig.submitted = formStatus[0].state == "DONE"
-              this.initialFormStatus = formStatus[0].state
-              if (formStatus[0].state != "DONE" && this.creativeTitle?.length)
-                this.buttonConfig.disabled = false
-            }
-          }
-        )
+    // if (this.project$)
+    //   this.project$.subscribe(data => {
+    //     if (data?.creativeTitle) {
+    //       this.creativeTitle = data.creativeTitle
+    //       this.initialFormData = data.creativeTitle
+    //     }
+    //   })
+    // if (this.stepStatus$)
+    //   this.stepStatus$.pipe(
+    //     map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
+    //     .subscribe(
+    //       formStatus => {
+    //         if (formStatus && formStatus.length) {
+    //           this.buttonConfig.submitted = formStatus[0].state == "DONE"
+    //           this.initialFormStatus = formStatus[0].state
+    //           if (formStatus[0].state != "DONE" && this.creativeTitle?.length)
+    //             this.buttonConfig.disabled = false
+    //         }
+    //       }
+    //     )
   }
 
   //Handle submit functionality
@@ -110,9 +110,8 @@ export class StepSixComponent implements OnInit {
   }
 
   // Function to trigger the value in the textarea
-  onValueChange(value: string, imageURL: string) {
+  onValueChange(value: string) {
     this.creativeTitle = value
-    this.creativeImage = imageURL
     this.checkStatus()
   }
 
