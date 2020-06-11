@@ -57,3 +57,13 @@ export interface FormEight {
 }
 
 export type FormEightInitData = string
+
+export interface FormNine {
+  data: {
+      synopsis?: string;
+      status?: Status
+  }
+  stepStatus: StepState
+}
+
+export type FormNineInitData = string

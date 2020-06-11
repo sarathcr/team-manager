@@ -1,0 +1,53 @@
+@import 'helpers/_helpers-master';
+@import '~video.js/dist/video-js.css';
+.video-player{
+  .video-js{
+    .vjs-big-play-button{
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      color: $play-btn-color;
+      background: $play-btn-bg-color;
+      border: 2px solid $play-btn-bg-color;
+      .vjs-icon-placeholder{
+        position: relative;
+        display: block;
+        width: 24px;
+        height: 24px;
+        line-height: 1;
+      }
+      &:focus{
+        border-color: rgba($play-btn-bg-color,0.7);
+        background-color: rgba($play-btn-bg-color,0.6);
+        transition: all 0s;
+      }
+    }
+    &:hover{
+      .vjs-big-play-button{
+        border-color: rgba($play-btn-bg-color,0.7);
+        background-color: rgba($play-btn-bg-color,0.6);
+        transition: all 0s;
+      }
+    }
+  }
+
+  .vjs-controls-disabled, .vjs-has-started, .vjs-using-native-controls, .vjs-error{
+    .vjs-big-play-button{
+      display: none;
+    }
+  }
+  .vjs-ended{
+    .vjs-big-play-button{
+      display: flex;
+    }
+  }
+}
+
+
