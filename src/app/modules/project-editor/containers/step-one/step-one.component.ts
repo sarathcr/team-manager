@@ -50,9 +50,9 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // if (this.isFormUpdated()) {
-    //   this.handleSubmit()
-    // }
+    if (this.isFormUpdated()) {
+      this.handleSubmit()
+    }
   }
 
   formInIt() {

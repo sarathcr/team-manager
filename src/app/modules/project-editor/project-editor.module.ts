@@ -51,9 +51,6 @@ import { GradeEntityService } from './services/grade/grade-entity.service';
 import { StatusComponent } from './components/status/status.component';
 import { StepStatusEntityService } from './services/step-status/step-status-entity.service';
 import { StepStatusDataService } from './services/step-status/step-status-data.service';
-import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive';
-import { ScrollToDirective } from './directives/scroll-to/scroll-to.directive';
-import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { ProjectEditorComponent } from './project-editor.component';
 import { EditorService } from './services/editor/editor.service';
 
@@ -111,11 +108,9 @@ const entityMetadata: EntityMetadataMap = {
         TextareaBulletsComponent,
         StatusComponent,
         InfoToolTipComponent,
-        ScrollSpyDirective,
         StepSevenComponent,
         StepEightComponent,
         TextareaComponent,
-        ScrollToDirective,
         StepThreeComponent,
         StepFourComponent,
         StepFiveComponent,
@@ -131,7 +126,6 @@ const entityMetadata: EntityMetadataMap = {
         TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule,
-        ScrollToModule.forRoot()
     ],
     providers: [
         ProjectsResolver,

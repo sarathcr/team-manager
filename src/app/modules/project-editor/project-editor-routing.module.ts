@@ -5,9 +5,14 @@ import { EditorComponent } from './containers/editor/editor.component';
 import { ProjectEditorComponent } from './project-editor.component';
 import { StepOneComponent } from './containers/step-one/step-one.component';
 import { StepTwoComponent } from './containers/step-two/step-two.component';
+import { StepThreeComponent } from './containers/step-three/step-three.component';
+import { StepFourComponent } from './containers/step-four/step-four.component';
+import { StepFiveComponent } from './containers/step-five/step-five.component';
+import { StepSixComponent } from './containers/step-six/step-six.component';
 import { StepSevenComponent } from './containers/step-seven/step-seven.component';
 import { StepEightComponent } from './containers/step-eight/step-eight.component';
 import { StepNineComponent } from './containers/step-nine/step-nine.component';
+import { StepTenComponent } from './containers/step-ten/step-ten.component';
 
 const routes: Routes = [
   {
@@ -29,6 +34,18 @@ const routes: Routes = [
           {
             path: 'stepTwo',
             component: StepTwoComponent,
+          }, {
+            path: 'stepThree',
+            component: StepThreeComponent,
+          }, {
+            path: 'stepFour',
+            component: StepFourComponent,
+          }, {
+            path: 'stepFive',
+            component: StepFiveComponent,
+          }, {
+            path: 'stepSix',
+            component: StepSixComponent,
           },
           {
             path: 'stepSeven',
@@ -41,6 +58,10 @@ const routes: Routes = [
           {
             path: 'stepNine',
             component: StepNineComponent,
+          },
+          {
+            path: 'stepTen',
+            component: StepTenComponent,
           },
           {
             path: '**',

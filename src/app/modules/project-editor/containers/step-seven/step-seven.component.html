@@ -10,6 +10,6 @@
       <app-textarea-bullets [config]='textAreaConfig' (onChange)="textAreaUpdate($event)" [options$]="drivingQuestions$">
       </app-textarea-bullets>
     </div>
-    <app-form-button scrollTo scrollToId="stepEight" [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>
+    <app-form-button [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>
     </app-form-button>
   </div>

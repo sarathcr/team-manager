@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Location } from '@angular/common';
 import { StepState, StepId, Steps, statusId, Step } from '../../constants/step.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
@@ -8,7 +7,6 @@ import { ProjectEntityService } from '../project/project-entity.service';
 import { map } from 'rxjs/operators';
 import { ProjectTitle } from '../../constants/title-data.model';
 import { StepStatusEntityService } from '../step-status/step-status-entity.service';
-import { FormOne } from '../../constants/step-forms.model';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -24,12 +22,13 @@ export class EditorService {
   stepStatus$: Observable<StepState>;
   tempStatus: any;
   currentSectionId: StepId
+  nextSectionId: StepId
+  isStepDone: boolean
 
   constructor(
     private projectsService: ProjectEntityService,
     private translate: TranslateService,
     private stepStatusService: StepStatusEntityService,
-    private location: Location,
     private router: Router
   ) { }
 
@@ -70,13 +69,13 @@ export class EditorService {
                 country: data?.country ? { id: data?.country.id, name: data?.country.name } : null,
                 region: data?.region ? { id: data?.region.id, name: data?.region.name } : null,
                 academicYear: data?.academicYear ? { id: data?.academicYear.id, academicYear: data?.academicYear?.academicYear } : null,
-                grades: data?.grades.map(({ id, name }) => ({ id, name })),
-                subjects: data?.subjects.map(({ id, name }) => ({ id, name }))
+                grades: data?.grades?.map(({ id, name }) => ({ id, name })),
+                subjects: data?.subjects?.map(({ id, name }) => ({ id, name }))
               })
-            case 'stepTwo': return data?.themes.map(({ id, name }) => ({ id, name }))
-            case 'stepSeven': return data?.drivingQuestions.map(({ id, name }) => ({ id, name }))
-            case 'stepEight': return data?.finalProduct
-            case 'stepNine': return data?.synopsis
+            case 'stepTwo': return data?.themes?.map(({ id, name }) => ({ id, name }))
+            case 'stepSeven': return data?.drivingQuestions?.map(({ id, name }) => ({ id, name }))
+            case 'stepEight': return { finalProduct: data.finalProduct }
+            case 'stepNine': return { synopsis: data.synopsis }
           }
         }
       ))
@@ -134,10 +133,10 @@ export class EditorService {
       this.projectsService.add(newProject)
         .subscribe(
           newResProject => {
-            // this.location.go(`editor/project/${newResProject.id}/${this.currentSectionId}`)
             this.router.navigate([`editor/project/${newResProject.id}/${this.currentSectionId}`])
             this.projectId = newResProject.id
             this.getProject(this.projectId);
+            this.handleNavigate()
             if (this.tempStatus) {
               this.tempStatus.id = newResProject.id
               this.stepStatusService.update(this.tempStatus)
@@ -158,6 +157,7 @@ export class EditorService {
   handleFormSubmit(data, isDone = false) {
     this.handleSubmit(data.data)
     this.submitFormStatus(data.stepStatus)
+    this.isStepDone = isDone
     this.handleNavigate()
   }
 
@@ -173,23 +173,32 @@ export class EditorService {
     }
   }
 
-  handleNavigate(data?) {
-    let nextSectionId
-    const keys = Object.keys(this.steps)
-    keys.forEach((step, index) => {
+  private handleNavigate() {
+    this.getNextSectionId()
+    if (this.isStepDone) {
+      if (this.projectId && this.currentSectionId != this.nextSectionId) {
+        setTimeout(() => {
+          this.router.navigate([`editor/project/${this.projectId}/${this.nextSectionId}`])
+        }, 1000);
+      }
+    }
+  }
+
+  private getNextSectionId() {
+    const stepkeys = Object.keys(this.steps)
+    stepkeys.forEach((step, index) => {
       if (this.steps[step].sectionid === this.currentSectionId) {
-        if (index != keys.length - 1) {
-          nextSectionId = this.steps[keys[index + 1]].sectionid
+        if (this.steps[step].stepid < 10) {
+          stepkeys.forEach(stepData => {
+            if (this.steps[stepData].stepid == this.steps[step].stepid + 1) {
+              this.nextSectionId = this.steps[stepData].sectionid
+            }
+          })
         } else {
-          nextSectionId = this.steps[step].sectionid
+          this.nextSectionId = this.steps[step].sectionid
         }
       }
     })
-    console.log(nextSectionId)
-    // if (this.projectId) {
-
-    // }
-
   }
 
   createSteps(): Steps {

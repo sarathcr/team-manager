@@ -34,7 +34,6 @@
     "@nguniversal/express-engine": "^9.1.0",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
-    "@nicky-lenaers/ngx-scroll-to": "^9.0.0",
     "express": "^4.15.2",
     "messageformat": "^2.0.2",
     "ng-multiselect-dropdown": "^0.2.10",

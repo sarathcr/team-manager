@@ -31,9 +31,9 @@ export class StepEightComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    // if (this.isFormUpdated()) {
-    //   this.handleSubmit()
-    // }
+    if (this.isFormUpdated()) {
+      this.handleSubmit()
+    }
   }
 
   formInit() {
@@ -114,7 +114,7 @@ export class StepEightComponent implements OnInit {
         ]
       }
     }
-    this.editor.handleFormSubmit(formData)
+    this.editor.handleFormSubmit(formData, this.step.state == "DONE")
   }
 
   // Function to check whether the form is updated

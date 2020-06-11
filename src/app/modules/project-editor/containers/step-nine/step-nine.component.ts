@@ -1,11 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Step, Status, StepId, StepState } from '../../constants/step.model';
+import { Component, OnInit } from '@angular/core';
+import { Step, Status } from '../../constants/step.model';
 import { FormNineInitData, FormNine } from '../../constants/step-forms.model';
 import { formNineInitData } from '../../constants/step-forms.data';
 import { buttonSubmitConfig } from '../../constants/form-config.data';
-import { Project } from 'src/app/shared/constants/project.model';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { EditorService } from '../../services/editor/editor.service';
 
 @Component({
@@ -17,12 +15,12 @@ export class StepNineComponent implements OnInit {
 
   project$: Observable<any>
   step$: Observable<Step>
-  step: Step 
-  synopsis:any = ''
+  step: Step
+  synopsis: any = ''
   initialFormData: FormNineInitData = formNineInitData
   initialFormStatus: Status
   buttonConfig = new buttonSubmitConfig
-  
+
   constructor(public editor: EditorService) { }
 
   ngOnInit(): void {
@@ -48,15 +46,15 @@ export class StepNineComponent implements OnInit {
       })
     if (this.step$)
       this.step$.subscribe(
-          formStatus => {
-            if (formStatus) {
-              this.buttonConfig.submitted = formStatus.state == "DONE"
-              this.initialFormStatus = formStatus.state
-              if (formStatus.state != "DONE" && this.synopsis?.length)
-                this.buttonConfig.disabled = false
-            }
+        formStatus => {
+          if (formStatus) {
+            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.initialFormStatus = formStatus.state
+            if (formStatus.state != "DONE" && this.synopsis?.length)
+              this.buttonConfig.disabled = false
           }
-        )
+        }
+      )
   }
 
   //Handle submit functionality
@@ -79,7 +77,7 @@ export class StepNineComponent implements OnInit {
         ]
       }
     }
-    this.editor.handleFormSubmit(formData);
+    this.editor.handleFormSubmit(formData, this.step.state == "DONE");
   }
 
   // Changes the button according to form status
@@ -115,8 +113,8 @@ export class StepNineComponent implements OnInit {
     this.checkStatus()
   }
 
-   // Function to check whether the form is updated
-   isFormUpdated() {
+  // Function to check whether the form is updated
+  isFormUpdated() {
     if (this.initialFormData !== this.synopsis || this.initialFormStatus !== this.step.state) {
       return true
     }

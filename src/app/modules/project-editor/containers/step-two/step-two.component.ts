@@ -36,9 +36,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // if (this.isFormUpdated()) {
-    //   this.handleSubmit()
-    // }
+    if (this.isFormUpdated()) {
+      this.handleSubmit()
+    }
   }
 
   createFormConfig() {
@@ -176,7 +176,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.editor.handleFormSubmit(formData)
+    this.editor.handleFormSubmit(formData, this.step.state == "DONE")
     this.handleButtonType()
   }
 
