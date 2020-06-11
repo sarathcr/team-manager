@@ -29,14 +29,16 @@ import { StepEightComponent } from './containers/step-eight/step-eight.component
 import { TextareaComponent } from './components/textarea/textarea.component';
 import { StepThreeComponent } from './containers/step-three/step-three.component';
 import { StepFourComponent } from './containers/step-four/step-four.component';
-import { AccordionComponent } from './components/accordion/accordion.component';
-import { ModalContentComponent } from './components/modal-content/modal-content.component';
-import { LinkComponent } from './components/link/link.component';
-import { VideoThumbComponent } from './components/video-thumb/video-thumb.component';
+import { HelpAccordionComponent } from './components/help-accordion/help-accordion.component';
+import { HelpModalContentComponent } from './components/help-modal-content/help-modal-content.component';
+import { HelpLinkComponent } from './components/help-link/help-link.component';
+import { HelpVideoThumbComponent } from './components/help-video-thumb/help-video-thumb.component';
 import { StepFiveComponent } from './containers/step-five/step-five.component';
 import { StepSixComponent } from './containers/step-six/step-six.component';
 import { StepNineComponent } from './containers/step-nine/step-nine.component';
 import { StepTenComponent } from './containers/step-ten/step-ten.component';
+import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component';
+
 // pages
 import { HomeComponent } from './containers/home/home.component';
 import { EditorComponent } from './containers/editor/editor.component';
@@ -136,11 +138,12 @@ const entityMetadata: EntityMetadataMap = {
     StepTenComponent,
     ProjectEditorComponent,
     ContextualHelpComponent,
-    AccordionComponent,
-    ModalContentComponent,
-    LinkComponent,
-    VideoThumbComponent,
-    VideoPlayerComponent
+    HelpAccordionComponent,
+    HelpModalContentComponent,
+    HelpLinkComponent,
+    HelpVideoThumbComponent,
+    VideoPlayerComponent,
+    HelpImgThumbComponent
   ],
   imports: [
     CommonModule,
