@@ -1,8 +1,8 @@
 <div class="textarea-bullets" [ngClass]="focus?'textarea-bullets_focus':''">
   <ul class="bullet-list textarea-bullets__list" *ngIf="config">
     <li class="textarea-bullets__item" *ngFor="let text of configOptions; let i = index" [attr.data-index]='i'>
-      <textarea class="textarea-bullets__textarea" id="list-item-{{text.id}}" placeholder={{config.placeholder}}
-        name='textArea' (keydown)='keyAction($event, i)' [(ngModel)]=text.name #textArea [maxLength]='config.maxLength'
+      <textarea class="textarea-bullets__textarea" id="list-item-{{text.id}}" [placeholder]=" i===0 ? config.placeholder : '' "
+        name='textArea' (keydown)='keyAction($event, i)' [ngModel]=text.name #textArea [maxLength]='config.maxLength'
         (ngModelChange)='onValueChange($event, i)'
         oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' (focus)="setFocus()" (blur)="onBlur()"></textarea>
     </li>

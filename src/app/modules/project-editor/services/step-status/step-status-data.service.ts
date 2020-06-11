@@ -22,7 +22,7 @@ export class StepStatusDataService extends DefaultDataService<StepState[]> {
     }
 
     getWithQuery(param: string): Observable<any[]> {
-        return this.http.get<StepState[]>(`${environment.apiUrl}/projects/${param}/getAllStepState`)
+        return this.http.get<StepState[]>(`${environment.apiUrl}/projects/${param}/steps`)
             .pipe(
                 map(res => [{ steps: res['steps'], id: Number(param) }])
             );

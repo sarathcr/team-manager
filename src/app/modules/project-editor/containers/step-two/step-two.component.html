@@ -5,14 +5,13 @@
       <h2 class="project-form__title title_s"><span>2. </span>{{'THEMATIC.project_thematic_title' | translate}}<app-info-tooltip></app-info-tooltip></h2>
       <p class="project-form__description" [innerHTML]="'THEMATIC.project_thematic_description' | translate"></p>
       <app-textarea-bullets
-        [(config)]='textAreaConfig'
+        [config]='textAreaConfig'
         (onChange)="textAreaUpdate($event)"
+        [options$]="themes$"
       >
     </app-textarea-bullets>
   </div>
       <app-form-button
-        scrollTo
-        scrollToId="stepThree"
         [config]='buttonConfig'
         (onClick)='handleSubmit("DONE")'
       >

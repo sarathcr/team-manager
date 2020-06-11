@@ -65,10 +65,8 @@ import { GradeEntityService } from './services/grade/grade-entity.service';
 import { StatusComponent } from './components/status/status.component';
 import { StepStatusEntityService } from './services/step-status/step-status-entity.service';
 import { StepStatusDataService } from './services/step-status/step-status-data.service';
-import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive';
-import { ScrollToDirective } from './directives/scroll-to/scroll-to.directive';
-import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { ProjectEditorComponent } from './project-editor.component';
+import { EditorService } from './services/editor/editor.service';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 
 const entityMetadata: EntityMetadataMap = {
@@ -111,71 +109,67 @@ const entityMetadata: EntityMetadataMap = {
 };
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    EditorComponent,
-    StepOneComponent,
-    ProjectThumbnailComponent,
-    CreateProjectComponent,
-    EditorHeaderComponent,
-    EditorSidebarComponent,
-    ProjectTitleComponent,
-    StepMenuComponent,
-    StepTwoComponent,
-    TextareaBulletsComponent,
-    StatusComponent,
-    InfoToolTipComponent,
-    ScrollSpyDirective,
-    StepSevenComponent,
-    StepEightComponent,
-    TextareaComponent,
-    ScrollToDirective,
-    StepThreeComponent,
-    StepFourComponent,
-    StepFiveComponent,
-    StepSixComponent,
-    StepNineComponent,
-    StepTenComponent,
-    ProjectEditorComponent,
-    ContextualHelpComponent,
-    AccordionComponent,
-    ModalContentComponent,
-    LinkComponent,
-    VideoThumbComponent,
-    VideoPlayerComponent,
-    InputComponent,
-    ImageUploadComponent,
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ProjectEditorRoutingModule,
-    TranslateModule.forChild(),
-    FormsModule,
-    ReactiveFormsModule,
-    ScrollToModule.forRoot(),
-    TabsModule.forRoot(),
-    AccordionModule.forRoot(),
-    ModalModule.forRoot()
-  ],
-  providers: [
-    ProjectsResolver,
-    ProjectEntityService,
-    ProjectsDataService,
-    CountryEntityService,
-    CountryDataService,
-    SubjectDataService,
-    SubjectEntityService,
-    RegionEntityService,
-    RegionDataService,
-    GradeDataService,
-    GradeEntityService,
-    AcademicYearDataService,
-    AcademicYearEntityService,
-    StepStatusEntityService,
-    StepStatusDataService,
-    BsModalRef
-  ]
+    declarations: [
+        HomeComponent,
+        EditorComponent,
+        StepOneComponent,
+        ProjectThumbnailComponent,
+        CreateProjectComponent,
+        EditorHeaderComponent,
+        EditorSidebarComponent,
+        ProjectTitleComponent,
+        StepMenuComponent,
+        StepTwoComponent,
+        TextareaBulletsComponent,
+        StatusComponent,
+        InfoToolTipComponent,
+        StepSevenComponent,
+        StepEightComponent,
+        TextareaComponent,
+        StepThreeComponent,
+        StepFourComponent,
+        StepFiveComponent,
+        StepSixComponent,
+        StepNineComponent,
+        StepTenComponent,
+        ProjectEditorComponent,
+        ContextualHelpComponent,
+        AccordionComponent,
+        ModalContentComponent,
+        LinkComponent,
+        VideoThumbComponent,
+        VideoPlayerComponent
+    ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        ProjectEditorRoutingModule,
+        TranslateModule.forChild(),
+        FormsModule,
+        ReactiveFormsModule,
+        TabsModule.forRoot(),
+        AccordionModule.forRoot(),
+        ModalModule.forRoot()
+    ],
+    providers: [
+        ProjectsResolver,
+        ProjectEntityService,
+        ProjectsDataService,
+        CountryEntityService,
+        CountryDataService,
+        SubjectDataService,
+        SubjectEntityService,
+        RegionEntityService,
+        RegionDataService,
+        GradeDataService,
+        GradeEntityService,
+        AcademicYearDataService,
+        AcademicYearEntityService,
+        StepStatusEntityService,
+        StepStatusDataService,
+        EditorService,
+        BsModalRef
+    ]
 })
 
 export class ProjectEditorModule {
