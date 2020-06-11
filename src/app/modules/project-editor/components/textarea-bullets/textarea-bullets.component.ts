@@ -21,7 +21,6 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   sampleOption: Option = { id: null, name: null };
   configOptions: Option[] = [];
   limit = 0
-  isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
   focus = false;
 
   constructor() { }
@@ -29,6 +28,14 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   ngOnInit(): void {
     this.limit = this.config.limit;
     this.optionInit()
+  }
+
+  ngAfterContentChecked() {
+    if (this.textArea) {
+      this.textArea.toArray().forEach(item => {
+        item.nativeElement.style.height = (item.nativeElement.scrollHeight) + "px";
+      })
+    }
   }
 
   optionInit() {
@@ -45,12 +52,11 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  ngAfterContentChecked() {
-    if (this.textArea) {
-      this.textArea.toArray().forEach(item => {
-        item.nativeElement.style.height = (item.nativeElement.scrollHeight) + "px";
-      })
+  checkBrowser(browser: string) {
+    if (navigator.userAgent.toLowerCase().indexOf(browser) > -1) {
+      return true
     }
+    return false
   }
 
   keyAction(event, id) {
@@ -96,6 +102,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         this.textArea.toArray()[id - 1].nativeElement.focus();
         clearTimeout(this.timeOut);
       }
+        break
 
       default:
         break
@@ -105,7 +112,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
   onValueChange(value, i) {
     this.index = i
-    if (this.isFirefox && value.length > this.config.maxLength) {
+    if (this.checkBrowser('firefox') && value.length > this.config.maxLength) {
       value = value.substring(0, this.config.maxLength)
     }
     this.configOptions[i].name = value
