@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data';
-import { ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
+import { ContextualHelp, Help } from 'src/app/shared/constants/contextual-help.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,12 +21,10 @@ export class HelpDataService extends DefaultDataService<ContextualHelp> {
             );
     }
 
-    getById(id: any): Observable<ContextualHelp> {
-        return this.http.get<ContextualHelp>(`${environment.apiUrl}/steps/${id}`)
+    getById(id: any):  Observable<ContextualHelp> {
+        return this.http.get<ContextualHelp>(`${environment.apiUrl}/steps/${id}/helps`)
             .pipe(
-                map(res => {
-                  return res
-                })
+                map( res =>   res )
             );
     }
 }

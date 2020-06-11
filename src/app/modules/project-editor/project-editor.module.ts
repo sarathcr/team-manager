@@ -71,6 +71,7 @@ import { ProjectEditorComponent } from './project-editor.component';
 import { EditorService } from './services/editor/editor.service';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
+import { StringDecoder } from './pipes/string-decoder.pipe';
 
 const entityMetadata: EntityMetadataMap = {
   Project: {
@@ -110,7 +111,6 @@ const entityMetadata: EntityMetadataMap = {
     }
   },
   ContextualHelp: {
-    selectId: (help: ContextualHelp) => help.stepid,
     entityDispatcherOptions: {
       optimisticUpdate: true
     }
@@ -148,7 +148,8 @@ const entityMetadata: EntityMetadataMap = {
     HelpLinkComponent,
     HelpVideoThumbComponent,
     VideoPlayerComponent,
-    HelpImgThumbComponent
+    HelpImgThumbComponent,
+    StringDecoder
   ],
   imports: [
     CommonModule,

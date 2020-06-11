@@ -1,13 +1,10 @@
-export class Help {
-  ContextualHelp: {
-    id: number
-    title: string
-    icon: string
-    body: string
-  }
+export interface Help {
+  id: number
+  title: string
+  icon: string
+  body: string
 }
-export class ContextualHelp {
-  stepid: number
-  name: string
-  help: Help
+export interface ContextualHelp {
+  id: number
+  help: Help[]
 }

@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
 import { HelpEntityService } from '../../services/help/help-entity.service'
 import { Step } from '../../constants/step.model';
+import { Help, ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
 @Component({
   selector: 'app-contextual-help',
   templateUrl: './contextual-help.component.html',
@@ -11,8 +12,9 @@ import { Step } from '../../constants/step.model';
   encapsulation: ViewEncapsulation.None
 })
 export class ContextualHelpComponent implements OnInit {
-  // @Input() step: Step
+  @Input() stepId: number
   @Output() status = new EventEmitter<boolean>();
+  content: ContextualHelp[]
   closeContext: boolean = false;
   activeTab: any;
 
@@ -42,7 +44,8 @@ export class ContextualHelpComponent implements OnInit {
   getHelpContent() {
     this.helpService.entities$
       .subscribe(data => {
-        if (!data.length) this.helpService.getAll()
+        if (!data.length) this.helpService.getByKey(this.stepId)
+        this.content = data
       })
   }
 }
