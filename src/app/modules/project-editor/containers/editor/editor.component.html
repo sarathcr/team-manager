@@ -15,7 +15,7 @@
     <app-step-nine data-scrollSpy id="{{steps[8].sectionid}}" class="step-section" [spyActive$]="spyActive$" [step]="steps[8]" [project$]="project$" [stepStatus$]="stepStatus$" (onSubmit)='handleFormSubmit($event)'></app-step-nine>
     <app-step-ten data-scrollSpy id="{{steps[9].sectionid}}" class="step-section"></app-step-ten>
   </div>
-  <app-contextual-help (status)="getContextualStatus($event)"></app-contextual-help>
+  <app-contextual-help (status)="getContextualStatus($event)" ></app-contextual-help>
 </div>
 <div *ngIf="notFound">
 Project not found

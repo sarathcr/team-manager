@@ -63,6 +63,8 @@ import { GradeEntityService } from './services/grade/grade-entity.service';
 import { StatusComponent } from './components/status/status.component';
 import { StepStatusEntityService } from './services/step-status/step-status-entity.service';
 import { StepStatusDataService } from './services/step-status/step-status-data.service';
+import { HelpEntityService } from './services/help/help-entity.service';
+import { HelpDataService } from './services/help/help-data.service';
 import { ScrollSpyDirective } from './directives/scroll-spy/scroll-spy.directive';
 import { ScrollToDirective } from './directives/scroll-to/scroll-to.directive';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
@@ -102,6 +104,11 @@ const entityMetadata: EntityMetadataMap = {
     }
   },
   StepStatus: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  ContextualHelp: {
     entityDispatcherOptions: {
       optimisticUpdate: true
     }
@@ -170,7 +177,9 @@ const entityMetadata: EntityMetadataMap = {
     AcademicYearEntityService,
     StepStatusEntityService,
     StepStatusDataService,
-    BsModalRef
+    BsModalRef,
+    HelpEntityService,
+    HelpDataService
   ]
 })
 
@@ -185,7 +194,8 @@ export class ProjectEditorModule {
     private subjectDataService: SubjectDataService,
     private gradeDataService: GradeDataService,
     private academicYearDataService: AcademicYearDataService,
-    private stepStatusDataService: StepStatusDataService) {
+    private stepStatusDataService: StepStatusDataService,
+    private contextualHelpService: HelpDataService) {
 
     // ngx-bootstrap theme
     setTheme('bs4');
@@ -198,5 +208,6 @@ export class ProjectEditorModule {
     entityDataService.registerService('Grade', gradeDataService);
     entityDataService.registerService('AcademicYear', academicYearDataService);
     entityDataService.registerService('StepStatus', stepStatusDataService)
+    entityDataService.registerService('ContextualHelp', contextualHelpService)
   }
 }
