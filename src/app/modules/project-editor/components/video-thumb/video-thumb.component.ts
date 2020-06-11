@@ -8,7 +8,11 @@ import { ModalContentComponent } from '../modal-content/modal-content.component'
   styleUrls: ['./video-thumb.component.scss']
 })
 export class VideoThumbComponent implements OnInit {
-  @Input() details: object;
+  @Input() poster: string;
+  @Input() title: string;
+  @Input() type: string;
+  @Input() url: string;
+
   bsModalRef: BsModalRef;
 
   constructor(private modalService: BsModalService) { }
@@ -18,11 +22,11 @@ export class VideoThumbComponent implements OnInit {
 
   videoModal() {
     const initialState = {
-      title: 'Some dummy title', // Title goes here
+      title: this.title, // Title goes here
       video: true,
       videoSources: {
-        src: 'https://youtu.be/f4cstWWgOh0', // 'https://vimeo.com/347119375', // Set video url here
-        type: 'youtube' // 'vimeo', // Set video type here:- youtube,vimeo,html5,flash,mp4 etc
+        src: this.url, //'https://youtu.be/f4cstWWgOh0', // 'https://vimeo.com/347119375', // Set video url here
+        type: this.type, //'youtube' // 'vimeo', // Set video type here:- youtube,vimeo,html5,flash,mp4 etc
       }
     };
 

@@ -21,10 +21,10 @@ export class AccordionComponent implements OnInit {
   };
 
   video: object = {
-    type: 'external',
-    src: 'bTqVqk7FSmY',
-    poster: '../../../../../assets/images/150.png',
-    caption: 'fds'
+    title: "Sample Video",
+    type: 'youtube',
+    url: 'https://youtu.be/f4cstWWgOh0',
+    poster: '../../../../../assets/images/150.png'
   };
 
   constructor(private modalService: BsModalService) { }
