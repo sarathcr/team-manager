@@ -7,7 +7,7 @@ export class Help {
   }
 }
 export class ContextualHelp {
-  id: number
+  stepid: number
   name: string
   help: Help
 }

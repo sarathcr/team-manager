@@ -70,6 +70,7 @@ import { ScrollToDirective } from './directives/scroll-to/scroll-to.directive';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 import { ProjectEditorComponent } from './project-editor.component';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
+import { ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
 
 const entityMetadata: EntityMetadataMap = {
   Project: {
@@ -109,6 +110,7 @@ const entityMetadata: EntityMetadataMap = {
     }
   },
   ContextualHelp: {
+    selectId: (help: ContextualHelp) => help.stepid,
     entityDispatcherOptions: {
       optimisticUpdate: true
     }
