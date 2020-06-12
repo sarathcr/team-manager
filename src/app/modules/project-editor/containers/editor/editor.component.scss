@@ -20,12 +20,12 @@
     background-image:url('../../../../../../images/img_background_shapes.png');
     background-repeat: no-repeat;
     background-position: right center;
-    background-size: contain;
-    position: absolute;
+    position: fixed;
     top: 75px;
     right: 0;
     width: 100%;
-    height: calc(100vh - 75px);
+    min-height: 1200px;
+    overflow: hidden;
     z-index: -1;
   }
   .step-section{
