@@ -18,7 +18,7 @@ export class StepNineComponent implements OnInit {
   step: Step
   synopsis: any = ''
   initialFormData: FormNineInitData = formNineInitData
-  initialFormStatus: Status
+  initialFormStatus: Status = "PENDING"
   buttonConfig = new buttonSubmitConfig
 
   constructor(public editor: EditorService) { }

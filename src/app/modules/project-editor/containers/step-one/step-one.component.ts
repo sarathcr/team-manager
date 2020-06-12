@@ -339,6 +339,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     }
     if (field == 'grades' && !this.gradesDropdown.selectedItems.length)
       this.subjectsDropdown.selectedItems = []
+    this.checkStatus()
   }
 
   isEqual(d1: any[], d2: any[]) {
