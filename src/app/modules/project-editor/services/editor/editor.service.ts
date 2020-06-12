@@ -26,6 +26,7 @@ export class EditorService {
   isStepDone: boolean
   projectSubscription: Subscription
   statusSubscription: Subscription
+  loading: boolean
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -54,6 +55,7 @@ export class EditorService {
         }
       })
     }
+    this.projectsService.loading$.subscribe(res => this.loading = res)
   }
 
   // filter data for each step
