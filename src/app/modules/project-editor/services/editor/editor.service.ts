@@ -209,10 +209,9 @@ export class EditorService {
     this.project$ = null
     this.titleData = null
     this.stepStatus$ = null
-    this.tempStatus = null
     this.currentSectionId = null
     this.nextSectionId = null
-    this.isStepDone = null
+    this.isStepDone = false
   }
 
   createSteps(): Steps {
