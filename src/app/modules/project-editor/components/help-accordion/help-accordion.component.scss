@@ -10,7 +10,7 @@
     $root-head: &;
     border: none;
     background-color: $context-bg-color;
-    padding: 14px 40px 18px 0;
+    padding: 14px 40px 15px 0;
     margin-left: 40px;
     border-top: 1px solid $context-border-color;
     display: flex;
@@ -27,13 +27,18 @@
       font-size: 27px;
       margin-right: 14px;
       
-      .icon:last-child{
+      #{$root}__icon:last-child{
         display: none;
       }
     }
 
+    #{$root}__icon{
+      max-width: 30px;
+      max-height: 30px;
+    }
+
     #{$root}_active &-icon_multi-icon{
-      .icon{
+      #{$root}__icon{
         display: none;
     
         &:last-child{
