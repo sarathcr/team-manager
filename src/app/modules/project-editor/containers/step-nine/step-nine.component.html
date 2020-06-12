@@ -10,7 +10,7 @@
             <app-textarea placeholder="{{'SINOPSIS.project_synopsis_placeholder' | translate }}"
                 [(value)]="synopsis" maxlength="500" (onChange)="onValueChange($event)"></app-textarea>
         </div>
-        <app-form-button scrollTo scrollToId="stepTen" [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>
+        <app-form-button [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>
         </app-form-button>
     </div>
 </div>

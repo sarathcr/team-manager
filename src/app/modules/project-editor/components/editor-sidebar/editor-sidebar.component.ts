@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { StepId, Step } from '../../constants/step.model';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-editor-sidebar',
@@ -10,12 +9,15 @@ export class EditorSidebarComponent implements OnInit {
 
   @Input() title: string;
   @Input() view: string;
-  @Input() spyActive: StepId;
-  @Input() steps: Step[];
+  @Input() steps: any;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  originalOrder = (): number => {
+    return 0;
   }
   
 }

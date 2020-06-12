@@ -69,8 +69,8 @@
 .project-editor__form {
   display: flex;
   width: 100%;
-  min-height: calc(100vh - 105px);
-  padding: 28px 40px;
+  min-height: calc(100vh - 75px);
+  padding: 28px 40px 57px;
   padding-left: 40px;
   padding-right: 40px;
   flex-direction: column;
@@ -93,6 +93,9 @@
   min-height: calc(100vh - 160px);
   &__title{
     line-height: 32px;
+  }
+  &__wrapper{
+    margin-bottom: 64px;
   }
 }
 
