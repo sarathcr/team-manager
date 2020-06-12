@@ -1,0 +1,10 @@
+<div class="help-modal__header">
+  <h4 class="help-modal__header-title">{{title}}</h4>
+  <button type="button" class="close help-modal__header-close" aria-label="Close" (click)="bsModalRef.hide()">
+    <span class="icon icon-ic_share_close"></span>
+  </button>
+</div>
+<div class="help-modal__body">
+  <img src='{{img}}' alt='image' class='help-modal__body-img' *ngIf='!video'>
+  <app-video-player [videoOptions]='videoOptions'  *ngIf='video'></app-video-player>
+</div>

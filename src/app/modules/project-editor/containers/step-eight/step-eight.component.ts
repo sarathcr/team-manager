@@ -114,7 +114,7 @@ export class StepEightComponent implements OnInit {
         ]
       }
     }
-    this.editor.handleFormSubmit(formData, this.step.state == "DONE")
+    this.editor.handleStepSubmit(formData, this.step.state == "DONE")
   }
 
   // Function to check whether the form is updated

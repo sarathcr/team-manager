@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project } from 'src/app/shared/constants/project.model';
 import { ProjectTitle } from '../../constants/title-data.model';
@@ -11,7 +11,7 @@ import { EditorService } from '../../services/editor/editor.service';
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss']
 })
-export class EditorComponent implements OnInit {
+export class EditorComponent implements OnInit, OnDestroy {
   project: Project;
   project$: Observable<Project>;
   spyActive$ = new BehaviorSubject<StepId>('stepOne')
@@ -33,6 +33,10 @@ export class EditorComponent implements OnInit {
     this.steps = this.editor.createSteps()
     this.projectUrl = this.route.snapshot.paramMap.get('id')
     this.editor.getProject(this.projectUrl)
+  }
+
+  ngOnDestroy() {
+    this.editor.clearData()
   }
 
   getContextualStatus($event) {

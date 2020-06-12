@@ -1,6 +1,6 @@
 @import 'helpers/_helpers-master';
 
-.accordion{
+.help-accordion{
   $root: &;
   border: none;
   border-radius: 0;
@@ -119,48 +119,16 @@
       }
     }
 
-    &-btn{
-      width: 185px;
-      display: inline-flex;
-      flex-direction: column;
-      margin-bottom: 17px;
-      border: none;
-      padding: 0;
-      background-color: transparent;
-      text-align: left;
-      cursor: pointer;
-
-      &:nth-child(even){
-        margin-left: 20px;
-      }
-
-      &-img{
-        width: 100%;
-        height: 100%;
-        max-height: 108px;
-        object-fit: cover;
-        object-position: center;
-        border-radius: 4px;
-        @include card-box-shadow;
-      }
-
-      &-title{
-        font-family: $font-family-tertiary;
-        font-size: $font-size-body-s;
-        line-height: $line-height-24px;
-        letter-spacing: normal;
-        font-weight: 700;
-        margin-top: 7px;
-        background-color: transparent;
-      }
-    }
-
     &-img{
       width: 100%;
       height: 100%;
       max-height: 220px;
       object-fit: cover;
       object-position: center;
+    }
+
+    &-thumb:nth-child(even){
+      margin-left: 20px;
     }
 
     //rules for spacing

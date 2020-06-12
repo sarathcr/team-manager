@@ -3,12 +3,12 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { VideoOptions } from 'src/app/shared/constants/video.model';
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal-content.component.html',
-  styleUrls: ['./modal-content.component.scss'],
+  selector: 'app-help-modal',
+  templateUrl: './help-modal-content.component.html',
+  styleUrls: ['./help-modal-content.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ModalContentComponent implements OnInit {
+export class HelpModalContentComponent implements OnInit {
   title: string
   img: string
   video: boolean
@@ -30,7 +30,7 @@ export class ModalContentComponent implements OnInit {
         techOrder: ["html5","youtube","vimeo"],
         sources: [{
           src: this.videoSources.src,
-          type: "video/"+this.videoSources.type,
+          type: this.videoSources.type,
         }],
         aspectRatio: "16:9",
         muted: false,
