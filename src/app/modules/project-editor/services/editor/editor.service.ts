@@ -128,10 +128,13 @@ export class EditorService {
         title: '',
         ...projectData
       }
+      const browserUrl = this.router.url
       this.projectsService.add(newProject)
         .subscribe(
           newResProject => {
-            this.router.navigate([`editor/project/${newResProject.id}/${this.currentSectionId}`])
+            if (browserUrl.includes('create')) {
+              this.router.navigate([`editor/project/${newResProject.id}/${this.currentSectionId}`])
+            }
             this.projectId = newResProject.id
             this.getProject(this.projectId);
             this.handleNavigate()
