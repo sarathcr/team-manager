@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, ViewEncapsulation, Input, SimpleChanges, AfterViewInit,} from '@angular/core';
-import { HelpImgThumbComponent } from '../help-img-thumb/help-img-thumb.component';
 import { Help } from 'src/app/shared/constants/contextual-help.model';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component';
 
 @Component({
   selector: 'app-help-accordion',
@@ -15,8 +16,9 @@ export class HelpAccordionComponent implements OnInit, OnChanges, AfterViewInit 
   isFirstOpen: boolean = true;
   customClass: string = 'accordion'
   accordionContent: string = ''
+  bsModalRef: BsModalRef;
 
-  constructor() { }
+  constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
 
@@ -31,5 +33,45 @@ export class HelpAccordionComponent implements OnInit, OnChanges, AfterViewInit 
     // this.accordion.nativeElement.insertAdjacentHTML('beforeend',this.accordionContent)
     this.content.forEach( help => {
     })
+  }
+
+  ngOnDestroy() {
+    const modalCount = this.modalService.getModalsCount();
+    if (modalCount > 0) {
+      this.modalService._hideModal(modalCount);
+    }
+  }
+
+  videoModal(event) {
+    event.preventDefault()
+    const element = event.currentTarget
+    const title = element.dataset.title
+    const url = element.dataset.url
+    const type = element.dataset.type
+    const initialState = {
+      title: title, // Title goes here
+      video: true,
+      videoSources: {
+        src: url,  //'https://youtu.be/f4cstWWgOh0', // 'https://vimeo.com/347119375', // Set video url here
+        type: type //this.type, //'video/youtube' 'video/vimeo' 'video/mp4' Set video type here
+      }
+    };
+
+    this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState });
+    this.bsModalRef.content.closeBtnName = 'Close';
+  }
+
+  openModalWithComponent(event) {
+    event.preventDefault()
+    const element = event.currentTarget
+    const title = element.dataset.title
+    const content = element.dataset.content
+    const initialState = {
+      title: title,
+      img: content
+    };
+
+    this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState });
+    this.bsModalRef.content.closeBtnName = 'Close';
   }
 }
