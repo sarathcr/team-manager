@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { StepState, StepId, Steps, statusId, Step } from '../../constants/step.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { ProjectEntityService } from '../project/project-entity.service';
 import { map } from 'rxjs/operators';
 import { ProjectTitle } from '../../constants/title-data.model';
@@ -26,6 +26,8 @@ export class EditorService {
   nextSectionId: StepId
   isStepDone: boolean
   currentStep$: BehaviorSubject<number> = new BehaviorSubject(1)
+  projectSubscription: Subscription
+  statusSubscription: Subscription
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -43,7 +45,7 @@ export class EditorService {
             return project.id === +(projectId)
           }))
         )
-      this.project$.subscribe(project => {
+      this.projectSubscription = this.project$.subscribe(project => {
         if (project) {
           this.projectId = project.id;
           this.notFound = false;
@@ -90,7 +92,7 @@ export class EditorService {
           return state.id === Number(this.projectId);
         }))
       )
-    this.stepStatus$.subscribe(data => {
+    this.statusSubscription = this.stepStatus$.subscribe(data => {
       if (data) {
         this.updateStepStatus(data)
       } else {
@@ -118,7 +120,7 @@ export class EditorService {
   private updateStepStatus(stepstatus: any) {
     for (const newState of stepstatus.steps) {
       for (const step in this.steps) {
-        if (this.steps[step].stepid == newState.stepid) {
+        if (this.steps[step].stepid == newState.stepid && stepstatus.id == this.projectId) {
           this.steps[step].state = newState.state
         }
       }
@@ -132,10 +134,13 @@ export class EditorService {
         title: '',
         ...projectData
       }
+      const browserUrl = this.router.url
       this.projectsService.add(newProject)
         .subscribe(
           newResProject => {
-            this.router.navigate([`editor/project/${newResProject.id}/${this.currentSectionId}`])
+            if (browserUrl.includes('create')) {
+              this.router.navigate([`editor/project/${newResProject.id}/${this.currentSectionId}`])
+            }
             this.projectId = newResProject.id
             this.getProject(this.projectId);
             this.handleNavigate()
@@ -206,14 +211,15 @@ export class EditorService {
   }
 
   clearData() {
-    this.projectId = null
+    this.projectSubscription.unsubscribe()
+    this.statusSubscription.unsubscribe()
     this.project$ = null
-    this.titleData = null
     this.stepStatus$ = null
-    this.tempStatus = null
+    this.projectId = null
+    this.titleData = null
     this.currentSectionId = null
     this.nextSectionId = null
-    this.isStepDone = null
+    this.isStepDone = false
   }
 
   createSteps(): Steps {
