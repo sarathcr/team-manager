@@ -111,6 +111,7 @@ const entityMetadata: EntityMetadataMap = {
     }
   },
   ContextualHelp: {
+    selectId: (help: ContextualHelp) => help.stepid,
     entityDispatcherOptions: {
       optimisticUpdate: true
     }

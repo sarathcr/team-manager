@@ -12,7 +12,8 @@
             <span class="icon icon-ic_share_close"></span>
           </button>
         </div>
-        <app-help-accordion [content] ='content'></app-help-accordion>
+        <app-loader *ngIf="!loaded"></app-loader>
+        <app-help-accordion  *ngIf="loaded" [content]='help'></app-help-accordion>
       </div>
     </tab>
     <tab customClass="contextual-help__tabset-item" (selectTab)="openTab($event)" [disabled]="true">

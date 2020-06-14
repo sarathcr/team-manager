@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { StepState, StepId, Steps, statusId, Step } from '../../constants/step.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/shared/constants/project.model';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { ProjectEntityService } from '../project/project-entity.service';
 import { map } from 'rxjs/operators';
 import { ProjectTitle } from '../../constants/title-data.model';
 import { StepStatusEntityService } from '../step-status/step-status-entity.service';
 import { Router } from '@angular/router';
+import { HelpEntityService } from '../help/help-entity.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +25,13 @@ export class EditorService {
   currentSectionId: StepId
   nextSectionId: StepId
   isStepDone: boolean
+  currentStep$: BehaviorSubject<number> = new BehaviorSubject(1)
 
   constructor(
     private projectsService: ProjectEntityService,
     private translate: TranslateService,
     private stepStatusService: StepStatusEntityService,
+    private helpService: HelpEntityService,
     private router: Router
   ) { }
 
@@ -98,6 +101,7 @@ export class EditorService {
 
   // filter status for each step
   getStepStatus(stepId: statusId): Observable<Step> {
+    this.currentStep$.next(stepId)
     this.stepStatus$ = this.stepStatusService.entities$
       .pipe(
         map(stepStates => stepStates.find(state => {

@@ -20,11 +20,10 @@ export class HelpDataService extends DefaultDataService<ContextualHelp> {
                 map(res => res)
             );
     }
-
-    getById(id: any):  Observable<ContextualHelp> {
-        return this.http.get<ContextualHelp>(`${environment.apiUrl}/steps/${id}/helps`)
-            .pipe(
-                map( res =>   res )
-            );
+    getById(id: any): Observable<ContextualHelp> {
+      return this.http.get<ContextualHelp>(`${environment.apiUrl}/steps/${id}/helps`)
+          .pipe(
+              map( res => res )
+          );
     }
 }

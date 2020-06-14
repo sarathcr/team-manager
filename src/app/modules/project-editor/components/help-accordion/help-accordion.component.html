@@ -60,14 +60,15 @@
     </div>
   </accordion-group>
 
-  <!-- <accordion-group [panelClass]="customClass" #accordionGroup3 [ngClass]="{ 'help-accordion_last help-accordion_active' : accordionGroup3.isOpen }" *ngFor="let accordian of content">
+  <!-- <accordion-group [isOpen]='first' [panelClass]="customClass" #accordionGroup [ngClass]="{ 'help-accordion_last help-accordion_active' : accordionGroup.isOpen }" *ngFor="let accordian of content; let i = index; let first = first;">
     <div accordion-heading class="help-accordion__heading">
         <div class="help-accordion__heading-icon help-accordion__heading-icon_multi-icon" [innerHTML]="accordian.icon | stringDecoder"></div>
-        <h5 class="help-accordion__heading-title" [innerHTML]="accordian.title | stringDecoder"></h5>
+        <h5 class="help-accordion__heading-title" [innerHTML]="accordian.title"></h5>
         <div class="help-accordion__heading-arrow">
           <span class="icon icon-ic_dropdown"></span>
         </div>
     </div>
+    <ng-template accordionBody></ng-template>
     <div class="help-accordion__body" [innerHTML]="accordian.body | stringDecoder">
 
     </div>

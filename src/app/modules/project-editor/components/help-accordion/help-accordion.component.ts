@@ -1,5 +1,6 @@
-import { Component, OnInit, OnChanges, ViewEncapsulation, Input, SimpleChanges } from '@angular/core';
-import { ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
+import { Component, OnInit, OnChanges, ViewEncapsulation, Input, SimpleChanges, AfterViewInit,} from '@angular/core';
+import { HelpImgThumbComponent } from '../help-img-thumb/help-img-thumb.component';
+import { Help } from 'src/app/shared/constants/contextual-help.model';
 
 @Component({
   selector: 'app-help-accordion',
@@ -7,11 +8,13 @@ import { ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
   styleUrls: ['./help-accordion.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HelpAccordionComponent implements OnInit, OnChanges {
-  @Input() content: ContextualHelp
+
+export class HelpAccordionComponent implements OnInit, OnChanges, AfterViewInit {
+  @Input() content: Help[]
   oneAtATime: boolean = true;
   isFirstOpen: boolean = true;
-  customClass: string = 'accordion';
+  customClass: string = 'accordion'
+  accordionContent: string = ''
 
   constructor() { }
 
@@ -20,5 +23,13 @@ export class HelpAccordionComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.content)
+    this.content.forEach( help => {
+      this.accordionContent += ''
+    })
+  }
+  ngAfterViewInit(): void {
+    // this.accordion.nativeElement.insertAdjacentHTML('beforeend',this.accordionContent)
+    this.content.forEach( help => {
+    })
   }
 }

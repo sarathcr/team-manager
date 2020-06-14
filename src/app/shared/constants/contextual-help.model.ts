@@ -5,6 +5,6 @@ export interface Help {
   body: string
 }
 export interface ContextualHelp {
-  id: number
-  help: Help[]
+  stepid: number
+  helps: Help[]
 }

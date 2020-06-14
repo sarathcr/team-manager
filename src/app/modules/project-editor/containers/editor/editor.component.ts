@@ -23,7 +23,6 @@ export class EditorComponent implements OnInit, OnDestroy {
   status: Status
   tempStatus: any // saving the status for non created projects
   contextualStatus: boolean = false
-  currentStep: number
 
   constructor(
     private route: ActivatedRoute,
