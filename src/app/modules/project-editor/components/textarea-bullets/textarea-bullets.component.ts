@@ -125,7 +125,6 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
       default:
         break
     }
-
   }
 
   onValueChange(value, i) {
@@ -137,14 +136,18 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     let newConfigOptions = [...this.configOptions];
     if (this.configOptions.length == 1 && !this.configOptions[0].name) newConfigOptions = []
     this.onChange.emit(newConfigOptions);
+
   }
 
   setFocus() {
     this.focus = true;
   }
 
-  onBlur() {
+  onBlur(i) {
     this.focus = false;
+    if(this.configOptions[i].name.length == 0){
+      this.configOptions.splice(i, 1)
+    }
   }
 
 }
