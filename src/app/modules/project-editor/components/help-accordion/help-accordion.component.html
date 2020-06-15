@@ -1,97 +1,16 @@
 <accordion [isAnimated]="true" [closeOthers]="oneAtATime">
-  <!-- This below should be removed once the integration completed -->
-  <!-- <accordion-group [isOpen]="isFirstOpen" [panelClass]="customClass" #accordionGroup1 [ngClass]="{ 'help-accordion_active' : accordionGroup1.isOpen }">
-    <div accordion-heading class="help-accordion__heading" [ngClass]="{ 'help-accordion_active' : accordionGroup1.isOpen }">
-      <div class="help-accordion__heading-icon help-accordion__heading-icon_multi-icon">
-        <img src="../../../../../assets/icons/ic_motivate_off.png" class="help-accordion__icon" alt="MOTÍVATE off">
-        <img src="../../../../../assets/icons/ic_motivate_on.png" class="help-accordion__icon" alt="MOTÍVATE on">
-      </div>
-      <h5 class="help-accordion__heading-title">MOTÍVATE</h5>
-      <div class="help-accordion__heading-arrow">
-        <span class="icon icon-ic_dropdown"></span>
-      </div>
-    </div>
-    <div class="help-accordion__body">
-      <h6 class="help-accordion__body-title">Intenta que tu proyecto conecte varias asignaturas.</h6>
-      <p class="help-accordion__body-desc">Cuando vas a comprar el pan, utilizas las matemáticas para saber si el cambio es correcto. También la expresión oral, para pedir exactamente la barra que quieres. En un gesto tan sencillo integras dos áreas. </p>
-      <p class="help-accordion__body-desc">Los retos de la vida real no se presentan por compartimentos, sino combinados. El ABP intenta acercar el aprendizaje a los desafíos de la vida real. Por eso, idealmente, los proyectos son transdisciplinares o interdisciplinares. </p>
-      <a class="help-link" href="" target="_blank">
-        <img src="../../../../../assets/images/150.png" alt="Los Objetivos de Desarrollo Sostenible y su vínculo con la educación." class="help-link__img">
-        <div class="help-link__body">
-          <h5 class="help-link__body-title">Los Objetivos de Desarrollo Sostenible y su vínculo con la educación.</h5>
-          <div class="help-link__body-icon">
-            <span class="icon icon-ic_web2"></span>
-          </div>
-        </div>
-      </div>
-      <div class="help-accordion__body">
-        <h6 class="help-accordion__body-title">Intenta que tu proyecto conecte varias asignaturas.</h6>
-        <p class="help-accordion__body-desc">Cuando vas a comprar el pan, utilizas las matemáticas para saber si el cambio es correcto. También la expresión oral, para pedir exactamente la barra que quieres. En un gesto tan sencillo integras dos áreas. </p>
-        <p class="help-accordion__body-desc">Los retos de la vida real no se presentan por compartimentos, sino combinados. El ABP intenta acercar el aprendizaje a los desafíos de la vida real. Por eso, idealmente, los proyectos son transdisciplinares o interdisciplinares. </p>
-        <a class="help-link" href="" target="_blank">
-          <img src="../../../../../assets/images/150.png" alt="Los Objetivos de Desarrollo Sostenible y su vínculo con la educación." class="help-link__img">
-          <div class="help-link__body">
-            <h5 class="help-link__body-title">Los Objetivos de Desarrollo Sostenible y su vínculo con la educación.</h5>
-            <div class="help-link__body-icon">
-              <span class="icon icon-ic_web2"></span>
-            </div>
-          </div>
-        </a>
-      </div>
-    </accordion-group>
-    <accordion-group [panelClass]="customClass" #accordionGroup2 [ngClass]="{ 'help-accordion_last help-accordion_active' : accordionGroup2.isOpen }">
-      <div accordion-heading class="help-accordion__heading">
-        <div class="help-accordion__heading-icon help-accordion__heading-icon_multi-icon">
-          <img src="../../../../../assets/icons/ic_inspirate_off.png" class="help-accordion__icon" alt="InspÍRATE off">
-          <img src="../../../../../assets/icons/ic_inspirate_on.png" class="help-accordion__icon" alt="InspÍRATE on">
-        </div>
-        <h5 class="help-accordion__heading-title">InspÍRATE</h5>
-        <div class="help-accordion__heading-arrow">
-          <span class="icon icon-ic_dropdown"></span>
-        </div>
-    </div>
-    <div class="help-accordion__body">
-      <div class="help-accordion__body-cards">
-        <div class="help-accordion__body-thumb">
-          <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
-            <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
-            <span class="help-img-thumb__title">Some title</span>
-          </a>
-        </div>
-        <div class="help-accordion__body-thumb">
-          <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
-            <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
-            <span class="help-img-thumb__title">Some title</span>
-          </a>
-        </div>
-        <div class="help-accordion__body-thumb">
-          <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
-            <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
-            <span class="help-img-thumb__title">Some title</span>
-          </a>
-        </div>
-        <div class="help-accordion__body-thumb">
-          <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
-            <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
-            <span class="help-img-thumb__title">Some title</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </accordion-group> -->
-  <!-- This above should be removed once the integration completed -->
-
   <accordion-group [isOpen]='first' [panelClass]="customClass" #accordionGroup [ngClass]="{ 'help-accordion_last help-accordion_active' : accordionGroup.isOpen }" *ngFor="let accordian of content; let i = index; let first = first;">
     <div accordion-heading class="help-accordion__heading" >
-        <div class="help-accordion__heading-icon help-accordion__heading-icon_multi-icon" [innerHTML]="accordian.icon | stringDecoder"></div>
+        <div class="help-accordion__heading-icon help-accordion__heading-icon_multi-icon">
+          <img src="data:image/png;base64,{{accordian.icon}}" class="help-accordion__icon" alt="off icon">
+          <img src="data:image/png;base64,{{accordian.secondIcon}}" class="help-accordion__icon" alt="on icon">
+        </div>
         <h5 class="help-accordion__heading-title" [innerHTML]="accordian.title"></h5>
         <div class="help-accordion__heading-arrow">
           <span class="icon icon-ic_dropdown"></span>
         </div>
     </div>
-    <div class="help-accordion__body" #accordionBody [innerHTML]="accordian.body | stringDecoder">
-
-    </div>
+    <div class="help-accordion__body" #accordionBody [innerHTML]="accordian.body | stringDecoder"></div>
   </accordion-group>
 
 </accordion>
