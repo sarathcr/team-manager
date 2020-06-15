@@ -76,9 +76,9 @@
 
   .panel-body{
     max-height: 420px;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
-  
+
   &__body{
     padding: 0 40px 25px 40px;
 

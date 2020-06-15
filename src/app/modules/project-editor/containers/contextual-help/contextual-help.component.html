@@ -16,7 +16,7 @@
         <app-help-accordion  *ngIf="loaded" [content]='help'></app-help-accordion>
       </div>
     </tab>
-    <tab customClass="contextual-help__tabset-item" (selectTab)="openTab($event)" [disabled]="true">
+    <tab customClass="contextual-help__tabset-item" (selectTab)="openTab($event)">
       <ng-template tabHeading>
         <span class="icon icon-ic_message"></span>
       </ng-template>
