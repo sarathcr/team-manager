@@ -61,7 +61,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
   keyAction(event, id) {
     switch (event.keyCode) {
-      case 13:
+      case 13: // Enter
         event.preventDefault();
         if (this.config.limit == 0) {
           this.limit = this.configOptions.length + 1
@@ -75,7 +75,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         }, 0)
         break
 
-      case 46:
+      case 46:  // delete
         event.preventDefault();
         if (this.configOptions.length > 1) {
           this.configOptions.splice(id, 1)
@@ -92,16 +92,34 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         this.onChange.emit([...this.configOptions]);
         break
 
-      case 32:
+      case 32: // spacebar
+        if(window.getSelection().toString().length){
+          if(this.configOptions.length > 1){
+            this.configOptions.splice(id, 1)
+            if( id - 1 > 0 ) {
+              this.textArea.toArray()[id - 1].nativeElement.focus();
+            } else{
+              this.textArea.toArray()[id+1].nativeElement.focus();
+            }
+          } else{
+            this.configOptions[0].name = ''
+          }
+        }
         if (event.target.selectionStart === 0 || (event.target.value[event.target.selectionEnd - 1] == " " || event.target.value[event.target.selectionEnd] == " ")) {
           event.preventDefault();
         }
         break
-      case 8: if (!event.target.value && this.configOptions.length > 1) {
-        this.configOptions.splice(id, 1)
-        this.textArea.toArray()[id - 1].nativeElement.focus();
-        clearTimeout(this.timeOut);
-      }
+
+      case 8: // backspace
+        if (!event.target.value && this.configOptions.length > 1) {
+          this.configOptions.splice(id, 1)
+          if( id - 1 > 0 ) {
+            this.textArea.toArray()[id - 1].nativeElement.focus();
+          } else{
+            this.textArea.toArray()[id+1].nativeElement.focus();
+          }
+          clearTimeout(this.timeOut);
+        }
         break
 
       default:
