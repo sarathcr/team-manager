@@ -20,7 +20,7 @@ export class HelpAccordionComponent implements OnInit, OnDestroy {
   constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
-
+    console.log(this.content)
   }
 
   ngOnDestroy() {
