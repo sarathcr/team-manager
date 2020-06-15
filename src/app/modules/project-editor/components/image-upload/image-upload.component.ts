@@ -39,7 +39,7 @@ export class ImageUploadComponent implements OnInit {
     this.aws.uploadImg(mimeType, `test/${ new Date().getTime()}.${mimeType.split('/')[1]}`)
     .subscribe(data => {
       console.log(files[0], '<====')
-      if (data) this.aws.upload(data, files[0], mimeType).subscribe(da => {console.log(da)})
+      if (data) this.aws.upload(data, this.imgURL, mimeType).subscribe(da => {console.log(da)})
     })
   }
 

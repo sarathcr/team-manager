@@ -25,11 +25,11 @@ export class AwsImgUploadService {
     
   }
   upload(res, img, mim): Observable<any> {
-    var formData = new FormData();
-    formData.append('image', img);
+    // var formData = new FormData();
+    // formData.append('image', img);
     var options = { headers: new HttpHeaders().set('Content-Type', mim) };
 
-    return this.http.put<any>( res.uploadURL, formData, options)
+    return this.http.put<any>( res.uploadURL, img, options)
     .pipe(
       map(re => {
         console.log(res, "rth ====")
