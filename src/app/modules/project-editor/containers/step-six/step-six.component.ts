@@ -22,7 +22,7 @@ export class StepSixComponent implements OnInit {
   initialFormData: FormSixInitData = formSixInitData
   buttonConfig = new buttonSubmitConfig
   creativeTitle: string = ''
-  creativeImage: string = ''
+  creativeImage: string = 'https://picsum.photos/id/237/200/300'
 
   constructor(private editor: EditorService) { }
 

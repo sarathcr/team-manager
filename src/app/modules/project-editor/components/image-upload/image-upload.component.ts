@@ -18,7 +18,7 @@ export class ImageUploadComponent implements OnInit {
   imgURL: any;
   public message: string;
   imageFromAws
-
+  loading = false
   constructor(private aws: AwsImgUploadService) { }
 
   ngOnInit(): void {
@@ -27,21 +27,28 @@ export class ImageUploadComponent implements OnInit {
 
   onSelect(event) {
     if (!this.files.length) {
+      this.loading = true;
       this.files = [...event.addedFiles]
-      const mimeType = this.files[0].type
+      const file = this.files[0]
+      const mimeType = file.type
       this.aws.GetPreSignedUrl(mimeType, `creativeImage/${new Date().getTime()}.${mimeType.split('/')[1]}`)
         .subscribe(data => {
-          if (data) this.aws.uploadImage(data.uploadURL, this.files[0])
+          if (data) this.aws.uploadImage(data.uploadURL, file)
             .subscribe(() => {
               this.imageFromAws = data.publicURL
+              this.imageURL = this.imageFromAws
               this.onChange.emit(data.publicURL)
+              this.loading = false;
             })
+          
         })
     }
   }
 
   onRemove(event) {
-    this.files.splice(this.files.indexOf(event), 1);
+    event.stopPropagation()
+    this.imageURL = ''
+    this.files = [];
   }
 
 }
