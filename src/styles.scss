@@ -76,12 +76,16 @@
   flex-direction: column;
   position: relative;
 }
-.step-section{
+
+.project-editor__goto-step{}
+.step-one{
   &:first-child{
     .status-indicator__bar_top{
       display: none;
     }
   }
+}
+.step-ten{
   &:last-child{
     .status-indicator__bar_bottom{
       display: none;
