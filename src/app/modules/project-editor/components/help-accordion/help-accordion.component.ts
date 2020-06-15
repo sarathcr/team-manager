@@ -2,6 +2,7 @@ import { Component, OnInit,  ViewEncapsulation, Input, OnDestroy, ElementRef, Af
 import { Help } from 'src/app/shared/constants/contextual-help.model'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-help-accordion',
@@ -15,13 +16,17 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit 
   @ViewChildren('accordionBody') accordionBody: QueryList<any>
   oneAtATime: boolean = true
   isFirstOpen: boolean = true
-  customClass: string = 'accordion'
+  customClass: string = 'help-accordion'
   bsModalRef: BsModalRef
 
-  constructor(private modalService: BsModalService, private elementRef:ElementRef,private renderer:Renderer2) { }
+  constructor(
+    private modalService: BsModalService,
+    private elementRef:ElementRef,
+    private renderer:Renderer2
+  ) { }
 
   ngOnInit(): void {
-
+    console.log(this.content)
   }
   ngAfterViewInit() {
       this.elementRef.nativeElement.querySelectorAll('.help-img-thumb').forEach( thumb => {

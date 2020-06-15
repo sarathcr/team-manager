@@ -20,11 +20,16 @@ export class ContextualHelpComponent implements OnInit, AfterViewInit {
   activeTab: any;
   loaded = false
 
-  constructor(public editorService: EditorService, public helpService: HelpEntityService) { }
+  constructor(
+    public editorService: EditorService,
+    public helpService: HelpEntityService,
+    private translateService: TranslateService
+  ) { }
 
   ngOnInit(): void {
-
+    this.getTranslation();
   }
+
   ngAfterViewInit(){
     this.getHelpContent();
   }
@@ -74,5 +79,11 @@ export class ContextualHelpComponent implements OnInit, AfterViewInit {
     this.helpService.loading$.subscribe(loading=> {
       this.loaded = !loading
     })
+  }
+
+  getTranslation(){
+    this.translateService.stream([
+      'PROJECTGUIDE.projectguide_pedagogical_guide',
+    ]).subscribe(translations => {})
   }
 }

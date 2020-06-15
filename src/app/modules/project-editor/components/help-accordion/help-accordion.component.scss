@@ -74,10 +74,13 @@
     }
   }
 
-  &__body{
-    padding: 0 40px 25px 40px;
+  .panel-body{
     max-height: 420px;
     overflow-y: scroll;
+  }
+  
+  &__body{
+    padding: 0 40px 25px 40px;
 
     &-title{
       font-family: $font-family-tertiary;
@@ -129,7 +132,7 @@
       object-position: center;
     }
 
-    &_cards{
+    &-cards{
       display: flex;
       position: relative;
       flex-flow: row wrap;
