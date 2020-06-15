@@ -1,0 +1,21 @@
+@import 'helpers/_helpers-master';
+.step-unlock{
+    width: 100%;
+    min-height: 236px;
+    border-radius: 4px;
+    background: $background-primary;
+    box-shadow: $transparent-shadow;
+    padding: 37px 41px;
+    margin-bottom: 36px;
+    &__title{
+        font-size: $font-size-body;
+        line-height: 28px;
+        letter-spacing: .2px;
+        margin-bottom: 11px;
+    }
+    &__description{
+        line-height: 24px;
+        font-size: $font-size-body-s;
+        margin-bottom: 29px;
+    }
+}

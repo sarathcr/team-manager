@@ -38,6 +38,8 @@ import { StepSixComponent } from './containers/step-six/step-six.component';
 import { StepNineComponent } from './containers/step-nine/step-nine.component';
 import { StepTenComponent } from './containers/step-ten/step-ten.component';
 import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component';
+import { StepUnlockComponent } from './components/step-unlock/step-unlock.component';
+import { SubjectComponent } from './components/subject/subject.component';
 
 // pages
 import { HomeComponent } from './containers/home/home.component';
@@ -139,7 +141,9 @@ const entityMetadata: EntityMetadataMap = {
     HelpLinkComponent,
     HelpVideoThumbComponent,
     VideoPlayerComponent,
-    HelpImgThumbComponent
+    HelpImgThumbComponent,
+    StepUnlockComponent,
+    SubjectComponent
   ],
   imports: [
     CommonModule,

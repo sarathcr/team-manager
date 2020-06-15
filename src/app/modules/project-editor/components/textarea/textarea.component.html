@@ -1,4 +1,4 @@
 <div class="textarea d-flex" [ngClass]="focus?'textarea_focus':''">
-    <textarea class="textarea__description" [maxlength]="maxlength" [placeholder]="placeholder"
+    <textarea class="textarea__description" [maxlength]="maxlength" [placeholder]="focus?'':placeholder"
         [ngModel]="value" (ngModelChange)="onValueChange($event)" (blur)="onBlur()" (focus)="setFocus()" (keydown)="onKeyDown($event)"></textarea>
 </div>

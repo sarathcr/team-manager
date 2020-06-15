@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Step } from '../../constants/step.model';
+import { buttonSubmitConfig } from '../../constants/form-config.data';
 
 @Component({
   selector: 'app-step-three',
@@ -7,6 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StepThreeComponent implements OnInit {
 
+  project$: Observable<any>
+  step$: Observable<Step>
+  step: Step
+  buttonConfig = new buttonSubmitConfig
+  
   constructor() { }
 
   ngOnInit(): void {
