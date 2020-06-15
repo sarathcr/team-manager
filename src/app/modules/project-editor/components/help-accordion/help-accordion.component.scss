@@ -81,7 +81,7 @@
 
   &__body{
     padding: 0 40px 25px 40px;
-
+    max-height: calc(100vh - 340px);
     &-title{
       font-family: $font-family-tertiary;
       font-size: $font-size-body;
@@ -144,6 +144,7 @@
     //rules for spacing
     &-desc + &-img{
       margin-top: 10px;
+      margin-bottom: 10px;
     }
   }
 }
