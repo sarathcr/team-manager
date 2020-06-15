@@ -28,4 +28,11 @@ export class HelpImgThumbComponent implements OnInit {
     this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState });
     this.bsModalRef.content.closeBtnName = 'Close';
   }
+
+  ngOnDestroy() {
+    const modalCount = this.modalService.getModalsCount();
+    if (modalCount > 0) {
+      this.modalService._hideModal(modalCount);
+    }
+  }
 }
