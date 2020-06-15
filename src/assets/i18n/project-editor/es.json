@@ -59,5 +59,8 @@
       "project_synopsis_title": "Sinopsis",
       "project_synopsis_description": "Describe en pocas líneas por qué has querido desarrollar este proyecto. No hay una receta cerrada para este apartado, menciona aquello que consideras relevante.",
       "project_synopsis_placeholder": "Describe brevemente tu proyecto"
+    },
+    "PROJECTGUIDE":{
+      "projectguide_pedagogical_guide": "GUÍA PEDAGÓGICA"
     }
 }

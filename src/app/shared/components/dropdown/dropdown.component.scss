@@ -238,22 +238,4 @@
       box-shadow: 0 0 0 1px $primary;
     }
   }
-
-  ::-webkit-scrollbar {
-    width: 7px;
-
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: $background-primary;
-  }
-
-  ::-webkit-scrollbar-button {
-    display: none;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 3.5px;
-    background-color: $desktop-border-color;
-  }
 }

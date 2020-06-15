@@ -7,15 +7,16 @@
       </ng-template>
       <div class="contextual-help__content">
         <div class="contextual-help__content-head">
-          <h4 class="contextual-help__content-title">GUÍA PEDAGÓGICA</h4>
+          <h4 class="contextual-help__content-title"  [innerHTML]="'PROJECTGUIDE.projectguide_pedagogical_guide' | translate"></h4>
           <button type="button" class="contextual-help__content-close" (click)="closeTab()">
             <span class="icon icon-ic_share_close"></span>
           </button>
         </div>
-        <app-help-accordion></app-help-accordion>
+        <app-loader *ngIf="!loaded"></app-loader>
+        <app-help-accordion  *ngIf="loaded" [content]='help'></app-help-accordion>
       </div>
     </tab>
-    <tab customClass="contextual-help__tabset-item" (selectTab)="openTab($event)" [disabled]="true">
+    <tab customClass="contextual-help__tabset-item" (selectTab)="openTab($event)">
       <ng-template tabHeading>
         <span class="icon icon-ic_message"></span>
       </ng-template>
