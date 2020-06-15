@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewEncapsulation, Input, SimpleChanges, AfterViewInit,} from '@angular/core';
+import { Component, OnInit, OnChanges, ViewEncapsulation, Input, OnDestroy,} from '@angular/core';
 import { Help } from 'src/app/shared/constants/contextual-help.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component';
@@ -10,29 +10,17 @@ import { HelpModalContentComponent } from '../help-modal-content/help-modal-cont
   encapsulation: ViewEncapsulation.None
 })
 
-export class HelpAccordionComponent implements OnInit, OnChanges, AfterViewInit {
+export class HelpAccordionComponent implements OnInit, OnDestroy {
   @Input() content: Help[]
   oneAtATime: boolean = true;
   isFirstOpen: boolean = true;
   customClass: string = 'accordion'
-  accordionContent: string = ''
   bsModalRef: BsModalRef;
 
   constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
 
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.content)
-    this.content.forEach( help => {
-      this.accordionContent += ''
-    })
-  }
-  ngAfterViewInit(): void {
-    // this.accordion.nativeElement.insertAdjacentHTML('beforeend',this.accordionContent)
-    this.content.forEach( help => {
-    })
   }
 
   ngOnDestroy() {

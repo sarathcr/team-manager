@@ -67,13 +67,12 @@ export class ContextualHelpComponent implements OnInit, AfterViewInit {
     this.contextualHelp$.subscribe( contextualHelp => {
       if(contextualHelp) {
           this.help = contextualHelp.helps
-          console.log(this.help)
       } else {
         this.helpService.getByKey(stepid)
-        this.helpService.loading$.subscribe(loading=> {
-          this.loaded = !loading
-        })
       }
+    })
+    this.helpService.loading$.subscribe(loading=> {
+      this.loaded = !loading
     })
   }
 }
