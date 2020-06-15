@@ -48,6 +48,9 @@ import { EditorComponent } from './containers/editor/editor.component';
 // ngx translate
 import { TranslateModule } from '@ngx-translate/core';
 
+// ngx dropzone
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
 // NgRx
 import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
 import { ProjectEntityService } from './services/project/project-entity.service';
@@ -155,7 +158,8 @@ const entityMetadata: EntityMetadataMap = {
     ReactiveFormsModule,
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgxDropzoneModule
   ],
   providers: [
     ProjectsResolver,

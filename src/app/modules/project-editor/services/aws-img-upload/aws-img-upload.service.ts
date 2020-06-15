@@ -28,7 +28,7 @@ export class AwsImgUploadService {
     var formData = new FormData();
     formData.append('image', img);
     var options = { headers: new HttpHeaders().set('Content-Type', mim) };
-
+    
     return this.http.put<any>( res.uploadURL, formData, options)
     .pipe(
       map(re => {

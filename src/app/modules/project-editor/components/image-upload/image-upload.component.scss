@@ -1,42 +1,63 @@
 @import 'helpers/_helpers-master';
-.image-upload{
-    width: 424px;
-    min-height: 238px;
-    border: 1px dashed $article-border;
-    border-radius: 4px;
-    margin-bottom: 69px;
-    &__input{
-        visibility: hidden;
+
+.image-upload {
+  width: 424px;
+  min-height: 238px;
+  border: 1px dashed $article-border !important;
+  box-sizing: border-box !important;
+  border-radius: 4px !important;
+  margin-bottom: 69px;
+  overflow: hidden;
+
+  &__preview {
+    border-radius: 0 !important;
+    margin: 0 !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    position: relative !important;
+    width: 100% !important;
+    display: block !important;
+
+    img {
+      max-height: unset !important;
+      border-radius: 0 !important;
+      opacity: 1 !important;
+      height: auto !important;
+      width: 100% !important;
+      object-fit: contain !important;
+      object-position: top left;
     }
-    &__label{
-        width: 424px;
-        font-size: $font-size-body-s;
-        line-height: 24px;
-        cursor: pointer;
+  }
+
+  &_no-border {
+    border: 0 !important;
+  }
+
+  &__label-icon {
+    display: block;
+    font-size: $font-size-s;
+    color: $blue-whale;
+    margin-bottom: 5px;
+  }
+
+  &__label-text {
+    color: $blue-whale;
+    line-height: $line-height-24px;
+  }
+
+  ngx-dropzone-remove-badge {
+    opacity: 1 !important;
+    background: $white !important;
+    height: 34px !important;
+    width: 34px !important;
+    top: 18px !important;
+    right: 18px !important;
+
+    line {
+      stroke: $tag-font-color !important;
+      height: 13.31px !important;
+      width: 13.31px !important;
     }
-    &__preview{
-        min-width: 424px;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        border-radius: 4px;
-        position: relative;
-    }
-    &_border{
-        border: none;
-    }
-    &__close{
-        width: 34px;
-        height: 34px;   
-        background: $background-primary; 
-        border-radius: 50%;
-        position: absolute;
-        top: 18px;
-        right: 18px;
-    }
-    &__icon{
-        font-size: $font-size-sub-m;
-        color: $overtitle-grey;
-    }
- }
- 
+  }
+}

@@ -6,6 +6,7 @@ import { Project } from 'src/app/shared/constants/project.model';
 import { FormSixInitData, FormSix } from '../../constants/step-forms.model';
 import { formSixInitData } from '../../constants/step-forms.data';
 import { map } from 'rxjs/operators';
+import { EditorService } from '../../services/editor/editor.service';
 
 @Component({
   selector: 'app-step-six',
@@ -14,18 +15,16 @@ import { map } from 'rxjs/operators';
 })
 export class StepSixComponent implements OnInit {
 
-  @Input() step: Step 
-  @Input() project$: Observable<Project>
-  @Input() spyActive$: Observable<StepId>
-  @Input() stepStatus$: Observable<StepState>
-  @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>()
+  project$: Observable<any>
+  step$: Observable<Step>
+  step: Step
   initialFormStatus: Status
   initialFormData: FormSixInitData = formSixInitData
   buttonConfig = new buttonSubmitConfig
-  creativeTitle:string = ''
-  creativeImage:string = ''
-  
-  constructor() { }
+  creativeTitle: string = ''
+  creativeImage: string = ''
+
+  constructor(private editor: EditorService) { }
 
   ngOnInit(): void {
     this.formInit()
@@ -38,13 +37,16 @@ export class StepSixComponent implements OnInit {
   }
 
   formInit() {
-    // if (this.project$)
-    //   this.project$.subscribe(data => {
-    //     if (data?.creativeTitle) {
-    //       this.creativeTitle = data.creativeTitle
-    //       this.initialFormData = data.creativeTitle
-    //     }
-    //   })
+    this.project$ = this.editor.getStepData('stepSix')
+    this.step$ = this.editor.getStepStatus(6)
+    this.step = this.editor.steps.six
+    if (this.project$)
+      this.project$.subscribe(data => {
+        if (data?.creativeTitle) {
+          this.creativeTitle = data.creativeTitle
+          this.initialFormData = data.creativeTitle
+        }
+      })
     // if (this.stepStatus$)
     //   this.stepStatus$.pipe(
     //     map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
@@ -79,7 +81,7 @@ export class StepSixComponent implements OnInit {
         ]
       }
     }
-    this.onSubmit.emit(formData);
+    // this.onSubmit.emit(formData);
   }
 
   // Changes the button according to form status
@@ -122,5 +124,5 @@ export class StepSixComponent implements OnInit {
     }
     return false
   }
-  
+
 }

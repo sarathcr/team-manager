@@ -1,5 +1,5 @@
 <div class="project-editor__form step-eight">
-    <!-- <app-status [status]='step.state'></app-status> -->
+    <app-status [status]='step.state'></app-status>
     <div class="project-form d-flex flex-column justify-content-between">
         <div>
             <h1 class="title_s"><span>6. </span>{{'RETHINK_TITLE.project_rethinktitle_creativetitle' | translate}}
@@ -12,7 +12,9 @@
             </app-input>
             <h2 class="title_xs project-form__subtitle">{{'RETHINK_TITLE.project_rethinktitle_addimage' | translate}}
             </h2>
-            <app-image-upload [(imageURL)]="creativeImage" (onChange)="onValueChange($event)"></app-image-upload>
+            <app-image-upload [(imageURL)]="creativeImage" [maxFileSize]="5242880" [acceptedType]="'image/png,image/jpg'" 
+            (onChange)="onValueChange($event)">
+            </app-image-upload>
         </div>
         <app-form-button scrollTo scrollToId="stepSix" [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>
         </app-form-button>

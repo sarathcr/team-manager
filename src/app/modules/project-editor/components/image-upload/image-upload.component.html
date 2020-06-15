@@ -1,12 +1,9 @@
-<div class="image-upload d-flex" [ngClass]="{'image-upload_border' : imgURL}">
-    <div class="image-upload__file d-flex align-items-center justify-content-center" *ngIf="!imgURL">
-        <label for="file" class="image-upload__label d-flex align-items-center justify-content-center m-0 h-100">Cargar
-            archivo</label>
-    </div>
-    <div class="image-upload__preview" *ngIf="imgURL" [ngStyle]="{'background-image' : 'url('+ imgURL +')'}">
-        <div class="image-upload__close d-flex align-items-center justify-content-center">
-            <span class="icon icon-ic_share_close image-upload__icon"></span></div>
-    </div>
-    <input type='file' class="image-upload__input" accept="image/jpeg, image/png" name="image" id="file"
-        (change)="preview(file.files)" #file (ngModelChange)="onValueChange($event)">
-</div>
+<ngx-dropzone class="image-upload d-flex {{files.length?'image-upload_no-border':''}}" (change)="onSelect($event)" 
+[multiple]="false" [accept]="acceptedType" [maxFileSize]="maxFileSize" [disableClick]="files.length ? true : false">
+    <ngx-dropzone-label>
+            <div class="icon-ic_upload image-upload__label-icon"></div>
+            <div class="image-upload__label-text">Cargar archivo</div>
+    </ngx-dropzone-label>
+    <ngx-dropzone-image-preview class="image-upload__preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+    </ngx-dropzone-image-preview>
+</ngx-dropzone>
