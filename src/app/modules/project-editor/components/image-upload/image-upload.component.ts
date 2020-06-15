@@ -24,6 +24,7 @@ export class ImageUploadComponent implements OnInit {
       return;
  
     var mimeType = files[0].type;
+    console.log(mimeType)
     if (mimeType.match(/image\/*/) == null) {
       this.message = "Only images are supported.";
       return;
@@ -35,8 +36,11 @@ export class ImageUploadComponent implements OnInit {
     reader.onload = (_event) => { 
       this.imgURL = reader.result; 
     }
-    this.aws.uploadImg()
-    .subscribe(data => console.log(data))
+    this.aws.uploadImg(mimeType, `test/${ new Date().getTime()}.${mimeType.split('/')[1]}`)
+    .subscribe(data => {
+      console.log(files[0], '<====')
+      if (data) this.aws.upload(data, files[0], mimeType).subscribe(da => {console.log(da)})
+    })
   }
 
   // Function to get and emit value on textarea

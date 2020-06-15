@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -11,18 +11,30 @@ export class AwsImgUploadService {
   constructor(private http: HttpClient) {
   }
 
-  uploadImg(): Observable<any> {
+  uploadImg(mime, path): Observable<any> {
     // console.log(parm,"<==== uploadImg")
     let body = {
-      FilePath: "src/assets/images/150.png",
-      MimeType: "image/png"
+      FilePath: path,
+      MimeType: mime
+      // MimeType: mime
     }
     return this.http.post<any>(`http://api.dev.abp.thinkoeducation.com/uploads/`, JSON.stringify(body))
       .pipe(
-        map(res => {
-          console.log(res, "<=====")
-        })
+        map(res => res)
       );
     
   }
+  upload(res, img, mim): Observable<any> {
+    var formData = new FormData();
+    formData.append('image', img);
+    var options = { headers: new HttpHeaders().set('Content-Type', mim) };
+
+    return this.http.put<any>( res.uploadURL, formData, options)
+    .pipe(
+      map(re => {
+        console.log(res, "rth ====")
+      })
+    );
+  }
+
 }
