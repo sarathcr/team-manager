@@ -10,3 +10,4 @@
     <input type='file' class="image-upload__input" accept="image/jpeg, image/png" name="image" id="file"
         (change)="preview(file.files)" #file (ngModelChange)="onValueChange($event)">
 </div>
+<img *ngIf="imageFromAws" src="{{imageFromAws}}" alt="test">

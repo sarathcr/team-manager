@@ -13,6 +13,7 @@ export class ImageUploadComponent implements OnInit {
   public imagePath;
   imgURL: any;
   public message: string;
+  imageFromAws
 
   constructor(private aws: AwsImgUploadService) { }
 
@@ -36,10 +37,13 @@ export class ImageUploadComponent implements OnInit {
     reader.onload = (_event) => { 
       this.imgURL = reader.result; 
     }
-    this.aws.uploadImg(mimeType, `test/${ new Date().getTime()}.${mimeType.split('/')[1]}`)
+
+    this.aws.GetRreSignedUrl(mimeType, `creativeImage/${ new Date().getTime()}.${mimeType.split('/')[1]}`)
     .subscribe(data => {
-      console.log(files[0], '<====')
-      if (data) this.aws.upload(data, this.imgURL, mimeType).subscribe(da => {console.log(da)})
+      if (data) this.aws.uploadImage(data.uploadURL, files[0])
+      .subscribe(da => {
+        this.imageFromAws = data.publicURL
+      })
     })
   }
 
