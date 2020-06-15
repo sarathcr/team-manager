@@ -26,15 +26,12 @@
     &-icon{
       font-size: 27px;
       margin-right: 14px;
+      height: 30px;
+      width: 30px;
 
       #{$root}__icon:last-child{
         display: none;
       }
-    }
-
-    #{$root}__icon{
-      max-width: 30px;
-      max-height: 30px;
     }
 
     #{$root}_active &-icon_multi-icon{
@@ -132,8 +129,13 @@
       object-position: center;
     }
 
-    &-thumb:nth-child(even){
-      margin-left: 20px;
+    &_cards{
+      display: flex;
+      position: relative;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      flex: 0 0 100%;
+      margin-top: 3px;
     }
 
     //rules for spacing
@@ -227,8 +229,7 @@
 
 .help-img-thumb{
   width: 185px;
-  display: inline-flex;
-  flex-direction: column;
+  display: block;
   margin-bottom: 17px;
   border: none;
   padding: 0;

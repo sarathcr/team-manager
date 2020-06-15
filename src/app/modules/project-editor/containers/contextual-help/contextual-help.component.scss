@@ -25,12 +25,12 @@
       border: none;
 
       #{$tab-root}-item{
-        margin-top: -12px;
+        margin-top: -8px;
         @include contextual-list-shadow;
         width: 62px;
-        height: 89px;
+        height: 82px;
         border-radius: 0;
-        transform: skewY(20deg);
+        @include skewY(14);
         position: relative;
         background-color: $context-bg-color;
 
@@ -47,8 +47,8 @@
           color: $primary-font-color;
 
           .icon{
-            padding-top: 10px;
-            @include skewY(-20);
+            padding-top: 16px;
+            @include skewY(-14);
           }
         }
 
@@ -127,7 +127,7 @@
             background-color: transparent;
             border: none;
             color: $context-close-color;
-            font-size: 20px;
+            font-size: 24px;
             margin-right: -8px;
             cursor: pointer;
           }
