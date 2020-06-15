@@ -69,6 +69,7 @@ import { StepStatusEntityService } from './services/step-status/step-status-enti
 import { StepStatusDataService } from './services/step-status/step-status-data.service';
 import { ProjectEditorComponent } from './project-editor.component';
 import { EditorService } from './services/editor/editor.service';
+import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 
 const entityMetadata: EntityMetadataMap = {
@@ -173,6 +174,7 @@ const entityMetadata: EntityMetadataMap = {
     StepStatusEntityService,
     StepStatusDataService,
     EditorService,
+    AwsImgUploadService,
     BsModalRef
   ]
 })

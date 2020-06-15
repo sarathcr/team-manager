@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { EventEmitter } from 'events';
+import { Component, OnInit, Input } from '@angular/core';
+import { AwsImgUploadService } from '../../services/aws-img-upload/aws-img-upload.service';
 
 @Component({
   selector: 'app-image-upload',
@@ -14,7 +14,7 @@ export class ImageUploadComponent implements OnInit {
   imgURL: any;
   public message: string;
 
-  constructor() { }
+  constructor(private aws: AwsImgUploadService) { }
 
   ngOnInit(): void {
   }
@@ -35,12 +35,13 @@ export class ImageUploadComponent implements OnInit {
     reader.onload = (_event) => { 
       this.imgURL = reader.result; 
     }
+    this.aws.uploadImg()
+    .subscribe(data => console.log(data))
   }
 
   // Function to get and emit value on textarea
   onValueChange(imgURL: string) {
     this.imageURL = imgURL;
-    // this.onChange.emit(this.imageURL);
   }
 
 }
