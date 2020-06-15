@@ -7,6 +7,7 @@ import { setTheme } from 'ngx-bootstrap/utils';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -161,7 +162,8 @@ const entityMetadata: EntityMetadataMap = {
     ReactiveFormsModule,
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgScrollbarModule
   ],
   providers: [
     ProjectsResolver,
