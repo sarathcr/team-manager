@@ -15,7 +15,6 @@ export class HelpAccordionComponent implements OnInit, OnDestroy {
   oneAtATime: boolean = true;
   isFirstOpen: boolean = true;
   customClass: string = 'accordion'
-  accordionContent: string = ''
   bsModalRef: BsModalRef;
 
   constructor(private modalService: BsModalService) { }
