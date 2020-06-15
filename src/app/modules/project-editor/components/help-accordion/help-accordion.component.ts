@@ -1,7 +1,7 @@
-import { Component, OnInit, OnChanges, ViewEncapsulation, Input, OnDestroy,} from '@angular/core';
-import { Help } from 'src/app/shared/constants/contextual-help.model';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component';
+import { Component, OnInit,  ViewEncapsulation, Input, OnDestroy, ElementRef, AfterViewInit, QueryList, ViewChildren, Renderer2,} from '@angular/core'
+import { Help } from 'src/app/shared/constants/contextual-help.model'
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component'
 
 @Component({
   selector: 'app-help-accordion',
@@ -10,56 +10,65 @@ import { HelpModalContentComponent } from '../help-modal-content/help-modal-cont
   encapsulation: ViewEncapsulation.None
 })
 
-export class HelpAccordionComponent implements OnInit, OnDestroy {
+export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() content: Help[]
-  oneAtATime: boolean = true;
-  isFirstOpen: boolean = true;
+  @ViewChildren('accordionBody') accordionBody: QueryList<any>
+  oneAtATime: boolean = true
+  isFirstOpen: boolean = true
   customClass: string = 'accordion'
-  bsModalRef: BsModalRef;
+  bsModalRef: BsModalRef
 
-  constructor(private modalService: BsModalService) { }
+  constructor(private modalService: BsModalService, private elementRef:ElementRef,private renderer:Renderer2) { }
 
   ngOnInit(): void {
 
+  }
+  ngAfterViewInit() {
+      this.elementRef.nativeElement.querySelectorAll('.help-img-thumb').forEach( thumb => {
+        this.renderer.listen(thumb, 'click', (event) => { this.openModalWithComponent(event)})
+      })
+      this.elementRef.nativeElement.querySelectorAll('.help-video-thumb').forEach( thumb => {
+        this.renderer.listen(thumb, 'click', (event) => { this.videoModal(event)})
+      })
   }
 
   ngOnDestroy() {
     const modalCount = this.modalService.getModalsCount();
     if (modalCount > 0) {
-      this.modalService._hideModal(modalCount);
+      this.modalService._hideModal(modalCount)
     }
   }
 
   videoModal(event) {
-    event.preventDefault()
-    const element = event.currentTarget
-    const title = element.dataset.title
-    const url = element.dataset.url
-    const type = element.dataset.type
-    const initialState = {
-      title: title, // Title goes here
-      video: true,
-      videoSources: {
-        src: url,  //'https://youtu.be/f4cstWWgOh0', // 'https://vimeo.com/347119375', // Set video url here
-        type: type //this.type, //'video/youtube' 'video/vimeo' 'video/mp4' Set video type here
-      }
-    };
+      event.preventDefault()
+      const element = event.currentTarget
+      const title = element.dataset.title
+      const url = element.dataset.url
+      const type = element.dataset.type
+      const initialState = {
+        title: title, // Title goes here
+        video: true,
+        videoSources: {
+          src: url,  //'https://youtu.be/f4cstWWgOh0', // 'https://vimeo.com/347119375', // Set video url here
+          type: type //this.type, //'video/youtube' 'video/vimeo' 'video/mp4' Set video type here
+        }
+      };
 
-    this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState });
-    this.bsModalRef.content.closeBtnName = 'Close';
+      this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState })
+      this.bsModalRef.content.closeBtnName = 'Close'
   }
 
   openModalWithComponent(event) {
-    event.preventDefault()
-    const element = event.currentTarget
-    const title = element.dataset.title
-    const content = element.dataset.content
-    const initialState = {
-      title: title,
-      img: content
-    };
+      event.preventDefault()
+      const element = event.currentTarget
+      const title = element.dataset.title
+      const content = element.dataset.content
+      const initialState = {
+        title: title,
+        img: content
+      };
 
-    this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState });
-    this.bsModalRef.content.closeBtnName = 'Close';
+      this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState })
+      this.bsModalRef.content.closeBtnName = 'Close'
   }
 }
