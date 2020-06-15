@@ -1,21 +1,40 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, AfterViewInit, ViewContainerRef, SimpleChanges } from '@angular/core';
+import { Observable } from 'rxjs'
+import { TranslateService } from '@ngx-translate/core'
+import { map, tap, filter, first } from 'rxjs/operators'
+import { HelpEntityService } from '../../services/help/help-entity.service'
+import { Step } from '../../constants/step.model';
+import { Help, ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
+import { EditorService } from '../../services/editor/editor.service'
 @Component({
   selector: 'app-contextual-help',
   templateUrl: './contextual-help.component.html',
   styleUrls: ['./contextual-help.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ContextualHelpComponent implements OnInit {
+export class ContextualHelpComponent implements OnInit, AfterViewInit {
   @Output() status = new EventEmitter<boolean>();
+  help: Help[]
+  contextualHelp$: Observable<ContextualHelp>
   closeContext: boolean = false;
   activeTab: any;
+  loaded = false
 
-  constructor() { }
+  constructor(
+    public editorService: EditorService,
+    public helpService: HelpEntityService,
+    private translateService: TranslateService
+  ) { }
 
   ngOnInit(): void {
+    this.getTranslation();
   }
 
-  //Close tab 
+  ngAfterViewInit(){
+    this.getHelpContent();
+  }
+
+  //Close tab
   closeTab() {
     this.closeContext = false;
     this.status.emit(false);
@@ -31,5 +50,40 @@ export class ContextualHelpComponent implements OnInit {
     if (!this.closeContext) {
       this.closeContext = true;
     }
+  }
+
+  getHelpContent() {
+    this.editorService.currentStep$.subscribe( stepId => {
+      if(stepId){
+        this.getHelp(stepId)
+      }
+    });
+  }
+
+  // Get help content
+  getHelp(stepid) {
+    this.contextualHelp$ = this.helpService.entities$
+      .pipe(
+        map( help => help.find( step => {
+            return step.stepid === Number(stepid)
+          })
+        )
+      )
+    this.contextualHelp$.subscribe( contextualHelp => {
+      if(contextualHelp) {
+          this.help = contextualHelp.helps
+      } else {
+        this.helpService.getByKey(stepid)
+      }
+    })
+    this.helpService.loading$.subscribe(loading=> {
+      this.loaded = !loading
+    })
+  }
+
+  getTranslation(){
+    this.translateService.stream([
+      'PROJECTGUIDE.projectguide_pedagogical_guide',
+    ]).subscribe(translations => {})
   }
 }
