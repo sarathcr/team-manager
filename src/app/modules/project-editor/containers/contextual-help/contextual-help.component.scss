@@ -9,8 +9,28 @@
   height: 100%;
   @include transitions(all, 0.5s, ease-in-out);
 
+  .tab-content{
+    &::before{
+      content: "";
+      display: block;
+      position: absolute;
+      top: 1px;
+      height: 80px;
+      background-color: #fff;
+      width: 40px;
+      left: -20px;
+      z-index: 2;
+      transform: skewY(14deg);
+    }
+  }
+
   &_open{
     right: 0;
+    .tab-content{
+      &::before{
+        content: none;
+      }
+    }
   }
 
   &__tabset{
@@ -33,7 +53,9 @@
         @include skewY(14);
         position: relative;
         background-color: $context-bg-color;
-
+        &:first-child{
+          box-shadow: -44px 0 50px -10px rgba($desktop-shadow-color, 0.1), inset -16px 12px 16px -15px rgba($desktop-shadow-color, 0.1)
+        }
         a{
           margin: 0;
           border-radius: 0;
@@ -59,6 +81,7 @@
 
         &.active{
           z-index: 2;
+          box-shadow: -25px 0 50px -10px rgba(0, 0, 0, 0.1), inset -16px 20px 16px -17px rgba(0, 0, 0, 0.1);
         }
 
         &:first-child{
