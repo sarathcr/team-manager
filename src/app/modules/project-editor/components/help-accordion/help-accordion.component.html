@@ -1,6 +1,6 @@
 <accordion [isAnimated]="true" [closeOthers]="oneAtATime">
   <!-- This below should be removed once the integration completed -->
-  <accordion-group [isOpen]="isFirstOpen" [panelClass]="customClass" #accordionGroup1 [ngClass]="{ 'help-accordion_active' : accordionGroup1.isOpen }">
+  <!-- <accordion-group [isOpen]="isFirstOpen" [panelClass]="customClass" #accordionGroup1 [ngClass]="{ 'help-accordion_active' : accordionGroup1.isOpen }">
     <div accordion-heading class="help-accordion__heading" [ngClass]="{ 'help-accordion_active' : accordionGroup1.isOpen }">
       <div class="help-accordion__heading-icon help-accordion__heading-icon_multi-icon">
         <img src="../../../../../assets/icons/ic_motivate_off.png" class="help-accordion__icon" alt="MOTÍVATE off">
@@ -65,38 +65,46 @@
         </div>
     </div>
     <div class="help-accordion__body">
-      <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
-        <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
-        <span class="help-img-thumb__title">Some title</span>
-      </a>
-      <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
-        <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
-        <span class="help-img-thumb__title">Some title</span>
-      </a>
-      <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
-        <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
-        <span class="help-img-thumb__title">Some title</span>
-      </a>
-      <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
-        <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
-        <span class="help-img-thumb__title">Some title</span>
-      </a>
+      <div class="help-accordion__body-thumb">
+        <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
+          <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
+          <span class="help-img-thumb__title">Some title</span>
+        </a>
+      </div>
+
+      <div class="help-accordion__body-thumb">
+        <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
+          <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
+          <span class="help-img-thumb__title">Some title</span>
+        </a>
+      </div>
+      <div class="help-accordion__body-thumb">
+        <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
+          <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
+          <span class="help-img-thumb__title">Some title</span>
+        </a>
+      </div>
+      <div class="help-accordion__body-thumb">
+        <a class="help-img-thumb" (click)="openModalWithComponent($event)" data-title='Some title' data-content='../../../../../assets/images/150.png'>
+          <img src="../../../../../assets/images/150.png" class="help-img-thumb__img" alt="Some title">
+          <span class="help-img-thumb__title">Some title</span>
+        </a>
+      </div>
     </div>
-  </accordion-group>
+  </accordion-group> -->
   <!-- This above should be removed once the integration completed -->
 
-  <!-- <accordion-group [isOpen]='first' [panelClass]="customClass" #accordionGroup [ngClass]="{ 'help-accordion_last help-accordion_active' : accordionGroup.isOpen }" *ngFor="let accordian of content; let i = index; let first = first;">
-    <div accordion-heading class="help-accordion__heading">
+  <accordion-group [isOpen]='first' [panelClass]="customClass" #accordionGroup [ngClass]="{ 'help-accordion_last help-accordion_active' : accordionGroup.isOpen }" *ngFor="let accordian of content; let i = index; let first = first;">
+    <div accordion-heading class="help-accordion__heading" >
         <div class="help-accordion__heading-icon help-accordion__heading-icon_multi-icon" [innerHTML]="accordian.icon | stringDecoder"></div>
         <h5 class="help-accordion__heading-title" [innerHTML]="accordian.title"></h5>
         <div class="help-accordion__heading-arrow">
           <span class="icon icon-ic_dropdown"></span>
         </div>
     </div>
-    <ng-template accordionBody></ng-template>
-    <div class="help-accordion__body" [innerHTML]="accordian.body | stringDecoder">
+    <div class="help-accordion__body"  [innerHTML]="accordian.body | stringDecoder">
 
     </div>
-  </accordion-group> -->
+  </accordion-group>
 
 </accordion>

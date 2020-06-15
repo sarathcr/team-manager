@@ -24,15 +24,15 @@ export class HelpAccordionComponent implements OnInit, OnChanges, AfterViewInit 
 
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.content)
-    this.content.forEach( help => {
-      this.accordionContent += ''
-    })
+    // console.log(this.content)
+    // this.content.forEach( help => {
+    //   this.accordionContent += ''
+    // })
   }
   ngAfterViewInit(): void {
     // this.accordion.nativeElement.insertAdjacentHTML('beforeend',this.accordionContent)
-    this.content.forEach( help => {
-    })
+    // this.content.forEach( help => {
+    // })
   }
 
   ngOnDestroy() {
