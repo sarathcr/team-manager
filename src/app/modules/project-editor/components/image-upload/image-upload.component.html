@@ -8,5 +8,5 @@
             <span class="icon icon-ic_share_close image-upload__icon"></span></div>
     </div>
     <input type='file' class="image-upload__input" accept="image/jpeg, image/png" name="image" id="file"
-        (change)="preview(file.files)" #file [ngModel]="imgURL" (ngModelChange)="onValueChange($event)">
+        (change)="preview(file.files)" #file (ngModelChange)="onValueChange($event)">
 </div>

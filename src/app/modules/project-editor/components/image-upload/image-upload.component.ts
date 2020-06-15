@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
-import { EventEmitter } from 'events';
+import { Component, OnInit, Input } from '@angular/core';
+import { AwsImgUploadService } from '../../services/aws-img-upload/aws-img-upload.service';
 
 @Component({
   selector: 'app-image-upload',
@@ -14,7 +14,7 @@ export class ImageUploadComponent implements OnInit {
   imgURL: any;
   public message: string;
 
-  constructor() { }
+  constructor(private aws: AwsImgUploadService) { }
 
   ngOnInit(): void {
   }
@@ -24,6 +24,7 @@ export class ImageUploadComponent implements OnInit {
       return;
  
     var mimeType = files[0].type;
+    console.log(mimeType)
     if (mimeType.match(/image\/*/) == null) {
       this.message = "Only images are supported.";
       return;
@@ -35,12 +36,16 @@ export class ImageUploadComponent implements OnInit {
     reader.onload = (_event) => { 
       this.imgURL = reader.result; 
     }
+    this.aws.uploadImg(mimeType, `test/${ new Date().getTime()}.${mimeType.split('/')[1]}`)
+    .subscribe(data => {
+      console.log(files[0], '<====')
+      if (data) this.aws.upload(data, files[0], mimeType).subscribe(da => {console.log(da)})
+    })
   }
 
   // Function to get and emit value on textarea
   onValueChange(imgURL: string) {
     this.imageURL = imgURL;
-    // this.onChange.emit(this.imageURL);
   }
 
 }
