@@ -42,5 +42,4 @@ export class EditorComponent implements OnInit, OnDestroy {
   getContextualStatus($event) {
     this.contextualStatus = $event
   }
-
 }

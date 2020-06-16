@@ -1,4 +1,4 @@
-<div class="editor" id="editor">
+<div class="editor" id="editor" [ngClass]="{ 'editor_short' : contextualStatus}">
     <div class="editor__bg"></div>
     <app-editor-header [projectData]="editor.titleData" id="editor-header" (titleBlur)="editor.handleSubmit($event)"></app-editor-header>
     <app-editor-sidebar id="editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
