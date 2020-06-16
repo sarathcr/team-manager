@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'thinko-creator';
   loading = true;
   isLoggedIn$: Observable<boolean>;
   isLoggedOut$: Observable<boolean>;
