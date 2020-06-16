@@ -39,7 +39,7 @@ export class ImageUploadComponent implements OnInit {
         this.toBase64(file)
         const mimeType = file.type
         this.loading = true;
-        this.aws.GetPreSignedUrl(mimeType, `${new Date().getTime()}-${file.name}`)
+        this.aws.getPreSignedUrl(mimeType, `${new Date().getTime()}-${file.name}`)
           .subscribe(data => {
             if (data) this.aws.uploadImage(data.uploadURL, file)
               .subscribe(() => {
