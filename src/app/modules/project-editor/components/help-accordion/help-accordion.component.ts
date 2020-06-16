@@ -13,6 +13,7 @@ import { HelpModalContentComponent } from '../help-modal-content/help-modal-cont
 export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() content: Help[]
   @ViewChildren('accordionBody') accordionBody: QueryList<any>
+  arrayHeight: string = ''
   oneAtATime: boolean = true
   isFirstOpen: boolean = true
   customClass: string = 'help-accordion'
@@ -25,8 +26,9 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit 
   ) { }
 
   ngOnInit(): void {
-
+    this.arrayHeight = 'calc(100vh - ' + ((this.content.length * 60) + 160) + 'px)'
   }
+  
   ngAfterViewInit() {
       this.elementRef.nativeElement.querySelectorAll('.help-img-thumb').forEach( thumb => {
         this.renderer.listen(thumb, 'click', (event) => { this.openModalWithComponent(event)})

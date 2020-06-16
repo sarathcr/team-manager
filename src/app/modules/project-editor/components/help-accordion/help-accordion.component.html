@@ -10,8 +10,10 @@
           <span class="icon icon-ic_dropdown"></span>
         </div>
     </div>
-    <ng-scrollbar>
-      <div class="help-accordion__body" #accordionBody [innerHTML]="accordian.body | stringDecoder"></div>
-    </ng-scrollbar>
+    <div class="help-accordion__body" [ngStyle]="{ 'height' : arrayHeight }">
+      <ng-scrollbar>
+        <div class="help-accordion__body-content" #accordionBody [innerHTML]="accordian.body | stringDecoder" [ngStyle]="{ 'max-height' : arrayHeight }"></div>
+      </ng-scrollbar>
+    </div>
   </accordion-group>
 </accordion>
