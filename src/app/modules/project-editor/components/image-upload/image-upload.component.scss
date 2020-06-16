@@ -43,10 +43,10 @@
       max-height: unset !important;
       border-radius: 0 !important;
       opacity: 1 !important;
-      height: auto !important;
+      height: 100% !important;
       width: 100% !important;
-      object-fit: contain !important;
-      object-position: top left;
+      object-fit: cover !important;
+      object-position: center;
     }
 
     &_loading {
