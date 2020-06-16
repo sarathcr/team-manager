@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, AfterViewInit, ViewContainerRef, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
-import { map, tap, filter, first } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
 import { HelpEntityService } from '../../services/help/help-entity.service'
-import { Step } from '../../constants/step.model';
 import { Help, ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
 import { EditorService } from '../../services/editor/editor.service'
 @Component({
@@ -12,7 +11,7 @@ import { EditorService } from '../../services/editor/editor.service'
   styleUrls: ['./contextual-help.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ContextualHelpComponent implements OnInit, AfterViewInit {
+export class ContextualHelpComponent implements OnInit {
   @Output() status = new EventEmitter<boolean>();
   help: Help[]
   contextualHelp$: Observable<ContextualHelp>
@@ -28,10 +27,6 @@ export class ContextualHelpComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getTranslation();
-  }
-
-  ngAfterViewInit(){
-    this.getHelpContent();
   }
 
   //Close tab
@@ -50,11 +45,14 @@ export class ContextualHelpComponent implements OnInit, AfterViewInit {
     if (!this.closeContext) {
       this.closeContext = true;
     }
+    if(this.closeContext){
+      this.getHelpContent();
+    }
   }
 
   getHelpContent() {
     this.editorService.currentStep$.subscribe( stepId => {
-      if(stepId){
+      if(stepId && this.closeContext){
         this.getHelp(stepId)
       }
     });

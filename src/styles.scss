@@ -136,20 +136,25 @@
   }
 }
 
+.contextual-help{
+  .spinner{
+    top: 80px;
+  }
+}
 body,
 .dropdown{
   ::-webkit-scrollbar {
     width: 7px;
   }
-  
+
   ::-webkit-scrollbar-track {
     background-color: $background-primary;
   }
-  
+
   ::-webkit-scrollbar-button {
     display: none;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     border-radius: 3.5px;
     background-color: $desktop-border-color;
