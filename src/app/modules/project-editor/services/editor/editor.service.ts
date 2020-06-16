@@ -99,7 +99,7 @@ export class EditorService {
       if (data) {
         this.updateStepStatus(data)
       } else {
-        this.stepStatusService.getWithQuery(this.projectId.toString())
+        if (this.projectId) this.stepStatusService.getWithQuery(this.projectId.toString())
       }
     })
   }
@@ -213,11 +213,12 @@ export class EditorService {
   }
 
   clearData() {
-    this.projectSubscription.unsubscribe()
-    this.statusSubscription.unsubscribe()
+    if (this.projectSubscription) this.projectSubscription.unsubscribe()
+    if (this.statusSubscription) this.statusSubscription.unsubscribe()
     this.project$ = null
     this.stepStatus$ = null
     this.titleData = null
+    this.projectId = null
     this.currentSectionId = null
     this.nextSectionId = null
     this.isStepDone = false

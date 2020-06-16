@@ -16,9 +16,9 @@ export class StepSixComponent implements OnInit {
   project$: Observable<any>
   step$: Observable<Step>
   step: Step
-  initialFormStatus: Status
   initialFormData: FormSixInitData = new formSixInitData
   buttonConfig = new buttonSubmitConfig
+  initialFormStatus: Status = 'PENDING'
   creativeTitle: string = ''
   creativeImage: string = ''
 

@@ -25,7 +25,7 @@
     font-size: $font-size-sub-m;
     color: $overtitle-grey;
   }
-  
+
   &__preview {
     border-radius: 0 !important;
     margin: 0 !important;
@@ -48,6 +48,10 @@
       object-fit: contain !important;
       object-position: top left;
     }
+
+    &_loading {
+      opacity: 0.8;
+    }
   }
 
   &_no-border {
@@ -65,19 +69,4 @@
     color: $blue-whale;
     line-height: $line-height-24px;
   }
-
-  // ngx-dropzone-remove-badge {
-  //   opacity: 1 !important;
-  //   background: $white !important;
-  //   height: 34px !important;
-  //   width: 34px !important;
-  //   top: 18px !important;
-  //   right: 18px !important;
-
-  //   line {
-  //     stroke: $tag-font-color !important;
-  //     height: 13.31px !important;
-  //     width: 13.31px !important;
-  //   }
-  // }
 }

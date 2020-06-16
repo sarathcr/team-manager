@@ -1,4 +1,4 @@
 <div class="input" [ngClass]="focus?'input_focus':''">
-    <input class="form-control input__field" [placeholder]="placeholder" (focus)="setFocus()" (blur)="onBlur()"
+    <input class="form-control input__field" [placeholder]="!focus ? placeholder : ''" (focus)="setFocus()" (blur)="onBlur()"
         [maxlength]="maxlength" [ngModel]="value" (ngModelChange)="onValueChange($event)">
 </div>
