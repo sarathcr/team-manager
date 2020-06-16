@@ -384,6 +384,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
       id: 'submitButton',
       disabled: true,
       submitted: false,
+      variant: {outlined:false}
     }
     this.countryDropdown = {
       field: 'dropdown',

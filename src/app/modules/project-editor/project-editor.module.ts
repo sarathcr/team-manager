@@ -41,6 +41,7 @@ import { StepTenComponent } from './containers/step-ten/step-ten.component';
 import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component';
 import { StepUnlockComponent } from './components/step-unlock/step-unlock.component';
 import { SubjectComponent } from './components/subject/subject.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 // pages
 import { HomeComponent } from './containers/home/home.component';
@@ -155,7 +156,8 @@ const entityMetadata: EntityMetadataMap = {
     HelpImgThumbComponent,
     StepUnlockComponent,
     SubjectComponent,
-    StringDecoder
+    StringDecoder,
+    ModalComponent
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
-import { FieldConfig } from '../../constants/field.model'
+import { FieldConfig, VariantConfig } from '../../constants/field.model'
 
 @Component({
   selector: 'app-form-button',
@@ -7,8 +7,11 @@ import { FieldConfig } from '../../constants/field.model'
   styleUrls: ['./form-button.component.scss']
 })
 export class FormButtonComponent implements OnInit {
+  
   @Input() config: FieldConfig
   @Output() onClick = new EventEmitter()
+  @Input() variant: VariantConfig
+  
   constructor() { }
 
   ngOnInit(): void {

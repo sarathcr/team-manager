@@ -22,12 +22,18 @@ export interface FieldConfig {
   multiselect?: boolean
   submitted?: boolean
   id: string
-  textField?: string,
+  textField?: string
   maxLength?: number
   limit?: number
+  variant?: VariantConfig
 }
 
 export interface Option {
   id?: number;
   name?: string;
 }
+
+export interface VariantConfig {
+  outlined?: boolean
+}
+

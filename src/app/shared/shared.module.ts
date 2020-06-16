@@ -20,7 +20,7 @@ import { LoaderComponent } from './components/loader/loader.component';
         FormButtonComponent,
         FormInputComponent,
         DropdownComponent,
-        LoaderComponent,
+        LoaderComponent
     ],
     imports: [
         CommonModule,
