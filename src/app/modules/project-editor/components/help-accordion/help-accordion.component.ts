@@ -25,7 +25,7 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit 
   ) { }
 
   ngOnInit(): void {
-    console.log(this.content)
+
   }
   ngAfterViewInit() {
       this.elementRef.nativeElement.querySelectorAll('.help-img-thumb').forEach( thumb => {
