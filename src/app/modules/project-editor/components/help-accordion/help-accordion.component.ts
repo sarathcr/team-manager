@@ -1,4 +1,4 @@
-import { Component, OnInit,  ViewEncapsulation, Input, OnDestroy, ElementRef, AfterViewInit, QueryList, ViewChildren, Renderer2,} from '@angular/core'
+import { Component, OnInit,  ViewEncapsulation, Input, OnDestroy, ElementRef, AfterViewInit, QueryList, ViewChildren, Renderer2, HostListener} from '@angular/core'
 import { Help } from 'src/app/shared/constants/contextual-help.model'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component'
@@ -13,6 +13,10 @@ import { HelpModalContentComponent } from '../help-modal-content/help-modal-cont
 export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() content: Help[]
   @ViewChildren('accordionBody') accordionBody: QueryList<any>
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
+    this.adjustHeight()
+  }
   arrayHeight: string = ''
   oneAtATime: boolean = true
   isFirstOpen: boolean = true
@@ -26,7 +30,7 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit 
   ) { }
 
   ngOnInit(): void {
-    this.arrayHeight = 'calc(100vh - ' + ((this.content.length * 60) + 160) + 'px)'
+    this.adjustHeight()
   }
   
   ngAfterViewInit() {
@@ -76,5 +80,9 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit 
 
       this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState })
       this.bsModalRef.content.closeBtnName = 'Close'
+  }
+
+  adjustHeight(){
+    this.arrayHeight = 'calc(100vh - ' + ((this.content.length * 60) + 160) + 'px)'
   }
 }
