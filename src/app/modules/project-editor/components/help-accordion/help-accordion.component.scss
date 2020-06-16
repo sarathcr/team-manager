@@ -243,6 +243,9 @@
   background-color: transparent;
   text-align: left;
   cursor: pointer;
+  &_large{
+    width: 100%;
+  }
 
   &__img{
     width: 100%;

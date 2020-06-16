@@ -1,4 +1,4 @@
-import { Component, OnInit,  ViewEncapsulation, Input, OnDestroy, ElementRef, AfterViewInit, QueryList, ViewChildren, Renderer2, HostListener} from '@angular/core'
+import { Component, OnInit,  ViewEncapsulation, Input, OnDestroy, ElementRef, AfterViewInit, Renderer2, HostListener, OnChanges} from '@angular/core'
 import { Help } from 'src/app/shared/constants/contextual-help.model'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component'
@@ -7,16 +7,14 @@ import { HelpModalContentComponent } from '../help-modal-content/help-modal-cont
   selector: 'app-help-accordion',
   templateUrl: './help-accordion.component.html',
   styleUrls: ['./help-accordion.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 
-export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit {
+export class HelpAccordionComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   @Input() content: Help[]
-  @ViewChildren('accordionBody') accordionBody: QueryList<any>
-  @HostListener('window:resize', ['$event'])
-  onResize(event): void {
-    this.adjustHeight()
-  }
   arrayHeight: string = ''
   oneAtATime: boolean = true
   isFirstOpen: boolean = true
@@ -30,9 +28,9 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit 
   ) { }
 
   ngOnInit(): void {
-    this.adjustHeight()
+
   }
-  
+
   ngAfterViewInit() {
       this.elementRef.nativeElement.querySelectorAll('.help-img-thumb').forEach( thumb => {
         this.renderer.listen(thumb, 'click', (event) => { this.openModalWithComponent(event)})
@@ -41,7 +39,9 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit 
         this.renderer.listen(thumb, 'click', (event) => { this.videoModal(event)})
       })
   }
-
+  ngOnChanges() {
+    this.adjustHeight()
+  }
   ngOnDestroy() {
     const modalCount = this.modalService.getModalsCount();
     if (modalCount > 0) {
@@ -81,8 +81,10 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit 
       this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState })
       this.bsModalRef.content.closeBtnName = 'Close'
   }
-
-  adjustHeight(){
+  onResize(event) {
+    this.adjustHeight()
+  }
+  adjustHeight() {
     this.arrayHeight = 'calc(100vh - ' + ((this.content.length * 60) + 160) + 'px)'
   }
 }
