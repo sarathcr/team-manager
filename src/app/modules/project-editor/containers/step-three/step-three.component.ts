@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Step } from '../../constants/step.model';
 import { buttonSubmitConfig } from '../../constants/form-config.data';
+import { FieldConfig } from 'src/app/shared/constants/field.model';
+import { Theme } from 'src/app/shared/constants/theme.model';
 
 @Component({
   selector: 'app-step-three',
@@ -14,6 +16,8 @@ export class StepThreeComponent implements OnInit {
   step$: Observable<Step>
   step: Step
   buttonConfig = new buttonSubmitConfig
+  textAreaConfig: FieldConfig
+  themes$: Observable<Theme[]>
   
   constructor() { }
 

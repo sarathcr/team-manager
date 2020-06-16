@@ -10,7 +10,12 @@
         <app-step-unlock></app-step-unlock>
         <div class="project-editor__subject-wrapper">
             <app-subject></app-subject>
-            <div class="project-editor__goto-step">Accede al Punto de partida si deseas añadir nuevas asignaturas.</div>
+            <div class="project-editor__goto-step">Accede al <span class="project-editor__point">Punto de partida</span> si deseas añadir nuevas asignaturas.</div>
+        </div>
+        <div class="project-editor__transform-evaluation">
+            <h2 class="title_xs project-editor__title">Transforma los criterios de evaluación a objetivos competenciales</h2>
+            <p class="project-form__sub-description">Al final del proyecto queremos que nuestros/as alumnos/as sepan…</p>
+            <app-textarea-bullets></app-textarea-bullets>
         </div>
         <app-form-button [config]='buttonConfig'>
         </app-form-button>
