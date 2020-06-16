@@ -1,4 +1,5 @@
 @import 'helpers/_helpers-master';
+
 .spinner {
   display: flex;
   align-items: center;
@@ -8,10 +9,12 @@
   right: 0;
   top: 0;
   bottom: 0;
-  &.block{
+
+  &.block {
     position: relative;
     padding: 50px;
   }
+
   &:before {
     content: '';
     display: block;
@@ -19,9 +22,9 @@
     height: inherit;
     position: absolute;
     margin: auto;
-    border: .2em solid $frenchgray;
+    border: .2em solid $medium-turquoise;
     border-radius: 50%;
-    opacity: .5;
+    opacity: .8;
   }
 
   &::after {
@@ -30,7 +33,7 @@
     width: inherit;
     height: inherit;
     border: .2em solid transparent;
-    border-top-color: $frenchgray;
+    border-top-color: $electric-indigo;
     border-radius: 50%;
     animation: 1s spinner linear infinite;
     position: absolute;

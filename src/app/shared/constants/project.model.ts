@@ -10,6 +10,7 @@ export class Project {
   id: number | null;
   title: string;
   creativeTitle?: string;
+  creativeImage?: string
   name?: string;
   finalProduct?: string;
   synopsis?: string
@@ -28,12 +29,12 @@ export class Project {
 export function compareProjects(p1: Project, p2: Project) {
   const firstTimestamp = new Date(p1?.createdAt).getTime()
   const secondTimestamp = new Date(p2?.createdAt).getTime()
-    const compare = firstTimestamp - secondTimestamp;
-    if (compare > 0) {
-      return -1;
-    }
-    else if (compare < 0) {
-      return 1;
-    }
-    else return 0;
+  const compare = firstTimestamp - secondTimestamp;
+  if (compare > 0) {
+    return -1;
   }
+  else if (compare < 0) {
+    return 1;
+  }
+  else return 0;
+}
