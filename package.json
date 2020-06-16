@@ -40,6 +40,7 @@
     "messageformat": "^2.0.2",
     "ng-multiselect-dropdown": "^0.2.10",
     "ngx-bootstrap": "^5.6.1",
+    "ngx-dropzone": "^2.2.2",
     "ngx-scrollbar": "^7.2.3",
     "ngx-translate-messageformat-compiler": "^4.7.0",
     "rxjs": "~6.5.4",
