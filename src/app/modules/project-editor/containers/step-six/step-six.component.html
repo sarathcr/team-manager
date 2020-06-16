@@ -12,8 +12,8 @@
             </app-input>
             <h2 class="title_xs project-form__subtitle">{{'RETHINK_TITLE.project_rethinktitle_addimage' | translate}}
             </h2>
-            <app-image-upload [(imageURL)]="creativeImage" [maxFileSize]="5242880" [acceptedType]="'image/png,image/jpg'" 
-            (onChange)="onValueChange($event)">
+            <app-image-upload [imageURL]="creativeImage" [maxFileSize]="5242880" acceptedType="image/jpeg,image/png" 
+            [label]="'Cargar archivo'" (onFileSelect)="onFileSelect($event)">
             </app-image-upload>
         </div>
         <app-form-button scrollTo scrollToId="stepSix" [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>

@@ -14,10 +14,13 @@ export class formSevenInitData implements FormSevenInitData {
   drivingQuestions = []
 }
 export class formTwoInitData implements FormTwoInitData {
-  themes= []
+  themes = []
 }
 
-export const formSixInitData: FormSixInitData = ''
+export class formSixInitData implements FormSixInitData {
+  creativeTitle = ''
+  creativeImage = ''
+}
 
 export const formEightInitData: FormEightInitData = ''
 

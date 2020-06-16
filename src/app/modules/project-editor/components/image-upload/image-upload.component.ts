@@ -11,37 +11,36 @@ export class ImageUploadComponent implements OnInit {
 
   @Input() maxFileSize: number
   @Input() acceptedType: string
-  files: File[] = [];
+  @Input() label: string
   @Input() imageURL: string
-  @Output() onChange = new EventEmitter()
-  public imagePath;
-  imgURL: any;
-  public message: string;
-  imageFromAws
+  @Output() onFileSelect = new EventEmitter()
+  files: File[] = [];
   loading = false
+
   constructor(private aws: AwsImgUploadService) { }
 
   ngOnInit(): void {
-    
+
   }
 
   onSelect(event) {
     if (!this.files.length) {
-      this.loading = true;
       this.files = [...event.addedFiles]
-      const file = this.files[0]
-      const mimeType = file.type
-      this.aws.GetPreSignedUrl(mimeType, `creativeImage/${new Date().getTime()}.${mimeType.split('/')[1]}`)
-        .subscribe(data => {
-          if (data) this.aws.uploadImage(data.uploadURL, file)
-            .subscribe(() => {
-              this.imageFromAws = data.publicURL
-              this.imageURL = this.imageFromAws
-              this.onChange.emit(data.publicURL)
-              this.loading = false;
-            })
-          
-        })
+      if (this.files.length) {
+        const file = this.files[0]
+        const mimeType = file.type
+        this.loading = true;
+        this.aws.GetPreSignedUrl(mimeType, `creativeImage/${new Date().getTime()}.${mimeType.split('/')[1]}`)
+          .subscribe(data => {
+            if (data) this.aws.uploadImage(data.uploadURL, file)
+              .subscribe(() => {
+                this.imageURL = data.publicURL
+                this.onFileSelect.emit(data.publicURL)
+                this.loading = false;
+              })
+            else this.loading = false
+          })
+      }
     }
   }
 
@@ -49,6 +48,7 @@ export class ImageUploadComponent implements OnInit {
     event.stopPropagation()
     this.imageURL = ''
     this.files = [];
+    this.onFileSelect.emit('')
   }
 
 }

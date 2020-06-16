@@ -1,11 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Step, StepId, StepState, Status } from '../../constants/step.model';
+import { Component, OnInit } from '@angular/core';
+import { Step, Status } from '../../constants/step.model';
 import { buttonSubmitConfig } from '../../constants/form-config.data';
 import { Observable } from 'rxjs';
-import { Project } from 'src/app/shared/constants/project.model';
 import { FormSixInitData, FormSix } from '../../constants/step-forms.model';
 import { formSixInitData } from '../../constants/step-forms.data';
-import { map } from 'rxjs/operators';
 import { EditorService } from '../../services/editor/editor.service';
 
 @Component({
@@ -19,10 +17,10 @@ export class StepSixComponent implements OnInit {
   step$: Observable<Step>
   step: Step
   initialFormStatus: Status
-  initialFormData: FormSixInitData = formSixInitData
+  initialFormData: FormSixInitData = new formSixInitData
   buttonConfig = new buttonSubmitConfig
   creativeTitle: string = ''
-  creativeImage: string = 'https://picsum.photos/id/237/200/300'
+  creativeImage: string = ''
 
   constructor(private editor: EditorService) { }
 
@@ -40,37 +38,39 @@ export class StepSixComponent implements OnInit {
     this.project$ = this.editor.getStepData('stepSix')
     this.step$ = this.editor.getStepStatus(6)
     this.step = this.editor.steps.six
-    if (this.project$)
+    if (this.project$) {
       this.project$.subscribe(data => {
-        if (data?.creativeTitle) {
+        if (data) {
           this.creativeTitle = data.creativeTitle
-          this.initialFormData = data.creativeTitle
+          this.initialFormData.creativeTitle = data.creativeTitle
+          this.creativeImage = data.creativeImage
+          this.initialFormData.creativeImage = data.creativeImage
         }
       })
-    // if (this.stepStatus$)
-    //   this.stepStatus$.pipe(
-    //     map(data => data?.steps?.filter(statusData => statusData.stepid == this.step.stepid)))
-    //     .subscribe(
-    //       formStatus => {
-    //         if (formStatus && formStatus.length) {
-    //           this.buttonConfig.submitted = formStatus[0].state == "DONE"
-    //           this.initialFormStatus = formStatus[0].state
-    //           if (formStatus[0].state != "DONE" && this.creativeTitle?.length)
-    //             this.buttonConfig.disabled = false
-    //         }
-    //       }
-    //     )
+    }
+    if (this.step$) {
+      this.step$.subscribe(
+        formStatus => {
+          if (formStatus) {
+            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.initialFormStatus = formStatus.state
+            if (formStatus.state != "DONE" && this.checkNonEmptyForm())
+              this.buttonConfig.disabled = false
+          }
+        }
+      )
+    }
   }
 
   //Handle submit functionality
   handleSubmit(formStatus?: Status) {
     if (formStatus == 'DONE')
       this.step.state = 'DONE'
-    this.initialFormData = this.creativeTitle
     this.handleButtonType()
     const formData: FormSix = {
       data: {
-        creativeTitle: this.creativeTitle
+        creativeTitle: this.creativeTitle,
+        creativeImage: this.creativeImage
       },
       stepStatus: {
         steps: [
@@ -81,33 +81,32 @@ export class StepSixComponent implements OnInit {
         ]
       }
     }
-    // this.onSubmit.emit(formData);
+    this.initialFormData = formData.data
+    this.editor.handleStepSubmit(formData, this.step.state == "DONE")
   }
 
   // Changes the button according to form status
   handleButtonType() {
-    if (this.step.state == 'INPROCESS') {
-      this.buttonConfig.disabled = false
-      this.buttonConfig.submitted = false
-    }
-    if (this.step.state == 'PENDING') {
-      this.buttonConfig.disabled = true
-      this.buttonConfig.submitted = false
-    }
     if (this.step.state == 'DONE') {
       this.buttonConfig.submitted = true
       this.buttonConfig.disabled = true
+    } else {
+      if (this.checkNonEmptyForm()) {
+        this.buttonConfig.disabled = false
+        this.buttonConfig.submitted = false
+      } else {
+        this.buttonConfig.disabled = true
+        this.buttonConfig.submitted = false
+      }
     }
   }
 
   // Function to check status of step
   checkStatus() {
-    if (this.creativeTitle.length && this.creativeTitle !== this.initialFormData) {
-      this.step.state = 'INPROCESS'
-    }
-    if (!this.creativeTitle.length) {
+    if (!this.creativeTitle && !this.creativeImage)
       this.step.state = 'PENDING'
-    }
+    else
+      this.step.state = 'INPROCESS'
     this.handleButtonType()
   }
 
@@ -117,11 +116,25 @@ export class StepSixComponent implements OnInit {
     this.checkStatus()
   }
 
+  onFileSelect(url: string) {
+    this.creativeImage = url
+    this.checkStatus()
+  }
+
   // Function to check whether the form is updated
   isFormUpdated() {
-    if (this.initialFormData !== this.creativeTitle || this.initialFormStatus !== this.step.state) {
+    if (this.initialFormData.creativeTitle !== this.creativeTitle ||
+      this.initialFormData.creativeImage !== this.creativeImage ||
+      this.initialFormStatus !== this.step.state) {
       return true
     }
+    return false
+  }
+
+  // checks the form is completely filled or not
+  checkNonEmptyForm() {
+    if (this.creativeTitle && this.creativeImage)
+      return true
     return false
   }
 

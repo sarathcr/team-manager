@@ -217,7 +217,6 @@ export class EditorService {
     this.statusSubscription.unsubscribe()
     this.project$ = null
     this.stepStatus$ = null
-    this.projectId = null
     this.titleData = null
     this.currentSectionId = null
     this.nextSectionId = null
