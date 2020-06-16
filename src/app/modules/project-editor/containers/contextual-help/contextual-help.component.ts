@@ -31,7 +31,6 @@ export class ContextualHelpComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(){
-    this.getHelpContent();
   }
 
   //Close tab
@@ -53,7 +52,6 @@ export class ContextualHelpComponent implements OnInit, AfterViewInit {
     if(this.closeContext){
       this.getHelpContent();
     }
-
   }
 
   getHelpContent() {
@@ -73,16 +71,15 @@ export class ContextualHelpComponent implements OnInit, AfterViewInit {
           })
         )
       )
+    this.contextualHelp$.subscribe( contextualHelp => {
+      if(contextualHelp) {
+          this.help = contextualHelp.helps
+      } else {
+        this.helpService.getByKey(stepid)
+      }
+    })
     this.helpService.loading$.subscribe(loading=> {
       this.loaded = !loading
-      if(!loading)
-        this.contextualHelp$.subscribe( contextualHelp => {
-          if(contextualHelp) {
-              this.help = contextualHelp.helps
-          } else {
-            this.helpService.getByKey(stepid)
-          }
-        })
     })
   }
 
