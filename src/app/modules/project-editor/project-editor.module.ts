@@ -7,6 +7,7 @@ import { setTheme } from 'ngx-bootstrap/utils';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -67,9 +68,13 @@ import { GradeEntityService } from './services/grade/grade-entity.service';
 import { StatusComponent } from './components/status/status.component';
 import { StepStatusEntityService } from './services/step-status/step-status-entity.service';
 import { StepStatusDataService } from './services/step-status/step-status-data.service';
+import { HelpEntityService } from './services/help/help-entity.service';
+import { HelpDataService } from './services/help/help-data.service';
 import { ProjectEditorComponent } from './project-editor.component';
 import { EditorService } from './services/editor/editor.service';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
+import { ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
+import { StringDecoder } from './pipes/string-decoder.pipe';
 
 const entityMetadata: EntityMetadataMap = {
   Project: {
@@ -104,6 +109,12 @@ const entityMetadata: EntityMetadataMap = {
     }
   },
   StepStatus: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  ContextualHelp: {
+    selectId: (help: ContextualHelp) => help.stepid,
     entityDispatcherOptions: {
       optimisticUpdate: true
     }
@@ -143,7 +154,8 @@ const entityMetadata: EntityMetadataMap = {
     VideoPlayerComponent,
     HelpImgThumbComponent,
     StepUnlockComponent,
-    SubjectComponent
+    SubjectComponent,
+    StringDecoder
   ],
   imports: [
     CommonModule,
@@ -154,7 +166,8 @@ const entityMetadata: EntityMetadataMap = {
     ReactiveFormsModule,
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgScrollbarModule
   ],
   providers: [
     ProjectsResolver,
@@ -173,6 +186,8 @@ const entityMetadata: EntityMetadataMap = {
     StepStatusEntityService,
     StepStatusDataService,
     EditorService,
+    HelpEntityService,
+    HelpDataService,
     BsModalRef
   ]
 })
@@ -188,7 +203,8 @@ export class ProjectEditorModule {
     private subjectDataService: SubjectDataService,
     private gradeDataService: GradeDataService,
     private academicYearDataService: AcademicYearDataService,
-    private stepStatusDataService: StepStatusDataService) {
+    private stepStatusDataService: StepStatusDataService,
+    private contextualHelpService: HelpDataService) {
 
     // ngx-bootstrap theme
     setTheme('bs4');
@@ -201,5 +217,6 @@ export class ProjectEditorModule {
     entityDataService.registerService('Grade', gradeDataService);
     entityDataService.registerService('AcademicYear', academicYearDataService);
     entityDataService.registerService('StepStatus', stepStatusDataService)
+    entityDataService.registerService('ContextualHelp', contextualHelpService)
   }
 }
