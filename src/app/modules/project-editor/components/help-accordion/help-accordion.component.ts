@@ -26,7 +26,7 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit 
   ) { }
 
   ngOnInit(): void {
-    this.arrayHeight = 'calc(100vh - ' + ((this.content.length * 60) + 160) + 'px)'
+    this.adjustHeight()
   }
   
   ngAfterViewInit() {
@@ -76,5 +76,9 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, AfterViewInit 
 
       this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState })
       this.bsModalRef.content.closeBtnName = 'Close'
+  }
+
+  adjustHeight(){
+    this.arrayHeight = 'calc(100vh - ' + ((this.content.length * 60) + 160) + 'px)'
   }
 }
