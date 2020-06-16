@@ -1,0 +1,14 @@
+<ngx-dropzone class="image-upload d-flex {{ imageURL ? 'image-upload_no-border' : '' }}" (change)="onSelect($event)" 
+[multiple]="false" [accept]="acceptedType" [maxFileSize]="maxFileSize" [disableClick]="imageURL || loading ? true : false">
+    <div class="image-upload__preview" [ngClass]="{ 'image-upload__preview_loading' : loading }" *ngIf="imageURL">
+        <div class="image-upload__close d-flex align-items-center justify-content-center" (click)="onRemove($event)">
+            <span class="icon icon-ic_share_close image-upload__icon"></span>
+        </div>
+        <img [src]="imageURL" alt="image" />
+    </div>
+    <ngx-dropzone-label *ngIf="!imageURL && !loading">
+        <div class="icon-ic_upload image-upload__label-icon"></div>
+        <div class="image-upload__label-text">{{label}}</div>
+    </ngx-dropzone-label>
+    <app-loader *ngIf="loading"></app-loader>
+</ngx-dropzone>

@@ -145,7 +145,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
   onBlur(i) {
     this.focus = false;
-    if(this.configOptions[i].name.length == 0){
+    if(this.configOptions[i].name){
       this.configOptions.splice(i, 1)
     }
   }

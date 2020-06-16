@@ -38,6 +38,8 @@ import { StepFiveComponent } from './containers/step-five/step-five.component';
 import { StepSixComponent } from './containers/step-six/step-six.component';
 import { StepNineComponent } from './containers/step-nine/step-nine.component';
 import { StepTenComponent } from './containers/step-ten/step-ten.component';
+import { InputComponent } from './components/input/input.component';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component';
 import { StepUnlockComponent } from './components/step-unlock/step-unlock.component';
 import { SubjectComponent } from './components/subject/subject.component';
@@ -49,6 +51,9 @@ import { EditorComponent } from './containers/editor/editor.component';
 
 // ngx translate
 import { TranslateModule } from '@ngx-translate/core';
+
+// ngx dropzone
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 // NgRx
 import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
@@ -73,6 +78,7 @@ import { HelpEntityService } from './services/help/help-entity.service';
 import { HelpDataService } from './services/help/help-data.service';
 import { ProjectEditorComponent } from './project-editor.component';
 import { EditorService } from './services/editor/editor.service';
+import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
 import { StringDecoder } from './pipes/string-decoder.pipe';
@@ -158,6 +164,9 @@ const entityMetadata: EntityMetadataMap = {
     SubjectComponent,
     StringDecoder,
     ModalComponent
+    InputComponent,
+    ImageUploadComponent,
+    StringDecoder
   ],
   imports: [
     CommonModule,
@@ -169,6 +178,7 @@ const entityMetadata: EntityMetadataMap = {
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
     ModalModule.forRoot(),
+    NgxDropzoneModule,
     NgScrollbarModule
   ],
   providers: [
@@ -188,6 +198,7 @@ const entityMetadata: EntityMetadataMap = {
     StepStatusEntityService,
     StepStatusDataService,
     EditorService,
+    AwsImgUploadService,
     HelpEntityService,
     HelpDataService,
     BsModalRef
