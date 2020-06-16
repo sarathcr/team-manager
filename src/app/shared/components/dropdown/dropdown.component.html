@@ -1,15 +1,30 @@
 <div class="dropdown dropdown_multiple {{active ? 'active':''}}">
   <div class="dropdown__wrap" >
     <label class="dropdown__label" for='config.name'>{{config.label}}</label>
-    <ng-multiselect-dropdown 
+    <!-- <ng-multiselect-dropdown
       [placeholder]="config.placeholder"
-      [disabled] ="config.disabled" 
-      [settings] ="dropdownSettings" 
-      [data]="config.options" 
-      (onSelect)="onItemSelect($event)" 
+      [disabled] ="config.disabled"
+      [settings] ="dropdownSettings"
+      [data]="config.options"
+      (onSelect)="onItemSelect($event)"
       (onDeSelect)="onItemDeSelect($event)"
-      (onDropDownClose)="onDropDownClose()" 
+      (onDropDownClose)="onDropDownClose()"
       [(ngModel)]="config.selectedItems">
-    </ng-multiselect-dropdown>
+    </ng-multiselect-dropdown> -->
+    <angular2-multiselect [data]="itemList" [(ngModel)]="selectedItems" [settings]="settings" (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"  (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)">
+      <c-badge>
+                <ng-template let-item="item">
+                    <label style="margin: 0px;">{{item.itemName}}</label>
+                    <img [src]="item.image" style="width: 16px; margin-right: 5px;" />
+                </ng-template>
+      </c-badge>
+      <c-item>
+              <ng-template let-item="item">
+                <label style="color: #333;min-width: 150px;">{{item.itemName}}</label>
+                <img [src]="item.image" style="width: 30px; border: 1px solid #efefef;margin-right: 20px;" />
+                <label>Capital - {{item.capital}}</label>
+              </ng-template>
+      </c-item>
+    </angular2-multiselect>
   </div>
 </div>
