@@ -50,11 +50,15 @@ export class ContextualHelpComponent implements OnInit, AfterViewInit {
     if (!this.closeContext) {
       this.closeContext = true;
     }
+    if(this.closeContext){
+      this.getHelpContent();
+    }
+
   }
 
   getHelpContent() {
     this.editorService.currentStep$.subscribe( stepId => {
-      if(stepId){
+      if(stepId && this.closeContext){
         this.getHelp(stepId)
       }
     });
@@ -69,15 +73,16 @@ export class ContextualHelpComponent implements OnInit, AfterViewInit {
           })
         )
       )
-    this.contextualHelp$.subscribe( contextualHelp => {
-      if(contextualHelp) {
-          this.help = contextualHelp.helps
-      } else {
-        this.helpService.getByKey(stepid)
-      }
-    })
     this.helpService.loading$.subscribe(loading=> {
       this.loaded = !loading
+      if(!loading)
+        this.contextualHelp$.subscribe( contextualHelp => {
+          if(contextualHelp) {
+              this.help = contextualHelp.helps
+          } else {
+            this.helpService.getByKey(stepid)
+          }
+        })
     })
   }
 
