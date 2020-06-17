@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://api.dev.abp.thinkoeducation.com/project-service',
-  uploadUrl: 'http://api.dev.abp.thinkoeducation.com/uploads/'
+  uploadUrl: 'https://api.dev.abp.thinkoeducation.com/uploads/'
 };
 
 /*
