@@ -7,7 +7,7 @@
   border: 1px solid $creator-border-active;
   border-radius: 3px;
   padding: 14px 22px;
-  margin-bottom: 36px;
+  margin-bottom: 56px;
   box-shadow: 0 0 0 0 transparent;
   &__list {
     padding-left: 0;
@@ -17,9 +17,9 @@
     display: flex;
     margin-bottom: 8px;
 
-    &::before {
-      top: unset;
-      line-height: 24px;
+    &:before {
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 

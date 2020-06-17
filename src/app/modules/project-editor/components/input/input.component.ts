@@ -34,5 +34,9 @@ export class InputComponent implements OnInit {
 
   onBlur() {
     this.focus = false;
+    if (!this.value.trim()) {
+      this.value = '';
+      this.onChange.emit('');
+    }
   }
 }

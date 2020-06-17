@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChildren, QueryList, Input, ElementRef, Output, EventEmitter, AfterContentChecked } from '@angular/core';
-import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
+import { FieldConfig, Option, TextAreaVariants } from 'src/app/shared/constants/field.model';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
+  @Input() variant: TextAreaVariants = 'bullet'
   @Input() config: FieldConfig
   @Input() options: Option[]
   @Input() options$: Observable<Object[]>
@@ -93,15 +94,15 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         break
 
       case 32: // spacebar
-        if(window.getSelection().toString().length){
-          if(this.configOptions.length > 1){
+        if (window.getSelection().toString().length) {
+          if (this.configOptions.length > 1) {
             this.configOptions.splice(id, 1)
-            if( id - 1 > 0 ) {
+            if (id - 1 >= 0) {
               this.textArea.toArray()[id - 1].nativeElement.focus();
-            } else{
-              this.textArea.toArray()[id+1].nativeElement.focus();
+            } else {
+              this.textArea.toArray()[id + 1].nativeElement.focus();
             }
-          } else{
+          } else {
             this.configOptions[0].name = ''
           }
         }
@@ -113,10 +114,10 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
       case 8: // backspace
         if (!event.target.value && this.configOptions.length > 1) {
           this.configOptions.splice(id, 1)
-          if( id - 1 > 0 ) {
+          if (id - 1 >= 0) {
             this.textArea.toArray()[id - 1].nativeElement.focus();
-          } else{
-            this.textArea.toArray()[id+1].nativeElement.focus();
+          } else {
+            this.textArea.toArray()[id + 1].nativeElement.focus();
           }
           clearTimeout(this.timeOut);
         }
@@ -145,7 +146,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
   onBlur(i) {
     this.focus = false;
-    if(this.configOptions[i].name.length == 0){
+    if (this.configOptions.length > 1 && this.configOptions[i]?.name?.length == 0) {
       this.configOptions.splice(i, 1)
     }
   }
