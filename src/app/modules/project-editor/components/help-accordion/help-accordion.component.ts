@@ -1,4 +1,4 @@
-import { Component, OnInit,  ViewEncapsulation, Input, OnDestroy, ElementRef, AfterViewInit, Renderer2, OnChanges} from '@angular/core'
+import { Component, OnInit,  ViewEncapsulation, Input, OnDestroy, ElementRef, Renderer2 } from '@angular/core'
 import { Help } from 'src/app/shared/constants/contextual-help.model'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component'
@@ -13,8 +13,13 @@ import { HelpModalContentComponent } from '../help-modal-content/help-modal-cont
   }
 })
 
-export class HelpAccordionComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
-  @Input() content: Help[]
+export class HelpAccordionComponent implements OnInit, OnDestroy {
+  _content: Help[]
+  @Input() set content(content: Help[]) {
+    this._content = content;
+    this.onContentChange();
+  }
+  get content(): Help[] { return this._content; }
   @Input() isOpen: boolean
   arrayHeight: string = ''
   oneAtATime: boolean = true
@@ -32,24 +37,23 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, OnChanges, Aft
 
   }
 
-  ngAfterViewInit() {
-    this.elementRef.nativeElement.querySelectorAll('.help-img-thumb').forEach( thumb => {
-      this.renderer.listen(thumb, 'click', (event) => { this.openModalWithComponent(event)})
-    })
-    this.elementRef.nativeElement.querySelectorAll('.help-video-thumb').forEach( thumb => {
-      this.renderer.listen(thumb, 'click', (event) => { this.videoModal(event) })
-    })
-  }
-  ngOnChanges() {
-    this.adjustHeight()
-  }
   ngOnDestroy() {
     const modalCount = this.modalService.getModalsCount();
     if (modalCount > 0) {
       this.modalService._hideModal(modalCount)
     }
   }
-
+  onContentChange(){
+    setTimeout(() => {
+      this.elementRef.nativeElement.querySelectorAll('.help-img-thumb').forEach( thumb => {
+        this.renderer.listen(thumb, 'click', (event) => { this.openModalWithComponent(event)})
+      })
+      this.elementRef.nativeElement.querySelectorAll('.help-video-thumb').forEach( thumb => {
+        this.renderer.listen(thumb, 'click', (event) => { this.videoModal(event) })
+      })
+      this.adjustHeight()
+    });
+  }
   videoModal(event) {
       event.preventDefault()
       const element = event.currentTarget
