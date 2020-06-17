@@ -15,7 +15,7 @@ export class GradeDataService extends DefaultDataService<Grade> {
 
     }
     getWithQuery(parm: any): Observable<Grade[]> {
-        return this.http.get<Grade[]>(`${environment.apiUrl}/regions/${parm.regionId}/academicyears/${parm.academicyearId}/grades`)
+        return this.http.get<Grade[]>(`${environment.apiUrl.curriculumService}/regions/${parm.regionId}/academicyears/${parm.academicyearId}/grades`)
             .pipe(
                 map(res => res)
             );

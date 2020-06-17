@@ -12,6 +12,8 @@ import { formOneInitData } from '../../constants/step-forms.data'
 import { FormOneInitData, FormOne } from '../../constants/step-forms.model'
 import { Step, Status } from '../../constants/step.model'
 import { EditorService } from '../../services/editor/editor.service'
+import { GradeDataService } from '../../services/grade/grade-data.service'
+import { SubjectDataService } from '../../services/subject/subject-data.service'
 
 @Component({
   selector: 'app-step-one',
@@ -40,7 +42,9 @@ export class StepOneComponent implements OnInit, OnDestroy {
     private gradeService: GradeEntityService,
     private subjectService: SubjectEntityService,
     private translateService: TranslateService,
-    private editor: EditorService
+    private editor: EditorService,
+    private gradeDataService: GradeDataService,
+    private subjectDataService: SubjectDataService
   ) { }
 
   ngOnInit(): void {
@@ -88,7 +92,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
             this.gradesDropdown.selectedItems.push(...gradesData)
             tempinitialFormData.grades.push(...gradesData)
             if (data.grades.length) {
-              this.getSubjects(data.grades[0].id)
+              this.getSubjects()
               this.subjectsDropdown.disabled = false
             }
           }
@@ -148,28 +152,52 @@ export class StepOneComponent implements OnInit, OnDestroy {
 
   getGrades(academicyearId: number, regionId?: number) {
     const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id
-    this.gradeService.entities$
-      .pipe(
-        map(grades => grades.filter(grade => grade.academicYear.id == academicyearId && grade.region.id == selectedRegionId))
-      )
-      .subscribe(newData => {
-        if (!newData.length) {
-          let parms = {
-            regionId: selectedRegionId.toString(),
-            academicyearId: academicyearId.toString()
-          }
-          this.gradeService.getWithQuery(parms) //trigger API after checking the store
-        }
-        this.gradesDropdown.options = newData
-      })
+    // this.gradeService.entities$
+    //   // .pipe(
+    //   //   map(grades => grades.filter(grade => grade.academicYear?.id == academicyearId && grade.region?.id == selectedRegionId))
+    //   // )
+    //   .subscribe(newData => {
+    //     if (!newData.length) {
+    //       let parms = {
+    //         regionId: selectedRegionId.toString(),
+    //         academicyearId: academicyearId.toString()
+    //       }
+    //       this.gradeService.getWithQuery(parms) //trigger API after checking the store
+    //     }
+    //     this.gradesDropdown.options = newData
+    //   })
+    let parms = {                                                       // Remove this block when api updated
+      regionId: selectedRegionId.toString(),
+      academicyearId: academicyearId.toString()
+    }
+    this.gradeDataService.getWithQuery(parms).subscribe(newData => {
+      this.gradesDropdown.options = newData
+    })
   }
 
-  getSubjects(gradeId: number) {
-    this.subjectService.entities$
-      .subscribe(newData => {
-        if (!newData.length) this.subjectService.getWithQuery(gradeId.toString()) //trigger API after checking the store
-        this.subjectsDropdown.options = newData
-      })
+  getSubjects() {
+    let gradeIds = []
+    this.gradesDropdown.selectedItems.forEach(grade => { gradeIds.push(grade.id) })
+    // this.subjectService.getWithQuery(gradeIds.toString())
+    // this.subjectService.entities$.
+    //   pipe(map(subjects => {
+    //     let subjectData = []
+    //     subjects.forEach(subject => {
+    //       gradeIds.forEach(gradeId => {
+    //         if (subject.grade?.id == gradeId) {
+    //           subjectData.push(subject)
+    //         }
+    //       })
+    //     })
+    //     return subjectData
+    //   }))
+    //   .subscribe(newData => {
+    //     this.subjectsDropdown.options = newData
+    //   })
+
+    this.subjectService.getWithQuery(gradeIds.toString()).subscribe(newData => {   //Remove this block when api updated
+      this.subjectsDropdown.options = newData
+    })
   }
 
   checkStatus() {
@@ -272,7 +300,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
         case 'grades': {
           this.resetForm(selectedData.controller)
           this.handleDropdownDisable(selectedData.controller)
-          if (selectedId) this.getSubjects(selectedId)
+          if (selectedId) this.getSubjects()
         }
       }
       this.checkInProgress(selectedData.val, selectedData.controller)

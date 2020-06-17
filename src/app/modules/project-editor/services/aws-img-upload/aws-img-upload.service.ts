@@ -11,7 +11,7 @@ export class AwsImgUploadService {
   }
 
   getPreSignedUrl(MimeType: string, FilePath: string): Observable<any> {
-    return this.http.post<any>(environment.uploadUrl, JSON.stringify({ FilePath, MimeType }))
+    return this.http.post<any>(environment.apiUrl.uploadUrl, JSON.stringify({ FilePath, MimeType }))
   }
 
   uploadImage(uploadURL: string, file: any): Observable<any> {
