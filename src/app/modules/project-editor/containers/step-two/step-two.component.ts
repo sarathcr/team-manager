@@ -131,9 +131,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   // Function to check whether the form is updated
   isFormUpdated() {
-    if (!this.isEqual(this.initialFormData.themes, this.InputFormData.themes)) {
-      return true
-    } else if (this.initialFormStatus !== this.step.state) {
+    if (!this.isEqual(this.initialFormData.themes, this.InputFormData.themes) || this.initialFormStatus !== this.step.state) {
       return true
     }
     return false
