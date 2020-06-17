@@ -12,6 +12,8 @@ $white-smoke:#f8f8f9;
 $transparent-shadow: rgba(0,0,0,0.1);
 $frenchgray:#C2C3C7 !default;
 $overtitle-grey: rgba($blue-whale,0.6) !default;
+$magnolia: #efe8fd !default;
+
 // background
 $background-primary: $white !default;
 
@@ -244,3 +246,27 @@ $context-content-title: rgba($primary-font-color,0.5) !default;
 
 //Contextual Help link
 $context-link-bg-color: $white !default;
+
+//Competency Modal
+$comptency-bg-color: $white !default;
+$comptency-border-color: rgba($primary-font-color,0.1) !default;
+$comptency-close-color: rgba($primary-font-color,0.6) !default;
+$comptency-content-title: rgba($primary-font-color,0.5) !default;
+$comptency-primary-color: $primary !default;
+$comptency-icon-size: 24px !default;
+
+//Custom Tab
+$custom-tab-border-color: rgba($primary-font-color,0.1) !default;
+$custom-tab-bg-color: rgba($primary-font-color,0.05) !default;
+$custom-tab-active-bg-color: rgba($primary,0.1) !default;
+$custom-tab-primary-color: $primary !default;
+$custom-tab-icon-size: 24px !default;
+$custom-tab-checkbox-border: rgba($primary,0) !default;
+$custom-tab-arrow-bg: $magnolia !default;
+$custom-tab-arrow-border: rgba($primary, 0) !default;
+
+//Table Row
+$table-row-border-color: rgba($primary-font-color,0.1) !default;
+$table-row-active-bg-color:  rgba($primary,0.1) !default;
+$table-row-primary-color: $primary !default;
+$table-row-secondary-color: $white !default;
