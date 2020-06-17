@@ -10,7 +10,7 @@
             <app-textarea placeholder="{{'FINAL_PRODUCT.project_finalproduct_placeholder' | translate }}"
                 [(value)]="finalProduct" maxlength="500" (onChange)="onValueChange($event)"></app-textarea>
         </div>
-        <app-form-button [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>
-        </app-form-button>
+        <app-button [config]='buttonConfig' (click)='handleSubmit("DONE")'>
+        </app-button>
     </div>
 </div>
