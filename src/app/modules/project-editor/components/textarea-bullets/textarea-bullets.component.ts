@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChildren, QueryList, Input, ElementRef, Output, EventEmitter, AfterContentChecked } from '@angular/core';
-import { FieldConfig, Option } from 'src/app/shared/constants/field.model';
+import { FieldConfig, Option, TextAreaVariants } from 'src/app/shared/constants/field.model';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
+  @Input() variant: TextAreaVariants = 'bullet'
   @Input() config: FieldConfig
   @Input() options: Option[]
   @Input() options$: Observable<Object[]>

@@ -47,7 +47,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       field: 'button',
       id: 'submitButton',
       disabled: true,
-      submitted: false,
+      submitted: false
     };
     this.textAreaConfig = {
       name: 'textarea',
