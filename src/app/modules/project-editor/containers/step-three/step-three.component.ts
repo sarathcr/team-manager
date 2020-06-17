@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable} from 'rxjs';
 import { Step } from '../../constants/step.model';
 import { FieldConfig } from 'src/app/shared/constants/field.model';
 import { Theme } from 'src/app/shared/constants/theme.model';
 import { EditorService } from '../../services/editor/editor.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'src/app/shared/constants/subject.model';
 
 @Component({
   selector: 'app-step-three',
@@ -19,8 +20,10 @@ export class StepThreeComponent implements OnInit {
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
   themes$: Observable<Theme[]>
+  loading$: Observable<boolean>
+  subjects: Subject[]
 
-  constructor(private translateService: TranslateService, private editor: EditorService) { }
+  constructor(private translateService: TranslateService, private editor: EditorService, ) { }
 
   ngOnInit(): void {
     this.createFormConfig()
@@ -31,6 +34,8 @@ export class StepThreeComponent implements OnInit {
     this.project$ = this.editor.getStepData('stepThree');
     this.step = this.editor.steps.three;
     this.step$ = this.editor.getStepStatus(3);
+    this.loading$ = this.editor.loading$
+    this.project$.subscribe(subjects => this.subjects = subjects)
   }
 
   createFormConfig() {
