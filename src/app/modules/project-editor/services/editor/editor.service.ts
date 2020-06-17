@@ -29,6 +29,7 @@ export class EditorService {
   projectSubscription: Subscription
   statusSubscription: Subscription
   loading: boolean
+  loading$: Observable<boolean>
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -58,7 +59,11 @@ export class EditorService {
         }
       })
     }
-    this.projectsService.loading$.subscribe(res => this.loading = res)
+    this.loading$ = this.projectsService.loading$
+    this.loading$.subscribe(res => {
+      this.loading = res
+      console.log(res)
+    })
   }
 
   // filter data for each step
@@ -77,6 +82,7 @@ export class EditorService {
                 subjects: data?.subjects?.map(({ id, name }) => ({ id, name }))
               })
             case 'stepTwo': return data?.themes?.map(({ id, name }) => ({ id, name }))
+            case 'stepThree': return data?.subjects?.map(({ id, name }) => ({ id, name }))
             case 'stepSix': return {
               creativeImage: data.creativeImage,
               creativeTitle: data.creativeTitle,
