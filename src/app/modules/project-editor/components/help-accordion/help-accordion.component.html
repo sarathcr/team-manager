@@ -1,5 +1,5 @@
-<accordion [isAnimated]="true" [closeOthers]="oneAtATime">
-  <accordion-group [isOpen]='first' [panelClass]="customClass" #accordionGroup [ngClass]="{ 'help-accordion_last help-accordion_active' : accordionGroup.isOpen }" *ngFor="let accordian of content; let i = index; let first = first;">
+<accordion [isAnimated]="true" [closeOthers]="oneAtATime" #accordion>
+  <accordion-group [isOpen]='first && isOpen' [panelClass]="customClass" #accordionGroup [ngClass]="{ 'help-accordion_last help-accordion_active' : accordionGroup.isOpen }" *ngFor="let accordian of content; let i = index; let first = first;">
     <div accordion-heading class="help-accordion__heading" >
         <div class="help-accordion__heading-icon help-accordion__heading-icon_multi-icon">
           <img src="data:image/png;base64,{{accordian.icon}}" class="help-accordion__icon" alt="off icon">
