@@ -10,32 +10,15 @@ import { FieldConfig } from 'src/app/shared/constants/field.model';
 })
 export class ModalComponent implements OnInit {
 
-  buttonConfig : FieldConfig
+  buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
 
   constructor(public bsModalRef: BsModalRef) { }
 
   ngOnInit(): void {
-    this.createFormConfig()
+
   }
 
-  createFormConfig() {
-    this.buttonConfig = {
-      name: 'submit',
-      field: 'button',
-      id: 'submitButton',
-      disabled: false,
-      submitted: false,
-      label: 'ELIMINAR',
-      variant: {outlined:true, text:true}
-    };
-    this.textAreaConfig = {
-      name: 'textarea',
-      field: 'themes',
-      id: 'themes',
-      maxLength: 150,
-      limit: 5
-    }
-  }
+
 
 }

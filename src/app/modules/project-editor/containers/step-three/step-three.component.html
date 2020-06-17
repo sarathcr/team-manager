@@ -9,15 +9,19 @@
         </p>
         <app-step-unlock></app-step-unlock>
         <div class="project-editor__subject-wrapper">
-            <app-subject></app-subject>
-            <div class="project-editor__goto-step">Accede al <span class="project-editor__point">Punto de partida</span> si deseas añadir nuevas asignaturas.</div>
+            <app-details-selector></app-details-selector>
+            <div class="project-editor__goto-step">Accede al <span class="project-editor__point">Punto de partida</span>
+                si deseas añadir nuevas asignaturas.</div>
         </div>
-        <div class="project-editor__transform-evaluation">
-            <h2 class="title_xs project-editor__title">Transforma los criterios de evaluación a objetivos competenciales</h2>
-            <p class="project-form__sub-description">Al final del proyecto queremos que nuestros/as alumnos/as sepan…</p>
-            <app-textarea-bullets [config]='textAreaConfig' [options$]="themes$"></app-textarea-bullets>
+        <div class="project-editor__transevaluation">
+            <h2 class="title_xs project-editor__title">Transforma los criterios de evaluación a objetivos competenciales
+            </h2>
+            <p class="project-form__sub-description">Al final del proyecto queremos que nuestros/as alumnos/as sepan…
+            </p>
+            <app-textarea-bullets [config]='textAreaConfig' [options$]="themes$" [variant]="'number'">
+            </app-textarea-bullets>
         </div>
-        <app-form-button [config]='buttonConfig'>
-        </app-form-button>
+        <app-button [config]='buttonConfig'>
+        </app-button>
     </div>
 </div>

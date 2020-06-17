@@ -16,11 +16,11 @@ export class StepThreeComponent implements OnInit {
   project$: Observable<any>
   step$: Observable<Step>
   step: Step
-  buttonConfig : FieldConfig
+  buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
   themes$: Observable<Theme[]>
-  
-  constructor(private translateService: TranslateService,private editor: EditorService) { }
+
+  constructor(private translateService: TranslateService, private editor: EditorService) { }
 
   ngOnInit(): void {
     this.createFormConfig()
@@ -40,8 +40,7 @@ export class StepThreeComponent implements OnInit {
       id: 'submitButton',
       disabled: true,
       submitted: false,
-      label: 'IR A PUNTO DE PARTIDA',
-      variant: {outlined:false}
+      label: 'IR A PUNTO DE PARTIDA'
     };
     this.textAreaConfig = {
       name: 'textarea',
@@ -63,7 +62,7 @@ export class StepThreeComponent implements OnInit {
       this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
       this.textAreaConfig.placeholder = translations['THEMATIC.project_thematic_placeholder']
     })
-  
+
   }
 
 }

@@ -3,10 +3,15 @@
 </div>
 <div class="common-modal__body">
     <div class="common-modal__content">
-        Si lo eliminas se eliminarán también todos los contenidos y estándares que hayas seleccionado que tengan relación con este.
+        Si lo eliminas se eliminarán también todos los contenidos y estándares que hayas seleccionado que tengan
+        relación con este.
     </div>
 </div>
 <div class="common-modal__footer">
-    <div class="common-modal__button-wrapper"><app-form-button [config]='buttonConfig'></app-form-button></div>
-    <div class="common-modal__button-wrapper"><app-form-button [config]='buttonConfig'></app-form-button></div>
+    <div class="common-modal__button-wrapper mr-4">
+        <app-button [variant]="'outlined'" [theme]="'secondary'">Delete</app-button>
+    </div>
+    <div class="common-modal__button-wrapper">
+        <app-button [variant]="'text'" [theme]="'secondary'">Cancel</app-button>
+    </div>
 </div>

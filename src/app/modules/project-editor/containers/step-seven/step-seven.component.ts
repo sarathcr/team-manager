@@ -53,8 +53,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       field: 'button',
       id: 'submitButton',
       disabled: true,
-      submitted: false,
-      variant: {outlined:false}
+      submitted: false
     }
     this.textAreaConfig = {
       name: 'textarea',

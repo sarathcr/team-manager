@@ -383,8 +383,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
       field: 'button',
       id: 'submitButton',
       disabled: true,
-      submitted: false,
-      variant: {outlined:false}
+      submitted: false
     }
     this.countryDropdown = {
       field: 'dropdown',

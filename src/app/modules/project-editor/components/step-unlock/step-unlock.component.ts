@@ -24,8 +24,7 @@ export class StepUnlockComponent implements OnInit {
       id: 'submitButton',
       disabled: false,
       submitted: false,
-      label: 'IR A PUNTO DE PARTIDA',
-      variant: {outlined:false , noIcon:true}
+      label: 'IR A PUNTO DE PARTIDA'
     };
     this.textAreaConfig = {
       name: 'textarea',

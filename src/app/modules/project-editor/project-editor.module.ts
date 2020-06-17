@@ -42,7 +42,7 @@ import { InputComponent } from './components/input/input.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component';
 import { StepUnlockComponent } from './components/step-unlock/step-unlock.component';
-import { SubjectComponent } from './components/subject/subject.component';
+import { DetailsSelectorComponent } from './components/details-selector/details-selector.component';
 import { ModalComponent } from './components/modal/modal.component';
 
 // pages
@@ -161,7 +161,7 @@ const entityMetadata: EntityMetadataMap = {
     VideoPlayerComponent,
     HelpImgThumbComponent,
     StepUnlockComponent,
-    SubjectComponent,
+    DetailsSelectorComponent,
     StringDecoder,
     ModalComponent,
     InputComponent,

@@ -25,7 +25,6 @@ export interface FieldConfig {
   textField?: string
   maxLength?: number
   limit?: number
-  variant?: VariantConfig
 }
 
 export interface Option {
@@ -33,9 +32,12 @@ export interface Option {
   name?: string;
 }
 
-export interface VariantConfig {
-  outlined?: boolean
-  noIcon?: boolean
-  text?: boolean
-}
+export type ButtonVariants = 'contained' | 'outlined' | 'text'
+
+export type ButtonTheme = 'primary' | 'secondary'
+
+export type TextAreaVariants = 'bullet' | 'number'
+
+
+
 

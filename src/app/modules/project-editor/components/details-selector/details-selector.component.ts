@@ -3,22 +3,22 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalComponent } from '../modal/modal.component';
 
 @Component({
-  selector: 'app-subject',
-  templateUrl: './subject.component.html',
-  styleUrls: ['./subject.component.scss']
+  selector: 'app-details-selector',
+  templateUrl: './details-selector.component.html',
+  styleUrls: ['./details-selector.component.scss']
 })
-export class SubjectComponent implements OnInit {
+export class DetailsSelectorComponent implements OnInit {
 
   @Input() title: string;
   @Input() content: string;
   bsModalRef: BsModalRef;
-  
+
   constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
   }
 
-  getModal(){
+  getModal() {
     const initialState = {
       title: this.title, // Title goes here
     };

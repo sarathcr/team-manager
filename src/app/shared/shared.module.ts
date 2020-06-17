@@ -7,7 +7,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
 import { TranslateModule } from '@ngx-translate/core';
 // Components
-import { FormButtonComponent } from './components/form-button/form-button.component';
+import { ButtonComponent } from './components/button/button.component';
 import { FormInputComponent } from './components/form-input/form-input.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { LoaderComponent } from './components/loader/loader.component';
@@ -17,7 +17,7 @@ import { LoaderComponent } from './components/loader/loader.component';
         SidebarComponent,
         HeaderComponent,
         LanguageSelectorComponent,
-        FormButtonComponent,
+        ButtonComponent,
         FormInputComponent,
         DropdownComponent,
         LoaderComponent
@@ -35,9 +35,9 @@ import { LoaderComponent } from './components/loader/loader.component';
         LanguageSelectorComponent,
         DropdownComponent,
         FormInputComponent,
-        FormButtonComponent,
+        ButtonComponent,
         LoaderComponent
     ]
 })
 
-export class SharedModule {}
+export class SharedModule { }
