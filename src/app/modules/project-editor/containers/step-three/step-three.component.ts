@@ -4,6 +4,7 @@ import { Step } from '../../constants/step.model';
 import { FieldConfig } from 'src/app/shared/constants/field.model';
 import { Theme } from 'src/app/shared/constants/theme.model';
 import { EditorService } from '../../services/editor/editor.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-step-three',
@@ -19,7 +20,7 @@ export class StepThreeComponent implements OnInit {
   textAreaConfig: FieldConfig
   themes$: Observable<Theme[]>
   
-  constructor(private editor: EditorService) { }
+  constructor(private translateService: TranslateService,private editor: EditorService) { }
 
   ngOnInit(): void {
     this.createFormConfig()
@@ -40,7 +41,7 @@ export class StepThreeComponent implements OnInit {
       disabled: true,
       submitted: false,
       label: 'IR A PUNTO DE PARTIDA',
-      variant: {outlined:true}
+      variant: {outlined:false}
     };
     this.textAreaConfig = {
       name: 'textarea',
@@ -49,6 +50,20 @@ export class StepThreeComponent implements OnInit {
       maxLength: 150,
       limit: 5
     }
+
+    // Translation
+    this.translateService.stream([
+      'PROJECT.project_button_markdone',
+      'PROJECT.project_button_done',
+      'THEMATIC.project_thematic_title',
+      'THEMATIC.project_thematic_description',
+      'THEMATIC.project_thematic_placeholder'
+    ]).subscribe(translations => {
+      this.buttonConfig.label = translations['PROJECT.project_button_markdone']
+      this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
+      this.textAreaConfig.placeholder = translations['THEMATIC.project_thematic_placeholder']
+    })
+  
   }
 
 }

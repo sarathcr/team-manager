@@ -24,10 +24,10 @@ export class ModalComponent implements OnInit {
       name: 'submit',
       field: 'button',
       id: 'submitButton',
-      disabled: true,
+      disabled: false,
       submitted: false,
-      label: 'Delete',
-      variant: {outlined:true}
+      label: 'ELIMINAR',
+      variant: {outlined:true, text:true}
     };
     this.textAreaConfig = {
       name: 'textarea',

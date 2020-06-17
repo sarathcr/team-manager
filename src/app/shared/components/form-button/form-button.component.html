@@ -1,5 +1,9 @@
 <div class="dynamic-field form-button">
-  <button class="btn btn-primary {{config.submitted ? 'btn-success':''}} " [disabled]="config.disabled"
-    (click)="handleClick()"><span class="form-button__icon icon-ic_check" *ngIf="!config.variant.outlined"></span>
+  <button class="btn btn-primary 
+  {{config.submitted ? 'btn-success':''}} 
+  {{config.variant.noIcon ? 'btn-no-icon':''}} 
+  {{config.variant.outlined ? 'btn-outline-secondary':''}}
+  {{config.variant.text ? 'btn-text' : ''}} " [disabled]="config.disabled"
+    (click)="handleClick()"><span class="form-button__icon icon-ic_check" *ngIf="!config.variant.outlined && !config.variant.noIcon"></span>
     {{ (config.submitted ? config.successLabel : config.label) | translate }} </button>
 </div>

@@ -30,6 +30,13 @@
     }
     &__footer{
         padding: 0 30px 30px;
+        width: 100%;
+    }
+    &__button-wrapper{
+        display: inline-flex;
+        &:first-child{
+            margin-right: 38px;
+        }
     }
 }
 

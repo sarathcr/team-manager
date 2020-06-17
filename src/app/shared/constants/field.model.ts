@@ -35,5 +35,7 @@ export interface Option {
 
 export interface VariantConfig {
   outlined?: boolean
+  noIcon?: boolean
+  text?: boolean
 }
 
