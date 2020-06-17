@@ -14,13 +14,13 @@ export class DropdownComponent implements OnInit {
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
   @Input() config: FieldConfig;
   active = false;
-  dropdownSettings: IDropdownSettings = {};
+  dropdownSettings = {};
   constructor() { }
 
   ngOnInit(): void {
     this.dropdownSettings = {
       singleSelection: !this.config.multiselect || false,
-      textField: this.config.textField || 'name',
+      labelKey: this.config.textField || 'name',
       itemsShowLimit: 3,
       closeDropDownOnSelection: true,
       maxHeight: 265,

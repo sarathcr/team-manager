@@ -11,6 +11,6 @@
       (onDropDownClose)="onDropDownClose()"
       [(ngModel)]="config.selectedItems">
     </ng-multiselect-dropdown> -->
-    <angular2-multiselect  [settings] ="dropdownSettings" [data]="config.options" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)" (onDropDownClose)="onDropDownClose()" [disabled] ="config.disabled" [(ngModel)]="config.selectedItems"></angular2-multiselect>
+    <angular2-multiselect  [data]="config.options" [(ngModel)]="config.selectedItems" [settings] ="dropdownSettings" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)" (onDropDownClose)="onDropDownClose()" [disabled] ="config.disabled" ></angular2-multiselect>
   </div>
 </div>
