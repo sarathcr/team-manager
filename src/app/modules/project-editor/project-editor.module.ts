@@ -163,7 +163,7 @@ const entityMetadata: EntityMetadataMap = {
     StepUnlockComponent,
     SubjectComponent,
     StringDecoder,
-    ModalComponent
+    ModalComponent,
     InputComponent,
     ImageUploadComponent,
     StringDecoder
