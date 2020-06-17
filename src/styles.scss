@@ -77,6 +77,12 @@
   position: relative;
 }
 
+.project-form__subtitle{
+  font-size: $font-size-body;
+  line-height: 28px;
+  letter-spacing: .2px;
+}
+
 .project-editor__goto-step{}
 .step-one{
   &:first-child{
