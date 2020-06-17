@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormButtonComponent } from './form-button.component';
+import { StepUnlockComponent } from './step-unlock.component';
 
-describe('FormButtonComponent', () => {
-  let component: FormButtonComponent;
-  let fixture: ComponentFixture<FormButtonComponent>;
+describe('StepUnlockComponent', () => {
+  let component: StepUnlockComponent;
+  let fixture: ComponentFixture<StepUnlockComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormButtonComponent ]
+      declarations: [ StepUnlockComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormButtonComponent);
+    fixture = TestBed.createComponent(StepUnlockComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

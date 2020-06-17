@@ -22,7 +22,7 @@ export interface FieldConfig {
   multiselect?: boolean
   submitted?: boolean
   id: string
-  textField?: string,
+  textField?: string
   maxLength?: number
   limit?: number
 }
@@ -31,3 +31,13 @@ export interface Option {
   id?: number;
   name?: string;
 }
+
+export type ButtonVariants = 'contained' | 'outlined' | 'text'
+
+export type Theme = 'primary' | 'secondary'
+
+export type TextAreaVariants = 'bullet' | 'number'
+
+
+
+
