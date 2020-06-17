@@ -21,8 +21,6 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, OnChanges, Aft
   isFirstOpen: boolean = true
   customClass: string = 'help-accordion'
   bsModalRef: BsModalRef
-  imgRenderer: any
-  videoRenderer: any
 
   constructor(
     private modalService: BsModalService,
@@ -36,20 +34,16 @@ export class HelpAccordionComponent implements OnInit, OnDestroy, OnChanges, Aft
 
   ngAfterViewInit() {
     this.elementRef.nativeElement.querySelectorAll('.help-img-thumb').forEach( thumb => {
-      this.imgRenderer = this.renderer.listen(thumb, 'click', (event) => { this.openModalWithComponent(event)})
-      // thumb.addEventListener("click", (event) => {this.openModalWithComponent(event)})
+      this.renderer.listen(thumb, 'click', (event) => { this.openModalWithComponent(event)})
     })
     this.elementRef.nativeElement.querySelectorAll('.help-video-thumb').forEach( thumb => {
-      this.videoRenderer = this.renderer.listen(thumb, 'click', (event) => { this.videoModal(event) })
-      // thumb.addEventListener("click", (event) => {this.videoModal(event)})
+      this.renderer.listen(thumb, 'click', (event) => { this.videoModal(event) })
     })
   }
   ngOnChanges() {
     this.adjustHeight()
   }
   ngOnDestroy() {
-    this.videoRenderer();
-    this.imgRenderer();
     const modalCount = this.modalService.getModalsCount();
     if (modalCount > 0) {
       this.modalService._hideModal(modalCount)
