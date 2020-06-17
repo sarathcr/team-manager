@@ -94,20 +94,30 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         break
 
       case 32: // spacebar
-        if (window.getSelection().toString().length) {
-          if (this.configOptions.length > 1) {
-            this.configOptions.splice(id, 1)
-            if (id - 1 >= 0) {
-              this.textArea.toArray()[id - 1].nativeElement.focus();
-            } else {
-              this.textArea.toArray()[id + 1].nativeElement.focus();
+        if (this.configOptions[id].name?.trim()?.length) {
+          var textComponent = this.textArea.toArray()[id].nativeElement
+          var startPos = textComponent.selectionStart;
+          var endPos = textComponent.selectionEnd;
+          let string = this.configOptions[id].name
+          let stringLength = string?.length
+          this.configOptions[id].name = (string.slice(0, startPos) + string.slice(endPos, stringLength)).trim();
+          if (!this.configOptions[id].name) {
+            if (this.configOptions.length > 1) {
+              this.configOptions.splice(id, 1)
+              if (id - 1 >= 0) {
+                this.textArea.toArray()[id - 1].nativeElement.focus();
+              } else {
+                this.textArea.toArray()[id + 1].nativeElement.focus();
+              }
             }
-          } else {
-            this.configOptions[0].name = ''
+            else {
+              if (!this.configOptions[id].name) {
+                this.configOptions[0].name = ''
+              }
+            }
           }
-        }
-        if (event.target.selectionStart === 0 || (event.target.value[event.target.selectionEnd - 1] == " " || event.target.value[event.target.selectionEnd] == " ")) {
-          event.preventDefault();
+        } else {
+          this.configOptions[id].name = this.configOptions[id].name?.trim()
         }
         break
 
@@ -133,7 +143,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     if (this.isFirefox() && value.length > this.config.maxLength) {
       value = value.substring(0, this.config.maxLength)
     }
-    this.configOptions[i].name = value
+    this.configOptions[i].name = value.trim()
     let newConfigOptions = [...this.configOptions];
     if (this.configOptions.length == 1 && !this.configOptions[0].name) newConfigOptions = []
     this.onChange.emit(newConfigOptions);
@@ -146,8 +156,11 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
   onBlur(i) {
     this.focus = false;
-    if (this.configOptions.length > 1 && this.configOptions[i]?.name?.length == 0) {
+    if (this.configOptions.length > 1 && !this.configOptions[i]?.name) {
       this.configOptions.splice(i, 1)
+    }
+    if (this.configOptions.length === 1 && !this.configOptions[0]?.name?.trim()) {
+      this.configOptions[0].name = null
     }
   }
 
