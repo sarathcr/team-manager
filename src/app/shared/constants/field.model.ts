@@ -34,7 +34,7 @@ export interface Option {
 
 export type ButtonVariants = 'contained' | 'outlined' | 'text'
 
-export type ButtonTheme = 'primary' | 'secondary'
+export type Theme = 'primary' | 'secondary'
 
 export type TextAreaVariants = 'bullet' | 'number'
 

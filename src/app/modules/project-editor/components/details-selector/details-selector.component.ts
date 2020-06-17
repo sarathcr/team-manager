@@ -9,8 +9,6 @@ import { ModalComponent } from '../modal/modal.component';
 })
 export class DetailsSelectorComponent implements OnInit {
 
-  @Input() title: string;
-  @Input() content: string;
   bsModalRef: BsModalRef;
 
   constructor(private modalService: BsModalService) { }
@@ -19,11 +17,8 @@ export class DetailsSelectorComponent implements OnInit {
   }
 
   getModal() {
-    const initialState = {
-      title: this.title, // Title goes here
-    };
-
-    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal', initialState });
+    
+    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal'});
     this.bsModalRef.content.closeBtnName = 'Close';
   }
 

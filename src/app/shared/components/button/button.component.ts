@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
-import { FieldConfig, ButtonVariants, ButtonTheme } from '../../constants/field.model'
+import { FieldConfig, ButtonVariants, Theme } from '../../constants/field.model'
 
 @Component({
   selector: 'app-button',
@@ -8,7 +8,7 @@ import { FieldConfig, ButtonVariants, ButtonTheme } from '../../constants/field.
 })
 export class ButtonComponent implements OnInit {
 
-  @Input() theme: ButtonTheme = 'primary'
+  @Input() theme: Theme = 'primary'
   @Input() disabled: boolean
   @Input() config: FieldConfig
   @Output() onClick = new EventEmitter()
