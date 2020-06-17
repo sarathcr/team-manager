@@ -25,6 +25,8 @@ export class DropdownComponent implements OnInit {
       closeDropDownOnSelection: true,
       maxHeight: 265,
       enableCheckAll: false,
+      showCheckbox: this.config.multiselect || true,
+      text: this.config.placeholder
     };
   }
 
