@@ -62,5 +62,17 @@
     },
     "PROJECTGUIDE":{
       "projectguide_pedagogical_guide": "GUÍA PEDAGÓGICA"
+    },
+    "OBJECTIVES":{
+      "project_objectives_criteriawindow_curriculum": "Currículum",
+      "project_objectives_criteriawindow_title": "Selecciona todos los criterios de evaluación a trabajar:",
+      "project_objectives_criteriawindow_combo_title": "Curso",
+      "project_objectives_criteriawindow_combo_section_1": "Cursos preferentes",
+      "project_objectives_criteriawindow_combo_section_2": "Otros cursos",
+      "project_objectives_criteriawindow_criterion": "Criterio de evaluación",
+      "project_objectives_criteriawindow_basic_skills": "Competencias asociadas",
+      "project_objectives_criteriawindow_dimensions": "Dimensiones asociadas",
+      "project_objectives_criteriawindow_showall": "Ver todos los criterios seleccionados",
+      "project_objectives_criteriawindow_add": "Añadir"
     }
 }

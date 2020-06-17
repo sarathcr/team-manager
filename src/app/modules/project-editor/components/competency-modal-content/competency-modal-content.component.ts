@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FieldConfig } from '../../../../shared/constants/field.model'
+import { TranslateService } from '@ngx-translate/core'
 
 
 @Component({
@@ -13,15 +14,35 @@ export class CompetencyModalContentComponent implements OnInit {
   gradeDropdown: FieldConfig
   rowHeadData: Array<object>
   rowData: Array<object>
-  constructor(public bsModalRef: BsModalRef) { }
+
+  constructor(
+    public bsModalRef: BsModalRef,
+    private translateService: TranslateService
+  ) { }
 
   ngOnInit(): void {
+    this.getTranslation();
     this.createFormConfig()
     this.rowInit()
   }
 
   onDropdownSelect(selectedData: any) {
 
+  }
+
+  getTranslation(){
+    this.translateService.stream([
+      'OBJECTIVES.project_objectives_criteriawindow_curriculum',
+      'OBJECTIVES.project_objectives_criteriawindow_title',
+      'OBJECTIVES.project_objectives_criteriawindow_combo_title',
+      'OBJECTIVES.project_objectives_criteriawindow_combo_section_1',
+      'OBJECTIVES.project_objectives_criteriawindow_combo_section_2',
+      'OBJECTIVES.project_objectives_criteriawindow_criterion',
+      'OBJECTIVES.project_objectives_criteriawindow_basic_skills',
+      'OBJECTIVES.project_objectives_criteriawindow_dimensions',
+      'OBJECTIVES.project_objectives_criteriawindow_showall',
+      'OBJECTIVES.project_objectives_criteriawindow_add',
+    ]).subscribe(translations => {})
   }
 
   createFormConfig() {

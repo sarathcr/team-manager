@@ -1,12 +1,12 @@
 <div class="competency-modal__content">
     <div class="competency-modal__header">
-        <h4 class="competency-modal__header-title">CURRÍCULUM TECNOLOGÍA</h4>
+        <h4 class="competency-modal__header-title">{{ 'OBJECTIVES.project_objectives_criteriawindow_curriculum' | translate }}</h4>
         <button type="button" class="close competency-modal__header-close" aria-label="Close" (click)="bsModalRef.hide()">
           <span class="icon icon-ic_share_close"></span>
         </button>
     </div>
     <div class="competency-modal__body">
-        <h6 class="competency-modal__body-title">Selecciona todos los criterios de evaluación a trabajar:</h6>
+        <h6 class="competency-modal__body-title">{{ 'OBJECTIVES.project_objectives_criteriawindow_title' | translate }}</h6>
         <div class="competency-modal__body-block">
             <div class="competency-modal__body-block-grade">
                 <ng-scrollbar>
@@ -129,8 +129,8 @@
                     </div>
                 </div>
                 <div class="competency-modal__body-btn-group">
-                    <a href="javascript:void(0);" class="competency-modal__body-btn-link">Ver todos lo criterios seleccionados (6)</a>
-                    <button class="btn btn-primary competency-modal__body-btn-submit"> <span class="icon icon-ic_check"></span>añadir</button>
+                    <a href="javascript:void(0);" class="competency-modal__body-btn-link">{{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }} (6)</a>
+                    <button class="btn btn-primary competency-modal__body-btn-submit"> <span class="icon icon-ic_check"></span>{{ 'OBJECTIVES.project_objectives_criteriawindow_add' | translate }}</button>
                 </div>
             </div>
         </div>
