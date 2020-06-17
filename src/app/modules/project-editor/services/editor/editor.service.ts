@@ -62,7 +62,6 @@ export class EditorService {
     this.loading$ = this.projectsService.loading$
     this.loading$.subscribe(res => {
       this.loading = res
-      console.log(res)
     })
   }
 
