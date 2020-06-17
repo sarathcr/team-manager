@@ -77,7 +77,34 @@
   position: relative;
 }
 
-.project-editor__goto-step{}
+.project-editor__subject-wrapper{
+  margin-bottom: 47px;
+}
+
+.project-editor__point {
+  font-weight: bold;
+  border-bottom: 1px solid $blue-whale;
+  cursor: pointer;
+}
+
+.project-editor__title{
+  font-size: $font-size-sub-s;
+  line-height: 28px;
+  letter-spacing: .2px;
+  margin-bottom: 7px;
+
+}
+
+.project-editor__sub-description{
+  margin-bottom: 25px;
+}
+
+.project-form__subtitle{
+  line-height: 28px;
+  letter-spacing: .2px;
+  font-size: $font-size-body;
+}
+
 .step-one{
   &:first-child{
     .status-indicator__bar_top{
