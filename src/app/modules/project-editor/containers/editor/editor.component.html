@@ -1,10 +1,18 @@
 <div class="editor" id="editor" [ngClass]="{ 'editor_short' : contextualStatus}">
-    <div class="editor__bg"></div>
-    <app-editor-header [projectData]="editor.titleData" id="editor-header" (titleBlur)="editor.handleSubmit($event)"></app-editor-header>
-    <app-editor-sidebar id="editor-sidebar" title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}" view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
-     [steps]="steps"></app-editor-sidebar>
-    <div class="editor__forms">
-      <router-outlet></router-outlet>
+  <div class="editor__bg"></div>
+  <app-editor-header
+    id="editor-header"
+    [projectData]="editor.titleData"
+    (titleBlur)="editor.handleSubmit($event)"
+  ></app-editor-header>
+  <app-editor-sidebar
+    id="editor-sidebar"
+    title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}"
+    view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
+    [steps]="steps"
+  ></app-editor-sidebar>
+  <div class="editor__forms">
+    <router-outlet></router-outlet>
   </div>
   <app-contextual-help (status)="getContextualStatus($event)"></app-contextual-help>
 </div>

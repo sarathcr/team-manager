@@ -1,27 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core'
 
 @Component({
   selector: 'app-editor-sidebar',
   templateUrl: './editor-sidebar.component.html',
   styleUrls: ['./editor-sidebar.component.scss']
 })
-export class EditorSidebarComponent implements OnInit {
+export class EditorSidebarComponent {
 
-  @Input() title: string;
-  @Input() view: string;
-  @Input() steps: any;
+  @Input() title: string
+  @Input() view: string
+  @Input() steps: any
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  originalOrder = (): number => {
-    return 0;
-  }
-  
+  originalOrder = (): number => 0 
 }
-
-
-
-

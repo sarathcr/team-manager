@@ -1,5 +1,5 @@
-import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { ProjectTitle } from '../../constants/title-data.model';
+import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core'
+import { ProjectTitle } from '../../constants/title-data.model'
 
 @Component({
   selector: 'app-project-title',
@@ -8,51 +8,36 @@ import { ProjectTitle } from '../../constants/title-data.model';
 })
 export class ProjectTitleComponent implements OnInit {
 
-  @ViewChild('titleInput') inputElement: ElementRef;
-  @Input() projectData: ProjectTitle;
-  @Input() maxLength: number;
-  @Input() placeholder: any;
-  @Output() titleBlur = new EventEmitter();
-  tempTitle: string;
-  showInputfield = true;
+  @ViewChild('titleInput') inputElement: ElementRef
+  @Input() projectData: ProjectTitle
+  @Input() maxLength: number
+  @Input() placeholder: string
+  @Output() titleBlur = new EventEmitter()
+  tempTitle: string
+  showInputfield = true
 
   constructor() { }
 
   ngOnInit(): void {
     if (this.projectData?.title) {
-      this.tempTitle = this.projectData?.title;
-      this.showInputfield = false;
+      this.tempTitle = this.projectData?.title
+      this.showInputfield = false
     }
   }
 
   // Function to show or hide the input text field.
   toggleInputfield(): void {
-    this.showInputfield = true;
-    setTimeout(() => this.inputElement.nativeElement.focus(), 0);
-  }
-
-  // check title for initial space
-  checkTitle(title: string) {
-    const regex = /^\s*$/;
-    if (regex.test(title)) {
-      return "";  // return if the string contains only white spaces
-    }
-    return title;
+    this.showInputfield = true
+    setTimeout(() => this.inputElement.nativeElement.focus(), 0)
   }
 
   // Function to handle blur event of input field.
   handleBlur(event: Event): void {
-    const title = this.checkTitle((<HTMLInputElement>event.target).value);
-    this.tempTitle = title;
-    if (title) {
-      this.showInputfield = false;
-    } else {
-      this.showInputfield = true;
-    }
-    if ((title || this.projectData?.id)
-      && (title !== this.projectData?.title)) { //check for same title value
-      this.titleBlur.emit({ title });
+    this.tempTitle = (<HTMLInputElement>event.target).value.trim()
+    this.showInputfield = this.tempTitle ? false : true
+    if ((this.tempTitle || this.projectData?.id)
+      && (this.tempTitle !== this.projectData?.title)) { //check for same this.temptitle value
+      this.titleBlur.emit({ title: this.tempTitle })
     }
   }
-
 }
