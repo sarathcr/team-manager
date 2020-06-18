@@ -1,4 +1,6 @@
 @import 'helpers/_helpers-master';
+@import 'helpers/_bt-mixins';
+
 .editor{
   $root: &;
   width: 100%;
@@ -23,21 +25,24 @@
     }
 
   }
-  &__bg{
-    background-image:url('../../../../../../images/img_background_shapes.png');
-    background-repeat: no-repeat;
-    background-position: right center;
-    position: fixed;
-    top: 75px;
-    right: 0;
-    width: 100%;
-    min-height: 1200px;
-    overflow: hidden;
-    z-index: -1;
-  }
   .step-section{
     scroll-margin-top: 110px;
     display: block;
+  }
+
+  @include media-breakpoint-up(xl) {
+    &__bg{
+      background-image:url('../../../../../../images/img_background_shapes.png');
+      background-repeat: no-repeat;
+      background-position: right center;
+      position: fixed;
+      top: 75px;
+      right: 0;
+      width: 100%;
+      min-height: 1200px;
+      overflow: hidden;
+      z-index: -1;
+    }
   }
 }
 
