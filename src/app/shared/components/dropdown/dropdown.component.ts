@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
 // Interfaces
 import { FieldConfig } from '../../constants/field.model';
-import { IDropdownSettings } from '../ng-multiselect-dropdown-custom';
+import { IDropdownSettings } from '../ng-multiselect-dropdown-custom/public_api';
+// import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-dropdown',
