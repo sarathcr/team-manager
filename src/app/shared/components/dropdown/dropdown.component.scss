@@ -43,7 +43,9 @@
     background-color: inherit;
     left: $padding-m;
     z-index: 2;
-    text-transform: capitalize;
+    &::first-letter{
+      text-transform: uppercase;
+    }
   }
 
   .multiselect-dropdown {
