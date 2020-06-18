@@ -45,5 +45,9 @@
       color: $overtitle-grey;
     }
   }
+
+  & .numbered-list &__item:before {
+    font-family: $font-family-tertiary !important;;
+  }
 }
 
