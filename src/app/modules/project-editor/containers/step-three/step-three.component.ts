@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable} from 'rxjs';
-import { Step, Status } from '../../constants/step.model';
-import { FieldConfig } from 'src/app/shared/constants/field.model';
-import { Theme } from 'src/app/shared/constants/theme.model';
-import { EditorService } from '../../services/editor/editor.service';
-import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'src/app/shared/constants/subject.model';
-import { FormThreeInitData, FormThree } from '../../constants/step-forms.model';
-import { formThreeInitData } from '../../constants/step-forms.data';
+import { Component, OnInit } from '@angular/core'
+import { Observable} from 'rxjs'
+import { Step, Status } from '../../constants/step.model'
+import { FieldConfig } from 'src/app/shared/constants/field.model'
+import { Theme } from 'src/app/shared/constants/theme.model'
+import { EditorService } from '../../services/editor/editor.service'
+import { TranslateService } from '@ngx-translate/core'
+import { Subject } from 'src/app/shared/constants/subject.model'
+import { FormThreeInitData, FormThree } from '../../constants/step-forms.model'
+import { formThreeInitData } from '../../constants/step-forms.data'
 
 @Component({
   selector: 'app-step-three',
@@ -42,9 +42,9 @@ export class StepThreeComponent implements OnInit {
   }
 
   formInIt() {
-    this.project$ = this.editor.getStepData('stepThree');
-    this.step = this.editor.steps.three;
-    this.step$ = this.editor.getStepStatus(3);
+    this.project$ = this.editor.getStepData('stepThree')
+    this.step = this.editor.steps.three
+    this.step$ = this.editor.getStepStatus(3)
     this.loading$ = this.editor.loading$
     let tempinitialFormData = new formThreeInitData
     this.project$.subscribe(subjects => this.subjects = subjects)
@@ -192,7 +192,8 @@ export class StepThreeComponent implements OnInit {
 
   // Function to check whether the form is updated
   isFormUpdated() {
-    if (!this.isEqual(this.initialFormData.competencyObjectives, this.InputFormData.competencyObjectives) || this.initialFormStatus !== this.step.state) {
+    if (!this.isEqual(this.initialFormData.competencyObjectives, 
+        this.InputFormData.competencyObjectives) || this.initialFormStatus !== this.step.state) {
       return true
     }
     return false
