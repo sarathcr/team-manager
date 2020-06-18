@@ -8,6 +8,8 @@ import { TranslateService } from '@ngx-translate/core'
 import { Subject } from 'src/app/shared/constants/subject.model'
 import { FormThreeInitData, FormThree } from '../../constants/step-forms.model'
 import { formThreeInitData } from '../../constants/step-forms.data'
+import { CompetencyObjectives } from 'src/app/shared/constants/project.model'
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-step-three',
@@ -21,11 +23,11 @@ export class StepThreeComponent implements OnInit {
   step: Step
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  competencyObjectives$: Observable<Theme[]>
+  competencyObjectives$: Observable<CompetencyObjectives[]>
   loading$: Observable<boolean>
   InputFormData: FormThreeInitData = new formThreeInitData
   initialFormData: FormThreeInitData = new formThreeInitData
-  subjects: Subject[]
+  project: {subjects:Subject[],competencyObjectives:CompetencyObjectives[]}
   initialFormStatus: Status = "PENDING"
 
   constructor(private translateService: TranslateService, private editor: EditorService, ) { }
@@ -47,9 +49,12 @@ export class StepThreeComponent implements OnInit {
     this.step$ = this.editor.getStepStatus(3)
     this.loading$ = this.editor.loading$
     let tempinitialFormData = new formThreeInitData
-    this.project$.subscribe(subjects => this.subjects = subjects)
+    this.project$.subscribe(data => this.project = data)
     if (this.project$) {
       this.competencyObjectives$ = this.project$
+      .pipe(
+        map(data => data?.competencyObjectives)
+      )
       this.competencyObjectives$
         .subscribe(competencyObjectives => {
           this.initialFormData.competencyObjectives = []

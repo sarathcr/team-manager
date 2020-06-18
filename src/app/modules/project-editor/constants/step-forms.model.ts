@@ -60,7 +60,7 @@ export interface FormThreeData {
   competencyObjectives: CompetencyObjectives[]
 }
 export interface FormThreeInitData {
-  competencyObjectives?: Theme[],
+  competencyObjectives?: CompetencyObjectives[],
   placeholder?: string
 }
 

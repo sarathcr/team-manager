@@ -24,7 +24,14 @@ export class Project {
   subjects?: Array<Subject>;
   createdAt?: string;
   updatedAt?: string;
+  competencyObjectives?: CompetencyObjectives[]
 }
+
+export class CompetencyObjectives {
+  id?: number
+  name?: string
+}
+
 
 export function compareProjects(p1: Project, p2: Project) {
   const firstTimestamp = new Date(p1?.createdAt).getTime()
