@@ -4,14 +4,14 @@
     </div>
     <ul class="details-selector__list">
         <li class="details-selector__item">
-            <span class="details-selector__text" *ngIf="numbers.length == 0">{{'OBJECTIVES.project_objectives_criteria_placeholder' | translate}}</span>
-            <span class="details-selector__text_evaluation" *ngIf="numbers.length">{{'OBJECTIVES.project_objectives_criterion' | translate}}({{count}})</span>
+            <span class="details-selector__text" *ngIf="count == 0">{{'OBJECTIVES.project_objectives_criteria_placeholder' | translate}}</span>
+            <span class="details-selector__text_evaluation" *ngIf="count>0">{{'OBJECTIVES.project_objectives_criterion' | translate}} ({{count}})</span>
             <span class="details-selector__add" (click)="addItem()"><span class="icon icon-ic_add_small details-selector__add_icon"></span>{{'OBJECTIVES.project_objectives_criteriawindow_add' | translate}}</span>
         </li>
-        <span *ngFor="let number of numbers">
+        <span *ngFor="let number of numbers; let numberIndex = index">
             <li class="details-selector__item" *ngIf="i == number">
-                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
+                <span class="details-selector__text_normal">evaluation criteria1.</span>
+                <span class="details-selector__close" (click)="getModal(numberIndex)"><span class="icon icon-ic_share_close"></span></span>
             </li>
         </span>
         
