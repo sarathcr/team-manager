@@ -19,14 +19,14 @@
                         </h2>
                         <p class="project-form__sub-description">{{'OBJECTIVES.project_objectives_objectives_subtitle.description' | translate}}
                         </p>
-                        <app-textarea-bullets [config]='textAreaConfig' [options$]="themes$" [variant]="'number'">
+                        <app-textarea-bullets [config]='textAreaConfig' (onChange)="textAreaUpdate($event)" [options$]="competencyObjectives$" [variant]="'number'">
                         </app-textarea-bullets>
                     </div>
                 </ng-template>
             </ng-template>
             <app-loader *ngIf="loading$ | async; else loaded"></app-loader>
         </div>
-        <app-button *ngIf="!(loading$ | async)" [config]='buttonConfig'>
+        <app-button *ngIf="!(loading$ | async)" [config]='buttonConfig' (click)='handleSubmit("DONE")'>
         </app-button>
     </div>
 </div>
