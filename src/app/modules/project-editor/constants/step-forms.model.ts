@@ -6,6 +6,7 @@ import { Subject } from 'src/app/shared/constants/subject.model'
 import { Theme } from 'src/app/shared/constants/theme.model'
 import { DrivingQuestion } from 'src/app/shared/constants/driving-questions.model'
 import { Status, StepState } from './step.model'
+import { CompetencyObjectives, EvaluationCriteria } from 'src/app/shared/constants/project.model'
 
 export interface FormOne {
   data: {
@@ -46,6 +47,21 @@ export interface FormTwoData {
 }
 export interface FormTwoInitData {
   themes?: Theme[],
+  placeholder?: string
+}
+
+export interface FormThree {
+  data: {
+    competencyObjectives: CompetencyObjectives[]
+    evaluationCriteria: EvaluationCriteria[]
+  }
+  stepStatus: StepState
+}
+export interface FormThreeData {
+  competencyObjectives: CompetencyObjectives[]
+}
+export interface FormThreeInitData {
+  competencyObjectives?: CompetencyObjectives[],
   placeholder?: string
 }
 

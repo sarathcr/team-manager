@@ -1,10 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Project } from 'src/app/shared/constants/project.model';
-import { ProjectTitle } from '../../constants/title-data.model';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { StepId, Status, StepState, Steps } from '../../constants/step.model';
-import { EditorService } from '../../services/editor/editor.service';
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+
+import { Steps } from '../../constants/step.model'
+import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
   selector: 'app-editor',
@@ -12,16 +10,8 @@ import { EditorService } from '../../services/editor/editor.service';
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit, OnDestroy {
-  project: Project;
-  project$: Observable<Project>;
-  spyActive$ = new BehaviorSubject<StepId>('stepOne')
-  stepStatus$: Observable<StepState>
-  notFound: boolean;
-  titleData: ProjectTitle;
-  projectUrl: any;
+  projectUrl: string | number
   steps: Steps
-  status: Status
-  tempStatus: any // saving the status for non created projects
   contextualStatus: boolean = false
 
   constructor(
@@ -35,11 +25,11 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.editor.getProject(this.projectUrl)
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.editor.clearData()
   }
 
-  getContextualStatus($event) {
+  getContextualStatus($event: boolean): void {
     this.contextualStatus = $event
   }
 }

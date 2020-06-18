@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-loader',
@@ -6,11 +6,10 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./loader.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LoaderComponent implements OnInit {
-  @Input() variant: "block"
-  constructor() { }
+export class LoaderComponent {
 
-  ngOnInit(): void {
-  }
+  @Input() variant: "block"
+
+  constructor() { }
 
 }

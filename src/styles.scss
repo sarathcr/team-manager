@@ -65,44 +65,49 @@
       transform: translateX(-50%);
   }
 }
-
-.project-editor__form {
-  display: flex;
-  width: 100%;
-  min-height: calc(100vh - 75px);
-  padding: 28px 40px 57px;
-  padding-left: 40px;
-  padding-right: 40px;
-  flex-direction: column;
-  position: relative;
+.project-editor{
+  &__goto-step{
+    letter-spacing: 0;
+    line-height: 24px;
+  }
+  &__form {
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 75px);
+    padding: 28px 40px 57px;
+    padding-left: 40px;
+    padding-right: 40px;
+    flex-direction: column;
+    position: relative;
+  }
+  &__subject-wrapper{
+    margin-bottom: 47px;
+  }
+  &__point {
+    font-weight: bold;
+    border-bottom: 1px solid $blue-whale;
+    cursor: pointer;
+  }
+  &__title{
+    font-size: $font-size-sub-s;
+    line-height: 28px;
+    letter-spacing: .2px;
+    margin-bottom: 7px;
+  }
+  &__sub-description{
+    margin-bottom: 25px;
+  }
 }
 
-.project-editor__subject-wrapper{
-  margin-bottom: 47px;
-}
-
-.project-editor__point {
-  font-weight: bold;
-  border-bottom: 1px solid $blue-whale;
-  cursor: pointer;
-}
-
-.project-editor__title{
-  font-size: $font-size-sub-s;
-  line-height: 28px;
-  letter-spacing: .2px;
-  margin-bottom: 7px;
-
-}
-
-.project-editor__sub-description{
-  margin-bottom: 25px;
-}
-
-.project-form__subtitle{
-  line-height: 28px;
-  letter-spacing: .2px;
-  font-size: $font-size-body;
+.project-form{
+  &__wrapper{
+    margin-bottom: 20px;
+  }
+  &__subtitle{
+    line-height: 28px;
+    letter-spacing: .2px;
+    font-size: $font-size-body;
+  }
 }
 
 .step-one{

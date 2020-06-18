@@ -152,52 +152,39 @@ export class StepOneComponent implements OnInit, OnDestroy {
 
   getGrades(academicyearId: number, regionId?: number) {
     const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id
-    // this.gradeService.entities$
-    //   // .pipe(
-    //   //   map(grades => grades.filter(grade => grade.academicYear?.id == academicyearId && grade.region?.id == selectedRegionId))
-    //   // )
-    //   .subscribe(newData => {
-    //     if (!newData.length) {
-    //       let parms = {
-    //         regionId: selectedRegionId.toString(),
-    //         academicyearId: academicyearId.toString()
-    //       }
-    //       this.gradeService.getWithQuery(parms) //trigger API after checking the store
-    //     }
-    //     this.gradesDropdown.options = newData
-    //   })
-    let parms = {                                                       // Remove this block when api updated
-      regionId: selectedRegionId.toString(),
-      academicyearId: academicyearId.toString()
-    }
-    this.gradeDataService.getWithQuery(parms).subscribe(newData => {
-      this.gradesDropdown.options = newData
-    })
+    this.gradeService.entities$
+      .pipe(
+        map(grades => grades.filter(grade => grade.academicYear?.id == academicyearId && grade.region?.id == selectedRegionId))
+      )
+      .subscribe(newData => {
+        if (!newData.length) {
+          let parms = {
+            regionId: selectedRegionId.toString(),
+            academicyearId: academicyearId.toString()
+          }
+          this.gradeService.getWithQuery(parms) //trigger API after checking the store
+        }
+        this.gradesDropdown.options = newData
+      })
   }
 
   getSubjects() {
     let gradeIds = []
     this.gradesDropdown.selectedItems.forEach(grade => { gradeIds.push(grade.id) })
-    // this.subjectService.getWithQuery(gradeIds.toString())
-    // this.subjectService.entities$.
-    //   pipe(map(subjects => {
-    //     let subjectData = []
-    //     subjects.forEach(subject => {
-    //       gradeIds.forEach(gradeId => {
-    //         if (subject.grade?.id == gradeId) {
-    //           subjectData.push(subject)
-    //         }
-    //       })
-    //     })
-    //     return subjectData
-    //   }))
-    //   .subscribe(newData => {
-    //     this.subjectsDropdown.options = newData
-    //   })
-
-    this.subjectService.getWithQuery(gradeIds.toString()).subscribe(newData => {   //Remove this block when api updated
-      this.subjectsDropdown.options = newData
-    })
+    this.gradeService.entities$
+      .pipe(map(gradeData => {                               // filters subject data from grade entity service
+        let subjectData = new Set([])
+        gradeData.forEach(grade => {
+          gradeIds.forEach(gradeId => {
+            if (grade.id == gradeId)
+              grade.subjectList.forEach(subject => subjectData.add(subject))
+          })
+        })
+        return [...subjectData]
+      }))
+      .subscribe(newData => {
+        this.subjectsDropdown.options = newData
+      })
   }
 
   checkStatus() {

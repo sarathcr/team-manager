@@ -9,12 +9,12 @@
     padding-left: 17px;
     padding-right: 17px;
     font-size: $font-size-button;
-    line-height: 28px;
+    line-height: 24px;
     letter-spacing: 1px;
   }
   .btn-primary{
     &:disabled{
-      background-color: $creator-border;
+      background-color: $creator-disabled;
       border-color: transparent;
     }
   }
@@ -50,6 +50,9 @@
   .btn-text{
     border: none;
     color: $primary-font-color;
+    text-transform: capitalize;
+    font-family: $font-family-tertiary;
+    letter-spacing: 0.2px;
   }
 }
 
