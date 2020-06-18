@@ -18,7 +18,7 @@
         padding: 0;
     }
     &__item{
-        padding: 14px 18px;
+        padding: 10px 18px 13px 18px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -34,6 +34,7 @@
             line-height: 24px;
         }
         &_normal{
+            line-height: 24px;
             font-weight: normal;
         }
     }
@@ -52,7 +53,12 @@
         }
     }
     &__close{
+        line-height: 24px;
         color: $overtitle-grey;
         margin-left: 37px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 4px;
     }
 }

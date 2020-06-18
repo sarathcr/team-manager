@@ -5,7 +5,7 @@
     <ul class="details-selector__list">
         <li class="details-selector__item">
             <span class="details-selector__text" *ngIf="!showList">{{'OBJECTIVES.project_objectives_criteria_placeholder' | translate}}</span>
-            <span class="details-selector__text_evaluation" *ngIf="showList">{{'OBJECTIVES.project_objectives_criterion' | translate}}(6)</span>
+            <span class="details-selector__text_evaluation" *ngIf="showList">{{'OBJECTIVES.project_objectives_criterion' | translate}} (6)</span>
             <span class="details-selector__add" (click)="showList =!showList"><span class="icon icon-ic_add_small details-selector__add_icon"></span>{{'OBJECTIVES.project_objectives_criteriawindow_add' | translate}}</span>
         </li>
             <li class="details-selector__item" *ngIf="showList">
