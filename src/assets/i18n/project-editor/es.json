@@ -1,11 +1,21 @@
 {
-    "PROJECT":{
+  "PROJECT":{
       "project_button_markdone": "MARCAR COMO HECHO",
       "project_button_done": "HECHO",
       "project_notitle": "Experiencia sin título",
-      "project_upload_file": "Cargar archivo"
-    },
-    "STEPS_MENU":{
+      "project_upload_file": "Cargar archivo",
+      "project_button_delete": "Eliminar",
+      "project_button_cancel": "Cancelar",
+      "project_dependancy_title": "Desbloquea este paso",
+      "project_button_back": "Volver",
+      "project_title_helpertext": "Pon un título identificativo, podrás editarlo más adelante.",
+      "project_button_save": "Guardar",
+      "project_button_create": "Crear",
+      "project_title_title_newtitle": "Nuevo proyecto",
+      "project_title_title_edittitle": "Edita el título",
+      "project_title_input_title": "Título"
+  },
+  "STEPS_MENU":{
       "project_structure_stepsmenu_title": "Crea paso a paso",
       "project_structure_stepsmenu_startingpoint": "Punto de partida",
       "project_structure_stepsmenu_topic": "Temática",
@@ -16,7 +26,7 @@
       "project_structure_stepsmenu_output": "Ver ficha estructura"
     },
     "STARTING_POINT":{
-      "project_startingpoint_title": "Curso y asignatura(s)",
+      "project_startingpoint_title": "Punto de partida",
       "project_startingpoint_description": "Escoge las áreas o asignaturas que van a estar implicadas en tu proyecto. Para ofrecerte solo las áreas que te interesan, necesitamos saber qué curso impartes y en qué territorio.",
       "project_startingpoint_year": "Año académico",
       "project_startingpoint_year_placeholder": "Selecciona el año académico",
@@ -26,22 +36,60 @@
       "project_startingpoint_country_españa":	"España",
       "project_startingpoint_region":	"Territorio",
       "project_startingpoint_region_placeholder":	"Selecciona un territorio",
-      "project_startingpoint_grades":	"Curso(s)",
+      "project_startingpoint_grades":	"Curso/s",
       "project_startingpoint_grades_placeholder":	"Selecciona uno o más cursos",
-      "project_startingpoint_subjects": "Asignatura(s)",
+      "project_startingpoint_subjects": "Asignatura/s",
       "project_startingpoint_subjects_placeholder": "Selecciona una o más asignaturas",
-      "project_startingpoint_term": "Trimestre(s)",
+      "project_startingpoint_term": "Trimestre/s",
       "project_startingpoint_term_placeholder": "Selecciona uno o más trimestres"
     },
     "THEMATIC":{
       "project_thematic_title": "Temática",
-      "project_thematic_description": "Escoge un tema, el asunto que quieres trabajar con tus alumnos. Este apartado responde al sobre qué tratará el proyecto. Elige libremente, que no te condicione el currículum. Más adelante te ayudaremos a conectarlo.",
+      "project_thematic_description": "¿Sobre qué tratará el proyecto? Escribe las temáticas que tienes previsto abordar. Más adelante te ayudaremos a contectarlas con los contenidos curriculares.",
       "project_thematic_placeholder": "Especifica uno o más temas..."
     },
+    "OBJECTIVES":{
+      "project_objectives_dependancy_description": "Para acceder al currículum y seleccionar los criterios de evaluación tienes que completar el paso Punto de partida.",
+      "project_objectives_dependancy_button": "Ir al punto de partida",
+      "project_objectives_title": "Objetivos de aprendizaje",
+      "project_objectives_description": "¿Qué quieres que tu alumnado acabe aprendiendo? Los objetivos de aprendizaje son de elaboración propia, pero deben responder a la normativa educativa. Parte de los criterios de evaluación para redactar los objetivos.",
+      "project_objectives_criterion_title": "3.1 Conéctalos con el currículum",
+      "project_objectives_criterion": "Criterios de evaluación",
+      "project_objectives_criteria_placeholder": "Añade criterios de evaluación del currículum.",
+      "project_objectives_objectives_title": "3.2 Redáctalos",
+      "project_objectives_objectives_subtitle": {
+        "subtitle" : "Transforma los criterios de evaluación en objetivos de aprendizaje:",
+        "description" : "Al final del proyecto queremos que nuestros/as alumnos/as sepan..."
+      },
+      "project_objectives_objectives_placeholder": "Escribe el primer objetivo competencial. Por ejemplo: \"...comprender que la cultura hace valorar la historia propia.\"",
+      "project_objectives_add_criteria": " + Añadir",
+      "project_objectivies_add_more_subjects": {
+        "one" : "Accede al",
+        "two" : "Punto de partida",
+        "three" : "si deseas añadir nuevas asignaturas."
+      },
+      "project_objectives_delete_confirmation_title": "¿Seguro que quieres eliminar este criterio?",
+      "project_objectives_delete_confirmation_message_nonrelated": "Si lo eliminas te recomendamos que revises todos los contenidos y estándares que puedan tener relación con este.",
+      "project_objectives_criteriawindow_curriculum": "Currículum",
+      "project_objectives_criteriawindow_title": "Selecciona todos los criterios de evaluación a trabajar:",
+      "project_objectives_criteriawindow_combo_title": "Curso",
+      "project_objectives_criteriawindow_combo_section_1": "Cursos preferentes",
+      "project_objectives_criteriawindow_combo_section_2": "Otros cursos",
+      "project_objectives_criteriawindow_criterion": "Criterio de evaluación",
+      "project_objectives_criteriawindow_basic_skills": "Competencias asociadas",
+      "project_objectives_criteriawindow_grade": "Curso",
+      "project_objectives_criteriawindow_block": "Bloque",
+      "project_objectives_criteriawindow_dimensions": "Dimensiones asociadas",
+      "project_objectives_criteriawindow_showall": "Ver todos los criterios seleccionados",
+      "project_objectives_criteriawindow_add": "Añadir",
+      "project_objectives_criteriawindow_critera_selected": "criterios seleccionados",
+      "project_objectives_criteriawindow_empty_title": "No tienes criterios seleccionados",
+      "project_objectives_criteriawindow_empty_description": "Selecciona criterios de evaluación del currículum y visualiza el listado de seleccionados aquí para añadirlos.",
+      "project_objectives_criteriawindow_empty_button": "Ver criterios"
+    },
     "RETHINK_TITLE":{
-      "project_rethinktitle_title": "Repensar título",
-      "project_rethinktitle_description": "¿Mantienes el nombre que le has dado a tu proyecto o prefieres cambiarlo? \nAhora puedes repensar el título inicial y darle un plus de creatividad. Si no se te ocurre nada, sigue nuestros consejos de la guía pedagógica. También puedes subir una imagen que te inspire. ",
-      "project_rethinktitle_creativetitle": "Título creativo",
+      "project_rethinktitle_title": "Título creativo",
+      "project_rethinktitle_description": "¿Mantienes el nombre que le has dado a tu proyecto o prefieres cambiarlo? <br>Ahora puedes repensar el título inicial y darle un plus de creatividad. Si no se te ocurre nada, sigue nuestros consejos de la guía pedagógica. También puedes subir una imagen que te inspire. ",
       "project_rethinktitle_creativetitle_placeholder": "Escribe un título creativo",
       "project_rethinktitle_addimage": "Acompañalo de una imagen inspiradora"
     },
@@ -62,17 +110,5 @@
     },
     "PROJECTGUIDE":{
       "projectguide_pedagogical_guide": "GUÍA PEDAGÓGICA"
-    },
-    "OBJECTIVES":{
-      "project_objectives_criteriawindow_curriculum": "Currículum",
-      "project_objectives_criteriawindow_title": "Selecciona todos los criterios de evaluación a trabajar:",
-      "project_objectives_criteriawindow_combo_title": "Curso",
-      "project_objectives_criteriawindow_combo_section_1": "Cursos preferentes",
-      "project_objectives_criteriawindow_combo_section_2": "Otros cursos",
-      "project_objectives_criteriawindow_criterion": "Criterio de evaluación",
-      "project_objectives_criteriawindow_basic_skills": "Competencias asociadas",
-      "project_objectives_criteriawindow_dimensions": "Dimensiones asociadas",
-      "project_objectives_criteriawindow_showall": "Ver todos los criterios seleccionados",
-      "project_objectives_criteriawindow_add": "Añadir"
     }
 }

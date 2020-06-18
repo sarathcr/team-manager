@@ -1,0 +1,10 @@
+<div class="input" [ngClass]="{'input_focus':focus ,'input_border' : value}">
+	<input
+		class="form-control input__field"
+		[placeholder]="!focus ? placeholder : ''"
+		(focus)="setFocus()" (blur)="onBlur()"
+		[attr.maxlength]="maxlength"
+		[ngModel]="value"
+		(ngModelChange)="onValueChange($event)"
+	/>
+</div>

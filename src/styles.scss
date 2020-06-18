@@ -77,7 +77,38 @@
   position: relative;
 }
 
-.project-editor__goto-step{}
+.project-editor__subject-wrapper{
+  margin-bottom: 47px;
+}
+
+.project-editor__point {
+  font-weight: bold;
+  border-bottom: 1px solid $blue-whale;
+  cursor: pointer;
+}
+
+.project-editor__title{
+  font-size: $font-size-sub-s;
+  line-height: 28px;
+  letter-spacing: .2px;
+  margin-bottom: 7px;
+
+}
+
+.project-editor__sub-description{
+  margin-bottom: 25px;
+}
+
+.project-form__subtitle{
+  line-height: 28px;
+  letter-spacing: .2px;
+  font-size: $font-size-body;
+}
+
+.project-form__wrapper{
+  margin-bottom: 20px;
+}
+
 .step-one{
   &:first-child{
     .status-indicator__bar_top{
@@ -100,7 +131,7 @@
   }
 }
 
-.textarea_focus, .textarea-bullets_focus{
+.textarea_focus, .textarea-bullets_focus, .input_focus{
   border: 1px solid transparent !important;
   box-shadow: 0 0 0 3px $primary !important;
 }

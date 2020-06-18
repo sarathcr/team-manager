@@ -9,4 +9,3 @@ export class buttonSubmitConfig implements FieldConfig {
     label = 'PROJECT.project_button_markdone'
     successLabel = 'PROJECT.project_button_done'
 }
-

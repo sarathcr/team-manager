@@ -28,6 +28,8 @@ export class EditorService {
   currentStep$: BehaviorSubject<number> = new BehaviorSubject(1)
   projectSubscription: Subscription
   statusSubscription: Subscription
+  loading: boolean
+  loading$: Observable<boolean>
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -57,6 +59,10 @@ export class EditorService {
         }
       })
     }
+    this.loading$ = this.projectsService.loading$
+    this.loading$.subscribe(res => {
+      this.loading = res
+    })
   }
 
   // filter data for each step
@@ -75,6 +81,11 @@ export class EditorService {
                 subjects: data?.subjects?.map(({ id, name }) => ({ id, name }))
               })
             case 'stepTwo': return data?.themes?.map(({ id, name }) => ({ id, name }))
+            case 'stepThree': return data?.subjects?.map(({ id, name }) => ({ id, name }))
+            case 'stepSix': return {
+              creativeImage: data.creativeImage,
+              creativeTitle: data.creativeTitle,
+            }
             case 'stepSeven': return data?.drivingQuestions?.map(({ id, name }) => ({ id, name }))
             case 'stepEight': return { finalProduct: data.finalProduct }
             case 'stepNine': return { synopsis: data.synopsis }
@@ -96,7 +107,7 @@ export class EditorService {
       if (data) {
         this.updateStepStatus(data)
       } else {
-        this.stepStatusService.getWithQuery(this.projectId.toString())
+        if (this.projectId) this.stepStatusService.getWithQuery(this.projectId.toString())
       }
     })
   }
@@ -211,12 +222,12 @@ export class EditorService {
   }
 
   clearData() {
-    this.projectSubscription.unsubscribe()
-    this.statusSubscription.unsubscribe()
+    if (this.projectSubscription) this.projectSubscription.unsubscribe()
+    if (this.statusSubscription) this.statusSubscription.unsubscribe()
     this.project$ = null
     this.stepStatus$ = null
-    this.projectId = null
     this.titleData = null
+    this.projectId = null
     this.currentSectionId = null
     this.nextSectionId = null
     this.isStepDone = false
