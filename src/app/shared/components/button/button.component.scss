@@ -50,6 +50,9 @@
   .btn-text{
     border: none;
     color: $primary-font-color;
+    text-transform: capitalize;
+    font-family: $font-family-tertiary;
+    letter-spacing: 0.2px;
   }
 }
 

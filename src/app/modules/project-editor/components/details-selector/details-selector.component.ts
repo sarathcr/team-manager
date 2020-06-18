@@ -11,6 +11,7 @@ import { Subject } from '../../../../shared/constants/subject.model';
 export class DetailsSelectorComponent implements OnInit {
   showList: boolean = false
   @Input() data: Subject;
+  @Input() isLast: boolean = false
   bsModalRef: BsModalRef;
 
   constructor(private modalService: BsModalService) { }
