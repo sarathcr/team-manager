@@ -14,7 +14,7 @@
   }
   .btn-primary{
     &:disabled{
-      background-color: $creator-border;
+      background-color: $creator-disabled;
       border-color: transparent;
     }
   }
