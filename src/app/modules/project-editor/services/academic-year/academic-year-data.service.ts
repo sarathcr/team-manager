@@ -14,7 +14,7 @@ export class AcademicYearDataService extends DefaultDataService<AcademicYear> {
 
     }
     getAll(): Observable<AcademicYear[]> {
-      return this.http.get<AcademicYear[]>(`${environment.apiUrl}/academicyears`)
+      return this.http.get<AcademicYear[]>(`${environment.apiUrl.curriculumService}/academicyears`)
           .pipe(
               map(res => res)
           );

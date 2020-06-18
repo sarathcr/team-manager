@@ -15,15 +15,15 @@ export class HelpDataService extends DefaultDataService<ContextualHelp> {
     }
 
     getAll(): Observable<ContextualHelp[]> {
-        return this.http.get<ContextualHelp[]>(`${environment.apiUrl}/steps`)
+        return this.http.get<ContextualHelp[]>(`${environment.apiUrl.projectService}/steps`)
             .pipe(
                 map(res => res)
             );
     }
     getById(id: any): Observable<ContextualHelp> {
-      return this.http.get<ContextualHelp>(`${environment.apiUrl}/steps/${id}/helps`)
-          .pipe(
-              map( res => res )
-          );
+        return this.http.get<ContextualHelp>(`${environment.apiUrl.projectService}/steps/${id}/helps`)
+            .pipe(
+                map(res => res)
+            );
     }
 }

@@ -13,7 +13,7 @@ export class RegionDataService extends DefaultDataService<Region> {
     }
 
     getWithQuery(parm:any): Observable<Region[]> {
-        return this.http.get<Region[]>(`${environment.apiUrl}/countries/${parm}/regions`)
+        return this.http.get<Region[]>(`${environment.apiUrl.curriculumService}/countries/${parm}/regions`)
             .pipe(
                 map(res => res)
             );
