@@ -105,6 +105,10 @@
   font-size: $font-size-body;
 }
 
+.project-form__wrapper{
+  margin-bottom: 20px;
+}
+
 .step-one{
   &:first-child{
     .status-indicator__bar_top{
