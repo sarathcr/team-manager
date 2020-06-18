@@ -41,7 +41,7 @@ export class StepThreeComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.isFormUpdated()) {
+    if (this.isFormUpdated() && this.step.state !== "DONE") {
       this.handleSubmit()
     }
   }
