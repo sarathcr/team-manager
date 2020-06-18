@@ -1,6 +1,7 @@
 @import 'helpers/_helpers-master';
 
 .common-modal{
+    $root: &;
     &__header{
         padding: 27px 30px 0px ;
     }
@@ -33,6 +34,7 @@
         width: 100%;
     }
     &__button-wrapper{
+        margin-right: 12px;
         display: inline-flex;
         &:first-child{
             // margin-right: 21px;

@@ -14,6 +14,7 @@ export class DetailsSelectorComponent implements OnInit {
   @Input() data: Subject
   @Input() numbers: any[]
   @Input() i: any
+  @Input() isLast: boolean = false
   @Output() onAdd = new EventEmitter()
   @Output() onDelete = new EventEmitter()
   count: number = 0
