@@ -6,7 +6,7 @@ import { Subject } from 'src/app/shared/constants/subject.model'
 import { Theme } from 'src/app/shared/constants/theme.model'
 import { DrivingQuestion } from 'src/app/shared/constants/driving-questions.model'
 import { Status, StepState } from './step.model'
-import { CompetencyObjectives } from 'src/app/shared/constants/competency-objective.model'
+import { CompetencyObjectives } from 'src/app/shared/constants/project.model'
 
 export interface FormOne {
   data: {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core'
 import { Observable} from 'rxjs'
 import { Step, Status } from '../../constants/step.model'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
-import { Theme } from 'src/app/shared/constants/theme.model'
 import { EditorService } from '../../services/editor/editor.service'
 import { TranslateService } from '@ngx-translate/core'
 import { Subject } from 'src/app/shared/constants/subject.model'
@@ -29,6 +28,7 @@ export class StepThreeComponent implements OnInit {
   initialFormData: FormThreeInitData = new formThreeInitData
   project: {subjects:Subject[],competencyObjectives:CompetencyObjectives[]}
   initialFormStatus: Status = "PENDING"
+  numbers: any[] = []
 
   constructor(private translateService: TranslateService, private editor: EditorService, ) { }
 
@@ -41,6 +41,11 @@ export class StepThreeComponent implements OnInit {
     if (this.isFormUpdated()) {
       this.handleSubmit()
     }
+  }
+
+  // WIP
+  addItem(i) {
+    this.numbers.push(i)
   }
 
   formInIt() {
