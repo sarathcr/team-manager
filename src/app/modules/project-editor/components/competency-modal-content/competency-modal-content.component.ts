@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, HostListener } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FieldConfig } from '../../../../shared/constants/field.model'
 import { TranslateService } from '@ngx-translate/core'
@@ -8,12 +8,18 @@ import { TranslateService } from '@ngx-translate/core'
   selector: 'app-competency-modal-content',
   templateUrl: './competency-modal-content.component.html',
   styleUrls: ['./competency-modal-content.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.None
 })
 export class CompetencyModalContentComponent implements OnInit {
+  @HostListener('window:resize', ['$event'])
+  onResize(event): void {
+    this.adjustHeightContent()
+  }
   gradeDropdown: FieldConfig
   rowHeadData: Array<object>
   rowData: Array<object>
+  leftHeight: string = ''
+  rightHeight: string = ''
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -21,7 +27,8 @@ export class CompetencyModalContentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getTranslation();
+    this.adjustHeightContent()
+    this.getTranslation()
     this.createFormConfig()
     this.rowInit()
   }
@@ -93,4 +100,13 @@ export class CompetencyModalContentComponent implements OnInit {
     event.currentTarget.classList.add('active');
   }
 
+  getStatus($event){
+    console.log($event);
+  }
+
+  adjustHeightContent(){
+    let innerHeight:number = window.innerHeight;
+    this.leftHeight = (innerHeight * 56.17)/100 + 'px';
+    this.rightHeight = (innerHeight * 57.16)/100 + 'px';
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-table-row',
@@ -6,8 +6,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./table-row.component.scss']
 })
 export class TableRowComponent implements OnInit {
+  @Output() count = new EventEmitter<object>();
   @Input() head: boolean = false
   @Input() checkbox: boolean = false
+  @Input() parentID: string = ''
   @Input() cellData: Array<object> = []
   isChecked: boolean
   colCount: number
@@ -19,11 +21,10 @@ export class TableRowComponent implements OnInit {
   }
 
   initRow(){
-    console.log(this.head,this.checkbox,this.cellData);
     this.colCount = Math.floor(12 / this.cellData.length);
   }
 
   onChange(checked:boolean){
-    console.log(checked);
+    this.count.emit({ parentID : this.parentID, checked});
   }
 }
