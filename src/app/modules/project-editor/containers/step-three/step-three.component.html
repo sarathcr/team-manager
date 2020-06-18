@@ -12,10 +12,11 @@
                     <div class="project-editor__subject-wrapper">
                         <app-details-selector 
                         *ngFor="let subject of project.subjects; let i = index; let last = last;" 
-                        [data]="subject"  [i]="i" 
-                        [numbers]="numbers" [isLast]="last"
+                        [data]="subject"  [i]="subject.id" 
+                        [criterias]="criterias" [isLast]="last"
                         (onAdd)="addItem($event)" 
                         (onDelete)="removeItem($event)"
+                        [criteria$]="evaluationCriteria$"
                         ></app-details-selector>
                         <div class="project-editor__goto-step">
                             {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}

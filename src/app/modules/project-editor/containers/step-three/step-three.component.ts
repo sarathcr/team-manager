@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { Subject } from 'src/app/shared/constants/subject.model'
 import { FormThreeInitData, FormThree } from '../../constants/step-forms.model'
 import { formThreeInitData } from '../../constants/step-forms.data'
-import { CompetencyObjectives } from 'src/app/shared/constants/project.model'
+import { CompetencyObjectives, EvaluationCriteria } from 'src/app/shared/constants/project.model'
 import { map } from 'rxjs/operators'
 
 @Component({
@@ -23,19 +23,20 @@ export class StepThreeComponent implements OnInit {
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
   competencyObjectives$: Observable<CompetencyObjectives[]>
+  evaluationCriteria$: Observable<EvaluationCriteria[]>
   loading: boolean = true
   InputFormData: FormThreeInitData = new formThreeInitData
   initialFormData: FormThreeInitData = new formThreeInitData
   project: { subjects: Subject[], competencyObjectives: CompetencyObjectives[] }
   initialFormStatus: Status = "PENDING"
-  numbers: any[] = []
+  initialCriterias: number[] = []
+  criterias: number[] = []
   tempData: any[]
 
   constructor(private translateService: TranslateService, private editor: EditorService,) { }
 
   ngOnInit(): void {
     this.createFormConfig()
-    this.createTempData()
     this.formInIt()
   }
 
@@ -45,27 +46,16 @@ export class StepThreeComponent implements OnInit {
     }
   }
 
-  // WIP
-  addItem(i) {
-    this.numbers.push(i)
-    this.checkStatus()
-  }
-
-  removeItem(index) {
-    this.numbers.splice(index, 1)
-    this.checkStatus()
-  }
-
   formInIt() {
     this.project$ = this.editor.getStepData('stepThree')
     this.step = this.editor.steps.three
     this.step$ = this.editor.getStepStatus(3)
-    this.editor.loading$ .subscribe(value => !value ? this.loading = value : null)
+    this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
     let tempinitialFormData = new formThreeInitData
-    this.project$.subscribe(data => {
-      this.project = data
-    })
     if (this.project$) {
+      this.project$.subscribe(data => {
+        this.project = data
+      })
       this.competencyObjectives$ = this.project$
         .pipe(
           map(data => data?.competencyObjectives)
@@ -78,6 +68,19 @@ export class StepThreeComponent implements OnInit {
             this.InputFormData.competencyObjectives = [...competencyObjectives]
           }
           this.initialFormData.competencyObjectives = [...tempinitialFormData.competencyObjectives]
+        })
+
+      this.evaluationCriteria$ = this.project$   //WIP 
+        .pipe(
+          map(data => data?.evaluationCriteria)
+        )
+      this.evaluationCriteria$
+        .subscribe(criterias => {
+          if (criterias)
+            criterias.forEach(criteria => {
+              this.criterias = []
+              this.initialCriterias.push(criteria.subjectId)
+            })
         })
     }
     if (this.step$) {
@@ -92,7 +95,18 @@ export class StepThreeComponent implements OnInit {
         }
       )
     }
-    // this.project$.subscribe(subjects => this.subjects = subjects)
+  }
+
+  // WIP
+  addItem(event) {
+    this.criterias.push(event.id)
+    if (!event.init) this.checkStatus()
+  }
+
+  //WIP
+  removeItem(index) {
+    this.criterias.splice(index, 1)
+    this.checkStatus()
   }
 
   textAreaUpdate(data) { // calls on every update
@@ -102,7 +116,7 @@ export class StepThreeComponent implements OnInit {
 
   // checks if the form is empty
   isFormEmpty() {
-    if (!this.InputFormData.competencyObjectives.length && !this.numbers.length) {
+    if (!this.InputFormData.competencyObjectives.length && !this.criterias.length) {
       return true
     }
     return false
@@ -110,12 +124,11 @@ export class StepThreeComponent implements OnInit {
 
   // checks the form is completely filled or not
   hasAnyEmptyFields() {
-    if (!this.InputFormData.competencyObjectives.length || !this.numbers.length) return true
+    if (!this.InputFormData.competencyObjectives.length || !this.criterias.length) return true
     let emptyForm = false
-    let subjectsCount = this.project.subjects.length
-    for (let i = 0; i < subjectsCount; i++) {
-      if (!this.numbers.includes(i)) emptyForm = true
-    }
+    this.project.subjects.forEach(subject => {
+      if (!this.criterias.includes(subject.id)) emptyForm = true
+    })
     if (emptyForm) return true
     return false
   }
@@ -147,8 +160,9 @@ export class StepThreeComponent implements OnInit {
 
   // Function to check whether the form is updated
   isFormUpdated() {
-    if (!this.isEqual(this.initialFormData.competencyObjectives,
-      this.InputFormData.competencyObjectives) || this.initialFormStatus !== this.step.state) {
+    if (!this.isEqual(this.initialFormData.competencyObjectives, this.InputFormData.competencyObjectives)
+      || !this.isEqual(this.initialCriterias, this.criterias)
+      || this.initialFormStatus !== this.step.state) {
       return true
     }
     return false
@@ -178,9 +192,19 @@ export class StepThreeComponent implements OnInit {
       this.initialFormData.competencyObjectives = this.InputFormData.competencyObjectives
     }
     this.InputFormData.competencyObjectives = tempData
+    let tempCrriteria = []                       // WIP change the criteria creation
+    this.criterias.forEach(subjectId => {
+      tempCrriteria.push({
+        gradeId: 8,
+        id: 1,
+        subjectId: subjectId,
+        name: "evaluation criteria1"
+      })
+    })
     let formData: FormThree = {
       data: {
-        competencyObjectives: tempData.length ? this.InputFormData.competencyObjectives : []
+        competencyObjectives: tempData.length ? this.InputFormData.competencyObjectives : [],
+        evaluationCriteria: [...tempCrriteria]
       },
       stepStatus: {
         steps: [
@@ -226,17 +250,6 @@ export class StepThreeComponent implements OnInit {
     })
 
   }
-
-  createTempData() {
-    this.tempData = [
-      {
-        id: 1,
-        name: "evaluation criteria1",
-      }
-    ]
-  }
-
-
 
 }
 

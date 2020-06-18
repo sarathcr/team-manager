@@ -25,11 +25,19 @@ export class Project {
   createdAt?: string;
   updatedAt?: string;
   competencyObjectives?: CompetencyObjectives[]
+  evaluationCriteria?: EvaluationCriteria[]
 }
 
 export class CompetencyObjectives {
   id?: number
   name?: string
+}
+
+export class EvaluationCriteria {
+  gradeId: number
+  id: number
+  name: string
+  subjectId: number
 }
 
 

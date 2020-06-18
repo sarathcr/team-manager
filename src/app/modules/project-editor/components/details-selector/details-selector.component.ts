@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angu
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalComponent } from '../modal/modal.component';
 import { Subject } from '../../../../shared/constants/subject.model';
+import { Observable } from 'rxjs';
+import { EvaluationCriteria } from 'src/app/shared/constants/project.model';
 
 @Component({
   selector: 'app-details-selector',
@@ -12,9 +14,10 @@ export class DetailsSelectorComponent implements OnInit {
 
   showList: boolean = false
   @Input() data: Subject
-  @Input() numbers: any[]
+  @Input() criterias: any[]
   @Input() i: any
   @Input() isLast: boolean = false
+  @Input() criteria$: Observable<EvaluationCriteria[]>
   @Output() onAdd = new EventEmitter()
   @Output() onDelete = new EventEmitter()
   count: number = 0
@@ -23,6 +26,18 @@ export class DetailsSelectorComponent implements OnInit {
   constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
+    this.formInit()
+  }
+
+  formInit() {
+    this.criteria$.subscribe(criterias => {
+      if (criterias) {
+        criterias.forEach(criteria => {
+          if (this.data.id === criteria.subjectId)
+            this.addItem(criteria.subjectId, true)
+        })
+      }
+    })
   }
 
   getModal(i) {
@@ -31,14 +46,14 @@ export class DetailsSelectorComponent implements OnInit {
     this.bsModalRef.content.onClose.subscribe(result => {
       if (result === 'delete') {
         this.onDelete.emit(i)
-        this.count = this.numbers.filter(d => d == this.i).length
+        this.count = this.criterias.filter(d => d == this.i).length
       }
     })
   }
 
-  addItem() {
-    this.onAdd.emit(this.i)
-    this.count = this.numbers.filter(d => d == this.i).length
+  addItem(id: number, init = false) {
+    this.onAdd.emit({ id, init })
+    this.count = this.criterias.filter(d => d == this.i).length
   }
 
 }
