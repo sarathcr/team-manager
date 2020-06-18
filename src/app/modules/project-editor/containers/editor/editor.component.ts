@@ -29,7 +29,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.editor.clearData()
   }
 
-  getContextualStatus($event): void {
+  getContextualStatus($event: boolean): void {
     this.contextualStatus = $event
   }
 }

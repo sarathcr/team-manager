@@ -12,11 +12,11 @@ export class AppComponent {
   isLoggedIn$: Observable<boolean>
   isLoggedOut$: Observable<boolean>
 
-  constructor(public TranslateService: TranslateService) {
+  constructor(public translateService: TranslateService) {
     // ngx-translate
-    TranslateService.addLangs(['en', 'es'])
-    TranslateService.setDefaultLang('en')
-    const browserLang = TranslateService.getBrowserLang();
-    TranslateService.use(browserLang.match(/en|es/) ? browserLang : 'en')
+    translateService.addLangs(['en', 'es'])
+    translateService.setDefaultLang('en')
+    const browserLang = translateService.getBrowserLang();
+    translateService.use(browserLang.match(/en|es/) ? browserLang : 'en')
   }
 }

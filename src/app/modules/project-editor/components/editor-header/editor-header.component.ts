@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
+
 import { ProjectTitle } from '../../constants/title-data.model'
 
 @Component({
