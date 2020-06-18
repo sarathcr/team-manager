@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-// import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component';
@@ -12,7 +11,6 @@ import { ButtonComponent } from './components/button/button.component';
 import { FormInputComponent } from './components/form-input/form-input.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { LoaderComponent } from './components/loader/loader.component';
-import { NgMultiSelectDropDownModule } from './components/ng-multiselect-dropdown-custom/public_api';
 
 @NgModule({
     declarations: [
@@ -29,8 +27,7 @@ import { NgMultiSelectDropDownModule } from './components/ng-multiselect-dropdow
         TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule,
-        NgMultiSelectDropDownModule,
-        AngularMultiSelectModule
+        NgMultiSelectDropDownModule
     ],
     exports: [
         SidebarComponent,
