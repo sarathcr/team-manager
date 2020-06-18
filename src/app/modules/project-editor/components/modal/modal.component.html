@@ -12,6 +12,6 @@
         <app-button [variant]="'outlined'" [theme]="'secondary'">Delete</app-button>
     </div>
     <div class="common-modal__button-wrapper">
-        <app-button [variant]="'text'" [theme]="'secondary'">Cancel</app-button>
+        <app-button [variant]="'text'" [theme]="'secondary'" (click)="bsModalRef.hide()">Cancel</app-button>
     </div>
 </div>
