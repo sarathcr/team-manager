@@ -3,10 +3,9 @@
 .textarea-bullets {
   width: 100%;
   min-height: 300px;
-  border: none;
   border: 1px solid $creator-border-active;
   border-radius: 3px;
-  padding: 14px 22px;
+  padding: 14px 20px;
   margin-bottom: 56px;
   box-shadow: 0 0 0 0 transparent;
   &__list {
@@ -38,7 +37,7 @@
     resize: none;
 
     &:placeholder {
-      color: $overtitle-grey;
+      color: rgba($primary-font-color,0.6);
     }
   }
 
