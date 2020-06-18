@@ -101,6 +101,11 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
           let string = this.configOptions[id].name
           let stringLength = string?.length
           this.configOptions[id].name = (string.slice(0, startPos) + string.slice(endPos, stringLength)).trim();
+          if (startPos != endPos) {
+            setTimeout(() => {
+              textComponent.setSelectionRange(startPos, startPos)
+            }, 0);
+          }
           if (!this.configOptions[id].name) {
             if (this.configOptions.length > 1) {
               this.configOptions.splice(id, 1)
@@ -109,8 +114,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
               } else {
                 this.textArea.toArray()[id + 1].nativeElement.focus();
               }
-            }
-            else {
+            } else {
               if (!this.configOptions[id].name) {
                 this.configOptions[0].name = ''
               }
