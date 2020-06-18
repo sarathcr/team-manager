@@ -1,0 +1,16 @@
+<div class="common-modal__header">
+    <h4 class="common-modal__title title_xs">{{'OBJECTIVES.project_objectives_delete_confirmation_title' | translate}}</h4>
+</div>
+<div class="common-modal__body">
+    <div class="common-modal__content">
+        {{'OBJECTIVES.project_objectives_delete_confirmation_message_nonrelated' | translate}}
+    </div>
+</div>
+<div class="common-modal__footer">
+    <div class="common-modal__button-wrapper mr-4">
+        <app-button [variant]="'outlined'" [theme]="'secondary'">{{'PROJECT.project_button_delete' | translate}}</app-button>
+    </div>
+    <div class="common-modal__button-wrapper">
+        <app-button [variant]="'text'" [theme]="'secondary'" (click)="bsModalRef.hide()">{{'PROJECT.project_button_cancel' | translate}}</app-button>
+    </div>
+</div>

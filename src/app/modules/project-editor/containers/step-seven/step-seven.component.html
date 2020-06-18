@@ -7,9 +7,10 @@
       </h2>
       <p class="project-form__description"
         [innerHTML]="'DRIVING_QUESTIONS.project_drivingquestions_description' | translate"></p>
-      <app-textarea-bullets [config]='textAreaConfig' (onChange)="textAreaUpdate($event)" [options$]="drivingQuestions$">
+      <app-textarea-bullets [config]='textAreaConfig' (onChange)="textAreaUpdate($event)"
+        [options$]="drivingQuestions$">
       </app-textarea-bullets>
     </div>
-    <app-form-button [config]='buttonConfig' (onClick)='handleSubmit("DONE")'>
-    </app-form-button>
+    <app-button [config]='buttonConfig' (click)='handleSubmit("DONE")'>
+    </app-button>
   </div>

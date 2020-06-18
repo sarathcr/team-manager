@@ -1,0 +1,58 @@
+@import 'helpers/_helpers-master';
+.form-button{
+  .btn{
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    border-radius: 4px;
+    min-width: auto;
+    padding-left: 17px;
+    padding-right: 17px;
+    font-size: $font-size-button;
+    line-height: 28px;
+    letter-spacing: 1px;
+  }
+  .btn-primary{
+    &:disabled{
+      background-color: $creator-border;
+      border-color: transparent;
+    }
+  }
+  &__icon{
+    font-size: 24px;
+    line-height: 1;
+    margin-left: -7px;
+    margin-right: 7px;
+  }
+  .btn-success{
+    padding-left: 20px;
+    padding-right: 20px;
+    min-width: 120px;
+    .form-button__icon{
+      margin-left: -8px;
+    }
+    &:disabled{
+      background-color: $success;
+      border-color: $success;
+      cursor: default;
+    }
+  }
+  .btn-no-icon{
+    display: inline-block;
+  }
+  .btn-secondary{
+    color: $button-outline;
+    background: $background-primary;
+  }
+  .btn-outline{
+    border: 1px solid $button-outline;
+  }
+  .btn-text{
+    border: none;
+    color: $primary-font-color;
+  }
+}
+
+:host{
+  align-self: flex-start;
+}

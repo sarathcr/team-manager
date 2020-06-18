@@ -1,0 +1,58 @@
+@import 'helpers/_helpers-master';
+.details-selector{
+    margin-bottom: 48px;
+    &__header{
+        width: 100%;
+        padding: 13px 18px;
+        border-radius: 3px 3px 0 0;
+        border: 1px solid $creator-border;
+        background: $subject-header-bg;
+    }
+    &__title{
+        font-size: $font-size-body-s;
+        line-height: 24px;
+    }
+    &__list{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    &__item{
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid $subject-border;
+    }
+    &__text,&__add{
+        line-height: 24px;
+        color: $overtitle-grey;
+        font-weight: bold;
+        &_evaluation{
+            color: $blue-whale;
+            font-weight: bold;
+            line-height: 24px;
+        }
+        &_normal{
+            font-weight: normal;
+        }
+    }
+    &__add,&__close{
+        color: $electric-indigo;
+        cursor: pointer;
+    }
+    &__add{
+        position: relative;
+        &_icon{
+            font-size: 24px;
+            position: absolute;
+            top: 50%;
+            left: -25px;
+            transform: translateY(-50%);
+        }
+    }
+    &__close{
+        color: $overtitle-grey;
+        margin-left: 37px;
+    }
+}
