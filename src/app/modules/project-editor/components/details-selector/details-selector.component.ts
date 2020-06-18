@@ -17,7 +17,6 @@ export class DetailsSelectorComponent implements OnInit {
   constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
-    console.log(this.isLast)
   }
 
   getModal() {
