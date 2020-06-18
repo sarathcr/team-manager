@@ -15,21 +15,21 @@ export class ProjectsDataService extends DefaultDataService<Project> {
     }
 
     getAll(): Observable<Project[]> {
-        return this.http.get<Project[]>(`${environment.apiUrl}/projects`)
+        return this.http.get<Project[]>(`${environment.apiUrl.projectService}/projects`)
             .pipe(
                 map(res => res)
             );
     }
 
     getById(id: any): Observable<Project> {
-        return this.http.get<Project>(`${environment.apiUrl}/projects/${id}`)
+        return this.http.get<Project>(`${environment.apiUrl.projectService}/projects/${id}`)
             .pipe(
                 map(res => res)
             );
     }
 
     add(project: object): Observable<any> {
-        return this.http.post<any>(`${environment.apiUrl}/projects`, project)
+        return this.http.post<any>(`${environment.apiUrl.projectService}/projects`, project)
             .pipe(
                 map(res => res)
             );
@@ -37,7 +37,7 @@ export class ProjectsDataService extends DefaultDataService<Project> {
 
     update(data: any): Observable<any> {
         let dataChanges = this.nullValidator(data.changes)
-        return this.http.put<any>(`${environment.apiUrl}/projects`, dataChanges)
+        return this.http.put<any>(`${environment.apiUrl.projectService}/projects`, dataChanges)
             .pipe(
                 map(res => res)
             );

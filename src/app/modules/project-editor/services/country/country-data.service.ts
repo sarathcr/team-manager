@@ -15,7 +15,7 @@ export class CountryDataService extends DefaultDataService<Country> {
     }
 
     getAll(): Observable<Country[]> {
-      return this.http.get<Country[]>(`${environment.apiUrl}/countries`)
+      return this.http.get<Country[]>(`${environment.apiUrl.curriculumService}/countries`)
           .pipe(
               map(res => res)
           );

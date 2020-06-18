@@ -4,8 +4,11 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api.dev.abp.thinkoeducation.com/project-service',
-  uploadUrl: 'https://api.dev.abp.thinkoeducation.com/uploads/'
+  apiUrl: {
+    projectService: 'https://api.dev.abp.thinkoeducation.com/project-service',
+    curriculumService: 'https://api.dev.abp.thinkoeducation.com/curriculum-service',
+    imgUpload: 'https://api.dev.abp.thinkoeducation.com/uploads/'
+  }
 };
 
 /*
