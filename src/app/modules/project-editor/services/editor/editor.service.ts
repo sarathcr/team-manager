@@ -81,7 +81,11 @@ export class EditorService {
                 subjects: data?.subjects?.map(({ id, name }) => ({ id, name }))
               })
             case 'stepTwo': return data?.themes?.map(({ id, name }) => ({ id, name }))
-            case 'stepThree': return data?.subjects?.map(({ id, name }) => ({ id, name }))
+            case 'stepThree': return ({
+              subjects: data?.subjects?.map(({ id, name }) => ({ id, name })),
+              competencyObjectives: data?.competencyObjectives?.map(({ id, name }) => ({ id, name })),
+              evaluationCriteria: data?.evaluationCriteria?.map(({ id, name, subjectId, gradeId }) => ({ id, name, subjectId, gradeId }))
+            })
             case 'stepSix': return {
               creativeImage: data.creativeImage,
               creativeTitle: data.creativeTitle,

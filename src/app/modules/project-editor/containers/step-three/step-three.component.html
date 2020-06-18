@@ -7,10 +7,17 @@
             </h1>
             <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
             <ng-template #loaded>
-                <app-step-unlock *ngIf="!subjects?.length; else hasSubjects"></app-step-unlock>
+                <app-step-unlock *ngIf="!project?.subjects?.length; else hasSubjects"></app-step-unlock>
                 <ng-template #hasSubjects>
                     <div class="project-editor__subject-wrapper">
-                        <app-details-selector [data]="subject" *ngFor="let subject of subjects; let last = last;" [isLast]="last"></app-details-selector>
+                        <app-details-selector 
+                        *ngFor="let subject of project.subjects; let i = index; let last = last;" 
+                        [data]="subject"  [i]="subject.id" 
+                        [criterias]="criterias" [isLast]="last"
+                        (onAdd)="addItem($event)" 
+                        (onDelete)="removeItem($event)"
+                        [criteria$]="evaluationCriteria$"
+                        ></app-details-selector>
                         <div class="project-editor__goto-step">
                             {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}
                             <span class="project-editor__point" [routerLink]="'stepOne'">
@@ -34,9 +41,9 @@
                     </div>
                 </ng-template>
             </ng-template>
-            <app-loader *ngIf="loading$ | async; else loaded"></app-loader>
+            <app-loader *ngIf="loading; else loaded"></app-loader>
         </div>
-        <app-button *ngIf="!(loading$ | async)" [config]='buttonConfig' (click)='handleSubmit("DONE")'>
+        <app-button *ngIf="!loading" [config]='buttonConfig' (click)='handleSubmit("DONE")'>
         </app-button>
     </div>
 </div>
