@@ -11,6 +11,7 @@
     &__title{
         font-size: $font-size-body-s;
         line-height: 24px;
+        letter-spacing: 0;
     }
     &__list{
         list-style: none;
@@ -27,7 +28,6 @@
     &__text,&__add{
         line-height: 24px;
         color: $overtitle-grey;
-        font-weight: bold;
         &_evaluation{
             color: $blue-whale;
             font-weight: bold;
@@ -43,6 +43,7 @@
     }
     &__add{
         position: relative;
+        font-weight: bold;
         &_icon{
             font-size: 24px;
             position: absolute;
