@@ -18,8 +18,8 @@
     margin-bottom: 8px;
 
     &:before {
-      top: 50%;
-      transform: translateY(-50%);
+      top: 0;
+      line-height: 24px;
     }
   }
 
