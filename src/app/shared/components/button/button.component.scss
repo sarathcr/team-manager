@@ -12,6 +12,12 @@
     line-height: 28px;
     letter-spacing: 1px;
   }
+  .btn-primary{
+    &:disabled{
+      background-color: $creator-border;
+      border-color: transparent;
+    }
+  }
   &__icon{
     font-size: 24px;
     line-height: 1;

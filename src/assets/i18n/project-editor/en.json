@@ -88,7 +88,7 @@
     },
     "RETHINK_TITLE":{
       "project_rethinktitle_title": "Título creativo",
-      "project_rethinktitle_description": "¿Mantienes el nombre que le has dado a tu proyecto o prefieres cambiarlo? Ahora puedes repensar el título inicial y darle un plus de creatividad. Si no se te ocurre nada, sigue nuestros consejos de la guía pedagógica. También puedes subir una imagen que te inspire. ",
+      "project_rethinktitle_description": "¿Mantienes el nombre que le has dado a tu proyecto o prefieres cambiarlo? <br>Ahora puedes repensar el título inicial y darle un plus de creatividad. Si no se te ocurre nada, sigue nuestros consejos de la guía pedagógica. También puedes subir una imagen que te inspire. ",
       "project_rethinktitle_creativetitle_placeholder": "Escribe un título creativo",
       "project_rethinktitle_addimage": "Acompañalo de una imagen inspiradora"
     },
