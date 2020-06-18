@@ -1,11 +1,3 @@
-import { Country } from './country.model';
-import { Region } from './region.model';
-import { AcademicYear } from './academic-year.model';
-import { Grade } from './grade.model';
-import { Subject } from './subject.model';
-import { DrivingQuestion } from './driving-questions.model';
-import { Theme } from './theme.model';
-
 export class Project {
   id: number | null;
   title: string;
@@ -27,11 +19,52 @@ export class Project {
   competencyObjectives?: CompetencyObjectives[]
 }
 
-export class CompetencyObjectives {
+export class Country {
+  id: number;
+  name: string;
+}
+
+export class Region {
+  id: number;
+  name: string;
+  country?: Country;
+}
+
+export class AcademicYear {
+  id: number;
+  name?: string;
+  academicYear?: string;
+}
+
+export class Grade {
+  id: number;
+  name: string;
+  academicYear?: AcademicYear;
+  region?: Region;
+  subjectList?: Subject[];
+}
+
+export class Subject {
+  id: number;
+  name: string;
+  academicYear?: AcademicYear;
+  region?: Region;
+}
+
+export interface DrivingQuestion {
   id?: number
   name?: string
 }
 
+export class Theme {
+  id?: number
+  name?: string
+}
+
+export class CompetencyObjectives {
+  id?: number
+  name?: string
+}
 
 export function compareProjects(p1: Project, p2: Project) {
   const firstTimestamp = new Date(p1?.createdAt).getTime()

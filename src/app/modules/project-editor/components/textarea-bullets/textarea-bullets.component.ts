@@ -19,6 +19,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   initResize = false;
   initialScrollHeight: number;
   timeOut: any
+  arrayHeight: string = ''
   sampleOption: Option = { id: null, name: null };
   configOptions: Option[] = [];
   limit = 0

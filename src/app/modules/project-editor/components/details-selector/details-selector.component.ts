@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalComponent } from '../modal/modal.component';
-import { Subject } from '../../../../shared/constants/subject.model';
+import { Subject } from 'src/app/modules/project-editor/constants/project.model';
 
 @Component({
   selector: 'app-details-selector',

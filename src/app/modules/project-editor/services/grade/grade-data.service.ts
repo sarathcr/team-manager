@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Grade } from 'src/app/shared/constants/grade.model';
+import { Grade } from 'src/app/modules/project-editor/constants/project.model';
 
 @Injectable()
 export class GradeDataService extends DefaultDataService<Grade> {
