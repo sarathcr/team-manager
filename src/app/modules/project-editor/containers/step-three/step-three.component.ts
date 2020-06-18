@@ -59,13 +59,13 @@ export class StepThreeComponent implements OnInit {
     this.translateService.stream([
       'PROJECT.project_button_markdone',
       'PROJECT.project_button_done',
-      'THEMATIC.project_thematic_title',
-      'THEMATIC.project_thematic_description',
-      'THEMATIC.project_thematic_placeholder'
+      'OBJECTIVES.project_objectives_title',
+      'OBJECTIVES.project_objectives_description',
+      'OBJECTIVES.project_objectives_objectives_placeholder'
     ]).subscribe(translations => {
       this.buttonConfig.label = translations['PROJECT.project_button_markdone']
       this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
-      this.textAreaConfig.placeholder = translations['THEMATIC.project_thematic_placeholder']
+      this.textAreaConfig.placeholder = translations['OBJECTIVES.project_objectives_objectives_placeholder']
     })
 
   }
