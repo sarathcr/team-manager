@@ -1,11 +1,13 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
-import { AppComponent } from './app.component'
-import { TranslateModule } from '@ngx-translate/core'
 import { By } from '@angular/platform-browser'
 import { RouterOutlet } from '@angular/router'
+import { DebugElement } from '@angular/core'
 
-describe('AppComponent', () => {
+import { AppComponent } from './app.component'
+import { TranslateModule } from '@ngx-translate/core'
+
+describe('AppComponent', (): void => {
   let app: AppComponent
   let fixture: ComponentFixture<AppComponent>
 
@@ -24,13 +26,13 @@ describe('AppComponent', () => {
     app = fixture.componentInstance
   })
 
-  it('should create the app', () => {
-    expect(app).toBeTruthy();
+  it('should create the app', (): void => {
+    expect(app).toBeTruthy()
   })
 
-  it('should have a router outlet', () => {
-    const debugElement = fixture.debugElement.query(By.directive(RouterOutlet))
+  it('should have a router outlet', (): void => {
+    const debugElement: DebugElement = fixture.debugElement.query(By.directive(RouterOutlet))
 
-    expect(debugElement).not.toBeNull()
+    expect(debugElement).toBeTruthy()
   })
 })
