@@ -160,12 +160,21 @@ export class StepThreeComponent implements OnInit {
 
   // Function to check whether the form is updated
   isFormUpdated() {
+    console.log(!this.isEqual(this.initialFormData.competencyObjectives, this.InputFormData.competencyObjectives))
+    console.log(!this.isArrayEqual(this.initialCriterias, this.criterias))
+    console.log(this.initialFormStatus !== this.step.state)
+    console.log(this.initialCriterias)
+    console.log(this.criterias)
     if (!this.isEqual(this.initialFormData.competencyObjectives, this.InputFormData.competencyObjectives)
-      || !this.isEqual(this.initialCriterias, this.criterias)
+      || !this.isArrayEqual(this.initialCriterias, this.criterias)
       || this.initialFormStatus !== this.step.state) {
       return true
     }
     return false
+  }
+
+  isArrayEqual(d1: any[], d2: any[]) {
+    return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
   isEqual(d1: any[], d2: any[]) {
