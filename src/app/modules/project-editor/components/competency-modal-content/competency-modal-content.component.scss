@@ -1,4 +1,5 @@
 @import 'helpers/_helpers-master';
+@import 'helpers/bt-mixins';
 
 .competency-modal{
     max-width: 87.5%; // 1260px;
@@ -56,32 +57,37 @@
             letter-spacing: 0.2px;
             font-weight: 700;
             text-align: left;
+            margin-bottom: 24px;
         }
 
         &-block{
-            display: block;
+            display: flex;
+            flex-direction: row;
         }
 
         &-block-grade{
             width: 30%;
-            display: inline-block;
+            display: inline-flex;
+            flex-direction: column;
 
             .dropdown{
                 margin-bottom: 8px;
+                padding-right: 20px;
             }
         }
 
         &-scroll{
-            max-height: 60vh;
+            max-height: 56vh;
             height: 100%;
             padding-right: 20px;
         }
 
         &-criteria{
             width: 70%;
-            display: block;
-            float: right;
-            height: 511px;
+            display: inline-flex;
+            flex-direction: column;
+            max-height: 70vh;
+            height: 100%;
             padding-left: 6px;
         }
 
@@ -126,10 +132,22 @@
         }
     }
 
-    // @include media-breakpoint-up(xxl) {
-    //     max-width: 1260px;
-    //     max-height: 750px;
-    // }
+    @include media-breakpoint-up(xxl) {
+        max-width: 1260px;
+        max-height: 750px;
+
+        &__body{
+            &-block-grade{
+                max-width: 343px;
+                max-height: 511px;
+            }
+
+            &-criteria{
+                max-width: 797px;
+                max-height: 589px;
+            }
+        }
+    }
 }
 
 .custom-tab{
@@ -220,9 +238,35 @@
             height: 100%;
             border: 1px solid $custom-tab-border-color;
             border-radius: 3px 3px 0 0;
+            position: relative;
+            overflow: hidden;
 
             &-scroll{
-                max-height: 450px;
+                // max-height: 450px;
+                max-height: 49vh;
+                height: 100%;
+            }
+
+            &::after{
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 50px;
+                width: 100%;
+                background: linear-gradient(180deg, rgba($white,0) 1.3%, $white 100%);
+            }
+        }
+    }
+
+    @include media-breakpoint-up(xxl) {
+        &__content{
+            &-body{
+                height: 511px;
+                &-scroll{
+                    max-height: 452px;
+                }
             }
         }
     }
