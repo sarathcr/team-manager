@@ -7,7 +7,7 @@
             </h1>
             <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
             <ng-template #loaded>
-                <app-step-unlock *ngIf="!project.subjects.length; else hasSubjects"></app-step-unlock>
+                <app-step-unlock *ngIf="!project?.subjects?.length; else hasSubjects"></app-step-unlock>
                 <ng-template #hasSubjects>
                     <div class="project-editor__subject-wrapper">
                         <app-details-selector 
@@ -40,9 +40,9 @@
                     </div>
                 </ng-template>
             </ng-template>
-            <app-loader *ngIf="loading$ | async; else loaded"></app-loader>
+            <app-loader *ngIf="loading; else loaded"></app-loader>
         </div>
-        <app-button *ngIf="!(loading$ | async)" [config]='buttonConfig' (click)='handleSubmit("DONE")'>
+        <app-button *ngIf="!loading" [config]='buttonConfig' (click)='handleSubmit("DONE")'>
         </app-button>
     </div>
 </div>

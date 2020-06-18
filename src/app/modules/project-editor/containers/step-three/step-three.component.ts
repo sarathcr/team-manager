@@ -23,7 +23,7 @@ export class StepThreeComponent implements OnInit {
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
   competencyObjectives$: Observable<CompetencyObjectives[]>
-  loading$: Observable<boolean>
+  loading: boolean = true
   InputFormData: FormThreeInitData = new formThreeInitData
   initialFormData: FormThreeInitData = new formThreeInitData
   project: { subjects: Subject[], competencyObjectives: CompetencyObjectives[] }
@@ -60,7 +60,7 @@ export class StepThreeComponent implements OnInit {
     this.project$ = this.editor.getStepData('stepThree')
     this.step = this.editor.steps.three
     this.step$ = this.editor.getStepStatus(3)
-    this.loading$ = this.editor.loading$
+    this.editor.loading$ .subscribe(value => !value ? this.loading = value : null)
     let tempinitialFormData = new formThreeInitData
     this.project$.subscribe(data => {
       this.project = data
