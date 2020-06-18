@@ -170,7 +170,15 @@
       border: none;
       margin-top: 1px;
       padding-bottom: 5px;
-
+      .single-select-mode{
+        .pure-checkbox{
+          div{
+            &::before,&::after{
+              content: none;
+            }
+          }
+        }
+      }
       .multiselect-item-checkbox {
         padding: 10px 15px;
 
