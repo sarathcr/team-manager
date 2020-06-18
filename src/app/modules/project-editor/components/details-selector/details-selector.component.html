@@ -1,95 +1,36 @@
 <div class="details-selector">
     <div class="details-selector__header">
-        <h2 class="title_xs details-selector__title m-0">Tecnología</h2>
+        <h2 class="title_xs details-selector__title m-0">{{data.name}}</h2>
     </div>
     <ul class="details-selector__list">
         <li class="details-selector__item">
-            <span class="details-selector__text">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__add"><span class="icon icon-ic_add_small details-selector__add_icon"></span>Añadir</span>
+            <span class="details-selector__text" *ngIf="!showList">Agrega criterios de evaluación del currículum.</span>
+            <span class="details-selector__text_evaluation" *ngIf="showList">criterio de evaluation(6)</span>
+            <span class="details-selector__add" (click)="showList =!showList"><span class="icon icon-ic_add_small details-selector__add_icon"></span>Añadir</span>
         </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_evaluation">criterio de evaluation(6)</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-    </ul>
-</div>
-
-<div class="details-selector">
-    <div class="details-selector__header">
-        <h2 class="title_xs details-selector__title m-0">Plástica</h2>
-    </div>
-    <ul class="details-selector__list">
-        <li class="details-selector__item">
-            <span class="details-selector__text">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__add"><span class="icon icon-ic_add_small details-selector__add_icon"></span>Añadir</span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_evaluation">criterio de evaluation(6)</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-    </ul>
-</div>
-
-<div class="details-selector">
-    <div class="details-selector__header">
-        <h2 class="title_xs details-selector__title m-0">Geografía e historia</h2>
-    </div>
-    <ul class="details-selector__list">
-        <li class="details-selector__item">
-            <span class="details-selector__text">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__add"><span class="icon icon-ic_add_small details-selector__add_icon"></span>Añadir</span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_evaluation">criterio de evaluation(6)</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Modal open.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
-        <li class="details-selector__item">
-            <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-            <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-        </li>
+            <li class="details-selector__item" *ngIf="showList">
+                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
+                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
+            </li>
+            <li class="details-selector__item" *ngIf="showList">
+                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
+                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
+            </li>
+            <li class="details-selector__item" *ngIf="showList">
+                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
+                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
+            </li>
+            <li class="details-selector__item" *ngIf="showList">
+                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
+                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
+            </li>
+            <li class="details-selector__item" *ngIf="showList">
+                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
+                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
+            </li>
+            <li class="details-selector__item" *ngIf="showList">
+                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
+                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
+            </li>
     </ul>
 </div>
