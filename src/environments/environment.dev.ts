@@ -3,6 +3,6 @@ export const environment = {
   apiUrl: {
     projectService: 'https://api.dev.abp.thinkoeducation.com/project-service',
     curriculumService: 'https://api.dev.abp.thinkoeducation.com/curriculum-service',
-    uploadUrl: 'https://api.dev.abp.thinkoeducation.com/uploads/'
+    imgUpload: 'https://api.dev.abp.thinkoeducation.com/uploads/'
   }
 };
