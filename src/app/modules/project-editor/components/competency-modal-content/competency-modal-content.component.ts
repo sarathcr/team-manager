@@ -18,8 +18,8 @@ export class CompetencyModalContentComponent implements OnInit {
   gradeDropdown: FieldConfig
   rowHeadData: Array<object>
   rowData: Array<object>
-  leftHeight: string = ''
-  rightHeight: string = ''
+  leftContentHeight: string = ''
+  contentHeight: string = ''
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -106,7 +106,7 @@ export class CompetencyModalContentComponent implements OnInit {
 
   adjustHeightContent(){
     let innerHeight:number = window.innerHeight;
-    this.leftHeight = (innerHeight * 56.17)/100 + 'px';
-    this.rightHeight = (innerHeight * 57.16)/100 + 'px';
+    this.contentHeight = (innerHeight * 61.73)/100 + 'px';
+    this.leftContentHeight = (innerHeight * 60.66)/100 + 'px';
   }
 }

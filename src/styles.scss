@@ -1,5 +1,6 @@
 @import "./styles/main";
 @import '~video.js/dist/video-js.css';
+@import 'helpers/bt-mixins';
 
 .creator-home,.editor{
   width: calc(100% - 187px);
@@ -143,6 +144,11 @@ body,
 .competency-modal{
   max-width: 87.5%; // 1260px;
   max-height: 92.6%; // 750px
+
+  @include media-breakpoint-up(xxl) {
+    max-width: 1260px;
+    max-height: 750px;
+  }
 
   .dropdown{
     margin-bottom: 8px;

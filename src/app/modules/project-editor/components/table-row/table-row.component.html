@@ -1,15 +1,11 @@
-<div class="table-row" [ngClass]="{ 'table-row__head' : head, 'selected' : isChecked}">
-    <div class="row">
-        <div *ngFor='let data of cellData; let indexVal = index;let isFirst = first;' class="col-md-{{colCount}}">
-            <div class="table-row__cell">
-                <div *ngIf="checkbox && isFirst" class="table-row__box">
-                    <label>
-                        <input #inputCheck type="checkbox" class="table-row__checkbox" [(ngModel)]="isChecked" (change)="onChange(inputCheck.checked)">
-                        <span class="icon-ic_check table-row__checkmark"></span>
-                    </label>
-                </div>
-                <span class="table-row__desc">{{ data.list }}</span>
-            </div>
+<div class="table-row table-row-{{colCount}}" [ngClass]="{ 'table-row__head' : isHead, 'selected' : isChecked, 'last-row' : isLastRow}">
+    <div class="table-row__cell" *ngFor='let data of cellData; let indexVal = index;let isFirst = first;'>
+        <div *ngIf="checkbox && isFirst" class="table-row__box">
+            <label>
+                <input #inputCheck type="checkbox" class="table-row__checkbox" [(ngModel)]="isChecked" (change)="onChange(inputCheck.checked)">
+                <span class="icon-ic_check table-row__checkmark"></span>
+            </label>
         </div>
+        <span class="table-row__desc">{{ data.list }}</span>
     </div>
 </div>

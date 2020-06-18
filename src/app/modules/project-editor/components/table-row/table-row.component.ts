@@ -7,10 +7,12 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 })
 export class TableRowComponent implements OnInit {
   @Output() count = new EventEmitter<object>();
-  @Input() head: boolean = false
+  @Input() isHead: boolean = false
   @Input() checkbox: boolean = false
   @Input() parentID: string = ''
   @Input() cellData: Array<object> = []
+  @Input() isLastRow:  boolean = false
+
   isChecked: boolean
   colCount: number
 

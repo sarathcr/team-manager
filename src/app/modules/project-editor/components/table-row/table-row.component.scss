@@ -2,13 +2,19 @@
 
 .table-row{
     $root: &;
+    display: flex;
+    flex-direction: row;
 
     &.selected{
         background-color: $table-row-active-bg-color;
     }
 
+    &.last-row{
+        margin-bottom: 16px;
+    }
+
     &__cell{
-        padding: 12px 0 12px 28px;
+        padding: 12px 28px ;
         font-family: $font-family-tertiary;
         font-size: $font-size-body-s;
         line-height: $line-height-24px;
@@ -16,6 +22,39 @@
         font-weight: 400;
         display: flex;
         flex-direction: row;
+    }
+
+    &-12{
+        #{$root}__cell{
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+
+    &-6{
+        #{$root}__cell{
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding-right: 19px;
+            &:nth-child(2){
+                padding-left: 19px;
+                padding-right: 28px;
+            }
+        }
+    }
+
+    &-4{
+        #{$root}__cell{
+            flex: 0 0 33.33333%;
+            max-width: 33.33333%;
+            &:nth-child(2){
+                padding-left: 19px;
+                padding-right: 19px;
+            }
+            &:nth-child(3){
+                padding-left: 19px;
+            }
+        }
     }
 
     &__head{
