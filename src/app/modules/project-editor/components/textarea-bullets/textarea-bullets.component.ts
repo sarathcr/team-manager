@@ -91,7 +91,8 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         else {
           this.configOptions[0].name = ''
         }
-        this.onChange.emit([...this.configOptions]);
+        if (this.configOptions.length == 1 && !this.configOptions[0].name) this.onChange.emit([]);
+        else this.onChange.emit([...this.configOptions]);
         break
 
       case 32: // spacebar
