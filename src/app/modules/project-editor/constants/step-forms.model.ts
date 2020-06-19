@@ -1,5 +1,4 @@
 import { Status, StepState } from './step.model'
-<<<<<<< HEAD
 import { DrivingQuestion,
          Theme, 
          Subject, 
@@ -7,10 +6,8 @@ import { DrivingQuestion,
          AcademicYear,
          Region,
          Country, 
-         CompetencyObjectives } from 'src/app/modules/project-editor/constants/project.model'
-=======
-import { CompetencyObjectives, EvaluationCriteria } from 'src/app/shared/constants/project.model'
->>>>>>> develop
+         CompetencyObjectives,
+         EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
 
 export interface FormOne {
   data: {
