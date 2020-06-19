@@ -277,12 +277,7 @@ export class StepThreeComponent implements OnInit {
   }
   openModalWithComponent(){
     const initialState = {
-      dropdownSettings: {
-        idField: 'gradeDropdown',
-        textField: '',
-        enableCheckAll: false,
-        itemsShowLimit: 1,
-      }
+
     };
 
     this.bsModalRef = this.modalService.show(CompetencyModalContentComponent, { class: 'competency-modal', initialState })

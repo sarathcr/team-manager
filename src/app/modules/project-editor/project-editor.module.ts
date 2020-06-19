@@ -167,11 +167,9 @@ const entityMetadata: EntityMetadataMap = {
     TableRowComponent,
     StepUnlockComponent,
     DetailsSelectorComponent,
-    StringDecoder,
     ModalComponent,
     InputComponent,
-    ImageUploadComponent,
-    StringDecoder
+    ImageUploadComponent
   ],
   imports: [
     CommonModule,
