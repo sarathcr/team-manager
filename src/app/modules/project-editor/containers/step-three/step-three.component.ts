@@ -5,7 +5,7 @@ import { Step, Status } from '../../constants/step.model'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
 import { EditorService } from '../../services/editor/editor.service'
 import { TranslateService } from '@ngx-translate/core'
-import { Subject,CompetencyObjectives,EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
+import { Subject, CompetencyObjectives, EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
 import { FormThreeInitData, FormThree } from '../../constants/step-forms.model'
 import { formThreeInitData } from '../../constants/step-forms.data'
 import { map } from 'rxjs/operators'
@@ -35,7 +35,11 @@ export class StepThreeComponent implements OnInit {
   tempData: any[]
   bsModalRef: BsModalRef
 
-  constructor(private translateService: TranslateService, private editor: EditorService, private modalService: BsModalService) { }
+  constructor(
+    private translateService: TranslateService,
+    public editor: EditorService,
+    private modalService: BsModalService
+  ) { }
 
   ngOnInit(): void {
     this.createFormConfig()
@@ -275,11 +279,8 @@ export class StepThreeComponent implements OnInit {
     })
 
   }
-  openModalWithComponent(){
-    const initialState = {
-
-    };
-
+  openModalWithComponent() {
+    const initialState = {};
     this.bsModalRef = this.modalService.show(CompetencyModalContentComponent, { class: 'competency-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
 
