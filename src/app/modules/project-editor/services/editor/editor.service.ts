@@ -254,6 +254,7 @@ export class EditorService {
       [
         'STEPS_MENU.project_structure_stepsmenu_startingpoint',
         'STEPS_MENU.project_structure_stepsmenu_topic',
+        'STEPS_MENU.project_structure_stepsmenu_objectives',
         'STEPS_MENU.project_structure_stepsmenu_creativetitle',
         'STEPS_MENU.project_stepsmenu_drivingquestion',
         'STEPS_MENU.project_structure_stepsmenu_finalproduct',
@@ -262,7 +263,7 @@ export class EditorService {
       .subscribe(translations => {
         this.steps.one.name = translations['STEPS_MENU.project_structure_stepsmenu_startingpoint']
         this.steps.two.name = translations['STEPS_MENU.project_structure_stepsmenu_topic']
-        this.steps.three.name = 'Objetivos competenciales' // WIP localization
+        this.steps.three.name = translations['STEPS_MENU.project_structure_stepsmenu_objectives']
         this.steps.four.name = 'Contenidos' // WIP localization
         this.steps.five.name = 'Estándares' // WIP localization
         this.steps.six.name = translations['STEPS_MENU.project_structure_stepsmenu_creativetitle']
