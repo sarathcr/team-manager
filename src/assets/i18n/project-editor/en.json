@@ -23,7 +23,8 @@
       "project_stepsmenu_drivingquestion": "Preguntas guía",
       "project_structure_stepsmenu_finalproduct": "Producto final",
       "project_structure_stepsmenu_sinopsis": "Sinopsis",
-      "project_structure_stepsmenu_output": "Ver ficha estructura"
+      "project_structure_stepsmenu_output": "Ver ficha estructura",
+      "project_structure_stepsmenu_objectives": "Objetivos"
     },
     "STARTING_POINT":{
       "project_startingpoint_title": "Punto de partida",

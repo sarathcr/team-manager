@@ -1,16 +1,30 @@
 <div class="textarea-bullets" [ngClass]="{'textarea-bullets_focus': focus}">
   <ng-scrollbar>
-    <ul *ngIf="config" class="bullet-list textarea-bullets__list"
-      [ngClass]="variant == 'bullet' ? 'bullet-list' : 'numbered-list'">
-
-      <li class="textarea-bullets__item" *ngFor="let text of configOptions; let i = index" [attr.data-index]='i'>
-        <textarea id="list-item-{{text.id}}" class="textarea-bullets__textarea" name='textArea'
-          [placeholder]=" i===0 && !focus ? config.placeholder : '' " [attr.maxlength]='config.maxLength'
-          [ngModel]=text.name oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
-          (keydown)='keyAction($event, i)' (ngModelChange)='onValueChange($event, i)' (focus)="setFocus()"
-          (blur)="onBlur(i)" #textArea></textarea>
-      </li>
-
-    </ul>
-  </ng-scrollbar>
+  <ul
+    *ngIf="config"
+    class="bullet-list textarea-bullets__list"
+    [ngClass]="variant == 'bullet' ? 'bullet-list' : 'numbered-list'"
+  >
+    <li
+      class="textarea-bullets__item"
+      *ngFor="let text of configOptions; let i = index"
+      [attr.data-index]='i'
+    >
+      <textarea
+        id="list-item-{{text.id}}"
+        class="textarea-bullets__textarea"
+        name='textArea'
+        [placeholder]=" i===0 && !focus ? config.placeholder : '' "
+        [attr.maxlength]='config.maxLength'
+        [ngModel]=text.name
+        oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+        (keydown)='keyAction($event, i)'
+        (ngModelChange)='onValueChange($event, i)'
+        (focus)="setFocus()"
+        (blur)="onBlur(i)"
+        #textArea
+      ></textarea>
+    </li>
+  </ul>
+</ng-scrollbar>
 </div>
