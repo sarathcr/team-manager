@@ -10,12 +10,13 @@
                 <app-step-unlock *ngIf="!project?.subjects?.length; else hasSubjects"></app-step-unlock>
                 <ng-template #hasSubjects>
                     <div class="project-editor__subject-wrapper">
-                        <app-details-selector 
-                        *ngFor="let subject of project.subjects; let i = index; let last = last;" 
-                        [data]="subject"  [i]="subject.id" 
+                        <app-details-selector
+                        *ngFor="let subject of project.subjects; let i = index; let last = last;"
+                        [data]="subject"  [i]="subject.id"
                         [criterias]="criterias" [isLast]="last"
-                        (onAdd)="addItem($event)" 
+                        (onAdd)="addItem($event)"
                         (onDelete)="removeItem($event)"
+                        (openModal)="openModalWithComponent()"
                         [criteria$]="evaluationCriteria$"
                         ></app-details-selector>
                         <div class="project-editor__goto-step">

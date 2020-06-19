@@ -12,6 +12,13 @@
     padding: 14px 22px;
     margin-bottom: 0;
     height: 295px;
+    &.numbered-list {
+      .textarea-bullets__item{
+        &::before{
+          font-family:  $font-family-tertiary !important;
+        }
+      }
+    }
   }
 
   &__item {

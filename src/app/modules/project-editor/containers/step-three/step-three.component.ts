@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { Step, Status } from '../../constants/step.model'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
 import { EditorService } from '../../services/editor/editor.service'
@@ -8,6 +9,7 @@ import { Subject,CompetencyObjectives,EvaluationCriteria } from 'src/app/modules
 import { FormThreeInitData, FormThree } from '../../constants/step-forms.model'
 import { formThreeInitData } from '../../constants/step-forms.data'
 import { map } from 'rxjs/operators'
+import { CompetencyModalContentComponent } from './../../components/competency-modal-content/competency-modal-content.component';
 
 @Component({
   selector: 'app-step-three',
@@ -31,8 +33,9 @@ export class StepThreeComponent implements OnInit {
   initialCriterias: number[] = []
   criterias: number[] = []
   tempData: any[]
+  bsModalRef: BsModalRef
 
-  constructor(private translateService: TranslateService, private editor: EditorService,) { }
+  constructor(private translateService: TranslateService, private editor: EditorService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.createFormConfig()
@@ -43,6 +46,11 @@ export class StepThreeComponent implements OnInit {
     if (this.isFormUpdated() && this.step.state !== "DONE") {
       this.handleSubmit()
     }
+    const modalCount = this.modalService.getModalsCount();
+    if (modalCount > 0) {
+      this.modalService._hideModal(modalCount)
+    }
+
   }
 
   formInIt() {
@@ -69,7 +77,7 @@ export class StepThreeComponent implements OnInit {
           this.initialFormData.competencyObjectives = [...tempinitialFormData.competencyObjectives]
         })
 
-      this.evaluationCriteria$ = this.project$   //WIP 
+      this.evaluationCriteria$ = this.project$   //WIP
         .pipe(
           map(data => data?.evaluationCriteria)
         )
@@ -267,6 +275,19 @@ export class StepThreeComponent implements OnInit {
     })
 
   }
+  openModalWithComponent(){
+    const initialState = {
+      dropdownSettings: {
+        idField: 'gradeDropdown',
+        textField: '',
+        enableCheckAll: false,
+        itemsShowLimit: 1,
+      }
+    };
 
+    this.bsModalRef = this.modalService.show(CompetencyModalContentComponent, { class: 'competency-modal', initialState })
+    this.bsModalRef.content.closeBtnName = 'Close'
+
+  }
 }
 

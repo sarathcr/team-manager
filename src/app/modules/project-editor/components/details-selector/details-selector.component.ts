@@ -18,6 +18,7 @@ export class DetailsSelectorComponent implements OnInit {
   @Input() isLast: boolean = false
   @Input() criteria$: Observable<EvaluationCriteria[]>
   @Output() onAdd = new EventEmitter()
+  @Output() openModal = new EventEmitter()
   @Output() onDelete = new EventEmitter()
   count: number = 0
   bsModalRef: BsModalRef;
@@ -52,6 +53,7 @@ export class DetailsSelectorComponent implements OnInit {
 
   addItem(id: number, init = false) {
     this.onAdd.emit({ id, init })
+    this.openModal.emit()
     this.getCount()
   }
 
