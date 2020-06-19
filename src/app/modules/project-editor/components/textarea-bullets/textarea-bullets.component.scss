@@ -10,6 +10,7 @@
   box-shadow: 0 0 0 0 transparent;
   &__list {
     padding-left: 0;
+    margin-bottom: 0;
   }
 
   &__item {
@@ -35,7 +36,7 @@
     padding: 0;
     overflow: hidden;
     resize: none;
-
+    caret-color: $electric-indigo;
     &:placeholder {
       color: rgba($primary-font-color,0.6);
     }

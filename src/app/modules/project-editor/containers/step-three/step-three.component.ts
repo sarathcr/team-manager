@@ -237,7 +237,7 @@ export class StepThreeComponent implements OnInit {
       field: 'competencyObjectives',
       id: 'competencyObjectives',
       maxLength: 150,
-      limit: 5
+      limit: 0
     }
 
     // Translation
