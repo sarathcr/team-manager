@@ -27,7 +27,7 @@ import { LoaderComponent } from './components/loader/loader.component';
         TranslateModule.forChild(),
         FormsModule,
         ReactiveFormsModule,
-        NgMultiSelectDropDownModule,
+        NgMultiSelectDropDownModule
     ],
     exports: [
         SidebarComponent,

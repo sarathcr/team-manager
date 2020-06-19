@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
 // Interfaces
 import { FieldConfig } from '../../constants/field.model';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
