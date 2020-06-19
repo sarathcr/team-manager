@@ -10,7 +10,7 @@
                 <app-step-unlock *ngIf="!subjects?.length; else hasSubjects"></app-step-unlock>
                 <ng-template #hasSubjects>
                     <div class="project-editor__subject-wrapper">
-                        <app-details-selector [data]="subject" *ngFor="let subject of subjects; let last = last;" [isLast]="last"></app-details-selector>
+                        <app-details-selector [data]="subject" (openModal)='openModalWithComponent($event)' *ngFor="let subject of subjects; let last = last;" [isLast]="last"></app-details-selector>
                         <div class="project-editor__goto-step">
                             {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}
                             <span class="project-editor__point" [routerLink]="'stepOne'">

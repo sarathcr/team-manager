@@ -199,7 +199,7 @@ export class StepThreeComponent implements OnInit {
 
   // Function to check whether the form is updated
   isFormUpdated() {
-    if (!this.isEqual(this.initialFormData.competencyObjectives, 
+    if (!this.isEqual(this.initialFormData.competencyObjectives,
         this.InputFormData.competencyObjectives) || this.initialFormStatus !== this.step.state) {
       return true
     }
@@ -214,7 +214,7 @@ export class StepThreeComponent implements OnInit {
 
   openModalWithComponent(event) {
     const initialState = {
-     
+
     };
 
     this.bsModalRef = this.modalService.show(CompetencyModalContentComponent, { class: 'competency-modal', initialState })

@@ -7,7 +7,7 @@
 }
 
 .competency-modal{
- 
+
     &,
     &__content,
     .modal-content{
@@ -22,7 +22,7 @@
     &__header{
         display: flex;
         flex-direction: row;
-      
+        align-items: center;
         &-title{
           width: 100%;
           display: inline-flex;
@@ -38,7 +38,7 @@
           justify-content: left;
           margin-bottom: 24px;
         }
-    
+
         &-close{
           display: inline-flex;
           justify-self: flex-end;
@@ -51,7 +51,7 @@
           cursor: pointer;
         }
     }
-    
+
     &__body{
         width: 100%;
         height: 100%;
@@ -141,6 +141,8 @@
             min-width: 140px;
             min-height: 48px;
             display: flex;
+            align-items: center;
+            justify-content: center;
 
             .icon{
                 font-size: $comptency-icon-size;
@@ -218,7 +220,7 @@
                 position: absolute;
                 pointer-events: none;
             }
-            
+
             &:after {
                 border-color: $custom-tab-arrow-border;
                 border-left-color: $custom-tab-arrow-bg;
@@ -227,7 +229,7 @@
                 left: 100%;
                 margin-left: -2px;
             }
-            
+
             &:before {
                 border-color: $custom-tab-checkbox-border;
                 border-left-color: $custom-tab-primary-color;
