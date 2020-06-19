@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProjectEntityService } from '../../services/project/project-entity.service';
-import { Project } from 'src/app/shared/constants/project.model';
+import { Project } from 'src/app/modules/project-editor/constants/project.model';
 import { tap, filter, first } from 'rxjs/operators';
 
 @Component({

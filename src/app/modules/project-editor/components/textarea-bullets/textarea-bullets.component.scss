@@ -2,14 +2,15 @@
 
 .textarea-bullets {
   width: 100%;
-  min-height: 300px;
+  height: 300px;
+  border: none;
   border: 1px solid $creator-border-active;
   border-radius: 3px;
-  padding: 14px 20px;
   margin-bottom: 56px;
   box-shadow: 0 0 0 0 transparent;
   &__list {
-    padding-left: 0;
+    padding: 14px 22px;
+    margin-bottom: 0;
   }
 
   &__item {
@@ -17,8 +18,7 @@
     margin-bottom: 8px;
 
     &:before {
-      top: 0;
-      line-height: 24px;
+      top: -4px;
     }
   }
 
@@ -35,13 +35,10 @@
     padding: 0;
     overflow: hidden;
     resize: none;
-
+    caret-color: $electric-indigo;
     &:placeholder {
       color: rgba($primary-font-color,0.6);
     }
   }
-
-  & .numbered-list &__item:before {
-    font-family: $font-family-tertiary !important;;
-  }
 }
+

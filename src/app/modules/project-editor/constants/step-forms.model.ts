@@ -1,12 +1,13 @@
-import { Country } from 'src/app/shared/constants/country.model'
-import { Region } from 'src/app/shared/constants/region.model'
-import { AcademicYear } from 'src/app/shared/constants/academic-year.model'
-import { Grade } from 'src/app/shared/constants/grade.model'
-import { Subject } from 'src/app/shared/constants/subject.model'
-import { Theme } from 'src/app/shared/constants/theme.model'
-import { DrivingQuestion } from 'src/app/shared/constants/driving-questions.model'
 import { Status, StepState } from './step.model'
-import { CompetencyObjectives, EvaluationCriteria } from 'src/app/shared/constants/project.model'
+import { DrivingQuestion,
+         Theme, 
+         Subject, 
+         Grade,
+         AcademicYear,
+         Region,
+         Country, 
+         CompetencyObjectives,
+         EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
 
 export interface FormOne {
   data: {

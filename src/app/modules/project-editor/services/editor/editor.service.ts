@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StepState, StepId, Steps, statusId, Step } from '../../constants/step.model';
 import { TranslateService } from '@ngx-translate/core';
-import { Project } from 'src/app/shared/constants/project.model';
+import { Project } from 'src/app/modules/project-editor/constants/project.model';
 import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { ProjectEntityService } from '../project/project-entity.service';
 import { map } from 'rxjs/operators';

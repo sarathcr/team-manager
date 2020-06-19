@@ -60,7 +60,7 @@ import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@
 import { ProjectEntityService } from './services/project/project-entity.service';
 import { ProjectsResolver } from './services/project/projects.resolver';
 import { ProjectsDataService } from './services/project/projects-data.service';
-import { compareProjects } from 'src/app/shared/constants/project.model';
+import { compareProjects } from 'src/app/modules/project-editor/constants/project.model';
 import { CountryEntityService } from './services/country/country-entity.service';
 import { CountryDataService } from './services/country/country-data.service';
 import { SubjectDataService } from './services/subject/subject-data.service';

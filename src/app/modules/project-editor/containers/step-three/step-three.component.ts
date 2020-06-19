@@ -4,10 +4,9 @@ import { Step, Status } from '../../constants/step.model'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
 import { EditorService } from '../../services/editor/editor.service'
 import { TranslateService } from '@ngx-translate/core'
-import { Subject } from 'src/app/shared/constants/subject.model'
+import { Subject,CompetencyObjectives,EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
 import { FormThreeInitData, FormThree } from '../../constants/step-forms.model'
 import { formThreeInitData } from '../../constants/step-forms.data'
-import { CompetencyObjectives, EvaluationCriteria } from 'src/app/shared/constants/project.model'
 import { map } from 'rxjs/operators'
 
 @Component({
@@ -251,7 +250,7 @@ export class StepThreeComponent implements OnInit {
       field: 'competencyObjectives',
       id: 'competencyObjectives',
       maxLength: 150,
-      limit: 5
+      limit: 0
     }
 
     // Translation

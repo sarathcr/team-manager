@@ -5,7 +5,7 @@ import { formSevenInitData } from '../../constants/step-forms.data'
 import { FormSevenInitData, FormSeven } from '../../constants/step-forms.model'
 import { Step, Status } from '../../constants/step.model'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
-import { DrivingQuestion } from 'src/app/shared/constants/driving-questions.model'
+import { DrivingQuestion } from 'src/app/modules/project-editor/constants/project.model'
 import { EditorService } from '../../services/editor/editor.service'
 import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
 

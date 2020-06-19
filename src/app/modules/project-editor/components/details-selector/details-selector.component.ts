@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalComponent } from '../modal/modal.component';
-import { Subject } from '../../../../shared/constants/subject.model';
+import { Subject,EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model';
 import { Observable } from 'rxjs';
-import { EvaluationCriteria } from 'src/app/shared/constants/project.model';
 
 @Component({
   selector: 'app-details-selector',
