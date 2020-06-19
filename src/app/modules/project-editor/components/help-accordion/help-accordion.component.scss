@@ -28,9 +28,11 @@
       margin-right: 14px;
       height: 30px;
       width: 30px;
-
-      #{$root}__icon:last-child{
-        display: none;
+      #{$root}__icon{
+        width: 36px;
+        &:last-child{
+          display: none;
+        }
       }
     }
 
