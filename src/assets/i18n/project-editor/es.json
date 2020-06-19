@@ -61,7 +61,7 @@
         "subtitle" : "Transforma los criterios de evaluación en objetivos de aprendizaje:",
         "description" : "Al final del proyecto queremos que nuestros/as alumnos/as sepan..."
       },
-      "project_objectives_objectives_placeholder": "Escribe el primer objetivo competencial. Por ejemplo: \"...comprender que la cultura hace valorar la historia propia.\"",
+      "project_objectives_objectives_placeholder": "Escribe el primer objetivo de aprendizaje. Por ejemplo: \"...comprender que la cultura hace valorar la historia propia.\"",
       "project_objectives_add_criteria": " + Añadir",
       "project_objectivies_add_more_subjects": {
         "one" : "Accede al",

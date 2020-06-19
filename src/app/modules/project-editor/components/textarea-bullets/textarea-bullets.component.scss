@@ -8,7 +8,6 @@
   border-radius: 3px;
   margin-bottom: 56px;
   box-shadow: 0 0 0 0 transparent;
-  // background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 1));
   &__list {
     padding: 14px 22px;
     margin-bottom: 0;
@@ -40,10 +39,6 @@
     &:placeholder {
       color: rgba($primary-font-color,0.6);
     }
-  }
-
-  & .numbered-list &__item:before {
-    font-family: $font-family-tertiary !important;;
   }
 }
 
