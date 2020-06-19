@@ -4,33 +4,16 @@
     </div>
     <ul class="details-selector__list">
         <li class="details-selector__item">
-            <span class="details-selector__text" *ngIf="!showList">{{'OBJECTIVES.project_objectives_criteria_placeholder' | translate}}</span>
-            <span class="details-selector__text_evaluation" *ngIf="showList">{{'OBJECTIVES.project_objectives_criterion' | translate}} (6)</span>
-            <span class="details-selector__add" (click)="onButtonClick($event);"><span class="icon icon-ic_add_small details-selector__add_icon"></span>{{'OBJECTIVES.project_objectives_criteriawindow_add' | translate}}</span>
+            <span class="details-selector__text" *ngIf="count == 0">{{'OBJECTIVES.project_objectives_criteria_placeholder' | translate}}</span>
+            <span class="details-selector__text_evaluation" *ngIf="count>0">{{'OBJECTIVES.project_objectives_criterion' | translate}} ({{count}})</span>
+            <span class="details-selector__add" (click)="addItem(data.id)"><span class="icon icon-ic_add_small details-selector__add_icon"></span>{{'OBJECTIVES.project_objectives_criteriawindow_add' | translate}}</span>
         </li>
-            <li class="details-selector__item" *ngIf="showList">
-                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
+        <span *ngFor="let criteria of criterias; let criteriaIndex = index">
+            <li class="details-selector__item" *ngIf="i == criteria">
+                <span class="details-selector__text_normal">evaluation criteria1.</span>
+                <span class="details-selector__close" (click)="getModal(criteriaIndex)"><span class="icon icon-ic_share_close"></span></span>
             </li>
-            <li class="details-selector__item" *ngIf="showList">
-                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-            </li>
-            <li class="details-selector__item" *ngIf="showList">
-                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-            </li>
-            <li class="details-selector__item" *ngIf="showList">
-                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-            </li>
-            <li class="details-selector__item" *ngIf="showList">
-                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-            </li>
-            <li class="details-selector__item" *ngIf="showList">
-                <span class="details-selector__text_normal">Agrega criterios de evaluación del currículum.</span>
-                <span class="details-selector__close" (click)="getModal()"><span class="icon icon-ic_share_close"></span></span>
-            </li>
+        </span>
+        
     </ul>
 </div>

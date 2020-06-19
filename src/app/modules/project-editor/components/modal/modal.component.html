@@ -8,9 +8,11 @@
 </div>
 <div class="common-modal__footer">
     <div class="common-modal__button-wrapper">
-        <app-button [variant]="'outlined'" [theme]="'secondary'">{{'PROJECT.project_button_delete' | translate}}</app-button>
+        <app-button #deleteButton [variant]="'outlined'" [theme]="'secondary'" (click)="onConfirm()">
+            {{'PROJECT.project_button_delete' | translate}}
+        </app-button>
     </div>
     <div class="common-modal__button-wrapper">
-        <app-button [variant]="'text'" [theme]="'secondary'" (click)="bsModalRef.hide()">{{'PROJECT.project_button_cancel' | translate}}</app-button>
+        <app-button [variant]="'text'" [theme]="'secondary'" (click)="onCancel()">{{'PROJECT.project_button_cancel' | translate}}</app-button>
     </div>
 </div>

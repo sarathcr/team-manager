@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { formTwoInitData } from '../../constants/step-forms.data'
 import { FormTwoInitData, FormTwo } from '../../constants/step-forms.model'
 import { Step, Status } from '../../constants/step.model'
-import { Theme } from 'src/app/shared/constants/theme.model'
+import { Theme } from 'src/app/modules/project-editor/constants/project.model'
 import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
