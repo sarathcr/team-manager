@@ -38,7 +38,7 @@
     resize: none;
 
     &:placeholder {
-      color: $overtitle-grey;
+      color: rgba($primary-font-color,0.6);
     }
   }
 

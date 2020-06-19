@@ -1,4 +1,5 @@
 import { Status, StepState } from './step.model'
+<<<<<<< HEAD
 import { DrivingQuestion,
          Theme, 
          Subject, 
@@ -7,6 +8,9 @@ import { DrivingQuestion,
          Region,
          Country, 
          CompetencyObjectives } from 'src/app/modules/project-editor/constants/project.model'
+=======
+import { CompetencyObjectives, EvaluationCriteria } from 'src/app/shared/constants/project.model'
+>>>>>>> develop
 
 export interface FormOne {
   data: {
@@ -53,6 +57,7 @@ export interface FormTwoInitData {
 export interface FormThree {
   data: {
     competencyObjectives: CompetencyObjectives[]
+    evaluationCriteria: EvaluationCriteria[]
   }
   stepStatus: StepState
 }
