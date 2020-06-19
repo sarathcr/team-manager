@@ -7,14 +7,11 @@
   border: 1px solid $creator-border-active;
   border-radius: 3px;
   margin-bottom: 56px;
-  // box-shadow: 0 0 0 0 transparent;
-  box-shadow: 
-  inset 0px 11px 8px -10px #CCC,
-  inset 0px -11px 8px -10px #CCC; 
+  box-shadow: 0 0 0 0 transparent;
+  // background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 1));
   &__list {
     padding: 14px 22px;
     margin-bottom: 0;
-    height: 295px; 
   }
 
   &__item {
@@ -22,8 +19,7 @@
     margin-bottom: 8px;
 
     &:before {
-      top: 50%;
-      transform: translateY(-50%);
+      top: 0;
     }
   }
 
