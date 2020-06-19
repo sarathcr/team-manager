@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalComponent } from '../modal/modal.component';
-import { Subject,EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model';
+import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-details-selector',
@@ -16,7 +17,7 @@ export class DetailsSelectorComponent implements OnInit {
   @Input() criterias: any[]
   @Input() i: any
   @Input() isLast: boolean = false
-  @Input() criteria$: Observable<EvaluationCriteria[]>
+  @Input() project$: Observable<Project>
   @Output() onAdd = new EventEmitter()
   @Output() openModal = new EventEmitter()
   @Output() onDelete = new EventEmitter()
@@ -30,14 +31,16 @@ export class DetailsSelectorComponent implements OnInit {
   }
 
   formInit() {
-    this.criteria$.subscribe(criterias => {
-      if (criterias) {
-        criterias.forEach(criteria => {
-          if (this.data.id === criteria.subjectId)
-            this.getCount()
-        })
-      }
-    })
+    this.project$
+      .pipe(map(data => data?.evaluationCriteria))
+      .subscribe(criterias => {
+        if (criterias) {
+          criterias.forEach(criteria => {
+            if (this.data.id === criteria.subjectId)
+              this.getCount()
+          })
+        }
+      })
   }
 
   getModal(i) {
