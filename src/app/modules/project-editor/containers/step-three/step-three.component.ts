@@ -219,7 +219,6 @@ export class StepThreeComponent implements OnInit {
         name: "evaluation criteria1"
       })
     })
-    console.log(tempCriteria)
     let formData: FormThree = {
       data: {
         competencyObjectives: tempData.length ? this.InputFormData.competencyObjectives : [],
