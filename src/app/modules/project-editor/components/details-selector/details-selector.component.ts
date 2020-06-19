@@ -33,7 +33,7 @@ export class DetailsSelectorComponent implements OnInit {
       if (criterias) {
         criterias.forEach(criteria => {
           if (this.data.id === criteria.subjectId)
-            this.addItem(criteria.subjectId, true)
+            this.getCount()
         })
       }
     })
@@ -52,6 +52,10 @@ export class DetailsSelectorComponent implements OnInit {
 
   addItem(id: number, init = false) {
     this.onAdd.emit({ id, init })
+    this.getCount()
+  }
+
+  getCount() {
     this.count = this.criterias.filter(d => d == this.i).length
   }
 

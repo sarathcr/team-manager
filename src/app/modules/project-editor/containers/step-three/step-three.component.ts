@@ -75,11 +75,14 @@ export class StepThreeComponent implements OnInit {
         )
       this.evaluationCriteria$
         .subscribe(criterias => {
-          if (criterias)
+          this.criterias = []
+          this.initialCriterias = []
+          if (criterias) {
             criterias.forEach(criteria => {
-              this.criterias = []
+              this.criterias.push(criteria.subjectId)
               this.initialCriterias.push(criteria.subjectId)
             })
+          }
         })
     }
     if (this.step$) {
@@ -88,7 +91,7 @@ export class StepThreeComponent implements OnInit {
           if (formStatus) {
             this.buttonConfig.submitted = formStatus.state == "DONE"
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != "DONE" && !this.hasAnyEmptyFields())
+            if (formStatus.state != "DONE" && !this.checkInitialEmptyForm())
               this.buttonConfig.disabled = false
           }
         }
@@ -118,6 +121,17 @@ export class StepThreeComponent implements OnInit {
     if (!this.InputFormData.competencyObjectives.length && !this.criterias.length) {
       return true
     }
+    return false
+  }
+
+  // check if the form is initially empty
+  checkInitialEmptyForm() {                      //WIP
+    if (!this.initialFormData.competencyObjectives.length || !this.initialCriterias.length) return true
+    let emptyForm = false
+    this.project.subjects.forEach(subject => {
+      if (!this.initialCriterias.includes(subject.id)) emptyForm = true
+    })
+    if (emptyForm) return true
     return false
   }
 
@@ -195,9 +209,9 @@ export class StepThreeComponent implements OnInit {
       this.initialFormData.competencyObjectives = this.InputFormData.competencyObjectives
     }
     this.InputFormData.competencyObjectives = tempData
-    let tempCrriteria = []                       // WIP change the criteria creation
+    let tempCriteria = []                       // WIP change the criteria creation
     this.criterias.forEach(subjectId => {
-      tempCrriteria.push({
+      tempCriteria.push({
         gradeId: 8,
         id: 1,
         subjectId: subjectId,
@@ -207,7 +221,7 @@ export class StepThreeComponent implements OnInit {
     let formData: FormThree = {
       data: {
         competencyObjectives: tempData.length ? this.InputFormData.competencyObjectives : [],
-        evaluationCriteria: [...tempCrriteria]
+        evaluationCriteria: [...tempCriteria]
       },
       stepStatus: {
         steps: [

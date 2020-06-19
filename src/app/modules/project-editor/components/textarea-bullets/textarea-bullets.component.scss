@@ -35,7 +35,7 @@
     padding: 0;
     overflow: hidden;
     resize: none;
-
+    caret-color: $electric-indigo;
     &:placeholder {
       color: rgba($primary-font-color,0.6);
     }
