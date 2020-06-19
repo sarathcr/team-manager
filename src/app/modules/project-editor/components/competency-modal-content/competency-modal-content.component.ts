@@ -15,7 +15,7 @@ export class CompetencyModalContentComponent implements OnInit {
   onResize(event): void {
     this.adjustHeightContent()
   }
-  gradeDropdown: FieldConfig
+  gradeDropdown: object
   rowHeadData: Array<object>
   rowData: Array<object>
   leftContentHeight: string = ''
@@ -31,6 +31,27 @@ export class CompetencyModalContentComponent implements OnInit {
     this.getTranslation()
     this.createFormConfig()
     this.rowInit()
+    this.gradeDropdown = {
+      field: 'dropdown',
+      name: 'Curso',
+      id: 'Curso',
+      label: 'Curso',
+      multiselect: true,
+      options: [
+        {
+          id: 1,
+          name: "sample1"
+        },
+        {
+          id: 2,
+          name: "sample2"
+        }
+      ],
+      selectedItems: [{
+        id: 1,
+        name: "sample1"
+      }]
+    }
   }
 
   onDropdownSelect(selectedData: any) {
