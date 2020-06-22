@@ -2,9 +2,9 @@
 	<input
 		class="form-control input__field"
 		[placeholder]="!focus ? placeholder : ''"
-		(focus)="setFocus()" (blur)="onBlur()"
 		[attr.maxlength]="maxlength"
 		[ngModel]="value"
 		(ngModelChange)="onValueChange($event)"
+		(focus)="setFocus()" (blur)="onBlur()"
 	/>
 </div>

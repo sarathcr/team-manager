@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { HelpVideoThumbComponent } from './help-video-thumb.component';
+import { HelpVideoThumbComponent } from './help-video-thumb.component'
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal'
 
-describe('HelpVideoThumbComponent', () => {
-  let component: HelpVideoThumbComponent;
-  let fixture: ComponentFixture<HelpVideoThumbComponent>;
-
-  beforeEach(async(() => {
+describe('HelpVideoThumbComponent', (): void => {
+  let component: HelpVideoThumbComponent
+  let fixture: ComponentFixture<HelpVideoThumbComponent>
+  
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [HelpVideoThumbComponent]
+      declarations: [HelpVideoThumbComponent],
+      providers: [ BsModalService ],
+      imports: [ ModalModule.forRoot() ]
     })
-      .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HelpVideoThumbComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(HelpVideoThumbComponent)
+    component = fixture.componentInstance
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})

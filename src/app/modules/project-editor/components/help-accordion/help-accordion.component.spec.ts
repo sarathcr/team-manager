@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { HelpAccordionComponent } from './help-accordion.component';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal'
+import { AccordionComponent, AccordionConfig } from 'ngx-bootstrap/accordion'
 
-describe('HelpAccordionComponent', () => {
-  let component: HelpAccordionComponent;
-  let fixture: ComponentFixture<HelpAccordionComponent>;
+import { HelpAccordionComponent } from './help-accordion.component'
 
-  beforeEach(async(() => {
+describe('HelpAccordionComponent', (): void => {
+  let component: HelpAccordionComponent
+  let fixture: ComponentFixture<HelpAccordionComponent>
+  
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ HelpAccordionComponent ]
+      declarations: [ HelpAccordionComponent, AccordionComponent ],
+      providers: [ BsModalService, AccordionConfig ],
+      imports: [ ModalModule.forRoot() ]
     })
-    .compileComponents();
-  }));
+    fixture = TestBed.createComponent(HelpAccordionComponent)
+    component = fixture.componentInstance
+  })
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HelpAccordionComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})

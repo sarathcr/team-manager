@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { HelpImgThumbComponent } from './help-img-thumb.component';
+import { BsModalService, ModalModule } from 'ngx-bootstrap/modal'
 
-describe('HelpImgThumbComponent', () => {
-  let component: HelpImgThumbComponent;
-  let fixture: ComponentFixture<HelpImgThumbComponent>;
+import { HelpImgThumbComponent } from './help-img-thumb.component'
 
-  beforeEach(async(() => {
+describe('HelpImgThumbComponent', (): void => {
+  let component: HelpImgThumbComponent
+  let fixture: ComponentFixture<HelpImgThumbComponent>
+  
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ HelpImgThumbComponent ]
+      declarations: [ HelpImgThumbComponent ],
+      providers: [ BsModalService ],
+      imports: [ ModalModule.forRoot() ]
     })
-    .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HelpImgThumbComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(HelpImgThumbComponent)
+    component = fixture.componentInstance
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})

@@ -1,24 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProjectThumbnailComponent } from './project-thumbnail.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-describe('ProjectThumbnailComponent', () => {
-  let component: ProjectThumbnailComponent;
-  let fixture: ComponentFixture<ProjectThumbnailComponent>;
+import { TranslateModule } from '@ngx-translate/core'
 
-  beforeEach(async(() => {
+import { ProjectThumbnailComponent } from './project-thumbnail.component'
+
+describe('ProjectThumbnailComponent', (): void => {
+  let component: ProjectThumbnailComponent
+  let fixture: ComponentFixture<ProjectThumbnailComponent>
+  
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectThumbnailComponent ]
+      declarations: [ ProjectThumbnailComponent ],
+      imports: [ TranslateModule.forRoot() ]
     })
-    .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ProjectThumbnailComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ProjectThumbnailComponent)
+    component = fixture.componentInstance
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})

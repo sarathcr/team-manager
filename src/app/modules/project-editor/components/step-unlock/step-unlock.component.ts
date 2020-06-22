@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FieldConfig } from 'src/app/shared/constants/field.model';
+import { Component, OnInit } from '@angular/core'
+
+import { FieldConfig } from 'src/app/shared/constants/field.model'
 
 @Component({
   selector: 'app-step-unlock',
@@ -25,7 +26,7 @@ export class StepUnlockComponent implements OnInit {
       disabled: false,
       submitted: false,
       label: 'IR A PUNTO DE PARTIDA'
-    };
+    }
     this.textAreaConfig = {
       name: 'textarea',
       field: 'themes',

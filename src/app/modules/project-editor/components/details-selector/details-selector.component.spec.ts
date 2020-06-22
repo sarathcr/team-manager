@@ -1,25 +1,26 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { DetailsSelectorComponent } from './details-selector.component';
+import { BsModalService, BsModalRef, ModalModule } from 'ngx-bootstrap/modal'
+import { TranslateModule } from '@ngx-translate/core'
 
-describe('DetailsSelectorComponent', () => {
-  let component: DetailsSelectorComponent;
-  let fixture: ComponentFixture<DetailsSelectorComponent>;
+import { DetailsSelectorComponent } from './details-selector.component'
 
-  beforeEach(async(() => {
+describe('DetailsSelectorComponent', (): void => {
+  let component: DetailsSelectorComponent
+  let fixture: ComponentFixture<DetailsSelectorComponent>
+  
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [DetailsSelectorComponent]
+      declarations: [ DetailsSelectorComponent ],
+      providers: [ BsModalService, BsModalRef ],
+      imports: [ ModalModule.forRoot(), TranslateModule.forRoot() ]
     })
-      .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DetailsSelectorComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(DetailsSelectorComponent)
+    component = fixture.componentInstance
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})
