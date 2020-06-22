@@ -41,6 +41,8 @@ import { StepTenComponent } from './containers/step-ten/step-ten.component';
 import { InputComponent } from './components/input/input.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component';
+import { CompetencyModalContentComponent } from './components/competency-modal-content/competency-modal-content.component';
+import { TableRowComponent } from './components/table-row/table-row.component';
 import { StepUnlockComponent } from './components/step-unlock/step-unlock.component';
 import { DetailsSelectorComponent } from './components/details-selector/details-selector.component';
 import { ModalComponent } from './components/modal/modal.component';
@@ -60,7 +62,7 @@ import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@
 import { ProjectEntityService } from './services/project/project-entity.service';
 import { ProjectsResolver } from './services/project/projects.resolver';
 import { ProjectsDataService } from './services/project/projects-data.service';
-import { compareProjects } from 'src/app/shared/constants/project.model';
+import { compareProjects } from 'src/app/modules/project-editor/constants/project.model';
 import { CountryEntityService } from './services/country/country-entity.service';
 import { CountryDataService } from './services/country/country-data.service';
 import { SubjectDataService } from './services/subject/subject-data.service';
@@ -160,13 +162,14 @@ const entityMetadata: EntityMetadataMap = {
     HelpVideoThumbComponent,
     VideoPlayerComponent,
     HelpImgThumbComponent,
+    StringDecoder,
+    CompetencyModalContentComponent,
+    TableRowComponent,
     StepUnlockComponent,
     DetailsSelectorComponent,
-    StringDecoder,
     ModalComponent,
     InputComponent,
-    ImageUploadComponent,
-    StringDecoder
+    ImageUploadComponent
   ],
   imports: [
     CommonModule,

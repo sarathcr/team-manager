@@ -23,7 +23,8 @@
       "project_stepsmenu_drivingquestion": "Preguntas guía",
       "project_structure_stepsmenu_finalproduct": "Producto final",
       "project_structure_stepsmenu_sinopsis": "Sinopsis",
-      "project_structure_stepsmenu_output": "Ver ficha estructura"
+      "project_structure_stepsmenu_output": "Ver ficha estructura",
+      "project_structure_stepsmenu_objectives": "Objetivos"
     },
     "STARTING_POINT":{
       "project_startingpoint_title": "Punto de partida",
@@ -61,7 +62,7 @@
         "subtitle" : "Transforma los criterios de evaluación en objetivos de aprendizaje:",
         "description" : "Al final del proyecto queremos que nuestros/as alumnos/as sepan..."
       },
-      "project_objectives_objectives_placeholder": "Escribe el primer objetivo competencial. Por ejemplo: \"...comprender que la cultura hace valorar la historia propia.\"",
+      "project_objectives_objectives_placeholder": "Escribe el primer objetivo de aprendizaje. Por ejemplo: \"...comprender que la cultura hace valorar la historia propia.\"",
       "project_objectives_add_criteria": " + Añadir",
       "project_objectivies_add_more_subjects": {
         "one" : "Accede al",

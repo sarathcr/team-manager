@@ -7,12 +7,20 @@
             </h1>
             <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
             <ng-template #loaded>
-                <app-step-unlock *ngIf="!subjects.length; else hasSubjects"></app-step-unlock>
+                <app-step-unlock *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects"></app-step-unlock>
                 <ng-template #hasSubjects>
                     <div class="project-editor__subject-wrapper">
-                        <app-details-selector [data]="subject" *ngFor="let subject of subjects"></app-details-selector>
+                        <app-details-selector
+                        *ngFor="let subject of (editor.project$|async).subjects; let i = index; let last = last;"
+                        [data]="subject"  [i]="subject.id"
+                        [criterias]="criterias" [isLast]="last"
+                        (onAdd)="addItem($event)"
+                        (onDelete)="removeItem($event)"
+                        (openModal)="openModalWithComponent()"
+                        [project$]="editor.project$"
+                        ></app-details-selector>
                         <div class="project-editor__goto-step">
-                            {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}} 
+                            {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}
                             <span class="project-editor__point" [routerLink]="'stepOne'">
                                 {{'OBJECTIVES.project_objectivies_add_more_subjects.two' | translate}}
                             </span>
@@ -23,20 +31,20 @@
                         <h2 class="title_xs project-editor__title">
                             {{'OBJECTIVES.project_objectives_objectives_subtitle.subtitle' | translate}}
                         </h2>
-                        <p class="project-form__sub-description">
+                        <p class="project-form__sub-description mb-5">
                             {{'OBJECTIVES.project_objectives_objectives_subtitle.description' | translate}}
                         </p>
-                        <app-textarea-bullets [config]='textAreaConfig' 
-                        (onChange)="textAreaUpdate($event)" 
-                        [options$]="competencyObjectives$" 
+                        <app-textarea-bullets [config]='textAreaConfig'
+                        (onChange)="textAreaUpdate($event)"
+                        [options$]="competencyObjectives$"
                         [variant]="'number'">
                         </app-textarea-bullets>
                     </div>
                 </ng-template>
             </ng-template>
-            <app-loader *ngIf="loading$ | async; else loaded"></app-loader>
+            <app-loader *ngIf="loading; else loaded"></app-loader>
         </div>
-        <app-button *ngIf="!(loading$ | async)" [config]='buttonConfig' (click)='handleSubmit("DONE")'>
+        <app-button *ngIf="!loading" [config]='buttonConfig' (click)='handleSubmit("DONE")'>
         </app-button>
     </div>
 </div>

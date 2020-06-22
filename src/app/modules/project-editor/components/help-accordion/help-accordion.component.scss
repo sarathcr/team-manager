@@ -24,13 +24,13 @@
     }
 
     &-icon{
-      font-size: 27px;
       margin-right: 14px;
-      height: 30px;
-      width: 30px;
-
-      #{$root}__icon:last-child{
-        display: none;
+      #{$root}__icon{
+        width: 30px;
+        height: 30px;
+        &:last-child{
+          display: none;
+        }
       }
     }
 

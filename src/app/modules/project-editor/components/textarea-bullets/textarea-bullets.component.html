@@ -1,4 +1,5 @@
 <div class="textarea-bullets" [ngClass]="{'textarea-bullets_focus': focus}">
+  <ng-scrollbar>
   <ul
     *ngIf="config"
     class="bullet-list textarea-bullets__list"
@@ -25,4 +26,5 @@
       ></textarea>
     </li>
   </ul>
+</ng-scrollbar>
 </div>

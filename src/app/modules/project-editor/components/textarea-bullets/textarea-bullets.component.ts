@@ -19,6 +19,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   initResize = false;
   initialScrollHeight: number;
   timeOut: any
+  arrayHeight: string = ''
   sampleOption: Option = { id: null, name: null };
   configOptions: Option[] = [];
   limit = 0
@@ -90,7 +91,8 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         else {
           this.configOptions[0].name = ''
         }
-        this.onChange.emit([...this.configOptions]);
+        if (this.configOptions.length == 1 && !this.configOptions[0].name) this.onChange.emit([]);
+        else this.onChange.emit([...this.configOptions]);
         break
 
       case 32: // spacebar

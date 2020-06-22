@@ -5,24 +5,19 @@
     margin-bottom: 44px;
     font-size: $font-size-body;
     counter-reset: list;
-
     & > li{
-        padding-left: 24px;
         margin-bottom: 16px;
-        position: relative;
-        counter-increment: list;
-
+        counter-increment: step-counter;
+        padding-left: 10px;
         &:before{
-            content: counter(list)'.';
-            top: 0;
-            left: 0;
+            content: counter(step-counter)'.';
             color: $primary-font-color;
             font-weight: $font-weight-bold;
             font-size: $font-size-button;
-            position: absolute;
+            position: relative;
         }
         &:last-child{
             margin-bottom:0;
         }
-     }
+    }
 }
