@@ -6,7 +6,7 @@ import { FieldConfig, ButtonVariants, Theme } from '../../constants/field.model'
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent {
 
   @Input() theme: Theme = 'primary'
   @Input() disabled: boolean
@@ -16,6 +16,4 @@ export class ButtonComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
 }

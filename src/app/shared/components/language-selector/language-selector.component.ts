@@ -1,17 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-language-selector',
   templateUrl: './language-selector.component.html',
   styleUrls: ['./language-selector.component.css']
 })
-export class LanguageSelectorComponent implements OnInit {
+export class LanguageSelectorComponent {
 
-  constructor(public TranslateService: TranslateService) {
-   }
-
-  ngOnInit(): void {
-  }
+  constructor(public TranslateService: TranslateService) { }
 
 }

@@ -1,25 +1,28 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ModalComponent } from './modal.component';
+import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal'
+import { TranslateModule } from '@ngx-translate/core'
 
-describe('ModalComponent', () => {
-  let component: ModalComponent;
-  let fixture: ComponentFixture<ModalComponent>;
+import { ModalComponent } from './modal.component'
+import { ButtonComponent } from '../../../../shared/components/button/button.component'
 
-  beforeEach(async(() => {
+
+describe('ModalComponent', (): void => {
+  let component: ModalComponent
+  let fixture: ComponentFixture<ModalComponent>
+  
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ ModalComponent ]
+      declarations: [ ModalComponent, ButtonComponent ],
+      providers: [ BsModalRef ],
+      imports: [ ModalModule.forRoot(), TranslateModule.forRoot() ]
     })
-    .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ModalComponent)
+    component = fixture.componentInstance
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})

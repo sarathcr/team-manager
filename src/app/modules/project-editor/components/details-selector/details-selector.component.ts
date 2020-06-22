@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { ModalComponent } from '../modal/modal.component';
-import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+
+import { ModalComponent } from '../modal/modal.component'
+import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
 
 @Component({
   selector: 'app-details-selector',
@@ -22,7 +24,7 @@ export class DetailsSelectorComponent implements OnInit {
   @Output() openModal = new EventEmitter()
   @Output() onDelete = new EventEmitter()
   count: number = 0
-  bsModalRef: BsModalRef;
+  bsModalRef: BsModalRef
 
   constructor(private modalService: BsModalService) { }
 
@@ -44,8 +46,8 @@ export class DetailsSelectorComponent implements OnInit {
   }
 
   getModal(i) {
-    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal' });
-    this.bsModalRef.content.closeBtnName = 'Close';
+    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal' })
+    this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
       if (result === 'delete') {
         this.onDelete.emit(i)
@@ -63,5 +65,4 @@ export class DetailsSelectorComponent implements OnInit {
   getCount() {
     this.count = this.criterias.filter(d => d == this.i).length
   }
-
 }

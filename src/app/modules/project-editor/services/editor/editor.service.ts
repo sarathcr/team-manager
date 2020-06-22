@@ -8,7 +8,6 @@ import { map } from 'rxjs/operators';
 import { ProjectTitle } from '../../constants/title-data.model';
 import { StepStatusEntityService } from '../step-status/step-status-entity.service';
 import { Router } from '@angular/router';
-import { HelpEntityService } from '../help/help-entity.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +34,6 @@ export class EditorService {
     private projectsService: ProjectEntityService,
     private translate: TranslateService,
     private stepStatusService: StepStatusEntityService,
-    private helpService: HelpEntityService,
     private router: Router
   ) { }
 

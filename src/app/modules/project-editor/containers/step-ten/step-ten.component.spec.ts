@@ -1,25 +1,40 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { TranslateModule } from '@ngx-translate/core'
 
-import { StepTenComponent } from './step-ten.component';
+import { StepTenComponent } from './step-ten.component'
 
-describe('StepTenComponent', () => {
-  let component: StepTenComponent;
-  let fixture: ComponentFixture<StepTenComponent>;
+import { EditorService } from '../../services/editor/editor.service'
+import { ProjectEntityService } from '../../services/project/project-entity.service'
+import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
+import { Router } from '@angular/router'
+import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip.component'
 
-  beforeEach(async(() => {
+class EditorServiceStub { }
+class ProjectEntityServiceStub { }
+class StepStatusEntityServiceStub { }
+class RouterStub { }
+
+describe('StepTenComponent', (): void => {
+  let component: StepTenComponent
+  let fixture: ComponentFixture<StepTenComponent>
+  
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ StepTenComponent ]
+      declarations: [ StepTenComponent, InfoToolTipComponent ],
+      providers: [
+        { provider: EditorService, useClass: EditorServiceStub },
+        { provide: ProjectEntityService, useClass: ProjectEntityServiceStub },
+        { provide: StepStatusEntityService, useClass: StepStatusEntityServiceStub },
+        { provide: Router, useClass: RouterStub }
+      ],
+      imports: [ TranslateModule.forRoot() ]
     })
-    .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(StepTenComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(StepTenComponent)
+    component = fixture.componentInstance
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})
