@@ -2,9 +2,9 @@ import { Component, OnInit, ViewEncapsulation, Output, EventEmitter} from '@angu
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
-import { HelpEntityService } from '../../services/help/help-entity.service'
 import { Help, ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
 import { EditorService } from '../../services/editor/editor.service'
+import { HelpEntityService } from '../../store/entity/help/help-entity.service';
 @Component({
   selector: 'app-contextual-help',
   templateUrl: './contextual-help.component.html',

@@ -3,11 +3,11 @@ import { StepState, StepId, Steps, statusId, Step } from '../../constants/step.m
 import { TranslateService } from '@ngx-translate/core';
 import { Project } from 'src/app/modules/project-editor/constants/project.model';
 import { Observable, Subscription, BehaviorSubject } from 'rxjs';
-import { ProjectEntityService } from '../project/project-entity.service';
 import { map } from 'rxjs/operators';
 import { ProjectTitle } from '../../constants/title-data.model';
-import { StepStatusEntityService } from '../step-status/step-status-entity.service';
 import { Router } from '@angular/router';
+import { ProjectEntityService } from '../../store/entity/project/project-entity.service';
+import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service';
 
 @Injectable({
   providedIn: 'root'

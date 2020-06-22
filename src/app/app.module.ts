@@ -15,7 +15,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AuthModule } from './modules/auth/auth.module';
 import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
-import { metaReducers, appReducers } from './state';
+import { metaReducers, appReducers } from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { EntityDataModule } from '@ngrx/data';
 import { CoreModule } from './core/core.module';
