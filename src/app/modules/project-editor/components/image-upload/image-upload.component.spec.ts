@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
-import { NgxDropzoneComponent } from 'ngx-dropzone';
+import { NgxDropzoneComponent } from 'ngx-dropzone'
 
 import { ImageUploadComponent } from './image-upload.component'
 

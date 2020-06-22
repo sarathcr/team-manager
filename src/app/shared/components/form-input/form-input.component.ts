@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewContainerRef } from '@angular/core'
+import { FormGroup } from '@angular/forms'
 // Interfaces
-import { Field, FieldConfig} from '../../constants/field.model';
+import { Field, FieldConfig} from '../../constants/field.model'
 
 @Component({
   selector: 'app-form-input',
@@ -10,7 +10,7 @@ import { Field, FieldConfig} from '../../constants/field.model';
 })
 export class FormInputComponent implements Field {
 
-  config: FieldConfig;
-  group: FormGroup;
+  config: FieldConfig
+  group: FormGroup
 
 }

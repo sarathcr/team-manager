@@ -12,14 +12,14 @@ import { ProjectEntityService } from '../../store/entity/project/project-entity.
 })
 export class HomeComponent implements OnInit {
 
-  title: string = 'Tus plantillas';
-  projects$: Observable<Project[]>;
+  title = 'Tus plantillas'
+  projects$: Observable<Project[]>
   loaded: boolean
   constructor(private projectsService: ProjectEntityService) {
   }
 
   ngOnInit() {
-    this.getAll();
+    this.getAll()
   }
 
   getAll() {
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
       .pipe(
         tap(loaded => {
           if (!loaded) {
-            this.projectsService.getAll();
+            this.projectsService.getAll()
           }
         }),
         filter(loaded => !!loaded),

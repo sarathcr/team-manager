@@ -7,7 +7,7 @@ import { DropdownComponent } from './dropdown.component'
 describe('DropdownComponent', () => {
   let component: DropdownComponent
   let fixture: ComponentFixture<DropdownComponent>
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ DropdownComponent ],

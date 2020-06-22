@@ -10,22 +10,23 @@ import { StepState } from '../../../constants/step.model'
 @Injectable()
 export class StepStatusDataService extends DefaultDataService<StepState[]> {
     constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
-        super('StepStatus', http, httpUrlGenerator);
+        super('StepStatus', http, httpUrlGenerator)
     }
     update(data: any): Observable<any> {
         const { id: projectId, steps: stateData } = data.changes
         const { stepid, state } = stateData[0]
-        return this.http.post<any>(`${environment.apiUrl.projectService}/projects/${data.id}/assignStepState`, { stepid, state, projectId })
+        const url = `${environment.apiUrl.projectService}/projects/${data.id}/assignStepState`
+        return this.http.post<any>(url, { stepid, state, projectId })
             .pipe(
                 map(res => res)
-            );
+            )
     }
 
     getWithQuery(param: string): Observable<any[]> {
-        return this.http.get<StepState[]>(`${environment.apiUrl.projectService}/projects/${param}/steps`)
+        return this.http.get<StepState>(`${environment.apiUrl.projectService}/projects/${param}/steps`)
             .pipe(
-                map(res => [{ steps: res['steps'], id: Number(param) }])
-            );
+                map(res => [{ steps: res.steps, id: Number(param) }])
+            )
     }
 
 }

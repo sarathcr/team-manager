@@ -4,7 +4,7 @@ import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } f
 export class ProjectEntityService extends EntityCollectionServiceBase<any> {
 
     constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
-        super('Project', serviceElementsFactory);
+        super('Project', serviceElementsFactory)
     }
 
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { EditorService } from '../../services/editor/editor.service';
+import { Component, OnInit } from '@angular/core'
+import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
   selector: 'app-step-ten',

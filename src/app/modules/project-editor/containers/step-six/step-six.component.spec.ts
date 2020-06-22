@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { Router } from '@angular/router'
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
 import { StepSixComponent } from './step-six.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
@@ -9,7 +9,7 @@ import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip
 import { StatusComponent } from '../../components/status/status.component'
 import { ImageUploadComponent } from '../../components/image-upload/image-upload.component'
 import { InputComponent } from '../../components/input/input.component'
-import { NgxDropzoneComponent } from 'ngx-dropzone';
+import { NgxDropzoneComponent } from 'ngx-dropzone'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { ProjectEntityService } from '../../services/project/project-entity.service'
@@ -44,14 +44,14 @@ describe('StepSixComponent', (): void => {
       ],
       imports: [ TranslateModule.forRoot(), HttpClientTestingModule ]
     })
-    
+
     fixture = TestBed.createComponent(StepSixComponent)
     component = fixture.componentInstance
   })
 
   afterEach((): void => {
     spyOn(component, 'isFormUpdated').and.returnValue(false)
-    
+
     fixture.destroy()
   })
 

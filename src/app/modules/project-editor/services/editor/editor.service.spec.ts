@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing'
 
-import { EditorService } from './editor.service';
+import { EditorService } from './editor.service'
 
 describe('EditorService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ EditorService ]
-    });
-  });
+    })
+  })
 
   it('should be created', () => {
-    expect(EditorService).toBeTruthy();
-  });
-});
+    expect(EditorService).toBeTruthy()
+  })
+})

@@ -1,6 +1,6 @@
-import { EntityMetadataMap } from '@ngrx/data';
-import { compareProjects } from '../../constants/project.model';
-import { ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
+import { EntityMetadataMap } from '@ngrx/data'
+import { compareProjects } from '../../constants/project.model'
+import { ContextualHelp } from 'src/app/shared/constants/contextual-help.model'
 
 export const entityMetadata: EntityMetadataMap = {
   Project: {
@@ -45,4 +45,4 @@ export const entityMetadata: EntityMetadataMap = {
       optimisticUpdate: true
     }
   }
-};
+}

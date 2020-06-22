@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core'
 
 @Component({
   selector: 'app-loader',
@@ -8,7 +8,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 })
 export class LoaderComponent {
 
-  @Input() variant: "block"
+  @Input() variant: 'block'
 
   constructor() { }
 

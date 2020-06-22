@@ -1,19 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core'
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component'
 
 @Component({
   selector: 'app-help-video-thumb',
   templateUrl: './help-video-thumb.component.html',
   styleUrls: ['./help-video-thumb.component.scss']
 })
-export class HelpVideoThumbComponent implements OnInit {
-  @Input() poster: string;
-  @Input() title: string;
-  @Input() type: string;
-  @Input() url: string;
+export class HelpVideoThumbComponent implements OnInit, OnDestroy {
+  @Input() poster: string
+  @Input() title: string
+  @Input() type: string
+  @Input() url: string
 
-  bsModalRef: BsModalRef;
+  bsModalRef: BsModalRef
 
   constructor(private modalService: BsModalService) { }
 
@@ -28,16 +28,16 @@ export class HelpVideoThumbComponent implements OnInit {
         src: this.url, //'https://youtu.be/f4cstWWgOh0', // 'https://vimeo.com/347119375', // Set video url here
         type: this.type, //'video/youtube' 'video/vimeo' 'video/mp4' Set video type here
       }
-    };
+    }
 
-    this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState });
-    this.bsModalRef.content.closeBtnName = 'Close';
+    this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState })
+    this.bsModalRef.content.closeBtnName = 'Close'
   }
 
   ngOnDestroy() {
-    const modalCount = this.modalService.getModalsCount();
+    const modalCount = this.modalService.getModalsCount()
     if (modalCount > 0) {
-      this.modalService._hideModal(modalCount);
+      this.modalService._hideModal(modalCount)
     }
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
-import { formSevenInitData } from '../../constants/step-forms.data'
-import { FormSevenInitData, FormSeven } from '../../constants/step-forms.model'
+import { FormSevenInitData } from '../../constants/step-forms.data'
+import { FormSevenInit, FormSeven } from '../../constants/step-forms.model'
 import { Step, Status } from '../../constants/step.model'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
 import { DrivingQuestion } from 'src/app/modules/project-editor/constants/project.model'
@@ -20,15 +20,15 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   step$: Observable<Step>
   step: Step
   drivingQuestions$: Observable<DrivingQuestion[]>
-  initialFormData: FormSevenInitData = new formSevenInitData
-  inputFormData: FormSevenInitData = new formSevenInitData
+  initialFormData: FormSevenInit = new FormSevenInitData()
+  inputFormData: FormSevenInit = new FormSevenInitData()
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
   formTitle: string
   formDescription: string
   formPlaceholder: string
-  active: boolean = false
-  initialFormStatus: Status = "PENDING"
+  active = false
+  initialFormStatus: Status = 'PENDING'
 
   constructor(
     private translateService: TranslateService,
@@ -80,7 +80,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     this.project$ = this.editor.getStepData('stepSeven')
     this.step$ = this.editor.getStepStatus(7)
     this.step = this.editor.steps.seven
-    let tempinitialFormData = new formSevenInitData
+    const tempinitialFormData = new FormSevenInitData()
     if (this.project$) {
       this.drivingQuestions$ = this.project$
       this.drivingQuestions$.subscribe(drivingQuestions => {
@@ -96,10 +96,11 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.buttonConfig.submitted = formStatus.state == 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != "DONE" && this.checkNonEmptyForm())
+            if (formStatus.state != 'DONE' && this.checkNonEmptyForm()) {
               this.buttonConfig.disabled = false
+            }
           }
         }
       )
@@ -108,10 +109,12 @@ export class StepSevenComponent implements OnInit, OnDestroy {
 
   // Function to check status of step
   checkStatus() {
-    if (this.checkEmptyForm())
-      this.step.state = "PENDING"
-    else
-      this.step.state = "INPROCESS"
+    if (this.checkEmptyForm()) {
+      this.step.state = 'PENDING'
+    }
+    else {
+      this.step.state = 'INPROCESS'
+    }
     this.handleButtonType()
   }
 
@@ -121,16 +124,18 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       return true
     } else {
       const tempData = this.inputFormData.drivingQuestions.filter(item => item.name != null && item.name.length && item)
-      if (!tempData.length)
+      if (!tempData.length) {
         return true
+      }
     }
     return false
   }
 
   // checks the form is completely filled or not
   checkNonEmptyForm() {
-    if (this.inputFormData.drivingQuestions.length && (this.inputFormData.drivingQuestions[this.inputFormData.drivingQuestions.length - 1].name != null))
+    if (this.inputFormData.drivingQuestions.length && (this.inputFormData.drivingQuestions[this.inputFormData.drivingQuestions.length - 1].name != null)) {
       return true
+    }
     return false
   }
 
@@ -153,10 +158,11 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   handleSubmit(formStatus?: Status) {
     if (formStatus == 'DONE') {
       this.step.state = 'DONE'
-      this.initialFormStatus = "DONE"
+      this.initialFormStatus = 'DONE'
     }
-    else
+    else {
       this.checkStatus()
+    }
     let tempData = this.inputFormData.drivingQuestions.filter(item => item.name != null && item.name.length)
     if (tempData.length) {
       tempData = tempData.map(item => item.id == null ? { name: item.name } : item)
@@ -167,7 +173,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       this.inputFormData.drivingQuestions = []
       this.initialFormData.drivingQuestions = this.inputFormData.drivingQuestions
     }
-    let formData: FormSeven = {
+    const formData: FormSeven = {
       data: {
         drivingQuestions: tempData.length ? this.inputFormData.drivingQuestions : [],
       },
@@ -180,7 +186,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.editor.handleStepSubmit(formData, this.step.state == "DONE")
+    this.editor.handleStepSubmit(formData, this.step.state == 'DONE')
     this.handleButtonType()
   }
 

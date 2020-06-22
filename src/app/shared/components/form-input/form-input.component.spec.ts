@@ -5,7 +5,7 @@ import { FormInputComponent } from './form-input.component'
 describe('FormInputComponent', () => {
   let component: FormInputComponent
   let fixture: ComponentFixture<FormInputComponent>
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ FormInputComponent ]

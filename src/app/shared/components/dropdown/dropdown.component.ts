@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core'
 // Interfaces
-import { FieldConfig } from '../../constants/field.model';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { FieldConfig } from '../../constants/field.model'
+import { IDropdownSettings } from 'ng-multiselect-dropdown'
 
 @Component({
   selector: 'app-dropdown',
@@ -10,10 +10,10 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   encapsulation: ViewEncapsulation.None
 })
 export class DropdownComponent implements OnInit {
-  @Output() onSelect: EventEmitter<any> = new EventEmitter();
-  @Input() config: FieldConfig;
-  active = false;
-  dropdownSettings: IDropdownSettings = {};
+  @Output() onSelect: EventEmitter<any> = new EventEmitter()
+  @Input() config: FieldConfig
+  active = false
+  dropdownSettings: IDropdownSettings = {}
   constructor() { }
 
   ngOnInit(): void {
@@ -24,20 +24,20 @@ export class DropdownComponent implements OnInit {
       closeDropDownOnSelection: true,
       maxHeight: 265,
       enableCheckAll: false,
-    };
+    }
   }
 
   onItemSelect(item: any) {
-    this.active = true;
-    this.onSelect.emit({controller: this.config.name, val: this.config.selectedItems});
+    this.active = true
+    this.onSelect.emit({controller: this.config.name, val: this.config.selectedItems})
   }
 
   onItemDeSelect(item: any) {
-    this.active = true;
-    this.onSelect.emit({controller: this.config.name, val: this.config.selectedItems});
+    this.active = true
+    this.onSelect.emit({controller: this.config.name, val: this.config.selectedItems})
   }
 
   onDropDownClose(){
-    this.active = false;
+    this.active = false
   }
 }
