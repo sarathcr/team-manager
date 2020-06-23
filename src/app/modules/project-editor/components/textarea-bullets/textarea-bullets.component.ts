@@ -68,13 +68,12 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         if (this.config.limit == 0) {
           this.limit = this.configOptions.length + 1
         }
-        if (this.configOptions.length < this.limit && this.configOptions[this.configOptions.length - 1].name) {
-          this.configOptions.push({ ...this.sampleOption });
-          this.index++
+        if (this.configOptions.length < this.limit && this.configOptions[id].name?.trim()) {
+          this.configOptions.splice(id + 1, 0, { ...this.sampleOption })
+          this.timeOut = setTimeout(() => {
+            this.textArea.toArray()[id + 1].nativeElement.focus()
+          }, 0)
         }
-        this.timeOut = setTimeout(() => {
-          this.textArea.last.nativeElement.focus()
-        }, 0)
         break
 
       case 46:  // delete
@@ -102,10 +101,10 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
           var endPos = textComponent.selectionEnd;
           let string = this.configOptions[id].name
           let stringLength = string?.length
-          this.configOptions[id].name = (string.slice(0, startPos) + string.slice(endPos, stringLength)).trim();
           if (startPos != endPos) {
+            this.configOptions[id].name = (string.slice(0, startPos) + " " + string.slice(endPos, stringLength)).trim(); // splice the input text
             setTimeout(() => {
-              textComponent.setSelectionRange(startPos, startPos)
+              textComponent.setSelectionRange(startPos + 1, startPos + 1) // shows the cursor after a space 
             }, 0);
           }
           if (!this.configOptions[id].name) {
@@ -117,9 +116,8 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
                 this.textArea.toArray()[id + 1].nativeElement.focus();
               }
             } else {
-              if (!this.configOptions[id].name) {
+              if (!this.configOptions[id].name)
                 this.configOptions[0].name = ''
-              }
             }
           }
         } else {
@@ -132,8 +130,10 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
           this.configOptions.splice(id, 1)
           if (id - 1 >= 0) {
             this.textArea.toArray()[id - 1].nativeElement.focus();
+            event.preventDefault();
           } else {
             this.textArea.toArray()[id + 1].nativeElement.focus();
+            event.preventDefault();
           }
           clearTimeout(this.timeOut);
         }
@@ -149,9 +149,9 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     if (this.isFirefox() && value.length > this.config.maxLength) {
       value = value.substring(0, this.config.maxLength)
     }
-    this.configOptions[i].name = value.trim()
-    let newConfigOptions = [...this.configOptions];
-    if (this.configOptions.length == 1 && !this.configOptions[0].name) newConfigOptions = []
+    this.configOptions[i].name = value
+    let newConfigOptions = this.configOptions.filter(option => option.name?.trim() && option)
+    if (this.configOptions.length == 1 && !this.configOptions[0].name.trim()) newConfigOptions = []
     this.onChange.emit(newConfigOptions);
 
   }
@@ -162,7 +162,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
   onBlur(i) {
     this.focus = false;
-    if (this.configOptions.length > 1 && !this.configOptions[i]?.name) {
+    if (this.configOptions.length > 1 && !this.configOptions[i]?.name?.trim()) {
       this.configOptions.splice(i, 1)
     }
     if (this.configOptions.length === 1 && !this.configOptions[0]?.name?.trim()) {
