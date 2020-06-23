@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core'
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateService } from '@ngx-translate/core'
+import { DropDownConfig } from 'src/app/shared/constants/field.model'
 
 
 @Component({
@@ -10,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core'
   // encapsulation: ViewEncapsulation.None
 })
 export class CompetencyModalContentComponent implements OnInit {
-  gradeDropdown: object
+  gradeDropdownConfig: DropDownConfig
   rowHeadData: Array<object>
   rowData: Array<object>
   leftContentHeight = ''
@@ -28,37 +29,31 @@ export class CompetencyModalContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.adjustHeightContent()
-    this.getTranslation()
     this.createFormConfig()
+    this.getTranslation()
     this.rowInit()
-    this.gradeDropdown = {
-      field: 'dropdown',
-      name: 'Curso',
-      id: 'Curso',
-      label: 'Curso',
-      multiselect: true,
-      options: [
-        {
-          id: 1,
-          name: 'sample1'
-        },
-        {
-          id: 2,
-          name: 'sample2'
-        }
-      ],
-      selectedItems: [{
-        id: 1,
-        name: 'sample1'
-      }]
-    }
+
   }
 
   onDropdownSelect(selectedData: any) {
 
   }
-
-  getTranslation(){
+  createFormConfig() {
+    this.gradeDropdownConfig = {
+      name: '',
+      data: [],
+      id: '',
+      priorityData: [],
+      placeholder: 'Selecciona un curso',
+      settings: {
+        singleSelection: true,
+        priorityList: true,
+        priorityTitle: 'Cursos preferentes',
+        normalTitle: 'Otros cursos',
+      }
+    }
+  }
+  getTranslation() {
     this.translateService.stream([
       'OBJECTIVES.project_objectives_criteriawindow_curriculum',
       'OBJECTIVES.project_objectives_criteriawindow_title',
@@ -70,22 +65,20 @@ export class CompetencyModalContentComponent implements OnInit {
       'OBJECTIVES.project_objectives_criteriawindow_dimensions',
       'OBJECTIVES.project_objectives_criteriawindow_showall',
       'OBJECTIVES.project_objectives_criteriawindow_add',
-    ]).subscribe(translations => {})
+    ]).subscribe(translations => {
+      this.gradeDropdownConfig.label =
+        translations['OBJECTIVES.project_objectives_criteriawindow_combo_title']
+      // Below lines must be uncommented after getting its translation
+      // this.gradeDropdownConfig.placeholder =
+      // translations['OBJECTIVES.project_objectives_criteriawindow_combo_placeholder']
+      this.gradeDropdownConfig.settings.priorityTitle =
+        translations['OBJECTIVES.project_objectives_criteriawindow_combo_section_1']
+      this.gradeDropdownConfig.settings.normalTitle =
+        translations['OBJECTIVES.project_objectives_criteriawindow_combo_section_2']
+    })
   }
 
-  createFormConfig() {
-    this.gradeDropdown = {
-      field: 'dropdown',
-      name: 'Curso',
-      id: 'curso',
-      multiselect: false,
-      options: [],
-      selectedItems: [],
-      placeholder: 'Selecciona un curso'
-    }
-  }
-
-  rowInit(){
+  rowInit() {
     this.rowHeadData = [
       {
         list: 'Criterio de evaluación'
@@ -104,13 +97,13 @@ export class CompetencyModalContentComponent implements OnInit {
     ]
   }
 
-  openTab(event, id: string){
+  openTab(event, id: string) {
     let i
     let tabcontent
     let tablinks
 
     tabcontent = document.getElementsByClassName('custom-tab__content')
-    for (i = 0 ; i < tabcontent.length; i++) {
+    for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].classList.remove('active')
     }
 
@@ -123,11 +116,11 @@ export class CompetencyModalContentComponent implements OnInit {
     event.currentTarget.classList.add('active')
   }
 
-  getStatus($event){
+  getStatus($event) {
     console.log($event)
   }
 
-  adjustHeightContent(){
+  adjustHeightContent() {
     const innerHeight: number = window.innerHeight
     this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'

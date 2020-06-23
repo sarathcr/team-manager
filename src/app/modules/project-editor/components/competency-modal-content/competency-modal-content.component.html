@@ -12,7 +12,7 @@
       {{ 'OBJECTIVES.project_objectives_criteriawindow_title' | translate }}</h6>
     <div class="competency-modal__body-block">
       <div class="competency-modal__body-block-grade">
-        <app-dropdown [config]='gradeDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
+        <app-dropdown [config]='gradeDropdownConfig' (onSelect)='onDropdownSelect($event)'></app-dropdown>
         <ng-scrollbar>
           <div class="competency-modal__body-scroll"
             [ngStyle]="{ 'max-height' : leftContentHeight }">

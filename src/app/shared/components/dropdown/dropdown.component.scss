@@ -24,6 +24,7 @@
     border-radius: 3px;
     z-index: 1;
     box-shadow: 0 0 0 0 transparent;
+
     &:active,
     &:focus {
       border: 1px solid $primary;
@@ -43,7 +44,8 @@
     background-color: inherit;
     left: $padding-m;
     z-index: 2;
-    &::first-letter{
+
+    &::first-letter {
       text-transform: uppercase;
     }
   }
@@ -172,15 +174,19 @@
       border: none;
       margin-top: 1px;
       padding-bottom: 5px;
-      .single-select-mode{
-        .pure-checkbox{
-          div{
-            &::before,&::after{
+
+      .single-select-mode {
+        .pure-checkbox {
+          div {
+
+            &::before,
+            &::after {
               content: none;
             }
           }
         }
       }
+
       .multiselect-item-checkbox {
         padding: 10px 15px;
 
@@ -233,6 +239,7 @@
       .no-data {
         height: 100px;
         width: 100%;
+
         h5 {
           color: transparent;
           @extend .spinner;
