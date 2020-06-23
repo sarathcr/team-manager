@@ -28,7 +28,7 @@ export class ContextualHelpComponent implements OnInit {
   ngOnInit(): void {}
 
   // Close tab
-  closeTab() {
+  closeTab(): void {
     this.closeContext = false
     this.status.emit(false)
     setTimeout(() => {
@@ -37,7 +37,7 @@ export class ContextualHelpComponent implements OnInit {
   }
 
   // Open tab
-  openTab($event) {
+  openTab($event: any): void {
     this.activeTab = $event
     this.status.emit(true)
     if (!this.closeContext) {
@@ -48,7 +48,7 @@ export class ContextualHelpComponent implements OnInit {
     }
   }
 
-  getHelpContent() {
+  getHelpContent(): void {
     this.editorService.currentStep$.subscribe( stepId => {
       if (stepId && this.closeContext){
         this.getHelp(stepId)
@@ -57,7 +57,7 @@ export class ContextualHelpComponent implements OnInit {
   }
 
   // Get help content
-  getHelp(stepid) {
+  getHelp(stepid): void {
     this.contextualHelp$ = this.helpService.entities$
       .pipe(
         map( help => help.find( step => {
