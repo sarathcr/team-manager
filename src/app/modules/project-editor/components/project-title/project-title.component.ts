@@ -32,12 +32,13 @@ export class ProjectTitleComponent implements OnInit {
   }
 
   // Function to handle blur event of input field.
-  handleBlur(event: Event): void {
-    this.tempTitle = (<HTMLInputElement>event.target).value.trim()
+  handleBlur(value: string): void {
+    this.tempTitle = value.trim()
     this.showInputfield = !this.tempTitle
     if ((this.tempTitle || this.projectData?.id)
-      && (this.tempTitle !== this.projectData?.title)) { //check for same this.temptitle value
+      && (this.tempTitle !== this.projectData?.title)) { // check for same this.temptitle value
       this.titleBlur.emit({ title: this.tempTitle })
     }
   }
+
 }

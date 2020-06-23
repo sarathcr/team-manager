@@ -52,9 +52,9 @@ export class StepEightComponent implements OnInit, OnDestroy {
       this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == 'DONE'
+            this.buttonConfig.submitted = formStatus.state === 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != 'DONE' && this.finalProduct?.length) {
+            if (formStatus.state !== 'DONE' && this.finalProduct?.length) {
               this.buttonConfig.disabled = false
             }
           }
@@ -76,15 +76,15 @@ export class StepEightComponent implements OnInit, OnDestroy {
 
   // Changes the button according to form status
   handleButtonType() {
-    if (this.step.state == 'INPROCESS') {
+    if (this.step.state === 'INPROCESS') {
       this.buttonConfig.disabled = false
       this.buttonConfig.submitted = false
     }
-    if (this.step.state == 'PENDING') {
+    if (this.step.state === 'PENDING') {
       this.buttonConfig.disabled = true
       this.buttonConfig.submitted = false
     }
-    if (this.step.state == 'DONE') {
+    if (this.step.state === 'DONE') {
       this.buttonConfig.submitted = true
       this.buttonConfig.disabled = true
     }
@@ -98,7 +98,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
 
   // Handle submit functionality
   handleSubmit(formStatus?: Status) {
-    if (formStatus == 'DONE') {
+    if (formStatus === 'DONE') {
       this.step.state = 'DONE'
     }
     this.initialFormData = this.finalProduct
@@ -116,7 +116,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.editor.handleStepSubmit(formData, this.step.state == 'DONE')
+    this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
   }
 
   // Function to check whether the form is updated

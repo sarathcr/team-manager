@@ -12,7 +12,7 @@ import { EditorService } from '../../services/editor/editor.service'
 export class EditorComponent implements OnInit, OnDestroy {
   projectUrl: string | number
   steps: Steps
-  contextualStatus: boolean = false
+  contextualStatus= false
 
   constructor(
     private route: ActivatedRoute,

@@ -2,17 +2,21 @@
     <app-status [status]='step.state'></app-status>
     <div class="project-form d-flex flex-column justify-content-between">
         <div>
-            <h1 class="title_s"><span>6. </span>{{'RETHINK_TITLE.project_rethinktitle_title' | translate}}<app-info-tooltip></app-info-tooltip></h1>
+            <h1 class="title_s">
+              <span>6. </span>{{'RETHINK_TITLE.project_rethinktitle_title' | translate}}
+              <app-info-tooltip></app-info-tooltip>
+            </h1>
             <p class="project-form__description"
                 [innerHTML]="'RETHINK_TITLE.project_rethinktitle_description' | translate"></p>
             <app-input placeholder="{{'RETHINK_TITLE.project_rethinktitle_creativetitle_placeholder' | translate }}"
-                maxlength="150" [(value)]="creativeTitle" (onChange)="onValueChange($event)">
+                maxlength="150" [(value)]="creativeTitle" (inputChange)="onValueChange($event)">
             </app-input>
-            <h2 class="title_xs project-form__subtitle mb-4">{{'RETHINK_TITLE.project_rethinktitle_addimage' | translate}}
+            <h2 class="title_xs project-form__subtitle mb-4">
+              {{'RETHINK_TITLE.project_rethinktitle_addimage' | translate}}
             </h2>
             <app-image-upload [imageURL]="creativeImage" [maxFileSize]="5242880"
                 acceptedType="image/jpeg,image/jpg,image/png" [label]="'Cargar archivo'"
-                (onFileSelect)="onFileSelect($event)">
+                (fileSelect)="onFileSelect($event)">
             </app-image-upload>
         </div>
         <app-button [config]='buttonConfig' (click)='handleSubmit("DONE")'>
