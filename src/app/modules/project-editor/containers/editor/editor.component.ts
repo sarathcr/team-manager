@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy,  HostListener } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
 import { Steps } from '../../constants/step.model'
@@ -13,6 +13,11 @@ export class EditorComponent implements OnInit, OnDestroy {
   projectUrl: string | number
   steps: Steps
   contextualStatus: boolean = false
+  leftPadding: string
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.updatePaddingLeft()
+  }
 
   constructor(
     private route: ActivatedRoute,
@@ -23,6 +28,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.steps = this.editor.createSteps()
     this.projectUrl = this.route.snapshot.paramMap.get('id')
     this.editor.getProject(this.projectUrl)
+    this.updatePaddingLeft()
   }
 
   ngOnDestroy(): void {
@@ -31,5 +37,10 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   getContextualStatus($event: boolean): void {
     this.contextualStatus = $event
+  }
+
+  updatePaddingLeft(){
+    const sidebarWidth = document.getElementById('project-editor-sidebar').clientWidth
+    this.leftPadding = sidebarWidth + 'px'
   }
 }

@@ -25,9 +25,7 @@ export class ContextualHelpComponent implements OnInit {
     private translateService: TranslateService
   ) { }
 
-  ngOnInit(): void {
-    this.getTranslation()
-  }
+  ngOnInit(): void {}
 
   // Close tab
   closeTab() {
@@ -77,11 +75,5 @@ export class ContextualHelpComponent implements OnInit {
     this.helpService.loading$.subscribe(loading => {
       this.loaded = !loading
     })
-  }
-
-  getTranslation(){
-    this.translateService.stream([
-      'PROJECTGUIDE.projectguide_pedagogical_guide',
-    ]).subscribe(translations => {})
   }
 }
