@@ -6,12 +6,13 @@ import { TranslateService } from '@ngx-translate/core'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
 import { Step, Status } from '../../constants/step.model'
-import { FieldConfig } from 'src/app/shared/constants/field.model'
+import { FieldConfig, Option } from 'src/app/shared/constants/field.model'
 import { EditorService } from '../../services/editor/editor.service'
-import { Subject, CompetencyObjectives, EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
+import { Subject, CompetencyObjectives, EvaluationCriteria, Grade, AcademicYear, Region } from 'src/app/modules/project-editor/constants/project.model'
 import { FormThreeInit, FormThree } from '../../constants/step-forms.model'
 import { FormThreeInitData } from '../../constants/step-forms.data'
 import { CompetencyModalContentComponent } from './../../components/competency-modal-content/competency-modal-content.component'
+import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 
 @Component({
   selector: 'app-step-three',
@@ -22,6 +23,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   project$: Observable<any>
   step$: Observable<Step>
+  grades: Option[]
   step: Step
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
@@ -30,7 +32,11 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   loading = true
   InputFormData: FormThreeInit = new FormThreeInitData()
   initialFormData: FormThreeInit = new FormThreeInitData()
-  project: { subjects: Subject[], competencyObjectives: CompetencyObjectives[] }
+  project: { subjects: Subject[],
+    competencyObjectives: CompetencyObjectives[],
+    grades: Grade[],
+    academicYear: AcademicYear,
+    region: Region }
   initialFormStatus: Status = 'PENDING'
   initialCriterias: number[] = []
   criterias: number[] = []
@@ -40,7 +46,8 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   constructor(
     private translateService: TranslateService,
     public editor: EditorService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private gradeService: GradeEntityService,
   ) { }
 
   ngOnInit(): void {
@@ -68,6 +75,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     if (this.project$) {
       this.project$.subscribe(data => {
         this.project = data
+        this.getGrades(this.project)
       })
       this.competencyObjectives$ = this.project$
         .pipe(
@@ -114,6 +122,25 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     }
   }
 
+  getGrades(project): void {
+    if ( this.project ) {
+      this.gradeService.entities$
+        .pipe(
+          map(grades => grades.filter(grade => grade.academicYear?.id === project.academicYear.id
+            && grade.region?.id === project.region.id))
+        )
+        .subscribe(newData => {
+          if (!newData.length) {
+            const parms = {
+              regionId: project.region.id.toString(),
+              academicyearId: project.academicYear.id.toString()
+            }
+            this.gradeService.getWithQuery(parms)
+          }
+          this.grades = newData.map(({ id, name }) => ({ id, name }))
+        })
+    }
+  }
   // WIP
   addItem(event) {
     this.criterias.push(event.id)
@@ -286,7 +313,10 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   }
   openModalWithComponent() {
-    const initialState = {}
+    const initialState = {
+      grades: this.grades,
+      selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name }))
+    }
     this.bsModalRef = this.modalService.show(CompetencyModalContentComponent,
       { class: 'competency-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'

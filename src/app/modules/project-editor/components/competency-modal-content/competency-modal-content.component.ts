@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core'
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateService } from '@ngx-translate/core'
-import { DropDownConfig } from 'src/app/shared/constants/field.model'
+import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
 
 
 @Component({
@@ -14,6 +14,8 @@ export class CompetencyModalContentComponent implements OnInit {
   gradeDropdownConfig: DropDownConfig
   rowHeadData: Array<object>
   rowData: Array<object>
+  grades: Option[]
+  selectedGrades: Option[]
   leftContentHeight = ''
   contentHeight = ''
 
@@ -39,13 +41,18 @@ export class CompetencyModalContentComponent implements OnInit {
 
   }
   createFormConfig() {
+    const selectedGrades = this.selectedGrades
+    const otherGrades = this.grades.filter(x => selectedGrades.includes(x))
+    console.log(selectedGrades,otherGrades)
     this.gradeDropdownConfig = {
       name: '',
-      data: [],
+      data: otherGrades,
       id: '',
-      priorityData: [],
+      priorityData: selectedGrades,
+      selectedItems: [selectedGrades[0]],
       placeholder: 'Selecciona un curso',
       settings: {
+        textField: 'name',
         singleSelection: true,
         priorityList: true,
         priorityTitle: 'Cursos preferentes',
@@ -126,4 +133,7 @@ export class CompetencyModalContentComponent implements OnInit {
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
   }
 
+  configDropdownData() {
+
+  }
 }

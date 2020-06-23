@@ -32,8 +32,8 @@ export interface FieldConfig {
 }
 
 export interface Option {
-  id?: number
-  name?: string
+  id: number
+  name: string
 }
 export interface DropDownConfig {
   id: string
