@@ -12,8 +12,8 @@ import { InputComponent } from '../../components/input/input.component'
 import { NgxDropzoneComponent } from 'ngx-dropzone'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { ProjectEntityService } from '../../services/project/project-entity.service'
-import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
+import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
+import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 
 class EditorServiceStub { }
 class ProjectEntityServiceStub { }

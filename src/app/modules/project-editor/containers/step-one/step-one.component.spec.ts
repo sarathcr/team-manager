@@ -11,15 +11,15 @@ import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip
 import { StatusComponent } from '../../components/status/status.component'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { ProjectEntityService } from '../../services/project/project-entity.service'
-import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
-import { CountryEntityService } from '../../services/country/country-entity.service'
-import { RegionEntityService } from '../../services/region/region-entity.service'
-import { AcademicYearEntityService } from '../../services/academic-year/academic-year-entity.service'
-import { GradeEntityService } from '../../services/grade/grade-entity.service'
-import { SubjectEntityService } from '../../services/subject/subject-entity.service'
-import { GradeDataService } from '../../services/grade/grade-data.service'
-import { SubjectDataService } from '../../services/subject/subject-data.service'
+import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
+import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
+import { CountryEntityService } from '../../store/entity/country/country-entity.service'
+import { RegionEntityService } from '../../store/entity/region/region-entity.service'
+import { AcademicYearEntityService } from '../../store/entity/academic-year/academic-year-entity.service'
+import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
+import { GradeDataService } from '../../store/entity/grade/grade-data.service'
+import { SubjectEntityService } from '../../store/entity/subject/subject-entity.service'
+import { SubjectDataService } from '../../store/entity/subject/subject-data.service'
 
 class EditorServiceStub { }
 class ProjectEntityServiceStub { }
@@ -36,7 +36,7 @@ class RouterStub { }
 describe('StartPointComponent', () => {
   let component: StepOneComponent
   let fixture: ComponentFixture<StepOneComponent>
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -68,7 +68,7 @@ describe('StartPointComponent', () => {
 
   afterEach((): void => {
     spyOn(component, 'isFormUpdated').and.returnValue(false)
-    
+
     fixture.destroy()
   })
 

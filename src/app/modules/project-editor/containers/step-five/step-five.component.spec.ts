@@ -3,11 +3,11 @@ import { TranslateModule } from '@ngx-translate/core'
 import { Router } from '@angular/router'
 
 import { StepFiveComponent } from './step-five.component'
+import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip.component'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { ProjectEntityService } from '../../services/project/project-entity.service'
-import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
-import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip.component'
+import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
+import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 
 class EditorServiceStub { }
 class ProjectEntityServiceStub { }
@@ -17,7 +17,7 @@ class RouterStub { }
 describe('StepFiveComponent', (): void => {
   let component: StepFiveComponent
   let fixture: ComponentFixture<StepFiveComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ StepFiveComponent, InfoToolTipComponent ],

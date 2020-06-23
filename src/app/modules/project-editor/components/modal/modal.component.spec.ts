@@ -10,7 +10,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 describe('ModalComponent', (): void => {
   let component: ModalComponent
   let fixture: ComponentFixture<ModalComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ ModalComponent, ButtonComponent ],

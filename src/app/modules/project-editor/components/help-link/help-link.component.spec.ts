@@ -5,7 +5,7 @@ import { HelpLinkComponent } from './help-link.component'
 describe('HelpLinkComponent', () => {
   let component: HelpLinkComponent
   let fixture: ComponentFixture<HelpLinkComponent>
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ HelpLinkComponent ]

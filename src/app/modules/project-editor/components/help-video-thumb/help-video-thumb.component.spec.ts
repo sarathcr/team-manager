@@ -6,7 +6,7 @@ import { BsModalService, ModalModule } from 'ngx-bootstrap/modal'
 describe('HelpVideoThumbComponent', (): void => {
   let component: HelpVideoThumbComponent
   let fixture: ComponentFixture<HelpVideoThumbComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [HelpVideoThumbComponent],
