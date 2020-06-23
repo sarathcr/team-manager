@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { FieldConfig, ButtonVariants, Theme } from '../../constants/field.model'
 
 @Component({
@@ -11,7 +11,6 @@ export class ButtonComponent {
   @Input() theme: Theme = 'primary'
   @Input() disabled: boolean
   @Input() config: FieldConfig
-  @Output() onClick = new EventEmitter()
   @Input() variant: ButtonVariants = 'contained'
 
   constructor() { }

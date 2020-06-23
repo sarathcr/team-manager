@@ -25,8 +25,8 @@ export class HelpVideoThumbComponent implements OnInit, OnDestroy {
       title: this.title, // Title goes here
       video: true,
       videoSources: {
-        src: this.url, //'https://youtu.be/f4cstWWgOh0', // 'https://vimeo.com/347119375', // Set video url here
-        type: this.type, //'video/youtube' 'video/vimeo' 'video/mp4' Set video type here
+        src: this.url, // 'https://youtu.be/f4cstWWgOh0', // 'https://vimeo.com/347119375', // Set video url here
+        type: this.type, // 'video/youtube' 'video/vimeo' 'video/mp4' Set video type here
       }
     }
 

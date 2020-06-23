@@ -1,14 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
+
 import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { TranslateService } from '@ngx-translate/core'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+
 import { Step, Status } from '../../constants/step.model'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
 import { EditorService } from '../../services/editor/editor.service'
-import { TranslateService } from '@ngx-translate/core'
 import { Subject, CompetencyObjectives, EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
 import { FormThreeInit, FormThree } from '../../constants/step-forms.model'
 import { FormThreeInitData } from '../../constants/step-forms.data'
-import { map } from 'rxjs/operators'
 import { CompetencyModalContentComponent } from './../../components/competency-modal-content/competency-modal-content.component'
 
 @Component({
@@ -101,9 +103,9 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == 'DONE'
+            this.buttonConfig.submitted = formStatus.state === 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != 'DONE' && !this.checkInitialEmptyForm()) {
+            if (formStatus.state !== 'DONE' && !this.checkInitialEmptyForm()) {
               this.buttonConfig.disabled = false
             }
           }
@@ -172,7 +174,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   // Changes the button according to form status
   handleButtonType() {
-    if (this.step.state == 'DONE') {
+    if (this.step.state === 'DONE') {
       this.buttonConfig.submitted = true
       this.buttonConfig.disabled = true
     } else {
@@ -207,7 +209,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   handleSubmit(formStatus?: Status) {
-    if (formStatus == 'DONE') {
+    if (formStatus === 'DONE') {
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'
     }
@@ -248,7 +250,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.editor.handleStepSubmit(formData, this.step.state == 'DONE')
+    this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
     this.handleButtonType()
   }
 
@@ -285,7 +287,8 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
   openModalWithComponent() {
     const initialState = {}
-    this.bsModalRef = this.modalService.show(CompetencyModalContentComponent, { class: 'competency-modal', initialState })
+    this.bsModalRef = this.modalService.show(CompetencyModalContentComponent,
+      { class: 'competency-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
 
   }

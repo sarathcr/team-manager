@@ -8,6 +8,6 @@ import { TranslateService } from '@ngx-translate/core'
 })
 export class LanguageSelectorComponent {
 
-  constructor(public TranslateService: TranslateService) { }
+  constructor(public translateService: TranslateService) { }
 
 }
