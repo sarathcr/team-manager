@@ -73,6 +73,11 @@
             flex-direction: row;
             width: 100%;
             height: 68%;
+            &_no-content{
+                min-height: 511px;
+                border:1px solid $creator-border;
+                border-radius:3px 3px 0 0;
+            }
         }
 
         &-block-grade{
@@ -98,6 +103,23 @@
             padding-left: 6px;
             // max-height: 78.5%;
         }
+
+        &__no-content-wrapper{
+            flex-direction: column;
+            &__title{
+                font-family: $font-family-primary;
+                line-height: 32px;
+                letter-spacing: 0.3px;
+                font-weight: 900;
+                margin-bottom: 7px;
+            }
+    
+            &__description{
+                line-height: 24px;
+                margin-bottom: 31px;
+            }
+        }
+
     }
 
     &__footer{

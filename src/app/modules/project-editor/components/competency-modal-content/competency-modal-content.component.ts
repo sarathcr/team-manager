@@ -15,6 +15,7 @@ export class CompetencyModalContentComponent implements OnInit {
   rowData: Array<object>
   leftContentHeight = ''
   contentHeight = ''
+  isShow = false
 
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
@@ -131,5 +132,8 @@ export class CompetencyModalContentComponent implements OnInit {
     const innerHeight: number = window.innerHeight
     this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
+  }
+  getSummary(){
+    this.isShow = !this.isShow
   }
 }

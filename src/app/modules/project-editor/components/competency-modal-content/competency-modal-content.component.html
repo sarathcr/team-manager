@@ -1,13 +1,19 @@
 <div class="competency-modal__content">
   <div class="competency-modal__header">
-    <h4 class="competency-modal__header-title">
-      {{ 'OBJECTIVES.project_objectives_criteriawindow_curriculum' | translate }}</h4>
+    <h4 class="competency-modal__header-title" *ngIf="!isShow else return">
+      {{ 'OBJECTIVES.project_objectives_criteriawindow_curriculum' | translate }}
+    </h4>
+    <ng-template #return>
+      <h4 class="competency-modal__header-title">
+        {{ 'CONTENT.project_objectives_contentwindow_content_selected_back' | translate }}
+      </h4>
+    </ng-template>
     <button type="button" class="close competency-modal__header-close" aria-label="Close"
-      (click)="bsModalRef.hide()">
+      (click)="bsModalRef.hide()" *ngIf="!isShow">
       <span class="icon icon-ic_share_close"></span>
     </button>
   </div>
-  <div class="competency-modal__body">
+  <div class="competency-modal__body" *ngIf="!isShow else summary">
     <h6 class="competency-modal__body-title">
       {{ 'OBJECTIVES.project_objectives_criteriawindow_title' | translate }}</h6>
     <div class="competency-modal__body-block">
@@ -141,11 +147,39 @@
       </div>
     </div>
   </div>
+
+  <!-- Summary view -->
+  <ng-template #summary>
+    <div class="competency-modal__body">
+      <h6 class="competency-modal__body-title">
+        0 {{ 'OBJECTIVES.project_objectives_criteriawindow_critera_selected' | translate }}</h6>
+      <div class="competency-modal__body-block_no-content d-flex align-items-center 
+      justify-content-center">
+        <div class="competency-modal__body__no-content-wrapper d-flex align-items-center 
+        justify-content-center">
+          <h3 class="title_xs competency-modal__body__no-content-wrapper__title">
+            {{ 'OBJECTIVES.project_objectives_criteriawindow_empty_title' | translate }}
+          </h3>
+          <div class="competency-modal__body__no-content-wrapper__description">
+            {{ 'OBJECTIVES.project_objectives_criteriawindow_empty_description' | translate }}
+          </div>
+          <div>
+            <app-button (click)="getSummary()">
+              {{'OBJECTIVES.project_objectives_criteriawindow_empty_button' | translate}}
+            </app-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
   <div class="competency-modal__footer">
     <div class="competency-modal__footer-btn-group">
       <a
         href="javascript:void(0);"
         class="competency-modal__footer-btn-link"
+        (click)="getSummary()"
+        *ngIf="!isShow"
       >
         {{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }}
         (6)
