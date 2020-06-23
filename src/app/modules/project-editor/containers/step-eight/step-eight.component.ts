@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Step, Status } from '../../constants/step.model';
-import { buttonSubmitConfig } from '../../constants/form-config.data';
-import { FormEightInitData, FormEight } from '../../constants/step-forms.model';
-import { formEightInitData } from '../../constants/step-forms.data';
-import { EditorService } from '../../services/editor/editor.service';
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Observable } from 'rxjs'
+import { Step, Status } from '../../constants/step.model'
+import { ButtonSubmitConfig } from '../../constants/form-config.data'
+import { FormEightInit, FormEight } from '../../constants/step-forms.model'
+import { FormEightInitData } from '../../constants/step-forms.data'
+import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
   selector: 'app-step-eight',
   templateUrl: './step-eight.component.html',
   styleUrls: ['./step-eight.component.scss']
 })
-export class StepEightComponent implements OnInit {
+export class StepEightComponent implements OnInit, OnDestroy {
 
   project$: Observable<any>
   step$: Observable<Step>
   step: Step
-  finalProduct: any = ""
-  buttonConfig = new buttonSubmitConfig
-  initialFormData: FormEightInitData = formEightInitData
-  active: boolean = false
-  initialFormStatus: Status = "PENDING"
+  finalProduct: any = ''
+  buttonConfig = new ButtonSubmitConfig()
+  initialFormData: FormEightInit = FormEightInitData
+  active = false
+  initialFormStatus: Status = 'PENDING'
 
   constructor(
     private editor: EditorService
@@ -52,10 +52,11 @@ export class StepEightComponent implements OnInit {
       this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.buttonConfig.submitted = formStatus.state == 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != "DONE" && this.finalProduct?.length)
+            if (formStatus.state != 'DONE' && this.finalProduct?.length) {
               this.buttonConfig.disabled = false
+            }
           }
         }
       )
@@ -95,10 +96,11 @@ export class StepEightComponent implements OnInit {
     this.checkStatus()
   }
 
-  //Handle submit functionality
+  // Handle submit functionality
   handleSubmit(formStatus?: Status) {
-    if (formStatus == 'DONE')
+    if (formStatus == 'DONE') {
       this.step.state = 'DONE'
+    }
     this.initialFormData = this.finalProduct
     this.handleButtonType()
     const formData: FormEight = {
@@ -114,7 +116,7 @@ export class StepEightComponent implements OnInit {
         ]
       }
     }
-    this.editor.handleStepSubmit(formData, this.step.state == "DONE")
+    this.editor.handleStepSubmit(formData, this.step.state == 'DONE')
   }
 
   // Function to check whether the form is updated

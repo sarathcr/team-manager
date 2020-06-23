@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewEncapsulation, HostListener } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FieldConfig } from '../../../../shared/constants/field.model'
+import { Component, OnInit, HostListener } from '@angular/core'
+import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateService } from '@ngx-translate/core'
 
 
@@ -11,15 +10,16 @@ import { TranslateService } from '@ngx-translate/core'
   // encapsulation: ViewEncapsulation.None
 })
 export class CompetencyModalContentComponent implements OnInit {
+  gradeDropdown: object
+  rowHeadData: Array<object>
+  rowData: Array<object>
+  leftContentHeight = ''
+  contentHeight = ''
+
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
     this.adjustHeightContent()
   }
-  gradeDropdown: object
-  rowHeadData: Array<object>
-  rowData: Array<object>
-  leftContentHeight: string = ''
-  contentHeight: string = ''
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -40,16 +40,16 @@ export class CompetencyModalContentComponent implements OnInit {
       options: [
         {
           id: 1,
-          name: "sample1"
+          name: 'sample1'
         },
         {
           id: 2,
-          name: "sample2"
+          name: 'sample2'
         }
       ],
       selectedItems: [{
         id: 1,
-        name: "sample1"
+        name: 'sample1'
       }]
     }
   }
@@ -105,29 +105,31 @@ export class CompetencyModalContentComponent implements OnInit {
   }
 
   openTab(event, id: string){
-    var i, tabcontent, tablinks;
+    let i
+    let tabcontent
+    let tablinks
 
-    tabcontent = document.getElementsByClassName("custom-tab__content");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].classList.remove('active');
+    tabcontent = document.getElementsByClassName('custom-tab__content')
+    for (i = 0 ; i < tabcontent.length; i++) {
+      tabcontent[i].classList.remove('active')
     }
 
-    tablinks = document.getElementsByClassName("custom-tab__links");
+    tablinks = document.getElementsByClassName('custom-tab__links')
     for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].classList.remove('active');
+      tablinks[i].classList.remove('active')
     }
 
-    document.getElementById(id).classList.add('active');
-    event.currentTarget.classList.add('active');
+    document.getElementById(id).classList.add('active')
+    event.currentTarget.classList.add('active')
   }
 
   getStatus($event){
-    console.log($event);
+    console.log($event)
   }
 
   adjustHeightContent(){
-    let innerHeight:number = window.innerHeight;
-    this.contentHeight = (innerHeight * 61.73)/100 + 'px';
-    this.leftContentHeight = (innerHeight * 60.66)/100 + 'px';
+    const innerHeight: number = window.innerHeight
+    this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
+    this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
   }
 }

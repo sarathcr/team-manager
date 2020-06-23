@@ -4,6 +4,7 @@
   width: 100%;
   height: 300px;
   border: none;
+  overflow: auto;
   border: 1px solid $creator-border-active;
   border-radius: 3px;
   margin-bottom: 56px;
@@ -11,7 +12,7 @@
   &__list {
     padding: 14px 22px;
     margin-bottom: 0;
-    height: 295px;
+    min-height: 295px;
     &.numbered-list {
       .textarea-bullets__item{
         &::before{

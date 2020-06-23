@@ -1,25 +1,29 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { HomeComponent } from './home.component';
+import { HomeComponent } from './home.component'
+import { HeaderComponent } from 'src/app/shared/components/header/header.component'
+import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component'
+import { CreateProjectComponent } from '../../components/create-project/create-project.component'
 
-describe('HomeComponent', () => {
-  let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
+import { ProjectEntityService } from '../../services/project/project-entity.service'
 
-  beforeEach(async(() => {
+class ProjectEntityServiceStub { }
+
+describe('HomeComponent', (): void => {
+  let component: HomeComponent
+  let fixture: ComponentFixture<HomeComponent>
+  
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ]
+      declarations: [ HomeComponent, HeaderComponent, SidebarComponent, CreateProjectComponent ],
+      providers: [ { provide: ProjectEntityService, useClass: ProjectEntityServiceStub } ]
     })
-    .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(HomeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(HomeComponent)
+    component = fixture.componentInstance
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})

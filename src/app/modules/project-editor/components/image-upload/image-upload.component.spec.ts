@@ -1,25 +1,28 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 
-import { ImageUploadComponent } from './image-upload.component';
+import { NgxDropzoneComponent } from 'ngx-dropzone'
 
-describe('ImageUploadComponent', () => {
-  let component: ImageUploadComponent;
-  let fixture: ComponentFixture<ImageUploadComponent>;
+import { ImageUploadComponent } from './image-upload.component'
 
-  beforeEach(async(() => {
+import { AwsImgUploadService } from '../../services/aws-img-upload/aws-img-upload.service'
+
+describe('ImageUploadComponent', (): void => {
+  let component: ImageUploadComponent
+  let fixture: ComponentFixture<ImageUploadComponent>
+
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ ImageUploadComponent ]
+      declarations: [ ImageUploadComponent, NgxDropzoneComponent ],
+      providers: [ AwsImgUploadService ],
+      imports: [ HttpClientTestingModule ]
     })
-    .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ImageUploadComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ImageUploadComponent)
+    component = fixture.componentInstance
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})

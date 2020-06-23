@@ -1,25 +1,21 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { InfoToolTipComponent } from './info-tooltip.component';
+import { InfoToolTipComponent } from './info-tooltip.component'
 
 describe('InfoToolTipComponent', () => {
-  let component: InfoToolTipComponent;
-  let fixture: ComponentFixture<InfoToolTipComponent>;
-
-  beforeEach(async(() => {
+  let component: InfoToolTipComponent
+  let fixture: ComponentFixture<InfoToolTipComponent>
+  
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ InfoToolTipComponent ]
     })
-    .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(InfoToolTipComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(InfoToolTipComponent)
+    component = fixture.componentInstance
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

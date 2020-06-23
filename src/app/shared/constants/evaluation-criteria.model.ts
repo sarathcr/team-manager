@@ -1,8 +1,8 @@
-import { BasicSkills } from './basicskll.model';
-import { Dimensions } from './dimensions.model';
-import { Standards } from './standard.model';
-import { Indicators } from './indicators.model';
-   
+import { BasicSkills } from './basicskll.model'
+import { Dimensions } from './dimensions.model'
+import { Standards } from './standard.model'
+import { Indicators } from './indicators.model'
+
 export interface EvaluationCriteria {
     basicSkills: BasicSkills[]
     code: string
@@ -14,4 +14,3 @@ export interface EvaluationCriteria {
     numeration: number
     standards: Standards[]
 }
-  

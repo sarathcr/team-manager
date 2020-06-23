@@ -1,6 +1,16 @@
-import { Component, OnInit, ViewChildren, QueryList, Input, ElementRef, Output, EventEmitter, AfterContentChecked } from '@angular/core';
-import { FieldConfig, Option, TextAreaVariants } from 'src/app/shared/constants/field.model';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  OnInit,
+  ViewChildren,
+  QueryList,
+  Input,
+  ElementRef,
+  Output,
+  EventEmitter,
+  AfterContentChecked
+} from '@angular/core'
+import { FieldConfig, Option, TextAreaVariants } from 'src/app/shared/constants/field.model'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-textarea-bullets',
@@ -12,30 +22,30 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   @Input() variant: TextAreaVariants = 'bullet'
   @Input() config: FieldConfig
   @Input() options: Option[]
-  @Input() options$: Observable<Object[]>
+  @Input() options$: Observable<object[]>
   @Output() onChange = new EventEmitter()
-  @ViewChildren('textArea') textArea: QueryList<ElementRef>;
+  @ViewChildren('textArea') textArea: QueryList<ElementRef>
   index = 0
-  initResize = false;
-  initialScrollHeight: number;
+  initResize = false
+  initialScrollHeight: number
   timeOut: any
-  arrayHeight: string = ''
-  sampleOption: Option = { id: null, name: null };
-  configOptions: Option[] = [];
+  arrayHeight = ''
+  sampleOption: Option = { id: null, name: null }
+  configOptions: Option[] = []
   limit = 0
-  focus = false;
+  focus = false
 
   constructor() { }
 
   ngOnInit(): void {
-    this.limit = this.config.limit;
+    this.limit = this.config.limit
     this.optionInit()
   }
 
   ngAfterContentChecked() {
     if (this.textArea) {
       this.textArea.toArray().forEach(item => {
-        item.nativeElement.style.height = (item.nativeElement.scrollHeight) + "px";
+        item.nativeElement.style.height = (item.nativeElement.scrollHeight) + 'px'
       })
     }
   }
@@ -64,12 +74,12 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   keyAction(event, id) {
     switch (event.keyCode) {
       case 13: // Enter
-        event.preventDefault();
+        event.preventDefault()
         if (this.config.limit == 0) {
           this.limit = this.configOptions.length + 1
         }
         if (this.configOptions.length < this.limit && this.configOptions[id].name?.trim()) {
-          this.configOptions.splice(id + 1, 0, { ...this.sampleOption })
+          this.configOptions.splice(id + 1, 0, { ...this.sampleOption })  // add a new bullet
           this.timeOut = setTimeout(() => {
             this.textArea.toArray()[id + 1].nativeElement.focus()
           }, 0)
@@ -77,28 +87,28 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         break
 
       case 46:  // delete
-        event.preventDefault();
+        event.preventDefault()
         if (this.configOptions.length > 1) {
           this.configOptions.splice(id, 1)
           this.index = this.textArea.toArray().length > id ? id : id - 1
           this.timeOut = setTimeout(() => {
             const textAreas = this.textArea.toArray()
             const index = textAreas.length > id ? id : id - 1
-            textAreas[index].nativeElement.focus();
+            textAreas[index].nativeElement.focus()
           }, 0)
         }
         else {
           this.configOptions[0].name = ''
         }
-        if (this.configOptions.length == 1 && !this.configOptions[0].name) this.onChange.emit([]);
-        else this.onChange.emit([...this.configOptions]);
+        if (this.configOptions.length == 1 && !this.configOptions[0].name) { this.onChange.emit([]) }
+        else { this.onChange.emit([...this.configOptions]) }
         break
 
       case 32: // spacebar
         if (this.configOptions[id].name?.trim()?.length) {
-          var textComponent = this.textArea.toArray()[id].nativeElement
-          var startPos = textComponent.selectionStart;
-          var endPos = textComponent.selectionEnd;
+          let textComponent = this.textArea.toArray()[id].nativeElement
+          let startPos = textComponent.selectionStart
+          let endPos = textComponent.selectionEnd
           let string = this.configOptions[id].name
           let stringLength = string?.length
           if (startPos != endPos) {
@@ -111,9 +121,9 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
             if (this.configOptions.length > 1) {
               this.configOptions.splice(id, 1)
               if (id - 1 >= 0) {
-                this.textArea.toArray()[id - 1].nativeElement.focus();
+                this.textArea.toArray()[id - 1].nativeElement.focus()
               } else {
-                this.textArea.toArray()[id + 1].nativeElement.focus();
+                this.textArea.toArray()[id + 1].nativeElement.focus()
               }
             } else {
               if (!this.configOptions[id].name)
@@ -135,7 +145,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
             this.textArea.toArray()[id + 1].nativeElement.focus();
             event.preventDefault();
           }
-          clearTimeout(this.timeOut);
+          clearTimeout(this.timeOut)
         }
         break
 
@@ -157,7 +167,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   }
 
   setFocus() {
-    this.focus = true;
+    this.focus = true
   }
 
   onBlur(i) {

@@ -1,4 +1,4 @@
-import { SpecificSkills } from './specificskills.model';
+import { SpecificSkills } from './specificskills.model'
 
 
 export interface Dimensions {

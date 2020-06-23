@@ -1,25 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { Step, Status } from '../../constants/step.model';
-import { FormNineInitData, FormNine } from '../../constants/step-forms.model';
-import { formNineInitData } from '../../constants/step-forms.data';
-import { buttonSubmitConfig } from '../../constants/form-config.data';
-import { Observable } from 'rxjs';
-import { EditorService } from '../../services/editor/editor.service';
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Step, Status } from '../../constants/step.model'
+import { FormNineInit, FormNine } from '../../constants/step-forms.model'
+import { FormNineInitData } from '../../constants/step-forms.data'
+import { ButtonSubmitConfig } from '../../constants/form-config.data'
+import { Observable } from 'rxjs'
+import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
   selector: 'app-step-nine',
   templateUrl: './step-nine.component.html',
   styleUrls: ['./step-nine.component.scss']
 })
-export class StepNineComponent implements OnInit {
+export class StepNineComponent implements OnInit, OnDestroy {
 
   project$: Observable<any>
   step$: Observable<Step>
   step: Step
   synopsis: any = ''
-  initialFormData: FormNineInitData = formNineInitData
-  initialFormStatus: Status = "PENDING"
-  buttonConfig = new buttonSubmitConfig
+  initialFormData: FormNineInit = FormNineInitData
+  initialFormStatus: Status = 'PENDING'
+  buttonConfig = new ButtonSubmitConfig()
 
   constructor(public editor: EditorService) { }
 
@@ -34,30 +34,33 @@ export class StepNineComponent implements OnInit {
   }
 
   formInit() {
-    this.project$ = this.editor.getStepData('stepNine');
-    this.step = this.editor.steps.nine;
-    this.step$ = this.editor.getStepStatus(9);
-    if (this.project$)
+    this.project$ = this.editor.getStepData('stepNine')
+    this.step = this.editor.steps.nine
+    this.step$ = this.editor.getStepStatus(9)
+    if (this.project$) {
       this.project$.subscribe(data => {
         if (data?.synopsis) {
           this.synopsis = data.synopsis
           this.initialFormData = data.synopsis
         }
       })
-    if (this.step$)
+    }
+    if (this.step$) {
       this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.buttonConfig.submitted = formStatus.state == 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != "DONE" && this.synopsis?.length)
+            if (formStatus.state != 'DONE' && this.synopsis?.length) {
               this.buttonConfig.disabled = false
+            }
           }
         }
       )
+    }
   }
 
-  //Handle submit functionality
+  // Handle submit functionality
   handleSubmit(formStatus?: Status) {
     if (formStatus == 'DONE') {
       this.step.state = formStatus
@@ -77,7 +80,7 @@ export class StepNineComponent implements OnInit {
         ]
       }
     }
-    this.editor.handleStepSubmit(formData, this.step.state == "DONE");
+    this.editor.handleStepSubmit(formData, this.step.state == 'DONE')
   }
 
   // Changes the button according to form status

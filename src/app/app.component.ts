@@ -16,7 +16,7 @@ export class AppComponent {
     // ngx-translate
     translateService.addLangs(['en', 'es'])
     translateService.setDefaultLang('en')
-    const browserLang = translateService.getBrowserLang();
+    const browserLang = translateService.getBrowserLang()
     translateService.use(browserLang.match(/en|es/) ? browserLang : 'en')
   }
 }

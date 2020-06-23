@@ -1,25 +1,27 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { RouterTestingModule } from '@angular/router/testing'
 
-import { StepUnlockComponent } from './step-unlock.component';
+import { TranslateModule } from '@ngx-translate/core'
 
-describe('StepUnlockComponent', () => {
-  let component: StepUnlockComponent;
-  let fixture: ComponentFixture<StepUnlockComponent>;
+import { StepUnlockComponent } from './step-unlock.component'
+import { ButtonComponent } from 'src/app/shared/components/button/button.component'
 
-  beforeEach(async(() => {
+describe('StepUnlockComponent', (): void => {
+  let component: StepUnlockComponent
+  let fixture: ComponentFixture<StepUnlockComponent>
+  
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ StepUnlockComponent ]
+      declarations: [ StepUnlockComponent, ButtonComponent ],
+      imports: [ TranslateModule.forRoot(), RouterTestingModule ]
     })
-    .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(StepUnlockComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(StepUnlockComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})
