@@ -157,6 +157,18 @@
       &-content{
         padding-left: 50px;
       }
+      &-thumb{
+        width: 100%;
+        display: flex;
+        flex: 0 0 50%;
+        max-width: 50%;
+        &:nth-child(even){
+          padding-left: 10px;
+        }
+        &:nth-child(odd){
+          padding-right: 10px;
+        }
+      }
     }
   }
 }
@@ -276,5 +288,9 @@
     font-weight: 700;
     margin-top: 7px;
     background-color: transparent;
+  }
+
+  @include media-breakpoint-up(xxl) {
+    width: 100%;
   }
 }
