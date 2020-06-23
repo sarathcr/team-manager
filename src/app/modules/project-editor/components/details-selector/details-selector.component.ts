@@ -14,16 +14,16 @@ import { Subject, Project } from 'src/app/modules/project-editor/constants/proje
 })
 export class DetailsSelectorComponent implements OnInit {
 
-  showList: boolean = false
+  showList = false
   @Input() data: Subject
   @Input() criterias: any[]
   @Input() i: any
-  @Input() isLast: boolean = false
+  @Input() isLast = false
   @Input() project$: Observable<Project>
   @Output() onAdd = new EventEmitter()
   @Output() openModal = new EventEmitter()
   @Output() onDelete = new EventEmitter()
-  count: number = 0
+  count = 0
   bsModalRef: BsModalRef
 
   constructor(private modalService: BsModalService) { }
@@ -38,8 +38,9 @@ export class DetailsSelectorComponent implements OnInit {
       .subscribe(criterias => {
         if (criterias) {
           criterias.forEach(criteria => {
-            if (this.data.id === criteria.subjectId)
+            if (this.data.id === criteria.subjectId) {
               this.getCount()
+            }
           })
         }
       })

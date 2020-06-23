@@ -1,9 +1,9 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { StoreModule } from '@ngrx/store';
-import * as fromAuth from './reducers';
-import { LoginComponent } from './components/login/login.component';
-import { RouterModule } from '@angular/router';
+import { NgModule, ModuleWithProviders } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { StoreModule } from '@ngrx/store'
+import * as fromAuth from './reducers'
+import { LoginComponent } from './components/login/login.component'
+import { RouterModule } from '@angular/router'
 
 
 

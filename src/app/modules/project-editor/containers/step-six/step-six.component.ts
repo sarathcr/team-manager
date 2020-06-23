@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { Step, Status } from '../../constants/step.model';
-import { buttonSubmitConfig } from '../../constants/form-config.data';
-import { Observable } from 'rxjs';
-import { FormSixInitData, FormSix } from '../../constants/step-forms.model';
-import { formSixInitData } from '../../constants/step-forms.data';
-import { EditorService } from '../../services/editor/editor.service';
+import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Step, Status } from '../../constants/step.model'
+import { ButtonSubmitConfig } from '../../constants/form-config.data'
+import { Observable } from 'rxjs'
+import { FormSixInit, FormSix } from '../../constants/step-forms.model'
+import { FormSixInitData } from '../../constants/step-forms.data'
+import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
   selector: 'app-step-six',
   templateUrl: './step-six.component.html',
   styleUrls: ['./step-six.component.scss']
 })
-export class StepSixComponent implements OnInit {
+export class StepSixComponent implements OnInit, OnDestroy {
 
   project$: Observable<any>
   step$: Observable<Step>
   step: Step
-  initialFormData: FormSixInitData = new formSixInitData
-  buttonConfig = new buttonSubmitConfig
+  initialFormData: FormSixInit = new FormSixInitData()
+  buttonConfig = new ButtonSubmitConfig()
   initialFormStatus: Status = 'PENDING'
-  creativeTitle: string = ''
-  creativeImage: string = ''
+  creativeTitle = ''
+  creativeImage = ''
 
   constructor(private editor: EditorService) { }
 
@@ -52,20 +52,22 @@ export class StepSixComponent implements OnInit {
       this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.buttonConfig.submitted = formStatus.state == 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != "DONE" && this.checkNonEmptyForm())
+            if (formStatus.state != 'DONE' && this.checkNonEmptyForm()) {
               this.buttonConfig.disabled = false
+            }
           }
         }
       )
     }
   }
 
-  //Handle submit functionality
+  // Handle submit functionality
   handleSubmit(formStatus?: Status) {
-    if (formStatus == 'DONE')
+    if (formStatus == 'DONE') {
       this.step.state = 'DONE'
+    }
     this.handleButtonType()
     const formData: FormSix = {
       data: {
@@ -82,7 +84,7 @@ export class StepSixComponent implements OnInit {
       }
     }
     this.initialFormData = formData.data
-    this.editor.handleStepSubmit(formData, this.step.state == "DONE")
+    this.editor.handleStepSubmit(formData, this.step.state == 'DONE')
   }
 
   // Changes the button according to form status
@@ -103,10 +105,12 @@ export class StepSixComponent implements OnInit {
 
   // Function to check status of step
   checkStatus() {
-    if (!this.creativeTitle && !this.creativeImage)
+    if (!this.creativeTitle && !this.creativeImage) {
       this.step.state = 'PENDING'
-    else
+    }
+    else {
       this.step.state = 'INPROCESS'
+    }
     this.handleButtonType()
   }
 
@@ -133,8 +137,9 @@ export class StepSixComponent implements OnInit {
 
   // checks the form is completely filled or not
   checkNonEmptyForm() {
-    if (this.creativeTitle && this.creativeImage)
+    if (this.creativeTitle && this.creativeImage) {
       return true
+    }
     return false
   }
 

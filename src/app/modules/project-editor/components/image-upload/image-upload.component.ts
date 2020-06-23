@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
-import { AwsImgUploadService } from '../../services/aws-img-upload/aws-img-upload.service';
+import { Component, OnInit, Input, ViewEncapsulation, EventEmitter, Output } from '@angular/core'
+import { AwsImgUploadService } from '../../services/aws-img-upload/aws-img-upload.service'
 
 @Component({
   selector: 'app-image-upload',
@@ -14,7 +14,7 @@ export class ImageUploadComponent implements OnInit {
   @Input() label: string
   @Input() imageURL: string | ArrayBuffer
   @Output() onFileSelect = new EventEmitter()
-  files: File[] = [];
+  files: File[] = []
   loading = false
 
   constructor(private aws: AwsImgUploadService) { }
@@ -24,8 +24,8 @@ export class ImageUploadComponent implements OnInit {
   }
 
   toBase64(file: File) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
     reader.onload = () => {
       this.imageURL = reader.result
     }
@@ -38,17 +38,19 @@ export class ImageUploadComponent implements OnInit {
         const file = this.files[0]
         this.toBase64(file)
         const mimeType = file.type
-        this.loading = true;
+        this.loading = true
         this.aws.getPreSignedUrl(mimeType, `${new Date().getTime()}-${file.name}`)
           .subscribe(data => {
-            if (data) this.aws.uploadImage(data.uploadURL, file)
+            if (data) {
+              this.aws.uploadImage(data.uploadURL, file)
               .subscribe(() => {
                 this.onFileSelect.emit(data.publicURL)
-                this.loading = false;
+                this.loading = false
               },
                 err => {
                   this.handleServerError(err)
                 })
+            }
           },
             err => {
               this.handleServerError(err)
@@ -60,7 +62,7 @@ export class ImageUploadComponent implements OnInit {
   onRemove(event) {
     event.stopPropagation()
     this.imageURL = ''
-    this.files = [];
+    this.files = []
     this.onFileSelect.emit('')
   }
 

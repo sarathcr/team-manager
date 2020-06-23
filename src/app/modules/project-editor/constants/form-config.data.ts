@@ -1,6 +1,6 @@
-import { FieldConfig } from 'src/app/shared/constants/field.model';
+import { FieldConfig } from 'src/app/shared/constants/field.model'
 
-export class buttonSubmitConfig implements FieldConfig {
+export class ButtonSubmitConfig implements FieldConfig {
     name = 'submit'
     field = 'button'
     id = 'submitButton'

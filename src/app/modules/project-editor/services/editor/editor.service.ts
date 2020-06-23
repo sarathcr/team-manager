@@ -1,26 +1,26 @@
-import { Injectable } from '@angular/core';
-import { StepState, StepId, Steps, statusId, Step } from '../../constants/step.model';
-import { TranslateService } from '@ngx-translate/core';
-import { Project } from 'src/app/modules/project-editor/constants/project.model';
-import { Observable, Subscription, BehaviorSubject } from 'rxjs';
-import { ProjectEntityService } from '../project/project-entity.service';
-import { map } from 'rxjs/operators';
-import { ProjectTitle } from '../../constants/title-data.model';
-import { StepStatusEntityService } from '../step-status/step-status-entity.service';
-import { Router } from '@angular/router';
+import { Injectable } from '@angular/core'
+import { StepState, StepId, Steps, statusId, Step } from '../../constants/step.model'
+import { TranslateService } from '@ngx-translate/core'
+import { Project } from 'src/app/modules/project-editor/constants/project.model'
+import { Observable, Subscription, BehaviorSubject } from 'rxjs'
+import { map } from 'rxjs/operators'
+import { ProjectTitle } from '../../constants/title-data.model'
+import { Router } from '@angular/router'
+import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
+import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class EditorService {
-  projectId: number;
-  project$: Observable<Project>;
+  projectId: number
+  project$: Observable<Project>
   step$: Observable<Step>
-  notFound: boolean;
-  titleData: ProjectTitle;
-  steps: Steps;
-  stepStatus$: Observable<StepState>;
-  tempStatus: any;
+  notFound: boolean
+  titleData: ProjectTitle
+  steps: Steps
+  stepStatus$: Observable<StepState>
+  tempStatus: any
   currentSectionId: StepId
   nextSectionId: StepId
   isStepDone: boolean
@@ -47,13 +47,13 @@ export class EditorService {
         )
       this.projectSubscription = this.project$.subscribe(project => {
         if (project) {
-          this.projectId = project.id;
-          this.notFound = false;
+          this.projectId = project.id
+          this.notFound = false
           this.titleData = { id: project.id, title: project.title }
           this.getStepsStatus()
         } else {
-          this.projectsService.getByKey(projectId.toString());
-          this.notFound = true;
+          this.projectsService.getByKey(projectId.toString())
+          this.notFound = true
         }
       })
     }
@@ -102,14 +102,14 @@ export class EditorService {
     this.stepStatus$ = this.stepStatusService.entities$
       .pipe(
         map(stepStates => stepStates.find(state => {
-          return state.id === Number(this.projectId);
+          return state.id === Number(this.projectId)
         }))
       )
     this.statusSubscription = this.stepStatus$.subscribe(data => {
       if (data) {
         this.updateStepStatus(data)
       } else {
-        if (this.projectId) this.stepStatusService.getWithQuery(this.projectId.toString())
+        if (this.projectId) { this.stepStatusService.getWithQuery(this.projectId.toString()) }
       }
     })
   }
@@ -120,7 +120,7 @@ export class EditorService {
     this.stepStatus$ = this.stepStatusService.entities$
       .pipe(
         map(stepStates => stepStates.find(state => {
-          return state.id === +(this.projectId);
+          return state.id === +(this.projectId)
         }))
       )
     if (this.stepStatus$) {
@@ -155,7 +155,7 @@ export class EditorService {
               this.router.navigate([`editor/project/${newResProject.id}/${this.currentSectionId}`])
             }
             this.projectId = newResProject.id
-            this.getProject(this.projectId);
+            this.getProject(this.projectId)
             this.handleNavigate()
             if (this.tempStatus) {
               this.tempStatus.id = newResProject.id
@@ -163,14 +163,14 @@ export class EditorService {
               this.tempStatus = null
             }
           }
-        );
+        )
     } else {
       // update mode
       const updateProject = {
         id: this.projectId,
         ...projectData
       }
-      this.projectsService.update(updateProject);
+      this.projectsService.update(updateProject)
     }
   }
 
@@ -189,7 +189,7 @@ export class EditorService {
       }
       this.stepStatusService.update(dataWithId)
     } else {
-      this.tempStatus = data;
+      this.tempStatus = data
     }
   }
 
@@ -200,12 +200,12 @@ export class EditorService {
       if (this.projectId && this.currentSectionId != this.nextSectionId) {
         setTimeout(() => {
           this.router.navigate([`editor/project/${this.projectId}/${this.nextSectionId}`])
-        }, 1000);
+        }, 1000)
       }
     }
   }
 
-  //Finds the next step sectionId
+  // Finds the next step sectionId
   private getNextSectionId() {
     const stepkeys = Object.keys(this.steps)
     stepkeys.forEach((step, index) => {
@@ -224,8 +224,8 @@ export class EditorService {
   }
 
   clearData() {
-    if (this.projectSubscription) this.projectSubscription.unsubscribe()
-    if (this.statusSubscription) this.statusSubscription.unsubscribe()
+    if (this.projectSubscription) { this.projectSubscription.unsubscribe() }
+    if (this.statusSubscription) { this.statusSubscription.unsubscribe() }
     this.project$ = null
     this.stepStatus$ = null
     this.titleData = null
@@ -270,7 +270,7 @@ export class EditorService {
         this.steps.nine.name = translations['STEPS_MENU.project_structure_stepsmenu_sinopsis']
         this.steps.ten.name = 'Interacción'  // WIP localization
       }
-      );
-    return this.steps;
+      )
+    return this.steps
   }
 }

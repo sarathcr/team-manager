@@ -1,14 +1,13 @@
 import {
-  ActionReducer,
   ActionReducerMap
-} from '@ngrx/store';
+} from '@ngrx/store'
 
-export const authFeatureKey = 'auth';
+export const authFeatureKey = 'auth'
 
 export interface AuthState {
-
+  user: string
 }
 
 export const reducers: ActionReducerMap<AuthState> = {
-
-};
+  user: undefined
+}

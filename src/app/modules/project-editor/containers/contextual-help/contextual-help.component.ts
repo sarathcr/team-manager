@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter} from '@angular/core'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
-import { HelpEntityService } from '../../services/help/help-entity.service'
-import { Help, ContextualHelp } from 'src/app/shared/constants/contextual-help.model';
+import { Help, ContextualHelp } from 'src/app/shared/constants/contextual-help.model'
 import { EditorService } from '../../services/editor/editor.service'
+import { HelpEntityService } from '../../store/entity/help/help-entity.service'
 @Component({
   selector: 'app-contextual-help',
   templateUrl: './contextual-help.component.html',
@@ -12,11 +12,11 @@ import { EditorService } from '../../services/editor/editor.service'
   encapsulation: ViewEncapsulation.None
 })
 export class ContextualHelpComponent implements OnInit {
-  @Output() status = new EventEmitter<boolean>();
+  @Output() status = new EventEmitter<boolean>()
   help: Help[]
   contextualHelp$: Observable<ContextualHelp>
-  closeContext: boolean = false;
-  activeTab: any;
+  closeContext = false
+  activeTab: any
   loaded = false
 
   constructor(
@@ -26,36 +26,36 @@ export class ContextualHelpComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getTranslation();
+    this.getTranslation()
   }
 
-  //Close tab
+  // Close tab
   closeTab() {
-    this.closeContext = false;
-    this.status.emit(false);
+    this.closeContext = false
+    this.status.emit(false)
     setTimeout(() => {
-      this.activeTab.active = false;
-    }, 500);
+      this.activeTab.active = false
+    }, 500)
   }
 
-  //Open tab
+  // Open tab
   openTab($event) {
-    this.activeTab = $event;
+    this.activeTab = $event
     this.status.emit(true)
     if (!this.closeContext) {
-      this.closeContext = true;
+      this.closeContext = true
     }
-    if(this.closeContext){
-      this.getHelpContent();
+    if (this.closeContext){
+      this.getHelpContent()
     }
   }
 
   getHelpContent() {
     this.editorService.currentStep$.subscribe( stepId => {
-      if(stepId && this.closeContext){
+      if (stepId && this.closeContext){
         this.getHelp(stepId)
       }
-    });
+    })
   }
 
   // Get help content
@@ -68,13 +68,13 @@ export class ContextualHelpComponent implements OnInit {
         )
       )
     this.contextualHelp$.subscribe( contextualHelp => {
-      if(contextualHelp) {
+      if (contextualHelp) {
           this.help = contextualHelp.helps
       } else {
         this.helpService.getByKey(stepid)
       }
     })
-    this.helpService.loading$.subscribe(loading=> {
+    this.helpService.loading$.subscribe(loading => {
       this.loaded = !loading
     })
   }

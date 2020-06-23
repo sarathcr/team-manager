@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ProjectEntityService } from '../../services/project/project-entity.service';
-import { Project } from 'src/app/modules/project-editor/constants/project.model';
-import { tap, filter, first } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { Observable } from 'rxjs'
+import { Project } from 'src/app/modules/project-editor/constants/project.model'
+import { tap, filter, first } from 'rxjs/operators'
+import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 
 @Component({
   selector: 'app-home',
@@ -12,14 +12,14 @@ import { tap, filter, first } from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
 
-  title: string = 'Tus plantillas';
-  projects$: Observable<Project[]>;
+  title = 'Tus plantillas'
+  projects$: Observable<Project[]>
   loaded: boolean
   constructor(private projectsService: ProjectEntityService) {
   }
 
   ngOnInit() {
-    this.getAll();
+    this.getAll()
   }
 
   getAll() {
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
       .pipe(
         tap(loaded => {
           if (!loaded) {
-            this.projectsService.getAll();
+            this.projectsService.getAll()
           }
         }),
         filter(loaded => !!loaded),

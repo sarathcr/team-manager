@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
 @Component({
   selector: 'app-textarea',
   templateUrl: './textarea.component.html',
@@ -10,8 +10,8 @@ export class TextareaComponent implements OnInit {
   @Input() placeholder: string
   @Input() maxlength: number
   @Output() onChange = new EventEmitter()
-  focus = false;
-  
+  focus = false
+
   constructor() { }
 
   ngOnInit(): void {
@@ -22,38 +22,38 @@ export class TextareaComponent implements OnInit {
     if ((this.isFirefox() || this.isEdge()) && value.length > this.maxlength) {
       value = value.substring(0, this.maxlength)
     }
-    this.value = value;
-    this.onChange.emit(value.trim());
+    this.value = value
+    this.onChange.emit(value.trim())
   }
 
   onKeyDown(event): any {
-    const text = event.target.value;
+    const text = event.target.value
     if (this.isEdge() && event.keyCode === 13 && text.length > this.maxlength - 1) {
-      event.preventDefault();
+      event.preventDefault()
     }
   }
 
   setFocus() {
-    this.focus = true;
+    this.focus = true
   }
 
   onBlur() {
-    this.focus = false;
+    this.focus = false
     if (!this.value.trim()) {
-      this.value = '';
-      this.onChange.emit('');
+      this.value = ''
+      this.onChange.emit('')
     }
   }
 
-  //function to check the browser is Firefox
+  // function to check the browser is Firefox
   isFirefox() {
-    let isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+    const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
     return isFirefox
   }
 
-  //function to check the browser is Edge
+  // function to check the browser is Edge
   isEdge() {
-    let isEdge = navigator.userAgent.toLowerCase().indexOf('edge') > -1
+    const isEdge = navigator.userAgent.toLowerCase().indexOf('edge') > -1
     return isEdge
   }
 

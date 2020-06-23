@@ -9,7 +9,7 @@ import { ProjectEditorComponent } from './project-editor.component'
 describe('ProjectEditorComponent', (): void => {
   let component: ProjectEditorComponent
   let fixture: ComponentFixture<ProjectEditorComponent>
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ ProjectEditorComponent ],
@@ -21,7 +21,7 @@ describe('ProjectEditorComponent', (): void => {
   })
 
   it('should create', (): void => {
-    expect(component).toBeTruthy();
+    expect(component).toBeTruthy()
   })
 
   it('should contain router outlet', (): void => {
