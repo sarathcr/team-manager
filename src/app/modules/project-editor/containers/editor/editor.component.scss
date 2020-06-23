@@ -4,14 +4,15 @@
 .editor{
   $root: &;
   width: 100%;
-  padding: 75px 15px 0 236px;
+  padding: 75px 15px 0 0;
+  display: flex;
   margin: 0;
   position: relative;
   height: 100%;
   z-index: 1;
   &__forms{
+    display: inline-block;
     width: 100%;
-    // flex-direction: column;
     max-width: 672px;
     min-width: 430px;
     @include transitions(all, 0.5s, ease-in-out);
@@ -21,12 +22,19 @@
       @include media-breakpoint-down(xl) {
         max-width: 672px;
         padding-right: 0;
-        width: calc(100% - 517px);
+        width: calc(100% - 768px);
       }
     }
   }
   .step-section{
     scroll-margin-top: 110px;
+    display: block;
+  }
+
+  &-aside{
+    width: 236px;
+    min-width: 236px;
+    max-width: 280px;
     display: block;
   }
 
@@ -50,6 +58,9 @@
       min-width: 672px;
       width: 49.5%;
       max-width: 800px;
+    }
+    &-aside{
+      width: 14.5%;
     }
   }
 }

@@ -18,6 +18,7 @@ export class DetailsSelectorComponent implements OnInit {
   @Input() data: Subject
   @Input() criterias: any[]
   @Input() subjectId: number
+  @Input() i: number
   @Input() isLast = false
   @Input() project$: Observable<Project>
   @Output() addCriteria = new EventEmitter()
