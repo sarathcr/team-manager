@@ -8,7 +8,7 @@ import { DetailsSelectorComponent } from './details-selector.component'
 describe('DetailsSelectorComponent', (): void => {
   let component: DetailsSelectorComponent
   let fixture: ComponentFixture<DetailsSelectorComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ DetailsSelectorComponent ],

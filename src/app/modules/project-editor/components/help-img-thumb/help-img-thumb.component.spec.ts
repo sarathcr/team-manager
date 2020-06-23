@@ -7,7 +7,7 @@ import { HelpImgThumbComponent } from './help-img-thumb.component'
 describe('HelpImgThumbComponent', (): void => {
   let component: HelpImgThumbComponent
   let fixture: ComponentFixture<HelpImgThumbComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ HelpImgThumbComponent ],

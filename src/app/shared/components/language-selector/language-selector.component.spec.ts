@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core'
 describe('LanguageSelectorComponent', (): void => {
   let component: LanguageSelectorComponent
   let fixture: ComponentFixture<LanguageSelectorComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ LanguageSelectorComponent ],

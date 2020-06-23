@@ -5,7 +5,7 @@ import { TextareaComponent } from './textarea.component'
 describe('TextareaComponent', (): void => {
   let component: TextareaComponent
   let fixture: ComponentFixture<TextareaComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ TextareaComponent ]

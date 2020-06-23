@@ -7,7 +7,7 @@ import { HelpModalContentComponent } from './help-modal-content.component'
 describe('HelpModalContentComponent', () => {
   let component: HelpModalContentComponent
   let fixture: ComponentFixture<HelpModalContentComponent>
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ HelpModalContentComponent ],

@@ -5,7 +5,7 @@ import { ButtonComponent } from './button.component'
 describe('ButtonComponent', (): void => {
   let component: ButtonComponent
   let fixture: ComponentFixture<ButtonComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ButtonComponent]

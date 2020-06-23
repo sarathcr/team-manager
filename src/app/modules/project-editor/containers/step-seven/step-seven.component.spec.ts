@@ -11,8 +11,8 @@ import { TextareaBulletsComponent } from '../../components/textarea-bullets/text
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { ProjectEntityService } from '../../services/project/project-entity.service'
-import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
+import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
+import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 
 class EditorServiceStub { }
 class ProjectEntityServiceStub { }
@@ -42,14 +42,14 @@ describe('StepSevenComponent', () => {
       ],
       imports: [ TranslateModule.forRoot() ]
     })
-    
+
     fixture = TestBed.createComponent(StepSevenComponent)
     component = fixture.componentInstance
   })
 
   afterEach((): void => {
     spyOn(component, 'isFormUpdated').and.returnValue(false)
-    
+
     fixture.destroy()
   })
 
@@ -58,4 +58,3 @@ describe('StepSevenComponent', () => {
 
   })
 })
-  

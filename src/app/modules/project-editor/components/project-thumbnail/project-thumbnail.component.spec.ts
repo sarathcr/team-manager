@@ -7,7 +7,7 @@ import { ProjectThumbnailComponent } from './project-thumbnail.component'
 describe('ProjectThumbnailComponent', (): void => {
   let component: ProjectThumbnailComponent
   let fixture: ComponentFixture<ProjectThumbnailComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ ProjectThumbnailComponent ],

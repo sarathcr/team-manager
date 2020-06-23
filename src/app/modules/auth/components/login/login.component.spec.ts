@@ -5,7 +5,7 @@ import { LoginComponent } from './login.component'
 describe('LoginComponent', (): void => {
   let component: LoginComponent
   let fixture: ComponentFixture<LoginComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ]

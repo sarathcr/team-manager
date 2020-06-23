@@ -5,7 +5,7 @@ import { StatusComponent } from './status.component'
 describe('StatusComponent', () => {
   let component: StatusComponent
   let fixture: ComponentFixture<StatusComponent>
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ StatusComponent ]

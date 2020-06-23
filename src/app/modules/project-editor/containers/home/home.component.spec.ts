@@ -5,14 +5,15 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
 import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component'
 import { CreateProjectComponent } from '../../components/create-project/create-project.component'
 
-import { ProjectEntityService } from '../../services/project/project-entity.service'
+import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
+
 
 class ProjectEntityServiceStub { }
 
 describe('HomeComponent', (): void => {
   let component: HomeComponent
   let fixture: ComponentFixture<HomeComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ HomeComponent, HeaderComponent, SidebarComponent, CreateProjectComponent ],
