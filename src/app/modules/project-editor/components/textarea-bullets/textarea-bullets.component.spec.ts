@@ -7,7 +7,7 @@ import { TextareaBulletsComponent } from './textarea-bullets.component'
 describe('TextareaWithBulletsComponent', (): void => {
   let component: TextareaBulletsComponent
   let fixture: ComponentFixture<TextareaBulletsComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ TextareaBulletsComponent, NgScrollbar ]

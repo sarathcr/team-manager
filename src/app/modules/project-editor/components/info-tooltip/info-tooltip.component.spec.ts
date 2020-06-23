@@ -5,7 +5,7 @@ import { InfoToolTipComponent } from './info-tooltip.component'
 describe('InfoToolTipComponent', () => {
   let component: InfoToolTipComponent
   let fixture: ComponentFixture<InfoToolTipComponent>
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ InfoToolTipComponent ]

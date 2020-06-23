@@ -20,18 +20,18 @@ describe('LoaderComponent', (): void => {
     expect(component).toBeTruthy()
   })
 
-  it("should not have block class if variant input prop is absent", (): void => {
+  it('should not have block class if variant input prop is absent', (): void => {
     const spinnerElement: DebugElement = fixture.debugElement.query(By.css('.spinner'))
 
     expect(spinnerElement.classes['block']).toBeUndefined()
   })
 
-  it("should have block class if variant input prop is block", (): void => {
+  it('should have block class if variant input prop is block', (): void => {
     component.variant = 'block'
 
     fixture.detectChanges()
     const spinnerElement = fixture.debugElement.query(By.css('.spinner'))
 
-    expect(spinnerElement.classes['block']).toBeTruthy()
+    expect(spinnerElement.classes.block).toBeTruthy()
   })
 })

@@ -35,7 +35,7 @@
                             {{'OBJECTIVES.project_objectives_objectives_subtitle.description' | translate}}
                         </p>
                         <app-textarea-bullets [config]='textAreaConfig'
-                        (onChange)="textAreaUpdate($event)"
+                        (inputChange)="textAreaUpdate($event)"
                         [options$]="competencyObjectives$"
                         [variant]="'number'">
                         </app-textarea-bullets>

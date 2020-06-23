@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { ContextualHelpComponent } from './contextual-help.component'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { HelpEntityService } from '../../services/help/help-entity.service'
+import { HelpEntityService } from '../../store/entity/help/help-entity.service'
 
 class EditorServiceStub {
   getProject() { }

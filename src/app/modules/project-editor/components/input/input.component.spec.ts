@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms'
 describe('InputComponent', () => {
   let component: InputComponent
   let fixture: ComponentFixture<InputComponent>
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ InputComponent ],

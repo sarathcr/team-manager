@@ -9,7 +9,7 @@ import { ButtonComponent } from 'src/app/shared/components/button/button.compone
 describe('StepUnlockComponent', (): void => {
   let component: StepUnlockComponent
   let fixture: ComponentFixture<StepUnlockComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ StepUnlockComponent, ButtonComponent ],
