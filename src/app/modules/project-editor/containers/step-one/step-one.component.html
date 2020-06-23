@@ -2,15 +2,19 @@
   <app-status [status]='step.state'></app-status>
   <div class="project-form d-flex flex-column justify-content-between">
     <div class="project-form__wrapper">
-      <h1 class="project-form__title title_s"><span>1. </span>Punto de partida<app-info-tooltip></app-info-tooltip>
+      <h1 class="project-form__title title_s">
+        <span>1. </span>Punto de partida
+        <app-info-tooltip></app-info-tooltip>
       </h1>
-      <p class="project-form__description" [innerHTML]="'STARTING_POINT.project_startingpoint_description' | translate">
-      </p>
-      <app-dropdown [config]='countryDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
-      <app-dropdown [config]='regionDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
-      <app-dropdown [config]='academicYearDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
-      <app-dropdown [config]='gradesDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
-      <app-dropdown [config]='subjectsDropdown' (onSelect)='onDropdownSelect($event)'></app-dropdown>
+      <p 
+        class="project-form__description" 
+        [innerHTML]="'STARTING_POINT.project_startingpoint_description' | translate"
+      ></p>
+      <app-dropdown [config]='countryDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
+      <app-dropdown [config]='regionDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
+      <app-dropdown [config]='academicYearDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
+      <app-dropdown [config]='gradesDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
+      <app-dropdown [config]='subjectsDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
     </div>
     <app-button [config]='buttonConfig' (click)='handleSubmit("DONE")'>
     </app-button>

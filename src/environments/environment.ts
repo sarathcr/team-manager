@@ -9,7 +9,7 @@ export const environment = {
     curriculumService: 'https://api.dev.abp.thinkoeducation.com/curriculum-service',
     imgUpload: 'https://api.dev.abp.thinkoeducation.com/uploads/'
   }
-};
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

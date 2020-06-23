@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-//lib's
+// lib's
 import { setTheme } from 'ngx-bootstrap/utils'
 import { TabsModule } from 'ngx-bootstrap/tabs'
 import { AccordionModule } from 'ngx-bootstrap/accordion'

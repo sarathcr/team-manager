@@ -4,7 +4,11 @@
     <h1 class="creator-home__head-text">{{title}}</h1>
     <div class="project">
         <app-create-project routerLink="../project/create" id="add-project"></app-create-project>
-        <app-project-thumbnail id="list-project-{{i}}" *ngFor="let project of projects$ | async; index as i;" [project]="project"></app-project-thumbnail>
+        <app-project-thumbnail 
+            *ngFor="let project of projects$ | async; index as i;" 
+            id="list-project-{{i}}"
+            [project]="project"
+        ></app-project-thumbnail>
     </div>
     <app-loader *ngIf="!loaded" variant="block"></app-loader>
 </div>

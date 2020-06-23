@@ -74,7 +74,10 @@ export class EditorService {
               return ({
                 country: data?.country ? { id: data?.country.id, name: data?.country.name } : null,
                 region: data?.region ? { id: data?.region.id, name: data?.region.name } : null,
-                academicYear: data?.academicYear ? { id: data?.academicYear.id, academicYear: data?.academicYear?.academicYear } : null,
+                academicYear: data?.academicYear ? {
+                  id: data?.academicYear.id,
+                  academicYear: data?.academicYear?.academicYear
+                } : null,
                 grades: data?.grades?.map(({ id, name }) => ({ id, name })),
                 subjects: data?.subjects?.map(({ id, name }) => ({ id, name }))
               })
@@ -82,7 +85,8 @@ export class EditorService {
             case 'stepThree': return ({
               subjects: data?.subjects?.map(({ id, name }) => ({ id, name })),
               competencyObjectives: data?.competencyObjectives?.map(({ id, name }) => ({ id, name })),
-              evaluationCriteria: data?.evaluationCriteria?.map(({ id, name, subjectId, gradeId }) => ({ id, name, subjectId, gradeId }))
+              evaluationCriteria: data?.evaluationCriteria?.map(({ id, name, subjectId, gradeId }) => (
+                { id, name, subjectId, gradeId }))
             })
             case 'stepSix': return {
               creativeImage: data.creativeImage,
@@ -125,7 +129,7 @@ export class EditorService {
       )
     if (this.stepStatus$) {
       return this.stepStatus$.pipe(map(data => (
-        data?.steps.find(item => item.stepid == stepId)
+        data?.steps.find(item => item.stepid === stepId)
       )))
     }
   }
@@ -133,7 +137,7 @@ export class EditorService {
   private updateStepStatus(stepstatus: any) {
     for (const newState of stepstatus.steps) {
       for (const step in this.steps) {
-        if (this.steps[step].stepid == newState.stepid && stepstatus.id == this.projectId) {
+        if (this.steps[step].stepid === newState.stepid && stepstatus.id === this.projectId) {
           this.steps[step].state = newState.state
         }
       }
@@ -197,7 +201,7 @@ export class EditorService {
   private handleNavigate() {
     this.getNextSectionId()
     if (this.isStepDone) {
-      if (this.projectId && this.currentSectionId != this.nextSectionId) {
+      if (this.projectId && this.currentSectionId !== this.nextSectionId) {
         setTimeout(() => {
           this.router.navigate([`editor/project/${this.projectId}/${this.nextSectionId}`])
         }, 1000)
@@ -212,7 +216,7 @@ export class EditorService {
       if (this.steps[step].sectionid === this.currentSectionId) {
         if (this.steps[step].stepid < 10) {
           stepkeys.forEach(stepData => {
-            if (this.steps[stepData].stepid == this.steps[step].stepid + 1) {
+            if (this.steps[stepData].stepid === this.steps[step].stepid + 1) {
               this.nextSectionId = this.steps[stepData].sectionid
             }
           })
