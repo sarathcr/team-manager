@@ -175,18 +175,6 @@
       margin-top: 1px;
       padding-bottom: 5px;
 
-      .single-select-mode {
-        .pure-checkbox {
-          div {
-
-            &::before,
-            &::after {
-              content: none;
-            }
-          }
-        }
-      }
-
       .multiselect-item-checkbox {
         padding: 10px 15px;
 
@@ -235,7 +223,14 @@
           }
         }
       }
-
+      .priority-title,.normal-title{
+          font-family: $font-family-tertiary;
+          font-size: 12px;
+          font-weight: bold;
+          letter-spacing: 0;
+          line-height: 24px;
+          padding: 10px 18px 5px;
+      }
       .no-data {
         height: 100px;
         width: 100%;
