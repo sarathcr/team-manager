@@ -19,6 +19,7 @@
                         (deleteCriteria)="removeItem($event)"
                         (openModal)="openModalWithComponent()"
                         [project$]="editor.project$"
+                        [i]="i"
                         ></app-details-selector>
                         <div class="project-editor__goto-step">
                             {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}

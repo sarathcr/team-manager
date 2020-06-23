@@ -1,8 +1,11 @@
 @import 'helpers/_helpers-master';
+@import 'helpers/_bt-mixins';
+
 .project-editor-sidebar{
   background:$background-primary;
   top: 75px;
   width: 236px;
+  min-width: 236px;
   position: fixed;
   left: 0;
   height: 100%;
@@ -37,6 +40,11 @@
     left: -3px;
     top: 50%;
     transform: translateY(-50%);
+  }
+
+  @include media-breakpoint-up(xxl) {
+    width: 14.5%;
+    max-width: 280px;
   }
 }
 

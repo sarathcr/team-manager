@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser'
+import { BrowserModule, Title } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { HttpClientModule, HttpClient } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -69,6 +69,7 @@ export function rootLoaderFactory(http: HttpClient) {
   ],
   providers: [
     AppRoutingModule,
+    Title
   ],
   bootstrap: [AppComponent]
 })

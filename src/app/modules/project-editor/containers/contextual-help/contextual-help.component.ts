@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter} from '@angular/core'
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
@@ -25,12 +25,10 @@ export class ContextualHelpComponent implements OnInit {
     private translateService: TranslateService
   ) { }
 
-  ngOnInit(): void {
-    this.getTranslation()
-  }
+  ngOnInit(): void { }
 
   // Close tab
-  closeTab() {
+  closeTab(): void {
     this.closeContext = false
     this.status.emit(false)
     setTimeout(() => {
@@ -39,37 +37,37 @@ export class ContextualHelpComponent implements OnInit {
   }
 
   // Open tab
-  openTab($event) {
+  openTab($event: any): void {
     this.activeTab = $event
     this.status.emit(true)
     if (!this.closeContext) {
       this.closeContext = true
     }
-    if (this.closeContext){
+    if (this.closeContext) {
       this.getHelpContent()
     }
   }
 
-  getHelpContent() {
-    this.editorService.currentStep$.subscribe( stepId => {
-      if (stepId && this.closeContext){
+  getHelpContent(): void {
+    this.editorService.currentStep$.subscribe(stepId => {
+      if (stepId && this.closeContext) {
         this.getHelp(stepId)
       }
     })
   }
 
   // Get help content
-  getHelp(stepid) {
+  getHelp(stepid): void {
     this.contextualHelp$ = this.helpService.entities$
       .pipe(
-        map( help => help.find( step => {
-            return step.stepid === Number(stepid)
-          })
+        map(help => help.find(step => {
+          return step.stepid === Number(stepid)
+        })
         )
       )
-    this.contextualHelp$.subscribe( contextualHelp => {
+    this.contextualHelp$.subscribe(contextualHelp => {
       if (contextualHelp) {
-          this.help = contextualHelp.helps
+        this.help = contextualHelp.helps
       } else {
         this.helpService.getByKey(stepid)
       }
@@ -77,11 +75,5 @@ export class ContextualHelpComponent implements OnInit {
     this.helpService.loading$.subscribe(loading => {
       this.loaded = !loading
     })
-  }
-
-  getTranslation(){
-    this.translateService.stream([
-      'PROJECTGUIDE.projectguide_pedagogical_guide',
-    ]).subscribe(translations => {})
   }
 }
