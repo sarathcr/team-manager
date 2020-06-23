@@ -20,7 +20,7 @@ class ProjectEntityServiceStub { }
 class StepStatusEntityServiceStub { }
 class RouterStub { }
 class BsModalServiceStub {
-  getModalsCount = (): number => 0 
+  getModalsCount = (): number => 0
 }
 
 describe('StepThreeComponent', (): void => {

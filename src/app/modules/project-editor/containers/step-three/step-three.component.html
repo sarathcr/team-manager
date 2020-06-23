@@ -13,10 +13,10 @@
                     <div class="project-editor__subject-wrapper">
                         <app-details-selector
                         *ngFor="let subject of (editor.project$|async).subjects; let i = index; let last = last;"
-                        [data]="subject"  [i]="subject.id"
+                        [data]="subject"  [subjectId]="subject.id"
                         [criterias]="criterias" [isLast]="last"
-                        (onAdd)="addItem($event)"
-                        (onDelete)="removeItem($event)"
+                        (addCriteria)="addItem($event)"
+                        (deleteCriteria)="removeItem($event)"
                         (openModal)="openModalWithComponent()"
                         [project$]="editor.project$"
                         ></app-details-selector>

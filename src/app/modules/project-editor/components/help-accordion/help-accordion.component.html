@@ -1,5 +1,11 @@
 <accordion [isAnimated]="true" [closeOthers]="oneAtATime" #accordion>
-  <accordion-group [isOpen]='first && isOpen' [panelClass]="customClass" #accordionGroup [ngClass]="{ 'help-accordion_last help-accordion_active' : accordionGroup.isOpen }" *ngFor="let accordian of content; let i = index; let first = first;">
+  <accordion-group 
+    *ngFor="let accordian of content; let i = index; let first = first;"
+    [isOpen]='first && isOpen' 
+    [panelClass]="customClass" 
+    [ngClass]="{ 'help-accordion_last help-accordion_active' : accordionGroup.isOpen }" 
+    #accordionGroup 
+  >
     <div accordion-heading class="help-accordion__heading" >
         <div class="help-accordion__heading-icon help-accordion__heading-icon_multi-icon">
           <img src="data:image/png;base64,{{accordian.icon}}" class="help-accordion__icon" alt="off icon">
@@ -12,7 +18,12 @@
     </div>
     <div class="help-accordion__body" [ngStyle]="{ 'height' : arrayHeight }">
       <ng-scrollbar>
-        <div class="help-accordion__body-content" #accordionBody [innerHTML]="accordian.body | stringDecoder" [ngStyle]="{ 'max-height' : arrayHeight }"></div>
+        <div 
+          class="help-accordion__body-content" 
+          [innerHTML]="accordian.body | stringDecoder" 
+          [ngStyle]="{ 'max-height' : arrayHeight }"
+          #accordionBody 
+        ></div>
       </ng-scrollbar>
     </div>
   </accordion-group>
