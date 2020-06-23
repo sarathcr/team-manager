@@ -8,7 +8,7 @@ import { Observable } from 'rxjs'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   loading = true
   isLoggedIn$: Observable<boolean>
   isLoggedOut$: Observable<boolean>
@@ -21,13 +21,13 @@ export class AppComponent implements OnInit{
     translateService.use(browserLang.match(/en|es/) ? browserLang : 'en')
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.translateService.get('GENERAL.platform_title_tab').subscribe(name => {
       this.setTitle(name)
     })
   }
 
-  public setTitle( newTitle: string) {
+  public setTitle(newTitle: string): void {
     this.titleService.setTitle(newTitle)
   }
 }

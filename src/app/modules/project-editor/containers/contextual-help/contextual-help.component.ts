@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter} from '@angular/core'
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
@@ -25,7 +25,7 @@ export class ContextualHelpComponent implements OnInit {
     private translateService: TranslateService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   // Close tab
   closeTab(): void {
@@ -43,14 +43,14 @@ export class ContextualHelpComponent implements OnInit {
     if (!this.closeContext) {
       this.closeContext = true
     }
-    if (this.closeContext){
+    if (this.closeContext) {
       this.getHelpContent()
     }
   }
 
   getHelpContent(): void {
-    this.editorService.currentStep$.subscribe( stepId => {
-      if (stepId && this.closeContext){
+    this.editorService.currentStep$.subscribe(stepId => {
+      if (stepId && this.closeContext) {
         this.getHelp(stepId)
       }
     })
@@ -60,14 +60,14 @@ export class ContextualHelpComponent implements OnInit {
   getHelp(stepid): void {
     this.contextualHelp$ = this.helpService.entities$
       .pipe(
-        map( help => help.find( step => {
-            return step.stepid === Number(stepid)
-          })
+        map(help => help.find(step => {
+          return step.stepid === Number(stepid)
+        })
         )
       )
-    this.contextualHelp$.subscribe( contextualHelp => {
+    this.contextualHelp$.subscribe(contextualHelp => {
       if (contextualHelp) {
-          this.help = contextualHelp.helps
+        this.help = contextualHelp.helps
       } else {
         this.helpService.getByKey(stepid)
       }
