@@ -9,7 +9,7 @@ export class TextareaComponent implements OnInit {
   @Input() value: string
   @Input() placeholder: string
   @Input() maxlength: number
-  @Output() onChange = new EventEmitter()
+  @Output() inputChange = new EventEmitter()
   focus = false
 
   constructor() { }
@@ -18,41 +18,41 @@ export class TextareaComponent implements OnInit {
   }
 
   // Function to get and emit value on textarea
-  onValueChange(value: string) {
+  onValueChange(value: string): void {
     if ((this.isFirefox() || this.isEdge()) && value.length > this.maxlength) {
       value = value.substring(0, this.maxlength)
     }
     this.value = value
-    this.onChange.emit(value.trim())
+    this.inputChange.emit(value.trim())
   }
 
-  onKeyDown(event): any {
+  onKeyDown(event): void {
     const text = event.target.value
     if (this.isEdge() && event.keyCode === 13 && text.length > this.maxlength - 1) {
       event.preventDefault()
     }
   }
 
-  setFocus() {
+  setFocus(): void {
     this.focus = true
   }
 
-  onBlur() {
+  onBlur(): void {
     this.focus = false
     if (!this.value.trim()) {
       this.value = ''
-      this.onChange.emit('')
+      this.inputChange.emit('')
     }
   }
 
   // function to check the browser is Firefox
-  isFirefox() {
+  isFirefox(): boolean {
     const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
     return isFirefox
   }
 
   // function to check the browser is Edge
-  isEdge() {
+  isEdge(): boolean {
     const isEdge = navigator.userAgent.toLowerCase().indexOf('edge') > -1
     return isEdge
   }

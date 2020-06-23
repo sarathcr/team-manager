@@ -13,5 +13,5 @@ export class EditorSidebarComponent {
 
   constructor() { }
 
-  originalOrder = (): number => 0 
+  originalOrder = (): number => 0
 }
