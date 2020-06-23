@@ -10,7 +10,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown'
   encapsulation: ViewEncapsulation.None
 })
 export class DropdownComponent implements OnInit {
-  @Output() onSelect: EventEmitter<any> = new EventEmitter()
+  @Output() dropdownSelect: EventEmitter<any> = new EventEmitter()
   @Input() config: DropDownConfig
   active = false
   dropdownSettings: IDropdownSettings = {}
@@ -29,12 +29,12 @@ export class DropdownComponent implements OnInit {
 
   onItemSelect(item: any) {
     this.active = true
-    this.onSelect.emit({controller: this.config.name, val: this.config.selectedItems})
+    this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
   }
 
   onItemDeSelect(item: any) {
     this.active = true
-    this.onSelect.emit({controller: this.config.name, val: this.config.selectedItems})
+    this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
   }
 
   onDropDownClose(){

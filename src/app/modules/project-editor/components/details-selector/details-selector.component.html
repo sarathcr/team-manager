@@ -16,13 +16,12 @@
       </span>
     </li>
       <span *ngFor="let criteria of criterias let criteriaIndex = index">
-        <li *ngIf="i == criteria" class="details-selector__item">
+        <li *ngIf="subjectId == criteria" class="details-selector__item">
           <span class="details-selector__text_normal">evaluation criteria1.</span>
           <span class="details-selector__close" (click)="getModal(criteriaIndex)">
             <span class="icon icon-ic_share_close"></span>
           </span>
         </li>
       </span>
-      
   </ul>
 </div>

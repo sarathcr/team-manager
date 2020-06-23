@@ -5,13 +5,6 @@
   width: 100%;
   margin-bottom: $m-36px;
 
-  &__wrap {
-    position: relative;
-    font-family: $font-family-pt-sans;
-    color: $primary-font-color;
-    background-color: $creator-background;
-  }
-
   &__field {
     padding: $padding-input;
     font-size: $font-size-default;
@@ -239,6 +232,30 @@
           color: transparent;
           @extend .spinner;
           @extend .spinner_medium;
+        }
+      }
+    }
+  }
+
+  & &__wrap {
+    position: relative;
+    font-family: $font-family-pt-sans;
+    color: $primary-font-color;
+    background-color: $creator-background;
+    &.dropdown_single-select{
+      .multiselect-item-checkbox{
+        input[type=checkbox] + div{
+          padding-left: 4px !important;
+          &::before,&::after{
+            content: none !important;
+          }
+        }
+        input[type=checkbox]:checked + div{
+          &::after{
+            position: relative !important;
+            margin: 0 !important;
+            margin-left:5px;
+          }
         }
       }
     }

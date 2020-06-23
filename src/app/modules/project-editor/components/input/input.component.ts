@@ -12,7 +12,7 @@ export class InputComponent {
   @Input() placeholder: string
   @Input() maxlength: number
   @Input() value: string
-  @Output() onChange = new EventEmitter()
+  @Output() inputChange = new EventEmitter()
   config: FieldConfig
   group: FormGroup
   focus = false
@@ -22,7 +22,7 @@ export class InputComponent {
   // Function to get and emit value on textarea
   onValueChange(value: string) {
     this.value = value
-    this.onChange.emit(value.trim())
+    this.inputChange.emit(value.trim())
   }
 
   setFocus() {
@@ -33,7 +33,7 @@ export class InputComponent {
     this.focus = false
     if (!this.value.trim()) {
       this.value = ''
-      this.onChange.emit('')
+      this.inputChange.emit('')
     }
   }
 }

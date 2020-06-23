@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input, OnDestroy, ElementRef, Renderer2 } from '@angular/core'
+import { Component, OnInit, ViewEncapsulation, Input, OnDestroy, ElementRef, Renderer2, HostListener } from '@angular/core'
 import { Help } from 'src/app/shared/constants/contextual-help.model'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component'
@@ -8,24 +8,26 @@ import { HelpModalContentComponent } from '../help-modal-content/help-modal-cont
   templateUrl: './help-accordion.component.html',
   styleUrls: ['./help-accordion.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  host: {
-    '(window:resize)': 'onResize($event)'
-  }
 })
 
 export class HelpAccordionComponent implements OnInit, OnDestroy {
-  _content: Help[]
+
+  privateContent: Help[]
   @Input() set content(content: Help[]) {
-    this._content = content
+    this.privateContent = content
     this.onContentChange()
   }
-  get content(): Help[] { return this._content }
+  get content(): Help[] { return this.privateContent }
   @Input() isOpen: boolean
   arrayHeight = ''
   oneAtATime = true
   isFirstOpen = true
   customClass = 'help-accordion'
   bsModalRef: BsModalRef
+  @HostListener('window:resize', ['$event'])
+  onResize(): void {
+    this.adjustHeight()
+  }
 
   constructor(
     private modalService: BsModalService,
@@ -90,9 +92,7 @@ export class HelpAccordionComponent implements OnInit, OnDestroy {
     )
     this.bsModalRef.content.closeBtnName = 'Close'
   }
-  onResize(event) {
-    this.adjustHeight()
-  }
+
   adjustHeight() {
     this.arrayHeight = 'calc(100vh - ' + ((this.content.length * 60) + 160) + 'px)'
   }

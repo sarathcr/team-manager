@@ -3,23 +3,18 @@
   <div class="project-form d-flex flex-column justify-content-between">
     <div>
       <h1 class="title_s">
-        <span>3. </span>{{'OBJECTIVES.project_objectives_title' | translate}}<app-info-tooltip>
-        </app-info-tooltip>
+        <span>3. </span>{{'OBJECTIVES.project_objectives_title' | translate}}
+        <app-info-tooltip></app-info-tooltip>
       </h1>
-      <p class="project-form__description">
-        {{'OBJECTIVES.project_objectives_description'  | translate}}</p>
+      <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
       <ng-template #loaded>
-        <app-step-unlock *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects">
-        </app-step-unlock>
+        <app-step-unlock *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects"></app-step-unlock>
         <ng-template #hasSubjects>
           <div class="project-editor__subject-wrapper">
             <app-details-selector
-              *ngFor="let subject of (editor.project$|async).subjects;
-              let i = index;
-              let last = last;"
-              [data]="subject" [i]="subject.id" [criterias]="criterias" [isLast]="last"
-              (onAdd)="addItem($event)" (onDelete)="removeItem($event)"
-              (openModal)="openModalWithComponent()" [project$]="editor.project$">
+              *ngFor="let subject of (editor.project$|async).subjects; let i = index; let last = last;" [data]="subject"
+              [subjectId]="subject.id" [criterias]="criterias" [isLast]="last" (addCriteria)="addItem($event)"
+              (deleteCriteria)="removeItem($event)" (openModal)="openModalWithComponent()" [project$]="editor.project$">
             </app-details-selector>
             <div class="project-editor__goto-step">
               {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}
@@ -36,7 +31,7 @@
             <p class="project-form__sub-description mb-5">
               {{'OBJECTIVES.project_objectives_objectives_subtitle.description' | translate}}
             </p>
-            <app-textarea-bullets [config]='textAreaConfig' (onChange)="textAreaUpdate($event)"
+            <app-textarea-bullets [config]='textAreaConfig' (inputChange)="textAreaUpdate($event)"
               [options$]="competencyObjectives$" [variant]="'number'">
             </app-textarea-bullets>
           </div>

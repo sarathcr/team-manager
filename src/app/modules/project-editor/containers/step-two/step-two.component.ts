@@ -91,9 +91,9 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == 'DONE'
+            this.buttonConfig.submitted = formStatus.state === 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != 'DONE' && this.checkNonEmptyForm()) {
+            if (formStatus.state !== 'DONE' && this.checkNonEmptyForm()) {
               this.buttonConfig.disabled = false
             }
           }
@@ -128,7 +128,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   // checks the form is completely filled or not
   checkNonEmptyForm() {
-    if (this.InputFormData.themes.length && (this.InputFormData.themes[this.InputFormData.themes.length - 1].name != null)) {
+    if (this.InputFormData.themes.length &&
+      (this.InputFormData.themes[this.InputFormData.themes.length - 1].name != null)) {
       return true
     }
     return false
@@ -136,7 +137,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   // Function to check whether the form is updated
   isFormUpdated() {
-    if (!this.isEqual(this.initialFormData.themes, this.InputFormData.themes) || this.initialFormStatus !== this.step.state) {
+    if (!this.isEqual(this.initialFormData.themes, this.InputFormData.themes) ||
+      this.initialFormStatus !== this.step.state) {
       return true
     }
     return false
@@ -149,7 +151,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   handleSubmit(formStatus?: Status) {
-    if (formStatus == 'DONE') {
+    if (formStatus === 'DONE') {
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'
     }
@@ -180,7 +182,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.editor.handleStepSubmit(formData, this.step.state == 'DONE')
+    this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
     this.handleButtonType()
   }
 
@@ -191,15 +193,15 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   // Changes the button according to form status
   handleButtonType() {
-    if (this.step.state == 'INPROCESS') {
+    if (this.step.state === 'INPROCESS') {
       this.buttonConfig.disabled = false
       this.buttonConfig.submitted = false
     }
-    if (this.step.state == 'PENDING') {
+    if (this.step.state === 'PENDING') {
       this.buttonConfig.disabled = true
       this.buttonConfig.submitted = false
     }
-    if (this.step.state == 'DONE') {
+    if (this.step.state === 'DONE') {
       this.buttonConfig.submitted = true
       this.buttonConfig.disabled = true
     }
