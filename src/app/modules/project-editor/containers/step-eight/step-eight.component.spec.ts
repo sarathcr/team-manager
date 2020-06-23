@@ -9,8 +9,8 @@ import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip
 import { StatusComponent } from '../../components/status/status.component'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { ProjectEntityService } from '../../services/project/project-entity.service'
-import { StepStatusEntityService } from '../../services/step-status/step-status-entity.service'
+import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
+import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 
 class EditorServiceStub { }
 class ProjectEntityServiceStub { }
@@ -39,14 +39,14 @@ describe('FinalProductComponent', (): void => {
       ],
       imports: [ TranslateModule.forRoot() ]
     })
-    
+
     fixture = TestBed.createComponent(StepEightComponent)
     component = fixture.componentInstance
   })
 
   afterEach((): void => {
     spyOn(component, 'isFormUpdated').and.returnValue(false)
-    
+
     fixture.destroy()
   })
 

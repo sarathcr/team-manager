@@ -9,7 +9,7 @@ import { Step } from '../../constants/step.model'
 describe('StepMenuComponent', (): void => {
   let component: StepMenuComponent
   let fixture: ComponentFixture<StepMenuComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ StepMenuComponent ],
@@ -34,11 +34,11 @@ describe('StepMenuComponent', (): void => {
     const menuStepIcon: DebugElement = menuElement
                                         .query(By.css('.menu__step .icon-ic_check'))
 
-    expect(menuElement.classes['menu_done']).toBeTruthy()
+    expect(menuElement.classes.menu_done).toBeTruthy()
     expect(menuStepIcon).toBeTruthy()
   })
 
-  it('should render classes and components for "INPROCESS" step state', () : void=> {
+  it('should render classes and components for "INPROCESS" step state', (): void => {
     const step: Step = { state: 'INPROCESS', stepid: 1, name: 'lorem ipsum' }
     component.step = step
 
@@ -47,7 +47,7 @@ describe('StepMenuComponent', (): void => {
     const menuDebugElement: DebugElement = fixture.debugElement.query(By.css('.menu'))
     const menuElement: HTMLElement = menuDebugElement.nativeElement
 
-    expect(menuDebugElement.classes['menu_inprocess']).toBeTruthy()
+    expect(menuDebugElement.classes.menu_inprocess).toBeTruthy()
     expect(menuElement.innerText).toContain(step.name)
     expect(menuElement.innerText).toContain(String(step.stepid))
   })

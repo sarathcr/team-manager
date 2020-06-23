@@ -9,7 +9,7 @@ import { StepMenuComponent } from '../step-menu/step-menu.component'
 describe('EditorSidebarComponent', (): void => {
   let component: EditorSidebarComponent
   let fixture: ComponentFixture<EditorSidebarComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [
@@ -59,7 +59,7 @@ describe('EditorSidebarComponent', (): void => {
     component.steps = steps
 
     fixture.detectChanges()
-    
+
     const debugStepMenuElement: DebugElement[] = fixture
                                                   .debugElement
                                                   .queryAll(By.directive(StepMenuComponent))

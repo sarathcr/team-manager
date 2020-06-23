@@ -8,7 +8,7 @@ import { HelpAccordionComponent } from './help-accordion.component'
 describe('HelpAccordionComponent', (): void => {
   let component: HelpAccordionComponent
   let fixture: ComponentFixture<HelpAccordionComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ HelpAccordionComponent, AccordionComponent ],

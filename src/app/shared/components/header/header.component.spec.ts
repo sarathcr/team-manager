@@ -5,12 +5,12 @@ import { HeaderComponent } from './header.component'
 describe('HeaderComponent', (): void => {
   let component: HeaderComponent
   let fixture: ComponentFixture<HeaderComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ HeaderComponent ]
     })
-    
+
     fixture = TestBed.createComponent(HeaderComponent)
     component = fixture.componentInstance
   })

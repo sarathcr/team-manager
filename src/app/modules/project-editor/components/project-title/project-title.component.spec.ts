@@ -11,11 +11,11 @@ describe('ProjectTitleComponent', (): void => {
   let component: ProjectTitleComponent
   let fixture: ComponentFixture<ProjectTitleComponent>
 
-  const getDebugElementByCss = 
+  const getDebugElementByCss =
     (css: string, currentFixture: ComponentFixture<ProjectTitleComponent>): DebugElement => {
     return currentFixture.debugElement.query(By.css(css))
   }
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ ProjectTitleComponent ],
@@ -30,13 +30,13 @@ describe('ProjectTitleComponent', (): void => {
     expect(component).toBeTruthy()
   })
 
-  it('should show input field with default values if not input prop is passed', (): void => {
+  it('should show input field with default values if no input prop is passed', (): void => {
     fixture.detectChanges()
 
     const inputDebugElement: DebugElement = getDebugElementByCss('.project-title__input', fixture)
 
-    expect(inputDebugElement.properties['placeholder']).toBeUndefined()
-    expect(inputDebugElement.attributes['maxlength']).toBeUndefined()
+    expect(inputDebugElement.properties.placeholder).toBeUndefined()
+    expect(inputDebugElement.attributes.maxlength).toBeUndefined()
   })
 
   it('should show input attributes if corresponding input props are passed', (): void => {
@@ -49,8 +49,8 @@ describe('ProjectTitleComponent', (): void => {
 
     const inputDebugElement: DebugElement = getDebugElementByCss('.project-title__input', fixture)
 
-    expect(inputDebugElement.properties['placeholder']).toBe(placeholder)
-    expect(inputDebugElement.attributes['maxlength']).toBe(String(maxLength))
+    expect(inputDebugElement.properties.placeholder).toBe(placeholder)
+    expect(inputDebugElement.attributes.maxlength).toBe(String(maxLength))
   })
 
   it('should not show heading by default if project title is not passed as props', (): void => {
@@ -70,7 +70,7 @@ describe('ProjectTitleComponent', (): void => {
     fixture.detectChanges()
 
     const titleDebugElement: DebugElement = getDebugElementByCss('.project-title__text', fixture)
-    
+
     expect(titleDebugElement).toBeFalsy()
   })
 
@@ -94,7 +94,7 @@ describe('ProjectTitleComponent', (): void => {
 
     const inputDebugElement: DebugElement = getDebugElementByCss('.project-title__input', fixture)
     inputDebugElement.triggerEventHandler('blur', event)
-    
+
     fixture.detectChanges()
     const titleElement: HTMLElement = getDebugElementByCss('.project-title__text', fixture).nativeElement
 
