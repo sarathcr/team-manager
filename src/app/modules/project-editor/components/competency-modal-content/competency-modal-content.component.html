@@ -153,7 +153,7 @@
     <div class="competency-modal__body">
       <h6 class="competency-modal__body-title">
         0 {{ 'OBJECTIVES.project_objectives_criteriawindow_critera_selected' | translate }}</h6>
-      <div class="competency-modal__body-block_no-content d-flex align-items-center 
+      <!-- <div class="competency-modal__body-block_no-content d-flex align-items-center 
       justify-content-center">
         <div class="competency-modal__body__no-content-wrapper d-flex align-items-center 
         justify-content-center">
@@ -167,6 +167,32 @@
             <app-button (click)="getSummary()">
               {{'OBJECTIVES.project_objectives_criteriawindow_empty_button' | translate}}
             </app-button>
+          </div>
+        </div>
+      </div> -->
+      <div class="competency-modal__body_summary">
+        <div id="custom-tab__content1" class="custom-tab__content active">
+          <div class="custom-tab__content-body">
+            <app-table-row [isHead]="true" [checkbox]="false" [cellData]="rowHeadData">
+            </app-table-row>
+            <ng-scrollbar>
+              <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
+                <app-table-row [checkbox]="true" [cellData]="rowData"
+                  [parentID]="'custom-tab__content1'" (count)="getStatus($event)"></app-table-row>
+                <app-table-row [checkbox]="true" [cellData]="rowData" (count)="getStatus($event)">
+                </app-table-row>
+                <app-table-row [checkbox]="true" [cellData]="rowData" (count)="getStatus($event)">
+                </app-table-row>
+                <app-table-row [checkbox]="true" [cellData]="rowData" (count)="getStatus($event)">
+                </app-table-row>
+                <app-table-row [checkbox]="true" [cellData]="rowData" (count)="getStatus($event)">
+                </app-table-row>
+                <app-table-row [checkbox]="true" [cellData]="rowData" (count)="getStatus($event)">
+                </app-table-row>
+                <app-table-row [checkbox]="true" [cellData]="rowData" [isLastRow]="true"
+                  (count)="getStatus($event)"></app-table-row>
+              </div>
+            </ng-scrollbar>
           </div>
         </div>
       </div>
