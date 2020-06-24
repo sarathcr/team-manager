@@ -17,8 +17,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "ng lint",
-      "pre-push": "ng lint",
-      "commit-msg": "echo $HUSKY_GIT_PARAMS"
+      "commit-msg": ""
     }
   },
   "dependencies": {

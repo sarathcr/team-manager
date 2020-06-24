@@ -1,7 +1,7 @@
 # ~/.huskyrc
 {
   "hooks": {
-    "commit-msg": "sh commit-msg.sh",
-    "pre-commit": "sh pre-commit.sh"
+    "commit-msg": "",
+    "pre-commit": ""
   }
 }
