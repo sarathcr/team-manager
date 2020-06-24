@@ -9,6 +9,7 @@ get_projects_keys () {
 }
 
 check_commit_msg () {
+  echo "$HUSKY_GIT_PARAMS '++++'"
   COMMIT_REGEX="^(($(get_projects_keys))-[0-9]*|NOTASK|Merge branch) [^-]*$"
   COMMIT_MSG_FILE=$1
 
