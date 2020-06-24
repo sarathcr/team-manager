@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core'
+import { Component, ViewEncapsulation, Output, EventEmitter } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
@@ -11,7 +11,7 @@ import { HelpEntityService } from '../../store/entity/help/help-entity.service'
   styleUrls: ['./contextual-help.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ContextualHelpComponent implements OnInit {
+export class ContextualHelpComponent {
   @Output() status = new EventEmitter<boolean>()
   help: Help[]
   contextualHelp$: Observable<ContextualHelp>
@@ -24,8 +24,6 @@ export class ContextualHelpComponent implements OnInit {
     public helpService: HelpEntityService,
     private translateService: TranslateService
   ) { }
-
-  ngOnInit(): void { }
 
   // Close tab
   closeTab(): void {
