@@ -28,44 +28,44 @@ const routes: Routes = [
         component: EditorComponent,
         children: [
           {
-            path: 'stepOne',
+            path: '1',
             component: StepOneComponent,
           },
           {
-            path: 'stepTwo',
+            path: '2',
             component: StepTwoComponent,
           }, {
-            path: 'stepThree',
+            path: '3',
             component: StepThreeComponent,
           }, {
-            path: 'stepFour',
+            path: '4',
             component: StepFourComponent,
           }, {
-            path: 'stepFive',
+            path: '5',
             component: StepFiveComponent,
           }, {
-            path: 'stepSix',
+            path: '6',
             component: StepSixComponent,
           },
           {
-            path: 'stepSeven',
+            path: '7',
             component: StepSevenComponent,
           },
           {
-            path: 'stepEight',
+            path: '8',
             component: StepEightComponent,
           },
           {
-            path: 'stepNine',
+            path: '9',
             component: StepNineComponent,
           },
           {
-            path: 'stepTen',
+            path: '10',
             component: StepTenComponent,
           },
           {
             path: '**',
-            redirectTo: 'stepOne'
+            redirectTo: '1'
           },
         ]
       },
