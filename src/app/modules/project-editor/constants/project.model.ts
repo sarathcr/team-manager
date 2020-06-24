@@ -1,6 +1,6 @@
 export class Project {
-  id: number | null
-  title: string
+  id?: number | null
+  title?: string
   creativeTitle?: string
   creativeImage?: string
   name?: string
@@ -74,7 +74,7 @@ export class EvaluationCriteria {
 }
 
 
-export function compareProjects(p1: Project, p2: Project) {
+export function compareProjects(p1: Project, p2: Project): number {
   const firstTimestamp = new Date(p1?.createdAt).getTime()
   const secondTimestamp = new Date(p2?.createdAt).getTime()
   const compare = firstTimestamp - secondTimestamp

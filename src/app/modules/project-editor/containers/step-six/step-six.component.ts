@@ -34,7 +34,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
     }
   }
 
-  formInit() {
+  formInit(): void {
     this.project$ = this.editor.getStepData(6)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[5]

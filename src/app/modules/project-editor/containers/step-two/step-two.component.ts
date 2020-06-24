@@ -1,3 +1,4 @@
+import { Option } from './../../../../shared/constants/field.model'
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { FieldConfig } from '../../../../shared/constants/field.model'
 import { Observable } from 'rxjs'
@@ -70,7 +71,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     })
   }
 
-  formInIt() {
+  formInIt(): void {
     this.project$ = this.editor.getStepData(2)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[1]
@@ -186,7 +187,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
-  textAreaUpdate(data): void { // calls on every update
+  textAreaUpdate(data: Option[]): void { // calls on every update
     this.InputFormData.themes = data
     this.checkStatus()
   }

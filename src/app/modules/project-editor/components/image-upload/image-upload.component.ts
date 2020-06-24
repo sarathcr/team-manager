@@ -31,7 +31,7 @@ export class ImageUploadComponent implements OnInit {
     }
   }
 
-  onSelect(event): void {
+  onSelect(event: any): void {
     if (!this.files.length) {
       this.files = [...event.addedFiles]
       if (this.files.length) {
