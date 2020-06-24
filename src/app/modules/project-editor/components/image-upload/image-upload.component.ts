@@ -23,7 +23,7 @@ export class ImageUploadComponent implements OnInit {
 
   }
 
-  toBase64(file: File) {
+  toBase64(file: File): void {
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = () => {
@@ -31,7 +31,7 @@ export class ImageUploadComponent implements OnInit {
     }
   }
 
-  onSelect(event) {
+  onSelect(event): void {
     if (!this.files.length) {
       this.files = [...event.addedFiles]
       if (this.files.length) {
@@ -43,13 +43,13 @@ export class ImageUploadComponent implements OnInit {
           .subscribe(data => {
             if (data) {
               this.aws.uploadImage(data.uploadURL, file)
-              .subscribe(() => {
-                this.fileSelect.emit(data.publicURL)
-                this.loading = false
-              },
-                err => {
-                  this.handleServerError(err)
-                })
+                .subscribe(() => {
+                  this.fileSelect.emit(data.publicURL)
+                  this.loading = false
+                },
+                  err => {
+                    this.handleServerError(err)
+                  })
             }
           },
             err => {
@@ -59,14 +59,14 @@ export class ImageUploadComponent implements OnInit {
     }
   }
 
-  onRemove(event) {
+  onRemove(event: any): void {
     event.stopPropagation()
     this.imageURL = ''
     this.files = []
     this.fileSelect.emit('')
   }
 
-  handleServerError(error) {
+  handleServerError(error: any): void {
     this.imageURL = ''
     this.loading = false
   }
