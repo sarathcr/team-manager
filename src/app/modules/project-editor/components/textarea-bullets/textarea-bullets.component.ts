@@ -22,7 +22,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   @Input() variant: TextAreaVariants = 'bullet'
   @Input() config: FieldConfig
   @Input() options: Option[]
-  @Input() options$: Observable<object[]>
+  @Input() options$: Observable<Option[]>
   @Output() inputChange = new EventEmitter()
   @ViewChildren('textArea') textArea: QueryList<ElementRef>
   index = 0

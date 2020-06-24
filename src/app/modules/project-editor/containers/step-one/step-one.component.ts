@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
-import { FieldConfig } from '../../../../shared/constants/field.model'
+import { FieldConfig, DropDownConfig } from '../../../../shared/constants/field.model'
 import { FormOneInitData } from '../../constants/step-forms.data'
 import { FormOneInit, FormOne } from '../../constants/step-forms.model'
 import { Step, Status } from '../../constants/step.model'
@@ -27,11 +27,11 @@ export class StepOneComponent implements OnInit, OnDestroy {
   step: Step
   initialFormData: FormOneInit = new FormOneInitData()
   buttonConfig: FieldConfig
-  countryDropdown: FieldConfig
-  regionDropdown: FieldConfig
-  academicYearDropdown: FieldConfig
-  gradesDropdown: FieldConfig
-  subjectsDropdown: FieldConfig
+  countryDropdown: DropDownConfig
+  regionDropdown: DropDownConfig
+  academicYearDropdown: DropDownConfig
+  gradesDropdown: DropDownConfig
+  subjectsDropdown: DropDownConfig
   active = false
   initialFormStatus: Status = 'PENDING'
 
@@ -121,7 +121,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   getAllCountries(): void {
     this.countryService.entities$
       .subscribe(data => {
-        this.countryDropdown.options = data
+        this.countryDropdown.data = data
         if (!data.length) { this.countryService.getAll() }
       })
   }
@@ -133,7 +133,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
       )
       .subscribe(newData => {
         if (!newData.length) { this.regionService.getWithQuery(countryId.toString()) }
-        this.regionDropdown.options = newData
+        this.regionDropdown.data = newData
       })
   }
 
@@ -141,7 +141,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     this.academicYearService.entities$
       .subscribe(newData => {
         if (!newData.length) { this.academicYearService.getAll() }
-        this.academicYearDropdown.options = newData
+        this.academicYearDropdown.data = newData
       })
   }
 
@@ -160,7 +160,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
           }
           this.gradeService.getWithQuery(parms)
         }
-        this.gradesDropdown.options = newData
+        this.gradesDropdown.data = newData
       })
   }
 
@@ -180,7 +180,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
         return [...subjectData]
       }))
       .subscribe(newData => {
-        this.subjectsDropdown.options = newData
+        this.subjectsDropdown.data = newData
       })
   }
 
@@ -410,49 +410,58 @@ export class StepOneComponent implements OnInit, OnDestroy {
       submitted: false
     }
     this.countryDropdown = {
-      field: 'dropdown',
       name: 'country',
       id: 'country',
-      multiselect: false,
-      options: [],
-      selectedItems: []
+      data: [],
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: true,
+      }
     }
     this.regionDropdown = {
-      field: 'dropdown',
       name: 'region',
       id: 'region',
-      multiselect: false,
-      options: [],
+      data: [],
       disabled: true,
-      selectedItems: []
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: true,
+      }
     }
     this.academicYearDropdown = {
-      field: 'dropdown',
       name: 'academicYear',
       id: 'academicYear',
-      textField: 'academicYear',
-      multiselect: false,
-      options: [],
+      data: [],
       disabled: true,
-      selectedItems: []
+      selectedItems: [],
+      settings: {
+        textField: 'academicYear',
+        singleSelection: true,
+      }
     }
     this.gradesDropdown = {
-      field: 'dropdown',
       name: 'grades',
       id: 'grade',
       disabled: true,
-      multiselect: true,
-      options: [],
-      selectedItems: []
+      data: [],
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: false,
+      }
     }
     this.subjectsDropdown = {
-      field: 'dropdown',
       name: 'subjects',
       id: 'subject',
       disabled: true,
-      multiselect: true,
-      options: [],
-      selectedItems: []
+      data: [],
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: false,
+      }
     }
     // Translation
     this.translateService.stream([

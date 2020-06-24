@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core'
 // Interfaces
-import { FieldConfig } from '../../constants/field.model'
+import { DropDownConfig } from '../../constants/field.model'
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
 
 @Component({
@@ -11,19 +11,19 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown'
 })
 export class DropdownComponent implements OnInit {
   @Output() dropdownSelect: EventEmitter<any> = new EventEmitter()
-  @Input() config: FieldConfig
+  @Input() config: DropDownConfig
   active = false
   dropdownSettings: IDropdownSettings = {}
   constructor() { }
 
   ngOnInit(): void {
+
     this.dropdownSettings = {
-      singleSelection: !this.config.multiselect || false,
-      textField: this.config.textField || 'name',
+      ...this.config.settings,
       itemsShowLimit: 3,
       closeDropDownOnSelection: true,
       maxHeight: 265,
-      enableCheckAll: false,
+      enableCheckAll: false
     }
   }
 
