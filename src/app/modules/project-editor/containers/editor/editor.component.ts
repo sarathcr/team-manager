@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 
-import { Steps } from '../../constants/step.model'
+import { Step } from '../../constants/step.model'
 import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
@@ -11,7 +11,7 @@ import { EditorService } from '../../services/editor/editor.service'
 })
 export class EditorComponent implements OnInit, OnDestroy {
   projectUrl: string | number
-  steps: Steps
+  steps: Step[]
   contextualStatus = false
 
   constructor(

@@ -22,7 +22,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   @Input() variant: TextAreaVariants = 'bullet'
   @Input() config: FieldConfig
   @Input() options: Option[]
-  @Input() options$: Observable<object[]>
+  @Input() options$: Observable<Option[]>
   @Output() inputChange = new EventEmitter()
   @ViewChildren('textArea') textArea: QueryList<ElementRef>
   index = 0
@@ -42,7 +42,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     this.optionInit()
   }
 
-  ngAfterContentChecked() {
+  ngAfterContentChecked(): void {
     if (this.textArea) {
       this.textArea.toArray().forEach(item => {
         item.nativeElement.style.height = (item.nativeElement.scrollHeight) + 'px'
@@ -50,7 +50,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  optionInit() {
+  optionInit(): void {
     if (this.options$) {
       this.options$.subscribe(data => {
         if (data?.length) {
@@ -64,14 +64,14 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  isFirefox() {
+  isFirefox(): boolean {
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
       return true
     }
     return false
   }
 
-  keyAction(event, id) {
+  keyAction(event: any, id: number): void {
     switch (event.keyCode) {
       case 13: // Enter
         event.preventDefault()
@@ -156,7 +156,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  onValueChange(value, i) {
+  onValueChange(value: string, i: number): void {
     this.index = i
     if (this.isFirefox() && value.length > this.config.maxLength) {
       value = value.substring(0, this.config.maxLength)
@@ -168,11 +168,11 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
 
   }
 
-  setFocus() {
+  setFocus(): void {
     this.focus = true
   }
 
-  onBlur(i) {
+  onBlur(i: number): void {
     this.focus = false
     if (this.configOptions.length > 1 && !this.configOptions[i]?.name?.trim()) {
       this.configOptions.splice(i, 1)

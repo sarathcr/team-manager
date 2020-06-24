@@ -44,7 +44,7 @@ export class ProjectsDataService extends DefaultDataService<Project> {
     }
 
     // Replaces the null value with {id:-1}
-    private nullValidator(data: any) {
+    private nullValidator(data: any): object {
         const dataChanges = { ...data }
         const validator = ['country', 'region', 'academicYear']
         for (const item of validator) {

@@ -21,9 +21,9 @@ export class DetailsSelectorComponent implements OnInit {
   @Input() i: number
   @Input() isLast = false
   @Input() project$: Observable<Project>
-  @Output() addCriteria = new EventEmitter()
-  @Output() openModal = new EventEmitter()
-  @Output() deleteCriteria = new EventEmitter()
+  @Output() addCriteria: EventEmitter<any> = new EventEmitter()
+  @Output() openModal: EventEmitter<any> = new EventEmitter()
+  @Output() deleteCriteria: EventEmitter<any> = new EventEmitter()
   count = 0
   bsModalRef: BsModalRef
 
@@ -33,7 +33,7 @@ export class DetailsSelectorComponent implements OnInit {
     this.formInit()
   }
 
-  formInit() {
+  formInit(): void {
     this.project$
       .pipe(map(data => data?.evaluationCriteria))
       .subscribe(criterias => {
@@ -47,7 +47,7 @@ export class DetailsSelectorComponent implements OnInit {
       })
   }
 
-  getModal(criteriaIndex: number) {
+  getModal(criteriaIndex: number): void {
     this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal' })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
@@ -58,13 +58,13 @@ export class DetailsSelectorComponent implements OnInit {
     })
   }
 
-  addItem(id: number, init = false) {
+  addItem(id: number, init: boolean = false): void {
     this.addCriteria.emit({ id, init })
     this.openModal.emit()
     this.getCount()
   }
 
-  getCount() {
+  getCount(): void {
     this.count = this.criterias.filter(criteria => criteria === this.subjectId).length
   }
 }

@@ -26,11 +26,11 @@ export class TableRowComponent implements OnInit {
     this.initRow()
   }
 
-  initRow() {
+  initRow(): void {
     // this.colCount = Math.floor(12 / this.cellData.length)
   }
 
-  onChange(checked: boolean) {
+  onChange(checked: boolean): void {
     this.count.emit({ parentID: this.parentID, checked })
   }
 }

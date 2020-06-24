@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
-import { FieldConfig } from '../../../../shared/constants/field.model'
+import { FieldConfig, DropDownConfig } from '../../../../shared/constants/field.model'
 import { FormOneInitData } from '../../constants/step-forms.data'
 import { FormOneInit, FormOne } from '../../constants/step-forms.model'
 import { Step, Status } from '../../constants/step.model'
@@ -27,11 +27,11 @@ export class StepOneComponent implements OnInit, OnDestroy {
   step: Step
   initialFormData: FormOneInit = new FormOneInitData()
   buttonConfig: FieldConfig
-  countryDropdown: FieldConfig
-  regionDropdown: FieldConfig
-  academicYearDropdown: FieldConfig
-  gradesDropdown: FieldConfig
-  subjectsDropdown: FieldConfig
+  countryDropdown: DropDownConfig
+  regionDropdown: DropDownConfig
+  academicYearDropdown: DropDownConfig
+  gradesDropdown: DropDownConfig
+  subjectsDropdown: DropDownConfig
   active = false
   initialFormStatus: Status = 'PENDING'
 
@@ -59,10 +59,10 @@ export class StepOneComponent implements OnInit, OnDestroy {
     }
   }
 
-  formInIt() {
-    this.project$ = this.editor.getStepData('stepOne')
-    this.step$ = this.editor.getStepStatus(1)
-    this.step = this.editor.steps.one
+  formInIt(): void {
+    this.project$ = this.editor.getStepData(1)
+    this.step$ = this.editor.getStepStatus()
+    this.step = this.editor.steps[0]
     if (this.project$) {
       this.project$
         .subscribe(data => {
@@ -87,20 +87,18 @@ export class StepOneComponent implements OnInit, OnDestroy {
             this.gradesDropdown.disabled = false
           }
           if (data?.grades) {
-            const gradesData = this.changeResponseFormat(data.grades)
             this.gradesDropdown.selectedItems = []
-            this.gradesDropdown.selectedItems.push(...gradesData)
-            tempinitialFormData.grades.push(...gradesData)
+            this.gradesDropdown.selectedItems.push(...data.grades)
+            tempinitialFormData.grades.push(...data.grades)
             if (data.grades.length) {
               this.getSubjects()
               this.subjectsDropdown.disabled = false
             }
           }
           if (data?.subjects?.length) {
-            const subjectData = this.changeResponseFormat(data.subjects)
             this.subjectsDropdown.selectedItems = []
-            this.subjectsDropdown.selectedItems.push(...subjectData)
-            tempinitialFormData.subjects.push(...subjectData)
+            this.subjectsDropdown.selectedItems.push(...data.subjects)
+            tempinitialFormData.subjects.push(...data.subjects)
           }
           this.initialFormData = tempinitialFormData
         })
@@ -120,38 +118,34 @@ export class StepOneComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeResponseFormat(data: any) {
-    return data.map(({ id, name }) => ({ id, name }))
-  }
-
-  getAllCountries() {
+  getAllCountries(): void {
     this.countryService.entities$
       .subscribe(data => {
-        this.countryDropdown.options = data
+        this.countryDropdown.data = data
         if (!data.length) { this.countryService.getAll() }
       })
   }
 
-  getRegions(countryId: number) {
+  getRegions(countryId: number): void {
     this.regionService.entities$
       .pipe(
         map(regions => regions.filter(region => region.country.id === countryId))
       )
       .subscribe(newData => {
         if (!newData.length) { this.regionService.getWithQuery(countryId.toString()) }
-        this.regionDropdown.options = newData
+        this.regionDropdown.data = newData
       })
   }
 
-  getAcademicYears() {
+  getAcademicYears(): void {
     this.academicYearService.entities$
       .subscribe(newData => {
         if (!newData.length) { this.academicYearService.getAll() }
-        this.academicYearDropdown.options = newData
+        this.academicYearDropdown.data = newData
       })
   }
 
-  getGrades(academicyearId: number, regionId?: number) {
+  getGrades(academicyearId: number, regionId?: number): void {
     const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id
     this.gradeService.entities$
       .pipe(
@@ -166,11 +160,11 @@ export class StepOneComponent implements OnInit, OnDestroy {
           }
           this.gradeService.getWithQuery(parms)
         }
-        this.gradesDropdown.options = newData
+        this.gradesDropdown.data = newData
       })
   }
 
-  getSubjects() {
+  getSubjects(): void {
     const gradeIds = []
     this.gradesDropdown.selectedItems.forEach(grade => { gradeIds.push(grade.id) })
     this.gradeService.entities$
@@ -186,11 +180,11 @@ export class StepOneComponent implements OnInit, OnDestroy {
         return [...subjectData]
       }))
       .subscribe(newData => {
-        this.subjectsDropdown.options = newData
+        this.subjectsDropdown.data = newData
       })
   }
 
-  checkStatus() {
+  checkStatus(): void {
     if (this.checkEmptyForm()) {
       this.step.state = 'PENDING'
     }
@@ -200,7 +194,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   // checks if the form is empty
-  checkEmptyForm() {
+  checkEmptyForm(): boolean {
     if (!this.countryDropdown.selectedItems.length &&
       !this.regionDropdown.selectedItems.length &&
       !this.academicYearDropdown.selectedItems.length &&
@@ -213,7 +207,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   // checks the form is completely filled or not
-  checkNonEmptyForm() {
+  checkNonEmptyForm(): boolean {
     if (this.countryDropdown.selectedItems.length &&
       this.regionDropdown.selectedItems.length &&
       this.academicYearDropdown.selectedItems.length &&
@@ -226,7 +220,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     }
   }
 
-  isFormUpdated() {
+  isFormUpdated(): boolean {
     if (!this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems) ||
@@ -239,7 +233,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     return false
   }
 
-  checkInProgress(data: any, type: string) {
+  checkInProgress(data: any, type: string): void {
     const values: Array<any> = []
     for (const key of Object.keys(this.initialFormData)) {
       switch (key) {
@@ -265,7 +259,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDropdownSelect(selectedData: any) {
+  onDropdownSelect(selectedData: any): void {
     this.checkInProgress(selectedData.val, selectedData.controller)
     const selectedId = selectedData.val[0]?.id
     if (selectedData) {
@@ -300,7 +294,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   // Changes the button according to form status
-  handleButtonType() {
+  handleButtonType(): void {
     if (this.checkNonEmptyForm()) {
       this.buttonConfig.disabled = false
       this.buttonConfig.submitted = false
@@ -310,7 +304,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleSubmit(formStatus?: Status) {
+  handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
       this.step.state = formStatus
       this.initialFormStatus = formStatus
@@ -345,7 +339,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   // reset form fields
-  resetForm(field: string) {
+  resetForm(field: string): void {
     if (field === 'country' || field === 'region') {
       this.gradesDropdown.selectedItems = []
       this.subjectsDropdown.selectedItems = []
@@ -364,12 +358,12 @@ export class StepOneComponent implements OnInit, OnDestroy {
     this.checkStatus()
   }
 
-  isEqual(d1: any[], d2: any[]) {
+  isEqual(d1: any[], d2: any[]): boolean {
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
   // disable or enable dropdown field
-  handleDropdownDisable(type: string) {
+  handleDropdownDisable(type: string): void {
     const fields = []
     switch (type) {
       case 'country': {
@@ -397,7 +391,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   // fuction updates the initial form data on form submit
-  updateInitialData() {
+  updateInitialData(): void {
     this.initialFormData = {
       country: this.countryDropdown.selectedItems,
       region: this.regionDropdown.selectedItems,
@@ -407,7 +401,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     }
   }
 
-  createFormConfig() {
+  createFormConfig(): void {
     this.buttonConfig = {
       name: 'submit',
       field: 'button',
@@ -416,49 +410,58 @@ export class StepOneComponent implements OnInit, OnDestroy {
       submitted: false
     }
     this.countryDropdown = {
-      field: 'dropdown',
       name: 'country',
       id: 'country',
-      multiselect: false,
-      options: [],
-      selectedItems: []
+      data: [],
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: true,
+      }
     }
     this.regionDropdown = {
-      field: 'dropdown',
       name: 'region',
       id: 'region',
-      multiselect: false,
-      options: [],
+      data: [],
       disabled: true,
-      selectedItems: []
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: true,
+      }
     }
     this.academicYearDropdown = {
-      field: 'dropdown',
       name: 'academicYear',
       id: 'academicYear',
-      textField: 'academicYear',
-      multiselect: false,
-      options: [],
+      data: [],
       disabled: true,
-      selectedItems: []
+      selectedItems: [],
+      settings: {
+        textField: 'academicYear',
+        singleSelection: true,
+      }
     }
     this.gradesDropdown = {
-      field: 'dropdown',
       name: 'grades',
       id: 'grade',
       disabled: true,
-      multiselect: true,
-      options: [],
-      selectedItems: []
+      data: [],
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: false,
+      }
     }
     this.subjectsDropdown = {
-      field: 'dropdown',
       name: 'subjects',
       id: 'subject',
       disabled: true,
-      multiselect: true,
-      options: [],
-      selectedItems: []
+      data: [],
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: false,
+      }
     }
     // Translation
     this.translateService.stream([

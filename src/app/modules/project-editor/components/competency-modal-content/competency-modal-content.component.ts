@@ -1,18 +1,20 @@
 import { Component, OnInit, HostListener } from '@angular/core'
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateService } from '@ngx-translate/core'
+import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
 
 
 @Component({
   selector: 'app-competency-modal-content',
   templateUrl: './competency-modal-content.component.html',
-  styleUrls: ['./competency-modal-content.component.scss'],
-  // encapsulation: ViewEncapsulation.None
+  styleUrls: ['./competency-modal-content.component.scss']
 })
 export class CompetencyModalContentComponent implements OnInit {
-  gradeDropdown: object
+  gradeDropdownConfig: DropDownConfig
   rowHeadData: Array<object>
   rowData: Array<object>
+  grades: Option[]
+  selectedGrades: Option[]
   leftContentHeight = ''
   contentHeight = ''
   isShow = false
@@ -107,7 +109,7 @@ export class CompetencyModalContentComponent implements OnInit {
   ]
 
   @HostListener('window:resize', ['$event'])
-  onResize(event): void {
+  onResize(): void {
     this.adjustHeightContent()
   }
 
@@ -118,36 +120,34 @@ export class CompetencyModalContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.adjustHeightContent()
-    this.getTranslation()
     this.createFormConfig()
-    this.gradeDropdown = {
-      field: 'dropdown',
-      name: 'Curso',
-      id: 'Curso',
-      label: 'Curso',
-      multiselect: true,
-      options: [
-        {
-          id: 1,
-          name: 'sample1'
-        },
-        {
-          id: 2,
-          name: 'sample2'
-        }
-      ],
-      selectedItems: [{
-        id: 1,
-        name: 'sample1'
-      }]
+    this.getTranslation()
+  }
+
+  onDropdownSelect(selectedData: any): void { }
+
+  createFormConfig(): void {
+    const selectedGrades = this.selectedGrades
+    const otherGrades = this.grades.filter(grade => selectedGrades.includes(grade))
+    this.gradeDropdownConfig = {
+      name: '',
+      data: otherGrades,
+      id: '',
+      priorityData: selectedGrades,
+      selectedItems: [selectedGrades[0]],
+      placeholder: 'Selecciona un curso',
+      settings: {
+        textField: 'name',
+        singleSelection: true,
+        priorityList: true,
+        priorityTitle: 'Cursos preferentes',
+        normalTitle: 'Otros cursos',
+        allowRemoteDataSearch: false
+      }
     }
   }
 
-  onDropdownSelect(selectedData: any) {
-
-  }
-
-  getTranslation() {
+  getTranslation(): void {
     this.translateService.stream([
       'OBJECTIVES.project_objectives_criteriawindow_curriculum',
       'OBJECTIVES.project_objectives_criteriawindow_title',
@@ -159,22 +159,20 @@ export class CompetencyModalContentComponent implements OnInit {
       'OBJECTIVES.project_objectives_criteriawindow_dimensions',
       'OBJECTIVES.project_objectives_criteriawindow_showall',
       'OBJECTIVES.project_objectives_criteriawindow_add',
-    ]).subscribe(translations => { })
+    ]).subscribe(translations => {
+      this.gradeDropdownConfig.label =
+        translations['OBJECTIVES.project_objectives_criteriawindow_combo_title']
+      // Below lines must be uncommented after getting its translation
+      // this.gradeDropdownConfig.placeholder =
+      // translations['OBJECTIVES.project_objectives_criteriawindow_combo_placeholder']
+      this.gradeDropdownConfig.settings.priorityTitle =
+        translations['OBJECTIVES.project_objectives_criteriawindow_combo_section_1']
+      this.gradeDropdownConfig.settings.normalTitle =
+        translations['OBJECTIVES.project_objectives_criteriawindow_combo_section_2']
+    })
   }
 
-  createFormConfig() {
-    this.gradeDropdown = {
-      field: 'dropdown',
-      name: 'Curso',
-      id: 'curso',
-      multiselect: false,
-      options: [],
-      selectedItems: [],
-      placeholder: 'Selecciona un curso'
-    }
-  }
-
-  openTab(event, id: string) {
+  openTab(event: any, id: string): void{
     let i
     let tabcontent
     let tablinks
@@ -193,17 +191,17 @@ export class CompetencyModalContentComponent implements OnInit {
     event.currentTarget.classList.add('active')
   }
 
-  getStatus($event) {
+  getStatus($event: any): void{
     console.log($event)
   }
 
-  adjustHeightContent() {
+  adjustHeightContent(): void{
     const innerHeight: number = window.innerHeight
     this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
   }
 
-  getSummary() {
+  getSummary(): void {
     this.isShow = !this.isShow
   }
 }

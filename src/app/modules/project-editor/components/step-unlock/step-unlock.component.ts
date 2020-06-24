@@ -18,7 +18,7 @@ export class StepUnlockComponent implements OnInit {
     this.createFormConfig()
   }
 
-  createFormConfig() {
+  createFormConfig(): void {
     this.buttonConfig = {
       name: 'submit',
       field: 'button',

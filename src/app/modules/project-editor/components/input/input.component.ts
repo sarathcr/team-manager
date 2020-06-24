@@ -20,16 +20,16 @@ export class InputComponent {
   constructor() { }
 
   // Function to get and emit value on textarea
-  onValueChange(value: string) {
+  onValueChange(value: string): void {
     this.value = value
     this.inputChange.emit(value.trim())
   }
 
-  setFocus() {
+  setFocus(): void {
     this.focus = true
   }
 
-  onBlur() {
+  onBlur(): void {
     this.focus = false
     if (!this.value.trim()) {
       this.value = ''
