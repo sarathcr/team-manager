@@ -41,7 +41,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
   }
 
-  createFormConfig() {
+  createFormConfig(): void {
     this.buttonConfig = {
       name: 'submit',
       field: 'button',
@@ -103,7 +103,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   // Function to check status of step
-  checkStatus() {
+  checkStatus(): void {
     if (this.checkEmptyForm()) {
       this.step.state = 'PENDING'
     }
@@ -114,7 +114,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   // checks if the form is empty
-  checkEmptyForm() {
+  checkEmptyForm(): boolean {
     if (!this.InputFormData.themes.length) {
       return true
     } else {
@@ -127,7 +127,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   // checks the form is completely filled or not
-  checkNonEmptyForm() {
+  checkNonEmptyForm(): boolean {
     if (this.InputFormData.themes.length &&
       (this.InputFormData.themes[this.InputFormData.themes.length - 1].name != null)) {
       return true
@@ -136,7 +136,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   // Function to check whether the form is updated
-  isFormUpdated() {
+  isFormUpdated(): boolean {
     if (!this.isEqual(this.initialFormData.themes, this.InputFormData.themes) ||
       this.initialFormStatus !== this.step.state) {
       return true
@@ -144,13 +144,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     return false
   }
 
-  isEqual(d1: any[], d2: any[]) {
+  isEqual(d1: any[], d2: any[]): boolean {
     d1 = d1.map(item => item.name)
     d2 = d2.map(item => item.name)
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
-  handleSubmit(formStatus?: Status) {
+  handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'
@@ -186,13 +186,13 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
-  textAreaUpdate(data) { // calls on every update
+  textAreaUpdate(data): void { // calls on every update
     this.InputFormData.themes = data
     this.checkStatus()
   }
 
   // Changes the button according to form status
-  handleButtonType() {
+  handleButtonType(): void {
     if (this.step.state === 'INPROCESS') {
       this.buttonConfig.disabled = false
       this.buttonConfig.submitted = false

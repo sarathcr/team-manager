@@ -64,7 +64,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
   }
 
   // Handle submit functionality
-  handleSubmit(formStatus?: Status) {
+  handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
       this.step.state = 'DONE'
     }
@@ -88,7 +88,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
   }
 
   // Changes the button according to form status
-  handleButtonType() {
+  handleButtonType(): void {
     if (this.step.state === 'DONE') {
       this.buttonConfig.submitted = true
       this.buttonConfig.disabled = true
@@ -104,7 +104,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
   }
 
   // Function to check status of step
-  checkStatus() {
+  checkStatus(): void {
     if (!this.creativeTitle && !this.creativeImage) {
       this.step.state = 'PENDING'
     }
@@ -115,18 +115,18 @@ export class StepSixComponent implements OnInit, OnDestroy {
   }
 
   // Function to trigger the value in the textarea
-  onValueChange(value: string) {
+  onValueChange(value: string): void {
     this.creativeTitle = value
     this.checkStatus()
   }
 
-  onFileSelect(url: string) {
+  onFileSelect(url: string): void {
     this.creativeImage = url
     this.checkStatus()
   }
 
   // Function to check whether the form is updated
-  isFormUpdated() {
+  isFormUpdated(): boolean {
     if (this.initialFormData.creativeTitle !== this.creativeTitle ||
       this.initialFormData.creativeImage !== this.creativeImage ||
       this.initialFormStatus !== this.step.state) {
@@ -136,7 +136,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
   }
 
   // checks the form is completely filled or not
-  checkNonEmptyForm() {
+  checkNonEmptyForm(): boolean {
     if (this.creativeTitle && this.creativeImage) {
       return true
     }

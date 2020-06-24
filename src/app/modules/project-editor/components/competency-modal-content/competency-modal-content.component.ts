@@ -6,8 +6,7 @@ import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'app-competency-modal-content',
   templateUrl: './competency-modal-content.component.html',
-  styleUrls: ['./competency-modal-content.component.scss'],
-  // encapsulation: ViewEncapsulation.None
+  styleUrls: ['./competency-modal-content.component.scss']
 })
 export class CompetencyModalContentComponent implements OnInit {
   gradeDropdown: object
@@ -54,11 +53,7 @@ export class CompetencyModalContentComponent implements OnInit {
     }
   }
 
-  onDropdownSelect(selectedData: any) {
-
-  }
-
-  getTranslation(){
+  getTranslation(): void{
     this.translateService.stream([
       'OBJECTIVES.project_objectives_criteriawindow_curriculum',
       'OBJECTIVES.project_objectives_criteriawindow_title',
@@ -73,7 +68,7 @@ export class CompetencyModalContentComponent implements OnInit {
     ]).subscribe(translations => {})
   }
 
-  createFormConfig() {
+  createFormConfig(): void {
     this.gradeDropdown = {
       field: 'dropdown',
       name: 'Curso',
@@ -85,7 +80,7 @@ export class CompetencyModalContentComponent implements OnInit {
     }
   }
 
-  rowInit(){
+  rowInit(): void{
     this.rowHeadData = [
       {
         list: 'Criterio de evaluación'
@@ -104,7 +99,7 @@ export class CompetencyModalContentComponent implements OnInit {
     ]
   }
 
-  openTab(event, id: string){
+  openTab(event, id: string): void{
     let i
     let tabcontent
     let tablinks
@@ -127,7 +122,9 @@ export class CompetencyModalContentComponent implements OnInit {
     console.log($event)
   }
 
-  adjustHeightContent(){
+  onDropdownSelect(event): void{}
+
+  adjustHeightContent(): void{
     const innerHeight: number = window.innerHeight
     this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
