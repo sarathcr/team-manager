@@ -16,9 +16,9 @@
   "private": true,
   "husky": {
     "hooks": {
-      "pre-commit": "npm lint",
-      "pre-push": "npm lint",
-      "commit-msg": "sh husky.sh"
+      "pre-commit": "ng lint",
+      "pre-push": "ng lint",
+      "commit-msg": "echo $HUSKY_GIT_PARAMS"
     }
   },
   "dependencies": {
