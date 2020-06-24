@@ -13,7 +13,7 @@ check_commit_msg () {
   COMMIT_MSG_FILE=$1
 
   git rev-parse -q --verify MERGE_HEAD && exit 0
-  if ! (grep -iqE "$COMMIT_REGEX" "$COMMIT_MSG_FILE"); then
+  if ! (grep -iqE "$COMMIT_REGEX" "$HUSKY_GIT_PARAMS"); then
     echo "Aborting commit. Your commit message should start with '${PROJECTS_KEY_LIST_REGEX}-' plus the number of your feature or NOTASK or Merge branch" >&2
     exit 1
   fi
