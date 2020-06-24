@@ -33,7 +33,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
     }
   }
 
-  formInit() {
+  formInit(): void {
     this.project$ = this.editor.getStepData('stepNine')
     this.step = this.editor.steps.nine
     this.step$ = this.editor.getStepStatus(9)
@@ -61,7 +61,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
   }
 
   // Handle submit functionality
-  handleSubmit(formStatus?: Status) {
+  handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
       this.step.state = formStatus
     }
@@ -84,7 +84,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
   }
 
   // Changes the button according to form status
-  handleButtonType() {
+  handleButtonType(): void {
     if (this.step.state === 'INPROCESS') {
       this.buttonConfig.disabled = false
       this.buttonConfig.submitted = false
@@ -100,7 +100,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
   }
 
   // Function to check status of step
-  checkStatus() {
+  checkStatus(): void {
     if (this.synopsis.length && this.synopsis !== this.initialFormData) {
       this.step.state = 'INPROCESS'
     }
@@ -111,13 +111,13 @@ export class StepNineComponent implements OnInit, OnDestroy {
   }
 
   // Function to trigger the value in the textarea
-  onValueChange(value: string) {
+  onValueChange(value: string): void {
     this.synopsis = value
     this.checkStatus()
   }
 
   // Function to check whether the form is updated
-  isFormUpdated() {
+  isFormUpdated(): boolean {
     if (this.initialFormData !== this.synopsis || this.initialFormStatus !== this.step.state) {
       return true
     }

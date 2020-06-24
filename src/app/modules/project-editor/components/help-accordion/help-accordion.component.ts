@@ -36,16 +36,16 @@ export class HelpAccordionComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
+    this.adjustHeight()
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     const modalCount = this.modalService.getModalsCount()
     if (modalCount > 0) {
       this.modalService._hideModal(modalCount)
     }
   }
-  onContentChange() {
+  onContentChange(): void {
     setTimeout(() => {
       this.elementRef.nativeElement.querySelectorAll('.help-img-thumb').forEach(thumb => {
         this.renderer.listen(thumb, 'click', (event) => { this.openModalWithComponent(event) })
@@ -56,7 +56,7 @@ export class HelpAccordionComponent implements OnInit, OnDestroy {
       this.adjustHeight()
     })
   }
-  videoModal(event) {
+  videoModal(event: any): void {
     event.preventDefault()
     const element = event.currentTarget
     const title = element.dataset.title
@@ -77,7 +77,7 @@ export class HelpAccordionComponent implements OnInit, OnDestroy {
     this.bsModalRef.content.closeBtnName = 'Close'
   }
 
-  openModalWithComponent(event) {
+  openModalWithComponent(event: any): void {
     event.preventDefault()
     const element = event.currentTarget
     const title = element.dataset.title
@@ -93,7 +93,7 @@ export class HelpAccordionComponent implements OnInit, OnDestroy {
     this.bsModalRef.content.closeBtnName = 'Close'
   }
 
-  adjustHeight() {
+  adjustHeight(): void {
     this.arrayHeight = 'calc(100vh - ' + ((this.content.length * 60) + 160) + 'px)'
   }
 }

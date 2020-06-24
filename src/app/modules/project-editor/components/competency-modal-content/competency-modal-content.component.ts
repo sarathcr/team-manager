@@ -7,8 +7,7 @@ import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
 @Component({
   selector: 'app-competency-modal-content',
   templateUrl: './competency-modal-content.component.html',
-  styleUrls: ['./competency-modal-content.component.scss'],
-  // encapsulation: ViewEncapsulation.None
+  styleUrls: ['./competency-modal-content.component.scss']
 })
 export class CompetencyModalContentComponent implements OnInit {
   gradeDropdownConfig: DropDownConfig
@@ -37,9 +36,8 @@ export class CompetencyModalContentComponent implements OnInit {
 
   }
 
-  onDropdownSelect(selectedData: any): void {
+  onDropdownSelect(selectedData: any): void { }
 
-  }
   createFormConfig(): void {
     const selectedGrades = this.selectedGrades
     const otherGrades = this.grades.filter(grade => selectedGrades.includes(grade))
@@ -60,6 +58,7 @@ export class CompetencyModalContentComponent implements OnInit {
       }
     }
   }
+
   getTranslation(): void {
     this.translateService.stream([
       'OBJECTIVES.project_objectives_criteriawindow_curriculum',

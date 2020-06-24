@@ -18,11 +18,11 @@ export class HomeComponent implements OnInit {
   constructor(private projectsService: ProjectEntityService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getAll()
   }
 
-  getAll() {
+  getAll(): void {
     this.projects$ = this.projectsService.entities$
     this.projectsService.loaded$
       .pipe(

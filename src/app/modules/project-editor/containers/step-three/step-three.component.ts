@@ -63,10 +63,9 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     if (modalCount > 0) {
       this.modalService._hideModal(modalCount)
     }
-
   }
 
-  formInIt() {
+  formInIt(): void {
     this.project$ = this.editor.getStepData('stepThree')
     this.step = this.editor.steps.three
     this.step$ = this.editor.getStepStatus(3)
@@ -142,24 +141,24 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     }
   }
   // WIP
-  addItem(event) {
+  addItem(event): void {
     this.criterias.push(event.id)
     if (!event.init) { this.checkStatus() }
   }
 
   // WIP
-  removeItem(index) {
+  removeItem(index: number): void {
     this.criterias.splice(index, 1)
     this.checkStatus()
   }
 
-  textAreaUpdate(data) { // calls on every update
+  textAreaUpdate(data): void { // calls on every update
     this.InputFormData.competencyObjectives = data
     this.checkStatus()
   }
 
   // checks if the form is empty
-  isFormEmpty() {
+  isFormEmpty(): boolean {
     if (!this.InputFormData.competencyObjectives.length && !this.criterias.length) {
       return true
     }
@@ -167,7 +166,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   // check if the form is initially empty
-  checkInitialEmptyForm() {                      // WIP
+  checkInitialEmptyForm(): boolean {                      // WIP
     if (!this.initialFormData.competencyObjectives.length || !this.initialCriterias.length) { return true }
     let emptyForm = false
     this.project.subjects.forEach(subject => {
@@ -178,7 +177,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   // checks the form is completely filled or not
-  hasAnyEmptyFields() {
+  hasAnyEmptyFields(): boolean {
     if (!this.InputFormData.competencyObjectives.length || !this.criterias.length) { return true }
     let emptyForm = false
     this.project.subjects.forEach(subject => {
@@ -189,7 +188,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   // Function to check status of step
-  checkStatus() {
+  checkStatus(): void {
     if (this.isFormEmpty()) {
       this.step.state = 'PENDING'
     }
@@ -200,7 +199,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   // Changes the button according to form status
-  handleButtonType() {
+  handleButtonType(): void {
     if (this.step.state === 'DONE') {
       this.buttonConfig.submitted = true
       this.buttonConfig.disabled = true
@@ -216,7 +215,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   // Function to check whether the form is updated
-  isFormUpdated() {
+  isFormUpdated(): boolean {
     if (!this.isEqual(this.initialFormData.competencyObjectives, this.InputFormData.competencyObjectives)
       || !this.isArrayEqual(this.initialCriterias, this.criterias)
       || this.initialFormStatus !== this.step.state) {
@@ -225,17 +224,17 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     return false
   }
 
-  isArrayEqual(d1: any[], d2: any[]) {
+  isArrayEqual(d1: any[], d2: any[]): boolean {
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
-  isEqual(d1: any[], d2: any[]) {
+  isEqual(d1: any[], d2: any[]): boolean {
     d1 = d1.map(item => item.name)
     d2 = d2.map(item => item.name)
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
-  handleSubmit(formStatus?: Status) {
+  handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'
@@ -281,7 +280,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
-  createFormConfig() {
+  createFormConfig(): void {
     this.buttonConfig = {
       name: 'submit',
       field: 'button',
@@ -310,9 +309,9 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
       this.textAreaConfig.placeholder = translations['OBJECTIVES.project_objectives_objectives_placeholder']
     })
-
   }
-  openModalWithComponent() {
+
+  openModalWithComponent(): void  {
     const initialState = {
       grades: this.grades,
       selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name }))
@@ -320,7 +319,6 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     this.bsModalRef = this.modalService.show(CompetencyModalContentComponent,
       { class: 'competency-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
-
   }
 }
 
