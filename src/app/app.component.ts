@@ -9,7 +9,7 @@ import { Observable } from 'rxjs'
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  loading = true
+  public loading = true
   isLoggedIn$: Observable<boolean>
   isLoggedOut$: Observable<boolean>
 
@@ -22,12 +22,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.translateService.get('GENERAL.platform_title_tab').subscribe(name => {
-      this.setTitle(name)
-    })
+    this.setTitle()
   }
 
-  public setTitle(newTitle: string): void {
-    this.titleService.setTitle(newTitle)
+  public setTitle(): void {
+    this.translateService.get('GENERAL.platform_title_tab').subscribe(name => {
+      this.titleService.setTitle(name)
+    })
   }
 }
