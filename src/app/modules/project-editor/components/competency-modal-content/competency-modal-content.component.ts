@@ -42,8 +42,7 @@ export class CompetencyModalContentComponent implements OnInit {
   }
   createFormConfig() {
     const selectedGrades = this.selectedGrades
-    const otherGrades = this.grades.filter(x => selectedGrades.includes(x))
-    console.log(selectedGrades,otherGrades)
+    const otherGrades = this.grades.filter(grade => selectedGrades.includes(grade))
     this.gradeDropdownConfig = {
       name: '',
       data: otherGrades,
@@ -57,6 +56,7 @@ export class CompetencyModalContentComponent implements OnInit {
         priorityList: true,
         priorityTitle: 'Cursos preferentes',
         normalTitle: 'Otros cursos',
+        allowRemoteDataSearch: false
       }
     }
   }
@@ -133,7 +133,4 @@ export class CompetencyModalContentComponent implements OnInit {
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
   }
 
-  configDropdownData() {
-
-  }
 }

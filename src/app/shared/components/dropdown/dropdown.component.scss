@@ -222,16 +222,20 @@
           font-weight: bold;
           letter-spacing: 0;
           line-height: 24px;
-          padding: 10px 18px 5px;
+          padding: 10px 18px 0px;
       }
       .no-data {
         height: 100px;
         width: 100%;
-
+        position: absolute;
+        top: 0;
+        background-color: $white;
         h5 {
+          text-indent: -999999999px;
           color: transparent;
           @extend .spinner;
           @extend .spinner_medium;
+          margin: 0;
         }
       }
     }
