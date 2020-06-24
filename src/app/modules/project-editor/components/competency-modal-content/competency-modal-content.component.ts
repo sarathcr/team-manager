@@ -37,10 +37,10 @@ export class CompetencyModalContentComponent implements OnInit {
 
   }
 
-  onDropdownSelect(selectedData: any) {
+  onDropdownSelect(selectedData: any): void {
 
   }
-  createFormConfig() {
+  createFormConfig(): void {
     const selectedGrades = this.selectedGrades
     const otherGrades = this.grades.filter(grade => selectedGrades.includes(grade))
     this.gradeDropdownConfig = {
@@ -60,7 +60,7 @@ export class CompetencyModalContentComponent implements OnInit {
       }
     }
   }
-  getTranslation() {
+  getTranslation(): void {
     this.translateService.stream([
       'OBJECTIVES.project_objectives_criteriawindow_curriculum',
       'OBJECTIVES.project_objectives_criteriawindow_title',
@@ -85,7 +85,7 @@ export class CompetencyModalContentComponent implements OnInit {
     })
   }
 
-  rowInit() {
+  rowInit(): void {
     this.rowHeadData = [
       {
         list: 'Criterio de evaluación'
@@ -104,7 +104,7 @@ export class CompetencyModalContentComponent implements OnInit {
     ]
   }
 
-  openTab(event, id: string) {
+  openTab(event, id: string): void {
     let i
     let tabcontent
     let tablinks
@@ -123,11 +123,11 @@ export class CompetencyModalContentComponent implements OnInit {
     event.currentTarget.classList.add('active')
   }
 
-  getStatus($event) {
+  getStatus($event): void {
     console.log($event)
   }
 
-  adjustHeightContent() {
+  adjustHeightContent(): void {
     const innerHeight: number = window.innerHeight
     this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
