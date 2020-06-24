@@ -55,7 +55,7 @@ describe('EditorSidebarComponent', (): void => {
   })
 
   it('should repeatly render step menu directives as number of steps', (): void => {
-    const steps = { one: { value: 'step1' }, two: { value: 'step2' } }
+    const steps = [{ stepid: 1, state: 'PENDING', name: '' }, { stepid: 2, state: 'PENDING', name: '' }]
     component.steps = steps
 
     fixture.detectChanges()

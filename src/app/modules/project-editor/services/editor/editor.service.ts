@@ -8,8 +8,6 @@ import { ProjectTitle } from '../../constants/title-data.model'
 import { Router } from '@angular/router'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
-import { steps } from '../../constants/step.data'
-
 @Injectable({
   providedIn: 'root'
 })
@@ -22,8 +20,8 @@ export class EditorService {
   steps: Step[]
   stepStatus$: Observable<StepState>
   tempStatus: any
-  currentSectionId: statusId
-  nextSectionId: statusId
+  currentStepId: statusId
+  nextStepId: statusId
   isStepDone: boolean
   currentStep$: BehaviorSubject<number> = new BehaviorSubject(1)
   projectSubscription: Subscription
@@ -66,7 +64,8 @@ export class EditorService {
 
   // filter data for each step
   getStepData(step: statusId): Observable<any> {
-    this.currentSectionId = step
+    this.currentStepId = step
+    this.currentStep$.next(step)
     if (this.project$) {
       return this.project$.pipe(map(
         (data) => {
@@ -120,8 +119,7 @@ export class EditorService {
   }
 
   // filter status for each step
-  getStepStatus(stepId: statusId): Observable<Step> {
-    this.currentStep$.next(stepId)
+  getStepStatus(): Observable<Step> {
     this.stepStatus$ = this.stepStatusService.entities$
       .pipe(
         map(stepStates => stepStates.find(state => {
@@ -130,7 +128,7 @@ export class EditorService {
       )
     if (this.stepStatus$) {
       return this.stepStatus$.pipe(map(data => (
-        data?.steps.find(item => item.stepid === stepId)
+        data?.steps.find(item => item.stepid === this.currentStepId)
       )))
     }
   }
@@ -157,7 +155,7 @@ export class EditorService {
         .subscribe(
           newResProject => {
             if (browserUrl.includes('create')) {
-              this.router.navigate([`editor/project/${newResProject.id}/${this.currentSectionId}`])
+              this.router.navigate([`editor/project/${newResProject.id}/${this.currentStepId}`])
             }
             this.projectId = newResProject.id
             this.getProject(this.projectId)
@@ -202,9 +200,9 @@ export class EditorService {
   private handleNavigate(): void {
     this.getNextSectionId()
     if (this.isStepDone) {
-      if (this.projectId && this.currentSectionId !== this.nextSectionId) {
+      if (this.projectId && this.currentStepId !== this.nextStepId) {
         setTimeout(() => {
-          this.router.navigate([`editor/project/${this.projectId}/${this.nextSectionId}`])
+          this.router.navigate([`editor/project/${this.projectId}/${this.nextStepId}`])
         }, 1000)
       }
     }
@@ -213,11 +211,11 @@ export class EditorService {
   // Finds the next step sectionId
   private getNextSectionId(): void {
     for (const [index, step] of this.steps.entries()) {
-      if (step.stepid === this.currentSectionId) {
+      if (step.stepid === this.currentStepId) {
         if (step.stepid < 10) {
-          this.nextSectionId = this.steps[index + 1].stepid
+          this.nextStepId = this.steps[index + 1].stepid
         } else {
-          this.nextSectionId = step.stepid
+          this.nextStepId = step.stepid
         }
       }
     }
@@ -230,8 +228,8 @@ export class EditorService {
     this.stepStatus$ = null
     this.titleData = null
     this.projectId = null
-    this.currentSectionId = null
-    this.nextSectionId = null
+    this.currentStepId = null
+    this.nextStepId = null
     this.isStepDone = false
   }
 

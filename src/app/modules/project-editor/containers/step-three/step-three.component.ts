@@ -61,7 +61,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   formInIt() {
     this.project$ = this.editor.getStepData(3)
-    this.step$ = this.editor.getStepStatus(3)
+    this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[2]
     this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
     const tempinitialFormData = new FormThreeInitData()

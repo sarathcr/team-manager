@@ -38,7 +38,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
 
   formInit() {
     this.project$ = this.editor.getStepData(8)
-    this.step$ = this.editor.getStepStatus(8)
+    this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[7]
     if (this.project$) {
       this.project$.subscribe(data => {
