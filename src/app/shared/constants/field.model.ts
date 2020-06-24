@@ -26,9 +26,6 @@ export interface FieldConfig {
   textField?: string
   maxLength?: number
   limit?: number,
-  priorityList?: boolean;
-  priorityTitle?: string;
-  normalTitle?: string;
 }
 
 export interface Option {
