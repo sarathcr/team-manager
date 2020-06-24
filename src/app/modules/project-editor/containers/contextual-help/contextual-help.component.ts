@@ -53,7 +53,7 @@ export class ContextualHelpComponent {
   }
 
   // Get help content
-  getHelp(stepid): void {
+  getHelp(stepid: number): void {
     this.contextualHelp$ = this.helpService.entities$
       .pipe(
         map(help => help.find(step => {

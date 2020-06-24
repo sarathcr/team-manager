@@ -1,3 +1,4 @@
+import { Option } from './../../../../shared/constants/field.model'
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
@@ -76,7 +77,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     })
   }
 
-  formInIt() {
+  formInIt(): void {
     this.project$ = this.editor.getStepData(7)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[6]
@@ -190,7 +191,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
-  textAreaUpdate(data): void { // calls on every update
+  textAreaUpdate(data: Option[]): void { // calls on every update
     this.inputFormData.drivingQuestions = data
     this.checkStatus()
   }

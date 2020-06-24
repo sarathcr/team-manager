@@ -8,11 +8,12 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { Step, Status } from '../../constants/step.model'
 import { FieldConfig, Option } from 'src/app/shared/constants/field.model'
 import { EditorService } from '../../services/editor/editor.service'
-import { Subject, CompetencyObjectives, EvaluationCriteria, Grade, AcademicYear, Region } from 'src/app/modules/project-editor/constants/project.model'
+import { CompetencyObjectives, EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
 import { FormThreeInit, FormThree } from '../../constants/step-forms.model'
 import { FormThreeInitData } from '../../constants/step-forms.data'
 import { CompetencyModalContentComponent } from './../../components/competency-modal-content/competency-modal-content.component'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
+import { Project } from './../../constants/project.model'
 
 @Component({
   selector: 'app-step-three',
@@ -21,7 +22,7 @@ import { GradeEntityService } from '../../store/entity/grade/grade-entity.servic
 })
 export class StepThreeComponent implements OnInit, OnDestroy {
 
-  project$: Observable<any>
+  project$: Observable<Project>
   step$: Observable<Step>
   grades: Option[]
   step: Step
@@ -32,11 +33,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   loading = true
   InputFormData: FormThreeInit = new FormThreeInitData()
   initialFormData: FormThreeInit = new FormThreeInitData()
-  project: { subjects: Subject[],
-    competencyObjectives: CompetencyObjectives[],
-    grades: Grade[],
-    academicYear: AcademicYear,
-    region: Region }
+  project: Project
   initialFormStatus: Status = 'PENDING'
   initialCriterias: number[] = []
   criterias: number[] = []
@@ -65,7 +62,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     }
   }
 
-  formInIt() {
+  formInIt(): void {
     this.project$ = this.editor.getStepData(3)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[2]
@@ -121,7 +118,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     }
   }
 
-  getGrades(project): void {
+  getGrades(project: Project): void {
     if ( this.project ) {
       this.gradeService.entities$
         .pipe(
@@ -141,7 +138,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     }
   }
   // WIP
-  addItem(event): void {
+  addItem(event: any): void {
     this.criterias.push(event.id)
     if (!event.init) { this.checkStatus() }
   }
@@ -152,7 +149,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     this.checkStatus()
   }
 
-  textAreaUpdate(data): void { // calls on every update
+  textAreaUpdate(data: Option[]): void { // calls on every update
     this.InputFormData.competencyObjectives = data
     this.checkStatus()
   }

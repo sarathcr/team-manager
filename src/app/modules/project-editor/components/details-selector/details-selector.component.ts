@@ -21,9 +21,9 @@ export class DetailsSelectorComponent implements OnInit {
   @Input() i: number
   @Input() isLast = false
   @Input() project$: Observable<Project>
-  @Output() addCriteria = new EventEmitter()
-  @Output() openModal = new EventEmitter()
-  @Output() deleteCriteria = new EventEmitter()
+  @Output() addCriteria: EventEmitter<any> = new EventEmitter()
+  @Output() openModal: EventEmitter<any> = new EventEmitter()
+  @Output() deleteCriteria: EventEmitter<any> = new EventEmitter()
   count = 0
   bsModalRef: BsModalRef
 
@@ -58,7 +58,7 @@ export class DetailsSelectorComponent implements OnInit {
     })
   }
 
-  addItem(id: number, init = false): void {
+  addItem(id: number, init: boolean = false): void {
     this.addCriteria.emit({ id, init })
     this.openModal.emit()
     this.getCount()

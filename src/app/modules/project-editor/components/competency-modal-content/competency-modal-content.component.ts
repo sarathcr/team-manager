@@ -19,7 +19,7 @@ export class CompetencyModalContentComponent implements OnInit {
   contentHeight = ''
 
   @HostListener('window:resize', ['$event'])
-  onResize(event): void {
+  onResize(): void {
     this.adjustHeightContent()
   }
 
@@ -103,7 +103,7 @@ export class CompetencyModalContentComponent implements OnInit {
     ]
   }
 
-  openTab(event, id: string): void {
+  openTab(event: any, id: string): void{
     let i
     let tabcontent
     let tablinks
@@ -122,11 +122,11 @@ export class CompetencyModalContentComponent implements OnInit {
     event.currentTarget.classList.add('active')
   }
 
-  getStatus($event): void {
+  getStatus($event: any): void{
     console.log($event)
   }
 
-  adjustHeightContent(): void {
+  adjustHeightContent(): void{
     const innerHeight: number = window.innerHeight
     this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
