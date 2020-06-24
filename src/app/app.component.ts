@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   isLoggedIn$: Observable<boolean>
   isLoggedOut$: Observable<boolean>
 
-  constructor(public translateService: TranslateService, private titleService: Title) {
+  constructor(private translateService: TranslateService, private titleService: Title) {
     // ngx-translate
     translateService.addLangs(['en', 'es'])
     translateService.setDefaultLang('en')
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     this.setTitle()
   }
 
-  public setTitle(): void {
+  setTitle(): void {
     this.translateService.get('GENERAL.platform_title_tab').subscribe(name => {
       this.titleService.setTitle(name)
     })

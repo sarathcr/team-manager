@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation, Output, EventEmitter } from '@angular/core'
 import { Observable } from 'rxjs'
-import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
 import { Help, ContextualHelp } from 'src/app/shared/constants/contextual-help.model'
 import { EditorService } from '../../services/editor/editor.service'
@@ -21,8 +20,7 @@ export class ContextualHelpComponent {
 
   constructor(
     public editorService: EditorService,
-    public helpService: HelpEntityService,
-    private translateService: TranslateService
+    public helpService: HelpEntityService
   ) { }
 
   // Close tab

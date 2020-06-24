@@ -17,11 +17,11 @@ export class HelpModalContentComponent implements OnInit {
   videoOptions: VideoOptions
   constructor(public bsModalRef: BsModalRef) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.videoInit()
   }
 
-  videoInit(){
+  videoInit(): void{
     if (this.video){
       this.videoOptions = {
         fluid: true,

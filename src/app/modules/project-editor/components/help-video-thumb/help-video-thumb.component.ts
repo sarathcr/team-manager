@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core'
+import { Component, Input, OnDestroy } from '@angular/core'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component'
 
@@ -7,7 +7,7 @@ import { HelpModalContentComponent } from '../help-modal-content/help-modal-cont
   templateUrl: './help-video-thumb.component.html',
   styleUrls: ['./help-video-thumb.component.scss']
 })
-export class HelpVideoThumbComponent implements OnInit, OnDestroy {
+export class HelpVideoThumbComponent implements OnDestroy {
   @Input() poster: string
   @Input() title: string
   @Input() type: string
@@ -17,10 +17,7 @@ export class HelpVideoThumbComponent implements OnInit, OnDestroy {
 
   constructor(private modalService: BsModalService) { }
 
-  ngOnInit(): void {
-  }
-
-  videoModal() {
+  videoModal(): void {
     const initialState = {
       title: this.title, // Title goes here
       video: true,
@@ -34,7 +31,7 @@ export class HelpVideoThumbComponent implements OnInit, OnDestroy {
     this.bsModalRef.content.closeBtnName = 'Close'
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     const modalCount = this.modalService.getModalsCount()
     if (modalCount > 0) {
       this.modalService._hideModal(modalCount)
