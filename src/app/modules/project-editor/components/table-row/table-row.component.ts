@@ -10,8 +10,12 @@ export class TableRowComponent implements OnInit {
   @Input() isHead = false
   @Input() checkbox = false
   @Input() parentID = ''
-  @Input() cellData: Array<object> = []
   @Input() isLastRow = false
+  @Input() eCriteria: string
+  @Input() aCompetences: string
+  @Input() course: string
+  @Input() block: string
+  @Input() dimension: string
 
   isChecked: boolean
   colCount: number
@@ -22,11 +26,11 @@ export class TableRowComponent implements OnInit {
     this.initRow()
   }
 
-  initRow(){
-    this.colCount = Math.floor(12 / this.cellData.length)
+  initRow() {
+    // this.colCount = Math.floor(12 / this.cellData.length)
   }
 
-  onChange(checked: boolean){
-    this.count.emit({ parentID : this.parentID, checked})
+  onChange(checked: boolean) {
+    this.count.emit({ parentID: this.parentID, checked })
   }
 }

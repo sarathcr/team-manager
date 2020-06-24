@@ -50,6 +50,13 @@
           margin-top: -24px;
           cursor: pointer;
         }
+        &__icon{
+            font-size: $font-size-xs;
+            margin-right: 11px;
+        }
+        &__summary-title{
+            cursor: pointer;
+        }
     }
 
     &__body{
@@ -77,6 +84,7 @@
                 min-height: 511px;
                 border:1px solid $creator-border;
                 border-radius:3px 3px 0 0;
+                padding: 24px;
             }
         }
 

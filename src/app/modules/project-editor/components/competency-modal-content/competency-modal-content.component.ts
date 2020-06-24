@@ -16,6 +16,95 @@ export class CompetencyModalContentComponent implements OnInit {
   leftContentHeight = ''
   contentHeight = ''
   isShow = false
+  tempHead: TempData = {
+    evaluationCriteria: 'Criterio de evaluación',
+    associatedCompetences: 'Competencias asociadas',
+    course: 'Curso',
+    block: 'Bloque',
+    dimension: 'Dimensiones'
+  }
+  tempData: TempData[] = [
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    }
+  ]
 
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
@@ -31,7 +120,6 @@ export class CompetencyModalContentComponent implements OnInit {
     this.adjustHeightContent()
     this.getTranslation()
     this.createFormConfig()
-    this.rowInit()
     this.gradeDropdown = {
       field: 'dropdown',
       name: 'Curso',
@@ -59,7 +147,7 @@ export class CompetencyModalContentComponent implements OnInit {
 
   }
 
-  getTranslation(){
+  getTranslation() {
     this.translateService.stream([
       'OBJECTIVES.project_objectives_criteriawindow_curriculum',
       'OBJECTIVES.project_objectives_criteriawindow_title',
@@ -71,7 +159,7 @@ export class CompetencyModalContentComponent implements OnInit {
       'OBJECTIVES.project_objectives_criteriawindow_dimensions',
       'OBJECTIVES.project_objectives_criteriawindow_showall',
       'OBJECTIVES.project_objectives_criteriawindow_add',
-    ]).subscribe(translations => {})
+    ]).subscribe(translations => { })
   }
 
   createFormConfig() {
@@ -86,32 +174,13 @@ export class CompetencyModalContentComponent implements OnInit {
     }
   }
 
-  rowInit(){
-    this.rowHeadData = [
-      {
-        list: 'Criterio de evaluación'
-      },
-      {
-        list: 'Competencias asociadas'
-      }
-    ]
-    this.rowData = [
-      {
-        list: 'Analizar los elementos y sistemas que configuran la comunicación alámbrica e inalámbrica.'
-      },
-      {
-        list: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica'
-      }
-    ]
-  }
-
-  openTab(event, id: string){
+  openTab(event, id: string) {
     let i
     let tabcontent
     let tablinks
 
     tabcontent = document.getElementsByClassName('custom-tab__content')
-    for (i = 0 ; i < tabcontent.length; i++) {
+    for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].classList.remove('active')
     }
 
@@ -124,17 +193,25 @@ export class CompetencyModalContentComponent implements OnInit {
     event.currentTarget.classList.add('active')
   }
 
-  getStatus($event){
+  getStatus($event) {
     console.log($event)
   }
 
-  adjustHeightContent(){
+  adjustHeightContent() {
     const innerHeight: number = window.innerHeight
     this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
   }
 
-  getSummary(){
+  getSummary() {
     this.isShow = !this.isShow
   }
+}
+
+export interface TempData {
+  evaluationCriteria?: string,
+  associatedCompetences?: string,
+  course?: string,
+  block?: string,
+  dimension?: string,
 }
