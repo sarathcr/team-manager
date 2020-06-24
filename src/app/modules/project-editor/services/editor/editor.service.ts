@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { StepState, StepId, Steps, statusId, Step } from '../../constants/step.model'
+import { StepState, statusId, Step } from '../../constants/step.model'
 import { TranslateService } from '@ngx-translate/core'
 import { Project } from 'src/app/modules/project-editor/constants/project.model'
 import { Observable, Subscription, BehaviorSubject } from 'rxjs'
@@ -8,6 +8,7 @@ import { ProjectTitle } from '../../constants/title-data.model'
 import { Router } from '@angular/router'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
+import { steps } from '../../constants/step.data'
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,11 @@ export class EditorService {
   step$: Observable<Step>
   notFound: boolean
   titleData: ProjectTitle
-  steps: Steps
+  steps: Step[]
   stepStatus$: Observable<StepState>
   tempStatus: any
-  currentSectionId: StepId
-  nextSectionId: StepId
+  currentSectionId: statusId
+  nextSectionId: statusId
   isStepDone: boolean
   currentStep$: BehaviorSubject<number> = new BehaviorSubject(1)
   projectSubscription: Subscription
@@ -37,7 +38,7 @@ export class EditorService {
     private router: Router
   ) { }
 
-  getProject(projectId) {
+  getProject(projectId): void {
     if (projectId !== 'create') {
       this.project$ = this.projectsService.entities$
         .pipe(
@@ -64,13 +65,13 @@ export class EditorService {
   }
 
   // filter data for each step
-  getStepData(step: StepId) {
+  getStepData(step: statusId): Observable<any> {
     this.currentSectionId = step
     if (this.project$) {
       return this.project$.pipe(map(
         (data) => {
           switch (data && step) {
-            case 'stepOne':
+            case 1:
               return ({
                 country: data?.country ? { id: data?.country.id, name: data?.country.name } : null,
                 region: data?.region ? { id: data?.region.id, name: data?.region.name } : null,
@@ -81,27 +82,27 @@ export class EditorService {
                 grades: data?.grades?.map(({ id, name }) => ({ id, name })),
                 subjects: data?.subjects?.map(({ id, name }) => ({ id, name }))
               })
-            case 'stepTwo': return data?.themes?.map(({ id, name }) => ({ id, name }))
-            case 'stepThree': return ({
+            case 2: return data?.themes?.map(({ id, name }) => ({ id, name }))
+            case 3: return ({
               subjects: data?.subjects?.map(({ id, name }) => ({ id, name })),
               competencyObjectives: data?.competencyObjectives?.map(({ id, name }) => ({ id, name })),
               evaluationCriteria: data?.evaluationCriteria?.map(({ id, name, subjectId, gradeId }) => (
                 { id, name, subjectId, gradeId }))
             })
-            case 'stepSix': return {
+            case 6: return {
               creativeImage: data.creativeImage,
               creativeTitle: data.creativeTitle,
             }
-            case 'stepSeven': return data?.drivingQuestions?.map(({ id, name }) => ({ id, name }))
-            case 'stepEight': return { finalProduct: data.finalProduct }
-            case 'stepNine': return { synopsis: data.synopsis }
+            case 7: return data?.drivingQuestions?.map(({ id, name }) => ({ id, name }))
+            case 8: return { finalProduct: data.finalProduct }
+            case 9: return { synopsis: data.synopsis }
           }
         }
       ))
     }
   }
 
-  private getStepsStatus() {
+  private getStepsStatus(): void {
     // status state management
     this.stepStatus$ = this.stepStatusService.entities$
       .pipe(
@@ -134,17 +135,17 @@ export class EditorService {
     }
   }
 
-  private updateStepStatus(stepstatus: any) {
+  private updateStepStatus(stepstatus: any): void {
     for (const newState of stepstatus.steps) {
-      for (const step in this.steps) {
-        if (this.steps[step].stepid === newState.stepid && stepstatus.id === this.projectId) {
-          this.steps[step].state = newState.state
+      for (const step of this.steps) {
+        if (step.stepid === newState.stepid && stepstatus.id === this.projectId) {
+          step.state = newState.state
         }
       }
     }
   }
 
-  handleSubmit(projectData: object) {
+  handleSubmit(projectData: object): void {
     if (!this.projectId) {
       // create mode
       const newProject = {
@@ -178,14 +179,14 @@ export class EditorService {
     }
   }
 
-  handleStepSubmit(data, isDone = false) {
+  handleStepSubmit(data, isDone = false): void {
     this.handleSubmit(data.data)
     this.submitStepStatus(data.stepStatus)
     this.isStepDone = isDone
     this.handleNavigate()
   }
 
-  private submitStepStatus(data: any) {
+  private submitStepStatus(data: any): void {
     if (this.projectId) {
       const dataWithId: StepState = {
         ...data,
@@ -198,7 +199,7 @@ export class EditorService {
   }
 
   // Navigates to next step after a 1s delay
-  private handleNavigate() {
+  private handleNavigate(): void {
     this.getNextSectionId()
     if (this.isStepDone) {
       if (this.projectId && this.currentSectionId !== this.nextSectionId) {
@@ -210,24 +211,19 @@ export class EditorService {
   }
 
   // Finds the next step sectionId
-  private getNextSectionId() {
-    const stepkeys = Object.keys(this.steps)
-    stepkeys.forEach((step, index) => {
-      if (this.steps[step].sectionid === this.currentSectionId) {
-        if (this.steps[step].stepid < 10) {
-          stepkeys.forEach(stepData => {
-            if (this.steps[stepData].stepid === this.steps[step].stepid + 1) {
-              this.nextSectionId = this.steps[stepData].sectionid
-            }
-          })
+  private getNextSectionId(): void {
+    for (const [index, step] of this.steps.entries()) {
+      if (step.stepid === this.currentSectionId) {
+        if (step.stepid < 10) {
+          this.nextSectionId = this.steps[index + 1].stepid
         } else {
-          this.nextSectionId = this.steps[step].sectionid
+          this.nextSectionId = step.stepid
         }
       }
-    })
+    }
   }
 
-  clearData() {
+  clearData(): void {
     if (this.projectSubscription) { this.projectSubscription.unsubscribe() }
     if (this.statusSubscription) { this.statusSubscription.unsubscribe() }
     this.project$ = null
@@ -239,19 +235,19 @@ export class EditorService {
     this.isStepDone = false
   }
 
-  createSteps(): Steps {
-    this.steps = {
-      one: { sectionid: 'stepOne', stepid: 1, state: 'PENDING', name: '' },
-      two: { sectionid: 'stepTwo', stepid: 2, state: 'PENDING', name: '' },
-      three: { sectionid: 'stepThree', stepid: 3, state: 'PENDING', name: '' },
-      four: { sectionid: 'stepFour', stepid: 4, state: 'PENDING', name: '' },
-      five: { sectionid: 'stepFive', stepid: 5, state: 'PENDING', name: '' },
-      six: { sectionid: 'stepSix', stepid: 6, state: 'PENDING', name: '' },
-      seven: { sectionid: 'stepSeven', stepid: 7, state: 'PENDING', name: '' },
-      eight: { sectionid: 'stepEight', stepid: 8, state: 'PENDING', name: '' },
-      nine: { sectionid: 'stepNine', stepid: 9, state: 'PENDING', name: '' },
-      ten: { sectionid: 'stepTen', stepid: 10, state: 'PENDING', name: '' },
-    }
+  createSteps(): Step[] {
+    this.steps = [
+      { stepid: 1, state: 'PENDING', name: '' },
+      { stepid: 2, state: 'PENDING', name: '' },
+      { stepid: 3, state: 'PENDING', name: '' },
+      { stepid: 4, state: 'PENDING', name: '' },
+      { stepid: 5, state: 'PENDING', name: '' },
+      { stepid: 6, state: 'PENDING', name: '' },
+      { stepid: 7, state: 'PENDING', name: '' },
+      { stepid: 8, state: 'PENDING', name: '' },
+      { stepid: 9, state: 'PENDING', name: '' },
+      { stepid: 10, state: 'PENDING', name: '' }
+    ]
     this.translate.stream(
       [
         'STEPS_MENU.project_structure_stepsmenu_startingpoint',
@@ -263,16 +259,16 @@ export class EditorService {
         'STEPS_MENU.project_structure_stepsmenu_sinopsis',
       ])
       .subscribe(translations => {
-        this.steps.one.name = translations['STEPS_MENU.project_structure_stepsmenu_startingpoint']
-        this.steps.two.name = translations['STEPS_MENU.project_structure_stepsmenu_topic']
-        this.steps.three.name = translations['STEPS_MENU.project_structure_stepsmenu_objectives']
-        this.steps.four.name = 'Contenidos' // WIP localization
-        this.steps.five.name = 'Estándares' // WIP localization
-        this.steps.six.name = translations['STEPS_MENU.project_structure_stepsmenu_creativetitle']
-        this.steps.seven.name = translations['STEPS_MENU.project_stepsmenu_drivingquestion']
-        this.steps.eight.name = translations['STEPS_MENU.project_structure_stepsmenu_finalproduct']
-        this.steps.nine.name = translations['STEPS_MENU.project_structure_stepsmenu_sinopsis']
-        this.steps.ten.name = 'Interacción'  // WIP localization
+        this.steps[0].name = translations['STEPS_MENU.project_structure_stepsmenu_startingpoint']
+        this.steps[1].name = translations['STEPS_MENU.project_structure_stepsmenu_topic']
+        this.steps[2].name = translations['STEPS_MENU.project_structure_stepsmenu_objectives']
+        this.steps[3].name = 'Contenidos' // WIP localization
+        this.steps[4].name = 'Estándares' // WIP localization
+        this.steps[5].name = translations['STEPS_MENU.project_structure_stepsmenu_creativetitle']
+        this.steps[6].name = translations['STEPS_MENU.project_stepsmenu_drivingquestion']
+        this.steps[7].name = translations['STEPS_MENU.project_structure_stepsmenu_finalproduct']
+        this.steps[8].name = translations['STEPS_MENU.project_structure_stepsmenu_sinopsis']
+        this.steps[9].name = 'Interacción'  // WIP localization
       }
       )
     return this.steps

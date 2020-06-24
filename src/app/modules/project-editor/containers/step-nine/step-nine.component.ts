@@ -34,9 +34,9 @@ export class StepNineComponent implements OnInit, OnDestroy {
   }
 
   formInit() {
-    this.project$ = this.editor.getStepData('stepNine')
-    this.step = this.editor.steps.nine
+    this.project$ = this.editor.getStepData(9)
     this.step$ = this.editor.getStepStatus(9)
+    this.step = this.editor.steps[8]
     if (this.project$) {
       this.project$.subscribe(data => {
         if (data?.synopsis) {
