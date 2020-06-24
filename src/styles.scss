@@ -204,3 +204,10 @@ scrollbar-y.scrollbar-control{
     background-color: $white;
   }
 }
+
+@include media-breakpoint-up(xxl) {
+  .project-editor__form{
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+}

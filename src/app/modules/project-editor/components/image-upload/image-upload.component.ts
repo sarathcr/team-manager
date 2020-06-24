@@ -13,7 +13,7 @@ export class ImageUploadComponent implements OnInit {
   @Input() acceptedType: string
   @Input() label: string
   @Input() imageURL: string | ArrayBuffer
-  @Output() onFileSelect = new EventEmitter()
+  @Output() fileSelect = new EventEmitter()
   files: File[] = []
   loading = false
 
@@ -44,7 +44,7 @@ export class ImageUploadComponent implements OnInit {
             if (data) {
               this.aws.uploadImage(data.uploadURL, file)
               .subscribe(() => {
-                this.onFileSelect.emit(data.publicURL)
+                this.fileSelect.emit(data.publicURL)
                 this.loading = false
               },
                 err => {
@@ -63,7 +63,7 @@ export class ImageUploadComponent implements OnInit {
     event.stopPropagation()
     this.imageURL = ''
     this.files = []
-    this.onFileSelect.emit('')
+    this.fileSelect.emit('')
   }
 
   handleServerError(error) {

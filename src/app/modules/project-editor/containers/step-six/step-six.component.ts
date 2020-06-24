@@ -52,9 +52,9 @@ export class StepSixComponent implements OnInit, OnDestroy {
       this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == 'DONE'
+            this.buttonConfig.submitted = formStatus.state === 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != 'DONE' && this.checkNonEmptyForm()) {
+            if (formStatus.state !== 'DONE' && this.checkNonEmptyForm()) {
               this.buttonConfig.disabled = false
             }
           }
@@ -65,7 +65,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
 
   // Handle submit functionality
   handleSubmit(formStatus?: Status) {
-    if (formStatus == 'DONE') {
+    if (formStatus === 'DONE') {
       this.step.state = 'DONE'
     }
     this.handleButtonType()
@@ -84,12 +84,12 @@ export class StepSixComponent implements OnInit, OnDestroy {
       }
     }
     this.initialFormData = formData.data
-    this.editor.handleStepSubmit(formData, this.step.state == 'DONE')
+    this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
   }
 
   // Changes the button according to form status
   handleButtonType() {
-    if (this.step.state == 'DONE') {
+    if (this.step.state === 'DONE') {
       this.buttonConfig.submitted = true
       this.buttonConfig.disabled = true
     } else {

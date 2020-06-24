@@ -9,9 +9,9 @@ import { FieldConfig } from 'src/app/shared/constants/field.model'
 })
 export class StepUnlockComponent implements OnInit {
 
-  buttonConfig : FieldConfig
+  buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  
+
   constructor() { }
 
   ngOnInit(): void {

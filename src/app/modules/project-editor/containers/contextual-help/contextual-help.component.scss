@@ -1,4 +1,5 @@
 @import 'helpers/_helpers-master';
+@import 'helpers/_bt-mixins';
 
 .contextual-help{
   $root: &;
@@ -25,7 +26,7 @@
     }
   }
 
-  &_open{
+  &#{$root}_open{
     right: 0;
     .tab-content{
       &::before{
@@ -158,5 +159,32 @@
         }
       }
     }
+  }
+
+  @include media-breakpoint-up(xxl) {
+    min-width: 532px;
+    width: 34.9%;
+    max-width: 670px;
+    left: calc(100% - 72px);
+    transition: none;
+
+    &__tabset{
+      position: relative;
+      right: 0;
+      @include transitions(all, 0.5s, ease-in-out);
+      & > div{
+        #{$root}__tabset-item{
+          #{$root}__content{
+            &-head{
+              margin-left: 50px;
+            }
+          }
+        }
+      }
+    }
+    &#{$root}_open &__tabset{
+      right: calc(100% - 72px);
+    }
+   
   }
 }
