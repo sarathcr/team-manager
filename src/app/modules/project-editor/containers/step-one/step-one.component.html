@@ -6,9 +6,7 @@
         <span class="project-form__title-number">1.</span>Punto de partida
         <app-info-tooltip></app-info-tooltip>
       </h1>
-      <p
-        class="project-form__description"
-        [innerHTML]="'STARTING_POINT.project_startingpoint_description' | translate"
+      <p class="project-form__description" [innerHTML]="'STARTING_POINT.project_startingpoint_description' | translate"
       ></p>
       <app-dropdown [config]='countryDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
       <app-dropdown [config]='regionDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
