@@ -1,19 +1,24 @@
-import { Component, ViewEncapsulation, Output, EventEmitter } from '@angular/core'
+import { Component, ViewEncapsulation, Output, EventEmitter, OnDestroy } from '@angular/core'
+
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
+
 import { Help, ContextualHelp } from 'src/app/shared/constants/contextual-help.model'
 import { EditorService } from '../../services/editor/editor.service'
 import { HelpEntityService } from '../../store/entity/help/help-entity.service'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
+
 @Component({
   selector: 'app-contextual-help',
   templateUrl: './contextual-help.component.html',
   styleUrls: ['./contextual-help.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ContextualHelpComponent {
+export class ContextualHelpComponent implements OnDestroy {
   @Output() status = new EventEmitter<boolean>()
   help: Help[]
   contextualHelp$: Observable<ContextualHelp>
+  subscription = new SubSink()
   closeContext = false
   activeTab: any
   loaded = false
@@ -22,6 +27,10 @@ export class ContextualHelpComponent {
     public editorService: EditorService,
     public helpService: HelpEntityService
   ) { }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
+  }
 
   // Close tab
   closeTab(): void {
@@ -61,14 +70,14 @@ export class ContextualHelpComponent {
         })
         )
       )
-    this.contextualHelp$.subscribe(contextualHelp => {
+    this.subscription.sink = this.contextualHelp$.subscribe(contextualHelp => {
       if (contextualHelp) {
         this.help = contextualHelp.helps
       } else {
         this.helpService.getByKey(stepid)
       }
     })
-    this.helpService.loading$.subscribe(loading => {
+    this.subscription.sink = this.helpService.loading$.subscribe(loading => {
       this.loaded = !loading
     })
   }

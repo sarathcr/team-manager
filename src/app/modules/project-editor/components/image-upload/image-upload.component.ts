@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, ViewEncapsulation, EventEmitter, Output } from '@angular/core'
+import { Component, Input, ViewEncapsulation, EventEmitter, Output, OnDestroy } from '@angular/core'
+
 import { AwsImgUploadService } from '../../services/aws-img-upload/aws-img-upload.service'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-image-upload',
@@ -7,7 +9,7 @@ import { AwsImgUploadService } from '../../services/aws-img-upload/aws-img-uploa
   styleUrls: ['./image-upload.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ImageUploadComponent implements OnInit {
+export class ImageUploadComponent implements OnDestroy {
 
   @Input() maxFileSize: number
   @Input() acceptedType: string
@@ -16,11 +18,12 @@ export class ImageUploadComponent implements OnInit {
   @Output() fileSelect = new EventEmitter()
   files: File[] = []
   loading = false
+  subscriptions = new SubSink()
 
   constructor(private aws: AwsImgUploadService) { }
 
-  ngOnInit(): void {
-
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
   }
 
   toBase64(file: File): void {
@@ -39,10 +42,10 @@ export class ImageUploadComponent implements OnInit {
         this.toBase64(file)
         const mimeType = file.type
         this.loading = true
-        this.aws.getPreSignedUrl(mimeType, `${new Date().getTime()}-${file.name}`)
+        this.subscriptions.sink = this.aws.getPreSignedUrl(mimeType, `${new Date().getTime()}-${file.name}`)
           .subscribe(data => {
             if (data) {
-              this.aws.uploadImage(data.uploadURL, file)
+              this.subscriptions.sink = this.aws.uploadImage(data.uploadURL, file)
                 .subscribe(() => {
                   this.fileSelect.emit(data.publicURL)
                   this.loading = false

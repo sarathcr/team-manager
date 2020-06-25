@@ -1,7 +1,10 @@
-import { Component, OnInit, HostListener } from '@angular/core'
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core'
+
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateService } from '@ngx-translate/core'
+
 import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 
 @Component({
@@ -9,7 +12,7 @@ import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
   templateUrl: './competency-modal-content.component.html',
   styleUrls: ['./competency-modal-content.component.scss']
 })
-export class CompetencyModalContentComponent implements OnInit {
+export class CompetencyModalContentComponent implements OnInit, OnDestroy {
   gradeDropdownConfig: DropDownConfig
   rowHeadData: Array<object>
   rowData: Array<object>
@@ -17,6 +20,7 @@ export class CompetencyModalContentComponent implements OnInit {
   selectedGrades: Option[]
   leftContentHeight = ''
   contentHeight = ''
+  subscriptions = new SubSink()
 
   @HostListener('window:resize', ['$event'])
   onResize(): void {
@@ -34,6 +38,10 @@ export class CompetencyModalContentComponent implements OnInit {
     this.getTranslation()
     this.rowInit()
 
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
   }
 
   onDropdownSelect(selectedData: any): void { }
@@ -60,7 +68,7 @@ export class CompetencyModalContentComponent implements OnInit {
   }
 
   getTranslation(): void {
-    this.translateService.stream([
+    this.subscriptions.sink = this.translateService.stream([
       'OBJECTIVES.project_objectives_criteriawindow_curriculum',
       'OBJECTIVES.project_objectives_criteriawindow_title',
       'OBJECTIVES.project_objectives_criteriawindow_combo_title',
@@ -103,7 +111,7 @@ export class CompetencyModalContentComponent implements OnInit {
     ]
   }
 
-  openTab(event: any, id: string): void{
+  openTab(event: any, id: string): void {
     let i
     let tabcontent
     let tablinks
@@ -122,11 +130,11 @@ export class CompetencyModalContentComponent implements OnInit {
     event.currentTarget.classList.add('active')
   }
 
-  getStatus($event: any): void{
+  getStatus($event: any): void {
     console.log($event)
   }
 
-  adjustHeightContent(): void{
+  adjustHeightContent(): void {
     const innerHeight: number = window.innerHeight
     this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
