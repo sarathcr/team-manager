@@ -27,22 +27,21 @@ class ActivatedRouteStub {
     this.id = id
   }
 
-  get snapshot() {
+  get snapshot(): object {
     return {
       paramMap: {
         get: () => this.id
       }
     }
   }
-  set snapshot(_) {}
 }
 
 class EditorServiceStub {
-  getProject() { }
-  clearData() { }
-  createSteps() { }
-  getStepData() { }
-  getStepStatus() { }
+  getProject(): void { }
+  clearData(): void { }
+  createSteps(): void { }
+  getStepData(): void { }
+  getStepStatus(): void { }
 }
 
 class HelpEntityServiceStub { }

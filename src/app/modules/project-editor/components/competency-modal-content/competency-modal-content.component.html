@@ -12,7 +12,10 @@
       {{ 'OBJECTIVES.project_objectives_criteriawindow_title' | translate }}</h6>
     <div class="competency-modal__body-block">
       <div class="competency-modal__body-block-grade">
-        <app-dropdown [config]='gradeDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
+        <app-dropdown
+          [config]='gradeDropdownConfig'
+          (dropdownSelect)='onDropdownSelect($event)'
+        ></app-dropdown>
         <ng-scrollbar>
           <div class="competency-modal__body-scroll"
             [ngStyle]="{ 'max-height' : leftContentHeight }">
@@ -25,8 +28,8 @@
               >
                 <strong class="custom-tab__links-{{index}}">{{ index + 1 }}.&nbsp;</strong>
                 <span class="custom-tab__links-label">{{ block.name }}</span>
-                <span *ngFor="let check of checks" class="d-flex">
-                  <span *ngIf="check.parentId === index && check.count" class="d-flex" >
+                <span *ngFor="let check of checks" class="d-flex ml-auto">
+                  <span *ngIf="check.parentId === index && check.count" class="d-flex ml-auto" >
                     <strong class="custom-tab__links-selected">
                       {{check.count}}
                     </strong>

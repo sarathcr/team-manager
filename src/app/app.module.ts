@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser'
+import { BrowserModule, Title } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { HttpClientModule, HttpClient } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -21,7 +21,7 @@ import { EntityDataModule } from '@ngrx/data'
 import { CoreModule } from './core/core.module'
 
 // AoT requires an exported function for factories
-export function rootLoaderFactory(http: HttpClient) {
+export function rootLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'assets/i18n/project-editor/', '.json')
 }
 @NgModule({
@@ -69,6 +69,7 @@ export function rootLoaderFactory(http: HttpClient) {
   ],
   providers: [
     AppRoutingModule,
+    Title
   ],
   bootstrap: [AppComponent]
 })

@@ -9,11 +9,11 @@ import { EditorService } from '../../services/editor/editor.service'
 import { HelpEntityService } from '../../store/entity/help/help-entity.service'
 
 class EditorServiceStub {
-  getProject() { }
-  clearData() { }
-  createSteps() { }
-  getStepData() { }
-  getStepStatus() { }
+  getProject(): void { }
+  clearData(): void { }
+  createSteps(): void { }
+  getStepData(): void { }
+  getStepStatus(): void { }
 }
 
 class HelpEntityServiceStub { }

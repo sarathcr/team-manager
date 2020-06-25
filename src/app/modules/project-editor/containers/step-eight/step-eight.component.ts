@@ -36,10 +36,10 @@ export class StepEightComponent implements OnInit, OnDestroy {
     }
   }
 
-  formInit() {
-    this.project$ = this.editor.getStepData('stepEight')
-    this.step$ = this.editor.getStepStatus(8)
-    this.step = this.editor.steps.eight
+  formInit(): void {
+    this.project$ = this.editor.getStepData(8)
+    this.step$ = this.editor.getStepStatus()
+    this.step = this.editor.steps[7]
     if (this.project$) {
       this.project$.subscribe(data => {
         if (data?.finalProduct) {
@@ -64,7 +64,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
   }
 
   // Function to check status of step
-  checkStatus() {
+  checkStatus(): void {
     if (this.finalProduct.length && this.finalProduct !== this.initialFormData) {
       this.step.state = 'INPROCESS'
     }
@@ -75,7 +75,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
   }
 
   // Changes the button according to form status
-  handleButtonType() {
+  handleButtonType(): void {
     if (this.step.state === 'INPROCESS') {
       this.buttonConfig.disabled = false
       this.buttonConfig.submitted = false
@@ -91,13 +91,13 @@ export class StepEightComponent implements OnInit, OnDestroy {
   }
 
   // Function to trigger the value in the textarea
-  onValueChange(value: string) {
+  onValueChange(value: string): void {
     this.finalProduct = value
     this.checkStatus()
   }
 
   // Handle submit functionality
-  handleSubmit(formStatus?: Status) {
+  handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
       this.step.state = 'DONE'
     }
@@ -120,7 +120,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
   }
 
   // Function to check whether the form is updated
-  isFormUpdated() {
+  isFormUpdated(): boolean {
     if (this.initialFormData !== this.finalProduct || this.initialFormStatus !== this.step.state) {
       return true
     }

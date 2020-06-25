@@ -8,7 +8,7 @@
         {{'OBJECTIVES.project_objectives_criteria_placeholder' | translate}}
       </span>
       <span *ngIf="count > 0" class="details-selector__text_evaluation">
-        {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{count}}
+        {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{count}})
       </span>
       <span class="details-selector__add" (click)="addItem(data.id)">
         <span class="icon icon-ic_add_small details-selector__add_icon"></span>
@@ -16,13 +16,12 @@
       </span>
     </li>
       <span *ngFor="let criteria of criterias let criteriaIndex = index">
-        <li *ngIf="subjectId == criteria" class="details-selector__item">
+        <li *ngIf="subjectId === criteria" class="details-selector__item">
           <span class="details-selector__text_normal">evaluation criteria1.</span>
           <span class="details-selector__close" (click)="getModal(criteriaIndex)">
             <span class="icon icon-ic_share_close"></span>
           </span>
         </li>
       </span>
-      
   </ul>
 </div>

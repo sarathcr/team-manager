@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core'
+import { Component, Input, OnDestroy } from '@angular/core'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component'
 
@@ -7,7 +7,7 @@ import { HelpModalContentComponent } from '../help-modal-content/help-modal-cont
   templateUrl: './help-img-thumb.component.html',
   styleUrls: ['./help-img-thumb.component.scss']
 })
-export class HelpImgThumbComponent implements OnInit, OnDestroy {
+export class HelpImgThumbComponent implements OnDestroy {
   bsModalRef: BsModalRef
   @Input() title: string
   @Input() thumbImg: string
@@ -15,11 +15,8 @@ export class HelpImgThumbComponent implements OnInit, OnDestroy {
 
   constructor(private modalService: BsModalService) { }
 
-  ngOnInit(): void {
-  }
-
   // Open Modal
-  openModalWithComponent() {
+  openModalWithComponent(): void {
     const initialState = {
       title: this.title,
       img: this.content
@@ -29,7 +26,7 @@ export class HelpImgThumbComponent implements OnInit, OnDestroy {
     this.bsModalRef.content.closeBtnName = 'Close'
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     const modalCount = this.modalService.getModalsCount()
     if (modalCount > 0) {
       this.modalService._hideModal(modalCount)

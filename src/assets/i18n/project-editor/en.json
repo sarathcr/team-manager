@@ -1,4 +1,7 @@
 {
+  "GENERAL":{
+    "platform_title_tab": "Thinkö"
+  },
   "PROJECT":{
       "project_button_markdone": "MARCAR COMO HECHO",
       "project_button_done": "HECHO",
