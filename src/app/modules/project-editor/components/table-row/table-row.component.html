@@ -8,10 +8,8 @@
     'table-row__cell_m' : colOne.size === 'm',
     'table-row__cell_s' : colOne.size === 's'}">
     <div *ngIf="checkbox" class="table-row__box">
-      <label>
         <input class="table-row__checkbox" type="checkbox" [(ngModel)]="checkbox.checked">
         <span class="icon-ic_check table-row__checkmark"></span>
-      </label>
     </div>
     <span class="table-row__desc">{{colOne.value}}</span>
   </div>
