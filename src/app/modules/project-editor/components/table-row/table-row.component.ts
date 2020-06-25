@@ -8,16 +8,15 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core'
 export class TableRowComponent implements OnInit {
   @Output() count = new EventEmitter<object>()
   @Input() isHead = false
-  @Input() checkbox = false
+  @Input() checkbox: CheckBox
   @Input() parentID = ''
   @Input() isLastRow = false
-  @Input() eCriteria: string
-  @Input() aCompetences: string
-  @Input() course: string
-  @Input() block: string
-  @Input() dimension: string
+  @Input() colOne: TableColumn
+  @Input() colTwo: TableColumn
+  @Input() colThree: TableColumn
+  @Input() colFour: TableColumn
+  // @Input() block: TableColumn
 
-  isChecked: boolean
   colCount: number
 
   constructor() { }
@@ -33,4 +32,18 @@ export class TableRowComponent implements OnInit {
   onChange(checked: boolean): void {
     this.count.emit({ parentID: this.parentID, checked })
   }
+
+  onCheck(): void {
+    this.checkbox.checked = !this.checkbox.checked
+  }
+}
+
+// WIP To be Moved in to corresponding file while doing functionality
+export interface TableColumn {
+  value: string,
+  size?: 'xs' | 'm' | 's'
+}
+
+export interface CheckBox {
+  checked: boolean
 }

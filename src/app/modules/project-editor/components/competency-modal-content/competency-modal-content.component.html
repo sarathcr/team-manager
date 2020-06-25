@@ -73,22 +73,14 @@
       <div class="competency-modal__body-criteria">
         <div id="custom-tab__content1" class="custom-tab__content active">
           <div class="custom-tab__content-body">
-            <app-table-row 
-              [isHead]="true" 
-              [checkbox]="false" 
-              [aCompetences]="tempHead.associatedCompetences"
-              [eCriteria]="tempHead.evaluationCriteria">
+            <app-table-row [isHead]="true" [checkbox]="{checked: false}" 
+              [colOne]="{value: tempHead.evaluationCriteria}"
+              [colTwo]="{value: tempHead.associatedCompetences}">
             </app-table-row>
             <ng-scrollbar>
-              <div class="custom-tab__content-body-scroll" 
-                [ngStyle]="{ 'height' : contentHeight }"
-              >
-                <app-table-row 
-                  *ngFor="let item of tempData" 
-                  [checkbox]="true" 
-                  [parentID]="'custom-tab__content1'" 
-                  [eCriteria]="item.evaluationCriteria"
-                  [aCompetences]="item.associatedCompetences" 
+              <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
+                <app-table-row *ngFor="let item of tempData" [checkbox]="true" [parentID]="'custom-tab__content1'"
+                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences}"
                   (count)="getStatus($event)">
                 </app-table-row>
 
@@ -98,20 +90,13 @@
         </div>
         <div id="custom-tab__content2" class="custom-tab__content">
           <div class="custom-tab__content-body">
-            <app-table-row 
-              [isHead]="true" 
-              [checkbox]="false" 
-              [aCompetences]="tempHead.associatedCompetences"
-              [eCriteria]="tempHead.evaluationCriteria">
+            <app-table-row [isHead]="true" [checkbox]="{checked: false}" [colOne]="{value: tempHead.associatedCompetences}"
+              [colTwo]="{value: tempHead.evaluationCriteria}">
             </app-table-row>
             <ng-scrollbar>
-              <div class="custom-tab__content-body-scroll" 
-                [ngStyle]="{ 'height' : contentHeight }">
-                <app-table-row *ngFor="let item of tempData" 
-                  [checkbox]="true" 
-                  [parentID]="'custom-tab__content1'" 
-                  [eCriteria]="item.evaluationCriteria"
-                  [aCompetences]="item.associatedCompetences" 
+              <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
+                <app-table-row *ngFor="let item of tempData" [checkbox]="true" [parentID]="'custom-tab__content1'"
+                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences}"
                   (count)="getStatus($event)">
                 </app-table-row>
               </div>
@@ -187,115 +172,14 @@
       <div class="competency-modal__body_summary">
         <div id="custom-tab__content1" class="custom-tab__content active">
           <div class="custom-tab__content-body">
-            <app-table-row 
-              [isHead]="true" 
-              [checkbox]="false" 
-              [eCriteria]="tempHead.evaluationCriteria"
-              [course]="tempHead.course" 
-              [block]="tempHead.block">
+            <app-table-row [isHead]="true" [checkbox]="{checked: false}" [colOne]="{value: tempHead.evaluationCriteria}"
+              [colTwo]="{value: tempHead.course, size: 'xs'}" [colThree]="{value: tempHead.block, size: 's'}">
             </app-table-row>
             <ng-scrollbar>
-              <div class="custom-tab__content-body-scroll" 
-              [ngStyle]="{ 'height' : contentHeight }">
-                <app-table-row 
-                  *ngFor="let item of tempData" 
-                  [checkbox]="true" 
-                  [eCriteria]="item.evaluationCriteria"
-                  [course]="item.course" 
-                  [block]="item.block" 
-                  [parentID]="'custom-tab__content1'"
-                  (count)="getStatus($event)">
-                </app-table-row>
-              </div>
-            </ng-scrollbar>
-          </div>
-        </div>
-      </div>
-
-      <!-- View with Criteria Evaluation, Associated Competencies, Course and Block -->
-      <div class="competency-modal__body_summary">
-        <div id="custom-tab__content1" class="custom-tab__content active">
-          <div class="custom-tab__content-body">
-            <app-table-row 
-              [isHead]="true" 
-              [checkbox]="false" 
-              [eCriteria]="tempHead.evaluationCriteria"
-              [aCompetences]="tempHead.associatedCompetences" 
-              [course]="tempHead.course" 
-              [block]="tempHead.block">
-            </app-table-row>
-            <ng-scrollbar>
-              <div class="custom-tab__content-body-scroll" 
-              [ngStyle]="{ 'height' : contentHeight }">
-                <app-table-row *ngFor="let item of tempData" 
-                  [checkbox]="true" 
-                  [eCriteria]="item.evaluationCriteria"
-                  [aCompetences]="item.associatedCompetences" 
-                  [course]="item.course" [block]="item.block"
-                  [parentID]="'custom-tab__content1'" 
-                  (count)="getStatus($event)">
-                </app-table-row>
-              </div>
-            </ng-scrollbar>
-          </div>
-        </div>
-      </div>
-
-      <!-- View with Criteria Evaluation, Dimension, Course and Block -->
-      <div class="competency-modal__body_summary">
-        <div id="custom-tab__content1" class="custom-tab__content active">
-          <div class="custom-tab__content-body">
-            <app-table-row 
-              [isHead]="true" 
-              [checkbox]="false" 
-              [eCriteria]="tempHead.evaluationCriteria"
-              [dimension]="tempHead.dimension" 
-              [course]="tempHead.course" 
-              [block]="tempHead.block">
-            </app-table-row>
-            <ng-scrollbar>
-              <div class="custom-tab__content-body-scroll" 
-              [ngStyle]="{ 'height' : contentHeight }">
-                <app-table-row 
-                  *ngFor="let item of tempData" 
-                  [checkbox]="true" 
-                  [eCriteria]="item.evaluationCriteria"
-                  [dimension]="item.dimension" 
-                  [course]="item.course" 
-                  [block]="item.block"
-                  [parentID]="'custom-tab__content1'" 
-                  (count)="getStatus($event)">
-                </app-table-row>
-              </div>
-            </ng-scrollbar>
-          </div>
-        </div>
-      </div>
-
-      <!-- View with Criteria Evaluation, Associated Competency, Dimension, Course and Block -->
-      <div class="competency-modal__body_summary">
-        <div id="custom-tab__content1" class="custom-tab__content active">
-          <div class="custom-tab__content-body">
-            <app-table-row 
-              [isHead]="true" 
-              [checkbox]="false" 
-              [eCriteria]="tempHead.evaluationCriteria"
-              [aCompetences]="tempHead.associatedCompetences" 
-              [dimension]="tempHead.dimension"
-              [course]="tempHead.course" 
-              [block]="tempHead.block">
-            </app-table-row>
-            <ng-scrollbar>
-              <div class="custom-tab__content-body-scroll" 
-                [ngStyle]="{ 'height' : contentHeight }">
-                <app-table-row *ngFor="let item of tempData" 
-                  [checkbox]="true" 
-                  [eCriteria]="item.evaluationCriteria"
-                  [aCompetences]="item.associatedCompetences" 
-                  [dimension]="item.dimension" 
-                  [course]="item.course"
-                  [block]="item.block" 
-                  [parentID]="'custom-tab__content1'" 
+              <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
+                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}"
+                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.course, size: 'xs'}"
+                  [colThree]="{value: item.block, size: 's'}" [parentID]="'custom-tab__content1'"
                   (count)="getStatus($event)">
                 </app-table-row>
               </div>
