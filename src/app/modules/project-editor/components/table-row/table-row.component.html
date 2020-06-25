@@ -1,23 +1,36 @@
-<div
-  class="table-row table-row-{{colCount}}"
-  [ngClass]="{ 'table-row__head' : isHead, 'selected' : isChecked, 'last-row' : isLastRow}"
->
-  <div
-    *ngFor='let data of cellData; let indexVal = index;let isFirst = first;'
-    class="table-row__cell"
-  >
-    <div *ngIf="checkbox && isFirst" class="table-row__box">
+<div *ngIf="colOne" class="table-row" [ngClass]="{ 
+    'table-row__head' : isHead,
+    'selected' : checkbox.checked, 
+    'last-row' : isLastRow}"
+    (click)="onCheck()">
+  <div class="table-row__cell" [ngClass]="{
+    'table-row__cell_xs' : colOne.size === 'xs',
+    'table-row__cell_m' : colOne.size === 'm',
+    'table-row__cell_s' : colOne.size === 's'}">
+    <div *ngIf="checkbox" class="table-row__box">
       <label>
-        <input
-          class="table-row__checkbox"
-          type="checkbox"
-          [(ngModel)]="isChecked"
-          (change)="onChange(inputCheck.checked)"
-          #inputCheck
-        >
+        <input class="table-row__checkbox" type="checkbox" [(ngModel)]="checkbox.checked">
         <span class="icon-ic_check table-row__checkmark"></span>
       </label>
     </div>
-    <span class="table-row__desc">{{ data.list }}</span>
+    <span class="table-row__desc">{{colOne.value}}</span>
+  </div>
+  <div *ngIf="colTwo" class="table-row__cell" [ngClass]="{
+    'table-row__cell_xs' : colTwo.size === 'xs',
+    'table-row__cell_m' : colTwo.size === 'm',
+    'table-row__cell_s' : colTwo.size === 's'}">
+    <span class="table-row__desc">{{colTwo.value}}</span>
+  </div>
+  <div *ngIf="colThree" class="table-row__cell" [ngClass]="{
+    'table-row__cell_xs' : colThree.size === 'xs',
+    'table-row__cell_m' : colThree.size === 'm',
+    'table-row__cell_s' : colThree.size === 's'}">
+    <span class="table-row__desc">{{colThree.value}}</span>
+  </div>
+  <div *ngIf="colFour" class="table-row__cell" [ngClass]="{
+    'table-row__cell_xs' : colFour.size === 'xs',
+    'table-row__cell_m' : colFour.size === 'm',
+    'table-row__cell_s' : colFour.size === 's'}">
+    <span class="table-row__desc">{{colFour.value}}</span>
   </div>
 </div>

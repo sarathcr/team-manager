@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core'
-import { FieldConfig, ButtonVariants, Theme } from '../../constants/field.model'
+import { ButtonVariants, Theme } from '../../constants/field.model'
 
 @Component({
   selector: 'app-button',
@@ -10,9 +10,8 @@ export class ButtonComponent {
 
   @Input() theme: Theme = 'primary'
   @Input() disabled: boolean
-  @Input() config: FieldConfig
   @Input() variant: ButtonVariants = 'contained'
 
-  constructor() { }
+  constructor() {}
 
 }

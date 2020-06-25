@@ -20,6 +20,96 @@ export class CompetencyModalContentComponent implements OnInit, OnDestroy {
   selectedGrades: Option[]
   leftContentHeight = ''
   contentHeight = ''
+  isShow = false
+  tempHead: TempData = {
+    evaluationCriteria: 'Criterio de evaluación',
+    associatedCompetences: 'Competencias asociadas',
+    course: 'Curso',
+    block: 'Bloque',
+    dimension: 'Dimensiones'
+  }
+  tempData: TempData[] = [
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    }
+  ]
   subscriptions = new SubSink()
 
   @HostListener('window:resize', ['$event'])
@@ -36,8 +126,6 @@ export class CompetencyModalContentComponent implements OnInit, OnDestroy {
     this.adjustHeightContent()
     this.createFormConfig()
     this.getTranslation()
-    this.rowInit()
-
   }
 
   ngOnDestroy(): void {
@@ -92,26 +180,7 @@ export class CompetencyModalContentComponent implements OnInit, OnDestroy {
     })
   }
 
-  rowInit(): void {
-    this.rowHeadData = [
-      {
-        list: 'Criterio de evaluación'
-      },
-      {
-        list: 'Competencias asociadas'
-      }
-    ]
-    this.rowData = [
-      {
-        list: 'Analizar los elementos y sistemas que configuran la comunicación alámbrica e inalámbrica.'
-      },
-      {
-        list: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica'
-      }
-    ]
-  }
-
-  openTab(event: any, id: string): void {
+  openTab(event: any, id: string): void{
     let i
     let tabcontent
     let tablinks
@@ -140,4 +209,15 @@ export class CompetencyModalContentComponent implements OnInit, OnDestroy {
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
   }
 
+  getSummary(): void {
+    this.isShow = !this.isShow
+  }
+}
+
+export interface TempData {
+  evaluationCriteria?: string,
+  associatedCompetences?: string,
+  course?: string,
+  block?: string,
+  dimension?: string,
 }
