@@ -193,10 +193,10 @@
 
   <div class="competency-modal__footer">
     <div class="competency-modal__footer-btn-group">
-      <a href="javascript:void(0);" class="competency-modal__footer-btn-link" (click)="getSummary()" *ngIf="!isShow">
+      <div class="competency-modal__footer-btn-link" (click)="getSummary()" *ngIf="!isShow">
         {{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }}
         (6)
-      </a>
+      </div>
       <button class="btn btn-primary competency-modal__footer-btn-submit">
         <span class="icon icon-ic_check"></span>
         {{ 'OBJECTIVES.project_objectives_criteriawindow_add' | translate }}
