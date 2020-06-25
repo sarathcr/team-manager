@@ -180,30 +180,7 @@ export class CompetencyModalContentComponent implements OnInit, OnDestroy {
     })
   }
 
-<<<<<<< HEAD
   openTab(event: any, id: string): void{
-=======
-  rowInit(): void {
-    this.rowHeadData = [
-      {
-        list: 'Criterio de evaluación'
-      },
-      {
-        list: 'Competencias asociadas'
-      }
-    ]
-    this.rowData = [
-      {
-        list: 'Analizar los elementos y sistemas que configuran la comunicación alámbrica e inalámbrica.'
-      },
-      {
-        list: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica'
-      }
-    ]
-  }
-
-  openTab(event: any, id: string): void {
->>>>>>> develop
     let i
     let tabcontent
     let tablinks
