@@ -129,6 +129,12 @@
   min-height: calc(100vh - 160px);
   &__title{
     line-height: 32px;
+    display: flex;
+    flex-direction: row;
+    &-number{
+      display: flex;
+      margin-right: 10px;
+    }
   }
 }
 
@@ -190,6 +196,7 @@ body,
 .ng-scrollbar-track{
   width: 7px  !important;
   border-radius: 4px !important;
+  background-color: transparent !important;
 }
 .ng-scrollbar-thumb{
   background-color: $creator-border !important;

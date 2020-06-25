@@ -7,17 +7,21 @@ import {
   ElementRef,
   Output,
   EventEmitter,
-  AfterContentChecked
+  AfterContentChecked,
+  OnDestroy
 } from '@angular/core'
-import { FieldConfig, Option, TextAreaVariants } from 'src/app/shared/constants/field.model'
+
 import { Observable } from 'rxjs'
+
+import { FieldConfig, Option, TextAreaVariants } from 'src/app/shared/constants/field.model'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-textarea-bullets',
   templateUrl: './textarea-bullets.component.html',
   styleUrls: ['./textarea-bullets.component.scss']
 })
-export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
+export class TextareaBulletsComponent implements OnInit, AfterContentChecked, OnDestroy {
 
   @Input() variant: TextAreaVariants = 'bullet'
   @Input() config: FieldConfig
@@ -34,6 +38,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
   configOptions: Option[] = []
   limit = 0
   focus = false
+  subscriptions = new SubSink()
 
   constructor() { }
 
@@ -50,9 +55,13 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     }
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
+  }
+
   optionInit(): void {
     if (this.options$) {
-      this.options$.subscribe(data => {
+      this.subscriptions.sink = this.options$.subscribe(data => {
         if (data?.length) {
           this.configOptions = data
         } else {

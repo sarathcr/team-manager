@@ -14,11 +14,13 @@ import { StatusComponent } from '../../components/status/status.component'
 import { EditorService } from '../../services/editor/editor.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
+import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 
 class EditorServiceStub { }
 class ProjectEntityServiceStub { }
 class StepStatusEntityServiceStub { }
 class RouterStub { }
+class GradeEntityServiceStub { }
 class BsModalServiceStub {
   getModalsCount = (): number => 0
 }
@@ -44,6 +46,7 @@ describe('StepThreeComponent', (): void => {
         { provide: StepStatusEntityService, useClass: StepStatusEntityServiceStub },
         { provide: Router, useClass: RouterStub },
         { provide: BsModalService, useClass: BsModalServiceStub },
+        { provide: GradeEntityService, useClass: GradeEntityServiceStub }
 
       ],
       imports: [ TranslateModule.forRoot() ]

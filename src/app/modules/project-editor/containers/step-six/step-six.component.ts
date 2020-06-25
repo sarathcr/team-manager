@@ -5,6 +5,7 @@ import { Observable } from 'rxjs'
 import { FormSixInit, FormSix } from '../../constants/step-forms.model'
 import { FormSixInitData } from '../../constants/step-forms.data'
 import { EditorService } from '../../services/editor/editor.service'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-six',
@@ -21,6 +22,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
   initialFormStatus: Status = 'PENDING'
   creativeTitle = ''
   creativeImage = ''
+  subscriptions = new SubSink()
 
   constructor(private editor: EditorService) { }
 
@@ -32,6 +34,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
     if (this.isFormUpdated()) {
       this.handleSubmit()
     }
+    this.subscriptions.unsubscribe()
   }
 
   formInit(): void {
@@ -39,7 +42,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[5]
     if (this.project$) {
-      this.project$.subscribe(data => {
+      this.subscriptions.sink = this.project$.subscribe(data => {
         if (data) {
           this.creativeTitle = data.creativeTitle
           this.initialFormData.creativeTitle = data.creativeTitle
@@ -49,7 +52,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
       })
     }
     if (this.step$) {
-      this.step$.subscribe(
+      this.subscriptions.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
             this.buttonConfig.submitted = formStatus.state === 'DONE'

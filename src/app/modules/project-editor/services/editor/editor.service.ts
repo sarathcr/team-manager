@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core'
-import { StepState, statusId, Step } from '../../constants/step.model'
-import { TranslateService } from '@ngx-translate/core'
-import { Project } from 'src/app/modules/project-editor/constants/project.model'
-import { Observable, Subscription, BehaviorSubject } from 'rxjs'
-import { map } from 'rxjs/operators'
-import { ProjectTitle } from '../../constants/title-data.model'
 import { Router } from '@angular/router'
+
+import { TranslateService } from '@ngx-translate/core'
+import { Observable, BehaviorSubject } from 'rxjs'
+import { map } from 'rxjs/operators'
+
+import { StepState, statusId, Step } from '../../constants/step.model'
+import { Project } from 'src/app/modules/project-editor/constants/project.model'
+import { ProjectTitle } from '../../constants/title-data.model'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
+import { FormsData } from '../../constants/step-forms.model'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,10 +29,9 @@ export class EditorService {
   nextStepId: statusId
   isStepDone: boolean
   currentStep$: BehaviorSubject<number> = new BehaviorSubject(1)
-  projectSubscription: Subscription
-  statusSubscription: Subscription
   loading: boolean
   loading$: Observable<boolean>
+  subscriptions = new SubSink()
 
   constructor(
     private projectsService: ProjectEntityService,
@@ -36,7 +40,7 @@ export class EditorService {
     private router: Router
   ) { }
 
-  getProject(projectId): void {
+  getProject(projectId: string | number): void {
     if (projectId !== 'create') {
       this.project$ = this.projectsService.entities$
         .pipe(
@@ -44,7 +48,7 @@ export class EditorService {
             return project.id === +(projectId)
           }))
         )
-      this.projectSubscription = this.project$.subscribe(project => {
+      this.subscriptions.sink = this.project$.subscribe(project => {
         if (project) {
           this.projectId = project.id
           this.notFound = false
@@ -57,13 +61,13 @@ export class EditorService {
       })
     }
     this.loading$ = this.projectsService.loading$
-    this.loading$.subscribe(res => {
+    this.subscriptions.sink = this.loading$.subscribe(res => {
       this.loading = res
     })
   }
 
   // filter data for each step
-  getStepData(step: statusId): Observable<any> {
+  getStepData(step: statusId): Observable<Project> {
     this.currentStepId = step
     this.currentStep$.next(step)
     if (this.project$) {
@@ -81,7 +85,7 @@ export class EditorService {
                 grades: data?.grades?.map(({ id, name }) => ({ id, name })),
                 subjects: data?.subjects?.map(({ id, name }) => ({ id, name }))
               })
-            case 2: return data?.themes?.map(({ id, name }) => ({ id, name }))
+            case 2: return { themes: data?.themes?.map(({ id, name }) => ({ id, name })) }
             case 3: return ({
               grades: data?.grades?.map(({ id, name }) => ({ id, name })),
               academicYear: data?.academicYear,
@@ -95,7 +99,7 @@ export class EditorService {
               creativeImage: data.creativeImage,
               creativeTitle: data.creativeTitle,
             }
-            case 7: return data?.drivingQuestions?.map(({ id, name }) => ({ id, name }))
+            case 7: return { drivingQuestions: data?.drivingQuestions?.map(({ id, name }) => ({ id, name })) }
             case 8: return { finalProduct: data.finalProduct }
             case 9: return { synopsis: data.synopsis }
           }
@@ -112,7 +116,7 @@ export class EditorService {
           return state.id === Number(this.projectId)
         }))
       )
-    this.statusSubscription = this.stepStatus$.subscribe(data => {
+    this.subscriptions.sink = this.stepStatus$.subscribe(data => {
       if (data) {
         this.updateStepStatus(data)
       } else {
@@ -154,7 +158,7 @@ export class EditorService {
         ...projectData
       }
       const browserUrl = this.router.url
-      this.projectsService.add(newProject)
+      this.subscriptions.sink = this.projectsService.add(newProject)
         .subscribe(
           newResProject => {
             if (browserUrl.includes('create')) {
@@ -180,7 +184,7 @@ export class EditorService {
     }
   }
 
-  handleStepSubmit(data, isDone = false): void {
+  handleStepSubmit(data: FormsData, isDone: boolean = false): void {
     this.handleSubmit(data.data)
     this.submitStepStatus(data.stepStatus)
     this.isStepDone = isDone
@@ -225,8 +229,7 @@ export class EditorService {
   }
 
   clearData(): void {
-    if (this.projectSubscription) { this.projectSubscription.unsubscribe() }
-    if (this.statusSubscription) { this.statusSubscription.unsubscribe() }
+    this.subscriptions.unsubscribe()
     this.project$ = null
     this.stepStatus$ = null
     this.titleData = null
@@ -249,7 +252,7 @@ export class EditorService {
       { stepid: 9, state: 'PENDING', name: '' },
       { stepid: 10, state: 'PENDING', name: '' }
     ]
-    this.translate.stream(
+    this.subscriptions.sink = this.translate.stream(
       [
         'STEPS_MENU.project_structure_stepsmenu_startingpoint',
         'STEPS_MENU.project_structure_stepsmenu_topic',

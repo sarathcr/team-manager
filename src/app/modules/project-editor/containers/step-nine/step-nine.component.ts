@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
+
+import { Observable } from 'rxjs'
+
 import { Step, Status } from '../../constants/step.model'
 import { FormNineInit, FormNine } from '../../constants/step-forms.model'
 import { FormNineInitData } from '../../constants/step-forms.data'
 import { ButtonSubmitConfig } from '../../constants/form-config.data'
-import { Observable } from 'rxjs'
 import { EditorService } from '../../services/editor/editor.service'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-nine',
@@ -20,6 +23,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
   initialFormData: FormNineInit = FormNineInitData
   initialFormStatus: Status = 'PENDING'
   buttonConfig = new ButtonSubmitConfig()
+  subscriptions = new SubSink()
 
   constructor(public editor: EditorService) { }
 
@@ -31,6 +35,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
     if (this.isFormUpdated()) {
       this.handleSubmit()
     }
+    this.subscriptions.unsubscribe()
   }
 
   formInit(): void {
@@ -38,7 +43,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[8]
     if (this.project$) {
-      this.project$.subscribe(data => {
+      this.subscriptions.sink = this.project$.subscribe(data => {
         if (data?.synopsis) {
           this.synopsis = data.synopsis
           this.initialFormData = data.synopsis
@@ -46,7 +51,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
       })
     }
     if (this.step$) {
-      this.step$.subscribe(
+      this.subscriptions.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
             this.buttonConfig.submitted = formStatus.state === 'DONE'
