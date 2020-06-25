@@ -1,24 +1,13 @@
 <div class="dynamic-field form-button">
-  <ng-template [ngIf]="config">
-    <button
-      class="btn btn-primary {{config.submitted ? 'btn-success':''}}"
-      [disabled]="config.disabled"
-    >
-      <span class="form-button__icon icon-ic_check"></span>
-      {{ (config.submitted ? config.successLabel : config.label) | translate }}
-    </button>
-  </ng-template>
-
-  <ng-template [ngIf]="!config">
-    <button
-      class="btn"
-      [ngClass]="{'btn-outline' : variant === 'outlined',
-                  'btn-text' : variant === 'text', 
-                  'btn-primary' : theme === 'primary', 
-                  'btn-secondary': theme === 'secondary'}"
-      [disabled]="disabled"
-    >
-      <ng-content></ng-content>
-    </button>
-  </ng-template>
+  <button
+    class="btn"
+    [ngClass]="{'btn-outline' : variant === 'outlined',
+                'btn-text' : variant === 'text',
+                'btn-primary' : theme === 'primary',
+                'btn-secondary': theme === 'secondary',
+                'btn-success': theme === 'success'}"
+    [disabled]="disabled"
+  >
+    <ng-content></ng-content>
+  </button>
 </div>
