@@ -129,6 +129,12 @@
   min-height: calc(100vh - 160px);
   &__title{
     line-height: 32px;
+    display: flex;
+    flex-direction: row;
+    &-number{
+      display: flex;
+      margin-right: 10px;
+    }
   }
 }
 

@@ -1,7 +1,9 @@
-import { Option } from './../../../../shared/constants/field.model'
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { Observable } from 'rxjs'
+
 import { TranslateService } from '@ngx-translate/core'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
+
 import { FormSevenInitData } from '../../constants/step-forms.data'
 import { FormSevenInit, FormSeven } from '../../constants/step-forms.model'
 import { Step, Status } from '../../constants/step.model'
@@ -9,6 +11,8 @@ import { FieldConfig } from 'src/app/shared/constants/field.model'
 import { DrivingQuestion } from 'src/app/modules/project-editor/constants/project.model'
 import { EditorService } from '../../services/editor/editor.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
+import { Option } from './../../../../shared/constants/field.model'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-seven',
@@ -30,6 +34,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   formPlaceholder: string
   active = false
   initialFormStatus: Status = 'PENDING'
+  subscriptions = new SubSink()
 
   constructor(
     private translateService: TranslateService,
@@ -46,6 +51,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     if (this.isFormUpdated()) {
       this.handleSubmit()
     }
+    this.subscriptions.unsubscribe()
   }
 
   createFormConfig(): void {
@@ -64,7 +70,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       limit: 0
     }
     // Translation
-    this.translateService.stream([
+    this.subscriptions.sink = this.translateService.stream([
       'PROJECT.project_button_markdone',
       'PROJECT.project_button_done',
       'DRIVING_QUESTIONS.project_drivingquestions_title',
@@ -83,8 +89,8 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     this.step = this.editor.steps[6]
     const tempinitialFormData = new FormSevenInitData()
     if (this.project$) {
-      this.drivingQuestions$ = this.project$
-      this.drivingQuestions$.subscribe(drivingQuestions => {
+      this.drivingQuestions$ = this.project$.pipe(map(data => data?.drivingQuestions))
+      this.subscriptions.sink = this.drivingQuestions$.subscribe(drivingQuestions => {
         this.initialFormData.drivingQuestions = []
         if (drivingQuestions) {
           tempinitialFormData.drivingQuestions = [...drivingQuestions]
@@ -94,7 +100,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       })
     }
     if (this.step$) {
-      this.step$.subscribe(
+      this.subscriptions.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
             this.buttonConfig.submitted = formStatus.state === 'DONE'
