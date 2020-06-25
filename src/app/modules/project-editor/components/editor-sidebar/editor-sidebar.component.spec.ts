@@ -57,7 +57,15 @@ describe('EditorSidebarComponent', (): void => {
   it('should repeatly render step menu directives as number of steps', (): void => {
     const steps = [
       { stepid: 1, state: 'PENDING', name: '' },
-      { stepid: 2, state: 'PENDING', name: '' }
+      { stepid: 2, state: 'PENDING', name: '' },
+      { stepid: 3, state: 'PENDING', name: '' },
+      { stepid: 4, state: 'PENDING', name: '' },
+      { stepid: 5, state: 'PENDING', name: '' },
+      { stepid: 6, state: 'PENDING', name: '' },
+      { stepid: 7, state: 'PENDING', name: '' },
+      { stepid: 8, state: 'PENDING', name: '' },
+      { stepid: 9, state: 'PENDING', name: '' },
+      { stepid: 10, state: 'PENDING', name: '' }
     ]
     component.steps = steps
 

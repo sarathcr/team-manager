@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
+
 import { Observable } from 'rxjs'
 import { Step, Status } from '../../constants/step.model'
 import { ButtonSubmitConfig } from '../../constants/form-config.data'
 import { FormEightInit, FormEight } from '../../constants/step-forms.model'
 import { FormEightInitData } from '../../constants/step-forms.data'
 import { EditorService } from '../../services/editor/editor.service'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-eight',
@@ -21,6 +23,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
   initialFormData: FormEightInit = FormEightInitData
   active = false
   initialFormStatus: Status = 'PENDING'
+  subscription = new SubSink()
 
   constructor(
     private editor: EditorService
@@ -34,6 +37,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
     if (this.isFormUpdated()) {
       this.handleSubmit()
     }
+    this.subscription.unsubscribe()
   }
 
   formInit(): void {
@@ -41,7 +45,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[7]
     if (this.project$) {
-      this.project$.subscribe(data => {
+      this.subscription.sink = this.project$.subscribe(data => {
         if (data?.finalProduct) {
           this.finalProduct = data.finalProduct
           this.initialFormData = data.finalProduct
@@ -49,7 +53,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
       })
     }
     if (this.step$) {
-      this.step$.subscribe(
+      this.subscription.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
             this.buttonConfig.submitted = formStatus.state === 'DONE'
