@@ -1,13 +1,17 @@
 import { Option } from './../../../../shared/constants/field.model'
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { FieldConfig } from '../../../../shared/constants/field.model'
+
 import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { TranslateService } from '@ngx-translate/core'
+
 import { FormTwoInitData } from '../../constants/step-forms.data'
 import { FormTwoInit, FormTwo } from '../../constants/step-forms.model'
 import { Step, Status } from '../../constants/step.model'
 import { Theme } from 'src/app/modules/project-editor/constants/project.model'
 import { EditorService } from '../../services/editor/editor.service'
+import { FieldConfig } from '../../../../shared/constants/field.model'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-two',
@@ -25,6 +29,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
   initialFormStatus: Status = 'PENDING'
+  subscriptions = new SubSink()
 
   constructor(
     private translateService: TranslateService,
@@ -40,6 +45,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     if (this.isFormUpdated()) {
       this.handleSubmit()
     }
+    this.subscriptions.unsubscribe()
   }
 
   createFormConfig(): void {
@@ -58,7 +64,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       limit: 5
     }
     // Translation
-    this.translateService.stream([
+    this.subscriptions.sink = this.translateService.stream([
       'PROJECT.project_button_markdone',
       'PROJECT.project_button_done',
       'THEMATIC.project_thematic_title',
@@ -77,8 +83,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.step = this.editor.steps[1]
     const tempinitialFormData = new FormTwoInitData()
     if (this.project$) {
-      this.themes$ = this.project$
-      this.themes$
+      this.themes$ = this.project$.pipe(map(data => data?.themes))
+      this.subscriptions.sink = this.themes$
         .subscribe(themes => {
           this.initialFormData.themes = []
           if (themes) {
@@ -89,7 +95,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         })
     }
     if (this.step$) {
-      this.step$.subscribe(
+      this.subscriptions.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
             this.buttonConfig.submitted = formStatus.state === 'DONE'

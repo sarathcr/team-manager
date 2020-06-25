@@ -14,6 +14,7 @@ import { FormThreeInitData } from '../../constants/step-forms.data'
 import { CompetencyModalContentComponent } from './../../components/competency-modal-content/competency-modal-content.component'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { Project } from './../../constants/project.model'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-three',
@@ -39,6 +40,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   criterias: number[] = []
   tempData: any[]
   bsModalRef: BsModalRef
+  subscriptions = new SubSink()
 
   constructor(
     private translateService: TranslateService,
@@ -60,16 +62,17 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     if (modalCount > 0) {
       this.modalService._hideModal(modalCount)
     }
+    this.subscriptions.unsubscribe()
   }
 
   formInIt(): void {
     this.project$ = this.editor.getStepData(3)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[2]
-    this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
+    this.subscriptions.sink = this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
     const tempinitialFormData = new FormThreeInitData()
     if (this.project$) {
-      this.project$.subscribe(data => {
+      this.subscriptions.sink = this.project$.subscribe(data => {
         this.project = data
         this.getGrades(this.project)
       })
@@ -77,7 +80,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         .pipe(
           map(data => data?.competencyObjectives)
         )
-      this.competencyObjectives$
+      this.subscriptions.sink = this.competencyObjectives$
         .subscribe(competencyObjectives => {
           this.initialFormData.competencyObjectives = []
           if (competencyObjectives) {
@@ -91,7 +94,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         .pipe(
           map(data => data?.evaluationCriteria)
         )
-      this.evaluationCriteria$
+      this.subscriptions.sink = this.evaluationCriteria$
         .subscribe(criterias => {
           this.criterias = []
           this.initialCriterias = []
@@ -104,7 +107,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         })
     }
     if (this.step$) {
-      this.step$.subscribe(
+      this.subscriptions.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
             this.buttonConfig.submitted = formStatus.state === 'DONE'
@@ -119,8 +122,8 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   getGrades(project: Project): void {
-    if ( this.project ) {
-      this.gradeService.entities$
+    if (this.project) {
+      this.subscriptions.sink = this.gradeService.entities$
         .pipe(
           map(grades => grades.filter(grade => grade.academicYear?.id === project.academicYear.id
             && grade.region?.id === project.region.id))
@@ -295,7 +298,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     }
 
     // Translation
-    this.translateService.stream([
+    this.subscriptions.sink = this.translateService.stream([
       'PROJECT.project_button_markdone',
       'PROJECT.project_button_done',
       'OBJECTIVES.project_objectives_title',

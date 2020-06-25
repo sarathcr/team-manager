@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
+
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
+
 import { FieldConfig, DropDownConfig } from '../../../../shared/constants/field.model'
 import { FormOneInitData } from '../../constants/step-forms.data'
 import { FormOneInit, FormOne } from '../../constants/step-forms.model'
@@ -14,6 +16,7 @@ import { GradeEntityService } from '../../store/entity/grade/grade-entity.servic
 import { SubjectEntityService } from '../../store/entity/subject/subject-entity.service'
 import { GradeDataService } from '../../store/entity/grade/grade-data.service'
 import { SubjectDataService } from '../../store/entity/subject/subject-data.service'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-one',
@@ -34,6 +37,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   subjectsDropdown: DropDownConfig
   active = false
   initialFormStatus: Status = 'PENDING'
+  subscriptions = new SubSink()
 
   constructor(
     private countryService: CountryEntityService,
@@ -57,6 +61,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     if (this.isFormUpdated()) {
       this.handleSubmit()
     }
+    this.subscriptions.unsubscribe()
   }
 
   formInIt(): void {
@@ -64,7 +69,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[0]
     if (this.project$) {
-      this.project$
+      this.subscriptions.sink = this.project$
         .subscribe(data => {
           const tempinitialFormData = new FormOneInitData()
           if (data?.country) {
@@ -104,7 +109,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
         })
     }
     if (this.step$) {
-      this.step$.subscribe(
+      this.subscriptions.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
             this.buttonConfig.submitted = formStatus.state === 'DONE'
@@ -119,7 +124,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   getAllCountries(): void {
-    this.countryService.entities$
+    this.subscriptions.sink = this.countryService.entities$
       .subscribe(data => {
         this.countryDropdown.data = data
         if (!data.length) { this.countryService.getAll() }
@@ -127,7 +132,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   getRegions(countryId: number): void {
-    this.regionService.entities$
+    this.subscriptions.sink = this.regionService.entities$
       .pipe(
         map(regions => regions.filter(region => region.country.id === countryId))
       )
@@ -138,7 +143,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   getAcademicYears(): void {
-    this.academicYearService.entities$
+    this.subscriptions.sink = this.academicYearService.entities$
       .subscribe(newData => {
         if (!newData.length) { this.academicYearService.getAll() }
         this.academicYearDropdown.data = newData
@@ -147,7 +152,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
 
   getGrades(academicyearId: number, regionId?: number): void {
     const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id
-    this.gradeService.entities$
+    this.subscriptions.sink = this.gradeService.entities$
       .pipe(
         map(grades => grades.filter(grade => grade.academicYear?.id === academicyearId
           && grade.region?.id === selectedRegionId))
@@ -167,7 +172,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   getSubjects(): void {
     const gradeIds = []
     this.gradesDropdown.selectedItems.forEach(grade => { gradeIds.push(grade.id) })
-    this.gradeService.entities$
+    this.subscriptions.sink = this.gradeService.entities$
       .pipe(map(gradeData => {
         const subjectData = new Set([])
         gradeData.forEach(grade => {
@@ -464,7 +469,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
       }
     }
     // Translation
-    this.translateService.stream([
+    this.subscriptions.sink = this.translateService.stream([
       'PROJECT.project_button_markdone',
       'PROJECT.project_button_done',
       'STARTING_POINT.project_startingpoint_year',

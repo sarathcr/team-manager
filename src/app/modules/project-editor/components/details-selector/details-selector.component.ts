@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { Observable } from 'rxjs'
@@ -6,13 +6,14 @@ import { map } from 'rxjs/operators'
 
 import { ModalComponent } from '../modal/modal.component'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-details-selector',
   templateUrl: './details-selector.component.html',
   styleUrls: ['./details-selector.component.scss']
 })
-export class DetailsSelectorComponent implements OnInit {
+export class DetailsSelectorComponent implements OnInit, OnDestroy {
 
   showList = false
   @Input() data: Subject
@@ -26,6 +27,7 @@ export class DetailsSelectorComponent implements OnInit {
   @Output() deleteCriteria: EventEmitter<any> = new EventEmitter()
   count = 0
   bsModalRef: BsModalRef
+  subscriptions = new SubSink()
 
   constructor(private modalService: BsModalService) { }
 
@@ -33,8 +35,12 @@ export class DetailsSelectorComponent implements OnInit {
     this.formInit()
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
+  }
+
   formInit(): void {
-    this.project$
+    this.subscriptions.sink = this.project$
       .pipe(map(data => data?.evaluationCriteria))
       .subscribe(criterias => {
         if (criterias) {

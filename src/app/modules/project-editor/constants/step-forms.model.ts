@@ -101,5 +101,6 @@ export interface FormNine {
 }
 
 export type FormNineInit = string
+export type FormsData = FormOne | FormTwo | FormThree | FormSix | FormSeven | FormEight | FormNine
 
 

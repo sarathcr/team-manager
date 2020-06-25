@@ -1,8 +1,10 @@
-import { Component, OnInit, HostListener } from '@angular/core'
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core'
 
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateService } from '@ngx-translate/core'
+
 import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 import { Block, CriteriaWithSkills } from 'src/app/shared/constants/block.model'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
@@ -12,7 +14,7 @@ import { BlockEntityService } from '../../store/entity/block/block-entity.servic
   templateUrl: './competency-modal-content.component.html',
   styleUrls: ['./competency-modal-content.component.scss']
 })
-export class CompetencyModalContentComponent implements OnInit {
+export class CompetencyModalContentComponent implements OnInit, OnDestroy {
   gradeDropdownConfig: DropDownConfig
   rowHeadData: Array<object>
   rowData: Array<object>
@@ -24,6 +26,16 @@ export class CompetencyModalContentComponent implements OnInit {
   currentBlockIndex = 0
   checks: Array<{ parentId: number, count: number }> = []
   subjectId
+  isShow = false
+  tempHead: TempData = {
+    evaluationCriteria: 'Criterio de evaluación',
+    associatedCompetences: 'Competencias asociadas',
+    course: 'Curso',
+    block: 'Bloque',
+    dimension: 'Dimensiones'
+  }
+  subscriptions = new SubSink()
+
 
   @HostListener('window:resize', ['$event'])
   onResize(): void {
@@ -41,7 +53,10 @@ export class CompetencyModalContentComponent implements OnInit {
     this.createFormConfig()
     this.getBlocks()
     this.getTranslation()
-    this.rowInit()
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
   }
 
   onDropdownSelect(selectedData: any): void { }
@@ -76,7 +91,7 @@ export class CompetencyModalContentComponent implements OnInit {
   }
 
   getTranslation(): void {
-    this.translateService.stream([
+    this.subscriptions.sink = this.translateService.stream([
       'OBJECTIVES.project_objectives_criteriawindow_curriculum',
       'OBJECTIVES.project_objectives_criteriawindow_title',
       'OBJECTIVES.project_objectives_criteriawindow_combo_title',
@@ -107,17 +122,6 @@ export class CompetencyModalContentComponent implements OnInit {
     ]
   }
 
-  rowInit(): void {
-    this.rowHeadData = [
-      {
-        list: 'Criterio de evaluación'
-      },
-      {
-        list: 'Competencias asociadas'
-      }
-    ]
-  }
-
   changeCurrentBlock(id: number): void {
     this.currentBlockIndex = id
   }
@@ -133,10 +137,21 @@ export class CompetencyModalContentComponent implements OnInit {
     }
   }
 
-  adjustHeightContent(): void{
+  adjustHeightContent(): void {
     const innerHeight: number = window.innerHeight
     this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
   }
 
+  getSummary(): void {
+    this.isShow = !this.isShow
+  }
+}
+
+export interface TempData {
+  evaluationCriteria?: string,
+  associatedCompetences?: string,
+  course?: string,
+  block?: string,
+  dimension?: string,
 }
