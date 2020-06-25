@@ -9,7 +9,7 @@ export class TableRowComponent implements OnInit {
   @Output() count = new EventEmitter<object>()
   @Input() isHead = false
   @Input() checkbox = false
-  @Input() parentID = ''
+  @Input() parentID: number
   @Input() cellData: Array<object> = []
   @Input() isLastRow = false
 

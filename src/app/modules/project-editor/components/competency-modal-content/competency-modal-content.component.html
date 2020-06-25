@@ -17,125 +17,48 @@
           <div class="competency-modal__body-scroll"
             [ngStyle]="{ 'max-height' : leftContentHeight }">
             <div class="custom-tab">
-              <button class="custom-tab__links active"
-                (click)="openTab($event,'custom-tab__content1')">
-                <strong class="custom-tab__links-index">1.</strong>
-                <span class="custom-tab__links-label">Tecnologías de la información y de la
-                  comunicación</span>
-                <strong class="custom-tab__links-selected">3</strong>
-                <span class="custom-tab__links-icon icon-ic_check"></span>
-              </button>
-              <button class="custom-tab__links" (click)="openTab($event,'custom-tab__content2')">
-                <strong class="custom-tab__links-index">2.</strong>
-                <span class="custom-tab__links-label">Control y robótica</span>
-              </button>
-              <button class="custom-tab__links" (click)="openTab($event,'custom-tab__content3')">
-                <strong class="custom-tab__links-index">3.</strong>
-                <span class="custom-tab__links-label">Control y robótica</span>
-              </button>
-              <button class="custom-tab__links" (click)="openTab($event,'custom-tab__content4')">
-                <strong class="custom-tab__links-index">4.</strong>
-                <span class="custom-tab__links-label">Control y robótica</span>
-              </button>
-              <button class="custom-tab__links" (click)="openTab($event,'custom-tab__content5')">
-                <strong class="custom-tab__links-index">5.</strong>
-                <span class="custom-tab__links-label">Neumática e hidráulica</span>
-              </button>
-              <button class="custom-tab__links" (click)="openTab($event,'custom-tab__content6')">
-                <strong class="custom-tab__links-index">6.</strong>
-                <span class="custom-tab__links-label">Tecnología y sociedad</span>
-                <strong class="custom-tab__links-selected">3</strong>
-                <span class="custom-tab__links-icon icon-ic_check"></span>
-              </button>
-              <button class="custom-tab__links" (click)="openTab($event,'custom-tab__content7')">
-                <strong class="custom-tab__links-index">7.</strong>
-                <span class="custom-tab__links-label">Tecnología y sociedad</span>
-                <strong class="custom-tab__links-selected">3</strong>
-                <span class="custom-tab__links-icon icon-ic_check"></span>
-              </button>
-              <button class="custom-tab__links" (click)="openTab($event,'custom-tab__content8')">
-                <strong class="custom-tab__links-index">8.</strong>
-                <span class="custom-tab__links-label">Tecnología y sociedad</span>
-                <strong class="custom-tab__links-selected">3</strong>
-                <span class="custom-tab__links-icon icon-ic_check"></span>
+              <button
+                *ngFor="let block of blocks; let index = index;"
+                class="custom-tab__links"
+                [ngClass]="{ active: this.currentBlockIndex === index }"
+                (click)="changeCurrentBlock(index)"
+              >
+                <strong class="custom-tab__links-{{index}}">{{ index + 1 }}.&nbsp;</strong>
+                <span class="custom-tab__links-label">{{ block.name }}</span>
+                <span *ngFor="let check of checks" class="d-flex">
+                  <span *ngIf="check.parentId === index && check.count" class="d-flex" >
+                    <strong class="custom-tab__links-selected">
+                      {{check.count}}
+                    </strong>
+                    <span class="custom-tab__links-icon icon-ic_check"></span>
+                  </span>
+                </span>
               </button>
             </div>
           </div>
         </ng-scrollbar>
       </div>
       <div class="competency-modal__body-criteria">
-        <div id="custom-tab__content1" class="custom-tab__content active">
+        <div
+          *ngFor="let block of blocks; let index = index;"
+          id="custom-tab__content{{index}}"
+          class="custom-tab__content"
+          [ngClass]="{ active: currentBlockIndex === index }"
+        >
           <div class="custom-tab__content-body">
             <app-table-row [isHead]="true" [checkbox]="false" [cellData]="rowHeadData">
             </app-table-row>
             <ng-scrollbar>
               <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
-                <app-table-row [checkbox]="true" [cellData]="rowData"
-                  [parentID]="'custom-tab__content1'" (count)="getStatus($event)"></app-table-row>
-                <app-table-row [checkbox]="true" [cellData]="rowData" (count)="getStatus($event)">
-                </app-table-row>
-                <app-table-row [checkbox]="true" [cellData]="rowData" (count)="getStatus($event)">
-                </app-table-row>
-                <app-table-row [checkbox]="true" [cellData]="rowData" (count)="getStatus($event)">
-                </app-table-row>
-                <app-table-row [checkbox]="true" [cellData]="rowData" (count)="getStatus($event)">
-                </app-table-row>
-                <app-table-row [checkbox]="true" [cellData]="rowData" (count)="getStatus($event)">
-                </app-table-row>
-                <app-table-row [checkbox]="true" [cellData]="rowData" [isLastRow]="true"
-                  (count)="getStatus($event)"></app-table-row>
+                <app-table-row
+                  *ngFor="let criteria of block.evaluationCriteria"
+                  [checkbox]="true"
+                  [cellData]="[{ list: criteria.name }, { list: criteria.basicSkills.join(', ') }]"
+                  [parentID]="index"
+                  (count)="getStatus($event)"
+                ></app-table-row>
               </div>
             </ng-scrollbar>
-          </div>
-        </div>
-        <div id="custom-tab__content2" class="custom-tab__content">
-          <div class="custom-tab__content-body">
-            <app-table-row [isHead]="true" [checkbox]="false" [cellData]="rowHeadData">
-            </app-table-row>
-            <ng-scrollbar>
-              <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
-                <app-table-row [checkbox]="true" [cellData]="rowData"></app-table-row>
-                <app-table-row [checkbox]="true" [cellData]="rowData"></app-table-row>
-                <app-table-row [checkbox]="true" [isLastRow]="true" [cellData]="rowData">
-                </app-table-row>
-              </div>
-            </ng-scrollbar>
-          </div>
-        </div>
-        <div id="custom-tab__content3" class="custom-tab__content">
-          <div class="custom-tab__content-body">
-            <h3>4</h3>
-            <p>London is the capital city of England.</p>
-          </div>
-        </div>
-        <div id="custom-tab__content4" class="custom-tab__content">
-          <div class="custom-tab__content-body">
-            <h3>4</h3>
-            <p>London is the capital city of England.</p>
-          </div>
-        </div>
-        <div id="custom-tab__content5" class="custom-tab__content">
-          <div class="custom-tab__content-body">
-            <h3>5</h3>
-            <p>London is the capital city of England.</p>
-          </div>
-        </div>
-        <div id="custom-tab__content6" class="custom-tab__content">
-          <div class="custom-tab__content-body">
-            <h3>6</h3>
-            <p>London is the capital city of England.</p>
-          </div>
-        </div>
-        <div id="custom-tab__content7" class="custom-tab__content">
-          <div class="custom-tab__content-body">
-            <h3>7</h3>
-            <p>London is the capital city of England.</p>
-          </div>
-        </div>
-        <div id="custom-tab__content8" class="custom-tab__content">
-          <div class="custom-tab__content-body">
-            <h3>8</h3>
-            <p>London is the capital city of England.</p>
           </div>
         </div>
       </div>

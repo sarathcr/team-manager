@@ -1,7 +1,10 @@
 import { Component, OnInit, HostListener } from '@angular/core'
+
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateService } from '@ngx-translate/core'
 
+import { Block, CriteriaWithSkills } from 'src/app/shared/constants/block.model'
+import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 
 @Component({
   selector: 'app-competency-modal-content',
@@ -15,6 +18,9 @@ export class CompetencyModalContentComponent implements OnInit {
   rowData: Array<object>
   leftContentHeight = ''
   contentHeight = ''
+  blocks: Block[]
+  currentBlockIndex = 0
+  checks: Array<{ parentId: number, count: number }> = []
 
   @HostListener('window:resize', ['$event'])
   onResize(event): void {
@@ -23,13 +29,15 @@ export class CompetencyModalContentComponent implements OnInit {
 
   constructor(
     public bsModalRef: BsModalRef,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private blockService: BlockEntityService
   ) { }
 
   ngOnInit(): void {
     this.adjustHeightContent()
     this.getTranslation()
     this.createFormConfig()
+    this.getBlocks(String(1))
     this.rowInit()
     this.gradeDropdown = {
       field: 'dropdown',
@@ -56,6 +64,12 @@ export class CompetencyModalContentComponent implements OnInit {
 
   onDropdownSelect(selectedData: any) {
 
+  }
+
+  getBlocks(gradeId) {
+    this.blockService.getWithQuery({ gradeId, subjectId: String(1) }).subscribe(data => {
+      this.blocks = data
+    })
   }
 
   getTranslation(){
@@ -85,7 +99,14 @@ export class CompetencyModalContentComponent implements OnInit {
     }
   }
 
-  rowInit(){
+  getCelldata(criteria: CriteriaWithSkills): Array<{ list: string }> {
+    return [
+      { list: criteria.name },
+      { list: criteria.basicSkills.join(', ') }
+    ]
+  }
+
+  rowInit(): void {
     this.rowHeadData = [
       {
         list: 'Criterio de evaluación'
@@ -94,40 +115,24 @@ export class CompetencyModalContentComponent implements OnInit {
         list: 'Competencias asociadas'
       }
     ]
-    this.rowData = [
-      {
-        list: 'Analizar los elementos y sistemas que configuran la comunicación alámbrica e inalámbrica.'
-      },
-      {
-        list: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica'
-      }
-    ]
   }
 
-  openTab(event, id: string){
-    let i
-    let tabcontent
-    let tablinks
+  changeCurrentBlock(id: number): void {
+    this.currentBlockIndex = id
+  }
 
-    tabcontent = document.getElementsByClassName('custom-tab__content')
-    for (i = 0 ; i < tabcontent.length; i++) {
-      tabcontent[i].classList.remove('active')
+  getStatus($event): void{
+    const parentId = $event.parentID
+    const parent = this.checks.find(check => check.parentId === parentId)
+    if (parent) {
+      parent.count = parent.count + ($event.checked ? 1 : -1)
     }
-
-    tablinks = document.getElementsByClassName('custom-tab__links')
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].classList.remove('active')
+    else {
+      this.checks.push({ parentId, count: 1 })
     }
-
-    document.getElementById(id).classList.add('active')
-    event.currentTarget.classList.add('active')
   }
 
-  getStatus($event){
-    console.log($event)
-  }
-
-  adjustHeightContent(){
+  adjustHeightContent(): void{
     const innerHeight: number = window.innerHeight
     this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
     this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
