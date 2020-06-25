@@ -12,6 +12,6 @@ export class ButtonComponent {
   @Input() disabled: boolean
   @Input() variant: ButtonVariants = 'contained'
 
-  constructor() { console.log(this.theme) }
+  constructor() {}
 
 }
