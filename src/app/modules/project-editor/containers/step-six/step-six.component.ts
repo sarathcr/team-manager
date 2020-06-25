@@ -1,10 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { Step, Status } from '../../constants/step.model'
-import { ButtonSubmitConfig } from '../../constants/form-config.data'
+
 import { Observable } from 'rxjs'
-import { FormSixInit, FormSix } from '../../constants/step-forms.model'
-import { FormSixInitData } from '../../constants/step-forms.data'
+
 import { EditorService } from '../../services/editor/editor.service'
+
+import { Step, Status } from '../../constants/step.model'
+import { FormSixInit, FormSix } from '../../constants/step-forms.model'
+
+import { ButtonSubmitConfig } from '../../constants/form-config.data'
+import { FormSixInitData } from '../../constants/step-forms.data'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
@@ -66,6 +71,62 @@ export class StepSixComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Function to trigger the value in the textarea
+  onValueChange(value: string): void {
+    this.creativeTitle = value
+    this.checkStatus()
+  }
+
+  onFileSelect(url: string): void {
+    this.creativeImage = url
+    this.checkStatus()
+  }
+
+  // Function to check status of step
+  checkStatus(): void {
+    if (!this.creativeTitle && !this.creativeImage) {
+      this.step.state = 'PENDING'
+    }
+    else {
+      this.step.state = 'INPROCESS'
+    }
+    this.handleButtonType()
+  }
+
+  // Function to check whether the form is updated
+  isFormUpdated(): boolean {
+    if (this.initialFormData.creativeTitle !== this.creativeTitle ||
+      this.initialFormData.creativeImage !== this.creativeImage ||
+      this.initialFormStatus !== this.step.state) {
+      return true
+    }
+    return false
+  }
+
+  // checks the form is completely filled or not
+  checkNonEmptyForm(): boolean {
+    if (this.creativeTitle && this.creativeImage) {
+      return true
+    }
+    return false
+  }
+
+  // Changes the button according to form status
+  handleButtonType(): void {
+    if (this.step.state === 'DONE') {
+      this.buttonConfig.submitted = true
+      this.buttonConfig.disabled = true
+    } else {
+      if (this.checkNonEmptyForm()) {
+        this.buttonConfig.disabled = false
+        this.buttonConfig.submitted = false
+      } else {
+        this.buttonConfig.disabled = true
+        this.buttonConfig.submitted = false
+      }
+    }
+  }
+
   // Handle submit functionality
   handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
@@ -88,62 +149,6 @@ export class StepSixComponent implements OnInit, OnDestroy {
     }
     this.initialFormData = formData.data
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
-  }
-
-  // Changes the button according to form status
-  handleButtonType(): void {
-    if (this.step.state === 'DONE') {
-      this.buttonConfig.submitted = true
-      this.buttonConfig.disabled = true
-    } else {
-      if (this.checkNonEmptyForm()) {
-        this.buttonConfig.disabled = false
-        this.buttonConfig.submitted = false
-      } else {
-        this.buttonConfig.disabled = true
-        this.buttonConfig.submitted = false
-      }
-    }
-  }
-
-  // Function to check status of step
-  checkStatus(): void {
-    if (!this.creativeTitle && !this.creativeImage) {
-      this.step.state = 'PENDING'
-    }
-    else {
-      this.step.state = 'INPROCESS'
-    }
-    this.handleButtonType()
-  }
-
-  // Function to trigger the value in the textarea
-  onValueChange(value: string): void {
-    this.creativeTitle = value
-    this.checkStatus()
-  }
-
-  onFileSelect(url: string): void {
-    this.creativeImage = url
-    this.checkStatus()
-  }
-
-  // Function to check whether the form is updated
-  isFormUpdated(): boolean {
-    if (this.initialFormData.creativeTitle !== this.creativeTitle ||
-      this.initialFormData.creativeImage !== this.creativeImage ||
-      this.initialFormStatus !== this.step.state) {
-      return true
-    }
-    return false
-  }
-
-  // checks the form is completely filled or not
-  checkNonEmptyForm(): boolean {
-    if (this.creativeTitle && this.creativeImage) {
-      return true
-    }
-    return false
   }
 
 }

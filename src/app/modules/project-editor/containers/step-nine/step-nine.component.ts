@@ -2,11 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 
 import { Observable } from 'rxjs'
 
+import { EditorService } from '../../services/editor/editor.service'
+
 import { Step, Status } from '../../constants/step.model'
 import { FormNineInit, FormNine } from '../../constants/step-forms.model'
+
 import { FormNineInitData } from '../../constants/step-forms.data'
 import { ButtonSubmitConfig } from '../../constants/form-config.data'
-import { EditorService } from '../../services/editor/editor.service'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
@@ -65,45 +68,6 @@ export class StepNineComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Handle submit functionality
-  handleSubmit(formStatus?: Status): void {
-    if (formStatus === 'DONE') {
-      this.step.state = formStatus
-    }
-    this.initialFormData = this.synopsis
-    this.handleButtonType()
-    const formData: FormNine = {
-      data: {
-        synopsis: this.synopsis
-      },
-      stepStatus: {
-        steps: [
-          {
-            state: this.step.state,
-            stepid: this.step.stepid
-          }
-        ]
-      }
-    }
-    this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
-  }
-
-  // Changes the button according to form status
-  handleButtonType(): void {
-    if (this.step.state === 'INPROCESS') {
-      this.buttonConfig.disabled = false
-      this.buttonConfig.submitted = false
-    }
-    if (this.step.state === 'PENDING') {
-      this.buttonConfig.disabled = true
-      this.buttonConfig.submitted = false
-    }
-    if (this.step.state === 'DONE') {
-      this.buttonConfig.submitted = true
-      this.buttonConfig.disabled = true
-    }
-  }
-
   // Function to check status of step
   checkStatus(): void {
     if (this.synopsis.length && this.synopsis !== this.initialFormData) {
@@ -127,6 +91,45 @@ export class StepNineComponent implements OnInit, OnDestroy {
       return true
     }
     return false
+  }
+
+  // Changes the button according to form status
+  handleButtonType(): void {
+    if (this.step.state === 'INPROCESS') {
+      this.buttonConfig.disabled = false
+      this.buttonConfig.submitted = false
+    }
+    if (this.step.state === 'PENDING') {
+      this.buttonConfig.disabled = true
+      this.buttonConfig.submitted = false
+    }
+    if (this.step.state === 'DONE') {
+      this.buttonConfig.submitted = true
+      this.buttonConfig.disabled = true
+    }
+  }
+
+  // Handle submit functionality
+  handleSubmit(formStatus?: Status): void {
+    if (formStatus === 'DONE') {
+      this.step.state = formStatus
+    }
+    this.initialFormData = this.synopsis
+    this.handleButtonType()
+    const formData: FormNine = {
+      data: {
+        synopsis: this.synopsis
+      },
+      stepStatus: {
+        steps: [
+          {
+            state: this.step.state,
+            stepid: this.step.stepid
+          }
+        ]
+      }
+    }
+    this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
   }
 
 }
