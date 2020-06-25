@@ -73,7 +73,7 @@
       <div class="competency-modal__body-criteria">
         <div id="custom-tab__content1" class="custom-tab__content active">
           <div class="custom-tab__content-body">
-            <app-table-row [isHead]="true" [checkbox]="{checked: false}" 
+            <app-table-row [isHead]="true" [checkbox]="false" 
               [colOne]="{value: tempHead.evaluationCriteria}"
               [colTwo]="{value: tempHead.associatedCompetences}">
             </app-table-row>
@@ -90,7 +90,7 @@
         </div>
         <div id="custom-tab__content2" class="custom-tab__content">
           <div class="custom-tab__content-body">
-            <app-table-row [isHead]="true" [checkbox]="{checked: false}" [colOne]="{value: tempHead.associatedCompetences}"
+            <app-table-row [isHead]="true" [checkbox]="false" [colOne]="{value: tempHead.associatedCompetences}"
               [colTwo]="{value: tempHead.evaluationCriteria}">
             </app-table-row>
             <ng-scrollbar>
@@ -172,7 +172,7 @@
       <div class="competency-modal__body_summary">
         <div id="custom-tab__content1" class="custom-tab__content active">
           <div class="custom-tab__content-body">
-            <app-table-row [isHead]="true" [checkbox]="{checked: false}" [colOne]="{value: tempHead.evaluationCriteria}"
+            <app-table-row [isHead]="true" [checkbox]="false" [colOne]="{value: tempHead.evaluationCriteria}"
               [colTwo]="{value: tempHead.course, size: 'xs'}" [colThree]="{value: tempHead.block, size: 's'}">
             </app-table-row>
             <ng-scrollbar>
