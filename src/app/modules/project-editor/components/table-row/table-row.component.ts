@@ -34,7 +34,9 @@ export class TableRowComponent implements OnInit {
   }
 
   onCheck(): void {
-    this.checkbox.checked = !this.checkbox.checked
+    if (this.checkbox) {
+      this.checkbox.checked = !this.checkbox.checked
+    }
   }
 }
 
