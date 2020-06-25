@@ -6,8 +6,8 @@
         <span>1. </span>Punto de partida
         <app-info-tooltip></app-info-tooltip>
       </h1>
-      <p 
-        class="project-form__description" 
+      <p
+        class="project-form__description"
         [innerHTML]="'STARTING_POINT.project_startingpoint_description' | translate"
       ></p>
       <app-dropdown [config]='countryDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
@@ -16,7 +16,12 @@
       <app-dropdown [config]='gradesDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
       <app-dropdown [config]='subjectsDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
     </div>
-    <app-button [config]='buttonConfig' (click)='handleSubmit("DONE")'>
+    <app-button
+      [disabled] = 'buttonConfig.disabled'
+      [theme] = "buttonConfig.submitted ? 'success':'primary'"
+      (click)='handleSubmit("DONE")'>
+      <span class="form-button__icon icon-ic_check"></span>
+      {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
     </app-button>
   </div>
 </div>

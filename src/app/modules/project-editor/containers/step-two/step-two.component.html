@@ -10,6 +10,12 @@
       <app-textarea-bullets [config]='textAreaConfig' (inputChange)="textAreaUpdate($event)" [options$]="themes$">
       </app-textarea-bullets>
     </div>
-    <app-button [config]='buttonConfig' (click)='handleSubmit("DONE")'></app-button>
+    <app-button
+      [disabled] = 'buttonConfig.disabled'
+      [theme] = "buttonConfig.submitted ? 'success':'primary'"
+      (click)='handleSubmit("DONE")'>
+      <span class="form-button__icon icon-ic_check"></span>
+      {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
+    </app-button>
   </div>
 </div>
