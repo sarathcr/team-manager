@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core'
+import { Component, OnInit, Input  } from '@angular/core'
 
 @Component({
   selector: 'app-table-row',
@@ -6,9 +6,8 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core'
   styleUrls: ['./table-row.component.scss']
 })
 export class TableRowComponent implements OnInit {
-  @Output() count = new EventEmitter<object>()
   @Input() isHead = false
-  @Input() checkbox: CheckBox
+  @Input() checkboxData: CheckBoxData
   @Input() parentID: number
   @Input() isLastRow = false
   @Input() colOne: TableColumn
@@ -34,8 +33,9 @@ export class TableRowComponent implements OnInit {
   }
 
   onCheck(): void {
-    this.checkbox.checked = !this.checkbox.checked
-    this.count.emit({ parentID: this.parentID, checked: this.checkbox.checked })
+    if (this.checkboxData) {
+      this.checkboxData.checked = !this.checkboxData.checked
+    }
   }
 }
 
@@ -45,6 +45,6 @@ export interface TableColumn {
   size?: 'xs' | 'm' | 's'
 }
 
-export interface CheckBox {
+export interface CheckBoxData {
   checked: boolean
 }

@@ -34,15 +34,13 @@
                 [ngClass]="{ active: this.currentBlockIndex === index }"
                 (click)="changeCurrentBlock(index)"
               >
-                <strong class="custom-tab__links-{{index}}">{{ index + 1 }}.&nbsp;</strong>
+                <strong class="custom-tab__links-{{index}}">{{ index + 1 }}. </strong>
                 <span class="custom-tab__links-label">{{ block.name }}</span>
-                <span *ngFor="let check of checks" class="d-flex ml-auto">
-                  <span *ngIf="check.parentId === block.id && check.count" class="d-flex ml-auto" >
+                  <span *ngIf="block.evaluationCriteria | checkCount" class="d-flex ml-auto" >
                     <strong class="custom-tab__links-selected">
-                      {{check.count}}
+                      {{ block.evaluationCriteria | checkCount }}
                     </strong>
-                    <span class="custom-tab__links-icon icon-ic_check"></span>
-                  </span>
+                  <span class="custom-tab__links-icon icon-ic_check"></span>
                 </span>
               </button>
             </div>
@@ -59,19 +57,19 @@
           <div class="custom-tab__content-body">
             <app-table-row
               [isHead]="true"
-              [checkbox]="false" 
+              [checkboxData]="false" 
               [colOne]="{value: tempHead.evaluationCriteria}"
+              [colTwo]="{value: tempHead[colTwo]}"
             >
             </app-table-row>
             <ng-scrollbar>
               <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
                 <app-table-row
                   *ngFor="let criteria of block.evaluationCriteria"
-                  [checkbox]="{checked: false}"
-                  [colOne]="criteria.name ? { value: criteria.name } : null"
-                  [colTwo]="criteria.dimensions ? { value: criteria.dimensions } : null"
+                  [checkboxData]="criteria"
+                  [colOne]="{ value: criteria.name }"
+                  [colTwo]="{ value: criteria[colTwo] }"
                   [parentID]="block.id"
-                  (count)="getStatus($event)"
                 ></app-table-row>
               </div>
             </ng-scrollbar>
@@ -85,7 +83,9 @@
   <ng-template #summary>
     <div class="competency-modal__body">
       <h6 class="competency-modal__body-title">
-        6 {{ 'OBJECTIVES.project_objectives_criteriawindow_critera_selected' | translate }}</h6>
+        ({{ blocks | checkCount }})
+        {{ 'OBJECTIVES.project_objectives_criteriawindow_critera_selected' | translate }}
+      </h6>
 
       <!-- View when No criteria is selected -->
       <div class="competency-modal__body-block_no-content d-flex align-items-center 
@@ -107,24 +107,23 @@
       </div>
 
       <!-- View with Criteria evaluation course and Block -->
-      <!-- <div class="competency-modal__body_summary">
+      <div class="competency-modal__body_summary">
         <div id="custom-tab__content1" class="custom-tab__content active">
           <div class="custom-tab__content-body">
-            <app-table-row [isHead]="true" [checkbox]="false" [colOne]="{value: tempHead.evaluationCriteria}"
+            <app-table-row [isHead]="true" [checkboxData]="false" [colOne]="{value: tempHead.evaluationCriteria}"
               [colTwo]="{value: tempHead.course, size: 'xs'}" [colThree]="{value: tempHead.block, size: 's'}">
             </app-table-row>
             <ng-scrollbar>
               <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
-                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}"
+                <app-table-row *ngFor="let item of tableData" [checkboxData]="{checked: false}"
                   [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.course, size: 'xs'}"
                   [colThree]="{value: item.block, size: 's'}" [parentID]="'custom-tab__content1'"
-                  (count)="getStatus($event)">
-                </app-table-row>
+                ></app-table-row>
               </div>
             </ng-scrollbar>
           </div>
         </div>
-      </div> -->
+      </div>
 
     </div>
   </ng-template>
@@ -133,7 +132,7 @@
     <div class="competency-modal__footer-btn-group">
       <div class="competency-modal__footer-btn-link" (click)="getSummary()" *ngIf="!isShow">
         {{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }}
-        (6)
+        ({{ blocks | checkCount }})
       </div>
       <button class="btn btn-primary competency-modal__footer-btn-submit">
         <span class="icon icon-ic_check"></span>

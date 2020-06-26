@@ -16,11 +16,13 @@
               [data]="subject"
               [subjectId]="subject.id"
               [criterias]="criterias"
-              [isLast]="last" (addCriteria)="addItem($event)"
+              [isLast]="last"
+              (addCriteria)="addItem($event)"
               (deleteCriteria)="removeItem($event)"
-              (openModal)="openModalWithComponent(subject.id)"
-              [project$]="editor.project$">
-            </app-details-selector>
+              [project$]="editor.project$"
+              [grades]="grades"
+              [selectedGrades]="project.grades"
+            ></app-details-selector>
             <div class="project-editor__goto-step">
               {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}
               <span class="project-editor__point" [routerLink]="'stepOne'">

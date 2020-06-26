@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators'
 import { ModalComponent } from '../modal/modal.component'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { PrincipalViewComponent } from '../principal-view/principal-view.component'
 
 @Component({
   selector: 'app-details-selector',
@@ -22,6 +23,8 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() i: number
   @Input() isLast = false
   @Input() project$: Observable<Project>
+  @Input() grades
+  @Input() selectedGrades
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() openModal: EventEmitter<any> = new EventEmitter()
   @Output() deleteCriteria: EventEmitter<any> = new EventEmitter()
@@ -66,11 +69,23 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
 
   addItem(id: number, init: boolean = false): void {
     this.addCriteria.emit({ id, init })
-    this.openModal.emit()
+    this.openModalWithComponent()
     this.getCount()
   }
 
   getCount(): void {
     this.count = this.criterias.filter(criteria => criteria === this.subjectId).length
+  }
+
+  openModalWithComponent(): void  {
+    // this.getEvaludationCriteria()
+    const initialState = {
+      grades: this.grades,
+      selectedGrades: this.selectedGrades.map(({ id, name }) => ({ id, name })),
+      subjectId: this.subjectId
+    }
+    this.bsModalRef = this.modalService.show(PrincipalViewComponent,
+      { class: 'competency-modal', initialState })
+    this.bsModalRef.content.closeBtnName = 'Close'
   }
 }

@@ -8,13 +8,14 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 import { Block, CriteriaWithSkills } from 'src/app/shared/constants/block.model'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-competency-modal-content',
-  templateUrl: './competency-modal-content.component.html',
-  styleUrls: ['./competency-modal-content.component.scss']
+  templateUrl: './principal-view.component.html',
+  styleUrls: ['./principal-view.component.scss']
 })
-export class CompetencyModalContentComponent implements OnInit, OnDestroy {
+export class PrincipalViewComponent implements OnInit, OnDestroy {
   gradeDropdownConfig: DropDownConfig
   rowHeadData: Array<object>
   rowData: Array<object>
@@ -35,6 +36,48 @@ export class CompetencyModalContentComponent implements OnInit, OnDestroy {
     dimension: 'Dimensiones'
   }
   subscriptions = new SubSink()
+  colTwo: string
+  tableData: TempData[] = [
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    },
+    {
+      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
+      + 'seguridad y uso responsable.',
+      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
+      course: '4º ESO',
+      block: '1. Tecnologías de la información y de la comunicación',
+      dimension: 'Món actual, Salut i equilibri personal'
+    }]
 
 
   @HostListener('window:resize', ['$event'])
@@ -56,10 +99,13 @@ export class CompetencyModalContentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.subjectId = null
     this.subscriptions.unsubscribe()
   }
 
-  onDropdownSelect(selectedData: any): void { }
+  onDropdownSelect(selectedData: any): void {
+    this.getBlocks()
+  }
 
   createFormConfig(): void {
     const selectedGrades = this.selectedGrades
@@ -83,10 +129,34 @@ export class CompetencyModalContentComponent implements OnInit, OnDestroy {
   }
 
   getBlocks(): void {
-    this.blockService.getWithQuery(
-      { gradeId: String(this.selectedGrades[0].id), subjectId: this.subjectId }
-    ).subscribe(data => {
-      this.blocks = data
+    this.subscriptions.unsubscribe()
+    this.subscriptions.sink = this.blockService.entities$
+    .pipe(map(data => {
+      const savedBlockData = data.find(blockData => blockData.id === `${this.selectedGrades[0].id}-${this.subjectId}`)
+      if (savedBlockData?.blockData) {
+        return savedBlockData.blockData
+      }
+    }))
+    .subscribe(data => {
+      if (!data?.length) {
+        this.blockService.getWithQuery(
+        { gradeId: String(this.selectedGrades[0].id), subjectId: this.subjectId }
+      )}
+      this.blocks = data && data.map(block => ({
+        ...block,
+        evaluationCriteria: [
+          ...block.evaluationCriteria.map(criteria => {
+            if (!this.colTwo) {
+              if (criteria.dimensions.length) {
+                this.colTwo = 'dimensions'
+              }
+              if (criteria.basicSkills.length) {
+                this.colTwo = 'basicSkills'
+              }
+            }
+            return { ...criteria, checked: false }
+          })]
+      }))
     })
   }
 
@@ -126,17 +196,6 @@ export class CompetencyModalContentComponent implements OnInit, OnDestroy {
     this.currentBlockIndex = id
   }
 
-  getStatus($event: { parentID: number, checked: number }): void{
-    const parentId = $event.parentID
-    const parent = this.checks.find(check => check.parentId === parentId)
-    if (parent) {
-      parent.count = parent.count + ($event.checked ? 1 : -1)
-    }
-    else {
-      this.checks.push({ parentId, count: 1 })
-    }
-  }
-
   adjustHeightContent(): void {
     const innerHeight: number = window.innerHeight
     this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
@@ -145,6 +204,10 @@ export class CompetencyModalContentComponent implements OnInit, OnDestroy {
 
   getSummary(): void {
     this.isShow = !this.isShow
+  }
+
+  checkCount(): any {
+    return criteria => criteria.checked === true
   }
 }
 

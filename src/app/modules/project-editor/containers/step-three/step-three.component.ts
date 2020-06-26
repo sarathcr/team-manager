@@ -11,7 +11,7 @@ import { EditorService } from '../../services/editor/editor.service'
 import { CompetencyObjectives, EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
 import { FormThreeInit, FormThree } from '../../constants/step-forms.model'
 import { FormThreeInitData } from '../../constants/step-forms.data'
-import { CompetencyModalContentComponent } from './../../components/competency-modal-content/competency-modal-content.component'
+import { PrincipalViewComponent } from '../../components/principal-view/principal-view.component'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { Project } from './../../constants/project.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
@@ -90,21 +90,10 @@ export class StepThreeComponent implements OnInit, OnDestroy {
           this.initialFormData.competencyObjectives = [...tempinitialFormData.competencyObjectives]
         })
 
-      this.evaluationCriteria$ = this.project$   // WIP
-        .pipe(
-          map(data => data?.evaluationCriteria)
-        )
-      this.subscriptions.sink = this.evaluationCriteria$
-        .subscribe(criterias => {
-          this.criterias = []
-          this.initialCriterias = []
-          if (criterias) {
-            criterias.forEach(criteria => {
-              this.criterias.push(criteria.subjectId)
-              this.initialCriterias.push(criteria.subjectId)
-            })
-          }
-        })
+      // this.evaluationCriteria$ = this.project$   // WIP
+      //   .pipe(
+      //     map(data => data?.evaluationCriteria)
+      //   )
     }
     if (this.step$) {
       this.subscriptions.sink = this.step$.subscribe(
@@ -311,15 +300,32 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     })
   }
 
-  openModalWithComponent(subjectId: number): void  {
-    const initialState = {
-      grades: this.grades,
-      selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name })),
-      subjectId
-    }
-    this.bsModalRef = this.modalService.show(CompetencyModalContentComponent,
-      { class: 'competency-modal', initialState })
-    this.bsModalRef.content.closeBtnName = 'Close'
+  getEvaludationCriteria(): void {
+    this.evaluationCriteria$ = this.project$.pipe(map(data => data?.evaluationCriteria))
+    this.subscriptions.sink = this.evaluationCriteria$
+      .subscribe(criterias => {
+        this.criterias = []
+        this.initialCriterias = []
+        if (criterias) {
+          criterias.forEach(criteria => {
+            this.criterias.push(criteria.subjectId)
+            this.initialCriterias.push(criteria.subjectId)
+          })
+        }
+      })
   }
+
+  // openModalWithComponent(subjectId: number): void  {
+  //   console.log(subjectId)
+  //   // this.getEvaludationCriteria()
+  //   const initialState = {
+  //     // grades: this.grades,
+  //     // selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name })),
+  //     subjectId
+  //   }
+  //   this.bsModalRef = this.modalService.show(PrincipalViewComponent,
+  //     { class: 'competency-modal', initialState })
+  //   this.bsModalRef.content.closeBtnName = 'Close'
+  // }
 }
 
