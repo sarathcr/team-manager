@@ -79,7 +79,7 @@
             </app-table-row>
             <ng-scrollbar>
               <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
-                <app-table-row *ngFor="let item of tempData" [checkbox]="true" [parentID]="'custom-tab__content1'"
+                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}" [parentID]="'custom-tab__content1'"
                   [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences}"
                   (count)="getStatus($event)">
                 </app-table-row>
@@ -95,7 +95,7 @@
             </app-table-row>
             <ng-scrollbar>
               <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
-                <app-table-row *ngFor="let item of tempData" [checkbox]="true" [parentID]="'custom-tab__content1'"
+                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}" [parentID]="'custom-tab__content1'"
                   [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences}"
                   (count)="getStatus($event)">
                 </app-table-row>
@@ -105,38 +105,92 @@
         </div>
         <div id="custom-tab__content3" class="custom-tab__content">
           <div class="custom-tab__content-body">
-            <h3>4</h3>
-            <p>London is the capital city of England.</p>
+            <app-table-row [isHead]="true" [checkbox]="false" [colOne]="{value: tempHead.associatedCompetences}"
+              [colTwo]="{value: tempHead.evaluationCriteria}">
+            </app-table-row>
+            <ng-scrollbar>
+              <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
+                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}" [parentID]="'custom-tab__content1'"
+                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences}"
+                  (count)="getStatus($event)">
+                </app-table-row>
+              </div>
+            </ng-scrollbar>
           </div>
         </div>
         <div id="custom-tab__content4" class="custom-tab__content">
           <div class="custom-tab__content-body">
-            <h3>4</h3>
-            <p>London is the capital city of England.</p>
+            <app-table-row [isHead]="true" [checkbox]="false" [colOne]="{value: tempHead.associatedCompetences}"
+              [colTwo]="{value: tempHead.evaluationCriteria}">
+            </app-table-row>
+            <ng-scrollbar>
+              <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
+                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}" [parentID]="'custom-tab__content1'"
+                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences}"
+                  (count)="getStatus($event)">
+                </app-table-row>
+              </div>
+            </ng-scrollbar>
           </div>
         </div>
         <div id="custom-tab__content5" class="custom-tab__content">
           <div class="custom-tab__content-body">
-            <h3>5</h3>
-            <p>London is the capital city of England.</p>
+            <app-table-row [isHead]="true" [checkbox]="false" [colOne]="{value: tempHead.associatedCompetences}"
+              [colTwo]="{value: tempHead.evaluationCriteria}">
+            </app-table-row>
+            <ng-scrollbar>
+              <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
+                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}" [parentID]="'custom-tab__content1'"
+                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences}"
+                  (count)="getStatus($event)">
+                </app-table-row>
+              </div>
+            </ng-scrollbar>
           </div>
         </div>
         <div id="custom-tab__content6" class="custom-tab__content">
           <div class="custom-tab__content-body">
-            <h3>6</h3>
-            <p>London is the capital city of England.</p>
+            <app-table-row [isHead]="true" [checkbox]="false" [colOne]="{value: tempHead.associatedCompetences}"
+              [colTwo]="{value: tempHead.evaluationCriteria}">
+            </app-table-row>
+            <ng-scrollbar>
+              <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
+                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}" [parentID]="'custom-tab__content1'"
+                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences}"
+                  (count)="getStatus($event)">
+                </app-table-row>
+              </div>
+            </ng-scrollbar>
           </div>
         </div>
         <div id="custom-tab__content7" class="custom-tab__content">
           <div class="custom-tab__content-body">
-            <h3>7</h3>
-            <p>London is the capital city of England.</p>
+            <app-table-row [isHead]="true" [checkbox]="false" [colOne]="{value: tempHead.associatedCompetences}"
+              [colTwo]="{value: tempHead.evaluationCriteria}">
+            </app-table-row>
+            <ng-scrollbar>
+              <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
+                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}" [parentID]="'custom-tab__content1'"
+                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences}"
+                  (count)="getStatus($event)">
+                </app-table-row>
+              </div>
+            </ng-scrollbar>
           </div>
         </div>
         <div id="custom-tab__content8" class="custom-tab__content">
           <div class="custom-tab__content-body">
-            <h3>8</h3>
-            <p>London is the capital city of England.</p>
+            <app-table-row [isHead]="true" [checkbox]="false" [colOne]="{value: tempHead.associatedCompetences}"
+              [colTwo]="{value: tempHead.evaluationCriteria}">
+            </app-table-row>
+            <ng-scrollbar>
+              <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
+                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}" [parentID]="'custom-tab__content1'"
+                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences}"
+                  (count)="getStatus($event)">
+                </app-table-row>
+              </div>
+            </ng-scrollbar>
           </div>
         </div>
       </div>
