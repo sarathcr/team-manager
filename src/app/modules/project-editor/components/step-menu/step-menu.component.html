@@ -1,16 +1,15 @@
-<div class="menu"
-  [ngClass]="{
+<div class="menu" [ngClass]="{
     'menu_inprocess' : this.step.state === 'INPROCESS',
-    'menu_done': this.step.state == 'DONE'
-  }"
-  [routerLink]="[this.step.stepid]"
-  [routerLinkActive]="['menu_active']"
->
-  <span class="menu__step" *ngIf="this.step.state === 'DONE'">
-    <span class="icon icon-ic_check"></span>
-  </span>
-  <span class="menu__step" *ngIf="this.step.state !== 'DONE'">
-    {{this.step.stepid}}.
-  </span>
+    'menu_done': this.step.state == 'DONE'}" [routerLink]="[this.step.stepid]" [routerLinkActive]="['menu_active']">
+  <div class="menu__wrapper" *ngIf="this.step.state === 'DONE'">
+    <span class="menu__step">
+      <span class="icon icon-ic_check"></span>
+    </span>
+  </div>
+  <div class="menu__wrapper" *ngIf="this.step.state !== 'DONE'">
+    <span class="menu__step">
+      {{this.step.stepid}}.
+    </span>
+  </div>
   {{this.step.name}}
 </div>
