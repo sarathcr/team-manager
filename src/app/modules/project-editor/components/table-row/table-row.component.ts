@@ -14,7 +14,6 @@ export class TableRowComponent implements OnInit {
   @Input() colTwo: TableColumn
   @Input() colThree: TableColumn
   @Input() colFour: TableColumn
-  // @Input() block: TableColumn
 
   colCount: number
 
@@ -46,5 +45,6 @@ export interface TableColumn {
 }
 
 export interface CheckBox {
-  checked: boolean
+  checked: boolean,
+  variant?: 'checkedOnly' | 'checkbox'
 }
