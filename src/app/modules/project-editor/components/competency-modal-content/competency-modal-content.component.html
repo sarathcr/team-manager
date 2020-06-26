@@ -231,7 +231,7 @@
             </app-table-row>
             <ng-scrollbar>
               <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
-                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}"
+                <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false, variant: 'checkedOnly'}"
                   [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.course, size: 'xs'}"
                   [colThree]="{value: item.block, size: 's'}" [parentID]="'custom-tab__content1'"
                   (count)="getStatus($event)">
