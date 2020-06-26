@@ -11,7 +11,12 @@
             <app-textarea placeholder="{{'FINAL_PRODUCT.project_finalproduct_placeholder' | translate }}"
                 [(value)]="finalProduct" maxlength="500" (inputChange)="onValueChange($event)"></app-textarea>
         </div>
-        <app-button [config]='buttonConfig' (click)='handleSubmit("DONE")'>
+        <app-button
+          [disabled] = 'buttonConfig.disabled'
+          [theme] = "buttonConfig.submitted ? 'success':'primary'"
+          (click)='handleSubmit("DONE")'>
+          <span class="form-button__icon icon-ic_check"></span>
+          {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
         </app-button>
     </div>
 </div>

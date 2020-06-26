@@ -147,13 +147,14 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
         evaluationCriteria: [
           ...block.evaluationCriteria.map(criteria => {
             if (!this.colTwo) {
-              if (criteria.dimensions.length) {
+              if (criteria.dimensions.length !== 0) {
                 this.colTwo = 'dimensions'
               }
-              if (criteria.basicSkills.length) {
+              if (criteria.basicSkills.length !== 0) {
                 this.colTwo = 'basicSkills'
               }
             }
+            console.log(this.colTwo, criteria)
             return { ...criteria, checked: false }
           })]
       }))
