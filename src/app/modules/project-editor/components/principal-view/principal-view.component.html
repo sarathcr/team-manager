@@ -59,7 +59,7 @@
               [isHead]="true"
               [checkboxData]="false" 
               [colOne]="{value: tempHead.evaluationCriteria}"
-              [colTwo]="{value: tempHead[colTwo]}"
+              [colTwo]="{value: block.colTwoHead }"
             >
             </app-table-row>
             <ng-scrollbar>
@@ -68,7 +68,7 @@
                   *ngFor="let criteria of block.evaluationCriteria"
                   [checkboxData]="criteria"
                   [colOne]="{ value: criteria.name }"
-                  [colTwo]="{ value: criteria[colTwo] }"
+                  [colTwo]="{ value: criteria.colTwoData }"
                   [parentID]="block.id"
                 ></app-table-row>
               </div>

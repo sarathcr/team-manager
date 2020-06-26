@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
-import { Block, CriteriaWithSkills } from 'src/app/shared/constants/block.model'
+import { Block, CriteriaWithSkills, BlockDisplay } from 'src/app/shared/constants/block.model'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 import { map } from 'rxjs/operators'
 
@@ -23,7 +23,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   selectedGrades: Option[]
   leftContentHeight = ''
   contentHeight = ''
-  blocks: Block[]
+  blocks: BlockDisplay[]
   currentBlockIndex = 0
   checks: Array<{ parentId: number, count: number }> = []
   subjectId
@@ -36,7 +36,6 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     dimension: 'Dimensiones'
   }
   subscriptions = new SubSink()
-  colTwo: string
   tableData: TempData[] = [
     {
       evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
@@ -142,22 +141,33 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
         this.blockService.getWithQuery(
         { gradeId: String(this.selectedGrades[0].id), subjectId: this.subjectId }
       )}
-      this.blocks = data && data.map(block => ({
-        ...block,
-        evaluationCriteria: [
-          ...block.evaluationCriteria.map(criteria => {
-            if (!this.colTwo) {
-              if (criteria.dimensions.length !== 0) {
-                this.colTwo = 'dimensions'
+      this.blocks = data && data.map(block => {
+        let colTwoHead: string
+        return {
+          ...block,
+          evaluationCriteria: [
+            ...block.evaluationCriteria.map(criteria => {
+              let colTwoData: string
+              if (!colTwoHead) {
+                if (criteria.dimensions.length) {
+                  colTwoHead = 'Dimensions'
+                }
+                else if (criteria.basicSkills.length) {
+                  colTwoHead = 'Basic Skills'
+                }
               }
-              if (criteria.basicSkills.length !== 0) {
-                this.colTwo = 'basicSkills'
+              if (criteria.dimensions.length) {
+                colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
               }
-            }
-            console.log(this.colTwo, criteria)
-            return { ...criteria, checked: false }
-          })]
-      }))
+              else if (criteria.basicSkills.length) {
+                colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
+              }
+              return { ...criteria, checked: false, colTwoData }
+            })
+          ],
+          colTwoHead
+        }
+      })
     })
   }
 
