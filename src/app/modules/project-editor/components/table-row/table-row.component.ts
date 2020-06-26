@@ -10,7 +10,6 @@ export class TableRowComponent implements OnInit {
   @Input() isHead = false
   @Input() checkbox: CheckBox
   @Input() parentID = ''
-  @Input() isLastRow = false
   @Input() colOne: TableColumn
   @Input() colTwo: TableColumn
   @Input() colThree: TableColumn

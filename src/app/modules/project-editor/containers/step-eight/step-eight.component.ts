@@ -1,11 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 
 import { Observable } from 'rxjs'
-import { Step, Status } from '../../constants/step.model'
-import { ButtonSubmitConfig } from '../../constants/form-config.data'
-import { FormEightInit, FormEight } from '../../constants/step-forms.model'
-import { FormEightInitData } from '../../constants/step-forms.data'
+
 import { EditorService } from '../../services/editor/editor.service'
+
+import { Step, Status } from '../../constants/step.model'
+import { FormEightInit, FormEight } from '../../constants/step-forms.model'
+
+import { ButtonSubmitConfig } from '../../constants/form-config.data'
+import { FormEightInitData } from '../../constants/step-forms.data'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
@@ -78,6 +82,20 @@ export class StepEightComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
+  // Function to trigger the value in the textarea
+  onValueChange(value: string): void {
+    this.finalProduct = value
+    this.checkStatus()
+  }
+
+  // Function to check whether the form is updated
+  isFormUpdated(): boolean {
+    if (this.initialFormData !== this.finalProduct || this.initialFormStatus !== this.step.state) {
+      return true
+    }
+    return false
+  }
+
   // Changes the button according to form status
   handleButtonType(): void {
     if (this.step.state === 'INPROCESS') {
@@ -92,12 +110,6 @@ export class StepEightComponent implements OnInit, OnDestroy {
       this.buttonConfig.submitted = true
       this.buttonConfig.disabled = true
     }
-  }
-
-  // Function to trigger the value in the textarea
-  onValueChange(value: string): void {
-    this.finalProduct = value
-    this.checkStatus()
   }
 
   // Handle submit functionality
@@ -123,14 +135,4 @@ export class StepEightComponent implements OnInit, OnDestroy {
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
   }
 
-  // Function to check whether the form is updated
-  isFormUpdated(): boolean {
-    if (this.initialFormData !== this.finalProduct || this.initialFormStatus !== this.step.state) {
-      return true
-    }
-    return false
-  }
-
 }
-
-
