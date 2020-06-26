@@ -29,8 +29,8 @@ export class EditorService {
   nextStepId: statusId
   isStepDone: boolean
   currentStep$: BehaviorSubject<number> = new BehaviorSubject(1)
-  loading: boolean
   loading$: Observable<boolean>
+  loaded$: BehaviorSubject<boolean> = new BehaviorSubject(false)
   subscriptions = new SubSink()
 
   constructor(
@@ -61,8 +61,10 @@ export class EditorService {
       })
     }
     this.loading$ = this.projectsService.loading$
-    this.subscriptions.sink = this.loading$.subscribe(res => {
-      this.loading = res
+    this.subscriptions.sink = this.loading$.subscribe(loading => {
+      if (!loading) {
+        this.loaded$.next(true)
+      }
     })
   }
 
