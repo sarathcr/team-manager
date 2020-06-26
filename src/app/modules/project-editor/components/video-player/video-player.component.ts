@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy, ElementRef, ViewChild, Input } from '@angular/core';
-import videojs from 'video.js';
-import '@devmobiliza/videojs-vimeo/dist/videojs-vimeo.cjs';
-import 'videojs-youtube';
-import { VideoOptions } from 'src/app/shared/constants/video.model';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, ElementRef, ViewChild, Input } from '@angular/core'
+import videojs from 'video.js'
+import '@devmobiliza/videojs-vimeo/dist/videojs-vimeo.cjs'
+import 'videojs-youtube'
+import { VideoOptions } from 'src/app/shared/constants/video.model'
 
 @Component({
   selector: 'app-video-player',
@@ -11,20 +11,23 @@ import { VideoOptions } from 'src/app/shared/constants/video.model';
   encapsulation: ViewEncapsulation.None,
 })
 export class VideoPlayerComponent implements OnInit, OnDestroy {
-  player: videojs.Player;
-  @ViewChild('target', {static: true}) target: ElementRef;
+  player: videojs.Player
+  @ViewChild('target', {static: true}) target: ElementRef
   @Input() videoOptions: VideoOptions
 
-  constructor( private elementRef: ElementRef,) { }
+  constructor( private elementRef: ElementRef) { }
 
   ngOnInit(): void {
-    this.player = videojs(this.target.nativeElement, this.videoOptions, function onPlayerReady() {});
+    this.initPlayer()
   }
 
-  ngOnDestroy() {
+  initPlayer(): void{
+    this.player = videojs(this.target.nativeElement, this.videoOptions, function onPlayerReady(): void {})
+  }
 
+  ngOnDestroy(): void {
     if (this.player) {
-      this.player.dispose(); // destroy player
+      this.player.dispose() // destroy player
     }
   }
 }

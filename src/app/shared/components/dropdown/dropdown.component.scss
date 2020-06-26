@@ -5,13 +5,6 @@
   width: 100%;
   margin-bottom: $m-36px;
 
-  &__wrap {
-    position: relative;
-    font-family: $font-family-pt-sans;
-    color: $primary-font-color;
-    background-color: $creator-background;
-  }
-
   &__field {
     padding: $padding-input;
     font-size: $font-size-default;
@@ -24,6 +17,7 @@
     border-radius: 3px;
     z-index: 1;
     box-shadow: 0 0 0 0 transparent;
+
     &:active,
     &:focus {
       border: 1px solid $primary;
@@ -43,7 +37,8 @@
     background-color: inherit;
     left: $padding-m;
     z-index: 2;
-    &::first-letter{
+
+    &::first-letter {
       text-transform: uppercase;
     }
   }
@@ -221,14 +216,50 @@
           }
         }
       }
-
+      .priority-title,.normal-title{
+          font-family: $font-family-tertiary;
+          font-size: 12px;
+          font-weight: bold;
+          letter-spacing: 0;
+          line-height: 24px;
+          padding: 10px 18px 0px;
+      }
       .no-data {
         height: 100px;
         width: 100%;
+        position: absolute;
+        top: 0;
+        background-color: $white;
         h5 {
+          text-indent: -999999999px;
           color: transparent;
           @extend .spinner;
           @extend .spinner_medium;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  & &__wrap {
+    position: relative;
+    font-family: $font-family-pt-sans;
+    color: $primary-font-color;
+    background-color: $creator-background;
+    &.dropdown_single-select{
+      .multiselect-item-checkbox{
+        input[type=checkbox] + div{
+          padding-left: 4px !important;
+          &::before,&::after{
+            content: none !important;
+          }
+        }
+        input[type=checkbox]:checked + div{
+          &::after{
+            position: relative !important;
+            margin: 0 !important;
+            margin-left:5px;
+          }
         }
       }
     }

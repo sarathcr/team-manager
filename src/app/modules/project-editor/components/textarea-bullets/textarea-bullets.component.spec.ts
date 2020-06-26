@@ -1,25 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { TextareaBulletsComponent } from './textarea-bullets.component';
+import { NgScrollbar } from 'ngx-scrollbar'
 
-describe('TextareaWithBulletsComponent', () => {
-  let component: TextareaBulletsComponent;
-  let fixture: ComponentFixture<TextareaBulletsComponent>;
+import { TextareaBulletsComponent } from './textarea-bullets.component'
 
-  beforeEach(async(() => {
+describe('TextareaWithBulletsComponent', (): void => {
+  let component: TextareaBulletsComponent
+  let fixture: ComponentFixture<TextareaBulletsComponent>
+
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ TextareaBulletsComponent ]
+      declarations: [ TextareaBulletsComponent, NgScrollbar ]
     })
-    .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TextareaBulletsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(TextareaBulletsComponent)
+    component = fixture.componentInstance
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})

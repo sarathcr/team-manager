@@ -3,7 +3,7 @@
     'menu_inprocess' : this.step.state === 'INPROCESS',
     'menu_done': this.step.state == 'DONE'
   }"
-  [routerLink]="[this.step.sectionid]"
+  [routerLink]="[this.step.stepid]"
   [routerLinkActive]="['menu_active']"
 >
   <span class="menu__step" *ngIf="this.step.state === 'DONE'">

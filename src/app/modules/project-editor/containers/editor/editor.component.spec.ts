@@ -18,28 +18,30 @@ import { ButtonComponent } from 'src/app/shared/components/button/button.compone
 
 import { EditorService } from '../../services/editor/editor.service'
 import { TranslateModule } from '@ngx-translate/core'
-import { HelpEntityService } from '../../services/help/help-entity.service'
+import { HelpEntityService } from '../../store/entity/help/help-entity.service'
 
 class ActivatedRouteStub {
   private id: number | 'create'
-  
+
   changeId(id: number | 'create'): void {
     this.id = id
   }
 
-  get snapshot() {
-    return {paramMap: {
-      get: () => this.id
-    }}
+  get snapshot(): object {
+    return {
+      paramMap: {
+        get: () => this.id
+      }
+    }
   }
 }
 
 class EditorServiceStub {
-  getProject() { }
-  clearData() { }
-  createSteps() { }
-  getStepData() { }
-  getStepStatus() { }
+  getProject(): void { }
+  clearData(): void { }
+  createSteps(): void { }
+  getStepData(): void { }
+  getStepStatus(): void { }
 }
 
 class HelpEntityServiceStub { }
@@ -47,7 +49,7 @@ class HelpEntityServiceStub { }
 describe('EditorComponent', (): void => {
   let component: EditorComponent
   let fixture: ComponentFixture<EditorComponent>
-  let route: ActivatedRouteStub
+  let route
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
@@ -93,10 +95,10 @@ describe('EditorComponent', (): void => {
   })
 
   it('should get project from url', (): void => {
-    const editor: EditorService = TestBed.get(EditorService)
+    const editor: EditorService = TestBed.inject(EditorService)
     const project = spyOn(editor, 'getProject')
 
-    route = TestBed.get(ActivatedRoute)
+    route = TestBed.inject(ActivatedRoute)
     route.changeId(1)
 
     fixture.detectChanges()
@@ -105,10 +107,10 @@ describe('EditorComponent', (): void => {
   })
 
   it(`should get project from url if route param id is 'create'`, (): void => {
-    const editor = TestBed.get(EditorService)
+    const editor = TestBed.inject(EditorService)
     const project = spyOn(editor, 'getProject')
     const create = 'create'
-    route = TestBed.get(ActivatedRoute)
+    route = TestBed.inject(ActivatedRoute)
     route.changeId(create)
 
     fixture.detectChanges()
@@ -117,7 +119,7 @@ describe('EditorComponent', (): void => {
   })
 
   it('should execute clearData method of editor service on destroy', (): void => {
-    const editor: EditorService = TestBed.get(EditorService)
+    const editor: EditorService = TestBed.inject(EditorService)
     const clearData = spyOn(editor, 'clearData')
 
     fixture.destroy()

@@ -14,7 +14,7 @@ export class EditorHeaderComponent {
 
   constructor() { }
 
-  handleTitleBlur(event: Event) {
-   this.titleBlur.emit(event)
+  handleTitleBlur(event: Event): void {
+    this.titleBlur.emit(event)
   }
 }

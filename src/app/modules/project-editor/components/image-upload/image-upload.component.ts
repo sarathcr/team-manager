@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
-import { AwsImgUploadService } from '../../services/aws-img-upload/aws-img-upload.service';
+import { Component, Input, ViewEncapsulation, EventEmitter, Output, OnDestroy } from '@angular/core'
+
+import { AwsImgUploadService } from '../../services/aws-img-upload/aws-img-upload.service'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-image-upload',
@@ -7,48 +9,51 @@ import { AwsImgUploadService } from '../../services/aws-img-upload/aws-img-uploa
   styleUrls: ['./image-upload.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ImageUploadComponent implements OnInit {
+export class ImageUploadComponent implements OnDestroy {
 
   @Input() maxFileSize: number
   @Input() acceptedType: string
   @Input() label: string
   @Input() imageURL: string | ArrayBuffer
-  @Output() onFileSelect = new EventEmitter()
-  files: File[] = [];
+  @Output() fileSelect = new EventEmitter()
+  files: File[] = []
   loading = false
+  subscriptions = new SubSink()
 
   constructor(private aws: AwsImgUploadService) { }
 
-  ngOnInit(): void {
-
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
   }
 
-  toBase64(file: File) {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
+  toBase64(file: File): void {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
     reader.onload = () => {
       this.imageURL = reader.result
     }
   }
 
-  onSelect(event) {
+  onSelect(event: any): void {
     if (!this.files.length) {
       this.files = [...event.addedFiles]
       if (this.files.length) {
         const file = this.files[0]
         this.toBase64(file)
         const mimeType = file.type
-        this.loading = true;
-        this.aws.getPreSignedUrl(mimeType, `${new Date().getTime()}-${file.name}`)
+        this.loading = true
+        this.subscriptions.sink = this.aws.getPreSignedUrl(mimeType, `${new Date().getTime()}-${file.name}`)
           .subscribe(data => {
-            if (data) this.aws.uploadImage(data.uploadURL, file)
-              .subscribe(() => {
-                this.onFileSelect.emit(data.publicURL)
-                this.loading = false;
-              },
-                err => {
-                  this.handleServerError(err)
-                })
+            if (data) {
+              this.subscriptions.sink = this.aws.uploadImage(data.uploadURL, file)
+                .subscribe(() => {
+                  this.fileSelect.emit(data.publicURL)
+                  this.loading = false
+                },
+                  err => {
+                    this.handleServerError(err)
+                  })
+            }
           },
             err => {
               this.handleServerError(err)
@@ -57,14 +62,14 @@ export class ImageUploadComponent implements OnInit {
     }
   }
 
-  onRemove(event) {
+  onRemove(event: any): void {
     event.stopPropagation()
     this.imageURL = ''
-    this.files = [];
-    this.onFileSelect.emit('')
+    this.files = []
+    this.fileSelect.emit('')
   }
 
-  handleServerError(error) {
+  handleServerError(error: any): void {
     this.imageURL = ''
     this.loading = false
   }

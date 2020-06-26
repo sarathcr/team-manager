@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { VideoOptions } from 'src/app/shared/constants/video.model';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core'
+import { BsModalRef } from 'ngx-bootstrap/modal'
+import { VideoOptions } from 'src/app/shared/constants/video.model'
 
 @Component({
   selector: 'app-help-modal',
@@ -17,22 +17,22 @@ export class HelpModalContentComponent implements OnInit {
   videoOptions: VideoOptions
   constructor(public bsModalRef: BsModalRef) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.videoInit()
   }
 
-  videoInit(){
-    if(this.video){
+  videoInit(): void{
+    if (this.video){
       this.videoOptions = {
         fluid: true,
         autoplay: true,
         controls: true,
-        techOrder: ["html5","youtube","vimeo"],
+        techOrder: ['html5', 'youtube', 'vimeo'],
         sources: [{
           src: this.videoSources.src,
           type: this.videoSources.type,
         }],
-        aspectRatio: "16:9",
+        aspectRatio: '16:9',
         muted: false,
         youtube: {
           iv_load_policy: 3,

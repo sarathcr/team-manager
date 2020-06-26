@@ -1,28 +1,36 @@
-import { FormOneInitData, FormTwoInitData, FormSevenInitData, FormEightInitData, FormNineInitData, FormSixInitData, FormThreeInitData } from './step-forms.model'
+import {
+  FormOneInit,
+  FormTwoInit,
+  FormSevenInit,
+  FormEightInit,
+  FormNineInit,
+  FormSixInit,
+  FormThreeInit
+} from './step-forms.model'
 
-export class formOneInitData implements FormOneInitData {
-  country = [];
-  region = [];
-  academicYear = [];
-  grades = [];
-  subjects = [];
-  finalProduct = [];
+export class FormOneInitData implements FormOneInit {
+  country = []
+  region = []
+  academicYear = []
+  grades = []
+  subjects = []
+  finalProduct = []
 }
-export class formSevenInitData implements FormSevenInitData {
+export class FormSevenInitData implements FormSevenInit {
   drivingQuestions = []
 }
-export class formTwoInitData implements FormTwoInitData {
+export class FormTwoInitData implements FormTwoInit {
   themes = []
 }
-export class formThreeInitData implements FormThreeInitData {
+export class FormThreeInitData implements FormThreeInit {
   competencyObjectives = []
 }
 
-export class formSixInitData implements FormSixInitData {
+export class FormSixInitData implements FormSixInit {
   creativeTitle = ''
   creativeImage = ''
 }
 
-export const formEightInitData: FormEightInitData = ''
+export const FormEightInitData: FormEightInit = ''
 
-export const formNineInitData: FormNineInitData = ''
+export const FormNineInitData: FormNineInit = ''

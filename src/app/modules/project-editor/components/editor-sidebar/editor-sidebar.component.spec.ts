@@ -9,7 +9,7 @@ import { StepMenuComponent } from '../step-menu/step-menu.component'
 describe('EditorSidebarComponent', (): void => {
   let component: EditorSidebarComponent
   let fixture: ComponentFixture<EditorSidebarComponent>
-  
+
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [
@@ -55,15 +55,25 @@ describe('EditorSidebarComponent', (): void => {
   })
 
   it('should repeatly render step menu directives as number of steps', (): void => {
-    const steps = { one: { value: 'step1' }, two: { value: 'step2' } }
+    const steps = [
+      { stepid: 1, state: 'PENDING', name: '' },
+      { stepid: 2, state: 'PENDING', name: '' },
+      { stepid: 3, state: 'PENDING', name: '' },
+      { stepid: 4, state: 'PENDING', name: '' },
+      { stepid: 5, state: 'PENDING', name: '' },
+      { stepid: 6, state: 'PENDING', name: '' },
+      { stepid: 7, state: 'PENDING', name: '' },
+      { stepid: 8, state: 'PENDING', name: '' },
+      { stepid: 9, state: 'PENDING', name: '' },
+      { stepid: 10, state: 'PENDING', name: '' }
+    ]
     component.steps = steps
 
     fixture.detectChanges()
-    
+
     const debugStepMenuElement: DebugElement[] = fixture
                                                   .debugElement
                                                   .queryAll(By.directive(StepMenuComponent))
-
-    expect(debugStepMenuElement.length).toBe(Object.keys(steps).length)
+    expect(debugStepMenuElement.length).toBe(steps.length)
   })
 })

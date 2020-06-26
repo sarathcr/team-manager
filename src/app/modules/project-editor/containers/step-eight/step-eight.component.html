@@ -2,15 +2,21 @@
     <app-status [status]='step.state'></app-status>
     <div class="project-form d-flex flex-column justify-content-between">
         <div>
-            <h1 class="title_s"><span>8. </span>{{'FINAL_PRODUCT.project_finalproduct_title' | translate}}
+            <h1 class="project-form__title title_s">
+                <span class="project-form__title-number">8.</span>{{'FINAL_PRODUCT.project_finalproduct_title' | translate}}
                 <app-info-tooltip></app-info-tooltip>
             </h1>
             <p class="project-form__description"
                 [innerHTML]="'FINAL_PRODUCT.project_finalproduct_description' | translate"></p>
             <app-textarea placeholder="{{'FINAL_PRODUCT.project_finalproduct_placeholder' | translate }}"
-                [(value)]="finalProduct" maxlength="500" (onChange)="onValueChange($event)"></app-textarea>
+                [(value)]="finalProduct" maxlength="500" (inputChange)="onValueChange($event)"></app-textarea>
         </div>
-        <app-button [config]='buttonConfig' (click)='handleSubmit("DONE")'>
+        <app-button
+          [disabled] = 'buttonConfig.disabled'
+          [theme] = "buttonConfig.submitted ? 'success':'primary'"
+          (click)='handleSubmit("DONE")'>
+          <span class="form-button__icon icon-ic_check"></span>
+          {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
         </app-button>
     </div>
 </div>

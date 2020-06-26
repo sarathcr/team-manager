@@ -29,9 +29,9 @@ describe('EditorHeaderComponent', (): void => {
     const logoDebugElement: DebugElement = fixture
                                             .debugElement
                                             .query(By.css('.app-logo__img'))
-    const logoSrc: string = logoDebugElement.attributes['src']
+    const logoSrc: string = logoDebugElement.attributes.src
 
-    expect(logoSrc).toBeDefined()    
+    expect(logoSrc).toBeDefined()
   })
 
   it('should have a logo with wrapper link to root page', (): void => {
@@ -40,7 +40,7 @@ describe('EditorHeaderComponent', (): void => {
                                             .query(By.css('.app-logo__img'))
     const logoWrapper: DebugElement = logoDebugElement.parent
 
-    expect(logoWrapper.attributes['routerLink']).toBe('/') 
+    expect(logoWrapper.attributes.routerLink).toBe('/')
   })
 
   it('should have project title directive', (): void => {

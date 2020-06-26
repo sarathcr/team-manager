@@ -1,25 +1,43 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { ContextualHelpComponent } from './contextual-help.component';
+import { TabsModule } from 'ngx-bootstrap/tabs'
+import { TranslateModule } from '@ngx-translate/core'
 
-describe('ContextualHelpComponent', () => {
-  let component: ContextualHelpComponent;
-  let fixture: ComponentFixture<ContextualHelpComponent>;
+import { ContextualHelpComponent } from './contextual-help.component'
 
-  beforeEach(async(() => {
+import { EditorService } from '../../services/editor/editor.service'
+import { HelpEntityService } from '../../store/entity/help/help-entity.service'
+
+class EditorServiceStub {
+  getProject(): void { }
+  clearData(): void { }
+  createSteps(): void { }
+  getStepData(): void { }
+  getStepStatus(): void { }
+}
+
+class HelpEntityServiceStub { }
+
+
+describe('ContextualHelpComponent', (): void => {
+  let component: ContextualHelpComponent
+  let fixture: ComponentFixture<ContextualHelpComponent>
+
+  beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ ContextualHelpComponent ]
+      declarations: [ ContextualHelpComponent ],
+      providers: [
+        { provide: EditorService, useClass: EditorServiceStub },
+        { provide: HelpEntityService, useClass: HelpEntityServiceStub }
+      ],
+      imports: [ TranslateModule.forRoot(), TabsModule.forRoot() ]
     })
-    .compileComponents();
-  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ContextualHelpComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(ContextualHelpComponent)
+    component = fixture.componentInstance
+  })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  it('should create', (): void => {
+    expect(component).toBeTruthy()
+  })
+})

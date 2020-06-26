@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { EditorService } from '../../services/editor/editor.service';
+import { Component, OnInit } from '@angular/core'
+import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
   selector: 'app-step-four',
@@ -14,8 +14,8 @@ export class StepFourComponent implements OnInit {
     this.formInit()
   }
 
-  formInit() {
-    this.editor.getStepData('stepFour')
+  formInit(): void {
+    this.editor.getStepData(4)
   }
 
 }

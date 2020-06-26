@@ -1,39 +1,53 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
+
 import { Observable } from 'rxjs'
-import { Step, Status } from '../../constants/step.model'
-import { FieldConfig } from 'src/app/shared/constants/field.model'
-import { EditorService } from '../../services/editor/editor.service'
-import { TranslateService } from '@ngx-translate/core'
-import { Subject } from 'src/app/shared/constants/subject.model'
-import { FormThreeInitData, FormThree } from '../../constants/step-forms.model'
-import { formThreeInitData } from '../../constants/step-forms.data'
-import { CompetencyObjectives, EvaluationCriteria } from 'src/app/shared/constants/project.model'
 import { map } from 'rxjs/operators'
+import { TranslateService } from '@ngx-translate/core'
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+
+import { Step, Status } from '../../constants/step.model'
+import { FieldConfig, Option } from 'src/app/shared/constants/field.model'
+import { EditorService } from '../../services/editor/editor.service'
+import { CompetencyObjectives, EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
+import { FormThreeInit, FormThree } from '../../constants/step-forms.model'
+import { FormThreeInitData } from '../../constants/step-forms.data'
+import { CompetencyModalContentComponent } from './../../components/competency-modal-content/competency-modal-content.component'
+import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
+import { Project } from './../../constants/project.model'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-three',
   templateUrl: './step-three.component.html',
   styleUrls: ['./step-three.component.scss']
 })
-export class StepThreeComponent implements OnInit {
+export class StepThreeComponent implements OnInit, OnDestroy {
 
-  project$: Observable<any>
+  project$: Observable<Project>
   step$: Observable<Step>
+  grades: Option[]
   step: Step
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
   competencyObjectives$: Observable<CompetencyObjectives[]>
   evaluationCriteria$: Observable<EvaluationCriteria[]>
-  loading: boolean = true
-  InputFormData: FormThreeInitData = new formThreeInitData
-  initialFormData: FormThreeInitData = new formThreeInitData
-  project: { subjects: Subject[], competencyObjectives: CompetencyObjectives[] }
-  initialFormStatus: Status = "PENDING"
+  loading = true
+  InputFormData: FormThreeInit = new FormThreeInitData()
+  initialFormData: FormThreeInit = new FormThreeInitData()
+  project: Project
+  initialFormStatus: Status = 'PENDING'
   initialCriterias: number[] = []
   criterias: number[] = []
   tempData: any[]
+  bsModalRef: BsModalRef
+  subscriptions = new SubSink()
 
-  constructor(private translateService: TranslateService, private editor: EditorService,) { }
+  constructor(
+    private translateService: TranslateService,
+    public editor: EditorService,
+    private modalService: BsModalService,
+    private gradeService: GradeEntityService,
+  ) { }
 
   ngOnInit(): void {
     this.createFormConfig()
@@ -41,26 +55,32 @@ export class StepThreeComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.isFormUpdated() && this.step.state !== "DONE") {
+    if (this.isFormUpdated() && this.step.state !== 'DONE') {
       this.handleSubmit()
     }
+    const modalCount = this.modalService.getModalsCount()
+    if (modalCount > 0) {
+      this.modalService._hideModal(modalCount)
+    }
+    this.subscriptions.unsubscribe()
   }
 
-  formInIt() {
-    this.project$ = this.editor.getStepData('stepThree')
-    this.step = this.editor.steps.three
-    this.step$ = this.editor.getStepStatus(3)
-    this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
-    let tempinitialFormData = new formThreeInitData
+  formInIt(): void {
+    this.project$ = this.editor.getStepData(3)
+    this.step$ = this.editor.getStepStatus()
+    this.step = this.editor.steps[2]
+    this.subscriptions.sink = this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
+    const tempinitialFormData = new FormThreeInitData()
     if (this.project$) {
-      this.project$.subscribe(data => {
+      this.subscriptions.sink = this.project$.subscribe(data => {
         this.project = data
+        this.getGrades(this.project)
       })
       this.competencyObjectives$ = this.project$
         .pipe(
           map(data => data?.competencyObjectives)
         )
-      this.competencyObjectives$
+      this.subscriptions.sink = this.competencyObjectives$
         .subscribe(competencyObjectives => {
           this.initialFormData.competencyObjectives = []
           if (competencyObjectives) {
@@ -70,81 +90,117 @@ export class StepThreeComponent implements OnInit {
           this.initialFormData.competencyObjectives = [...tempinitialFormData.competencyObjectives]
         })
 
-      this.evaluationCriteria$ = this.project$   //WIP 
+      this.evaluationCriteria$ = this.project$   // WIP
         .pipe(
           map(data => data?.evaluationCriteria)
         )
-      this.evaluationCriteria$
+      this.subscriptions.sink = this.evaluationCriteria$
         .subscribe(criterias => {
-          if (criterias)
+          this.criterias = []
+          this.initialCriterias = []
+          if (criterias) {
             criterias.forEach(criteria => {
-              this.criterias = []
+              this.criterias.push(criteria.subjectId)
               this.initialCriterias.push(criteria.subjectId)
             })
+          }
         })
     }
     if (this.step$) {
-      this.step$.subscribe(
+      this.subscriptions.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.buttonConfig.submitted = formStatus.state === 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != "DONE" && !this.hasAnyEmptyFields())
+            if (formStatus.state !== 'DONE' && !this.checkInitialEmptyForm()) {
               this.buttonConfig.disabled = false
+            }
           }
         }
       )
     }
   }
 
+  getGrades(project: Project): void {
+    if (this.project) {
+      this.subscriptions.sink = this.gradeService.entities$
+        .pipe(
+          map(grades => grades.filter(grade => grade.academicYear?.id === project.academicYear.id
+            && grade.region?.id === project.region.id))
+        )
+        .subscribe(newData => {
+          if (!newData.length) {
+            const parms = {
+              regionId: project.region.id.toString(),
+              academicyearId: project.academicYear.id.toString()
+            }
+            this.gradeService.getWithQuery(parms)
+          }
+          this.grades = newData.map(({ id, name }) => ({ id, name }))
+        })
+    }
+  }
   // WIP
-  addItem(event) {
+  addItem(event: any): void {
     this.criterias.push(event.id)
-    if (!event.init) this.checkStatus()
+    if (!event.init) { this.checkStatus() }
   }
 
-  //WIP
-  removeItem(index) {
+  // WIP
+  removeItem(index: number): void {
     this.criterias.splice(index, 1)
     this.checkStatus()
   }
 
-  textAreaUpdate(data) { // calls on every update
+  textAreaUpdate(data: Option[]): void { // calls on every update
     this.InputFormData.competencyObjectives = data
     this.checkStatus()
   }
 
   // checks if the form is empty
-  isFormEmpty() {
+  isFormEmpty(): boolean {
     if (!this.InputFormData.competencyObjectives.length && !this.criterias.length) {
       return true
     }
     return false
   }
 
-  // checks the form is completely filled or not
-  hasAnyEmptyFields() {
-    if (!this.InputFormData.competencyObjectives.length || !this.criterias.length) return true
+  // check if the form is initially empty
+  checkInitialEmptyForm(): boolean {                      // WIP
+    if (!this.initialFormData.competencyObjectives.length || !this.initialCriterias.length) { return true }
     let emptyForm = false
     this.project.subjects.forEach(subject => {
-      if (!this.criterias.includes(subject.id)) emptyForm = true
+      if (!this.initialCriterias.includes(subject.id)) { emptyForm = true }
     })
-    if (emptyForm) return true
+    if (emptyForm) { return true }
+    return false
+  }
+
+  // checks the form is completely filled or not
+  hasAnyEmptyFields(): boolean {
+    if (!this.InputFormData.competencyObjectives.length || !this.criterias.length) { return true }
+    let emptyForm = false
+    this.project.subjects.forEach(subject => {
+      if (!this.criterias.includes(subject.id)) { emptyForm = true }
+    })
+    if (emptyForm) { return true }
     return false
   }
 
   // Function to check status of step
-  checkStatus() {
-    if (this.isFormEmpty())
-      this.step.state = "PENDING"
-    else
-      this.step.state = "INPROCESS"
+  checkStatus(): void {
+    if (this.isFormEmpty()) {
+      this.step.state = 'PENDING'
+    }
+    else {
+      this.step.state = 'INPROCESS'
+    }
     this.handleButtonType()
   }
 
   // Changes the button according to form status
-  handleButtonType() {
-    if (this.step.state == 'DONE') {
+  handleButtonType(): void {
+    if (this.step.state === 'DONE') {
       this.buttonConfig.submitted = true
       this.buttonConfig.disabled = true
     } else {
@@ -159,7 +215,7 @@ export class StepThreeComponent implements OnInit {
   }
 
   // Function to check whether the form is updated
-  isFormUpdated() {
+  isFormUpdated(): boolean {
     if (!this.isEqual(this.initialFormData.competencyObjectives, this.InputFormData.competencyObjectives)
       || !this.isArrayEqual(this.initialCriterias, this.criterias)
       || this.initialFormStatus !== this.step.state) {
@@ -168,23 +224,24 @@ export class StepThreeComponent implements OnInit {
     return false
   }
 
-  isArrayEqual(d1: any[], d2: any[]) {
+  isArrayEqual(d1: any[], d2: any[]): boolean {
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
-  isEqual(d1: any[], d2: any[]) {
+  isEqual(d1: any[], d2: any[]): boolean {
     d1 = d1.map(item => item.name)
     d2 = d2.map(item => item.name)
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
-  handleSubmit(formStatus?: Status) {
-    if (formStatus == 'DONE') {
+  handleSubmit(formStatus?: Status): void {
+    if (formStatus === 'DONE') {
       this.step.state = 'DONE'
-      this.initialFormStatus = "DONE"
+      this.initialFormStatus = 'DONE'
     }
-    else
+    else {
       this.checkStatus()
+    }
     let tempData = this.InputFormData.competencyObjectives.filter(item => item.name != null && item.name.length)
     if (tempData.length) {
       tempData = tempData.map(item => item.id == null ? { name: item.name } : item)
@@ -196,19 +253,19 @@ export class StepThreeComponent implements OnInit {
       this.initialFormData.competencyObjectives = this.InputFormData.competencyObjectives
     }
     this.InputFormData.competencyObjectives = tempData
-    let tempCrriteria = []                       // WIP change the criteria creation
+    const tempCriteria = []                       // WIP change the criteria creation
     this.criterias.forEach(subjectId => {
-      tempCrriteria.push({
+      tempCriteria.push({
         gradeId: 8,
         id: 1,
-        subjectId: subjectId,
-        name: "evaluation criteria1"
+        subjectId,
+        name: 'evaluation criteria1'
       })
     })
-    let formData: FormThree = {
+    const formData: FormThree = {
       data: {
         competencyObjectives: tempData.length ? this.InputFormData.competencyObjectives : [],
-        evaluationCriteria: [...tempCrriteria]
+        evaluationCriteria: [...tempCriteria]
       },
       stepStatus: {
         steps: [
@@ -219,11 +276,11 @@ export class StepThreeComponent implements OnInit {
         ]
       }
     }
-    this.editor.handleStepSubmit(formData, this.step.state == "DONE")
+    this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
     this.handleButtonType()
   }
 
-  createFormConfig() {
+  createFormConfig(): void {
     this.buttonConfig = {
       name: 'submit',
       field: 'button',
@@ -231,17 +288,17 @@ export class StepThreeComponent implements OnInit {
       disabled: true,
       submitted: false,
       label: 'IR A PUNTO DE PARTIDA'
-    };
+    }
     this.textAreaConfig = {
       name: 'textarea',
       field: 'competencyObjectives',
       id: 'competencyObjectives',
       maxLength: 150,
-      limit: 5
+      limit: 0
     }
 
     // Translation
-    this.translateService.stream([
+    this.subscriptions.sink = this.translateService.stream([
       'PROJECT.project_button_markdone',
       'PROJECT.project_button_done',
       'OBJECTIVES.project_objectives_title',
@@ -252,8 +309,16 @@ export class StepThreeComponent implements OnInit {
       this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
       this.textAreaConfig.placeholder = translations['OBJECTIVES.project_objectives_objectives_placeholder']
     })
-
   }
 
+  openModalWithComponent(): void {
+    const initialState = {
+      grades: this.grades,
+      selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name }))
+    }
+    this.bsModalRef = this.modalService.show(CompetencyModalContentComponent,
+      { class: 'competency-modal', initialState })
+    this.bsModalRef.content.closeBtnName = 'Close'
+  }
 }
 

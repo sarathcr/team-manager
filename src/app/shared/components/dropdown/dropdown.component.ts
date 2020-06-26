@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core'
 // Interfaces
-import { FieldConfig } from '../../constants/field.model';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { DropDownConfig } from '../../constants/field.model'
+import { IDropdownSettings } from 'ng-multiselect-dropdown'
 
 @Component({
   selector: 'app-dropdown',
@@ -11,34 +10,34 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   encapsulation: ViewEncapsulation.None
 })
 export class DropdownComponent implements OnInit {
-  @Output() onSelect: EventEmitter<any> = new EventEmitter();
-  @Input() config: FieldConfig;
-  active = false;
-  dropdownSettings: IDropdownSettings = {};
+  @Output() dropdownSelect: EventEmitter<any> = new EventEmitter()
+  @Input() config: DropDownConfig
+  active = false
+  dropdownSettings: IDropdownSettings = {}
   constructor() { }
 
   ngOnInit(): void {
+
     this.dropdownSettings = {
-      singleSelection: !this.config.multiselect || false,
-      textField: this.config.textField || 'name',
+      ...this.config.settings,
       itemsShowLimit: 3,
       closeDropDownOnSelection: true,
       maxHeight: 265,
-      enableCheckAll: false,
-    };
+      enableCheckAll: false
+    }
   }
 
-  onItemSelect(item: any) {
-    this.active = true;
-    this.onSelect.emit({controller: this.config.name, val: this.config.selectedItems});
+  onItemSelect(item: any): void {
+    this.active = true
+    this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
   }
 
-  onItemDeSelect(item: any) {
-    this.active = true;
-    this.onSelect.emit({controller: this.config.name, val: this.config.selectedItems});
+  onItemDeSelect(item: any): void {
+    this.active = true
+    this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
   }
 
-  onDropDownClose(){
-    this.active = false;
+  onDropDownClose(): void{
+    this.active = false
   }
 }

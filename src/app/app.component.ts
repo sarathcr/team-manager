@@ -1,4 +1,5 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { Title } from '@angular/platform-browser'
 import { TranslateService } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 
@@ -7,16 +8,26 @@ import { Observable } from 'rxjs'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   loading = true
   isLoggedIn$: Observable<boolean>
   isLoggedOut$: Observable<boolean>
 
-  constructor(public translateService: TranslateService) {
+  constructor(private translateService: TranslateService, private titleService: Title) {
     // ngx-translate
     translateService.addLangs(['en', 'es'])
     translateService.setDefaultLang('en')
-    const browserLang = translateService.getBrowserLang();
+    const browserLang = translateService.getBrowserLang()
     translateService.use(browserLang.match(/en|es/) ? browserLang : 'en')
+  }
+
+  ngOnInit(): void {
+    this.setTitle()
+  }
+
+  setTitle(): void {
+    this.translateService.get('GENERAL.platform_title_tab').subscribe(name => {
+      this.titleService.setTitle(name)
+    })
   }
 }

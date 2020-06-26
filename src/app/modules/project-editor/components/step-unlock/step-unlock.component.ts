@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FieldConfig } from 'src/app/shared/constants/field.model';
+import { Component, OnInit } from '@angular/core'
+
+import { FieldConfig } from 'src/app/shared/constants/field.model'
 
 @Component({
   selector: 'app-step-unlock',
@@ -8,16 +9,16 @@ import { FieldConfig } from 'src/app/shared/constants/field.model';
 })
 export class StepUnlockComponent implements OnInit {
 
-  buttonConfig : FieldConfig
+  buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  
+
   constructor() { }
 
   ngOnInit(): void {
     this.createFormConfig()
   }
 
-  createFormConfig() {
+  createFormConfig(): void {
     this.buttonConfig = {
       name: 'submit',
       field: 'button',
@@ -25,7 +26,7 @@ export class StepUnlockComponent implements OnInit {
       disabled: false,
       submitted: false,
       label: 'IR A PUNTO DE PARTIDA'
-    };
+    }
     this.textAreaConfig = {
       name: 'textarea',
       field: 'themes',

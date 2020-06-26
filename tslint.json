@@ -42,7 +42,7 @@
     "max-classes-per-file": false,
     "max-line-length": [
       true,
-      100
+      120
     ],
     "member-ordering": [
       true,
@@ -82,7 +82,7 @@
     ],
     "semicolon": {
       "options": [
-        "always"
+        "never"
       ]
     },
     "space-before-function-paren": {
@@ -112,6 +112,7 @@
         }
       ]
     },
+    "typedef": [true, "call-signature", "parameter"],
     "variable-name": {
       "options": [
         "ban-keywords",

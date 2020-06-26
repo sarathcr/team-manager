@@ -1,47 +1,67 @@
-import { Component, OnInit, ViewChildren, QueryList, Input, ElementRef, Output, EventEmitter, AfterContentChecked } from '@angular/core';
-import { FieldConfig, Option, TextAreaVariants } from 'src/app/shared/constants/field.model';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  OnInit,
+  ViewChildren,
+  QueryList,
+  Input,
+  ElementRef,
+  Output,
+  EventEmitter,
+  AfterContentChecked,
+  OnDestroy
+} from '@angular/core'
+
+import { Observable } from 'rxjs'
+
+import { FieldConfig, Option, TextAreaVariants } from 'src/app/shared/constants/field.model'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-textarea-bullets',
   templateUrl: './textarea-bullets.component.html',
   styleUrls: ['./textarea-bullets.component.scss']
 })
-export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
+export class TextareaBulletsComponent implements OnInit, AfterContentChecked, OnDestroy {
 
   @Input() variant: TextAreaVariants = 'bullet'
   @Input() config: FieldConfig
   @Input() options: Option[]
-  @Input() options$: Observable<Object[]>
-  @Output() onChange = new EventEmitter()
-  @ViewChildren('textArea') textArea: QueryList<ElementRef>;
+  @Input() options$: Observable<Option[]>
+  @Output() inputChange = new EventEmitter()
+  @ViewChildren('textArea') textArea: QueryList<ElementRef>
   index = 0
-  initResize = false;
-  initialScrollHeight: number;
+  initResize = false
+  initialScrollHeight: number
   timeOut: any
-  sampleOption: Option = { id: null, name: null };
-  configOptions: Option[] = [];
+  arrayHeight = ''
+  sampleOption: Option = { id: null, name: null }
+  configOptions: Option[] = []
   limit = 0
-  focus = false;
+  focus = false
+  subscriptions = new SubSink()
 
   constructor() { }
 
   ngOnInit(): void {
-    this.limit = this.config.limit;
+    this.limit = this.config.limit
     this.optionInit()
   }
 
-  ngAfterContentChecked() {
+  ngAfterContentChecked(): void {
     if (this.textArea) {
       this.textArea.toArray().forEach(item => {
-        item.nativeElement.style.height = (item.nativeElement.scrollHeight) + "px";
+        item.nativeElement.style.height = (item.nativeElement.scrollHeight) + 'px'
       })
     }
   }
 
-  optionInit() {
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
+  }
+
+  optionInit(): void {
     if (this.options$) {
-      this.options$.subscribe(data => {
+      this.subscriptions.sink = this.options$.subscribe(data => {
         if (data?.length) {
           this.configOptions = data
         } else {
@@ -53,64 +73,69 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  isFirefox() {
+  isFirefox(): boolean {
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
       return true
     }
     return false
   }
 
-  keyAction(event, id) {
+  keyAction(event: any, id: number): void {
     switch (event.keyCode) {
       case 13: // Enter
-        event.preventDefault();
-        if (this.config.limit == 0) {
+        event.preventDefault()
+        if (this.config.limit === 0) {
           this.limit = this.configOptions.length + 1
         }
-        if (this.configOptions.length < this.limit && this.configOptions[this.configOptions.length - 1].name) {
-          this.configOptions.push({ ...this.sampleOption });
-          this.index++
+        if (this.configOptions.length < this.limit && this.configOptions[id].name?.trim()) {
+          this.configOptions.splice(id + 1, 0, { ...this.sampleOption })  // add a new bullet
+          this.timeOut = setTimeout(() => {
+            this.textArea.toArray()[id + 1].nativeElement.focus()
+          }, 0)
         }
-        this.timeOut = setTimeout(() => {
-          this.textArea.last.nativeElement.focus()
-        }, 0)
         break
 
       case 46:  // delete
-        event.preventDefault();
+        event.preventDefault()
         if (this.configOptions.length > 1) {
           this.configOptions.splice(id, 1)
           this.index = this.textArea.toArray().length > id ? id : id - 1
           this.timeOut = setTimeout(() => {
             const textAreas = this.textArea.toArray()
             const index = textAreas.length > id ? id : id - 1
-            textAreas[index].nativeElement.focus();
+            textAreas[index].nativeElement.focus()
           }, 0)
         }
         else {
           this.configOptions[0].name = ''
         }
-        this.onChange.emit([...this.configOptions]);
+        if (this.configOptions.length === 1 && !this.configOptions[0].name) { this.inputChange.emit([]) }
+        else { this.inputChange.emit([...this.configOptions]) }
         break
 
       case 32: // spacebar
         if (this.configOptions[id].name?.trim()?.length) {
-          var textComponent = this.textArea.toArray()[id].nativeElement
-          var startPos = textComponent.selectionStart;
-          var endPos = textComponent.selectionEnd;
-          let string = this.configOptions[id].name
-          let stringLength = string?.length
-          this.configOptions[id].name = (string.slice(0, startPos) + string.slice(endPos, stringLength)).trim();
+          const textComponent = this.textArea.toArray()[id].nativeElement
+          const startPos = textComponent.selectionStart
+          const endPos = textComponent.selectionEnd
+          const name = this.configOptions[id].name
+          const stringLength = name?.length
+          if (startPos !== endPos) {
+            this.configOptions[id].name = (name.slice(0, startPos) + ' '
+              + name.slice(endPos, stringLength)).trim() // splice the input text
+            setTimeout(() => {
+              textComponent.setSelectionRange(startPos + 1, startPos + 1) // shows the cursor after a space
+            }, 0)
+          }
           if (!this.configOptions[id].name) {
             if (this.configOptions.length > 1) {
               this.configOptions.splice(id, 1)
               if (id - 1 >= 0) {
-                this.textArea.toArray()[id - 1].nativeElement.focus();
+                this.textArea.toArray()[id - 1].nativeElement.focus()
               } else {
-                this.textArea.toArray()[id + 1].nativeElement.focus();
+                this.textArea.toArray()[id + 1].nativeElement.focus()
               }
-            }
-            else {
+            } else {
               if (!this.configOptions[id].name) {
                 this.configOptions[0].name = ''
               }
@@ -125,11 +150,13 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
         if (!event.target.value && this.configOptions.length > 1) {
           this.configOptions.splice(id, 1)
           if (id - 1 >= 0) {
-            this.textArea.toArray()[id - 1].nativeElement.focus();
+            this.textArea.toArray()[id - 1].nativeElement.focus()
+            event.preventDefault()
           } else {
-            this.textArea.toArray()[id + 1].nativeElement.focus();
+            this.textArea.toArray()[id + 1].nativeElement.focus()
+            event.preventDefault()
           }
-          clearTimeout(this.timeOut);
+          clearTimeout(this.timeOut)
         }
         break
 
@@ -138,25 +165,25 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  onValueChange(value, i) {
+  onValueChange(value: string, i: number): void {
     this.index = i
     if (this.isFirefox() && value.length > this.config.maxLength) {
       value = value.substring(0, this.config.maxLength)
     }
-    this.configOptions[i].name = value.trim()
-    let newConfigOptions = [...this.configOptions];
-    if (this.configOptions.length == 1 && !this.configOptions[0].name) newConfigOptions = []
-    this.onChange.emit(newConfigOptions);
+    this.configOptions[i].name = value
+    let newConfigOptions = this.configOptions.filter(option => option.name?.trim() && option)
+    if (this.configOptions.length === 1 && !this.configOptions[0].name.trim()) { newConfigOptions = [] }
+    this.inputChange.emit(newConfigOptions)
 
   }
 
-  setFocus() {
-    this.focus = true;
+  setFocus(): void {
+    this.focus = true
   }
 
-  onBlur(i) {
-    this.focus = false;
-    if (this.configOptions.length > 1 && !this.configOptions[i]?.name) {
+  onBlur(i: number): void {
+    this.focus = false
+    if (this.configOptions.length > 1 && !this.configOptions[i]?.name?.trim()) {
       this.configOptions.splice(i, 1)
     }
     if (this.configOptions.length === 1 && !this.configOptions[0]?.name?.trim()) {

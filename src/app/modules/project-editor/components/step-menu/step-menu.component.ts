@@ -10,7 +10,7 @@ import { Step } from '../../constants/step.model'
 export class StepMenuComponent {
 
   @Input() step: Step
-  
+
   constructor() { }
-   
+
 }
