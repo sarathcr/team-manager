@@ -128,7 +128,6 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   }
 
   getBlocks(selectedGrade: any): void {
-    this.subscriptions.unsubscribe()
     this.subscriptions.sink = this.blockService.entities$
     .pipe(map(data => {
       const savedBlockData = data.find(blockData => blockData.id === `${selectedGrade.id}-${this.subjectId}`)
@@ -142,26 +141,32 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
         { gradeId: String(selectedGrade.id), subjectId: this.subjectId }
       )}
       this.blocks = data?.map(block => {
+        let colOneHead: string
         let colTwoHead: string
         const evaluationCriteria = block.evaluationCriteria.map(criteria => {
-            let colTwoData: string
-            if (!colTwoHead) {
-              if (criteria.dimensions?.length) {
-                colTwoHead = 'Dimensions'
-              }
-              else if (criteria.basicSkills?.length) {
-                colTwoHead = 'Basic Skills'
-              }
-            }
+          let colTwoData: string
+          let colOneData: string
+          if (!colOneHead && criteria.name) {
+            colOneHead = 'Criterio de evaluación'
+          }
+          if (!colTwoHead) {
             if (criteria.dimensions?.length) {
-              colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
+              colTwoHead = 'Dimensions'
             }
             else if (criteria.basicSkills?.length) {
-              colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
+              colTwoHead = 'Basic Skills'
             }
-            return { ...criteria, checked: false, colTwoData, grade: selectedGrade, block }
-          })
-        return { ...block, evaluationCriteria, colTwoHead }
+          }
+          colOneData = criteria.name
+          if (criteria.dimensions?.length) {
+            colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
+          }
+          else if (criteria.basicSkills?.length) {
+            colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
+          }
+          return { ...criteria, checked: false, colOneData, colTwoData, grade: selectedGrade, block }
+        })
+        return { ...block, evaluationCriteria, colOneHead, colTwoHead }
       })
     })
   }

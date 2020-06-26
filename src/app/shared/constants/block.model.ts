@@ -12,6 +12,7 @@ export interface CriteriaWithSkills extends EvaluationCriteria {
   dimensions?: Dimensions[]
   checked?: boolean
   colTwoData?: string
+  colOneData?: string
 }
 
 export interface Block {
@@ -22,6 +23,7 @@ export interface Block {
   evaluationCriteria: CriteriaWithSkills[]
   contents: Content[]
   colTwoHead?: string
+  colOneHead?: string
   virtual: boolean
 }
 

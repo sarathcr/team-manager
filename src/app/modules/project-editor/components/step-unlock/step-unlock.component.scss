@@ -4,10 +4,10 @@
     min-height: 236px;
     border-radius: 4px;
     background: $background-primary;
-    box-shadow: $transparent-shadow;
     padding: 37px 41px;
     margin-bottom: 36px;
     position: relative;
+    box-shadow: 0 20px 50px -25px $transparent-shadow;
     &__title{
         font-size: $font-size-body;
         line-height: 28px;
@@ -31,6 +31,7 @@
     &__bg-left{
         background-image: url('../../../../../../images/bg-left.png');
         background-position: left center;
+        background-size: cover;
         background-repeat: no-repeat;
         height: 200px;
         width: 200px;
@@ -42,12 +43,12 @@
     &__bg-right{
         background-image: url('../../../../../../images/bg-right.png');
         background-position: left center;
+        background-size: cover;
         background-repeat: no-repeat;
         width: 270px;
         height: 170px;
         position: absolute;
         bottom: 0;
         right: 0;
-        
     }
 }

@@ -9,12 +9,10 @@ export class TableRowComponent implements OnInit {
   @Input() isHead = false
   @Input() checkboxData: CheckBoxData
   @Input() parentID: number
-  @Input() isLastRow = false
   @Input() colOne: TableColumn
   @Input() colTwo: TableColumn
   @Input() colThree: TableColumn
   @Input() colFour: TableColumn
-  // @Input() block: TableColumn
 
   colCount: number
 
@@ -46,5 +44,6 @@ export interface TableColumn {
 }
 
 export interface CheckBoxData {
-  checked: boolean
+  checked: boolean,
+  variant?: 'checkedOnly' | 'checkbox'
 }
