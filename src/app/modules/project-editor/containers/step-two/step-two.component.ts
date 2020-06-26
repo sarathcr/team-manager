@@ -1,12 +1,17 @@
+import { Option } from './../../../../shared/constants/field.model'
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { FieldConfig } from '../../../../shared/constants/field.model'
+
 import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 import { TranslateService } from '@ngx-translate/core'
-import { formTwoInitData } from '../../constants/step-forms.data'
-import { FormTwoInitData, FormTwo } from '../../constants/step-forms.model'
+
+import { FormTwoInitData } from '../../constants/step-forms.data'
+import { FormTwoInit, FormTwo } from '../../constants/step-forms.model'
 import { Step, Status } from '../../constants/step.model'
-import { Theme } from 'src/app/shared/constants/theme.model'
+import { Theme } from 'src/app/modules/project-editor/constants/project.model'
 import { EditorService } from '../../services/editor/editor.service'
+import { FieldConfig } from '../../../../shared/constants/field.model'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-two',
@@ -19,11 +24,12 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   step$: Observable<Step>
   step: Step
   themes$: Observable<Theme[]>
-  InputFormData: FormTwoInitData = new formTwoInitData
-  initialFormData: FormTwoInitData = new formTwoInitData
+  InputFormData: FormTwoInit = new FormTwoInitData()
+  initialFormData: FormTwoInit = new FormTwoInitData()
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  initialFormStatus: Status = "PENDING"
+  initialFormStatus: Status = 'PENDING'
+  subscriptions = new SubSink()
 
   constructor(
     private translateService: TranslateService,
@@ -39,16 +45,17 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     if (this.isFormUpdated()) {
       this.handleSubmit()
     }
+    this.subscriptions.unsubscribe()
   }
 
-  createFormConfig() {
+  createFormConfig(): void {
     this.buttonConfig = {
       name: 'submit',
       field: 'button',
       id: 'submitButton',
       disabled: true,
       submitted: false
-    };
+    }
     this.textAreaConfig = {
       name: 'textarea',
       field: 'themes',
@@ -57,7 +64,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       limit: 5
     }
     // Translation
-    this.translateService.stream([
+    this.subscriptions.sink = this.translateService.stream([
       'PROJECT.project_button_markdone',
       'PROJECT.project_button_done',
       'THEMATIC.project_thematic_title',
@@ -70,14 +77,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     })
   }
 
-  formInIt() {
-    this.project$ = this.editor.getStepData('stepTwo')
-    this.step$ = this.editor.getStepStatus(2)
-    this.step = this.editor.steps.two
-    let tempinitialFormData = new formTwoInitData
+  formInIt(): void {
+    this.project$ = this.editor.getStepData(2)
+    this.step$ = this.editor.getStepStatus()
+    this.step = this.editor.steps[1]
+    const tempinitialFormData = new FormTwoInitData()
     if (this.project$) {
-      this.themes$ = this.project$
-      this.themes$
+      this.themes$ = this.project$.pipe(map(data => data?.themes))
+      this.subscriptions.sink = this.themes$
         .subscribe(themes => {
           this.initialFormData.themes = []
           if (themes) {
@@ -88,13 +95,14 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         })
     }
     if (this.step$) {
-      this.step$.subscribe(
+      this.subscriptions.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.buttonConfig.submitted = formStatus.state === 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != "DONE" && this.checkNonEmptyForm())
+            if (formStatus.state !== 'DONE' && this.checkNonEmptyForm()) {
               this.buttonConfig.disabled = false
+            }
           }
         }
       )
@@ -102,54 +110,61 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   // Function to check status of step
-  checkStatus() {
-    if (this.checkEmptyForm())
-      this.step.state = "PENDING"
-    else
-      this.step.state = "INPROCESS"
+  checkStatus(): void {
+    if (this.checkEmptyForm()) {
+      this.step.state = 'PENDING'
+    }
+    else {
+      this.step.state = 'INPROCESS'
+    }
     this.handleButtonType()
   }
 
   // checks if the form is empty
-  checkEmptyForm() {
+  checkEmptyForm(): boolean {
     if (!this.InputFormData.themes.length) {
       return true
     } else {
       const tempData = this.InputFormData.themes.filter(item => item.name != null && item.name.length && item)
-      if (!tempData.length)
+      if (!tempData.length) {
         return true
+      }
     }
     return false
   }
 
   // checks the form is completely filled or not
-  checkNonEmptyForm() {
-    if (this.InputFormData.themes.length && (this.InputFormData.themes[this.InputFormData.themes.length - 1].name != null))
-      return true
-    return false
-  }
-
-  // Function to check whether the form is updated
-  isFormUpdated() {
-    if (!this.isEqual(this.initialFormData.themes, this.InputFormData.themes) || this.initialFormStatus !== this.step.state) {
+  checkNonEmptyForm(): boolean {
+    if (this.InputFormData.themes.length &&
+      (this.InputFormData.themes[this.InputFormData.themes.length - 1].name != null)) {
       return true
     }
     return false
   }
 
-  isEqual(d1: any[], d2: any[]) {
+  // Function to check whether the form is updated
+  isFormUpdated(): boolean {
+    if (!this.isEqual(this.initialFormData.themes, this.InputFormData.themes) ||
+      this.initialFormStatus !== this.step.state) {
+      return true
+    }
+    return false
+  }
+
+  isEqual(d1: any[], d2: any[]): boolean {
     d1 = d1.map(item => item.name)
     d2 = d2.map(item => item.name)
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
-  handleSubmit(formStatus?: Status) {
-    if (formStatus == 'DONE') {
+  handleSubmit(formStatus?: Status): void {
+    if (formStatus === 'DONE') {
       this.step.state = 'DONE'
-      this.initialFormStatus = "DONE"
+      this.initialFormStatus = 'DONE'
     }
-    else
+    else {
       this.checkStatus()
+    }
     let tempData = this.InputFormData.themes.filter(item => item.name != null && item.name.length)
     if (tempData.length) {
       tempData = tempData.map(item => item.id == null ? { name: item.name } : item)
@@ -161,7 +176,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.initialFormData.themes = this.InputFormData.themes
     }
     this.InputFormData.themes = tempData
-    let formData: FormTwo = {
+    const formData: FormTwo = {
       data: {
         themes: tempData.length ? this.InputFormData.themes : []
       },
@@ -174,26 +189,26 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.editor.handleStepSubmit(formData, this.step.state == "DONE")
+    this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
     this.handleButtonType()
   }
 
-  textAreaUpdate(data) { // calls on every update
+  textAreaUpdate(data: Option[]): void { // calls on every update
     this.InputFormData.themes = data
     this.checkStatus()
   }
 
   // Changes the button according to form status
-  handleButtonType() {
-    if (this.step.state == 'INPROCESS') {
+  handleButtonType(): void {
+    if (this.step.state === 'INPROCESS') {
       this.buttonConfig.disabled = false
       this.buttonConfig.submitted = false
     }
-    if (this.step.state == 'PENDING') {
+    if (this.step.state === 'PENDING') {
       this.buttonConfig.disabled = true
       this.buttonConfig.submitted = false
     }
-    if (this.step.state == 'DONE') {
+    if (this.step.state === 'DONE') {
       this.buttonConfig.submitted = true
       this.buttonConfig.disabled = true
     }

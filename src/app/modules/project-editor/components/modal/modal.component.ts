@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FieldConfig } from 'src/app/shared/constants/field.model';
-import { Subject } from 'rxjs';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core'
+import { BsModalRef } from 'ngx-bootstrap/modal'
+
+import { Subject } from 'rxjs'
+
+import { FieldConfig } from 'src/app/shared/constants/field.model'
 
 @Component({
   selector: 'app-modal',
@@ -13,23 +15,22 @@ export class ModalComponent implements OnInit {
 
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  public onClose: Subject<string>;
-
+  public onClose: Subject<string>
 
   constructor(public bsModalRef: BsModalRef) { }
 
   ngOnInit(): void {
-    this.onClose = new Subject();
+    this.onClose = new Subject()
   }
 
   public onConfirm(): void {
-    this.onClose.next('delete');
-    this.bsModalRef.hide();
+    this.onClose.next('delete')
+    this.bsModalRef.hide()
   }
 
   public onCancel(): void {
-    this.onClose.next('cancel');
-    this.bsModalRef.hide();
+    this.onClose.next('cancel')
+    this.bsModalRef.hide()
   }
 
 }

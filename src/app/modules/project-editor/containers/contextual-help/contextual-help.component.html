@@ -7,7 +7,7 @@
       </ng-template>
       <div class="contextual-help__content">
         <div class="contextual-help__content-head">
-          <h4 class="contextual-help__content-title"  [innerHTML]="'PROJECTGUIDE.projectguide_pedagogical_guide' | translate"></h4>
+          <h4 class="contextual-help__content-title">{{'PROJECTGUIDE.projectguide_pedagogical_guide' | translate}}</h4>
           <button type="button" class="contextual-help__content-close" (click)="closeTab()">
             <span class="icon icon-ic_share_close"></span>
           </button>
@@ -16,10 +16,10 @@
         <app-help-accordion  *ngIf="loaded" [content]='help' [isOpen]='closeContext'></app-help-accordion>
       </div>
     </tab>
-    <tab customClass="contextual-help__tabset-item" (selectTab)="openTab($event)">
+    <!-- <tab customClass="contextual-help__tabset-item" (selectTab)="openTab($event)">
       <ng-template tabHeading>
         <span class="icon icon-ic_message"></span>
       </ng-template>
-    </tab>
+    </tab> -->
   </tabset>
 </div>

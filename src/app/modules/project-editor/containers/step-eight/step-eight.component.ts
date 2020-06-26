@@ -1,26 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Step, Status } from '../../constants/step.model';
-import { buttonSubmitConfig } from '../../constants/form-config.data';
-import { FormEightInitData, FormEight } from '../../constants/step-forms.model';
-import { formEightInitData } from '../../constants/step-forms.data';
-import { EditorService } from '../../services/editor/editor.service';
+import { Component, OnInit, OnDestroy } from '@angular/core'
+
+import { Observable } from 'rxjs'
+import { Step, Status } from '../../constants/step.model'
+import { ButtonSubmitConfig } from '../../constants/form-config.data'
+import { FormEightInit, FormEight } from '../../constants/step-forms.model'
+import { FormEightInitData } from '../../constants/step-forms.data'
+import { EditorService } from '../../services/editor/editor.service'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-eight',
   templateUrl: './step-eight.component.html',
   styleUrls: ['./step-eight.component.scss']
 })
-export class StepEightComponent implements OnInit {
+export class StepEightComponent implements OnInit, OnDestroy {
 
   project$: Observable<any>
   step$: Observable<Step>
   step: Step
-  finalProduct: any = ""
-  buttonConfig = new buttonSubmitConfig
-  initialFormData: FormEightInitData = formEightInitData
-  active: boolean = false
-  initialFormStatus: Status = "PENDING"
+  finalProduct: any = ''
+  buttonConfig = new ButtonSubmitConfig()
+  initialFormData: FormEightInit = FormEightInitData
+  active = false
+  initialFormStatus: Status = 'PENDING'
+  subscription = new SubSink()
 
   constructor(
     private editor: EditorService
@@ -34,14 +37,15 @@ export class StepEightComponent implements OnInit {
     if (this.isFormUpdated()) {
       this.handleSubmit()
     }
+    this.subscription.unsubscribe()
   }
 
-  formInit() {
-    this.project$ = this.editor.getStepData('stepEight')
-    this.step$ = this.editor.getStepStatus(8)
-    this.step = this.editor.steps.eight
+  formInit(): void {
+    this.project$ = this.editor.getStepData(8)
+    this.step$ = this.editor.getStepStatus()
+    this.step = this.editor.steps[7]
     if (this.project$) {
-      this.project$.subscribe(data => {
+      this.subscription.sink = this.project$.subscribe(data => {
         if (data?.finalProduct) {
           this.finalProduct = data.finalProduct
           this.initialFormData = data.finalProduct
@@ -49,13 +53,14 @@ export class StepEightComponent implements OnInit {
       })
     }
     if (this.step$) {
-      this.step$.subscribe(
+      this.subscription.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.buttonConfig.submitted = formStatus.state === 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != "DONE" && this.finalProduct?.length)
+            if (formStatus.state !== 'DONE' && this.finalProduct?.length) {
               this.buttonConfig.disabled = false
+            }
           }
         }
       )
@@ -63,7 +68,7 @@ export class StepEightComponent implements OnInit {
   }
 
   // Function to check status of step
-  checkStatus() {
+  checkStatus(): void {
     if (this.finalProduct.length && this.finalProduct !== this.initialFormData) {
       this.step.state = 'INPROCESS'
     }
@@ -74,31 +79,32 @@ export class StepEightComponent implements OnInit {
   }
 
   // Changes the button according to form status
-  handleButtonType() {
-    if (this.step.state == 'INPROCESS') {
+  handleButtonType(): void {
+    if (this.step.state === 'INPROCESS') {
       this.buttonConfig.disabled = false
       this.buttonConfig.submitted = false
     }
-    if (this.step.state == 'PENDING') {
+    if (this.step.state === 'PENDING') {
       this.buttonConfig.disabled = true
       this.buttonConfig.submitted = false
     }
-    if (this.step.state == 'DONE') {
+    if (this.step.state === 'DONE') {
       this.buttonConfig.submitted = true
       this.buttonConfig.disabled = true
     }
   }
 
   // Function to trigger the value in the textarea
-  onValueChange(value: string) {
+  onValueChange(value: string): void {
     this.finalProduct = value
     this.checkStatus()
   }
 
-  //Handle submit functionality
-  handleSubmit(formStatus?: Status) {
-    if (formStatus == 'DONE')
+  // Handle submit functionality
+  handleSubmit(formStatus?: Status): void {
+    if (formStatus === 'DONE') {
       this.step.state = 'DONE'
+    }
     this.initialFormData = this.finalProduct
     this.handleButtonType()
     const formData: FormEight = {
@@ -114,11 +120,11 @@ export class StepEightComponent implements OnInit {
         ]
       }
     }
-    this.editor.handleStepSubmit(formData, this.step.state == "DONE")
+    this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
   }
 
   // Function to check whether the form is updated
-  isFormUpdated() {
+  isFormUpdated(): boolean {
     if (this.initialFormData !== this.finalProduct || this.initialFormStatus !== this.step.state) {
       return true
     }

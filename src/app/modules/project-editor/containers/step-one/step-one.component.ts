@@ -1,19 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
+
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
-import { FieldConfig } from '../../../../shared/constants/field.model'
-import { CountryEntityService } from '../../services/country/country-entity.service'
-import { RegionEntityService } from '../../services/region/region-entity.service'
-import { AcademicYearEntityService } from '../../services/academic-year/academic-year-entity.service'
-import { GradeEntityService } from '../../services/grade/grade-entity.service'
-import { SubjectEntityService } from '../../services/subject/subject-entity.service'
-import { formOneInitData } from '../../constants/step-forms.data'
-import { FormOneInitData, FormOne } from '../../constants/step-forms.model'
+
+import { FieldConfig, DropDownConfig } from '../../../../shared/constants/field.model'
+import { FormOneInitData } from '../../constants/step-forms.data'
+import { FormOneInit, FormOne } from '../../constants/step-forms.model'
 import { Step, Status } from '../../constants/step.model'
 import { EditorService } from '../../services/editor/editor.service'
-import { GradeDataService } from '../../services/grade/grade-data.service'
-import { SubjectDataService } from '../../services/subject/subject-data.service'
+import { CountryEntityService } from '../../store/entity/country/country-entity.service'
+import { RegionEntityService } from '../../store/entity/region/region-entity.service'
+import { AcademicYearEntityService } from '../../store/entity/academic-year/academic-year-entity.service'
+import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
+import { SubjectEntityService } from '../../store/entity/subject/subject-entity.service'
+import { GradeDataService } from '../../store/entity/grade/grade-data.service'
+import { SubjectDataService } from '../../store/entity/subject/subject-data.service'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-one',
@@ -25,15 +28,16 @@ export class StepOneComponent implements OnInit, OnDestroy {
   project$: Observable<any>
   step$: Observable<Step>
   step: Step
-  initialFormData: FormOneInitData = new formOneInitData
+  initialFormData: FormOneInit = new FormOneInitData()
   buttonConfig: FieldConfig
-  countryDropdown: FieldConfig
-  regionDropdown: FieldConfig
-  academicYearDropdown: FieldConfig
-  gradesDropdown: FieldConfig
-  subjectsDropdown: FieldConfig
-  active: boolean = false
-  initialFormStatus: Status = "PENDING"
+  countryDropdown: DropDownConfig
+  regionDropdown: DropDownConfig
+  academicYearDropdown: DropDownConfig
+  gradesDropdown: DropDownConfig
+  subjectsDropdown: DropDownConfig
+  active = false
+  initialFormStatus: Status = 'PENDING'
+  subscriptions = new SubSink()
 
   constructor(
     private countryService: CountryEntityService,
@@ -57,16 +61,17 @@ export class StepOneComponent implements OnInit, OnDestroy {
     if (this.isFormUpdated()) {
       this.handleSubmit()
     }
+    this.subscriptions.unsubscribe()
   }
 
-  formInIt() {
-    this.project$ = this.editor.getStepData('stepOne')
-    this.step$ = this.editor.getStepStatus(1)
-    this.step = this.editor.steps.one
+  formInIt(): void {
+    this.project$ = this.editor.getStepData(1)
+    this.step$ = this.editor.getStepStatus()
+    this.step = this.editor.steps[0]
     if (this.project$) {
-      this.project$
+      this.subscriptions.sink = this.project$
         .subscribe(data => {
-          let tempinitialFormData = new formOneInitData
+          const tempinitialFormData = new FormOneInitData()
           if (data?.country) {
             this.countryDropdown.selectedItems = [{ ...data.country }]
             tempinitialFormData.country.push({ ...data.country })
@@ -87,115 +92,114 @@ export class StepOneComponent implements OnInit, OnDestroy {
             this.gradesDropdown.disabled = false
           }
           if (data?.grades) {
-            const gradesData = this.changeResponseFormat(data.grades)
             this.gradesDropdown.selectedItems = []
-            this.gradesDropdown.selectedItems.push(...gradesData)
-            tempinitialFormData.grades.push(...gradesData)
+            this.gradesDropdown.selectedItems.push(...data.grades)
+            tempinitialFormData.grades.push(...data.grades)
             if (data.grades.length) {
               this.getSubjects()
               this.subjectsDropdown.disabled = false
             }
           }
           if (data?.subjects?.length) {
-            const subjectData = this.changeResponseFormat(data.subjects)
             this.subjectsDropdown.selectedItems = []
-            this.subjectsDropdown.selectedItems.push(...subjectData)
-            tempinitialFormData.subjects.push(...subjectData)
+            this.subjectsDropdown.selectedItems.push(...data.subjects)
+            tempinitialFormData.subjects.push(...data.subjects)
           }
           this.initialFormData = tempinitialFormData
         })
     }
     if (this.step$) {
-      this.step$.subscribe(
+      this.subscriptions.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state == "DONE"
+            this.buttonConfig.submitted = formStatus.state === 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state != "DONE" && this.checkNonEmptyForm())
+            if (formStatus.state !== 'DONE' && this.checkNonEmptyForm()) {
               this.buttonConfig.disabled = false
+            }
           }
         }
       )
     }
   }
 
-  changeResponseFormat(data: any) {
-    return data.map(({ id, name }) => ({ id, name }))
-  }
-
-  getAllCountries() {
-    this.countryService.entities$
+  getAllCountries(): void {
+    this.subscriptions.sink = this.countryService.entities$
       .subscribe(data => {
-        this.countryDropdown.options = data
-        if (!data.length) this.countryService.getAll()
+        this.countryDropdown.data = data
+        if (!data.length) { this.countryService.getAll() }
       })
   }
 
-  getRegions(countryId: number) {
-    this.regionService.entities$
+  getRegions(countryId: number): void {
+    this.subscriptions.sink = this.regionService.entities$
       .pipe(
-        map(regions => regions.filter(region => region.country.id == countryId))
+        map(regions => regions.filter(region => region.country.id === countryId))
       )
       .subscribe(newData => {
-        if (!newData.length) this.regionService.getWithQuery(countryId.toString()) //trigger API after checking the store
-        this.regionDropdown.options = newData
+        if (!newData.length) { this.regionService.getWithQuery(countryId.toString()) }
+        this.regionDropdown.data = newData
       })
   }
 
-  getAcademicYears() {
-    this.academicYearService.entities$
+  getAcademicYears(): void {
+    this.subscriptions.sink = this.academicYearService.entities$
       .subscribe(newData => {
-        if (!newData.length) this.academicYearService.getAll() //trigger API after checking the store
-        this.academicYearDropdown.options = newData
+        if (!newData.length) { this.academicYearService.getAll() }
+        this.academicYearDropdown.data = newData
       })
   }
 
-  getGrades(academicyearId: number, regionId?: number) {
+  getGrades(academicyearId: number, regionId?: number): void {
     const selectedRegionId = regionId ? regionId : this.regionDropdown.selectedItems[0].id
-    this.gradeService.entities$
+    this.subscriptions.sink = this.gradeService.entities$
       .pipe(
-        map(grades => grades.filter(grade => grade.academicYear?.id == academicyearId && grade.region?.id == selectedRegionId))
+        map(grades => grades.filter(grade => grade.academicYear?.id === academicyearId
+          && grade.region?.id === selectedRegionId))
       )
       .subscribe(newData => {
         if (!newData.length) {
-          let parms = {
+          const parms = {
             regionId: selectedRegionId.toString(),
             academicyearId: academicyearId.toString()
           }
-          this.gradeService.getWithQuery(parms) //trigger API after checking the store
+          this.gradeService.getWithQuery(parms)
         }
-        this.gradesDropdown.options = newData
+        this.gradesDropdown.data = newData
       })
   }
 
-  getSubjects() {
-    let gradeIds = []
+  getSubjects(): void {
+    const gradeIds = []
     this.gradesDropdown.selectedItems.forEach(grade => { gradeIds.push(grade.id) })
-    this.gradeService.entities$
-      .pipe(map(gradeData => {                               // filters subject data from grade entity service
-        let subjectData = new Set([])
+    this.subscriptions.sink = this.gradeService.entities$
+      .pipe(map(gradeData => {
+        const subjectData = new Set([])
         gradeData.forEach(grade => {
           gradeIds.forEach(gradeId => {
-            if (grade.id == gradeId)
+            if (grade.id === gradeId) {
               grade.subjectList.forEach(subject => subjectData.add(subject))
+            }
           })
         })
         return [...subjectData]
       }))
       .subscribe(newData => {
-        this.subjectsDropdown.options = newData
+        this.subjectsDropdown.data = newData
       })
   }
 
-  checkStatus() {
-    if (this.checkEmptyForm())
-      this.step.state = "PENDING"
-    else
-      this.step.state = "INPROCESS"
+  checkStatus(): void {
+    if (this.checkEmptyForm()) {
+      this.step.state = 'PENDING'
+    }
+    else {
+      this.step.state = 'INPROCESS'
+    }
   }
 
   // checks if the form is empty
-  checkEmptyForm() {
+  checkEmptyForm(): boolean {
     if (!this.countryDropdown.selectedItems.length &&
       !this.regionDropdown.selectedItems.length &&
       !this.academicYearDropdown.selectedItems.length &&
@@ -208,7 +212,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   // checks the form is completely filled or not
-  checkNonEmptyForm() {
+  checkNonEmptyForm(): boolean {
     if (this.countryDropdown.selectedItems.length &&
       this.regionDropdown.selectedItems.length &&
       this.academicYearDropdown.selectedItems.length &&
@@ -221,7 +225,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     }
   }
 
-  isFormUpdated() {
+  isFormUpdated(): boolean {
     if (!this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.region, this.regionDropdown.selectedItems) ||
       !this.isEqual(this.initialFormData.academicYear, this.academicYearDropdown.selectedItems) ||
@@ -234,10 +238,9 @@ export class StepOneComponent implements OnInit, OnDestroy {
     return false
   }
 
-  checkInProgress(data: any, type: string) {
-    let values: Array<any> = []
-    for (var key of Object.keys(this.initialFormData)) {
-      // let value: any
+  checkInProgress(data: any, type: string): void {
+    const values: Array<any> = []
+    for (const key of Object.keys(this.initialFormData)) {
       switch (key) {
         case 'country':
           values.push(this.isEqual(this.initialFormData.country, this.countryDropdown.selectedItems))
@@ -261,7 +264,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDropdownSelect(selectedData: any) {
+  onDropdownSelect(selectedData: any): void {
     this.checkInProgress(selectedData.val, selectedData.controller)
     const selectedId = selectedData.val[0]?.id
     if (selectedData) {
@@ -269,25 +272,25 @@ export class StepOneComponent implements OnInit, OnDestroy {
         case 'country': {
           this.resetForm(selectedData.controller)
           this.handleDropdownDisable(selectedData.controller)
-          if (selectedId) this.getRegions(selectedId)
+          if (selectedId) { this.getRegions(selectedId) }
           break
         }
         case 'region': {
           this.resetForm(selectedData.controller)
           this.handleDropdownDisable(selectedData.controller)
-          if (selectedId) this.getAcademicYears()
+          if (selectedId) { this.getAcademicYears() }
           break
         }
         case 'academicYear': {
           this.resetForm(selectedData.controller)
           this.handleDropdownDisable(selectedData.controller)
-          if (selectedId) this.getGrades(selectedId)
+          if (selectedId) { this.getGrades(selectedId) }
           break
         }
         case 'grades': {
           this.resetForm(selectedData.controller)
           this.handleDropdownDisable(selectedData.controller)
-          if (selectedId) this.getSubjects()
+          if (selectedId) { this.getSubjects() }
         }
       }
       this.checkInProgress(selectedData.val, selectedData.controller)
@@ -296,7 +299,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   // Changes the button according to form status
-  handleButtonType() {
+  handleButtonType(): void {
     if (this.checkNonEmptyForm()) {
       this.buttonConfig.disabled = false
       this.buttonConfig.submitted = false
@@ -306,14 +309,15 @@ export class StepOneComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleSubmit(formStatus?: Status) {
-    if (formStatus == 'DONE') {
+  handleSubmit(formStatus?: Status): void {
+    if (formStatus === 'DONE') {
       this.step.state = formStatus
       this.initialFormStatus = formStatus
     }
-    else
+    else {
       this.checkStatus()
-    let formData: FormOne = {
+    }
+    const formData: FormOne = {
       data: {
         country: this.countryDropdown.selectedItems[0] ? this.countryDropdown.selectedItems[0] : null,
         region: this.regionDropdown.selectedItems[0] ? this.regionDropdown.selectedItems[0] : null,
@@ -331,58 +335,68 @@ export class StepOneComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.updateInitialData();
-    if (formStatus == 'DONE' && this.checkNonEmptyForm()) {
-      this.buttonConfig.submitted = this.step.state == 'DONE'
-      this.buttonConfig.disabled = this.step.state == "DONE"
+    this.updateInitialData()
+    if (formStatus === 'DONE' && this.checkNonEmptyForm()) {
+      this.buttonConfig.submitted = this.step.state === 'DONE'
+      this.buttonConfig.disabled = this.step.state === 'DONE'
     }
-    this.editor.handleStepSubmit(formData, this.step.state == "DONE")
+    this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
   }
 
   // reset form fields
-  resetForm(field: string) {
-    if (field == 'country' || field == 'region') {
+  resetForm(field: string): void {
+    if (field === 'country' || field === 'region') {
       this.gradesDropdown.selectedItems = []
       this.subjectsDropdown.selectedItems = []
       this.academicYearDropdown.selectedItems = []
-      if (field == 'country')
+      if (field === 'country') {
         this.regionDropdown.selectedItems = []
+      }
     }
-    if (field == 'academicYear') {
+    if (field === 'academicYear') {
       this.gradesDropdown.selectedItems = []
       this.subjectsDropdown.selectedItems = []
     }
-    if (field == 'grades' && !this.gradesDropdown.selectedItems.length)
+    if (field === 'grades' && !this.gradesDropdown.selectedItems.length) {
       this.subjectsDropdown.selectedItems = []
+    }
     this.checkStatus()
   }
 
-  isEqual(d1: any[], d2: any[]) {
+  isEqual(d1: any[], d2: any[]): boolean {
     return JSON.stringify(d1) === JSON.stringify(d2)
   }
 
   // disable or enable dropdown field
-  handleDropdownDisable(type: string) {
-    let fields = [];
+  handleDropdownDisable(type: string): void {
+    const fields = []
     switch (type) {
-      case 'country': fields.splice(0, 0, "gradesDropdown", "subjectsDropdown", "academicYearDropdown")
-        this.regionDropdown.disabled = this.countryDropdown.selectedItems.length == 0
+      case 'country': {
+        fields.splice(0, 0, 'gradesDropdown', 'subjectsDropdown', 'academicYearDropdown')
+        this.regionDropdown.disabled = this.countryDropdown.selectedItems.length === 0
         break
-      case 'region': fields.splice(0, 0, "gradesDropdown", "subjectsDropdown")
-        this.academicYearDropdown.disabled = this.regionDropdown.selectedItems.length == 0
+      }
+      case 'region': {
+        fields.splice(0, 0, 'gradesDropdown', 'subjectsDropdown')
+        this.academicYearDropdown.disabled = this.regionDropdown.selectedItems.length === 0
         break
-      case 'academicYear': fields.push("subjectsDropdown")
-        this.gradesDropdown.disabled = this.academicYearDropdown.selectedItems.length == 0
+      }
+      case 'academicYear': {
+        fields.push('subjectsDropdown')
+        this.gradesDropdown.disabled = this.academicYearDropdown.selectedItems.length === 0
         break
-      case 'grades': this.subjectsDropdown.disabled = this.gradesDropdown.selectedItems.length == 0
+      }
+      case 'grades':
+        this.subjectsDropdown.disabled = this.gradesDropdown.selectedItems.length === 0
         break
     }
-    if (fields.length)
+    if (fields.length) {
       fields.forEach(field => this[field].disabled = true)
+    }
   }
 
   // fuction updates the initial form data on form submit
-  updateInitialData() {
+  updateInitialData(): void {
     this.initialFormData = {
       country: this.countryDropdown.selectedItems,
       region: this.regionDropdown.selectedItems,
@@ -392,7 +406,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     }
   }
 
-  createFormConfig() {
+  createFormConfig(): void {
     this.buttonConfig = {
       name: 'submit',
       field: 'button',
@@ -401,52 +415,61 @@ export class StepOneComponent implements OnInit, OnDestroy {
       submitted: false
     }
     this.countryDropdown = {
-      field: 'dropdown',
       name: 'country',
       id: 'country',
-      multiselect: false,
-      options: [],
-      selectedItems: []
+      data: [],
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: true,
+      }
     }
     this.regionDropdown = {
-      field: 'dropdown',
       name: 'region',
       id: 'region',
-      multiselect: false,
-      options: [],
+      data: [],
       disabled: true,
-      selectedItems: []
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: true,
+      }
     }
     this.academicYearDropdown = {
-      field: 'dropdown',
       name: 'academicYear',
       id: 'academicYear',
-      textField: 'academicYear',
-      multiselect: false,
-      options: [],
+      data: [],
       disabled: true,
-      selectedItems: []
+      selectedItems: [],
+      settings: {
+        textField: 'academicYear',
+        singleSelection: true,
+      }
     }
     this.gradesDropdown = {
-      field: 'dropdown',
       name: 'grades',
       id: 'grade',
       disabled: true,
-      multiselect: true,
-      options: [],
-      selectedItems: []
+      data: [],
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: false,
+      }
     }
     this.subjectsDropdown = {
-      field: 'dropdown',
       name: 'subjects',
       id: 'subject',
       disabled: true,
-      multiselect: true,
-      options: [],
-      selectedItems: []
+      data: [],
+      selectedItems: [],
+      settings: {
+        textField: 'name',
+        singleSelection: false,
+      }
     }
     // Translation
-    this.translateService.stream([
+    this.subscriptions.sink = this.translateService.stream([
       'PROJECT.project_button_markdone',
       'PROJECT.project_button_done',
       'STARTING_POINT.project_startingpoint_year',

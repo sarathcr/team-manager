@@ -129,6 +129,12 @@
   min-height: calc(100vh - 160px);
   &__title{
     line-height: 32px;
+    display: flex;
+    flex-direction: row;
+    &-number{
+      display: flex;
+      margin-right: 10px;
+    }
   }
 }
 
@@ -169,5 +175,45 @@ body,
   ::-webkit-scrollbar-thumb {
     border-radius: 3.5px;
     background-color: $desktop-border-color;
+  }
+}
+
+.competency-modal{
+  max-width: 87.5%; // 1260px;
+  max-height: 92.6%; // 750px
+
+  @media (min-width: 1440px) and (min-height: 810px) {
+    max-width: 1260px;
+    max-height: 750px;
+  }
+
+  .dropdown{
+    margin-bottom: 8px;
+    padding-right: 20px;
+  }
+}
+//Scrollbar Styles
+.ng-scrollbar-track{
+  width: 7px  !important;
+  border-radius: 4px !important;
+  background-color: transparent !important;
+}
+.ng-scrollbar-thumb{
+  background-color: $creator-border !important;
+}
+
+scrollbar-y.scrollbar-control{
+  right: 3px !important;
+}
+.competency-modal__body-block{
+  .dropdown__wrap{
+    background-color: $white;
+  }
+}
+
+@include media-breakpoint-up(xxl) {
+  .project-editor__form{
+    padding-left: 50px;
+    padding-right: 50px;
   }
 }

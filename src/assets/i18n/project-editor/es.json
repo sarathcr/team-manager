@@ -1,4 +1,7 @@
 {
+  "GENERAL":{
+    "platform_title_tab": "Thinkö"
+  },
   "PROJECT":{
       "project_button_markdone": "MARCAR COMO HECHO",
       "project_button_done": "HECHO",
@@ -23,7 +26,8 @@
       "project_stepsmenu_drivingquestion": "Preguntas guía",
       "project_structure_stepsmenu_finalproduct": "Producto final",
       "project_structure_stepsmenu_sinopsis": "Sinopsis",
-      "project_structure_stepsmenu_output": "Ver ficha estructura"
+      "project_structure_stepsmenu_output": "Ver ficha estructura",
+      "project_structure_stepsmenu_objectives": "Objetivos"
     },
     "STARTING_POINT":{
       "project_startingpoint_title": "Punto de partida",
@@ -61,7 +65,7 @@
         "subtitle" : "Transforma los criterios de evaluación en objetivos de aprendizaje:",
         "description" : "Al final del proyecto queremos que nuestros/as alumnos/as sepan..."
       },
-      "project_objectives_objectives_placeholder": "Escribe el primer objetivo competencial. Por ejemplo: \"...comprender que la cultura hace valorar la historia propia.\"",
+      "project_objectives_objectives_placeholder": "Escribe el primer objetivo de aprendizaje. Por ejemplo: \"...comprender que la cultura hace valorar la historia propia.\"",
       "project_objectives_add_criteria": " + Añadir",
       "project_objectivies_add_more_subjects": {
         "one" : "Accede al",
@@ -86,6 +90,34 @@
       "project_objectives_criteriawindow_empty_title": "No tienes criterios seleccionados",
       "project_objectives_criteriawindow_empty_description": "Selecciona criterios de evaluación del currículum y visualiza el listado de seleccionados aquí para añadirlos.",
       "project_objectives_criteriawindow_empty_button": "Ver criterios"
+    },
+    "CONTENT":{
+      "project_content_dependancy_description":"Para acceder al currículum y seleccionar los contenidos tienes que completar el paso Punto de partida.",
+      "project_content_dependancy_button":"Ir al punto de partida",
+      "project_content_dependancy_filterbycriteria_description":"Para seleccionar los contenidos, primero tienes que tienes que especificar los criterios de evaluación de esta asignatura en el paso Objetivos de aprendizaje.",
+      "project_content_dependancy_filterbycriteria_button":"Especifica los criterios",
+      "project_content_title":"Contenidos",
+      "project_content_description":"Especifica los contenidos que te interesa trabajar. En el currículum te mostramos los contenidos ya filtrados en función de los criterios de evaluación que has añadido en el paso anterior.",
+      "project_content_placeholder":"Agrega contenidos del currículum.",
+      "project_content_add_criteria":" + Añadir",
+      "project_content_cvcontent":"Contenido del currículum",
+      "project_content_extracontent":"Añadir contenidos personalizados",
+      "project_content_extracontent_input":"Contenidos personalizados",
+      "project_content_contentwindow_curriculum":"Currículum",	
+      "project_content_contentwindow_title":"Selecciona los contenidos a trabajar:",	
+      "project_objectives_contentwindow_combo_title":"Curso",	
+      "project_objectives_contentwindow_combo_section_1":"Cursos preferentes",	
+      "project_objectives_contentwindow_combo_section_2":"Otros cursos",	
+      "project_objectives_contentwindow_content":"Contenidos",	
+      "project_objectives_contentwindow_course":"Curso",	
+      "project_objectives_contentwindow_block":"Bloque",	
+      "project_objectives_contentwindow_showall":"Ver todos los contenidos seleccionados",	
+      "project_objectives_contentwindow_add":"Añadir",	
+      "project_objectives_contentwindow_content_selected"	:"contenidos seleccionados",
+      "project_objectives_contentwindow_content_selected_back":"Volver",	
+      "project_content_contentwindow_empty_title":"No tienes contenidos seleccionados",	
+      "project_content_contentwindow_empty_description":"Selecciona contenidos del currículum y visualiza el listado de seleccionados aquí para añadirlos.",	
+      "project_content_contentwindow_empty_button":"Ver contenidos"	
     },
     "RETHINK_TITLE":{
       "project_rethinktitle_title": "Título creativo",
