@@ -8,8 +8,8 @@ interface Content extends Standards {
 }
 
 export interface CriteriaWithSkills extends EvaluationCriteria {
-  basicSkills: BasicSkills[]
-  dimensions: Dimensions[]
+  basicSkills?: BasicSkills[]
+  dimensions?: Dimensions[]
   checked?: boolean
   colTwoData?: string
 }
@@ -22,6 +22,7 @@ export interface Block {
   evaluationCriteria: CriteriaWithSkills[]
   contents: Content[]
   colTwoHead?: string
+  virtual: boolean
 }
 
 export interface BlockData {

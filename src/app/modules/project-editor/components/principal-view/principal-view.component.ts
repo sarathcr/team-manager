@@ -93,7 +93,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.adjustHeightContent()
     this.createFormConfig()
-    this.getBlocks()
+    this.getBlocks(this.selectedGrades[0])
     this.getTranslation()
   }
 
@@ -103,12 +103,12 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   }
 
   onDropdownSelect(selectedData: any): void {
-    this.getBlocks()
+    this.getBlocks(selectedData.val[0])
   }
 
   createFormConfig(): void {
     const selectedGrades = this.selectedGrades
-    const otherGrades = this.grades.filter(grade => selectedGrades.includes(grade))
+    const otherGrades = this.grades.filter(grade => !selectedGrades.map(selected => selected.id).includes(grade.id))
     this.gradeDropdownConfig = {
       name: '',
       data: otherGrades,
@@ -127,11 +127,11 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  getBlocks(): void {
+  getBlocks(selectedGrade: any): void {
     this.subscriptions.unsubscribe()
     this.subscriptions.sink = this.blockService.entities$
     .pipe(map(data => {
-      const savedBlockData = data.find(blockData => blockData.id === `${this.selectedGrades[0].id}-${this.subjectId}`)
+      const savedBlockData = data.find(blockData => blockData.id === `${selectedGrade.id}-${this.subjectId}`)
       if (savedBlockData?.blockData) {
         return savedBlockData.blockData
       }
@@ -139,30 +139,28 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     .subscribe(data => {
       if (!data?.length) {
         this.blockService.getWithQuery(
-        { gradeId: String(this.selectedGrades[0].id), subjectId: this.subjectId }
+        { gradeId: String(selectedGrade.id), subjectId: this.subjectId }
       )}
-      this.blocks = data && data.map(block => {
+      this.blocks = data?.map(block => {
         let colTwoHead: string
-        const evaluationCriteria = [
-          ...block.evaluationCriteria.map(criteria => {
+        const evaluationCriteria = block.evaluationCriteria.map(criteria => {
             let colTwoData: string
             if (!colTwoHead) {
-              if (criteria.dimensions.length) {
+              if (criteria.dimensions?.length) {
                 colTwoHead = 'Dimensions'
               }
-              else if (criteria.basicSkills.length) {
+              else if (criteria.basicSkills?.length) {
                 colTwoHead = 'Basic Skills'
               }
             }
-            if (criteria.dimensions.length) {
+            if (criteria.dimensions?.length) {
               colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
             }
-            else if (criteria.basicSkills.length) {
+            else if (criteria.basicSkills?.length) {
               colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
             }
-            return { ...criteria, checked: false, colTwoData }
+            return { ...criteria, checked: false, colTwoData, grade: selectedGrade, block }
           })
-        ]
         return { ...block, evaluationCriteria, colTwoHead }
       })
     })
