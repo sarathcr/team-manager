@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
-import { Block, CriteriaWithSkills, BlockDisplay } from 'src/app/shared/constants/block.model'
+import { CriteriaWithSkills, Block } from 'src/app/shared/constants/block.model'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 import { map } from 'rxjs/operators'
 
@@ -23,7 +23,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   selectedGrades: Option[]
   leftContentHeight = ''
   contentHeight = ''
-  blocks: BlockDisplay[]
+  blocks: Block[]
   currentBlockIndex = 0
   checks: Array<{ parentId: number, count: number }> = []
   subjectId
@@ -143,30 +143,27 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
       )}
       this.blocks = data && data.map(block => {
         let colTwoHead: string
-        return {
-          ...block,
-          evaluationCriteria: [
-            ...block.evaluationCriteria.map(criteria => {
-              let colTwoData: string
-              if (!colTwoHead) {
-                if (criteria.dimensions.length) {
-                  colTwoHead = 'Dimensions'
-                }
-                else if (criteria.basicSkills.length) {
-                  colTwoHead = 'Basic Skills'
-                }
-              }
+        const evaluationCriteria = [
+          ...block.evaluationCriteria.map(criteria => {
+            let colTwoData: string
+            if (!colTwoHead) {
               if (criteria.dimensions.length) {
-                colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
+                colTwoHead = 'Dimensions'
               }
               else if (criteria.basicSkills.length) {
-                colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
+                colTwoHead = 'Basic Skills'
               }
-              return { ...criteria, checked: false, colTwoData }
-            })
-          ],
-          colTwoHead
-        }
+            }
+            if (criteria.dimensions.length) {
+              colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
+            }
+            else if (criteria.basicSkills.length) {
+              colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
+            }
+            return { ...criteria, checked: false, colTwoData }
+          })
+        ]
+        return { ...block, evaluationCriteria, colTwoHead }
       })
     })
   }
@@ -215,10 +212,6 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
 
   getSummary(): void {
     this.isShow = !this.isShow
-  }
-
-  checkCount(): any {
-    return criteria => criteria.checked === true
   }
 }
 

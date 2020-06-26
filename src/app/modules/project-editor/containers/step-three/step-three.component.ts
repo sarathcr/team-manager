@@ -315,17 +315,16 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       })
   }
 
-  // openModalWithComponent(subjectId: number): void  {
-  //   console.log(subjectId)
-  //   // this.getEvaludationCriteria()
-  //   const initialState = {
-  //     // grades: this.grades,
-  //     // selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name })),
-  //     subjectId
-  //   }
-  //   this.bsModalRef = this.modalService.show(PrincipalViewComponent,
-  //     { class: 'competency-modal', initialState })
-  //   this.bsModalRef.content.closeBtnName = 'Close'
-  // }
+  openModalWithComponent(subjectId: number): void  {
+    this.getEvaludationCriteria()
+    const initialState = {
+      grades: this.grades,
+      selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name })),
+      subjectId
+    }
+    this.bsModalRef = this.modalService.show(PrincipalViewComponent,
+      { class: 'competency-modal', initialState })
+    this.bsModalRef.content.closeBtnName = 'Close'
+  }
 }
 
