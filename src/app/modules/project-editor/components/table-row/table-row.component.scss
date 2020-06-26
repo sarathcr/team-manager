@@ -1,4 +1,9 @@
 @import 'helpers/_helpers-master';
+:host{
+    &:last-child{
+        margin-bottom: 16px;
+    }
+}
 
 .table-row{
     $root: &;

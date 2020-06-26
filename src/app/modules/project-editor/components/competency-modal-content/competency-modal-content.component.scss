@@ -52,7 +52,7 @@
         }
         &__icon{
             font-size: $font-size-xs;
-            margin-right: 11px;
+            margin-right: 8px;
         }
         &__summary-title{
             cursor: pointer;
@@ -120,11 +120,13 @@
                 letter-spacing: 0.3px;
                 font-weight: 900;
                 margin-bottom: 7px;
+                text-align: center;
             }
     
             &__description{
                 line-height: 24px;
                 margin-bottom: 31px;
+                text-align: center;
             }
         }
 
