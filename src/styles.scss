@@ -69,6 +69,7 @@
   &__goto-step{
     letter-spacing: 0;
     line-height: 24px;
+    display: flex;
   }
   &__form {
     display: flex;
@@ -87,6 +88,7 @@
     font-weight: bold;
     border-bottom: 1px solid $blue-whale;
     cursor: pointer;
+    margin: 0 6px;
   }
   &__title{
     font-size: $font-size-sub-s;

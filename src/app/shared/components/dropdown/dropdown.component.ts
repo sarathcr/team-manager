@@ -27,12 +27,12 @@ export class DropdownComponent implements OnInit {
     }
   }
 
-  onItemSelect(item: any): void {
+  onItemSelect(): void {
     this.active = true
     this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
   }
 
-  onItemDeSelect(item: any): void {
+  onItemDeSelect(): void {
     this.active = true
     this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
   }

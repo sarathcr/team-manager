@@ -5,16 +5,24 @@ import { map } from 'rxjs/operators'
 import { TranslateService } from '@ngx-translate/core'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
+import { EditorService } from '../../services/editor/editor.service'
+import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
+
 import { Step, Status } from '../../constants/step.model'
 import { FieldConfig, Option } from 'src/app/shared/constants/field.model'
-import { EditorService } from '../../services/editor/editor.service'
-import { CompetencyObjectives, EvaluationCriteria, Subject } from 'src/app/modules/project-editor/constants/project.model'
+import {
+  CompetencyObjectives,
+  EvaluationCriteria,
+  Subject
+} from 'src/app/modules/project-editor/constants/project.model'
 import { FormThreeInit, FormThree } from '../../constants/step-forms.model'
-import { FormThreeInitData } from '../../constants/step-forms.data'
 import { PrincipalViewComponent } from '../../components/principal-view/principal-view.component'
-import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { Project } from './../../constants/project.model'
+
+import { FormThreeInitData } from '../../constants/step-forms.data'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { compareArray } from 'src/app/shared/utility/array.utility'
 
 @Component({
   selector: 'app-step-three',
@@ -208,24 +216,17 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   // Function to check whether the form is updated
   isFormUpdated(): boolean {
-    if (!this.isEqual(this.initialFormData.competencyObjectives, this.InputFormData.competencyObjectives)
-      || !this.isArrayEqual(this.initialCriterias, this.criterias)
+    const initialData = this.initialFormData.competencyObjectives.map(item => item.name)
+    const inputData = this.InputFormData.competencyObjectives.map(item => item.name)
+    if (!compareArray(initialData, inputData)
+      || !compareArray(this.initialCriterias, this.criterias)
       || this.initialFormStatus !== this.step.state) {
       return true
     }
     return false
   }
 
-  isArrayEqual(d1: any[], d2: any[]): boolean {
-    return JSON.stringify(d1) === JSON.stringify(d2)
-  }
-
-  isEqual(d1: any[], d2: any[]): boolean {
-    d1 = d1.map(item => item.name)
-    d2 = d2.map(item => item.name)
-    return JSON.stringify(d1) === JSON.stringify(d2)
-  }
-
+  // function to submit form data
   handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
       this.step.state = 'DONE'

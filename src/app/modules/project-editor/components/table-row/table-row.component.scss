@@ -1,4 +1,10 @@
 @import 'helpers/_helpers-master';
+:host{
+    display: block;
+    &:last-child{
+        margin-bottom: 16px;
+    }
+}
 
 .table-row{
     $root: &;
@@ -7,10 +13,6 @@
     padding: 0 16px;
     &.selected{
         background-color: $table-row-active-bg-color;
-    }
-
-    &.last-row{
-        margin-bottom: 16px;
     }
 
     &__cell{
