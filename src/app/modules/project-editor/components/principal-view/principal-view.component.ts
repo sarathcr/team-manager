@@ -78,12 +78,6 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
       dimension: 'Món actual, Salut i equilibri personal'
     }]
 
-
-  @HostListener('window:resize', ['$event'])
-  onResize(): void {
-    this.adjustHeightContent()
-  }
-
   constructor(
     public bsModalRef: BsModalRef,
     private translateService: TranslateService,
@@ -91,7 +85,6 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.adjustHeightContent()
     this.createFormConfig()
     this.getBlocks(this.selectedGrades[0])
     this.getTranslation()
@@ -205,12 +198,6 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
 
   changeCurrentBlock(id: number): void {
     this.currentBlockIndex = id
-  }
-
-  adjustHeightContent(): void {
-    const innerHeight: number = window.innerHeight
-    this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
-    this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
   }
 
   getSummary(): void {

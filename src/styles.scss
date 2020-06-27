@@ -182,13 +182,13 @@ body,
 
 .competency-modal{
   max-width: 87.5%; // 1260px;
-  max-height: 92.6%; // 750px
-
+  height: 750px; // 750px
+  .modal-content{
+    height: 100%;
+  }
   @media (min-width: 1440px) and (min-height: 810px) {
     max-width: 1260px;
-    max-height: 750px;
   }
-
   .dropdown{
     margin-bottom: 8px;
     padding-right: 20px;
