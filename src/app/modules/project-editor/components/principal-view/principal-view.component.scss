@@ -296,13 +296,7 @@
             overflow: hidden;
 
             &-scroll{
-                // max-height: 450px;
-                // max-height: 49vh;
                 height: 100%;
-
-                .last-row{
-                    margin-bottom: 20px;
-                }
             }
 
             &::after{
