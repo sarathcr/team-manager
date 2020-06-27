@@ -20,6 +20,8 @@ import { HelpDataService } from './entity/help/help-data.service'
 import { entityMetadata } from './entity/entity-metadata'
 import { BlockEntityService } from './entity/block/block-entity.service'
 import { BlockDataService } from './entity/block/block-data.service'
+import { EvaluationCriteriaDataService } from './entity/evaluation-criteria/evaluatio-criteria-data.service'
+import { EvaluationCriteriaEntityService } from './entity/evaluation-criteria/evaluation-criteria-entity.service'
 
 
 
@@ -46,7 +48,9 @@ import { BlockDataService } from './entity/block/block-data.service'
     HelpEntityService,
     HelpDataService,
     BlockEntityService,
-    BlockDataService
+    BlockDataService,
+    EvaluationCriteriaDataService,
+    EvaluationCriteriaEntityService
   ]
 })
 export class ProjectEditorStoreModule {
@@ -62,7 +66,8 @@ export class ProjectEditorStoreModule {
     private academicYearDataService: AcademicYearDataService,
     private stepStatusDataService: StepStatusDataService,
     private contextualHelpService: HelpDataService,
-    private blockDataService: BlockDataService
+    private blockDataService: BlockDataService,
+    private evaluatioCriteriaDataService: EvaluationCriteriaDataService
   ) {
 
     eds.registerMetadataMap(entityMetadata)
@@ -75,5 +80,6 @@ export class ProjectEditorStoreModule {
     entityDataService.registerService('StepStatus', stepStatusDataService)
     entityDataService.registerService('ContextualHelp', contextualHelpService)
     entityDataService.registerService('Block', blockDataService)
+    entityDataService.registerService('EvaluationCriteria', evaluatioCriteriaDataService)
   }
 }

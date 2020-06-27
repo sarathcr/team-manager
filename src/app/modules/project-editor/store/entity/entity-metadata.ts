@@ -49,5 +49,10 @@ export const entityMetadata: EntityMetadataMap = {
     entityDispatcherOptions: {
       optimisticUpdate: true
     }
+  },
+  EvaluationCriteria: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
   }
 }

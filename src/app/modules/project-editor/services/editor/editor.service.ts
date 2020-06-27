@@ -90,7 +90,7 @@ export class EditorService {
               grades: data?.grades?.map(({ id, name }) => ({ id, name })),
               academicYear: data?.academicYear,
               region: data?.region,
-              subjects: data?.subjects?.map(({ id, name }) => ({ id, name })),
+              subjects: data?.subjects?.map(subject => subject),
               competencyObjectives: data?.competencyObjectives?.map(({ id, name }) => ({ id, name })),
               evaluationCriteria: data?.evaluationCriteria?.map(({ id, name, subjectId, gradeId }) => (
                 { id, name, subjectId, gradeId }))

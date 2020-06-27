@@ -2,13 +2,15 @@ import { Component, OnInit, HostListener, OnDestroy } from '@angular/core'
 
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateService } from '@ngx-translate/core'
+import { map } from 'rxjs/operators'
+import { Subject } from 'rxjs'
 
 import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 import { CriteriaWithSkills, Block } from 'src/app/shared/constants/block.model'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
-import { map } from 'rxjs/operators'
+import { EvaluationCriteria } from 'src/app/shared/constants/evaluation-criteria.model'
 
 @Component({
   selector: 'app-competency-modal-content',
@@ -39,7 +41,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   tableData: TempData[] = [
     {
       evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
-      + 'seguridad y uso responsable.',
+        + 'seguridad y uso responsable.',
       associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
       course: '4º ESO',
       block: '1. Tecnologías de la información y de la comunicación',
@@ -47,7 +49,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     },
     {
       evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
-      + 'seguridad y uso responsable.',
+        + 'seguridad y uso responsable.',
       associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
       course: '4º ESO',
       block: '1. Tecnologías de la información y de la comunicación',
@@ -55,7 +57,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     },
     {
       evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
-      + 'seguridad y uso responsable.',
+        + 'seguridad y uso responsable.',
       associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
       course: '4º ESO',
       block: '1. Tecnologías de la información y de la comunicación',
@@ -63,7 +65,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     },
     {
       evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
-      + 'seguridad y uso responsable.',
+        + 'seguridad y uso responsable.',
       associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
       course: '4º ESO',
       block: '1. Tecnologías de la información y de la comunicación',
@@ -71,12 +73,13 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     },
     {
       evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
-      + 'seguridad y uso responsable.',
+        + 'seguridad y uso responsable.',
       associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
       course: '4º ESO',
       block: '1. Tecnologías de la información y de la comunicación',
       dimension: 'Món actual, Salut i equilibri personal'
     }]
+  selectedCriterias: Subject<EvaluationCriteria[]> = new Subject()
 
 
   @HostListener('window:resize', ['$event'])
@@ -130,42 +133,43 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   getBlocks(): void {
     this.subscriptions.unsubscribe()
     this.subscriptions.sink = this.blockService.entities$
-    .pipe(map(data => {
-      const savedBlockData = data.find(blockData => blockData.id === `${this.selectedGrades[0].id}-${this.subjectId}`)
-      if (savedBlockData?.blockData) {
-        return savedBlockData.blockData
-      }
-    }))
-    .subscribe(data => {
-      if (!data?.length) {
-        this.blockService.getWithQuery(
-        { gradeId: String(this.selectedGrades[0].id), subjectId: this.subjectId }
-      )}
-      this.blocks = data && data.map(block => {
-        let colTwoHead: string
-        const evaluationCriteria = [
-          ...block.evaluationCriteria.map(criteria => {
-            let colTwoData: string
-            if (!colTwoHead) {
+      .pipe(map(data => {
+        const savedBlockData = data.find(blockData => blockData.id === `${this.selectedGrades[0].id}-${this.subjectId}`)
+        if (savedBlockData?.blockData) {
+          return savedBlockData.blockData
+        }
+      }))
+      .subscribe(data => {
+        if (!data?.length) {
+          this.blockService.getWithQuery(
+            { gradeId: String(this.selectedGrades[0].id), subjectId: this.subjectId }
+          )
+        }
+        this.blocks = data && data.map(block => {
+          let colTwoHead: string
+          const evaluationCriteria = [
+            ...block.evaluationCriteria.map(criteria => {
+              let colTwoData: string
+              if (!colTwoHead) {
+                if (criteria.dimensions.length) {
+                  colTwoHead = 'Dimensions'
+                }
+                else if (criteria.basicSkills.length) {
+                  colTwoHead = 'Basic Skills'
+                }
+              }
               if (criteria.dimensions.length) {
-                colTwoHead = 'Dimensions'
+                colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
               }
               else if (criteria.basicSkills.length) {
-                colTwoHead = 'Basic Skills'
+                colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
               }
-            }
-            if (criteria.dimensions.length) {
-              colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
-            }
-            else if (criteria.basicSkills.length) {
-              colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
-            }
-            return { ...criteria, checked: false, colTwoData }
-          })
-        ]
-        return { ...block, evaluationCriteria, colTwoHead }
+              return { ...criteria, checked: false, colTwoData }
+            })
+          ]
+          return { ...block, evaluationCriteria, colTwoHead }
+        })
       })
-    })
   }
 
   getTranslation(): void {
@@ -213,6 +217,22 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   getSummary(): void {
     this.isShow = !this.isShow
   }
+
+  handleButtonClick(): void {
+    if (this.blocks?.length) {
+      const selectedCriteria = []
+      for (const block of this.blocks) {
+        for (const criteria of block.evaluationCriteria) {
+          if (criteria.checked === true) {
+            selectedCriteria.push({ id: criteria.id, name: criteria.name })
+          }
+        }
+      }
+      this.selectedCriterias.next(selectedCriteria)
+    }
+    this.bsModalRef.hide()
+  }
+
 }
 
 export interface TempData {

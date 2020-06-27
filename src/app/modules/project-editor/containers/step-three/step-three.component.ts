@@ -8,7 +8,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { Step, Status } from '../../constants/step.model'
 import { FieldConfig, Option } from 'src/app/shared/constants/field.model'
 import { EditorService } from '../../services/editor/editor.service'
-import { CompetencyObjectives, EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
+import { CompetencyObjectives, EvaluationCriteria, Subject } from 'src/app/modules/project-editor/constants/project.model'
 import { FormThreeInit, FormThree } from '../../constants/step-forms.model'
 import { FormThreeInitData } from '../../constants/step-forms.data'
 import { PrincipalViewComponent } from '../../components/principal-view/principal-view.component'
@@ -74,6 +74,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     if (this.project$) {
       this.subscriptions.sink = this.project$.subscribe(data => {
         this.project = data
+        // console.log(this.project)
         this.getGrades(this.project)
       })
       this.competencyObjectives$ = this.project$
@@ -137,8 +138,10 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   // WIP
   removeItem(index: number): void {
-    this.criterias.splice(index, 1)
-    this.checkStatus()
+    // this.criterias.splice(index, 1)
+    // this.checkStatus()
+    // console.log(index)
+
   }
 
   textAreaUpdate(data: Option[]): void { // calls on every update
@@ -254,7 +257,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     const formData: FormThree = {
       data: {
         competencyObjectives: tempData.length ? this.InputFormData.competencyObjectives : [],
-        evaluationCriteria: [...tempCriteria]
+        // evaluationCriteria: [...tempCriteria]
       },
       stepStatus: {
         steps: [
@@ -315,16 +318,43 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       })
   }
 
-  openModalWithComponent(subjectId: number): void  {
+  openModalWithComponent(subject: Subject): void {
     this.getEvaludationCriteria()
     const initialState = {
       grades: this.grades,
       selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name })),
-      subjectId
+      subjectId: subject.id
     }
     this.bsModalRef = this.modalService.show(PrincipalViewComponent,
       { class: 'competency-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
+    this.bsModalRef.content.selectedCriterias.subscribe(criterias => {
+      this.handleCriteriaSubmit(criterias, subject)
+    })
   }
+
+  handleCriteriaSubmit(criterias: EvaluationCriteria[], subject: Subject): void {
+    const subjectData: FormThree = {
+      data: {
+        subjects: [
+          {
+            evaluationCriteria: criterias,
+            id: subject.id,
+            name: subject.name
+          }
+        ]
+      },
+      stepStatus: {
+        steps: [
+          {
+            state: 'INPROCESS',
+            stepid: this.step.stepid
+          }
+        ]
+      }
+    }
+    this.editor.handleStepSubmit(subjectData)
+  }
+
 }
 

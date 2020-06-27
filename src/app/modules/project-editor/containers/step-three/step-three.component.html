@@ -8,14 +8,14 @@
       </h1>
       <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
       <ng-template #loaded>
-        <app-step-unlock *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects"></app-step-unlock>
+        <app-step-unlock *ngIf="!project.subjects?.length; else hasSubjects"></app-step-unlock>
         <ng-template #hasSubjects>
           <div class="project-editor__subject-wrapper">
             <app-details-selector
               *ngFor="let subject of (editor.project$|async).subjects; let i = index; let last = last;"
               [data]="subject"
-              [subjectId]="subject.id"
-              [criterias]="criterias"
+              [subject]="subject"
+              [criterias]="subject.evaluationCriteria"
               [isLast]="last"
               (addCriteria)="addItem($event)"
               (deleteCriteria)="removeItem($event)"

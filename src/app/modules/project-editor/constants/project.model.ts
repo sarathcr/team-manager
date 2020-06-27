@@ -50,6 +50,7 @@ export class Subject {
   name: string
   academicYear?: AcademicYear
   region?: Region
+  evaluationCriteria?: EvaluationCriteria[]
 }
 
 export interface DrivingQuestion {
@@ -67,10 +68,10 @@ export class CompetencyObjectives {
   name?: string
 }
 export class EvaluationCriteria {
-  gradeId: number
+  gradeId?: number
   id: number
   name: string
-  subjectId: number
+  subjectId?: number
 }
 
 

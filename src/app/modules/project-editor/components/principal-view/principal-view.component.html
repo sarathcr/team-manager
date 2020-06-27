@@ -134,7 +134,7 @@
         {{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }}
         ({{ blocks | checkCount }})
       </div>
-      <button class="btn btn-primary competency-modal__footer-btn-submit">
+      <button class="btn btn-primary competency-modal__footer-btn-submit" (click)="handleButtonClick()">
         <span class="icon icon-ic_check"></span>
         {{ 'OBJECTIVES.project_objectives_criteriawindow_add' | translate }}
       </button>
