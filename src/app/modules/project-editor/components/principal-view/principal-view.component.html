@@ -134,10 +134,10 @@
         {{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }}
         ({{ blocks | checkCount }})
       </div>
-      <button class="btn btn-primary competency-modal__footer-btn-submit">
-        <span class="icon icon-ic_check"></span>
+      <app-button class="ml-auto" [disabled]="!(blocks | checkCount)">
+        <span class="form-button__icon icon-ic_check"></span>
         {{ 'OBJECTIVES.project_objectives_criteriawindow_add' | translate }}
-      </button>
+      </app-button>
     </div>
   </div>
 </div>
