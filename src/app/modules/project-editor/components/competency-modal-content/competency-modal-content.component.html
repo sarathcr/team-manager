@@ -75,12 +75,12 @@
           <div class="custom-tab__content-body">
             <app-table-row [isHead]="true" [checkbox]="false" 
               [colOne]="{value: tempHead.evaluationCriteria}"
-              [colTwo]="{value: tempHead.associatedCompetences}">
+              [colTwo]="{value: tempHead.associatedCompetences, size: 'sm'}">
             </app-table-row>
             <ng-scrollbar>
               <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
                 <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false}" [parentID]="'custom-tab__content1'"
-                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences}"
+                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.associatedCompetences, size: 'sm'}"
                   (count)="getStatus($event)">
                 </app-table-row>
 
@@ -227,13 +227,13 @@
         <div id="custom-tab__content1" class="custom-tab__content active">
           <div class="custom-tab__content-body">
             <app-table-row [isHead]="true" [checkbox]="false" [colOne]="{value: tempHead.evaluationCriteria}"
-              [colTwo]="{value: tempHead.course, size: 'xs'}" [colThree]="{value: tempHead.block, size: 's'}">
+              [colTwo]="{value: tempHead.course, size: 'xs'}" [colThree]="{value: tempHead.block, size: 'm'}">
             </app-table-row>
             <ng-scrollbar>
               <div class="custom-tab__content-body-scroll" [ngStyle]="{ 'height' : contentHeight }">
                 <app-table-row *ngFor="let item of tempData" [checkbox]="{checked: false, variant: 'checkedOnly'}"
                   [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.course, size: 'xs'}"
-                  [colThree]="{value: item.block, size: 's'}" [parentID]="'custom-tab__content1'"
+                  [colThree]="{value: item.block, size: 'm'}" [parentID]="'custom-tab__content1'"
                   (count)="getStatus($event)">
                 </app-table-row>
               </div>
