@@ -1,39 +1,27 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core'
+import { Component, Input  } from '@angular/core'
 
 @Component({
   selector: 'app-table-row',
   templateUrl: './table-row.component.html',
   styleUrls: ['./table-row.component.scss']
 })
-export class TableRowComponent implements OnInit {
-  @Output() count = new EventEmitter<object>()
+export class TableRowComponent {
   @Input() isHead = false
-  @Input() checkbox: CheckBox
-  @Input() parentID = ''
+  @Input() checkboxData: CheckBoxData
+  @Input() parentID: number
   @Input() colOne: TableColumn
   @Input() colTwo: TableColumn
   @Input() colThree: TableColumn
   @Input() colFour: TableColumn
+  @Input() checkedOnly = false
 
   colCount: number
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.initRow()
-  }
-
-  initRow(): void {
-    // this.colCount = Math.floor(12 / this.cellData.length)
-  }
-
-  onChange(checked: boolean): void {
-    this.count.emit({ parentID: this.parentID, checked })
-  }
-
   onCheck(): void {
-    if (this.checkbox) {
-      this.checkbox.checked = !this.checkbox.checked
+    if (this.checkboxData) {
+      this.checkboxData.checked = !this.checkboxData.checked
     }
   }
 }
@@ -41,10 +29,10 @@ export class TableRowComponent implements OnInit {
 // WIP To be Moved in to corresponding file while doing functionality
 export interface TableColumn {
   value: string,
-  size?: 'xs' | 'm' | 's'
+  size?: 'xs' | 'm' | 's' | 'sm'
 }
 
-export interface CheckBox {
+export interface CheckBoxData {
   checked: boolean,
   variant?: 'checkedOnly' | 'checkbox'
 }
