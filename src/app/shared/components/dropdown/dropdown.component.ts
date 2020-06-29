@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core'
 // Interfaces
-import { DropDownConfig } from '../../constants/field.model'
+import { DropDownConfig, Option } from '../../constants/field.model'
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
 
 @Component({
@@ -12,6 +12,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown'
 export class DropdownComponent implements OnInit {
   @Output() dropdownSelect: EventEmitter<any> = new EventEmitter()
   @Input() config: DropDownConfig
+  @Input() canDeselect = true
   active = false
   dropdownSettings: IDropdownSettings = {}
   constructor() { }
@@ -23,7 +24,7 @@ export class DropdownComponent implements OnInit {
       itemsShowLimit: 4,
       closeDropDownOnSelection: true,
       maxHeight: 265,
-      enableCheckAll: false
+      enableCheckAll: false,
     }
   }
 
@@ -32,9 +33,14 @@ export class DropdownComponent implements OnInit {
     this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
   }
 
-  onItemDeSelect(): void {
-    this.active = true
-    this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
+  onItemDeSelect(item: Option): void {
+    if (this.canDeselect) {
+      this.active = true
+      this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
+    }
+    else {
+      this.config.selectedItems = [{...item}]
+    }
   }
 
   onDropDownClose(): void{
