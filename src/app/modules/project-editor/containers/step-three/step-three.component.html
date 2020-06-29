@@ -17,8 +17,7 @@
               [subject]="subject"
               [criterias]="subject.evaluationCriteria"
               [isLast]="last"
-              (addCriteria)="addItem($event)"
-              (deleteCriteria)="removeItem($event)"
+              (deleteCriteria)="removeCriteria($event)"
               [project$]="editor.project$"
               (openModal)="openModalWithComponent($event)"
             ></app-details-selector>

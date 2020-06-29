@@ -89,10 +89,14 @@ export class EditorService {
               })
             case 2: return { themes: data?.themes?.map(({ id, name }) => ({ id, name })) }
             case 3: return ({
+              ...data,
               grades: data?.grades?.map(({ id, name }) => ({ id, name })),
               academicYear: data?.academicYear,
               region: data?.region,
-              subjects: data?.subjects?.map(subject => subject),
+              subjects: data?.subjects?.map(subject => ({
+                ...subject,
+                evaluationCriteria: subject.evaluationCriteria.map(({ id, name }) => ({ id, name }))
+              })),
               competencyObjectives: data?.competencyObjectives?.map(({ id, name }) => ({ id, name })),
               evaluationCriteria: data?.evaluationCriteria?.map(({ id, name, subjectId, gradeId }) => (
                 { id, name, subjectId, gradeId }))

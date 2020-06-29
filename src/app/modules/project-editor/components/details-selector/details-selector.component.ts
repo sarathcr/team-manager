@@ -54,12 +54,12 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
       })
   }
 
-  getModal(criteriaIndex: number): void {
+  getModal(criteriaId: number): void {
     this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal' })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
       if (result === 'delete') {
-        this.deleteCriteria.emit(criteriaIndex)
+        this.deleteCriteria.emit({ subjectId: this.subject.id, criteriaId })
         this.count = this.criterias.filter(criteria => criteria === this.subject.id).length
       }
     })
