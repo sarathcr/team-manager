@@ -41,7 +41,7 @@
                 [ngClass]="{ active: this.currentBlockIndex === index }"
                 (click)="changeCurrentBlock(index)"
               >
-                <strong class="custom-tab__links-{{index}}">{{ index + 1 }}. </strong>
+                <strong class="custom-tab__links-index">{{ index + 1 }}. </strong>
                 <span class="custom-tab__links-label">{{ block.name }}</span>
                   <span *ngIf="block.evaluationCriteria | checkCount" class="d-flex ml-auto" >
                     <strong class="custom-tab__links-selected">
@@ -74,7 +74,7 @@
                   *ngFor="let criteria of block.evaluationCriteria"
                   [checkboxData]="criteria"
                   [colOne]="{ value: criteria.colOneData }"
-                  [colTwo]="{ value: criteria.colTwoDatam, size: 'sm' }"
+                  [colTwo]="{ value: criteria.colTwoData, size: 'sm' }"
                   [parentID]="block.id"
                 ></app-table-row>
               </div>
