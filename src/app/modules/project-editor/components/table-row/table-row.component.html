@@ -1,7 +1,9 @@
-<div *ngIf="colOne" class="table-row" [ngClass]="{ 
-    'table-row__head' : isHead,
-    'selected' : checkboxData.checked && checkboxData.variant !== 'checkedOnly'}"
-    (click)="onCheck()">
+<div
+  *ngIf="colOne"
+  class="table-row"
+  [ngClass]="{ 'table-row__head' : isHead, 'selected' : checkboxData.checked && !checkedOnly}"
+  (click)="onCheck()"
+>
   <div class="table-row__cell" [ngClass]="{
     'table-row__cell_xs' : colOne.size === 'xs',
     'table-row__cell_m' : colOne.size === 'm',

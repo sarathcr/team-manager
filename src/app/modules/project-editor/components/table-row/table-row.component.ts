@@ -1,11 +1,11 @@
-import { Component, OnInit, Input  } from '@angular/core'
+import { Component, Input  } from '@angular/core'
 
 @Component({
   selector: 'app-table-row',
   templateUrl: './table-row.component.html',
   styleUrls: ['./table-row.component.scss']
 })
-export class TableRowComponent implements OnInit {
+export class TableRowComponent {
   @Input() isHead = false
   @Input() checkboxData: CheckBoxData
   @Input() parentID: number
@@ -13,22 +13,11 @@ export class TableRowComponent implements OnInit {
   @Input() colTwo: TableColumn
   @Input() colThree: TableColumn
   @Input() colFour: TableColumn
+  @Input() checkedOnly = false
 
   colCount: number
 
   constructor() { }
-
-  ngOnInit(): void {
-    this.initRow()
-  }
-
-  initRow(): void {
-    // this.colCount = Math.floor(12 / this.cellData.length)
-  }
-
-  onChange(checked: boolean): void {
-    console.log(checked)
-  }
 
   onCheck(): void {
     if (this.checkboxData) {

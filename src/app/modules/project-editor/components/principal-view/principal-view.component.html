@@ -132,6 +132,7 @@
                     <app-table-row 
                       *ngIf="criteria.checked"
                       [checkboxData]="criteria"
+                      [checkedOnly]="true"
                       [colOne]="{value: criteria.name}"
                       [colTwo]="colTwoHead ?
                                 {value:  criteria.colTwoData, size: 'm'} :
