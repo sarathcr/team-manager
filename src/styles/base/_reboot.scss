@@ -45,10 +45,10 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0; // 1
-  font-family: $font-family-default;
+  font-family: $font-family-tertiary;
   font-size: $font-size-default;
   font-weight: $font-weight-default;
-  line-height: $line-height-default;
+  line-height: 24px;
   color: $primary-font-color;
   text-align: left; // 3
   -webkit-font-smoothing: antialiased;
