@@ -45,7 +45,7 @@ import { HelpVideoThumbComponent } from './components/help-video-thumb/help-vide
 import { InputComponent } from './components/input/input.component'
 import { ImageUploadComponent } from './components/image-upload/image-upload.component'
 import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component'
-import { CompetencyModalContentComponent } from './components/competency-modal-content/competency-modal-content.component'
+import { PrincipalViewComponent } from './components/principal-view/principal-view.component'
 import { TableRowComponent } from './components/table-row/table-row.component'
 import { StepUnlockComponent } from './components/step-unlock/step-unlock.component'
 import { DetailsSelectorComponent } from './components/details-selector/details-selector.component'
@@ -57,6 +57,7 @@ import { EditorService } from './services/editor/editor.service'
 import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service'
 // pipe
 import { StringDecoder } from './pipes/string-decoder.pipe'
+import { CheckCount } from './pipes/check-count.pipe'
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { StringDecoder } from './pipes/string-decoder.pipe'
     VideoPlayerComponent,
     HelpImgThumbComponent,
     StringDecoder,
-    CompetencyModalContentComponent,
+    CheckCount,
+    PrincipalViewComponent,
     TableRowComponent,
     StepUnlockComponent,
     DetailsSelectorComponent,
