@@ -29,12 +29,12 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   currentBlockIndex = 0
   checks: Array<{ parentId: number, count: number }> = []
   subjectId: number
-  isShow = false
+  showPrimaryView = true
   heading: TempData
   subscriptions = new SubSink()
   loading = false
   selectedCriterias: Subject<EvaluationCriteria[]> = new Subject()
-  criterias: number[]
+  criteriaIds: number[]
   colOneHead: string
   colTwoHead: string
 
@@ -87,7 +87,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  getData(criteria: CriteriaWithSkills, colOneHead: string, colTwoHead: string):
+  getTableData(criteria: CriteriaWithSkills, colOneHead: string, colTwoHead: string):
     { colOneHead: string, colTwoHead: string, colTwoData: string } {
     let colTwoData: string
     if (!colOneHead && criteria.name) {
@@ -126,8 +126,8 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
         colOneHead: colOneHeading,
         colTwoHead: colTwoHeading,
         colTwoData
-      } = this.getData(criteria, colOneHead, colTwoHead)
-      const checked = this.criterias.includes(criteria.id)
+      } = this.getTableData(criteria, colOneHead, colTwoHead)
+      const checked = this.criteriaIds.includes(criteria.id)
       colOneHead = colOneHeading
       colTwoHead = colTwoHeading
       colOneData = criteria.name
@@ -190,7 +190,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   }
 
   getSummary(): void {
-    this.isShow = !this.isShow
+    this.showPrimaryView = !this.showPrimaryView
   }
 
   handleButtonClick(): void {

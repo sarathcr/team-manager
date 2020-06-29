@@ -66,8 +66,6 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   }
 
   addItem(id: number, init: boolean = false): void {
-    // this.addCriteria.emit({ id, init })
-    // this.openModalWithComponent()
     this.openModal.emit(this.subject)
     this.getCount()
   }

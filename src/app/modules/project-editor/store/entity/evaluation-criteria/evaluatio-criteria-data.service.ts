@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core'
-import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data'
 import { HttpClient } from '@angular/common/http'
+
+import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data'
 import { Observable } from 'rxjs'
-import { map, switchMap, mergeMap } from 'rxjs/operators'
+import { map } from 'rxjs/operators'
+
 import { environment } from 'src/environments/environment'
 
 @Injectable()
@@ -15,18 +17,6 @@ export class EvaluationCriteriaDataService extends DefaultDataService<object> {
   }
   getWithQuery(parm: any): Observable<any> {
     return this.http.get<object[]>(`${environment.apiUrl.curriculumService}/evaluationcriteria/${parm.criteriaId}/basicskills`)
-      .pipe(
-        map(res => res)
-        // if (!res.length) {
-        //   return this.http.get<object[]>
-        // (`${environment.apiUrl.curriculumService}/evaluationcriteria/${parm.criteriaId}/dimensions`)
-        //     .pipe(map(response => {
-        //       return response
-        //     }))
-        // } else {
-        // return res
-        // }
-        // })
-      )
+      .pipe(map(res => res))
   }
 }
