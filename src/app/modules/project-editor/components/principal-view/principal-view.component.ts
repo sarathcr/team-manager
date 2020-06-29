@@ -138,7 +138,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     return { ...block, evaluationCriteria, colOneHead, colTwoHead }
   }
 
-  getBlocks(selectedGrade: any): void {
+  getBlocks(selectedGrade: Grade): void {
     this.loading = true
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
