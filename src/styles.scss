@@ -207,11 +207,6 @@ body,
 scrollbar-y.scrollbar-control{
   right: 3px !important;
 }
-.competency-modal__body-block{
-  .dropdown__wrap{
-    background-color: $white;
-  }
-}
 
 @include media-breakpoint-up(xxl) {
   .project-editor__form{
