@@ -91,37 +91,33 @@
 
       >span:last-child {
         justify-self: end;
-            span:nth-child(1){
-              
-                &::before{
-                  content: '(';
-                }
-                &::after{
-                  content: ')';
-                }
-             
-            }
-            span.dropdown-up,
-            span.dropdown-down{
-              &::before {
-                content: "\e903";
-                display: block;
-                width: 14px;
-                height: 14px;
-                position: absolute;
-                top: 0;
-                left: -3px;
-                line-height: 0.7;
-                text-align: center;
-              }
-              &::after {
-                content: none;
-              }
-            }
+        span:nth-child(1){
+          &::before{
+            content: '(';
+          }
+          &::after{
+            content: ')';
+          }
+        }
+        span.dropdown-up,
+        span.dropdown-down{
+          &::before {
+            content: "\e903";
+            display: block;
+            width: 14px;
+            height: 14px;
+            position: absolute;
+            top: 0;
+            left: -3px;
+            line-height: 0.7;
+            text-align: center;
+          }
+          &::after {
+            content: none;
+          }
+        }
         
       }
-
-
       .dropdown-up,
       .dropdown-down {
         border: none !important;
