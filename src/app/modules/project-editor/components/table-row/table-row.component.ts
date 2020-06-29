@@ -29,8 +29,9 @@ export class TableRowComponent {
 // WIP To be Moved in to corresponding file while doing functionality
 export interface TableColumn {
   value: string,
-  size?: 'xs' | 'm' | 's'
+  size?: 'xs' | 'm' | 's' | 'sm'
 }
+
 
 export interface CheckBoxData {
   checked: boolean,

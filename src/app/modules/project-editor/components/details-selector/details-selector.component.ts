@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators'
 import { ModalComponent } from '../modal/modal.component'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { PrincipalViewComponent } from '../principal-view/principal-view.component'
 
 @Component({
   selector: 'app-details-selector',
@@ -66,8 +65,6 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   }
 
   addItem(id: number, init: boolean = false): void {
-    // this.addCriteria.emit({ id, init })
-    // this.openModalWithComponent()
     this.openModal.emit(this.subject)
     this.getCount()
   }
