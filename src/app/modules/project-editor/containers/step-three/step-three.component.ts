@@ -224,6 +224,20 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     return false
   }
 
+  // Create subject
+  createSubjectPayload(): Subject[] {
+    const subjectPayload = [...this.project.subjects]
+    if (this.criteriaPayload) {
+      for (const subject of subjectPayload) {
+        if (subject.id === this.criteriaPayload.id) {
+          subject.evaluationCriteria = [...this.criteriaPayload.evaluationCriteria]
+        }
+      }
+    }
+    this.criteriaPayload = null // To clear criteria payload
+    return [...subjectPayload]
+  }
+
   // function to submit form data
   handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
@@ -232,7 +246,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     }
     const formData: FormThree = {
       data: {
-        subjects: [this.criteriaPayload],
+        subjects: this.createSubjectPayload(),
         competencyObjectives: this.inputFormData.competencyObjectives,
       },
       stepStatus: {
@@ -279,28 +293,12 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     })
   }
 
-  // getEvaluationCriteria(): void {
-  //   this.evaluationCriteria$ = this.project$.pipe(map(data => data?.evaluationCriteria))
-  //   this.subscriptions.sink = this.evaluationCriteria$
-  //     .subscribe(criterias => {
-  //       this.criterias = []
-  //       this.initialCriterias = []
-  //       if (criterias) {
-  //         criterias.forEach(criteria => {
-  //           this.criterias.push(criteria.subjectId)
-  //           this.initialCriterias.push(criteria.subjectId)
-  //         })
-  //       }
-  //     })
-  // }
-
   openModalWithComponent(subject: Subject): void {
-    // this.getEvaluationCriteria()
     const initialState = {
       grades: this.grades,
       selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name })),
       subjectId: subject.id,
-      criterias: subject.evaluationCriteria.map(criteria => criteria.id)
+      criteriaIds: subject.evaluationCriteria.map(criteria => criteria.id)
     }
     this.bsModalRef = this.modalService.show(PrincipalViewComponent,
       { class: 'competency-modal', initialState })
@@ -326,4 +324,3 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
 }
-

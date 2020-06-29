@@ -1,6 +1,6 @@
 <div class="competency-modal__content">
   <div class="competency-modal__header">
-    <h4 *ngIf="!isShow else return" class="competency-modal__header-title">
+    <h4 *ngIf="showPrimaryView else return" class="competency-modal__header-title">
       {{ 'OBJECTIVES.project_objectives_criteriawindow_curriculum' | translate }}
     </h4>
     <ng-template #return>
@@ -12,7 +12,7 @@
       </div>
     </ng-template>
     <button
-      *ngIf="!isShow"
+      *ngIf="showPrimaryView"
       class="close competency-modal__header-close"
       type="button"
       aria-label="Close"
@@ -21,8 +21,8 @@
       <span class="icon icon-ic_share_close"></span>
     </button>
   </div>
-  <app-loader *ngIf="loading; else loaded"></app-loader>
-  <div *ngIf="!isShow else summary" class="competency-modal__body" #loaded>
+  <app-loader *ngIf="loading"></app-loader>
+  <div *ngIf="showPrimaryView else summary" class="competency-modal__body">
     <h6 class="competency-modal__body-title">
       {{ 'OBJECTIVES.project_objectives_criteriawindow_title' | translate }}
     </h6>
@@ -119,7 +119,6 @@
           <div class="custom-tab__content-body">
             <app-table-row
               [isHead]="true"
-              [checkboxData]="false"
               [colOne]="{value: heading.evaluationCriteria}"
               [colTwo]="colTwoHead ? {value:  heading[colTwoHead], size: 'm'} : { value: heading.course, size: 'xs'}"
               [colThree]="colTwoHead ? {value:  heading.course, size: 'xs'} : { value: heading.block, size: 's'}"
@@ -154,9 +153,9 @@
   </ng-template>
   <div class="competency-modal__footer">
     <div class="competency-modal__footer-btn-group">
-      <div class="competency-modal__footer-btn-link" (click)="getSummary()" *ngIf="!isShow">
+      <div class="competency-modal__footer-btn-link" (click)="getSummary()" *ngIf="showPrimaryView">
         {{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }}
-        ({{ blocks | checkCount }})
+        ({{ (blocks | checkCount) || 0 }})
       </div>
       <app-button class="ml-auto" [disabled]="!(blocks | checkCount)" (click)="handleButtonClick()">
         <span class="form-button__icon icon-ic_check"></span>
