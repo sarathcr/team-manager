@@ -5,9 +5,11 @@ export class CheckCount implements PipeTransform {
 
   transform(value: any): number {
     return value?.reduce((acc, item) => {
-      return acc += item.checked || item.evaluationCriteria?.reduce((sum, criteria) => {
-        return sum += criteria.checked
+      acc += item.checked || item?.evaluationCriteria?.reduce((sum, criteria) => {
+        sum += criteria.checked
+        return sum
       }, 0) || 0
+      return acc
     }, 0)
   }
 
