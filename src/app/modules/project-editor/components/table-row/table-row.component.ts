@@ -32,7 +32,6 @@ export interface TableColumn {
   size?: 'xs' | 'm' | 's' | 'sm'
 }
 
-
 export interface CheckBoxData {
   checked: boolean,
   variant?: 'checkedOnly' | 'checkbox'
