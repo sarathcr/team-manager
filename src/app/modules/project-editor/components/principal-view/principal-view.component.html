@@ -115,10 +115,12 @@
             </app-table-row>
             <ng-scrollbar>
               <div class="custom-tab__content-body-scroll">
-                <app-table-row *ngFor="let item of tableData" [checkboxData]="{checked: false}"
-                  [colOne]="{value: item.evaluationCriteria}" [colTwo]="{value: item.course, size: 'xs'}"
-                  [colThree]="{value: item.block, size: 's'}" [parentID]="'custom-tab__content1'"
-                ></app-table-row>
+                <ng-container *ngFor="let block of blocks; let index = index;">
+                  <app-table-row *ngFor="let criteria of block.evaluationCriteria" [checkboxData]="criteria"
+                    [colOne]="{value: criteria.name}" [colTwo]="{value: criteria.grade.name, size: 'xs'}"
+                    [colThree]="{value: block.name, size: 's'}" [parentID]="'custom-tab__content1'"
+                  ></app-table-row>
+                </ng-container>
               </div>
             </ng-scrollbar>
           </div>

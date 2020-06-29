@@ -1,4 +1,4 @@
-import { EvaluationCriteria } from 'src/app/modules/project-editor/constants/project.model'
+import { EvaluationCriteria, Grade } from 'src/app/modules/project-editor/constants/project.model'
 import { BasicSkills } from './basic-skill.model'
 import { Standards } from './standard.model'
 import { Dimensions } from './dimensions.model'
@@ -13,6 +13,7 @@ export interface CriteriaWithSkills extends EvaluationCriteria {
   checked?: boolean
   colTwoData?: string
   colOneData?: string
+  grade?: Grade
 }
 
 export interface Block {
