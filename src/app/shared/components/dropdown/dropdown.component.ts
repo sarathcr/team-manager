@@ -20,7 +20,7 @@ export class DropdownComponent implements OnInit {
 
     this.dropdownSettings = {
       ...this.config.settings,
-      itemsShowLimit: 3,
+      itemsShowLimit: 4,
       closeDropDownOnSelection: true,
       maxHeight: 265,
       enableCheckAll: false
