@@ -85,7 +85,7 @@ export class EditorService {
                   academicYear: data?.academicYear?.academicYear
                 } : null,
                 grades: data?.grades?.map(({ id, name }) => ({ id, name })),
-                subjects: data?.subjects?.map(({ id, name }) => ({ id, name }))
+                subjects: data?.subjects?.map(({ id, name, evaluationCriteria }) => ({ id, name, evaluationCriteria }))
               })
             case 2: return { themes: data?.themes?.map(({ id, name }) => ({ id, name })) }
             case 3: return ({

@@ -158,6 +158,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
           return this.createTableData(block, selectedGrade)
         })
       })
+    this.changeCurrentBlock(0)
     this.blockService.loading$.subscribe(loading => { this.loading = loading })
   }
 

@@ -13,12 +13,14 @@ export class DropdownComponent implements OnInit {
   @Output() dropdownSelect: EventEmitter<any> = new EventEmitter()
   @Input() config: DropDownConfig
   @Input() canDeselect = true
+  @Input() getInitialData: boolean
   active = false
   dropdownSettings: IDropdownSettings = {}
+  initialSelectedItems: any
   constructor() { }
 
   ngOnInit(): void {
-
+    this.initialSelectedItems = [...this.config.selectedItems]
     this.dropdownSettings = {
       ...this.config.settings,
       itemsShowLimit: 4,
@@ -28,15 +30,25 @@ export class DropdownComponent implements OnInit {
     }
   }
 
+  selectedValue(): any {
+    if (this.getInitialData) {
+      return this.initialSelectedItems.filter(item => this.config.selectedItems
+                                      .map(selected => selected.id).includes(item.id))
+    }
+    return this.config.selectedItems
+  }
+
   onItemSelect(): void {
+    const val = this.selectedValue()
     this.active = true
-    this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
+    this.dropdownSelect.emit({controller: this.config.name, val })
   }
 
   onItemDeSelect(item: Option): void {
     if (this.canDeselect) {
+      const val = this.selectedValue()
       this.active = true
-      this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
+      this.dropdownSelect.emit({controller: this.config.name, val })
     }
     else {
       this.config.selectedItems = [{...item}]
