@@ -2,14 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateService } from '@ngx-translate/core'
+import { map } from 'rxjs/operators'
+import { Subject } from 'rxjs'
 
 import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 import { CriteriaWithSkills, Block } from 'src/app/shared/constants/block.model'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
-import { map } from 'rxjs/operators'
-import { EvaluationCriteria } from '../../constants/project.model'
+import { EvaluationCriteria, Grade } from '../../constants/project.model'
 
 @Component({
   selector: 'app-competency-modal-content',
@@ -27,18 +28,15 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   blocks: Block[]
   currentBlockIndex = 0
   checks: Array<{ parentId: number, count: number }> = []
-  subjectId
+  subjectId: number
   isShow = false
-  tempHead: TempData = {
-    evaluationCriteria: 'OBJECTIVES.project_objectives_criteriawindow_criterion',
-    associatedCompetences: 'OBJECTIVES.project_objectives_criteriawindow_basic_skills',
-    course: 'OBJECTIVES.project_objectives_criteriawindow_grade',
-    block: 'OBJECTIVES.project_objectives_criteriawindow_block',
-    dimension: 'OBJECTIVES.project_objectives_criteriawindow_dimensions'
-  }
+  heading: TempData
   subscriptions = new SubSink()
-  criterias: EvaluationCriteria[]
   loading = false
+  selectedCriterias: Subject<EvaluationCriteria[]> = new Subject()
+  criterias: number[]
+  colOneHead: string
+  colTwoHead: string
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -47,6 +45,13 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.heading = {
+      evaluationCriteria: 'OBJECTIVES.project_objectives_criteriawindow_criterion',
+      basicSkills: 'OBJECTIVES.project_objectives_criteriawindow_basic_skills',
+      course: 'OBJECTIVES.project_objectives_criteriawindow_grade',
+      block: 'OBJECTIVES.project_objectives_criteriawindow_block',
+      dimension: 'OBJECTIVES.project_objectives_criteriawindow_dimensions'
+    }
     this.createFormConfig()
     this.getBlocks(this.selectedGrades[0])
     this.getTranslation()
@@ -82,51 +87,76 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  getData(criteria: CriteriaWithSkills, colOneHead: string, colTwoHead: string):
+    { colOneHead: string, colTwoHead: string, colTwoData: string } {
+    let colTwoData: string
+    if (!colOneHead && criteria.name) {
+      colOneHead = this.heading.evaluationCriteria
+    }
+    if (!colTwoHead) {
+      if (criteria.dimensions?.length) {
+        colTwoHead = this.heading.dimension
+        if (!this.colTwoHead) {
+          this.colTwoHead = 'dimensions'
+        }
+      }
+      else if (criteria.basicSkills?.length) {
+        colTwoHead = this.heading.basicSkills
+        if (!this.colTwoHead) {
+          this.colTwoHead = 'basicSkills'
+        }
+      }
+    }
+    if (criteria.dimensions?.length) {
+      colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
+    }
+    else if (criteria.basicSkills?.length) {
+      colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
+    }
+    return { colOneHead, colTwoHead, colTwoData }
+  }
+
+  createTableData(block: Block, grade: Grade): Block {
+    let colOneHead: string
+    let colTwoHead: string
+
+    const evaluationCriteria = block.evaluationCriteria.map(criteria => {
+      let colOneData: string
+      const {
+        colOneHead: colOneHeading,
+        colTwoHead: colTwoHeading,
+        colTwoData
+      } = this.getData(criteria, colOneHead, colTwoHead)
+      const checked = this.criterias.includes(criteria.id)
+      colOneHead = colOneHeading
+      colTwoHead = colTwoHeading
+      colOneData = criteria.name
+
+      return { ...criteria, checked, colOneData, colTwoData, grade, block }
+    })
+
+    return { ...block, evaluationCriteria, colOneHead, colTwoHead }
+  }
+
   getBlocks(selectedGrade: any): void {
     this.loading = true
     this.subscriptions.sink = this.blockService.entities$
-    .pipe(map(data => {
-      const savedBlockData = data.find(blockData => blockData.id === `${selectedGrade.id}-${this.subjectId}`)
-      if (savedBlockData?.blockData) {
-        return savedBlockData.blockData
-      }
-    }))
-    .subscribe(data => {
-      if (!data?.length) {
-        this.blockService.getWithQuery(
-        { gradeId: String(selectedGrade.id), subjectId: this.subjectId }
-      )}
-      this.blocks = data?.map(block => {
-        let colOneHead: string
-        let colTwoHead: string
-        const evaluationCriteria = block.evaluationCriteria.map(criteria => {
-          let colTwoData: string
-          let colOneData: string
-          if (!colOneHead && criteria.name) {
-            colOneHead = this.tempHead.evaluationCriteria
-          }
-          if (!colTwoHead) {
-            if (criteria.dimensions?.length) {
-              colTwoHead = this.tempHead.dimension
-            }
-            else if (criteria.basicSkills?.length) {
-              colTwoHead = this.tempHead.associatedCompetences
-            }
-          }
-          colOneData = criteria.name
-          if (criteria.dimensions?.length) {
-            colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
-          }
-          else if (criteria.basicSkills?.length) {
-            colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
-          }
-          return {
-            ...criteria, checked: false, colOneData, colTwoData, grade: selectedGrade, block
-          }
+      .pipe(map(data => {
+        const savedBlockData = data.find(blockData => blockData.id === `${selectedGrade.id}-${this.subjectId}`)
+        if (savedBlockData?.blockData) {
+          return savedBlockData.blockData
+        }
+      }))
+      .subscribe(data => {
+        if (!data?.length) {
+          this.blockService.getWithQuery(
+            { gradeId: String(selectedGrade.id), subjectId: String(this.subjectId) }
+          )
+        }
+        this.blocks = data?.map(block => {
+          return this.createTableData(block, selectedGrade)
         })
-        return { ...block, evaluationCriteria, colOneHead, colTwoHead }
       })
-    })
     this.blockService.loading$.subscribe(loading => { this.loading = loading })
   }
 
@@ -155,13 +185,6 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     })
   }
 
-  getCelldata(criteria: CriteriaWithSkills): Array<{ list: string }> {
-    return [
-      { list: criteria.name },
-      { list: criteria.basicSkills.join(', ') }
-    ]
-  }
-
   changeCurrentBlock(id: number): void {
     this.currentBlockIndex = id
   }
@@ -169,11 +192,27 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   getSummary(): void {
     this.isShow = !this.isShow
   }
+
+  handleButtonClick(): void {
+    if (this.blocks?.length) {
+      const selectedCriteria = []
+      for (const block of this.blocks) {
+        for (const criteria of block.evaluationCriteria) {
+          if (criteria.checked === true) {
+            selectedCriteria.push({ id: criteria.id, name: criteria.name })
+          }
+        }
+      }
+      this.selectedCriterias.next(selectedCriteria)
+    }
+    this.bsModalRef.hide()
+  }
+
 }
 
 export interface TempData {
   evaluationCriteria?: string,
-  associatedCompetences?: string,
+  basicSkills?: string,
   course?: string,
   block?: string,
   dimension?: string,

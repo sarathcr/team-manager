@@ -1,6 +1,6 @@
 <div class="competency-modal__content">
   <div class="competency-modal__header">
-    <h4 class="competency-modal__header-title" *ngIf="!isShow else return">
+    <h4 *ngIf="!isShow else return" class="competency-modal__header-title">
       {{ 'OBJECTIVES.project_objectives_criteriawindow_curriculum' | translate }}
     </h4>
     <ng-template #return>
@@ -11,13 +11,18 @@
         </h4>
       </div>
     </ng-template>
-    <button type="button" class="close competency-modal__header-close" aria-label="Close" (click)="bsModalRef.hide()"
-      *ngIf="!isShow">
+    <button
+      *ngIf="!isShow"
+      class="close competency-modal__header-close"
+      type="button"
+      aria-label="Close"
+      (click)="bsModalRef.hide()"
+    >
       <span class="icon icon-ic_share_close"></span>
     </button>
   </div>
   <app-loader *ngIf="loading; else loaded"></app-loader>
-  <div class="competency-modal__body" *ngIf="!isShow else summary" #loaded>
+  <div *ngIf="!isShow else summary" class="competency-modal__body" #loaded>
     <h6 class="competency-modal__body-title">
       {{ 'OBJECTIVES.project_objectives_criteriawindow_title' | translate }}</h6>
     <div class="competency-modal__body-block">
@@ -114,9 +119,10 @@
             <app-table-row
               [isHead]="true"
               [checkboxData]="false"
-              [colOne]="{value: tempHead.evaluationCriteria}"
-              [colTwo]="{value: tempHead.course, size: 'xs'}"
-              [colThree]="{value: tempHead.block, size: 's'}"
+              [colOne]="{value: heading.evaluationCriteria}"
+              [colTwo]="colTwoHead ? {value:  heading[colTwoHead], size: 'm'} : { value: heading.course, size: 'xs'}"
+              [colThree]="colTwoHead ? {value:  heading.course, size: 'xs'} : { value: heading.block, size: 's'}"
+              [colFour]="colTwoHead ? {value:  heading.block, size: 's'} : ''"
             ></app-table-row>
             <ng-scrollbar>
               <div class="custom-tab__content-body-scroll">
@@ -126,8 +132,13 @@
                       *ngIf="criteria.checked"
                       [checkboxData]="criteria"
                       [colOne]="{value: criteria.name}"
-                      [colTwo]="{value: criteria.grade.name, size: 'xs'}"
-                      [colThree]="{value: block.name, size: 's'}"
+                      [colTwo]="colTwoHead ?
+                                {value:  criteria.colTwoData, size: 'm'} :
+                                { value: criteria.grade.name, size: 'xs'}"
+                      [colThree]="colTwoHead ?
+                                  {value:  criteria.grade.name, size: 'xs'} :
+                                  { value: block.name, size: 's'}"
+                      [colFour]="colTwoHead ? {value:  block.name, size: 's'} : ''"
                       [parentID]="'custom-tab__content1'"
                     ></app-table-row>
                   </ng-container>
@@ -137,7 +148,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </ng-template>
   <div class="competency-modal__footer">
@@ -146,7 +156,7 @@
         {{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }}
         ({{ blocks | checkCount }})
       </div>
-      <app-button class="ml-auto" [disabled]="!(blocks | checkCount)">
+      <app-button class="ml-auto" [disabled]="!(blocks | checkCount)" (click)="handleButtonClick()">
         <span class="form-button__icon icon-ic_check"></span>
         {{ 'OBJECTIVES.project_objectives_criteriawindow_add' | translate }}
       </app-button>
