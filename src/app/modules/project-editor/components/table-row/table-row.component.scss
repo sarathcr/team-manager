@@ -26,13 +26,16 @@
         flex-direction: row;
         flex: 1 1 100%;
         &_xs{
-            max-width: 80px;
+            max-width: 104px;
         }
         &_m{
-            max-width: 355px;
+            max-width: 378px;
+        }
+        &_sm{
+            max-width: 358px;
         }
         &_s{
-            max-width: 290px;
+            max-width: 314px;
         }
     }
 
