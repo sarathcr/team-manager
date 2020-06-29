@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateService } from '@ngx-translate/core'
@@ -10,7 +10,7 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 import { CriteriaWithSkills, Block } from 'src/app/shared/constants/block.model'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
-import { EvaluationCriteria } from 'src/app/shared/constants/evaluation-criteria.model'
+import { EvaluationCriteria } from '../../constants/project.model'
 
 @Component({
   selector: 'app-competency-modal-content',
@@ -31,61 +31,15 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   subjectId
   isShow = false
   tempHead: TempData = {
-    evaluationCriteria: 'Criterio de evaluación',
-    associatedCompetences: 'Competencias asociadas',
-    course: 'Curso',
-    block: 'Bloque',
-    dimension: 'Dimensiones'
+    evaluationCriteria: 'OBJECTIVES.project_objectives_criteriawindow_criterion',
+    associatedCompetences: 'OBJECTIVES.project_objectives_criteriawindow_basic_skills',
+    course: 'OBJECTIVES.project_objectives_criteriawindow_grade',
+    block: 'OBJECTIVES.project_objectives_criteriawindow_block',
+    dimension: 'OBJECTIVES.project_objectives_criteriawindow_dimensions'
   }
   subscriptions = new SubSink()
-  tableData: TempData[] = [
-    {
-      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
-        + 'seguridad y uso responsable.',
-      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
-      course: '4º ESO',
-      block: '1. Tecnologías de la información y de la comunicación',
-      dimension: 'Món actual, Salut i equilibri personal'
-    },
-    {
-      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
-        + 'seguridad y uso responsable.',
-      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
-      course: '4º ESO',
-      block: '1. Tecnologías de la información y de la comunicación',
-      dimension: 'Món actual, Salut i equilibri personal'
-    },
-    {
-      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
-        + 'seguridad y uso responsable.',
-      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
-      course: '4º ESO',
-      block: '1. Tecnologías de la información y de la comunicación',
-      dimension: 'Món actual, Salut i equilibri personal'
-    },
-    {
-      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
-        + 'seguridad y uso responsable.',
-      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
-      course: '4º ESO',
-      block: '1. Tecnologías de la información y de la comunicación',
-      dimension: 'Món actual, Salut i equilibri personal'
-    },
-    {
-      evaluationCriteria: 'Acceder a servicios de intercambio y publicación de información digital con criterios de'
-        + 'seguridad y uso responsable.',
-      associatedCompetences: 'Matemática y competencias básicas en ciencia y tecnología, Comunicación linguïstica',
-      course: '4º ESO',
-      block: '1. Tecnologías de la información y de la comunicación',
-      dimension: 'Món actual, Salut i equilibri personal'
-    }]
+  criterias: EvaluationCriteria[]
   selectedCriterias: Subject<EvaluationCriteria[]> = new Subject()
-
-
-  @HostListener('window:resize', ['$event'])
-  onResize(): void {
-    this.adjustHeightContent()
-  }
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -94,7 +48,6 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.adjustHeightContent()
     this.createFormConfig()
     this.getBlocks(this.selectedGrades[0])
     this.getTranslation()
@@ -151,14 +104,14 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
             let colTwoData: string
             let colOneData: string
             if (!colOneHead && criteria.name) {
-              colOneHead = 'Criterio de evaluación'
+              colOneHead = this.tempHead.evaluationCriteria
             }
             if (!colTwoHead) {
               if (criteria.dimensions?.length) {
-                colTwoHead = 'Dimensions'
+                colTwoHead = this.tempHead.dimension
               }
               else if (criteria.basicSkills?.length) {
-                colTwoHead = 'Basic Skills'
+                colTwoHead = this.tempHead.associatedCompetences
               }
             }
             colOneData = criteria.name
@@ -168,7 +121,9 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
             else if (criteria.basicSkills?.length) {
               colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
             }
-            return { ...criteria, checked: false, colOneData, colTwoData, grade: selectedGrade, block }
+            return {
+              ...criteria, checked: false, colOneData, colTwoData, grade: selectedGrade, block
+            }
           })
           return { ...block, evaluationCriteria, colOneHead, colTwoHead }
         })
@@ -211,12 +166,6 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     this.currentBlockIndex = id
   }
 
-  adjustHeightContent(): void {
-    const innerHeight: number = window.innerHeight
-    this.contentHeight = (innerHeight * 61.73) / 100 + 'px'
-    this.leftContentHeight = (innerHeight * 60.66) / 100 + 'px'
-  }
-
   getSummary(): void {
     this.isShow = !this.isShow
   }
@@ -244,4 +193,5 @@ export interface TempData {
   course?: string,
   block?: string,
   dimension?: string,
+  checked?: boolean
 }
