@@ -15,7 +15,6 @@
     width: 100%;
     max-width: 672px;
     min-width: 430px;
-    @include transitions(all, 0.5s, ease-in-out);
   }
   &_short{
     #{$root}__forms{
