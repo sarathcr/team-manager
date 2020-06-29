@@ -61,7 +61,7 @@
 
     &__body{
         width: 100%;
-        height: 100%;
+        height: calc(100% - 126px);
         display: flex;
         flex-direction: column;
 
@@ -79,7 +79,7 @@
             display: flex;
             flex-direction: row;
             width: 100%;
-            height: 68%;
+            height: calc(100% - 52px);
             &_no-content{
                 min-height: 511px;
                 border:1px solid $creator-border;
@@ -132,6 +132,7 @@
 
         &_summary{
             width: 100%;
+            height: 100%;
         }
 
     }
@@ -223,7 +224,6 @@
 
         &-index{
            margin-right: 9px;
-           align-self: flex-start;
         }
 
         &-label{
@@ -294,15 +294,11 @@
             border-radius: 3px 3px 0 0;
             position: relative;
             overflow: hidden;
-
+            ng-scrollbar{
+                max-height: calc(100% - 49px);
+            }
             &-scroll{
-                // max-height: 450px;
-                // max-height: 49vh;
                 height: 100%;
-
-                .last-row{
-                    margin-bottom: 20px;
-                }
             }
 
             &::after{

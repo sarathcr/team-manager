@@ -7,8 +7,8 @@
       [settings] ="dropdownSettings"
       [data]="config.data"
       [priorityData]="config.priorityData"
-      (onSelect)="onItemSelect($event)"
-      (onDeSelect)="onItemDeSelect($event)"
+      (onSelect)="onItemSelect()"
+      (onDeSelect)="onItemDeSelect()"
       (onDropDownClose)="onDropDownClose()"
       [(ngModel)]="config.selectedItems">
     </ng-multiselect-dropdown>

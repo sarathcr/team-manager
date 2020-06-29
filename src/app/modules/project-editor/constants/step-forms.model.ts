@@ -55,8 +55,8 @@ export interface FormTwoInit {
 
 export interface FormThree {
   data: {
-    competencyObjectives: CompetencyObjectives[]
-    evaluationCriteria: EvaluationCriteria[]
+    competencyObjectives?: CompetencyObjectives[]
+    subjects?: Subject[]
   }
   stepStatus: StepState
 }
