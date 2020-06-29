@@ -48,7 +48,7 @@ body {
   font-family: $font-family-default;
   font-size: $font-size-default;
   font-weight: $font-weight-default;
-  line-height: 24px;
+  line-height: $line-height-default;
   color: $primary-font-color;
   text-align: left; // 3
   -webkit-font-smoothing: antialiased;
