@@ -16,7 +16,8 @@
       <span class="icon icon-ic_share_close"></span>
     </button>
   </div>
-  <div class="competency-modal__body" *ngIf="!isShow else summary">
+  <app-loader *ngIf="loading; else loaded"></app-loader>
+  <div class="competency-modal__body" *ngIf="!isShow else summary" #loaded>
     <h6 class="competency-modal__body-title">
       {{ 'OBJECTIVES.project_objectives_criteriawindow_title' | translate }}</h6>
     <div class="competency-modal__body-block">
@@ -110,16 +111,26 @@
       <div *ngIf="blocks | checkCount" class="competency-modal__body_summary">
         <div id="custom-tab__content1" class="custom-tab__content active">
           <div class="custom-tab__content-body">
-            <app-table-row [isHead]="true" [checkboxData]="false" [colOne]="{value: tempHead.evaluationCriteria}"
-              [colTwo]="{value: tempHead.course, size: 'xs'}" [colThree]="{value: tempHead.block, size: 's'}">
-            </app-table-row>
+            <app-table-row
+              [isHead]="true"
+              [checkboxData]="false"
+              [colOne]="{value: tempHead.evaluationCriteria}"
+              [colTwo]="{value: tempHead.course, size: 'xs'}"
+              [colThree]="{value: tempHead.block, size: 's'}"
+            ></app-table-row>
             <ng-scrollbar>
               <div class="custom-tab__content-body-scroll">
                 <ng-container *ngFor="let block of blocks; let index = index;">
-                  <app-table-row *ngFor="let criteria of block.evaluationCriteria" [checkboxData]="criteria"
-                    [colOne]="{value: criteria.name}" [colTwo]="{value: criteria.grade.name, size: 'xs'}"
-                    [colThree]="{value: block.name, size: 's'}" [parentID]="'custom-tab__content1'"
-                  ></app-table-row>
+                  <ng-container *ngFor="let criteria of block.evaluationCriteria">
+                    <app-table-row 
+                      *ngIf="criteria.checked"
+                      [checkboxData]="criteria"
+                      [colOne]="{value: criteria.name}"
+                      [colTwo]="{value: criteria.grade.name, size: 'xs'}"
+                      [colThree]="{value: block.name, size: 's'}"
+                      [parentID]="'custom-tab__content1'"
+                    ></app-table-row>
+                  </ng-container>
                 </ng-container>
               </div>
             </ng-scrollbar>
@@ -129,7 +140,6 @@
 
     </div>
   </ng-template>
-
   <div class="competency-modal__footer">
     <div class="competency-modal__footer-btn-group">
       <div class="competency-modal__footer-btn-link" (click)="getSummary()" *ngIf="!isShow">

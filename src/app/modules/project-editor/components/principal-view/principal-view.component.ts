@@ -38,6 +38,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   }
   subscriptions = new SubSink()
   criterias: EvaluationCriteria[]
+  loading = false
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -82,6 +83,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   }
 
   getBlocks(selectedGrade: any): void {
+    this.loading = true
     this.subscriptions.sink = this.blockService.entities$
     .pipe(map(data => {
       const savedBlockData = data.find(blockData => blockData.id === `${selectedGrade.id}-${this.subjectId}`)
@@ -125,6 +127,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
         return { ...block, evaluationCriteria, colOneHead, colTwoHead }
       })
     })
+    this.blockService.loading$.subscribe(loading => { this.loading = loading })
   }
 
   getTranslation(): void {
