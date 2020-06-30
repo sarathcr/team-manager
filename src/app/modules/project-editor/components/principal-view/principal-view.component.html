@@ -158,8 +158,7 @@
         {{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }}
         ({{ (blocks | checkCount) || 0 }})
       </div>
-      <app-button class="ml-auto" [disabled]="!(blocks | checkCount)" (click)="handleButtonClick()">
-        <span class="form-button__icon icon-ic_check"></span>
+      <app-button class="ml-auto" [icon]="'tick'" [disabled]="!(blocks | checkCount)" (click)="handleButtonClick()">
         {{ 'OBJECTIVES.project_objectives_criteriawindow_add' | translate }}
       </app-button>
     </div>
