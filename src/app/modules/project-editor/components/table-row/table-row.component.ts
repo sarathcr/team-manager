@@ -25,7 +25,6 @@ export class TableRowComponent {
     }
   }
 }
-
 // WIP To be Moved in to corresponding file while doing functionality
 export interface TableColumn {
   value: string,

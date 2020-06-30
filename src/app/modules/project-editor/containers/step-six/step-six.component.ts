@@ -150,5 +150,4 @@ export class StepSixComponent implements OnInit, OnDestroy {
     this.initialFormData = formData.data
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
   }
-
 }

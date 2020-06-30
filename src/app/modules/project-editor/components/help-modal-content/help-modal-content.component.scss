@@ -45,5 +45,15 @@
       object-position: center;
       object-fit: cover;
     }
+
+    &-pdf{
+      &-content{
+        max-height: 500px;
+        overflow-y: scroll;
+        pdf-viewer{
+          display: block;
+        }
+      }
+    }
   }
 }

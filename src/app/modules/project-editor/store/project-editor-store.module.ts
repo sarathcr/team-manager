@@ -69,7 +69,6 @@ export class ProjectEditorStoreModule {
     private blockDataService: BlockDataService,
     private evaluatioCriteriaDataService: EvaluationCriteriaDataService
   ) {
-
     eds.registerMetadataMap(entityMetadata)
     entityDataService.registerService('Project', projectsDataService)
     entityDataService.registerService('Country', countryDataService)

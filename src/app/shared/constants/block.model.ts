@@ -26,10 +26,11 @@ export interface Block {
   colTwoHead?: string
   colOneHead?: string
   virtual: boolean
+  counts(): number
 }
 
 export interface BlockData {
-  id: string
+  id?: string
   blockData: Block[]
   gradeId?: number
   subjectId?: number

@@ -55,4 +55,5 @@ export const entityMetadata: EntityMetadataMap = {
       optimisticUpdate: true
     }
   }
+
 }

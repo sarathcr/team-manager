@@ -131,5 +131,4 @@ export class StepNineComponent implements OnInit, OnDestroy {
     }
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
   }
-
 }
