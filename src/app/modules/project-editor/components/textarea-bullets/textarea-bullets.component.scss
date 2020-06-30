@@ -50,5 +50,12 @@
       color: rgba($primary-font-color,0.6);
     }
   }
+
+  &.toggle-textarea{
+    height: 150px;
+    .textarea-bullets__list{
+      min-height: 148px;
+    }
+  }
 }
 

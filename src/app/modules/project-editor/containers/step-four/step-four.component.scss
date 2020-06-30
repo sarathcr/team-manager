@@ -1,6 +1,26 @@
 @import 'helpers/_helpers-master';
 .project-form{
   &__detail-selector-wrapper{
-
+    margin-bottom: 41px;
+    ::ng-deep{
+      .details-selector{
+        margin-bottom: 18px;
+      }
+    }
+    &:last-child{
+      margin-bottom: 56px;
+    }
+  }
+  &__textarea-content{
+    letter-spacing: normal;
+    padding: 0 18px;
+    &_link{
+      font-weight: 900;
+      border-bottom: 1px solid $link-color;
+      cursor: pointer;
+    }
+  }
+  &__textarea-wrapper{
+    margin-top:42px;
   }
 }

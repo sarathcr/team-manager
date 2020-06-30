@@ -1,4 +1,8 @@
-<div class="textarea-bullets" [ngClass]="{'textarea-bullets_focus': focus}">
+<div class="textarea-bullets" 
+  [ngClass]="{
+    'textarea-bullets_focus': focus, 
+    'toggle-textarea textarea-bullets_focus': type.height === '150'
+  }">
   <ng-scrollbar>
     <ul
       *ngIf="config"
