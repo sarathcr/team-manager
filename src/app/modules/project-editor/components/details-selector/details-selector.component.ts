@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators'
 import { ModalComponent } from '../modal/modal.component'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { PrincipalViewComponent } from '../principal-view/principal-view.component'
 
 @Component({
   selector: 'app-details-selector',
