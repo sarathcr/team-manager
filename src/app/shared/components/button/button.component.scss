@@ -19,11 +19,15 @@
     font-size: $font-size-button;
     line-height: 24px;
     letter-spacing: 1px;
+    &:disabled{
+      pointer-events: none;
+    }
   }
   .btn-primary{
     &:disabled{
       background-color: $creator-disabled;
       border-color: transparent;
+      pointer-events: none;
     }
   }
   .btn-success{
