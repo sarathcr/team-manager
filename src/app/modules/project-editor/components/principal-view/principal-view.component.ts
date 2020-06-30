@@ -11,6 +11,8 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { CriteriaWithSkills, Block } from 'src/app/shared/constants/block.model'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 import { EvaluationCriteria, Grade } from '../../constants/project.model'
+import { CompetencyModal } from '../../constants/competency-modal.data'
+import { ModalTable } from '../../constants/modal-table.data'
 
 @Component({
   selector: 'app-competency-modal-content',
@@ -30,7 +32,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   checks: Array<{ parentId: number, count: number }> = []
   subjectId: number
   showPrimaryView = true
-  heading: TempData
+  heading: CompetencyModal
   subscriptions = new SubSink()
   loading = false
   selectedCriterias: Subject<EvaluationCriteria[]> = new Subject()
@@ -88,8 +90,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  getTableData(criteria: CriteriaWithSkills, colOneHead: string, colTwoHead: string):
-    { colOneHead: string, colTwoHead: string, colTwoData: string } {
+  getTableData(criteria: CriteriaWithSkills, colOneHead: string, colTwoHead: string): ModalTable {
     let colTwoData: string
     if (!colOneHead && criteria.name) {
       colOneHead = this.heading.evaluationCriteria
@@ -191,7 +192,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     this.currentBlockIndex = id
   }
 
-  getSummary(): void {
+  togglePrimaryView(): void {
     this.showPrimaryView = !this.showPrimaryView
   }
 
@@ -210,13 +211,4 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     this.bsModalRef.hide()
   }
 
-}
-
-export interface TempData {
-  evaluationCriteria?: string,
-  basicSkills?: string,
-  course?: string,
-  block?: string,
-  dimension?: string,
-  checked?: boolean
 }

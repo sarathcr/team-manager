@@ -5,7 +5,7 @@
     </h4>
     <ng-template #return>
       <div class="competency-modal__header__summary-title">
-        <h4 class="competency-modal__header-title" (click)="getSummary()">
+        <h4 class="competency-modal__header-title" (click)="togglePrimaryView()">
           <span class="icon icon-ic_back competency-modal__header__icon"></span>
           {{ 'CONTENT.project_objectives_contentwindow_content_selected_back' | translate }}
         </h4>
@@ -88,73 +88,16 @@
 
   <!-- Summary view Evaluation Criteria-->
   <ng-template #summary>
-    <div class="competency-modal__body">
-      <h6 class="competency-modal__body-title">
-        ({{ blocks | checkCount }})
-        {{ 'OBJECTIVES.project_objectives_criteriawindow_critera_selected' | translate }}
-      </h6>
-
-      <!-- View when No criteria is selected -->
-      <div
-        *ngIf="!(blocks | checkCount)"
-        class="competency-modal__body-block_no-content d-flex align-items-center justify-content-center"
-      >
-        <div class="competency-modal__body__no-content-wrapper d-flex align-items-center justify-content-center">
-          <h3 class="title_xs competency-modal__body__no-content-wrapper__title">
-            {{ 'OBJECTIVES.project_objectives_criteriawindow_empty_title' | translate }}
-          </h3>
-          <div class="competency-modal__body__no-content-wrapper__description">
-            {{ 'OBJECTIVES.project_objectives_criteriawindow_empty_description' | translate }}
-          </div>
-          <div>
-            <app-button (click)="getSummary()">
-              {{'OBJECTIVES.project_objectives_criteriawindow_empty_button' | translate}}
-            </app-button>
-          </div>
-        </div>
-      </div>
-
-      <!-- View with Criteria evaluation course and Block -->
-      <div *ngIf="blocks | checkCount" class="competency-modal__body_summary">
-        <div class="custom-tab__content active">
-          <div class="custom-tab__content-body">
-            <app-table-row
-              [isHead]="true"
-              [colOne]="{value: heading.evaluationCriteria}"
-              [colTwo]="colTwoHead ? {value:  heading[colTwoHead], size: 'm'} : { value: heading.course, size: 'xs'}"
-              [colThree]="colTwoHead ? {value:  heading.course, size: 'xs'} : { value: heading.block, size: 's'}"
-              [colFour]="colTwoHead ? {value:  heading.block, size: 's'} : ''"
-            ></app-table-row>
-            <ng-scrollbar>
-              <div class="custom-tab__content-body-scroll">
-                <ng-container *ngFor="let block of blocks; let index = index;">
-                  <ng-container *ngFor="let criteria of block.evaluationCriteria">
-                    <app-table-row 
-                      *ngIf="criteria.checked"
-                      [checkboxData]="criteria"
-                      [checkedOnly]="true"
-                      [colOne]="{value: criteria.name}"
-                      [colTwo]="colTwoHead ?
-                                {value:  criteria.colTwoData, size: 'm'} :
-                                { value: criteria.grade.name, size: 'xs'}"
-                      [colThree]="colTwoHead ?
-                                  {value:  criteria.grade.name, size: 'xs'} :
-                                  { value: block.name, size: 's'}"
-                      [colFour]="colTwoHead ? {value:  block.name, size: 's'} : ''"
-                      [parentID]="block.id"
-                    ></app-table-row>
-                  </ng-container>
-                </ng-container>
-              </div>
-            </ng-scrollbar>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-secondary-view
+      [blocks]="blocks"
+      [heading]="heading"
+      [colHeading]="[colOneHead, colTwoHead]"
+      (summary)="togglePrimaryView()"
+    ></app-secondary-view>
   </ng-template>
   <div class="competency-modal__footer">
     <div class="competency-modal__footer-btn-group">
-      <div class="competency-modal__footer-btn-link" (click)="getSummary()" *ngIf="showPrimaryView">
+      <div class="competency-modal__footer-btn-link" (click)="togglePrimaryView()" *ngIf="showPrimaryView">
         {{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }}
         ({{ (blocks | checkCount) || 0 }})
       </div>

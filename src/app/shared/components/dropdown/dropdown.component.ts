@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } fro
 // Interfaces
 import { DropDownConfig, Option } from '../../constants/field.model'
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast'
 
 @Component({
   selector: 'app-dropdown',
@@ -31,11 +32,12 @@ export class DropdownComponent implements OnInit {
   }
 
   selectedValue(): any {
-    if (this.getInitialData) {
-      return this.initialSelectedItems.filter(item => this.config.selectedItems
-                                      .map(selected => selected.id).includes(item.id))
+    if (this.getInitialData && this.initialSelectedItems?.length) {
+      return this.config.selectedItems.map(item => {
+        return this.initialSelectedItems.find(selected => selected.id === item.id) || { ...item }
+      })
     }
-    return this.config.selectedItems
+    return [...this.config.selectedItems]
   }
 
   onItemSelect(): void {
