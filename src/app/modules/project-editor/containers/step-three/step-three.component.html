@@ -47,8 +47,8 @@
     <app-button
       [disabled] = 'buttonConfig.disabled'
       [theme] = "buttonConfig.submitted ? 'success':'primary'"
+      [icon]="'tick'"
       (click)='handleSubmit("DONE")'>
-      <span class="form-button__icon icon-ic_check"></span>
       {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
     </app-button>
   </div>
