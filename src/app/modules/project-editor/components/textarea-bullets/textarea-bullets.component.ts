@@ -193,7 +193,5 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   }
 
 }
-export interface TextareaType {
-  height?: '150'
-}
+export type TextareaType = 'toggle'
 

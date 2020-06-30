@@ -1,7 +1,7 @@
 <div class="project-editor__form step-four">
     <app-status [status]='step.state'></app-status>
     <div class="project-form d-flex flex-column justify-content-between">
-      <div>
+      <div class="project-form__wrap">
         <h1 class="project-form__title title_s">
           <span class="project-form__title-number">4.</span>
           {{"CONTENT.project_content_title" | translate}}<app-info-tooltip></app-info-tooltip>
@@ -29,11 +29,23 @@
               <div class="project-form__textarea-wrapper">
                 <app-textarea-bullets 
                   [config]='textAreaConfig'
-                  [type]="{height: '150'}">
+                  [type]="'toggle'">
                 </app-textarea-bullets>
               </div>
             </ng-template>
           </div>
+          <ng-container>
+            <div class="project-form__basic-skill">
+              <h3 class="project-form__basic-skill__title">
+                {{"CONTENT.project_content_contentwindow_title" | translate}}
+              </h3>
+              <div class="project-form__cell">
+                <div class="project-form__box">
+                  <input type="checkbox" class="project-form__checkbox">
+                  <span class="icon-ic_check project-form__checkmark"></span></div>
+                  <span class="project-form__desc">ec name 41</span></div>
+            </div>
+          </ng-container>
         </div>
         <app-button
         [disabled] = 'buttonConfig.disabled'

@@ -9,6 +9,7 @@
   border-radius: 3px;
   margin-bottom: 56px;
   box-shadow: 0 0 0 0 transparent;
+  position: relative;
   &__list {
     padding: 14px 22px;
     margin-bottom: 0;
@@ -50,9 +51,23 @@
       color: rgba($primary-font-color,0.6);
     }
   }
-
+  &__label{
+    position: absolute;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 12px;
+    top: -2px;
+    transform: translateY(-50%);
+    padding: 2px 5px;
+    background-color: inherit;
+    left: 14px;
+    z-index: 2;
+    background-color: $creator-background;
+  }
   &.toggle-textarea{
     height: 150px;
+    overflow: visible;
     .textarea-bullets__list{
       min-height: 148px;
     }

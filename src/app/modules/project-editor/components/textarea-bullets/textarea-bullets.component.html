@@ -1,8 +1,12 @@
 <div class="textarea-bullets" 
   [ngClass]="{
     'textarea-bullets_focus': focus, 
-    'toggle-textarea textarea-bullets_focus': type.height === '150'
+    'toggle-textarea input_focus': type === 'toggle'
   }">
+  <label class="textarea-bullets__label"
+    *ngIf="type">
+    {{"CONTENT.project_content_extracontent_input" | translate}}
+  </label>
   <ng-scrollbar>
     <ul
       *ngIf="config"
