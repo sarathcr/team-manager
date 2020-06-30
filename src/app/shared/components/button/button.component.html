@@ -7,7 +7,6 @@
                 'btn-secondary': theme === 'secondary',
                 'btn-success': theme === 'success'}"
     [disabled]="disabled"
-    (click)="buttonClick.emit($event)"
   >
     <span class="form-button__icon icon-ic_check" *ngIf="icon === 'tick'"></span>
     <ng-content></ng-content>

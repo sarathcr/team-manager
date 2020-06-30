@@ -49,7 +49,7 @@
       [disabled] = 'buttonConfig.disabled'
       [theme] = "buttonConfig.submitted ? 'success':'primary'"
       [icon]="'tick'"
-      (buttonClick)='handleSubmit("DONE")'>
+      (click)='handleSubmit("DONE")'>
       {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
     </app-button>
   </div>

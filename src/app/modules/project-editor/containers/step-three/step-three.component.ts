@@ -244,6 +244,9 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'
     }
+    const tempData = this.inputFormData.competencyObjectives.map(item => item.id == null ? { name: item.name } : item)
+    this.inputFormData.competencyObjectives = tempData
+    this.initialFormData.competencyObjectives = tempData
     const formData: FormThree = {
       data: {
         subjects: this.createSubjectPayload(),
