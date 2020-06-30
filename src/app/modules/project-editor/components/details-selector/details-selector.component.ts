@@ -22,6 +22,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() subject: Subject
   @Input() i: number
   @Input() isLast = false
+  @Input() icon: IconSelect
   @Input() project$: Observable<Project>
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() openModal: EventEmitter<any> = new EventEmitter()
@@ -74,3 +75,8 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
     this.count = this.criterias.filter(criteria => criteria === this.subject.id).length
   }
 }
+export interface IconSelect {
+  value: string,
+  name?: 'add' | 'locked'
+}
+
