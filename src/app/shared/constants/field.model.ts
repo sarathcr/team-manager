@@ -40,3 +40,4 @@ export type Theme = 'primary' | 'secondary' | 'success'
 export type TextAreaVariants = 'bullet' | 'number'
 
 export type ButtonIcon = 'tick'
+

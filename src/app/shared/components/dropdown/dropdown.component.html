@@ -1,6 +1,7 @@
 <div class="dropdown dropdown_multiple {{active ? 'active':''}}">
   <div class="dropdown__wrap  {{ config.settings.singleSelection ? 'dropdown_single-select':'' }}" >
     <label class="dropdown__label" for='config.name'>{{config.label}}</label>
+    
     <ng-multiselect-dropdown
       [placeholder]="config.placeholder"
       [disabled] ="config.disabled"

@@ -73,3 +73,4 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
     this.count = this.criterias.filter(criteria => criteria === this.subject.id).length
   }
 }
+

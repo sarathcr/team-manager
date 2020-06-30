@@ -59,6 +59,7 @@ export class HelpAccordionComponent implements OnInit, OnDestroy {
       this.adjustHeight()
     })
   }
+
   videoModal(event: any): void {
     event.preventDefault()
     const element = event.currentTarget

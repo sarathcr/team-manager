@@ -190,5 +190,4 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.textAreaConfig.placeholder = translations['THEMATIC.project_thematic_placeholder']
     })
   }
-
 }

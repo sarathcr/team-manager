@@ -129,7 +129,7 @@ import { CheckCount } from './pipes/check-count.pipe'
 export class ProjectEditorModule {
 
   constructor() {
-    // ngx-bootstrap theme
+    // ngx-bootstrap  theme
     setTheme('bs4')
   }
 }

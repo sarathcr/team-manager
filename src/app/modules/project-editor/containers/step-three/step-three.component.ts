@@ -185,6 +185,17 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     this.checkStepStatus()
   }
 
+  // check if the form is initially empty
+  checkInitialEmptyForm(): boolean {                      // WIP
+    if (!this.initialFormData.competencyObjectives.length || !this.initialCriterias.length) { return true }
+    let emptyForm = false
+    this.project.subjects.forEach(subject => {
+      if (!this.initialCriterias.includes(subject.id)) { emptyForm = true }
+    })
+    if (emptyForm) { return true }
+    return false
+  }
+
   // checks the form is completely filled or not
   hasAnyEmptyFields(): boolean {
     let nonEmptyForm = true
@@ -322,5 +333,5 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     }
     this.handleButtonType()   // WIP
   }
-
 }
+

@@ -471,5 +471,4 @@ export class StepOneComponent implements OnInit, OnDestroy {
       this.subjectsDropdown.placeholder = translations['STARTING_POINT.project_startingpoint_subjects_placeholder']
     })
   }
-
 }

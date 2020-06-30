@@ -1,10 +1,13 @@
 @import 'helpers/_helpers-master';
+<<<<<<< HEAD
 :host{
     display: block;
     &:last-child{
         margin-bottom: 16px;
     }
 }
+=======
+>>>>>>> 59f80b1ebf5bb8d0db878a19a6f3f689961f5d85
 
 .table-row{
     $root: &;
@@ -15,8 +18,17 @@
         background-color: $table-row-active-bg-color;
     }
 
+<<<<<<< HEAD
     &__cell{
         padding: 12px 15px;
+=======
+    &.last-row{
+        margin-bottom: 16px;
+    }
+
+    &__cell{
+        padding: 12px 12px ;
+>>>>>>> 59f80b1ebf5bb8d0db878a19a6f3f689961f5d85
         font-family: $font-family-tertiary;
         font-size: $font-size-body-s;
         line-height: $line-height-24px;
@@ -26,6 +38,7 @@
         flex-direction: row;
         flex: 1 1 100%;
         &_xs{
+<<<<<<< HEAD
             max-width: 110px;
         }
         &_m{
@@ -36,6 +49,15 @@
         }
         &_s{
             max-width: 320px;
+=======
+            max-width: 80px;
+        }
+        &_m{
+            max-width: 355px;
+        }
+        &_s{
+            max-width: 290px;
+>>>>>>> 59f80b1ebf5bb8d0db878a19a6f3f689961f5d85
         }
     }
 
@@ -81,7 +103,11 @@
     }
 
     &__box{
+<<<<<<< HEAD
         display: block;
+=======
+        display: inline-flex;
+>>>>>>> 59f80b1ebf5bb8d0db878a19a6f3f689961f5d85
         margin-right: 14px;
         align-self: flex-start;
         position: relative;

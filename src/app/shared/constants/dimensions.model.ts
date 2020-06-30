@@ -6,3 +6,4 @@ export interface Dimensions {
     description: string
     specificSkills: SpecificSkills[]
 }
+

@@ -5,3 +5,4 @@ export interface Indicators {
     code: string
     numeration: number
 }
+
