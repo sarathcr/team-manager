@@ -11,37 +11,37 @@
       <app-dropdown 
         [config]='countryDropdown' 
         [data$]='country$'
-        [label]="'STARTING_POINT.project_startingpoint_country' | translate"
-        [placeholder]="'STARTING_POINT.project_startingpoint_country' | translate"
+        label="STARTING_POINT.project_startingpoint_country"
+        placeholder="STARTING_POINT.project_startingpoint_country"
         (dropdownSelect)='onDropdownSelect($event)'
       ></app-dropdown>
       <app-dropdown 
         [config]='regionDropdown' 
         [data$]='region$' 
-        [label]="'STARTING_POINT.project_startingpoint_region' | translate"
-        [placeholder]="'STARTING_POINT.project_startingpoint_region_placeholder' | translate"
+        label="STARTING_POINT.project_startingpoint_region"
+        placeholder="STARTING_POINT.project_startingpoint_region_placeholder"
         (dropdownSelect)='onDropdownSelect($event)'
       ></app-dropdown>
       <app-dropdown 
         [config]='academicYearDropdown' 
         [data$]='academicYear$'
-        [label]="'STARTING_POINT.project_startingpoint_year' | translate"
-        [placeholder]="'STARTING_POINT.project_startingpoint_year_placeholder' | translate" 
+        label="STARTING_POINT.project_startingpoint_year"
+        placeholder="STARTING_POINT.project_startingpoint_year_placeholder" 
         (dropdownSelect)='onDropdownSelect($event)'
       ></app-dropdown>
       <app-dropdown 
         [config]='gradesDropdown' 
         [data$]='grades$'
-        [label]="'STARTING_POINT.project_startingpoint_grades' | translate"
-        [placeholder]="'STARTING_POINT.project_startingpoint_grades_placeholder' | translate" 
+        label="STARTING_POINT.project_startingpoint_grades"
+        placeholder="STARTING_POINT.project_startingpoint_grades_placeholder" 
         (dropdownSelect)='onDropdownSelect($event)'
       ></app-dropdown>
       <app-dropdown 
         [config]='subjectsDropdown' 
         [data$]='subjects$'
         [getInitialData]="true"
-        [label]="'STARTING_POINT.project_startingpoint_subjects' | translate"
-        [placeholder]="'STARTING_POINT.project_startingpoint_subjects_placeholder' | translate" 
+        label="STARTING_POINT.project_startingpoint_subjects"
+        placeholder="STARTING_POINT.project_startingpoint_subjects_placeholder" 
         (dropdownSelect)='onDropdownSelect($event)'
       ></app-dropdown>
     </div>
