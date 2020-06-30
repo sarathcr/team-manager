@@ -5,6 +5,16 @@
   </button>
 </div>
 <div class="help-modal__body">
-  <img src='{{img}}' alt='image' class='help-modal__body-img' *ngIf='!video'>
+  <img src='{{img}}' alt='image' class='help-modal__body-img' *ngIf='!video && !pdf'>
   <app-video-player [videoOptions]='videoOptions'  *ngIf='video'></app-video-player>
+  <div class="help-modal__body-pdf" *ngIf='pdf'>
+    <div class="help-modal__body-pdf-content">
+      <pdf-viewer 
+        [src]='pdfContent'
+        [render-text]="true"
+        [original-size]="false"
+        [autoresize]="true"
+      ></pdf-viewer>
+    </div>
+  </div>
 </div>
