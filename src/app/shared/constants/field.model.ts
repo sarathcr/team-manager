@@ -30,6 +30,7 @@ export interface DropDownConfig {
   priorityData?: Array<{ id?: number; name?: string }>
   selectedItems?: Array<{ id: number; name: string }>
   settings: IDropdownSettings
+  canDeselect?: boolean
 }
 
 export type ButtonVariants = 'contained' | 'outlined' | 'text'

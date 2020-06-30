@@ -12,7 +12,8 @@
       <app-dropdown [config]='regionDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
       <app-dropdown [config]='academicYearDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
       <app-dropdown [config]='gradesDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
-      <app-dropdown [config]='subjectsDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
+      <app-dropdown [config]='subjectsDropdown' (dropdownSelect)='onDropdownSelect($event)' [getInitialData]="true">
+      </app-dropdown>
     </div>
     <app-button
       [disabled] = 'buttonConfig.disabled'
