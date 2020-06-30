@@ -8,7 +8,7 @@ import { Subject } from 'rxjs'
 import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
-import { CriteriaWithSkills, Block } from 'src/app/shared/constants/block.model'
+import { CriteriaWithSkills, Block, BlockData } from 'src/app/shared/constants/block.model'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 import { EvaluationCriteria, Grade } from '../../constants/project.model'
 import { CompetencyModal } from '../../constants/competency-modal.data'
@@ -30,7 +30,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   blocks: Block[]
   currentBlockIndex = 0
   checks: Array<{ parentId: number, count: number }> = []
-  subjectId: number
+  subject: Option
   showPrimaryView = true
   heading: CompetencyModal
   subscriptions = new SubSink()
@@ -39,6 +39,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   criteriaIds: number[]
   colOneHead: string
   colTwoHead: string
+  blockData: BlockData[] = []
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -60,12 +61,19 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subjectId = null
+    this.subject = null
     this.subscriptions.unsubscribe()
   }
 
   onDropdownSelect(selectedData: any): void {
-    this.getBlocks(selectedData.val[0])
+    const selectedGrade = selectedData.val[0]
+    const blockDataInstance = this.blockData.find(block => block.gradeId === selectedGrade.id)
+    if (blockDataInstance) {
+      this.blocks = blockDataInstance.blockData
+    }
+    else {
+      this.getBlocks(selectedGrade)
+    }
   }
 
   createFormConfig(): void {
@@ -115,6 +123,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     else if (criteria.basicSkills?.length) {
       colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
     }
+
     return { colOneHead, colTwoHead, colTwoData }
   }
 
@@ -144,7 +153,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     this.loading = true
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
-        const savedBlockData = data.find(blockData => blockData.id === `${selectedGrade.id}-${this.subjectId}`)
+        const savedBlockData = data.find(blockData => blockData.id === `${selectedGrade.id}-${this.subject.id}`)
         if (savedBlockData?.blockData) {
           return savedBlockData.blockData
         }
@@ -152,12 +161,15 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         if (!data?.length) {
           this.blockService.getWithQuery(
-            { gradeId: String(selectedGrade.id), subjectId: String(this.subjectId) }
+            { gradeId: String(selectedGrade.id), subjectId: String(this.subject.id) }
           )
         }
         this.blocks = data?.map(block => {
           return this.createTableData(block, selectedGrade)
         })
+        if (data && !this.blockData.find(block => block.gradeId === selectedGrade.id)) {
+          this.blockData.push({ blockData: this.blocks, gradeId: selectedGrade.id })
+        }
       })
     this.changeCurrentBlock(0)
     this.blockService.loading$.subscribe(loading => { this.loading = loading })
@@ -199,10 +211,12 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   handleButtonClick(): void {
     if (this.blocks?.length) {
       const selectedCriteria = []
-      for (const block of this.blocks) {
-        for (const criteria of block.evaluationCriteria) {
-          if (criteria.checked === true) {
-            selectedCriteria.push({ id: criteria.id, name: criteria.name })
+      for (const blocks of this.blockData) {
+        for (const block of blocks.blockData) {
+          for (const criteria of block.evaluationCriteria) {
+            if (criteria.checked === true) {
+              selectedCriteria.push({ id: criteria.id, name: criteria.name })
+            }
           }
         }
       }
