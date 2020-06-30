@@ -1,0 +1,167 @@
+<div class="competency-modal__content">
+  <div class="competency-modal__header">
+    <h4 *ngIf="showPrimaryView else return" class="competency-modal__header-title">
+      {{ 'OBJECTIVES.project_objectives_criteriawindow_curriculum' | translate }}
+    </h4>
+    <ng-template #return>
+      <div class="competency-modal__header__summary-title">
+        <h4 class="competency-modal__header-title" (click)="getSummary()">
+          <span class="icon icon-ic_back competency-modal__header__icon"></span>
+          {{ 'CONTENT.project_objectives_contentwindow_content_selected_back' | translate }}
+        </h4>
+      </div>
+    </ng-template>
+    <button
+      *ngIf="showPrimaryView"
+      class="close competency-modal__header-close"
+      type="button"
+      aria-label="Close"
+      (click)="bsModalRef.hide()"
+    >
+      <span class="icon icon-ic_share_close"></span>
+    </button>
+  </div>
+  <app-loader *ngIf="loading"></app-loader>
+  <div *ngIf="showPrimaryView else summary" class="competency-modal__body">
+    <h6 class="competency-modal__body-title">
+      {{ 'OBJECTIVES.project_objectives_criteriawindow_title' | translate }}
+    </h6>
+    <div class="competency-modal__body-block">
+      <div class="competency-modal__body-block-grade">
+        <app-dropdown
+          [config]='gradeDropdownConfig'
+          (dropdownSelect)='onDropdownSelect($event)'
+          [canDeselect]="false"
+        ></app-dropdown>
+        <ng-scrollbar>
+          <div class="competency-modal__body-scroll">
+            <div *ngIf="!(blocks?.length === 1 && blocks[0]?.virtual)" class="custom-tab">
+              <button
+                *ngFor="let block of blocks; let index = index;"
+                class="custom-tab__links"
+                [ngClass]="{ active: this.currentBlockIndex === index }"
+                (click)="changeCurrentBlock(index)"
+              >
+                <strong class="custom-tab__links-index">{{ index + 1 }}. </strong>
+                <span class="custom-tab__links-label">{{ block.name }}</span>
+                  <span *ngIf="block.evaluationCriteria | checkCount" class="d-flex ml-auto" >
+                    <strong class="custom-tab__links-selected">
+                      {{ block.evaluationCriteria | checkCount }}
+                    </strong>
+                  <span class="custom-tab__links-icon icon-ic_check"></span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </ng-scrollbar>
+      </div>
+      <div class="competency-modal__body-criteria">
+        <div
+          *ngFor="let block of blocks; let index = index;"
+          class="custom-tab__content"
+          [ngClass]="{ active: currentBlockIndex === index }"
+        >
+          <div class="custom-tab__content-body">
+            <app-table-row
+              [isHead]="true"
+              [checkboxData]="false" 
+              [colOne]="{value: block.colOneHead }"
+              [colTwo]="{value: block.colTwoHead, size: 'sm' }"
+            >
+            </app-table-row>
+            <ng-scrollbar>
+              <div class="custom-tab__content-body-scroll">
+                <app-table-row
+                  *ngFor="let criteria of block.evaluationCriteria"
+                  [checkboxData]="criteria"
+                  [colOne]="{ value: criteria.colOneData }"
+                  [colTwo]="{ value: criteria.colTwoData, size: 'sm' }"
+                  [parentID]="block.id"
+                ></app-table-row>
+              </div>
+            </ng-scrollbar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary view Evaluation Criteria-->
+  <ng-template #summary>
+    <div class="competency-modal__body">
+      <h6 class="competency-modal__body-title">
+        ({{ blocks | checkCount }})
+        {{ 'OBJECTIVES.project_objectives_criteriawindow_critera_selected' | translate }}
+      </h6>
+
+      <!-- View when No criteria is selected -->
+      <div
+        *ngIf="!(blocks | checkCount)"
+        class="competency-modal__body-block_no-content d-flex align-items-center justify-content-center"
+      >
+        <div class="competency-modal__body__no-content-wrapper d-flex align-items-center justify-content-center">
+          <h3 class="title_xs competency-modal__body__no-content-wrapper__title">
+            {{ 'OBJECTIVES.project_objectives_criteriawindow_empty_title' | translate }}
+          </h3>
+          <div class="competency-modal__body__no-content-wrapper__description">
+            {{ 'OBJECTIVES.project_objectives_criteriawindow_empty_description' | translate }}
+          </div>
+          <div>
+            <app-button (click)="getSummary()">
+              {{'OBJECTIVES.project_objectives_criteriawindow_empty_button' | translate}}
+            </app-button>
+          </div>
+        </div>
+      </div>
+
+      <!-- View with Criteria evaluation course and Block -->
+      <div *ngIf="blocks | checkCount" class="competency-modal__body_summary">
+        <div class="custom-tab__content active">
+          <div class="custom-tab__content-body">
+            <app-table-row
+              [isHead]="true"
+              [colOne]="{value: heading.evaluationCriteria}"
+              [colTwo]="colTwoHead ? {value:  heading[colTwoHead], size: 'm'} : { value: heading.course, size: 'xs'}"
+              [colThree]="colTwoHead ? {value:  heading.course, size: 'xs'} : { value: heading.block, size: 's'}"
+              [colFour]="colTwoHead ? {value:  heading.block, size: 's'} : ''"
+            ></app-table-row>
+            <ng-scrollbar>
+              <div class="custom-tab__content-body-scroll">
+                <ng-container *ngFor="let block of blocks; let index = index;">
+                  <ng-container *ngFor="let criteria of block.evaluationCriteria">
+                    <app-table-row 
+                      *ngIf="criteria.checked"
+                      [checkboxData]="criteria"
+                      [checkedOnly]="true"
+                      [colOne]="{value: criteria.name}"
+                      [colTwo]="colTwoHead ?
+                                {value:  criteria.colTwoData, size: 'm'} :
+                                { value: criteria.grade.name, size: 'xs'}"
+                      [colThree]="colTwoHead ?
+                                  {value:  criteria.grade.name, size: 'xs'} :
+                                  { value: block.name, size: 's'}"
+                      [colFour]="colTwoHead ? {value:  block.name, size: 's'} : ''"
+                      [parentID]="block.id"
+                    ></app-table-row>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </ng-scrollbar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <div class="competency-modal__footer">
+    <div class="competency-modal__footer-btn-group">
+      <div class="competency-modal__footer-btn-link" (click)="getSummary()" *ngIf="showPrimaryView">
+        {{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }}
+        ({{ (blocks | checkCount) || 0 }})
+      </div>
+      <app-button class="ml-auto" [disabled]="!(blocks | checkCount)" (click)="handleButtonClick()">
+        <span class="form-button__icon icon-ic_check"></span>
+        {{ 'OBJECTIVES.project_objectives_criteriawindow_add' | translate }}
+      </app-button>
+    </div>
+  </div>
+</div>

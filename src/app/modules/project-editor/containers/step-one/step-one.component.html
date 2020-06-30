@@ -39,6 +39,7 @@
       <app-dropdown 
         [config]='subjectsDropdown' 
         [data$]='subjects$'
+        [getInitialData]="true"
         [label]="'STARTING_POINT.project_startingpoint_subjects' | translate"
         [placeholder]="'STARTING_POINT.project_startingpoint_subjects_placeholder' | translate" 
         (dropdownSelect)='onDropdownSelect($event)'

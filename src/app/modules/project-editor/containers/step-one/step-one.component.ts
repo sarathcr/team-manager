@@ -213,6 +213,10 @@ export class StepOneComponent implements OnInit, OnDestroy {
           this.resetForm(selectedData.controller)
           this.handleDropdownDisable(selectedData.controller)
           if (selectedId) { this.getSubjects() }
+          break
+        }
+        case 'subjects': {
+          this.subjectsDropdown.selectedItems = [...selectedData.val]
         }
       }
     }

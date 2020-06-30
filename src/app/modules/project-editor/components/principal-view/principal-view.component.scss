@@ -46,7 +46,7 @@
           border: none;
           color: $comptency-close-color;
           font-size: $comptency-icon-size;
-          margin-right: -30px;
+          margin-right: -36px;
           margin-top: -24px;
           cursor: pointer;
         }
@@ -61,7 +61,7 @@
 
     &__body{
         width: 100%;
-        height: 100%;
+        height: calc(100% - 126px);
         display: flex;
         flex-direction: column;
 
@@ -79,12 +79,17 @@
             display: flex;
             flex-direction: row;
             width: 100%;
-            height: 68%;
+            height: calc(100% - 52px);
             &_no-content{
                 min-height: 511px;
                 border:1px solid $creator-border;
                 border-radius:3px 3px 0 0;
                 padding: 24px;
+            }
+            ::ng-deep{
+                .dropdown__wrap{
+                    background-color: $white !important;
+                }
             }
         }
 
@@ -132,6 +137,7 @@
 
         &_summary{
             width: 100%;
+            height: 100%;
         }
 
     }
@@ -159,7 +165,6 @@
             font-weight: 700;
             color: $comptency-primary-color;
             position: relative;
-            backface-visibility: hidden;
             cursor:pointer;
 
             &::after{
@@ -224,7 +229,6 @@
 
         &-index{
            margin-right: 9px;
-           align-self: flex-start;
         }
 
         &-label{
@@ -282,7 +286,6 @@
         width: 100%;
         height: 100%;
         display: none;
-        animation: fadeEffect 1s;
 
         &.active{
             display: block;
@@ -295,15 +298,14 @@
             border-radius: 3px 3px 0 0;
             position: relative;
             overflow: hidden;
-
+            display: flex;
+            flex-direction: column;
+            ng-scrollbar{
+                max-height: calc(100% - 49px);
+                flex: 1 1 100%;
+            }
             &-scroll{
-                // max-height: 450px;
-                // max-height: 49vh;
                 height: 100%;
-
-                .last-row{
-                    margin-bottom: 20px;
-                }
             }
 
             &::after{
@@ -317,6 +319,12 @@
                 background: linear-gradient(180deg, rgba($white,0) 1.3%, $white 100%);
                 pointer-events: none;
             }
+            ::ng-deep{
+                .ng-scroll-content{
+                    display: block !important;
+                }
+            }
+
         }
     }
 
@@ -332,7 +340,3 @@
     }
 }
 
-@keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}

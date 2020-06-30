@@ -16,7 +16,7 @@
     }
 
     &__cell{
-        padding: 12px 12px ;
+        padding: 12px 15px;
         font-family: $font-family-tertiary;
         font-size: $font-size-body-s;
         line-height: $line-height-24px;
@@ -26,13 +26,16 @@
         flex-direction: row;
         flex: 1 1 100%;
         &_xs{
-            max-width: 80px;
+            max-width: 110px;
         }
         &_m{
-            max-width: 355px;
+            max-width: 384px;
+        }
+        &_sm{
+            max-width: 364px;
         }
         &_s{
-            max-width: 290px;
+            max-width: 320px;
         }
     }
 
@@ -78,7 +81,7 @@
     }
 
     &__box{
-        display: inline-flex;
+        display: block;
         margin-right: 14px;
         align-self: flex-start;
         position: relative;

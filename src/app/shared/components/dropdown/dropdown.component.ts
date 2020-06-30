@@ -15,27 +15,28 @@ import { SubSink } from '../../utility/subsink.utility'
   encapsulation: ViewEncapsulation.None
 })
 export class DropdownComponent implements OnInit, OnDestroy {
-  @Output() dropdownSelect: EventEmitter<any> = new EventEmitter()
+
   @Input() config: DropDownConfig
-  @Input() selectedItems$: Observable<Option[]>
   @Input() data$: Observable<any>
   @Input() placeholder: string
   @Input() label: string
+  @Input() canDeselect = true
+  @Input() getInitialData: boolean
+  @Output() dropdownSelect: EventEmitter<any> = new EventEmitter()
   active = false
   dropdownSettings: IDropdownSettings = {}
-  initialSelectedItems: Option[]
+  initialSelectedItems: any
   subscriptions = new SubSink()
-  init
 
   constructor() { }
 
   ngOnInit(): void {
     this.dropdownSettings = {
       ...this.config.settings,
-      itemsShowLimit: 3,
+      itemsShowLimit: 4,
       closeDropDownOnSelection: true,
       maxHeight: 265,
-      enableCheckAll: false
+      enableCheckAll: false,
     }
     this.dropdownInit()
   }
@@ -51,10 +52,12 @@ export class DropdownComponent implements OnInit, OnDestroy {
           if (Array.isArray(data)) {
             if (data.length) {
               this.config.selectedItems = [...data]
+              this.initialSelectedItems = [...data]
               this.handleDataChange()
             }
           } else {
             this.config.selectedItems = [{ ...data }]
+            this.initialSelectedItems = [{ ...data }]
             this.handleDataChange()
           }
         }
@@ -62,14 +65,28 @@ export class DropdownComponent implements OnInit, OnDestroy {
     }
   }
 
-  onItemSelect(item: any): void {
+  selectedValue(): any {
+    if (this.getInitialData && this.initialSelectedItems?.length) {
+      return this.config.selectedItems.map(item => {
+        return this.initialSelectedItems.find(selected => selected.id === item.id) || { ...item }
+      })
+    }
+    return [...this.config.selectedItems]
+  }
+
+  onItemSelect(): void {
     this.active = true
     this.handleDataChange(true)
   }
 
-  onItemDeSelect(item: any): void {
-    this.active = true
-    this.handleDataChange(true)
+  onItemDeSelect(item: Option): void {
+    if (this.canDeselect) {
+      this.active = true
+      this.handleDataChange(true)
+    }
+    else {
+      this.config.selectedItems = [{ ...item }]
+    }
   }
 
   onDropDownClose(): void {
@@ -77,7 +94,8 @@ export class DropdownComponent implements OnInit, OnDestroy {
   }
 
   handleDataChange(updated: boolean = false): void {
+    const val = this.selectedValue()
     const status = this.config.selectedItems.length ? 'INPROCESS' : 'PENDING'
-    this.dropdownSelect.emit({ controller: this.config.name, val: this.config.selectedItems, updated, status })
+    this.dropdownSelect.emit({ controller: this.config.name, val, updated, status })
   }
 }
