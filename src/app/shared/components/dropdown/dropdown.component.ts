@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } fro
 // Interfaces
 import { DropDownConfig, Option } from '../../constants/field.model'
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast'
 
 @Component({
   selector: 'app-dropdown',

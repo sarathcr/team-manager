@@ -297,7 +297,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     const initialState = {
       grades: this.grades,
       selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name })),
-      subjectId: subject.id,
+      subject: {id: subject.id, name: subject.name},
       criteriaIds: subject.evaluationCriteria.map(criteria => criteria.id)
     }
     this.bsModalRef = this.modalService.show(PrincipalViewComponent,
