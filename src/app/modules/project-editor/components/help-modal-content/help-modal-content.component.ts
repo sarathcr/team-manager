@@ -12,6 +12,8 @@ export class HelpModalContentComponent implements OnInit {
   title: string
   img: string
   video: boolean
+  pdf = false
+  pdfContent: string
   videoSources: any
   closeBtnName: string
   videoOptions: VideoOptions
