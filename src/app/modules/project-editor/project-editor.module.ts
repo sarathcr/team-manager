@@ -55,6 +55,7 @@ import { StatusComponent } from './components/status/status.component'
 // service
 import { EditorService } from './services/editor/editor.service'
 import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service'
+import { SecondaryViewComponent } from './components/secondary-view/secondary-view.component'
 // pipe
 import { StringDecoder } from './pipes/string-decoder.pipe'
 import { CheckCount } from './pipes/check-count.pipe'
@@ -99,7 +100,8 @@ import { CheckCount } from './pipes/check-count.pipe'
     DetailsSelectorComponent,
     ModalComponent,
     InputComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
+    SecondaryViewComponent
   ],
   imports: [
     CommonModule,
