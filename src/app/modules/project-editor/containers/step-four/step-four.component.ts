@@ -2,6 +2,7 @@ import { ModalComponent } from './../../components/modal/modal.component'
 import { Component, OnInit } from '@angular/core'
 import { EditorService } from '../../services/editor/editor.service'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+import { ModalUnlock } from './../../constants/modal-config.data'
 
 @Component({
   selector: 'app-step-four',
@@ -21,20 +22,13 @@ export class StepFourComponent implements OnInit {
   }
 
   getModal(): void {
-    const initialState = {
-      modalConfig: {
-        variant: 'information',
-        icon: 'lock',
-        title: 'PROJECT.project_dependancy_title_cv',
-        description: 'CONTENT.project_content_dependancy_filterbycriteria_description',
-        redirectTo: '2',
-        completeLabel: 'CONTENT.project_content_dependancy_filterbycriteria_button'
-      }
-    }
+    const initialState = { modalConfig: { ...ModalUnlock } }
     this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
-
+      if (result){
+        this.editor.redirectToStep(3)
+      }
     })
   }
 

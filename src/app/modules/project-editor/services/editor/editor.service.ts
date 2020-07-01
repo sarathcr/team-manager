@@ -215,7 +215,7 @@ export class EditorService {
     if (this.isStepDone) {
       if (this.projectId && this.currentStepId !== this.nextStepId) {
         setTimeout(() => {
-          this.router.navigate([`editor/project/${this.projectId}/${this.nextStepId}`])
+          this.redirectToStep(this.nextStepId)
         }, 1000)
       }
     }

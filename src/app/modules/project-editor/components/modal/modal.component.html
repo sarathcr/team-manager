@@ -1,10 +1,10 @@
 <div class="common-modal__header">
   <h4 class="common-modal__title title_xs">
-    <span class="icon icon-ic_locked common-modal__icon" *ngIf="modalConfig.variant === 'information'"></span>
+    <span class="icon icon-ic_locked common-modal__icon" *ngIf="modalConfig.variant === 'unlock'"></span>
     {{ modalConfig.title | translate }}
   </h4>
   <button
-    *ngIf="modalConfig.variant === 'information'"
+    *ngIf="modalConfig.variant === 'unlock'"
     class="close common-modal__close"
     type="button"
     aria-label="Close"
@@ -19,22 +19,19 @@
   </div>
 </div>
 <div class="common-modal__footer">
-  <ng-container *ngIf="modalConfig.variant === 'confirmation'">
+  <ng-container>
     <div class="common-modal__button-wrapper">
-      <app-button [variant]="'outlined'" [theme]="'secondary'" (click)="onConfirm()" #deleteButton>
-        {{ modalConfig.deleteLabel | translate }}
+      <app-button 
+      [variant]="modalConfig.variant === 'delete' ? 'outlined' : 'contained'" 
+      [theme]="modalConfig.variant === 'delete' ? 'secondary' : 'primary'" 
+      (click)="onConfirm()" 
+      #deleteButton>
+        {{ modalConfig.confirmLabel | translate }}
       </app-button>
     </div>
-    <div class="common-modal__button-wrapper">
+    <div class="common-modal__button-wrapper" *ngIf="modalConfig.variant === 'delete'">
       <app-button [variant]="'text'" [theme]="'secondary'" (click)="onCancel()">
         {{ modalConfig.cancelLabel | translate }}
-      </app-button>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="modalConfig.variant === 'information'">
-    <div class="common-modal__button-wrapper">
-      <app-button [theme]="'primary'" (click)="onRedirect()">
-        {{ modalConfig.completeLabel | translate }}
       </app-button>
     </div>
   </ng-container>

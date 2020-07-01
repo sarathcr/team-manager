@@ -4,7 +4,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal'
 import { Subject } from 'rxjs'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { FieldConfig, ModalConfig } from 'src/app/shared/constants/field.model'
+import { FieldConfig } from 'src/app/shared/constants/field.model'
+import { ModalConfig } from './../../constants/modal-config.model'
 
 @Component({
   selector: 'app-modal',
@@ -30,17 +31,12 @@ export class ModalComponent implements OnInit {
   }
 
   public onConfirm(): void {
-    this.onClose.next('delete')
+    this.onClose.next(this.modalConfig.variant)
     this.bsModalRef.hide()
   }
 
   public onCancel(): void {
     this.onClose.next('cancel')
-    this.bsModalRef.hide()
-  }
-
-  public onRedirect(): void {
-    this.editor.redirectToStep(this.modalConfig.redirectTo)
     this.bsModalRef.hide()
   }
 

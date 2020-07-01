@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators'
 import { ModalComponent } from '../modal/modal.component'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { ModalDelete } from '../../constants/modal-config.data'
 
 @Component({
   selector: 'app-details-selector',
@@ -54,15 +55,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   }
 
   getModal(criteriaId: number): void {
-    const initialState = {
-      modalConfig: {
-        variant: 'confirmation',
-        title: 'OBJECTIVES.project_objectives_delete_confirmation_title',
-        description: 'OBJECTIVES.project_objectives_delete_confirmation_message_nonrelated',
-        deleteLabel: 'PROJECT.project_button_delete',
-        cancelLabel: 'PROJECT.project_button_cancel'
-      }
-    }
+    const initialState = { modalConfig: { ...ModalDelete } }
     this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
