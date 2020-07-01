@@ -94,5 +94,20 @@ export class StepFourComponent implements OnInit {
   toggleTextarea(): void{
     this.showTextarea = !this.showTextarea
   }
+      // this.project.competencyObjectives = [...this.inputFormData.competencyObjectives]
+      // this.checkFormEmpty()
+      // const formData = {
+      //   data: { ...this.project, updateType: 'removeCriteria', ...criteriaData },
+      //   stepStatus: {
+      //     steps: [
+      //       {
+      //         state: this.step.state,
+      //         stepid: this.step.stepid
+      //       }
+      //     ]
+      //   }
+      // }
+      // this.editor.handleStepSubmit(formData)
+    // }
 
 }
