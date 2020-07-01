@@ -26,9 +26,8 @@ export class StepFourComponent implements OnInit {
   textAreaConfig: FieldConfig
   subscriptions = new SubSink()
   showTextarea = false
-  contents: Array<{ name: string }>
   initialFormStatus: Status = 'PENDING'
-  sampleContent = { name: 'Lenguajes básicos de programación.', id: null }
+  contents: Option[] = []
 
   constructor(
     public editor: EditorService,
@@ -36,17 +35,19 @@ export class StepFourComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // Temporory function
+    this.pushContent()
     this.createFormConfig()
     this.formInIt()
   }
 
   // Temperory Function
   pushContent(): void {
-    this.contents.push({ ...this.sampleContent })
+    this.contents.push({ name: 'Lenguajes básicos de programación.', id: this.contents.length })
   }
 
   // Temperory Function
-  popConent(index: number): void {
+  popConent(): void {
     this.contents.pop()
   }
 
@@ -94,20 +95,5 @@ export class StepFourComponent implements OnInit {
   toggleTextarea(): void{
     this.showTextarea = !this.showTextarea
   }
-      // this.project.competencyObjectives = [...this.inputFormData.competencyObjectives]
-      // this.checkFormEmpty()
-      // const formData = {
-      //   data: { ...this.project, updateType: 'removeCriteria', ...criteriaData },
-      //   stepStatus: {
-      //     steps: [
-      //       {
-      //         state: this.step.state,
-      //         stepid: this.step.stepid
-      //       }
-      //     ]
-      //   }
-      // }
-      // this.editor.handleStepSubmit(formData)
-    // }
 
 }

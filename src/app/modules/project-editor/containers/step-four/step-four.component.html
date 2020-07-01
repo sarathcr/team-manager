@@ -15,12 +15,13 @@
             *ngFor="let subject of (editor.project$|async).subjects; let i = index; let last = last;"
           >
             <app-details-selector
-              [data]="subject"
               [subject]="subject"
-              [criterias]="subject.evaluationCriteria"
+              [subjectItem]="contents"
               [isLast]="last"
               [project$]="editor.project$"
               [icon]="{name:'locked'}"
+              (openModal)="pushContent()"
+              (deleteCriteria)="popConent()"
             ></app-details-selector>
             <div class="project-form__textarea-content"  *ngIf="!showTextarea; else manualContent">
               {{"CONTENT.project_content_extracontent.one" | translate}}
