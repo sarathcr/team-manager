@@ -32,7 +32,7 @@ export interface DropDownConfig {
   selectedItems?: Array<{ id: number; name: string }>
   settings: IDropdownSettings
   canDeselect?: boolean
-  status: Status
+  status?: Status
 }
 
 export type ButtonVariants = 'contained' | 'outlined' | 'text'
