@@ -1,22 +1,41 @@
 <div class="common-modal__header">
   <h4 class="common-modal__title title_xs">
-    {{'OBJECTIVES.project_objectives_delete_confirmation_title' | translate}}
+    <span class="icon icon-ic_locked common-modal__icon" *ngIf="modalConfig.variant === 'information'"></span>
+    {{ modalConfig.title | translate }}
   </h4>
+  <button
+    *ngIf="modalConfig.variant === 'information'"
+    class="close common-modal__close"
+    type="button"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+    >
+    <span class="icon icon-ic_share_close"></span>
+  </button>
 </div>
 <div class="common-modal__body">
   <div class="common-modal__content">
-    {{'OBJECTIVES.project_objectives_delete_confirmation_message_nonrelated' | translate}}
+    {{ modalConfig.description | translate }}
   </div>
 </div>
 <div class="common-modal__footer">
-  <div class="common-modal__button-wrapper">
-    <app-button [variant]="'outlined'" [theme]="'secondary'" (click)="onConfirm()" #deleteButton>
-      {{'PROJECT.project_button_delete' | translate}}
-    </app-button>
-  </div>
-  <div class="common-modal__button-wrapper">
-    <app-button [variant]="'text'" [theme]="'secondary'" (click)="onCancel()">
-      {{'PROJECT.project_button_cancel' | translate}}
-    </app-button>
-  </div>
+  <ng-container *ngIf="modalConfig.variant === 'confirmation'">
+    <div class="common-modal__button-wrapper">
+      <app-button [variant]="'outlined'" [theme]="'secondary'" (click)="onConfirm()" #deleteButton>
+        {{ modalConfig.deleteLabel | translate }}
+      </app-button>
+    </div>
+    <div class="common-modal__button-wrapper">
+      <app-button [variant]="'text'" [theme]="'secondary'" (click)="onCancel()">
+        {{ modalConfig.cancelLabel | translate }}
+      </app-button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="modalConfig.variant === 'information'">
+    <div class="common-modal__button-wrapper">
+      <app-button [theme]="'primary'" (click)="onRedirect()">
+        {{ modalConfig.completeLabel | translate }}
+      </app-button>
+    </div>
+  </ng-container>
 </div>

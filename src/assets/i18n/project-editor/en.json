@@ -16,7 +16,8 @@
       "project_button_create": "Crear",
       "project_title_title_newtitle": "Nuevo proyecto",
       "project_title_title_edittitle": "Edita el título",
-      "project_title_input_title": "Título"
+      "project_title_input_title": "Título",
+      "project_dependancy_title_cv": "Desbloquea el currículum"
   },
   "STEPS_MENU":{
       "project_structure_stepsmenu_title": "Crea paso a paso",

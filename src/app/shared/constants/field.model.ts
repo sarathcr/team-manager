@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
 
 export interface FieldConfig {
@@ -31,6 +32,17 @@ export interface DropDownConfig {
   selectedItems?: Array<{ id: number; name: string }>
   settings: IDropdownSettings
   canDeselect?: boolean
+}
+
+export interface ModalConfig {
+  variant: string
+  title: string
+  icon?: string
+  description: string
+  redirectUrl?: string
+  completeLabel?: string
+  deleteLabel?: string
+  cancelLabel?: string
 }
 
 export type ButtonVariants = 'contained' | 'outlined' | 'text'

@@ -2,25 +2,36 @@
 
 .common-modal{
     $root: &;
+    max-width: 460px;
+
     &__header{
-        padding: 27px 30px 0px ;
+        padding: 27px 30px 0px;
+        display: flex;
+        margin-bottom: 14px;
     }
     &__title{
         font-size: $font-size-sub-s;
         line-height: 28px;
         letter-spacing: .2px;
-        margin-bottom: 14px;
+        display: flex;
+        width: 100%;
+        margin-bottom: 0;
+    }
+    &__icon{
+        font-size: 24px;
+        display: flex;
+        margin-right: 16px;
+        align-self: center;
     }
 
-    &-close{
-      display: inline-flex;
-      justify-self: flex-end;
-      background-color: transparent;
-      border: none;
-      color: $context-close-color;
-      font-size: 20px;
-      margin-right: -8px;
-      cursor: pointer;
+    &__close{
+        display: flex;
+        background-color: transparent;
+        border: none;
+        color: $context-close-color;
+        font-size: 20px;
+        margin-right: -8px;
+        cursor: pointer;
     }
     &__body{
         padding: 0 30px;
@@ -36,9 +47,6 @@
     &__button-wrapper{
         margin-right: 12px;
         display: inline-flex;
-        &:first-child{
-            // margin-right: 21px;
-        }
     }
 }
 

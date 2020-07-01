@@ -55,7 +55,16 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   }
 
   getModal(criteriaId: number): void {
-    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal' })
+    const initialState = {
+      modalConfig: {
+        variant: 'confirmation',
+        title: 'OBJECTIVES.project_objectives_delete_confirmation_title',
+        description: 'OBJECTIVES.project_objectives_delete_confirmation_message_nonrelated',
+        deleteLabel: 'PROJECT.project_button_delete',
+        cancelLabel: 'PROJECT.project_button_cancel'
+      }
+    }
+    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
       if (result === 'delete') {
