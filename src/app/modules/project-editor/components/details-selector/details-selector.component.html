@@ -10,7 +10,7 @@
       <span *ngIf="subjectItem.length > 0" class="details-selector__text_evaluation">
         {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{subjectItem.length}})
       </span>
-      <span class="details-selector__add" (click)="addItem(subject.id)">
+      <span class="details-selector__add" (click)="addItem()">
         <span class="icon details-selector__add_icon"
         [ngClass]="{
           'icon-ic_add_small' : icon.name === 'add',
