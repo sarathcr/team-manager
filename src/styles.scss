@@ -216,7 +216,7 @@ scrollbar-y.scrollbar-control {
 }
 
 .custom-scrollbar{
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
 
   &::-webkit-scrollbar {
