@@ -40,7 +40,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   academicYear$: Observable<AcademicYear>
   grades$: Observable<Grade[]>
   subjects$: Observable<Subject[]>
-  issFormUpdated = false
+  isFormUpdated = false
   fieldNames = ['countryDropdown', 'regionDropdown', 'academicYearDropdown', 'gradesDropdown', 'subjectsDropdown']
 
   constructor(
@@ -53,17 +53,17 @@ export class StepOneComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAllCountries()
-    this.formInIt()
+    this.stepInIt()
   }
 
   ngOnDestroy(): void {
-    if (this.issFormUpdated) {
+    if (this.isFormUpdated) {
       this.handleSubmit()
     }
     this.subscriptions.unsubscribe()
   }
 
-  formInIt(): void {
+  stepInIt(): void {
     this.project$ = this.editor.getDataByStep(1)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[0]
@@ -186,7 +186,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   // function to handle the dropdown selection
   onDropdownSelect(selectedData: any): void {
     const selectedId = selectedData.val[0]?.id
-    this.issFormUpdated = selectedData.updated
+    this.isFormUpdated = selectedData.updated
     if (selectedData) {
       switch (selectedData.controller) {
         case 'country': {

@@ -32,7 +32,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
   constructor(private editor: EditorService) { }
 
   ngOnInit(): void {
-    this.formInit()
+    this.stepInIt()
   }
 
   ngOnDestroy(): void {
@@ -42,7 +42,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe()
   }
 
-  formInit(): void {
+  stepInIt(): void {
     this.project$ = this.editor.getDataByStep(6)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[5]
