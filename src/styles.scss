@@ -150,6 +150,7 @@
     display: flex !important;
     .modal-dialog{
       margin: auto;
+      width: 87.5%;
     }
   }
 }
@@ -180,7 +181,7 @@ body,
 }
 
 .competency-modal{
-  min-width: 67.5%;
+  max-width: 87.5%; // 1260px;
   height: 750px; // 750px
   .modal-content{
     height: 100%;
