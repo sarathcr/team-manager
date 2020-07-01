@@ -38,7 +38,7 @@ export interface ModalConfig {
   title: string
   icon?: string
   description: string
-  redirectUrl?: string
+  redirectTo?: number
   completeLabel?: string
   deleteLabel?: string
   cancelLabel?: string

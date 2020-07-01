@@ -27,7 +27,7 @@ export class StepFourComponent implements OnInit {
         icon: 'lock',
         title: 'PROJECT.project_dependancy_title_cv',
         description: 'CONTENT.project_content_dependancy_filterbycriteria_description',
-        redirectUrl: '',
+        redirectTo: '2',
         completeLabel: 'CONTENT.project_content_dependancy_filterbycriteria_button'
       }
     }

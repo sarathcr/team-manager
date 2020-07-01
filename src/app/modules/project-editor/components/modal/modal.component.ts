@@ -3,6 +3,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal'
 
 import { Subject } from 'rxjs'
 
+import { EditorService } from '../../services/editor/editor.service'
 import { FieldConfig, ModalConfig } from 'src/app/shared/constants/field.model'
 
 @Component({
@@ -19,11 +20,13 @@ export class ModalComponent implements OnInit {
 
   public onClose: Subject<string>
 
-  constructor(public bsModalRef: BsModalRef) { }
+  constructor(
+    public bsModalRef: BsModalRef,
+    private editor: EditorService
+  ) { }
 
   ngOnInit(): void {
     this.onClose = new Subject()
-    console.log(this.modalConfig)
   }
 
   public onConfirm(): void {
@@ -37,7 +40,8 @@ export class ModalComponent implements OnInit {
   }
 
   public onRedirect(): void {
-
+    this.editor.redirectToStep(this.modalConfig.redirectTo)
+    this.bsModalRef.hide()
   }
 
 }

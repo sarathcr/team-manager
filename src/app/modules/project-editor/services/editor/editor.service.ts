@@ -283,5 +283,9 @@ export class EditorService {
       )
     return this.steps
   }
+
+  redirectToStep(id: number): void {
+    this.router.navigate([`editor/project/${this.projectId}/${id}`])
+  }
 }
 
