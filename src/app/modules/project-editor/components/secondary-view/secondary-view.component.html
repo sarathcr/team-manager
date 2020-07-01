@@ -1,7 +1,7 @@
 <!-- Summary view Evaluation Criteria-->
 <div class="competency-modal__body">
   <h6 class="competency-modal__body-title">
-    ({{ blockData | checkCount }})
+    {{ blockData | checkCount }}
     {{ 'OBJECTIVES.project_objectives_criteriawindow_critera_selected' | translate }}
   </h6>
 
@@ -36,7 +36,6 @@
           [colThree]="colHeading[1] ? {value:  heading.course, size: 'xs'} : { value: heading.block, size: 's'}"
           [colFour]="colHeading[1] ? {value:  heading.block, size: 's'} : ''"
         ></app-table-row>
-        <ng-scrollbar>
           <div class="custom-tab__content-body-scroll">
             <ng-container *ngFor="let blocks of blockData; let index = index;">
               <ng-container *ngFor="let block of blocks.blockData">
@@ -59,7 +58,6 @@
               </ng-container>
             </ng-container>
           </div>
-        </ng-scrollbar>
       </div>
     </div>
   </div>

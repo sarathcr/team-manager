@@ -56,12 +56,15 @@
     }
     &__close{
         line-height: 24px;
-        color: $overtitle-grey;
-        margin-left: 37px;
+        color: $creator-border-active;
+        margin-left: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
         margin-top: 4px;
+        .icon{
+            font-weight: 900;
+        }
     }
     &_last{
         margin-bottom: 20px;
