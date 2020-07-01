@@ -1,4 +1,3 @@
-import { Title } from '@angular/platform-browser';
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
 
 export interface FieldConfig {
