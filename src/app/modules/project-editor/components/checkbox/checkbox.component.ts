@@ -1,11 +1,11 @@
 import { Component, Input  } from '@angular/core'
 
 @Component({
-  selector: 'app-table-row',
-  templateUrl: './table-row.component.html',
-  styleUrls: ['./table-row.component.scss']
+  selector: 'app-checkbox',
+  templateUrl: './checkbox.component.html',
+  styleUrls: ['./checkbox.component.scss']
 })
-export class TableRowComponent {
+export class CheckBoxComponent {
   @Input() isHead = false
   @Input() checkboxData: CheckBoxData
   @Input() parentID: number

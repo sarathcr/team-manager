@@ -5,7 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { PrincipalViewComponent } from './principal-view.component'
-import { TableRowComponent } from '../table-row/table-row.component'
+import { CheckBoxComponent } from '../table-row/table-row.component'
 import { NgScrollbar } from 'ngx-scrollbar'
 import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.component'
 
@@ -15,7 +15,7 @@ describe('CompetencyModalContentComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrincipalViewComponent, TableRowComponent, NgScrollbar, DropdownComponent ],
+      declarations: [ PrincipalViewComponent, CheckBoxComponent, NgScrollbar, DropdownComponent ],
       providers: [ BsModalRef ],
       imports: [ TranslateModule.forRoot(), FormsModule ]
     })
