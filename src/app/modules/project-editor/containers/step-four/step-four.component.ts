@@ -16,11 +16,11 @@ export class StepFourComponent implements OnInit {
   constructor(private editor: EditorService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
-    this.formInit()
+    this.stepInIt()
   }
 
-  formInit(): void {
-    this.editor.getStepData(4)
+  stepInIt(): void {
+    this.editor.getDataByStep(4)
   }
 
   getModal(): void {

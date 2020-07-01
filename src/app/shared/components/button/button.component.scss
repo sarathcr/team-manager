@@ -61,3 +61,6 @@
 :host{
   align-self: flex-start;
 }
+:host(.disabled){
+  pointer-events: none;
+}

@@ -11,11 +11,11 @@ export class StepFiveComponent implements OnInit {
   constructor(private editor: EditorService) { }
 
   ngOnInit(): void {
-    this.formInit()
+    this.stepInIt()
   }
 
-  formInit(): void {
-    this.editor.getStepData(5)
+  stepInIt(): void {
+    this.editor.getDataByStep(5)
   }
 
 }

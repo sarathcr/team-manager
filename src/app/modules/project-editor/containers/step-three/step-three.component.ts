@@ -57,7 +57,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createFormConfig()
-    this.formInIt()
+    this.stepInIt()
   }
 
   ngOnDestroy(): void {
@@ -71,8 +71,8 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe()
   }
 
-  formInIt(): void {
-    this.project$ = this.editor.getStepData(3)
+  stepInIt(): void {
+    this.project$ = this.editor.getDataByStep(3)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[2]
     this.subscriptions.sink = this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
@@ -240,6 +240,9 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'
     }
+    const tempData = this.inputFormData.competencyObjectives.map(item => item.id == null ? { name: item.name } : item)
+    this.inputFormData.competencyObjectives = tempData
+    this.initialFormData.competencyObjectives = tempData
     const formData: FormThree = {
       data: {
         subjects: this.createSubjectPayload(),
