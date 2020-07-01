@@ -11,7 +11,11 @@
         {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{criterias.length}})
       </span>
       <span class="details-selector__add" (click)="addItem(data.id)">
-        <span class="icon icon-ic_add_small details-selector__add_icon"></span>
+        <span class="icon details-selector__add_icon"
+        [ngClass]="{
+          'icon-ic_add_small' : icon.name === 'add',
+          'icon-ic_locked' : icon.name === 'locked'
+        }"></span>
         {{'OBJECTIVES.project_objectives_criteriawindow_add' | translate}}
       </span>
     </li>

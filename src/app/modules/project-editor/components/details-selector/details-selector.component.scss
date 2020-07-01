@@ -53,7 +53,11 @@
             left: -25px;
             transform: translateY(-50%);
         }
+        .icon-ic_locked{
+            left: -30px;
+        }
     }
+    
     &__close{
         line-height: 24px;
         color: $overtitle-grey;

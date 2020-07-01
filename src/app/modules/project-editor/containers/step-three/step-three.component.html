@@ -8,7 +8,10 @@
       </h1>
       <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
       <ng-template #loaded>
-        <app-step-unlock *ngIf="!project.subjects?.length; else hasSubjects"></app-step-unlock>
+        <app-step-unlock 
+          *ngIf="!project.subjects?.length; else hasSubjects" 
+          [StepThree]="{step:'stepThree'}"
+        ></app-step-unlock>
         <ng-template #hasSubjects>
           <div class="project-editor__subject-wrapper">
             <app-details-selector
@@ -20,6 +23,7 @@
               (deleteCriteria)="removeCriteria($event)"
               [project$]="editor.project$"
               (openModal)="openModalWithComponent($event)"
+              [icon]="{name:'add'}"
             ></app-details-selector>
             <div class="project-editor__goto-step">
               {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}
