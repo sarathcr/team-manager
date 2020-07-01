@@ -8,12 +8,42 @@
       </h1>
       <p class="project-form__description" [innerHTML]="'STARTING_POINT.project_startingpoint_description' | translate"
       ></p>
-      <app-dropdown [config]='countryDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
-      <app-dropdown [config]='regionDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
-      <app-dropdown [config]='academicYearDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
-      <app-dropdown [config]='gradesDropdown' (dropdownSelect)='onDropdownSelect($event)'></app-dropdown>
-      <app-dropdown [config]='subjectsDropdown' (dropdownSelect)='onDropdownSelect($event)' [getInitialData]="true">
-      </app-dropdown>
+      <app-dropdown 
+        [config]='countryDropdown' 
+        [data$]='country$'
+        label="STARTING_POINT.project_startingpoint_country"
+        placeholder="STARTING_POINT.project_startingpoint_country"
+        (dropdownSelect)='onDropdownSelect($event)'
+      ></app-dropdown>
+      <app-dropdown 
+        [config]='regionDropdown' 
+        [data$]='region$' 
+        label="STARTING_POINT.project_startingpoint_region"
+        placeholder="STARTING_POINT.project_startingpoint_region_placeholder"
+        (dropdownSelect)='onDropdownSelect($event)'
+      ></app-dropdown>
+      <app-dropdown 
+        [config]='academicYearDropdown' 
+        [data$]='academicYear$'
+        label="STARTING_POINT.project_startingpoint_year"
+        placeholder="STARTING_POINT.project_startingpoint_year_placeholder" 
+        (dropdownSelect)='onDropdownSelect($event)'
+      ></app-dropdown>
+      <app-dropdown 
+        [config]='gradesDropdown' 
+        [data$]='grades$'
+        label="STARTING_POINT.project_startingpoint_grades"
+        placeholder="STARTING_POINT.project_startingpoint_grades_placeholder" 
+        (dropdownSelect)='onDropdownSelect($event)'
+      ></app-dropdown>
+      <app-dropdown 
+        [config]='subjectsDropdown' 
+        [data$]='subjects$'
+        [getInitialData]="true"
+        label="STARTING_POINT.project_startingpoint_subjects"
+        placeholder="STARTING_POINT.project_startingpoint_subjects_placeholder" 
+        (dropdownSelect)='onDropdownSelect($event)'
+      ></app-dropdown>
     </div>
     <app-button
       [disabled] = 'buttonConfig.disabled'
