@@ -3,3 +3,4 @@ export interface SpecificSkills {
     description: string
     code: string
 }
+

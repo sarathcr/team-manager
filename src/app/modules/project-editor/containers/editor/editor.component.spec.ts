@@ -19,6 +19,7 @@ import { ButtonComponent } from 'src/app/shared/components/button/button.compone
 import { EditorService } from '../../services/editor/editor.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { HelpEntityService } from '../../store/entity/help/help-entity.service'
+import { BehaviorSubject } from 'rxjs'
 
 class ActivatedRouteStub {
   private id: number | 'create'
@@ -37,6 +38,7 @@ class ActivatedRouteStub {
 }
 
 class EditorServiceStub {
+  loaded$ = new BehaviorSubject(true)
   getProject(): void { }
   clearData(): void { }
   createSteps(): void { }
@@ -89,6 +91,7 @@ describe('EditorComponent', (): void => {
   })
 
   it('should have a router outlet', (): void => {
+    fixture.detectChanges()
     const debugElement: DebugElement = fixture.debugElement.query(By.directive(RouterOutlet))
 
     expect(debugElement).not.toBeNull()
@@ -126,4 +129,5 @@ describe('EditorComponent', (): void => {
 
     expect(clearData).toHaveBeenCalled()
   })
+
 })

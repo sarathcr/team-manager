@@ -9,6 +9,7 @@ import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal'
 import { NgScrollbarModule } from 'ngx-scrollbar'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
+import { PdfViewerModule } from 'ng2-pdf-viewer'
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module'
 import { ProjectEditorRoutingModule } from './project-editor-routing.module'
@@ -45,7 +46,7 @@ import { HelpVideoThumbComponent } from './components/help-video-thumb/help-vide
 import { InputComponent } from './components/input/input.component'
 import { ImageUploadComponent } from './components/image-upload/image-upload.component'
 import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component'
-import { CompetencyModalContentComponent } from './components/competency-modal-content/competency-modal-content.component'
+import { PrincipalViewComponent } from './components/principal-view/principal-view.component'
 import { TableRowComponent } from './components/table-row/table-row.component'
 import { StepUnlockComponent } from './components/step-unlock/step-unlock.component'
 import { DetailsSelectorComponent } from './components/details-selector/details-selector.component'
@@ -55,8 +56,10 @@ import { StatusComponent } from './components/status/status.component'
 // service
 import { EditorService } from './services/editor/editor.service'
 import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service'
+import { SecondaryViewComponent } from './components/secondary-view/secondary-view.component'
 // pipe
 import { StringDecoder } from './pipes/string-decoder.pipe'
+import { CheckCount } from './pipes/check-count.pipe'
 
 @NgModule({
   declarations: [
@@ -91,13 +94,15 @@ import { StringDecoder } from './pipes/string-decoder.pipe'
     VideoPlayerComponent,
     HelpImgThumbComponent,
     StringDecoder,
-    CompetencyModalContentComponent,
+    CheckCount,
+    PrincipalViewComponent,
     TableRowComponent,
     StepUnlockComponent,
     DetailsSelectorComponent,
     ModalComponent,
     InputComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
+    SecondaryViewComponent
   ],
   imports: [
     CommonModule,
@@ -111,7 +116,8 @@ import { StringDecoder } from './pipes/string-decoder.pipe'
     AccordionModule.forRoot(),
     ModalModule.forRoot(),
     NgxDropzoneModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    PdfViewerModule
   ],
   providers: [
     EditorService,
@@ -123,7 +129,7 @@ import { StringDecoder } from './pipes/string-decoder.pipe'
 export class ProjectEditorModule {
 
   constructor() {
-    // ngx-bootstrap theme
+    // ngx-bootstrap  theme
     setTheme('bs4')
   }
 }

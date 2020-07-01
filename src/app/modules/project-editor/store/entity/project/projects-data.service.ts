@@ -36,12 +36,22 @@ export class ProjectsDataService extends DefaultDataService<Project> {
     }
 
     update(data: any): Observable<any> {
-        const dataChanges = this.nullValidator(data.changes)
-        return this.http.put<any>(`${environment.apiUrl.projectService}/projects`, dataChanges)
-            .pipe(
-                map(res => res)
-            )
+        if (!data.changes?.updateType) {
+            const dataChanges = this.nullValidator(data.changes)
+            return this.http.put<any>(`${environment.apiUrl.projectService}/projects`, dataChanges)
+                .pipe(
+                    map(res => res)
+                )
+        }
+        if (data.changes?.updateType === 'removeCriteria') {
+            const { subjectId, criteriaId, id } = data.changes
+            return this.http.delete<any>(`${environment.apiUrl.projectService}/projects/${id}/subjects/${subjectId}/evaluationcriteria/${criteriaId}`)
+                .pipe(
+                    map(() => data.changes)
+                )
+        }
     }
+
 
     // Replaces the null value with {id:-1}
     private nullValidator(data: any): object {
@@ -54,5 +64,4 @@ export class ProjectsDataService extends DefaultDataService<Project> {
         }
         return dataChanges
     }
-
 }

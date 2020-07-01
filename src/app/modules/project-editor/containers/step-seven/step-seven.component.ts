@@ -4,15 +4,17 @@ import { TranslateService } from '@ngx-translate/core'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-import { FormSevenInitData } from '../../constants/step-forms.data'
+import { EditorService } from '../../services/editor/editor.service'
+
 import { FormSevenInit, FormSeven } from '../../constants/step-forms.model'
 import { Step, Status } from '../../constants/step.model'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
 import { DrivingQuestion } from 'src/app/modules/project-editor/constants/project.model'
-import { EditorService } from '../../services/editor/editor.service'
-import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 import { Option } from './../../../../shared/constants/field.model'
+import { FormSevenInitData } from '../../constants/step-forms.data'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { compareArray } from 'src/app/shared/utility/array.utility'
 
 @Component({
   selector: 'app-step-seven',
@@ -39,7 +41,6 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   constructor(
     private translateService: TranslateService,
     private editor: EditorService,
-    private stepStatusService: StepStatusEntityService
   ) { }
 
   ngOnInit(): void {
@@ -116,7 +117,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
 
   // Function to check status of step
   checkStatus(): void {
-    if (this.checkEmptyForm()) {
+    if (!this.checkNonEmptyForm()) {
       this.step.state = 'PENDING'
     }
     else {
@@ -125,23 +126,9 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
-  // checks if the form is empty
-  checkEmptyForm(): boolean {
-    if (!this.inputFormData.drivingQuestions.length) {
-      return true
-    } else {
-      const tempData = this.inputFormData.drivingQuestions.filter(item => item.name != null && item.name.length && item)
-      if (!tempData.length) {
-        return true
-      }
-    }
-    return false
-  }
-
   // checks the form is completely filled or not
   checkNonEmptyForm(): boolean {
-    if (this.inputFormData.drivingQuestions.length &&
-      (this.inputFormData.drivingQuestions[this.inputFormData.drivingQuestions.length - 1].name != null)) {
+    if (this.inputFormData.drivingQuestions.length) {
       return true
     }
     return false
@@ -149,37 +136,46 @@ export class StepSevenComponent implements OnInit, OnDestroy {
 
   // Function to check whether the form is updated
   isFormUpdated(): boolean {
-    if (!this.isEqual(this.initialFormData.drivingQuestions, this.inputFormData.drivingQuestions) ||
+    const initialData = this.initialFormData.drivingQuestions.map(item => item.name)
+    const inputData = this.inputFormData.drivingQuestions.map(item => item.name)
+    if (!compareArray(initialData, inputData) ||
       this.initialFormStatus !== this.step.state) {
       return true
     }
     return false
   }
 
-  isEqual(d1: any[], d2: any[]): boolean {
-    d1 = d1.map(item => item.name)
-    d2 = d2.map(item => item.name)
-    return JSON.stringify(d1) === JSON.stringify(d2)
+  textAreaUpdate(data: Option[]): void { // calls on every update
+    this.inputFormData.drivingQuestions = data
+    this.checkStatus()
   }
 
+  // Changes the button according to form status
+  handleButtonType(): void {
+    if (this.step.state === 'DONE') {
+      this.buttonConfig.submitted = true
+      this.buttonConfig.disabled = true
+    } else {
+      if (this.checkNonEmptyForm()) {
+        this.buttonConfig.disabled = false
+        this.buttonConfig.submitted = false
+      } else {
+        this.buttonConfig.disabled = true
+        this.buttonConfig.submitted = false
+      }
+    }
+  }
+
+  // Function to submit the form data
   handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'
     }
-    else {
-      this.checkStatus()
-    }
-    let tempData = this.inputFormData.drivingQuestions.filter(item => item.name != null && item.name.length)
-    if (tempData.length) {
-      tempData = tempData.map(item => item.id == null ? { name: item.name } : item)
-      this.inputFormData.drivingQuestions = tempData
-      this.initialFormData.drivingQuestions = tempData
-    }
-    else {
-      this.inputFormData.drivingQuestions = []
-      this.initialFormData.drivingQuestions = this.inputFormData.drivingQuestions
-    }
+    this.handleButtonType()
+    const tempData = this.inputFormData.drivingQuestions.map(item => item.id == null ? { name: item.name } : item)
+    this.inputFormData.drivingQuestions = tempData
+    this.initialFormData.drivingQuestions = tempData
     const formData: FormSeven = {
       data: {
         drivingQuestions: tempData.length ? this.inputFormData.drivingQuestions : [],
@@ -194,27 +190,5 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       }
     }
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
-    this.handleButtonType()
-  }
-
-  textAreaUpdate(data: Option[]): void { // calls on every update
-    this.inputFormData.drivingQuestions = data
-    this.checkStatus()
-  }
-
-  // Changes the button according to form status
-  handleButtonType(): void {
-    if (this.step.state === 'INPROCESS') {
-      this.buttonConfig.disabled = false
-      this.buttonConfig.submitted = false
-    }
-    if (this.step.state === 'PENDING') {
-      this.buttonConfig.disabled = true
-      this.buttonConfig.submitted = false
-    }
-    if (this.step.state === 'DONE') {
-      this.buttonConfig.submitted = true
-      this.buttonConfig.disabled = true
-    }
   }
 }

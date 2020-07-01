@@ -1,34 +1,41 @@
 @import 'helpers/_helpers-master';
 .menu{
-    font-family: $font-family-tertiary;
-    font-size: $font-size-body-s;
-    color: $sidebar-text;
+  font-family: $font-family-tertiary;
+  font-size: $font-size-body-s;
+  color: $sidebar-text;
+  font-weight: normal;
+  letter-spacing: 0.16px;
+  line-height: 34px;
+  position: relative;
+  margin-bottom: 10px;
+  cursor: pointer;
+  &__step{
+    position: absolute;
+    left: 50%;
+    transform:translateX(-50%);
+    top:3px;
+  }
+  &_inprocess,&_done{
+    color:$sidebar-text-active;
     font-weight: normal;
-    letter-spacing: 0.16px;
-    line-height: 34px;
+  }
+  &_active{
+    color:$sidebar-text-active;
+    font-weight: bold;
+  }
+  .icon-ic_check{
+    position: absolute;
+    color:$icon-green;
+    font-size: $font-size-xs;
+    left: -10px;
+    top: 4px;
+  }
+  &__wrapper{
     position: relative;
-    padding-left: 21px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    &__step{
-        position: absolute;
-        left: 0;
-    }
-    &_inprocess,&_done{
-        color:$sidebar-text-active;
-        font-weight: normal;
-    }
-    &_active{
-        color:$sidebar-text-active;
-        font-weight: bold;
-    }
-    .icon-ic_check{
-        position: absolute;
-        color:$icon-green;
-        font-size: $font-size-xs;
-        left: -10px;
-        top: 4px;
-    }
+    width: 25px;
+    height: 25px;
+    display: inline-flex;
+  }
 }
 
 

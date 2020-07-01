@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core'
 // Interfaces
-import { DropDownConfig } from '../../constants/field.model'
+import { DropDownConfig, Option } from '../../constants/field.model'
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
 
 @Component({
@@ -12,32 +12,52 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown'
 export class DropdownComponent implements OnInit {
   @Output() dropdownSelect: EventEmitter<any> = new EventEmitter()
   @Input() config: DropDownConfig
+  @Input() canDeselect = true
+  @Input() getInitialData: boolean
   active = false
   dropdownSettings: IDropdownSettings = {}
+  initialSelectedItems: any
   constructor() { }
 
   ngOnInit(): void {
-
+    this.initialSelectedItems = [...this.config.selectedItems]
     this.dropdownSettings = {
       ...this.config.settings,
       itemsShowLimit: 3,
       closeDropDownOnSelection: true,
       maxHeight: 265,
-      enableCheckAll: false
+      enableCheckAll: false,
     }
   }
 
-  onItemSelect(item: any): void {
-    this.active = true
-    this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
+  selectedValue(): any {
+    if (this.getInitialData && this.initialSelectedItems?.length) {
+      return this.config.selectedItems.map(item => {
+        return this.initialSelectedItems.find(selected => selected.id === item.id) || { ...item }
+      })
+    }
+    return [...this.config.selectedItems]
   }
 
-  onItemDeSelect(item: any): void {
+  onItemSelect(): void {
+    const val = this.selectedValue()
     this.active = true
-    this.dropdownSelect.emit({controller: this.config.name, val: this.config.selectedItems})
+    this.dropdownSelect.emit({controller: this.config.name, val })
+  }
+
+  onItemDeSelect(item: Option): void {
+    if (this.canDeselect) {
+      const val = this.selectedValue()
+      this.active = true
+      this.dropdownSelect.emit({controller: this.config.name, val })
+    }
+    else {
+      this.config.selectedItems = [{...item}]
+    }
   }
 
   onDropDownClose(): void{
     this.active = false
   }
+
 }

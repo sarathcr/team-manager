@@ -50,6 +50,7 @@ export class Subject {
   name: string
   academicYear?: AcademicYear
   region?: Region
+  evaluationCriteria?: EvaluationCriteria[]
 }
 
 export interface DrivingQuestion {
@@ -67,12 +68,11 @@ export class CompetencyObjectives {
   name?: string
 }
 export class EvaluationCriteria {
-  gradeId: number
+  gradeId?: number
   id: number
   name: string
-  subjectId: number
+  subjectId?: number
 }
-
 
 export function compareProjects(p1: Project, p2: Project): number {
   const firstTimestamp = new Date(p1?.createdAt).getTime()

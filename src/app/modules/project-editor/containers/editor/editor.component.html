@@ -5,7 +5,7 @@
     [projectData]="editor.titleData"
     (titleBlur)="editor.handleSubmit($event)"
   ></app-editor-header>
-  <div class="editor-aside">
+  <div *ngIf="(loaded$ | async)" class="editor-aside">
     <app-editor-sidebar
     id="editor-sidebar"
     title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}"
@@ -13,8 +13,9 @@
     [steps]="steps"
     ></app-editor-sidebar>
   </div>
-  <div class="editor__forms">
+  <div *ngIf="(loaded$ | async)" class="editor__forms">
     <router-outlet></router-outlet>
   </div>
   <app-contextual-help (status)="getContextualStatus($event)"></app-contextual-help>
+  <app-loader *ngIf="(loaded$ | async) === false"></app-loader>
 </div>

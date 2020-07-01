@@ -1,0 +1,342 @@
+@import 'helpers/_helpers-master';
+@import 'helpers/bt-mixins';
+
+:host{
+    width: 100%;
+    height: 100%;
+}
+
+.competency-modal{
+
+    &,
+    &__content,
+    .modal-content{
+        width: 100%;
+        height: 100%;
+    }
+
+    &__content{
+        padding: 30px 60px;
+    }
+
+    &__header{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        &-title{
+          width: 100%;
+          display: inline-flex;
+          font-family: $font-family-secondary;
+          font-size: $font-size-body-overtitle;
+          line-height: $line-height-24px;
+          letter-spacing: 1px;
+          font-weight: 900;
+          text-transform: uppercase;
+          color: $comptency-content-title;
+          margin: 0;
+          align-items: center;
+          justify-content: left;
+          margin-bottom: 24px;
+        }
+
+        &-close{
+          display: inline-flex;
+          justify-self: flex-end;
+          background-color: transparent;
+          border: none;
+          color: $comptency-close-color;
+          font-size: $comptency-icon-size;
+          margin-right: -36px;
+          margin-top: -24px;
+          cursor: pointer;
+        }
+        &__icon{
+            font-size: $font-size-xs;
+            margin-right: 8px;
+        }
+        &__summary-title{
+            cursor: pointer;
+        }
+    }
+
+    &__body{
+        width: 100%;
+        height: calc(100% - 126px);
+        display: flex;
+        flex-direction: column;
+
+        &-title{
+            font-family: $font-family-tertiary;
+            font-size: $font-size-body;
+            line-height: $line-height-28px;
+            letter-spacing: 0.2px;
+            font-weight: 700;
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        &-block{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: calc(100% - 52px);
+            &_no-content{
+                min-height: 511px;
+                border:1px solid $creator-border;
+                border-radius:3px 3px 0 0;
+                padding: 24px;
+            }
+            ::ng-deep{
+                .dropdown__wrap{
+                    background-color: $white !important;
+                }
+            }
+        }
+
+        &-block-grade{
+            width: 30%;
+            height: 100%;
+            display: inline-flex;
+            flex-direction: column;
+        }
+
+        &-scroll{
+            // max-height: 56vh;
+            height: 100%;
+            padding-right: 20px;
+            // max-height: 500px;
+        }
+
+        &-criteria{
+            width: 70%;
+            display: inline-flex;
+            flex-direction: column;
+            // max-height: 70vh;
+            height: 100%;
+            padding-left: 6px;
+            // max-height: 78.5%;
+        }
+
+        &__no-content-wrapper{
+            flex-direction: column;
+            &__title{
+                font-family: $font-family-primary;
+                line-height: 32px;
+                letter-spacing: 0.3px;
+                font-weight: 900;
+                margin-bottom: 7px;
+                text-align: center;
+            }
+    
+            &__description{
+                line-height: 24px;
+                margin-bottom: 31px;
+                text-align: center;
+            }
+        }
+
+        &_summary{
+            width: 100%;
+            height: 100%;
+        }
+
+    }
+
+    &__footer{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 30px;
+
+        &-btn-group{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 70%;
+            margin-left: auto;
+            padding-left: 6px;
+        }
+
+        &-btn-link{
+            font-family: $font-family-tertiary;
+            font-size: $font-size-body-s;
+            line-height: $line-height-24px;
+            letter-spacing: normal;
+            font-weight: 700;
+            color: $comptency-primary-color;
+            position: relative;
+            cursor:pointer;
+
+            &::after{
+                content: '';
+                position: absolute;
+                border-bottom: 1px solid $comptency-primary-color;
+                top: 22px;
+                left: 0;
+                width: 100%;
+                display: block;
+            }
+        }
+
+        &-btn-submit{
+            margin-left: auto;
+            min-width: 140px;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .icon{
+                font-size: $comptency-icon-size;
+                margin-right: 6px;
+            }
+        }
+    }
+
+    @include media-breakpoint-up(xxl) {
+        &__body{
+            &-block-grade{
+                max-width: 343px;
+                max-height: 511px;
+            }
+
+            &-criteria{
+                max-width: 797px;
+                max-height: 589px;
+            }
+        }
+    }
+}
+
+.custom-tab{
+    &__links{
+        width: 100%;
+        border: 1px solid $custom-tab-border-color;
+        border-radius: 3px;
+        background-color: $custom-tab-bg-color;
+        margin-bottom: 8px;
+        font-family: $font-family-tertiary;
+        font-size: $font-size-body-s;
+        line-height: $line-height-24px;
+        letter-spacing: normal;
+        font-weight: 400;
+        padding: 12px 17px 15px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-self: left;
+        position: relative;
+
+        &-index{
+           margin-right: 9px;
+        }
+
+        &-label{
+            width: 100%;
+            text-align: left;
+            max-width: 72%;
+        }
+
+        &-selected{
+            margin-left: auto;
+        }
+
+        &-icon{
+            margin-right: -4px;
+            font-size: $custom-tab-icon-size;
+            color: $primary;
+        }
+
+        &.active{
+            border: 1px solid $custom-tab-primary-color;
+            background-color: $custom-tab-active-bg-color;
+
+            &:after,
+            &:before {
+                left: 100%;
+                top: 50%;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+            }
+
+            &:after {
+                border-color: $custom-tab-arrow-border;
+                border-left-color: $custom-tab-arrow-bg;
+                border-width: 8px;
+                margin-top: -8px;
+                left: 100%;
+                margin-left: -2px;
+            }
+
+            &:before {
+                border-color: $custom-tab-checkbox-border;
+                border-left-color: $custom-tab-primary-color;
+                border-width: 8px;
+                margin-top: -8px;
+                pointer-events: none;
+            }
+        }
+    }
+
+    &__content{
+        width: 100%;
+        height: 100%;
+        display: none;
+
+        &.active{
+            display: block;
+        }
+
+        &-body{
+            width: 100%;
+            height: 100%;
+            border: 1px solid $custom-tab-border-color;
+            border-radius: 3px 3px 0 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            ng-scrollbar{
+                max-height: calc(100% - 49px);
+                flex: 1 1 100%;
+            }
+            &-scroll{
+                height: 100%;
+            }
+
+            &::after{
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 50px;
+                width: 100%;
+                background: linear-gradient(180deg, rgba($white,0) 1.3%, $white 100%);
+                pointer-events: none;
+            }
+            ::ng-deep{
+                .ng-scroll-content{
+                    display: block !important;
+                }
+            }
+
+        }
+    }
+
+    @include media-breakpoint-up(xxl) {
+        &__content{
+            &-body{
+                height: 511px;
+                &-scroll{
+                    max-height: 452px;
+                }
+            }
+        }
+    }
+}
+

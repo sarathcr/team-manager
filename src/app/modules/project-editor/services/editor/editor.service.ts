@@ -29,8 +29,8 @@ export class EditorService {
   nextStepId: statusId
   isStepDone: boolean
   currentStep$: BehaviorSubject<number> = new BehaviorSubject(1)
-  loading: boolean
   loading$: Observable<boolean>
+  loaded$: BehaviorSubject<boolean> = new BehaviorSubject(false)
   subscriptions = new SubSink()
 
   constructor(
@@ -61,8 +61,10 @@ export class EditorService {
       })
     }
     this.loading$ = this.projectsService.loading$
-    this.subscriptions.sink = this.loading$.subscribe(res => {
-      this.loading = res
+    this.subscriptions.sink = this.loading$.subscribe(loading => {
+      if (!loading) {
+        this.loaded$.next(true)
+      }
     })
   }
 
@@ -83,14 +85,18 @@ export class EditorService {
                   academicYear: data?.academicYear?.academicYear
                 } : null,
                 grades: data?.grades?.map(({ id, name }) => ({ id, name })),
-                subjects: data?.subjects?.map(({ id, name }) => ({ id, name }))
+                subjects: data?.subjects?.map(({ id, name, evaluationCriteria }) => ({ id, name, evaluationCriteria }))
               })
             case 2: return { themes: data?.themes?.map(({ id, name }) => ({ id, name })) }
             case 3: return ({
+              ...data,
               grades: data?.grades?.map(({ id, name }) => ({ id, name })),
               academicYear: data?.academicYear,
               region: data?.region,
-              subjects: data?.subjects?.map(({ id, name }) => ({ id, name })),
+              subjects: data?.subjects?.map(subject => ({
+                ...subject,
+                evaluationCriteria: subject?.evaluationCriteria?.map(({ id, name }) => ({ id, name }))
+              })),
               competencyObjectives: data?.competencyObjectives?.map(({ id, name }) => ({ id, name })),
               evaluationCriteria: data?.evaluationCriteria?.map(({ id, name, subjectId, gradeId }) => (
                 { id, name, subjectId, gradeId }))
@@ -278,3 +284,4 @@ export class EditorService {
     return this.steps
   }
 }
+

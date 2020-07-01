@@ -53,9 +53,13 @@ export class HelpAccordionComponent implements OnInit, OnDestroy {
       this.elementRef.nativeElement.querySelectorAll('.help-video-thumb').forEach(thumb => {
         this.renderer.listen(thumb, 'click', (event) => { this.videoModal(event) })
       })
+      this.elementRef.nativeElement.querySelectorAll('.help-pdf-thumb').forEach(thumb => {
+        this.renderer.listen(thumb, 'click', (event) => { this.openPDF(event) })
+      })
       this.adjustHeight()
     })
   }
+
   videoModal(event: any): void {
     event.preventDefault()
     const element = event.currentTarget
@@ -85,6 +89,23 @@ export class HelpAccordionComponent implements OnInit, OnDestroy {
     const initialState = {
       title,
       img: content
+    }
+
+    this.bsModalRef = this.modalService.show(
+      HelpModalContentComponent, { class: 'help-modal', initialState }
+    )
+    this.bsModalRef.content.closeBtnName = 'Close'
+  }
+
+  openPDF(event: any): void {
+    event.preventDefault()
+    const element = event.currentTarget
+    const title = element.dataset.title
+    const content = element.dataset.content
+    const initialState = {
+      title,
+      pdf: true,
+      pdfContent: content
     }
 
     this.bsModalRef = this.modalService.show(

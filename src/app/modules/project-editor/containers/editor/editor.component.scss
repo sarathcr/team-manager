@@ -15,7 +15,6 @@
     width: 100%;
     max-width: 672px;
     min-width: 430px;
-    @include transitions(all, 0.5s, ease-in-out);
   }
   &_short{
     #{$root}__forms{
@@ -30,7 +29,6 @@
     scroll-margin-top: 110px;
     display: block;
   }
-
   &-aside{
     width: 236px;
     min-width: 236px;
@@ -42,6 +40,7 @@
     &__bg{
       background-image:url('../../../../../../images/img_background_shapes.png');
       background-repeat: no-repeat;
+      background-size: contain;
       background-position: right center;
       position: fixed;
       top: 75px;

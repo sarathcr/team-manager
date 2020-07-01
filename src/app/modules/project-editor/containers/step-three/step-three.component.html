@@ -8,19 +8,19 @@
       </h1>
       <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
       <ng-template #loaded>
-        <app-step-unlock *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects"></app-step-unlock>
+        <app-step-unlock *ngIf="!project.subjects?.length; else hasSubjects"></app-step-unlock>
         <ng-template #hasSubjects>
           <div class="project-editor__subject-wrapper">
             <app-details-selector
               *ngFor="let subject of (editor.project$|async).subjects; let i = index; let last = last;"
               [data]="subject"
-              [subjectId]="subject.id"
-              [criterias]="criterias"
-              [isLast]="last" (addCriteria)="addItem($event)"
-              (deleteCriteria)="removeItem($event)"
-              (openModal)="openModalWithComponent()"
-              [project$]="editor.project$">
-            </app-details-selector>
+              [subject]="subject"
+              [criterias]="subject.evaluationCriteria"
+              [isLast]="last"
+              (deleteCriteria)="removeCriteria($event)"
+              [project$]="editor.project$"
+              (openModal)="openModalWithComponent($event)"
+            ></app-details-selector>
             <div class="project-editor__goto-step">
               {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}
               <span class="project-editor__point" [routerLink]="'stepOne'">
@@ -47,8 +47,8 @@
     <app-button
       [disabled] = 'buttonConfig.disabled'
       [theme] = "buttonConfig.submitted ? 'success':'primary'"
+      [icon]="'tick'"
       (click)='handleSubmit("DONE")'>
-      <span class="form-button__icon icon-ic_check"></span>
       {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
     </app-button>
   </div>

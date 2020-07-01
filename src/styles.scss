@@ -69,6 +69,7 @@
   &__goto-step{
     letter-spacing: 0;
     line-height: 24px;
+    display: flex;
   }
   &__form {
     display: flex;
@@ -87,6 +88,7 @@
     font-weight: bold;
     border-bottom: 1px solid $blue-whale;
     cursor: pointer;
+    margin: 0 6px;
   }
   &__title{
     font-size: $font-size-sub-s;
@@ -180,13 +182,13 @@ body,
 
 .competency-modal{
   max-width: 87.5%; // 1260px;
-  max-height: 92.6%; // 750px
-
+  height: 750px; // 750px
+  .modal-content{
+    height: 100%;
+  }
   @media (min-width: 1440px) and (min-height: 810px) {
     max-width: 1260px;
-    max-height: 750px;
   }
-
   .dropdown{
     margin-bottom: 8px;
     padding-right: 20px;
@@ -202,13 +204,8 @@ body,
   background-color: $creator-border !important;
 }
 
-scrollbar-y.scrollbar-control{
+scrollbar-y.scrollbar-control {
   right: 3px !important;
-}
-.competency-modal__body-block{
-  .dropdown__wrap{
-    background-color: $white;
-  }
 }
 
 @include media-breakpoint-up(xxl) {
