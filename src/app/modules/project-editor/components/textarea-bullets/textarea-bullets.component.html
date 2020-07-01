@@ -1,4 +1,7 @@
 <div class="textarea-bullets" [ngClass]="{'textarea-bullets_focus': focus}">
+  <span class="textarea-bullets__placeholder">
+    {{!configOptions[0]?.name && !focus ? config.placeholder : ''}}
+  </span>
   <ul
     *ngIf="config"
     class="bullet-list textarea-bullets__list"
@@ -8,12 +11,12 @@
       *ngFor="let text of configOptions; let i = index"
       class="textarea-bullets__item"
       [attr.data-index]='i'
+      (click)="textArea.focus()"
     >
       <textarea
         id="list-item-{{text.id}}"
         class="textarea-bullets__textarea"
         name='textArea'
-        [placeholder]=" i===0 && !focus ? config.placeholder : '' "
         [attr.maxlength]='config.maxLength'
         [ngModel]=text.name
         oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'

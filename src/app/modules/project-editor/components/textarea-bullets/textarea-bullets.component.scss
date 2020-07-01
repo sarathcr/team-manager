@@ -1,6 +1,7 @@
 @import 'helpers/_helpers-master';
 
 .textarea-bullets {
+  $root: &;
   width: 100%;
   height: 300px;
   border: none;
@@ -9,15 +10,43 @@
   border-radius: 3px;
   margin-bottom: 56px;
   box-shadow: 0 0 0 0 transparent;
+  position: relative;
+  &__placeholder{
+    position: absolute;
+    top: 14px;
+    left: 42px;
+    color: rgba($primary-font-color,0.6);
+  }
   &__list {
     padding: 14px 22px;
     margin-bottom: 0;
     min-height: 295px;
+    display: flex;
+    flex-direction: column;
     &.numbered-list {
-      .textarea-bullets__item{
+      #{$root}__item{
+        padding-left: 0px;
         &::before{
           font-family:  $font-family-tertiary !important;
+          position: absolute;
+          left: 0;
           top: 1px;
+          pointer-events: none;
+        }
+        #{$root}__textarea{
+          padding-left: 20px;
+        }
+      }
+    }
+    &.bullet-list:not(.numbered-list){
+      #{$root}__item{
+        padding-left: 0;
+        &::before{
+          pointer-events: none;
+          left: -8px;
+        }
+        #{$root}__textarea{
+          padding-left: 20px;
         }
       }
     }
@@ -26,7 +55,10 @@
   &__item {
     display: flex;
     margin-bottom: 8px;
-
+    &:last-child{
+      flex:1 1 100%;
+      
+    }
     &:before {
       top: 0px;
     }
@@ -46,8 +78,6 @@
     overflow: hidden;
     resize: none;
     caret-color: $electric-indigo;
-    &:placeholder {
-      color: rgba($primary-font-color,0.6);
-    }
+    
   }
 }
