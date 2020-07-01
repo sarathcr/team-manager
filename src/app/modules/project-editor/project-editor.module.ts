@@ -6,7 +6,6 @@ import { setTheme } from 'ngx-bootstrap/utils'
 import { TabsModule } from 'ngx-bootstrap/tabs'
 import { AccordionModule } from 'ngx-bootstrap/accordion'
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal'
-import { NgScrollbarModule } from 'ngx-scrollbar'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { PdfViewerModule } from 'ng2-pdf-viewer'
@@ -116,7 +115,6 @@ import { CheckCount } from './pipes/check-count.pipe'
     AccordionModule.forRoot(),
     ModalModule.forRoot(),
     NgxDropzoneModule,
-    NgScrollbarModule,
     PdfViewerModule
   ],
   providers: [

@@ -36,7 +36,6 @@
           [colThree]="colHeading[1] ? {value:  heading.course, size: 'xs'} : { value: heading.block, size: 's'}"
           [colFour]="colHeading[1] ? {value:  heading.block, size: 's'} : ''"
         ></app-table-row>
-        <ng-scrollbar>
           <div class="custom-tab__content-body-scroll">
             <ng-container *ngFor="let blocks of blockData; let index = index;">
               <ng-container *ngFor="let block of blocks.blockData">
@@ -59,7 +58,6 @@
               </ng-container>
             </ng-container>
           </div>
-        </ng-scrollbar>
       </div>
     </div>
   </div>
