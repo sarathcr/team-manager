@@ -2,8 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { Router } from '@angular/router'
 
-import { NgScrollbar } from 'ngx-scrollbar'
-
 import { StepSevenComponent } from './step-seven.component'
 import { StatusComponent } from '../../components/status/status.component'
 import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip.component'
@@ -31,8 +29,7 @@ describe('StepSevenComponent', () => {
         StatusComponent,
         InfoToolTipComponent,
         TextareaBulletsComponent,
-        ButtonComponent,
-        NgScrollbar
+        ButtonComponent
       ],
       providers: [
         { provider: EditorService, useClass: EditorServiceStub },

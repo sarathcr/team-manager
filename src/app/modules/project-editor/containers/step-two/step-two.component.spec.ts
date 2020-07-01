@@ -2,8 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { Router } from '@angular/router'
 
-import { NgScrollbar } from 'ngx-scrollbar'
-
 import { StepTwoComponent } from './step-two.component'
 import {
   TextareaBulletsComponent
@@ -33,8 +31,7 @@ describe('TematicaComponent', (): void => {
         TextareaBulletsComponent,
         ButtonComponent,
         InfoToolTipComponent,
-        StatusComponent,
-        NgScrollbar
+        StatusComponent
       ],
       providers: [
         { provider: EditorService, useClass: EditorServiceStub },

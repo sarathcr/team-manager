@@ -296,10 +296,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            ng-scrollbar{
-                max-height: calc(100% - 49px);
-                flex: 1 1 100%;
-            }
+            
             &-scroll{
                 height: 100%;
             }

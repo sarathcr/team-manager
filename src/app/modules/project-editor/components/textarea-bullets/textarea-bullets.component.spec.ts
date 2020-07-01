@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { NgScrollbar } from 'ngx-scrollbar'
-
 import { TextareaBulletsComponent } from './textarea-bullets.component'
 
 describe('TextareaWithBulletsComponent', (): void => {
@@ -10,7 +8,7 @@ describe('TextareaWithBulletsComponent', (): void => {
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ TextareaBulletsComponent, NgScrollbar ]
+      declarations: [ TextareaBulletsComponent ]
     })
 
     fixture = TestBed.createComponent(TextareaBulletsComponent)
