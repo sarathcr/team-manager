@@ -16,8 +16,7 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 export class DetailsSelectorComponent implements OnInit, OnDestroy {
 
   showList = false
-  @Input() data: Subject
-  @Input() criterias: any[]
+  @Input() subjectItem: any[]
   @Input() subject: Subject
   @Input() i: number
   @Input() isLast = false
@@ -43,10 +42,10 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   formInit(): void {
     this.subscriptions.sink = this.project$
       .pipe(map(data => data?.evaluationCriteria))
-      .subscribe(criterias => {
-        if (criterias) {
-          criterias.forEach(criteria => {
-            if (this.data.id === criteria.subjectId) {
+      .subscribe(subjectItem => {
+        if (subjectItem) {
+          subjectItem.forEach(criteria => {
+            if (this.subject.id === criteria.subjectId) {
               this.getCount()
             }
           })
@@ -60,18 +59,18 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
     this.bsModalRef.content.onClose.subscribe(result => {
       if (result === 'delete') {
         this.deleteCriteria.emit({ subjectId: this.subject.id, criteriaId })
-        this.count = this.criterias.filter(criteria => criteria === this.subject.id).length
+        this.count = this.subjectItem.filter(criteria => criteria === this.subject.id).length
       }
     })
   }
 
-  addItem(id: number, init: boolean = false): void {
+  addItem(): void {
     this.openModal.emit(this.subject)
     this.getCount()
   }
 
   getCount(): void {
-    this.count = this.criterias.filter(criteria => criteria === this.subject.id).length
+    this.count = this.subjectItem.filter(criteria => criteria === this.subject.id).length
   }
 }
 export interface IconSelect {

@@ -16,9 +16,8 @@
           <div class="project-editor__subject-wrapper">
             <app-details-selector
               *ngFor="let subject of (editor.project$|async).subjects; let i = index; let last = last;"
-              [data]="subject"
               [subject]="subject"
-              [criterias]="subject.evaluationCriteria"
+              [subjectItem]="subject.evaluationCriteria"
               [isLast]="last"
               (deleteCriteria)="removeCriteria($event)"
               [project$]="editor.project$"

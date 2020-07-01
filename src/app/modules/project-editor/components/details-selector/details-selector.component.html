@@ -1,16 +1,16 @@
 <div class="details-selector" [ngClass]="{'details-selector_last' : isLast}">
   <div class="details-selector__header">
-    <h2 class="title_xs details-selector__title m-0">{{data.name}}</h2>
+    <h2 class="title_xs details-selector__title m-0">{{subject.name}}</h2>
   </div>
   <ul class="details-selector__list">
     <li class="details-selector__item">
-      <span *ngIf="criterias.length === 0" class="details-selector__text">
+      <span *ngIf="subjectItem.length === 0" class="details-selector__text">
         {{'OBJECTIVES.project_objectives_criteria_placeholder' | translate}}
       </span>
-      <span *ngIf="criterias.length > 0" class="details-selector__text_evaluation">
-        {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{criterias.length}})
+      <span *ngIf="subjectItem.length > 0" class="details-selector__text_evaluation">
+        {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{subjectItem.length}})
       </span>
-      <span class="details-selector__add" (click)="addItem(data.id)">
+      <span class="details-selector__add" (click)="addItem(subject.id)">
         <span class="icon details-selector__add_icon"
         [ngClass]="{
           'icon-ic_add_small' : icon.name === 'add',
@@ -19,10 +19,10 @@
         {{'OBJECTIVES.project_objectives_criteriawindow_add' | translate}}
       </span>
     </li>
-    <span *ngFor="let criteria of criterias">
+    <span *ngFor="let item of subjectItem">
       <li class="details-selector__item">
-        <span class="details-selector__text_normal">{{criteria.name}}</span>
-        <span class="details-selector__close" (click)="getModal(criteria.id)">
+        <span class="details-selector__text_normal">{{item.name}}</span>
+        <span class="details-selector__close" (click)="getModal(item.id)">
           <span class="icon icon-ic_share_close"></span>
         </span>
       </li>
