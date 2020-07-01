@@ -1,7 +1,7 @@
-import { ModalComponent } from './../../components/modal/modal.component'
 import { Component, OnInit } from '@angular/core'
-import { EditorService } from '../../services/editor/editor.service'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+import { EditorService } from '../../services/editor/editor.service'
+import { ModalComponent } from './../../components/modal/modal.component'
 import { ModalUnlock } from './../../constants/modal-config.data'
 
 @Component({
