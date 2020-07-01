@@ -14,3 +14,4 @@ export interface EvaluationCriteria {
     numeration: number
     standards: Standards[]
 }
+

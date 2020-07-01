@@ -129,4 +129,5 @@ describe('EditorComponent', (): void => {
 
     expect(clearData).toHaveBeenCalled()
   })
+
 })

@@ -22,7 +22,6 @@ import { Project } from './../../constants/project.model'
 import { FormThreeInitData } from '../../constants/step-forms.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { compareArray } from 'src/app/shared/utility/array.utility'
 
 @Component({
   selector: 'app-step-three',
@@ -44,11 +43,10 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   initialFormData: FormThreeInit = new FormThreeInitData()
   project: Project
   initialFormStatus: Status = 'PENDING'
-  initialCriterias: number[] = []
-  criterias: number[] = []
   bsModalRef: BsModalRef
   subscriptions = new SubSink()
   criteriaPayload: Subject
+  isFormUpdated = false
 
   constructor(
     private translateService: TranslateService,
@@ -63,7 +61,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.isFormUpdated() && this.step.state !== 'DONE') {
+    if (this.isFormUpdated && this.step.state !== 'DONE') {
       this.handleSubmit()
     }
     const modalCount = this.modalService.getModalsCount()
@@ -97,11 +95,6 @@ export class StepThreeComponent implements OnInit, OnDestroy {
           }
           this.initialFormData.competencyObjectives = [...tempinitialFormData.competencyObjectives]
         })
-
-      // this.evaluationCriteria$ = this.project$   // WIP
-      //   .pipe(
-      //     map(data => data?.evaluationCriteria)
-      //   )
     }
     if (this.step$) {
       this.subscriptions.sink = this.step$.subscribe(
@@ -138,6 +131,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Delete selected criteria
   removeCriteria(criteriaData: any): void {
     for (const subject of this.project.subjects) {
       if (subject.id === criteriaData.subjectId) {
@@ -162,9 +156,9 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       }
     }
     this.editor.handleStepSubmit(formData)
-    this.handleButtonType()    // WIP
   }
 
+  // Checks whether the form is empty
   checkFormEmpty(): void {
     const isCriteriaLength = []
     for (const subject of this.project.subjects) {
@@ -177,12 +171,23 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     } else {
       this.step.state = 'INPROCESS'
     }
-    this.handleButtonType()  // WIP
+    this.handleButtonType()
   }
 
   textAreaUpdate(data: Option[]): void { // calls on every update
     this.inputFormData.competencyObjectives = data
     this.checkStepStatus()
+    this.isFormUpdated = true
+  }
+
+  // checks current form status
+  checkStepStatus(criterias?: EvaluationCriteria[]): void {
+    if (criterias?.length || !this.hasAnyEmptyFields()) {
+      this.step.state = 'INPROCESS'
+    } else {
+      this.step.state = 'PENDING'
+    }
+    this.handleButtonType()
   }
 
   // checks the form is completely filled or not
@@ -193,7 +198,9 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         nonEmptyForm = false
       }
     }
-    if (!nonEmptyForm || !this.inputFormData.competencyObjectives.length) { return true }
+    if (!nonEmptyForm || !this.inputFormData.competencyObjectives.length) {
+      return true
+    }
     return false
   }
 
@@ -211,17 +218,6 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         this.buttonConfig.submitted = false
       }
     }
-  }
-
-  // Function to check whether the form is updated
-  isFormUpdated(): boolean {
-    const initialData = this.initialFormData.competencyObjectives.map(item => item.name)
-    const inputData = this.inputFormData.competencyObjectives.map(item => item.name)
-    if (!compareArray(initialData, inputData)
-      || this.initialFormStatus !== this.step.state) {
-      return true
-    }
-    return false
   }
 
   // Create subject
@@ -293,11 +289,12 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     })
   }
 
+  // function to open principle view modal
   openModalWithComponent(subject: Subject): void {
     const initialState = {
       grades: this.grades,
       selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name })),
-      subjectId: subject.id,
+      subject: { id: subject.id, name: subject.name },
       criteriaIds: subject.evaluationCriteria.map(criteria => criteria.id)
     }
     this.bsModalRef = this.modalService.show(PrincipalViewComponent,
@@ -313,14 +310,4 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       this.handleSubmit()
     })
   }
-
-  checkStepStatus(criterias?: EvaluationCriteria[]): void {
-    if (criterias?.length || this.hasAnyEmptyFields()) {   // WIP
-      this.step.state = 'INPROCESS'
-    } else {
-      this.step.state = 'PENDING'
-    }
-    this.handleButtonType()   // WIP
-  }
-
 }

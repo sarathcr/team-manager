@@ -74,7 +74,6 @@ export class EvaluationCriteria {
   subjectId?: number
 }
 
-
 export function compareProjects(p1: Project, p2: Project): number {
   const firstTimestamp = new Date(p1?.createdAt).getTime()
   const secondTimestamp = new Date(p2?.createdAt).getTime()

@@ -52,6 +52,7 @@ export class ProjectsDataService extends DefaultDataService<Project> {
         }
     }
 
+
     // Replaces the null value with {id:-1}
     private nullValidator(data: any): object {
         const dataChanges = { ...data }
@@ -63,5 +64,4 @@ export class ProjectsDataService extends DefaultDataService<Project> {
         }
         return dataChanges
     }
-
 }

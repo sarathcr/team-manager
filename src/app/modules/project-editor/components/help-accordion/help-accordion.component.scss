@@ -293,3 +293,11 @@
     width: 100%;
   }
 }
+
+.help-pdf-thumb{
+  font-family: $font-family-tertiary;
+  font-size: $font-size-body-s;
+  font-weight: bold;
+  border-bottom: 1px solid $blue-whale;
+  cursor: pointer;
+}

@@ -2,6 +2,7 @@
   <div class="competency-modal__header">
     <h4 *ngIf="showPrimaryView else return" class="competency-modal__header-title">
       {{ 'OBJECTIVES.project_objectives_criteriawindow_curriculum' | translate }}
+      {{ subject.name }}
     </h4>
     <ng-template #return>
       <div class="competency-modal__header__summary-title">
@@ -89,7 +90,7 @@
   <!-- Summary view Evaluation Criteria-->
   <ng-template #summary>
     <app-secondary-view
-      [blocks]="blocks"
+      [blockData]="blockData"
       [heading]="heading"
       [colHeading]="[colOneHead, colTwoHead]"
       (summary)="togglePrimaryView()"
@@ -99,9 +100,9 @@
     <div class="competency-modal__footer-btn-group">
       <div class="competency-modal__footer-btn-link" (click)="togglePrimaryView()" *ngIf="showPrimaryView">
         {{ 'OBJECTIVES.project_objectives_criteriawindow_showall' | translate }}
-        ({{ (blocks | checkCount) || 0 }})
+        ({{ (blockData | checkCount) || 0 }})
       </div>
-      <app-button class="ml-auto" [icon]="'tick'" [disabled]="!(blocks | checkCount)" (click)="handleButtonClick()">
+      <app-button class="ml-auto" [icon]="'tick'" [disabled]="!(blockData | checkCount)" (click)="handleButtonClick()">
         {{ 'OBJECTIVES.project_objectives_criteriawindow_add' | translate }}
       </app-button>
     </div>

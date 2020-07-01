@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
-import { Block } from 'src/app/shared/constants/block.model'
+import { BlockData } from 'src/app/shared/constants/block.model'
 import { CompetencyModal } from '../../constants/competency-modal.data'
 
 @Component({
@@ -9,7 +9,7 @@ import { CompetencyModal } from '../../constants/competency-modal.data'
 })
 export class SecondaryViewComponent {
 
-  @Input() blocks: Block[]
+  @Input() blockData: BlockData[]
   @Input() heading: CompetencyModal
   @Input() colHeading: string[]
   @Output() getPrimary: EventEmitter<null> = new EventEmitter()

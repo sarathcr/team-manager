@@ -13,7 +13,5 @@ export class ButtonComponent {
   @Input() variant: ButtonVariants = 'contained'
   @Input() icon: ButtonIcon
 
-
   constructor() {}
-
 }
