@@ -11,7 +11,7 @@
       <ng-template #loaded>
         <app-step-unlock *ngIf="!project.subjects?.length; else hasSubjects" [StepFour]="{step:'stepFour'}"></app-step-unlock>
         <ng-template #hasSubjects>
-          <div class="project-form__detail-selector-wrapper" 
+          <div class="project-form__detail-selector-wrapper"
             *ngFor="let subject of (editor.project$|async).subjects; let i = index; let last = last;"
           >
             <app-details-selector
@@ -31,7 +31,7 @@
             </div>
             <ng-template #manualContent>
               <div class="project-form__textarea-wrapper">
-                <app-textarea-bullets 
+                <app-textarea-bullets
                   [config]='textAreaConfig'
                   [type]="'toggle'">
                 </app-textarea-bullets>
@@ -43,11 +43,14 @@
               <h3 class="project-form__basic-skill__title">
                 {{"CONTENT.project_content_contentwindow_title" | translate}}
               </h3>
-              <div class="project-form__cell">
-                <div class="project-form__box">
-                  <input type="checkbox" class="project-form__checkbox">
-                  <span class="icon-ic_check project-form__checkmark"></span></div>
-                  <span class="project-form__desc">ec name 41</span></div>
+              <div class="project-form__basic-skill_row">
+                <app-checkbox *ngFor="let basicSkill of basicSkills"
+                [checkboxData]="basicSkill.checkData"
+                [colOne]="{ value: basicSkill.description }"
+                [parentID]="basicSkill.id"
+                [checkedOnly]="!!basicSkill.checkData.variant"
+                ></app-checkbox>
+              </div>
             </div>
           </ng-container>
         </ng-template>
@@ -57,6 +60,7 @@
     [disabled] = 'buttonConfig.disabled'
     [theme] = "buttonConfig.submitted ? 'success':'primary'"
     [icon]="'tick'"
+    (click)="handleButtonClick()"
     >
     {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
     </app-button>

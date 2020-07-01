@@ -1,3 +1,5 @@
+import { BasicSkills } from 'src/app/shared/constants/basic-skill.model'
+
 export class Project {
   id?: number | null
   title?: string
@@ -18,6 +20,7 @@ export class Project {
   updatedAt?: string
   competencyObjectives?: CompetencyObjectives[]
   evaluationCriteria?: EvaluationCriteria[]
+  basicSkills?: BasicSkills[]
 }
 
 export class Country {

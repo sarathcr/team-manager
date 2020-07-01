@@ -20,7 +20,7 @@ import { HelpDataService } from './entity/help/help-data.service'
 import { entityMetadata } from './entity/entity-metadata'
 import { BlockEntityService } from './entity/block/block-entity.service'
 import { BlockDataService } from './entity/block/block-data.service'
-import { EvaluationCriteriaDataService } from './entity/evaluation-criteria/evaluatio-criteria-data.service'
+import { EvaluationCriteriaDataService } from './entity/evaluation-criteria/evaluation-criteria-data.service'
 import { EvaluationCriteriaEntityService } from './entity/evaluation-criteria/evaluation-criteria-entity.service'
 
 

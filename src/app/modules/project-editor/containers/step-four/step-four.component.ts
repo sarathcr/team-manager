@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 
 import { Observable } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
+import { map } from 'rxjs/operators'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { Project } from '../../constants/project.model'
 import { Step, Status } from '../../constants/step.model'
 import { Option, FieldConfig } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
+import { BasicSkills } from 'src/app/shared/constants/basic-skill.model'
+import { CheckBoxData } from '../../components/checkbox/checkbox.component'
 
 @Component({
   selector: 'app-step-four',
   templateUrl: './step-four.component.html',
   styleUrls: ['./step-four.component.scss']
 })
-export class StepFourComponent implements OnInit {
+export class StepFourComponent implements OnInit, OnDestroy {
 
   project$: Observable<Project>
   step$: Observable<Step>
@@ -28,10 +32,13 @@ export class StepFourComponent implements OnInit {
   showTextarea = false
   initialFormStatus: Status = 'PENDING'
   contents: Option[] = []
+  basicSkills: BasicSkills[] = []
+  selectedBasicSkills: BasicSkills[] = []
 
   constructor(
     public editor: EditorService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private evaluationService: EvaluationCriteriaEntityService
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +46,11 @@ export class StepFourComponent implements OnInit {
     this.pushContent()
     this.createFormConfig()
     this.formInIt()
+    this.getBasicSkills()
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
   }
 
   // Temperory Function
@@ -94,6 +106,50 @@ export class StepFourComponent implements OnInit {
 
   toggleTextarea(): void{
     this.showTextarea = !this.showTextarea
+  }
+
+  getEvaluationCriteiaIds(): number[] {
+    const evaluationCriteriaIds = []
+    for (const subject of this.project.subjects) {
+      for ( const eCriteria of subject.evaluationCriteria) {
+        evaluationCriteriaIds.push(eCriteria.id)
+      }
+    }
+    return evaluationCriteriaIds
+  }
+  getBasicSkills(): void {
+    const evaluationCriteriaIds = this.getEvaluationCriteiaIds()
+    const checkData: CheckBoxData = { checked: false, variant: 'checkedOnly'}
+    this.selectedBasicSkills = [...this.project.basicSkills]
+    this.subscriptions.sink = this.evaluationService.entities$
+      .pipe(
+        map(data => data.map( item => item?.basicSkills
+          .map(({id, code, description, name}) => ({id, code, description, name})))))
+      .subscribe( newData => {
+        if (!newData.length) { this.evaluationService.getWithQuery(evaluationCriteriaIds.toString()) }
+        newData.forEach( basicSkills  => {
+          checkData.variant = 'checkedOnly'
+          checkData.checked = !basicSkills.filter( basicSkill => this.selectedBasicSkills
+            .map( selected => selected.id).includes(basicSkill.id))
+          this.basicSkills.push(...basicSkills)
+          this.basicSkills.forEach( basicSkill => {
+            basicSkill.checkData = {...checkData}
+          })
+        })
+      })
+    this.evaluationService.loading$.subscribe(loading => { this.loading = loading })
+  }
+  handleButtonClick(): void {
+    if (this.basicSkills?.length) {
+      const selectedBasicSkills = []
+      for (const skills of this.basicSkills) {
+        if (skills.checkData.checked === true) {
+          selectedBasicSkills.push(skills)
+        }
+      }
+      this.selectedBasicSkills = selectedBasicSkills
+      console.log(this.selectedBasicSkills)
+    }
   }
 
 }
