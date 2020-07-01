@@ -72,7 +72,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   formInIt(): void {
-    this.project$ = this.editor.getStepData(3)
+    this.project$ = this.editor.getDataByStep(3)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[2]
     this.subscriptions.sink = this.editor.loading$.subscribe(value => !value ? this.loading = value : null)

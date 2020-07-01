@@ -85,7 +85,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   }
 
   formInIt(): void {
-    this.project$ = this.editor.getStepData(7)
+    this.project$ = this.editor.getDataByStep(7)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[6]
     const tempinitialFormData = new FormSevenInitData()

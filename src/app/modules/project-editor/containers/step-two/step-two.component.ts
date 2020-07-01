@@ -53,7 +53,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   formInIt(): void {
-    this.project$ = this.editor.getStepData(2)
+    this.project$ = this.editor.getDataByStep(2)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[1]
     const tempinitialFormData = new FormTwoInitData()

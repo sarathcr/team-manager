@@ -95,7 +95,7 @@ export class DropdownComponent implements OnInit, OnDestroy {
 
   handleDataChange(updated: boolean = false): void {
     const val = this.selectedValue()
-    const status = this.config.selectedItems.length ? 'INPROCESS' : 'PENDING'
-    this.dropdownSelect.emit({ controller: this.config.name, val, updated, status })
+    this.config.status = status = this.config.selectedItems.length ? 'INPROCESS' : 'PENDING'
+    this.dropdownSelect.emit({ controller: this.config.name, val, updated })
   }
 }

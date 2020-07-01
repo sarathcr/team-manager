@@ -1,4 +1,5 @@
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
+import { Status } from 'src/app/modules/project-editor/constants/step.model'
 
 export interface FieldConfig {
   disabled?: boolean
@@ -31,6 +32,7 @@ export interface DropDownConfig {
   selectedItems?: Array<{ id: number; name: string }>
   settings: IDropdownSettings
   canDeselect?: boolean
+  status: Status
 }
 
 export type ButtonVariants = 'contained' | 'outlined' | 'text'

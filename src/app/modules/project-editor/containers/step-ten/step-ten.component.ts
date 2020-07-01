@@ -15,7 +15,7 @@ export class StepTenComponent implements OnInit {
   }
 
   formInit(): void {
-    this.editor.getStepData(10)
+    this.editor.getDataByStep(10)
   }
 
 }

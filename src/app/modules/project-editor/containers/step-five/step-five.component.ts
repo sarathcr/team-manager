@@ -15,7 +15,7 @@ export class StepFiveComponent implements OnInit {
   }
 
   formInit(): void {
-    this.editor.getStepData(5)
+    this.editor.getDataByStep(5)
   }
 
 }

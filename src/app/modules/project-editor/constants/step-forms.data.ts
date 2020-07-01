@@ -25,11 +25,3 @@ export class FormSixInitData implements FormSixInit {
 export const FormEightInitData: FormEightInit = ''
 
 export const FormNineInitData: FormNineInit = ''
-
-export class FormOneFieldsStatus {
-  country = 'PENDING'
-  region = 'PENDING'
-  academicYear = 'PENDING'
-  grades = 'PENDING'
-  subjects = 'PENDING'
-}

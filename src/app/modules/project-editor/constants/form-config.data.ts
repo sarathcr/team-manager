@@ -1,4 +1,5 @@
 import { FieldConfig, DropDownConfig } from 'src/app/shared/constants/field.model'
+import { Status } from './step.model'
 
 export class ButtonSubmitConfig implements FieldConfig {
     name = 'submit'
@@ -17,6 +18,7 @@ export class DropdownConfigInit implements DropDownConfig {
     data = []
     priorityData = []
     selectedItems = []
+    status: Status = 'PENDING'
     settings = {
         textField: '',
         singleSelection: true,

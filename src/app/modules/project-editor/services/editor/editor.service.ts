@@ -69,7 +69,7 @@ export class EditorService {
   }
 
   // filter data for each step
-  getStepData(step: statusId): Observable<Project> {
+  getDataByStep(step: statusId): Observable<Project> {
     this.currentStepId = step
     this.currentStep$.next(step)
     if (this.project$) {

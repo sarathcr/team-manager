@@ -16,7 +16,6 @@ import { Country, Region, AcademicYear, Grade, Subject } from '../../constants/p
 import { ButtonSubmitConfig, DropdownConfigInit } from '../../constants/form-config.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { FormOneFieldsStatus } from '../../constants/step-forms.data'
 
 @Component({
   selector: 'app-step-one',
@@ -42,7 +41,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   grades$: Observable<Grade[]>
   subjects$: Observable<Subject[]>
   issFormUpdated = false
-  fieldsStatus = new FormOneFieldsStatus()
+  fieldNames = ['countryDropdown', 'regionDropdown', 'academicYearDropdown', 'gradesDropdown', 'subjectsDropdown']
 
   constructor(
     private countryService: CountryEntityService,
@@ -65,7 +64,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   }
 
   formInIt(): void {
-    this.project$ = this.editor.getStepData(1)
+    this.project$ = this.editor.getDataByStep(1)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[0]
     if (this.project$) {
@@ -160,9 +159,9 @@ export class StepOneComponent implements OnInit, OnDestroy {
   // function to check the status of the form
   checkStatus(): void {
     const statusArray = []
-    for (const field of Object.keys(this.fieldsStatus)) {
-      if (this.fieldsStatus[field] === 'INPROCESS') {
-        statusArray.push('INPROCESS')
+    for (const field of this.fieldNames) {
+      if (this[field].status === 'INPROCESS') {
+        statusArray.push(this[field].status)
       }
     }
     if (statusArray.length) {
@@ -176,8 +175,8 @@ export class StepOneComponent implements OnInit, OnDestroy {
   // checks the form is completely filled or not
   checkNonEmptyForm(): boolean {
     let completedForm = true
-    for (const field of Object.keys(this.fieldsStatus)) {
-      if (this.fieldsStatus[field] === 'PENDING') {
+    for (const field of this.fieldNames) {
+      if (this[field].status === 'PENDING') {
         completedForm = false
       }
     }
@@ -189,7 +188,6 @@ export class StepOneComponent implements OnInit, OnDestroy {
     const selectedId = selectedData.val[0]?.id
     this.issFormUpdated = selectedData.updated
     if (selectedData) {
-      this.fieldsStatus[selectedData.controller] = selectedData.status
       switch (selectedData.controller) {
         case 'country': {
           this.resetForm(selectedData.controller)
@@ -251,23 +249,23 @@ export class StepOneComponent implements OnInit, OnDestroy {
       this.gradesDropdown.selectedItems = []
       this.subjectsDropdown.selectedItems = []
       this.academicYearDropdown.selectedItems = []
-      this.fieldsStatus.grades = 'PENDING'
-      this.fieldsStatus.subjects = 'PENDING'
-      this.fieldsStatus.academicYear = 'PENDING'
+      this.gradesDropdown.status = 'PENDING'
+      this.subjectsDropdown.status = 'PENDING'
+      this.academicYearDropdown.status = 'PENDING'
       if (field === 'country') {
         this.regionDropdown.selectedItems = []
-        this.fieldsStatus.region = 'PENDING'
+        this.regionDropdown.status = 'PENDING'
       }
     }
     if (field === 'academicYear') {
       this.gradesDropdown.selectedItems = []
       this.subjectsDropdown.selectedItems = []
-      this.fieldsStatus.grades = 'PENDING'
-      this.fieldsStatus.subjects = 'PENDING'
+      this.gradesDropdown.status = 'PENDING'
+      this.subjectsDropdown.status = 'PENDING'
     }
     if (field === 'grades' && !this.gradesDropdown.selectedItems.length) {
       this.subjectsDropdown.selectedItems = []
-      this.fieldsStatus.subjects = 'PENDING'
+      this.subjectsDropdown.status = 'PENDING'
     }
   }
 
