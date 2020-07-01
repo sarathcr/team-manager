@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core'
+
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+
+import { ModalUnlock } from './../../constants/modal-config.data'
 import { EditorService } from '../../services/editor/editor.service'
 import { ModalComponent } from './../../components/modal/modal.component'
-import { ModalUnlock } from './../../constants/modal-config.data'
 
 @Component({
   selector: 'app-step-four',
