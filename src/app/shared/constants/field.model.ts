@@ -33,17 +33,6 @@ export interface DropDownConfig {
   canDeselect?: boolean
 }
 
-export interface ModalConfig {
-  variant: string
-  title: string
-  icon?: string
-  description: string
-  redirectTo?: number
-  completeLabel?: string
-  deleteLabel?: string
-  cancelLabel?: string
-}
-
 export type ButtonVariants = 'contained' | 'outlined' | 'text'
 
 export type Theme = 'primary' | 'secondary' | 'success'
