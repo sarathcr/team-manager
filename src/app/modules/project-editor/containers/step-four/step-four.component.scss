@@ -43,24 +43,10 @@
       ::ng-deep{
         .checkbox-row {
           padding: 0;
-          .checkbox-row__checkmark {
-            border-width: 2px !important;
-          }
         }
       }
     }
   }
-  // &__cell{
-  //   // padding: 12px 15px;
-  //   font-family: $font-family-tertiary;
-  //   font-size: $font-size-body-s;
-  //   line-height: $line-height-24px;
-  //   letter-spacing: 0;
-  //   font-weight: 400;
-  //   display: flex;
-  //   flex-direction: row;
-  //   flex: 1 1 100%;
-  // }
   &__box{
         display: block;
         margin-right: 14px;
