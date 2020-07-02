@@ -147,10 +147,10 @@
 .modal{
   &.show{
     padding: 15px;
+    display: flex !important;
     .modal-dialog{
-      transform: translateY(-50%);
-      top: 50%;
-      margin: 0 auto;
+      margin: auto;
+      width: 87.5%;
     }
   }
 }
@@ -160,8 +160,7 @@
     top: 80px;
   }
 }
-body,
-.dropdown{
+body{
   ::-webkit-scrollbar {
     width: 7px;
   }
@@ -180,6 +179,7 @@ body,
   }
 }
 
+
 .competency-modal{
   max-width: 87.5%; // 1260px;
   height: 750px; // 750px
@@ -193,19 +193,6 @@ body,
     margin-bottom: 8px;
     padding-right: 20px;
   }
-}
-//Scrollbar Styles
-.ng-scrollbar-track{
-  width: 7px  !important;
-  border-radius: 4px !important;
-  background-color: transparent !important;
-}
-.ng-scrollbar-thumb{
-  background-color: $creator-border !important;
-}
-
-scrollbar-y.scrollbar-control {
-  right: 3px !important;
 }
 
 @include media-breakpoint-up(xxl) {

@@ -7,6 +7,8 @@ import { map } from 'rxjs/operators'
 import { ModalComponent } from '../modal/modal.component'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { ModalDelete } from '../../constants/modal-config.data'
+import { IconSelect } from 'src/app/shared/constants/select-icon.model'
 
 @Component({
   selector: 'app-details-selector',
@@ -54,7 +56,8 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   }
 
   getModal(criteriaId: number): void {
-    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal' })
+    const initialState = { modalConfig: { ...ModalDelete } }
+    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
       if (result === 'delete') {
@@ -73,8 +76,3 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
     this.count = this.subjectItem.filter(criteria => criteria === this.subject.id).length
   }
 }
-export interface IconSelect {
-  value: string,
-  name?: 'add' | 'locked'
-}
-

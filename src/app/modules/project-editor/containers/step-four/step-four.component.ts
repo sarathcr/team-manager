@@ -13,6 +13,11 @@ import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-c
 import { BasicSkills } from 'src/app/shared/constants/basic-skill.model'
 import { CheckBoxData } from '../../components/checkbox/checkbox.component'
 
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+
+import { ModalComponent } from './../../components/modal/modal.component'
+import { ModalUnlock } from './../../constants/modal-config.data'
+
 @Component({
   selector: 'app-step-four',
   templateUrl: './step-four.component.html',
@@ -34,11 +39,12 @@ export class StepFourComponent implements OnInit, OnDestroy {
   contents: Option[] = []
   basicSkills: BasicSkills[] = []
   selectedBasicSkills: BasicSkills[] = []
-
+  bsModalRef: BsModalRef
   constructor(
     public editor: EditorService,
     private translateService: TranslateService,
-    private evaluationService: EvaluationCriteriaEntityService
+    private evaluationService: EvaluationCriteriaEntityService,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +70,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   formInIt(): void {
-    this.project$ = this.editor.getStepData(4)
+    this.project$ = this.editor.getDataByStep(4)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[3]
     this.subscriptions.sink = this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
@@ -157,4 +163,14 @@ export class StepFourComponent implements OnInit, OnDestroy {
     }
   }
 
+  getModal(): void {
+    const initialState = { modalConfig: { ...ModalUnlock } }
+    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal', initialState })
+    this.bsModalRef.content.closeBtnName = 'Close'
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if (result){
+        this.editor.redirectToStep(3)
+      }
+    })
+  }
 }

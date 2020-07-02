@@ -42,7 +42,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createFormConfig()
-    this.formInIt()
+    this.stepInIt()
   }
 
   ngOnDestroy(): void {
@@ -52,8 +52,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe()
   }
 
-  formInIt(): void {
-    this.project$ = this.editor.getStepData(2)
+  stepInIt(): void {
+    this.project$ = this.editor.getDataByStep(2)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[1]
     const tempinitialFormData = new FormTwoInitData()

@@ -1,38 +1,31 @@
-<div class="textarea-bullets" 
-  [ngClass]="{
-    'textarea-bullets_focus': focus, 
-    'toggle-textarea input_focus': type === 'toggle'
-  }">
-  <label class="textarea-bullets__label"
-    *ngIf="type">
-    {{"CONTENT.project_content_extracontent_input" | translate}}
-  </label>
-  <ng-scrollbar>
-    <ul
-      *ngIf="config"
-      class="bullet-list textarea-bullets__list"
-      [ngClass]="variant == 'bullet' ? 'bullet-list' : 'numbered-list'"
+<div class="textarea-bullets" [ngClass]="{'textarea-bullets_focus': focus}">
+  <span class="textarea-bullets__placeholder">
+    {{!configOptions[0]?.name && !focus ? config.placeholder : ''}}
+  </span>
+  <ul
+    *ngIf="config"
+    class="bullet-list textarea-bullets__list"
+    [ngClass]="variant == 'bullet' ? 'bullet-list' : 'numbered-list'"
+  >
+    <li
+      *ngFor="let text of configOptions; let i = index"
+      class="textarea-bullets__item"
+      [attr.data-index]='i'
+      (click)="textArea.focus()"
     >
-      <li
-        *ngFor="let text of configOptions; let i = index"
-        class="textarea-bullets__item"
-        [attr.data-index]='i'
-      >
-        <textarea
-          id="list-item-{{text.id}}"
-          class="textarea-bullets__textarea"
-          name='textArea'
-          [placeholder]=" i===0 && !focus ? config.placeholder : '' "
-          [attr.maxlength]='config.maxLength'
-          [ngModel]=text.name
-          oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
-          (keydown)='keyAction($event, i)'
-          (ngModelChange)='onValueChange($event, i)'
-          (focus)="setFocus()"
-          (blur)="onBlur(i)"
-          #textArea
-        ></textarea>
-      </li>
-    </ul>
-  </ng-scrollbar>
+      <textarea
+        id="list-item-{{text.id}}"
+        class="textarea-bullets__textarea"
+        name='textArea'
+        [attr.maxlength]='config.maxLength'
+        [ngModel]=text.name
+        oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+        (keydown)='keyAction($event, i)'
+        (ngModelChange)='onValueChange($event, i)'
+        (focus)="setFocus()"
+        (blur)="onBlur(i)"
+        #textArea
+      ></textarea>
+    </li>
+  </ul>
 </div>

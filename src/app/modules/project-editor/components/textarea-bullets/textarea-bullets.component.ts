@@ -89,6 +89,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
           this.limit = this.configOptions.length + 1
         }
         if (this.configOptions.length < this.limit && this.configOptions[id].name?.trim()) {
+          this.inputChange.emit([...this.configOptions])
           this.configOptions.splice(id + 1, 0, { ...this.sampleOption })  // add a new bullet
           this.timeOut = setTimeout(() => {
             this.textArea.toArray()[id + 1].nativeElement.focus()

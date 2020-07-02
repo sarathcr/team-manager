@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { TranslateModule } from '@ngx-translate/core'
 import { Router } from '@angular/router'
 
-import { NgScrollbar } from 'ngx-scrollbar'
 import { BsModalService } from 'ngx-bootstrap/modal'
 
 import { StepThreeComponent } from './step-three.component'
@@ -37,8 +36,7 @@ describe('StepThreeComponent', (): void => {
         TextareaComponent,
         ButtonComponent,
         InfoToolTipComponent,
-        StatusComponent,
-        NgScrollbar
+        StatusComponent
       ],
       providers: [
         { provider: EditorService, useClass: EditorServiceStub },

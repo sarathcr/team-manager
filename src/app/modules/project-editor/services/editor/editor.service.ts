@@ -69,7 +69,7 @@ export class EditorService {
   }
 
   // filter data for each step
-  getStepData(step: statusId): Observable<Project> {
+  getDataByStep(step: statusId): Observable<Project> {
     this.currentStepId = step
     this.currentStep$.next(step)
     if (this.project$) {
@@ -222,7 +222,7 @@ export class EditorService {
     if (this.isStepDone) {
       if (this.projectId && this.currentStepId !== this.nextStepId) {
         setTimeout(() => {
-          this.router.navigate([`editor/project/${this.projectId}/${this.nextStepId}`])
+          this.redirectToStep(this.nextStepId)
         }, 1000)
       }
     }
@@ -289,6 +289,10 @@ export class EditorService {
       }
       )
     return this.steps
+  }
+
+  redirectToStep(id: number): void {
+    this.router.navigate([`editor/project/${this.projectId}/${id}`])
   }
 }
 

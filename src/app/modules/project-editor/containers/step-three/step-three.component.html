@@ -8,14 +8,12 @@
       </h1>
       <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
       <ng-template #loaded>
-        <app-step-unlock 
-          *ngIf="!project.subjects?.length; else hasSubjects" 
-          [StepThree]="{step:'stepThree'}"
-        ></app-step-unlock>
+        <app-step-unlock *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects"
+          [StepThree]="{step:'stepThree'}"></app-step-unlock>
         <ng-template #hasSubjects>
           <div class="project-editor__subject-wrapper">
             <app-details-selector
-              *ngFor="let subject of (editor.project$|async).subjects; let i = index; let last = last;"
+              *ngFor="let subject of project?.subjects; let i = index; let last = last;"
               [subject]="subject"
               [subjectItem]="subject.evaluationCriteria"
               [isLast]="last"
@@ -48,7 +46,7 @@
       <app-loader *ngIf="loading; else loaded"></app-loader>
     </div>
     <app-button
-      [disabled] = 'buttonConfig.disabled'
+      [disabled] = 'buttonConfig.disabled || !project.subjects?.length'
       [theme] = "buttonConfig.submitted ? 'success':'primary'"
       [icon]="'tick'"
       (click)='handleSubmit("DONE")'>

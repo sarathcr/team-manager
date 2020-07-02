@@ -11,8 +11,7 @@
         {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{subjectItem.length}})
       </span>
       <span class="details-selector__add" (click)="addItem()">
-        <span class="icon details-selector__add_icon"
-        [ngClass]="{
+        <span class="icon details-selector__add_icon" [ngClass]="{
           'icon-ic_add_small' : icon.name === 'add',
           'icon-ic_locked' : icon.name === 'locked'
         }"></span>
@@ -21,10 +20,20 @@
     </li>
     <span *ngFor="let item of subjectItem">
       <li class="details-selector__item">
-        <span class="details-selector__text_normal">{{item.name}}</span>
-        <span class="details-selector__close" (click)="getModal(item.id)">
+        <div class="details-selector__text_normal">{{item.name}}</div>
+        <div *ngIf=" item.dimensions?.length" class="details-selector__text_normal">
+          <ng-container *ngFor="let dimension of item.dimensions">
+            <span class="details-selector__item-details">{{dimension.name}}</span>
+          </ng-container>
+        </div>
+        <div *ngIf="item.basicSkills?.length && !item.dimensions?.length" class="details-selector__text_normal">
+          <ng-container *ngFor="let skill of item.basicSkills">
+            <span class="details-selector__item-details">{{skill.name}}</span>
+          </ng-container>
+        </div>
+        <div class="details-selector__close" (click)="getModal(item.id)">
           <span class="icon icon-ic_share_close"></span>
-        </span>
+        </div>
       </li>
     </span>
   </ul>
