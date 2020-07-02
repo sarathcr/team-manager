@@ -119,28 +119,30 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   getBasicSkills(): void {
-    const evaluationCriteriaIds = this.getEvaluationCriteiaIds()
-    const checkData: CheckBoxData = { checked: false, variant: 'checkedOnly'}
-    this.selectedBasicSkills = [...this.project.basicSkills]
-    this.subscriptions.sink = this.evaluationService.entities$
-      .pipe(
-        map(data => data.map( item => item?.basicSkills
-          .map(({id, code, description, name}) => ({id, code, description, name})))))
-      .subscribe( newData => {
-        if (!newData.length && evaluationCriteriaIds.length) {
-          this.evaluationService.getWithQuery(evaluationCriteriaIds.toString())
-        }
-        newData.forEach( basicSkills  => {
-          checkData.variant = 'checkedOnly'
-          checkData.checked = !basicSkills.filter( basicSkill => this.selectedBasicSkills
-            .map( selected => selected.id).includes(basicSkill.id))
-          this.basicSkills.push(...basicSkills)
-          this.basicSkills.forEach( basicSkill => {
-            basicSkill.checkData = {...checkData}
+    if (!this.project.basicSkills?.length) {
+      const evaluationCriteriaIds = this.getEvaluationCriteiaIds()
+      const checkData: CheckBoxData = { checked: false, variant: 'checkedOnly'}
+      this.selectedBasicSkills = [...this.project.basicSkills]
+      this.subscriptions.sink = this.evaluationService.entities$
+        .pipe(
+          map(data => data.map( item => item?.basicSkills
+            .map(({id, code, description, name}) => ({id, code, description, name})))))
+        .subscribe( newData => {
+          if (!newData.length && evaluationCriteriaIds.length) {
+            this.evaluationService.getWithQuery(evaluationCriteriaIds.toString())
+          }
+          newData.forEach( basicSkills  => {
+            checkData.variant = 'checkedOnly'
+            checkData.checked = !basicSkills.filter( basicSkill => this.selectedBasicSkills
+              .map( selected => selected.id).includes(basicSkill.id))
+            this.basicSkills.push(...basicSkills)
+            this.basicSkills.forEach( basicSkill => {
+              basicSkill.checkData = {...checkData}
+            })
           })
         })
-      })
-    this.evaluationService.loading$.subscribe(loading => { this.loading = loading })
+      // this.evaluationService.loading$.subscribe(loading => { this.loading = loading })
+    }
   }
 
   handleButtonClick(): void {

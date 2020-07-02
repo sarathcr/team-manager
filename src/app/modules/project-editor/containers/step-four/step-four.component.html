@@ -38,7 +38,7 @@
               </div>
             </ng-template>
           </div>
-          <ng-container>
+          <ng-container *ngIf="!this.project.basicSkills?.length">
             <div class="project-form__basic-skill">
               <h3 class="project-form__basic-skill__title">
                 {{"CONTENT.project_content_contentwindow_title" | translate}}
