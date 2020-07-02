@@ -82,7 +82,8 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
         priorityList: true,
         priorityTitle: 'Cursos preferentes',
         normalTitle: 'Otros cursos',
-        allowRemoteDataSearch: false
+        allowRemoteDataSearch: false,
+        maxHeight: 225,
       },
       canDeselect: false
     }
