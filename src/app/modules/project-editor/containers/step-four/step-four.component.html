@@ -35,6 +35,7 @@
             <ng-template #manualContent>
               <div class="project-form__textarea-wrapper">
                 <app-textarea-bullets
+                  [onInitFocus]="true"
                   [config]='textAreaConfig'
                   type="toggle"
                   (textareaBlur)="textareaBlur($event, i)"

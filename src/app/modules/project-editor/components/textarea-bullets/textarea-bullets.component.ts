@@ -27,6 +27,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   @Input() type: TextareaType
   @Input() config: FieldConfig
   @Input() options: Option[]
+  @Input() onInitFocus = false
   @Input() options$: Observable<Option[]>
   @Output() inputChange = new EventEmitter()
   @Output() textareaBlur = new EventEmitter()
@@ -48,6 +49,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   ngOnInit(): void {
     this.limit = this.config.limit
     this.optionInit()
+    this.focusTextArea()
   }
 
   ngAfterContentChecked(): void {
@@ -194,6 +196,15 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
       this.configOptions[0].name = null
     }
     this.textareaBlur.emit([...this.configOptions])
+  }
+
+  // focus the text area initially
+  focusTextArea(): void{
+    if (this.onInitFocus){
+      setTimeout(() => {
+        this.textArea.first.nativeElement.focus()
+      }, 0)
+    }
   }
 
 }
