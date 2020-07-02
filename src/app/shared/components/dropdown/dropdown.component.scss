@@ -301,6 +301,12 @@
     &.selected{
       .dropdown-btn{
         border: 1px solid $creator-border !important;
+        &:active,
+        &:focus,
+        &:focus-within{
+          border: 1px solid $primary !important;
+          box-shadow: 0 0 0 1px $primary !important;
+        }
       }
     }
   }
