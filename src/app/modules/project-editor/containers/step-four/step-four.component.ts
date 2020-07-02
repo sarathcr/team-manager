@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 
-import { Observable } from 'rxjs'
+import { Observable, BehaviorSubject } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { Project } from '../../constants/project.model'
+import { Project, Subject } from '../../constants/project.model'
 import { Step, Status } from '../../constants/step.model'
 import { Option, FieldConfig } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
@@ -17,6 +17,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
 import { ModalComponent } from './../../components/modal/modal.component'
 import { ModalUnlock } from './../../constants/modal-config.data'
+import { FormFour } from '../../constants/step-forms.model'
 
 @Component({
   selector: 'app-step-four',
@@ -40,19 +41,20 @@ export class StepFourComponent implements OnInit, OnDestroy {
   basicSkills: BasicSkills[] = []
   selectedBasicSkills: BasicSkills[] = []
   bsModalRef: BsModalRef
+  subjectContents: any[] = []
+  subjectTextArea: any[] = []
+
   constructor(
     public editor: EditorService,
     private translateService: TranslateService,
     private evaluationService: EvaluationCriteriaEntityService,
     private modalService: BsModalService
   ) { }
-  subjectContents: any[] = []
-  subjectTextArea: any[] = []
 
   ngOnInit(): void {
     // Temporory function
     this.createFormConfig()
-    this.formInIt()
+    this.stepInit()
     this.getBasicSkills()
   }
 
@@ -60,23 +62,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe()
   }
 
-  // Temperory Function
-  pushContent(hasCriteria: boolean, index: number): void {
-    if (hasCriteria) {
-      this.subjectContents[index].push({ name: 'Lenguajes básicos de programación.', id: this.contents.length })
-      this.checkStepStatus()
-    }
-    else {
-      this.getModal()
-    }
-  }
-
-  // Temperory Function
-  popConent(index: number): void {
-    this.subjectContents[index].pop()
-  }
-
-  formInIt(): void {
+  stepInit(): void {
     this.project$ = this.editor.getDataByStep(4)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[3]
@@ -87,10 +73,27 @@ export class StepFourComponent implements OnInit, OnDestroy {
         if (this.project) {
           this.project.subjects.forEach(subject => {
             this.subjectContents.push([...subject.contents])
-            this.subjectTextArea.push({ isShown: false })
+            this.subjectTextArea.push({
+              data: [...subject.customContents],
+              isShown: !!subject.customContents?.length,
+              options$: new BehaviorSubject([...subject.customContents]),
+            })
           })
         }
       })
+    }
+    if (this.step$) {
+      this.subscriptions.sink = this.step$.subscribe(
+        formStatus => {
+          if (formStatus) {
+            this.buttonConfig.submitted = formStatus.state === 'DONE' && !!this.project.subjects?.length
+            this.initialFormStatus = formStatus.state
+            if (formStatus.state !== 'DONE' && !this.hasAnyEmptyFields()) {
+              this.buttonConfig.disabled = false
+            }
+          }
+        }
+      )
     }
   }
 
@@ -123,6 +126,23 @@ export class StepFourComponent implements OnInit, OnDestroy {
     })
   }
 
+  // Temperory Function
+  pushContent(hasCriteria: boolean, index: number): void {
+    if (hasCriteria) {
+      this.subjectContents[index].push({ name: 'Lenguajes básicos de programación.', id: 1 })
+      this.checkStepStatus()
+    }
+    else {
+      this.getModal()
+    }
+  }
+
+  // Temperory Function
+  popConent(index: number): void {
+    this.subjectContents[index].pop()
+    this.checkStepStatus()
+  }
+
   textareaBlur(data: Option[], index: number): void {
     if (data.length === 1 && data[0].name === null) {
       this.toggleTextarea(index)
@@ -146,7 +166,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   getBasicSkills(): void {
-    if (this.project && !this.project.basicSkills?.length) {
+    if (!this.project?.basicSkills?.length) {
       const evaluationCriteriaIds = this.getEvaluationCriteiaIds()
       const checkData: CheckBoxData = { checked: false, variant: 'checkedOnly' }
       this.selectedBasicSkills = [...this.project.basicSkills]
@@ -168,18 +188,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
             })
           })
         })
-    }
-  }
-
-  handleButtonClick(): void {
-    if (this.basicSkills?.length) {
-      const selectedBasicSkills = []
-      for (const skills of this.basicSkills) {
-        if (skills.checkData.checked === true) {
-          selectedBasicSkills.push(skills)
-        }
-      }
-      this.selectedBasicSkills = selectedBasicSkills
     }
   }
 
@@ -265,6 +273,49 @@ export class StepFourComponent implements OnInit, OnDestroy {
       }
     }
     return hasEmptyField
+  }
+
+  // Create subject
+  createSubjectPayload(): Subject[] {
+    const subjectPayload = [...this.project.subjects]
+    for (const [index, contents] of this.subjectContents.entries()) {
+      subjectPayload[index].contents = contents
+    }
+    for (const [index, manualContent] of this.subjectTextArea.entries()) {
+      const tempData = manualContent?.data?.map(item => item.id == null ? { name: item.name } : item)
+      subjectPayload[index].customContents = tempData
+    }
+    return [...subjectPayload]
+  }
+
+  // function to submit form data
+  handleSubmit(formStatus?: Status): void {
+    if (formStatus === 'DONE') {
+      this.step.state = 'DONE'
+      this.initialFormStatus = 'DONE'
+    }
+    const selectedBasicSkills = []
+    for (const skill of this.basicSkills) {
+      if (skill.checkData.checked === true) {
+        selectedBasicSkills.push({ id: skill.id, name: skill.name })
+      }
+    }
+    const formData: FormFour = {
+      data: {
+        subjects: this.createSubjectPayload(),
+        basicSkills: selectedBasicSkills
+      },
+      stepStatus: {
+        steps: [
+          {
+            state: this.step.state,
+            stepid: this.step.stepid
+          }
+        ]
+      }
+    }
+    this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
+    this.handleButtonType()
   }
 
 }

@@ -39,6 +39,7 @@
                   type="toggle"
                   (textareaBlur)="textareaBlur($event, i)"
                   (inputChange)="textareaDataChange($event, i)"
+                  [options$]="subjectTextArea[i].options$"
                 >
                 </app-textarea-bullets>
               </div>
@@ -68,7 +69,7 @@
     [disabled] = 'buttonConfig.disabled'
     [theme] = "buttonConfig.submitted ? 'success':'primary'"
     [icon]="'tick'"
-    (click)="handleButtonClick()"
+    (click)="handleSubmit('DONE')"
     >
     {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
     </app-button>

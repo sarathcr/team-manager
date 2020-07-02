@@ -360,7 +360,6 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   // function to open principle view modal
   openModalWithComponent(subject: Subject): void {
     const { selectedGrades, gradeIds } = this.getAllGrades()
-    console.log(this.grades)
     const initialState = {
       grades: this.grades,
       selectedGrades,

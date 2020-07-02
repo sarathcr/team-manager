@@ -55,7 +55,8 @@ export class Subject {
   academicYear?: AcademicYear
   region?: Region
   evaluationCriteria?: EvaluationCriteria[]
-  contents?: any[]
+  contents?: Option[]
+  customContents?: Option[]
 }
 
 export interface DrivingQuestion {
