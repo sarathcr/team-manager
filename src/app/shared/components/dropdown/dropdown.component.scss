@@ -4,7 +4,7 @@
 .dropdown {
   width: 100%;
   margin-bottom: $m-36px;
-
+  $root: &;
   &__field {
     padding: $padding-input;
     font-size: $font-size-default;
@@ -20,8 +20,8 @@
 
     &:active,
     &:focus {
-      border: 1px solid $primary;
-      box-shadow: 0 0 0 1px $primary;
+      border: 1px solid $primary !important;
+      box-shadow: 0 0 0 1px $primary !important;
     }
   }
 
@@ -81,7 +81,7 @@
       &:active,
       &:focus {
         border: 1px solid $primary !important;
-        box-shadow: 0 0 0 1px $primary;
+        box-shadow: 0 0 0 1px $primary !important;
       }
 
       >span:first-child {
@@ -311,9 +311,15 @@
     }
   }
   &.active {
-    .dropdown-btn {
+    .dropdown-btn{
       border: 1px solid $primary !important;
-      box-shadow: 0 0 0 1px $primary;
+      box-shadow: 0 0 0 1px $primary !important;
+    }
+    .selected{
+      .dropdown-btn {
+        border: 1px solid $primary !important;
+        box-shadow: 0 0 0 1px $primary !important;
+      }
     }
   }
 }
