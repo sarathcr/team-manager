@@ -9,28 +9,26 @@
       </h1>
       <p class="project-form__description">{{"CONTENT.project_content_description" | translate}}</p>
 
-      <!-- Button to go to step 3 -->
-      <!-- <app-button class="ml-auto" (click)="getModal()">Test</app-button> -->
-
       <app-loader *ngIf="loading; else loaded"></app-loader>
       <ng-template #loaded>
-        <app-step-unlock *ngIf="!project.subjects?.length; else hasSubjects" [StepFour]="{step:'stepFour'}"></app-step-unlock>
+        <app-step-unlock *ngIf="!project.subjects?.length; else hasSubjects" [StepFour]="{step:'stepFour'}">
+        </app-step-unlock>
         <ng-template #hasSubjects>
           <div class="project-form__detail-selector-wrapper"
             *ngFor="let subject of (editor.project$|async).subjects; let i = index; let last = last;"
           >
             <app-details-selector
               [subject]="subject"
-              [subjectItem]="contents"
+              [subjectItem]="subjectContents[i]"
               [isLast]="last"
               [project$]="editor.project$"
-              [icon]="{name:'locked'}"
-              (openModal)="pushContent()"
-              (deleteCriteria)="popConent()"
+              [icon]="subject.evaluationCriteria.length ? {name:'add'} : {name: 'locked'}"
+              (openModal)="pushContent(!!subject.evaluationCriteria.length, i)"
+              (deleteCriteria)="popConent(i)"
             ></app-details-selector>
-            <div class="project-form__textarea-content"  *ngIf="!showTextarea; else manualContent">
+            <div class="project-form__textarea-content"  *ngIf="!subjectTextArea[i]; else manualContent">
               {{"CONTENT.project_content_extracontent.one" | translate}}
-              <span class="project-form__textarea-content_link" (click)="toggleTextarea()">
+              <span class="project-form__textarea-content_link" (click)="toggleTextarea(i)">
                 {{"CONTENT.project_content_extracontent.two" | translate}}
               </span>
             </div>
@@ -38,7 +36,9 @@
               <div class="project-form__textarea-wrapper">
                 <app-textarea-bullets
                   [config]='textAreaConfig'
-                  [type]="'toggle'">
+                  type="toggle"
+                  (textareaBlur)="textareaBlur($event, i)"
+                >
                 </app-textarea-bullets>
               </div>
             </ng-template>

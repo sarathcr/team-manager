@@ -29,6 +29,8 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   @Input() options: Option[]
   @Input() options$: Observable<Option[]>
   @Output() inputChange = new EventEmitter()
+  @Output() textareaBlur = new EventEmitter()
+
   @ViewChildren('textArea') textArea: QueryList<ElementRef>
   index = 0
   initResize = false
@@ -191,6 +193,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
     if (this.configOptions.length === 1 && !this.configOptions[0]?.name?.trim()) {
       this.configOptions[0].name = null
     }
+    this.textareaBlur.emit([...this.configOptions])
   }
 
 }

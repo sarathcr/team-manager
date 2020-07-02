@@ -46,10 +46,11 @@ export class StepFourComponent implements OnInit, OnDestroy {
     private evaluationService: EvaluationCriteriaEntityService,
     private modalService: BsModalService
   ) { }
+  subjectContents: any[] = []
+  subjectTextArea: boolean[] = []
 
   ngOnInit(): void {
     // Temporory function
-    this.pushContent()
     this.createFormConfig()
     this.formInIt()
     this.getBasicSkills()
@@ -60,13 +61,18 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   // Temperory Function
-  pushContent(): void {
-    this.contents.push({ name: 'Lenguajes básicos de programación.', id: this.contents.length })
+  pushContent(hasCriteria: boolean, index: number): void {
+    if (hasCriteria) {
+      this.subjectContents[index].push({ name: 'Lenguajes básicos de programación.', id: this.contents.length })
+    }
+    else {
+      this.getModal()
+    }
   }
 
   // Temperory Function
-  popConent(): void {
-    this.contents.pop()
+  popConent(index: number): void {
+    this.subjectContents[index].pop()
   }
 
   formInIt(): void {
@@ -77,6 +83,10 @@ export class StepFourComponent implements OnInit, OnDestroy {
     if (this.project$) {
       this.subscriptions.sink = this.project$.subscribe(data => {
         this.project = data
+        this.project.subjects.forEach(subject => {
+          this.subjectContents.push([...subject.contents])
+          this.subjectTextArea.push(false)
+        })
       })
     }
   }
@@ -110,8 +120,14 @@ export class StepFourComponent implements OnInit, OnDestroy {
     })
   }
 
-  toggleTextarea(): void{
-    this.showTextarea = !this.showTextarea
+  textareaBlur(data: Option[], index: number): void {
+    if (data.length === 1 && data[0].name === null) {
+      this.toggleTextarea(index)
+    }
+  }
+
+  toggleTextarea(index: number): void{
+    this.subjectTextArea[index] = !this.subjectTextArea[index]
   }
 
   getEvaluationCriteiaIds(): number[] {
