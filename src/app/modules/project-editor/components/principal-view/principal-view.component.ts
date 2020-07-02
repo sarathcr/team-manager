@@ -119,7 +119,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
       colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
     }
     else if (criteria.basicSkills?.length) {
-      colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
+      colTwoData = criteria.basicSkills.map(({ name }) => name).join(', ')
     }
 
     return { colOneHead, colTwoHead, colTwoData }
