@@ -8,7 +8,7 @@ import { Subject } from 'rxjs'
 import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
-import { CriteriaWithSkills, Block, BlockData } from 'src/app/shared/constants/block.model'
+import { CriteriaWithSkills, Block } from 'src/app/shared/constants/block.model'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 import { EvaluationCriteria, Grade } from '../../constants/project.model'
 import { CompetencyModal } from '../../constants/competency-modal.data'
@@ -39,7 +39,8 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   criteriaIds: number[]
   colOneHead: string
   colTwoHead: string
-  blockData: BlockData[] = []
+  blockData: Block[] = []
+  gradeIds: number[]
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -63,17 +64,6 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subject = null
     this.subscriptions.unsubscribe()
-  }
-
-  onDropdownSelect(selectedData: any): void {
-    const selectedGrade = selectedData.val[0]
-    const blockDataInstance = this.blockData.find(block => block.gradeId === selectedGrade.id)
-    if (blockDataInstance) {
-      this.blocks = blockDataInstance.blockData
-    }
-    else {
-      this.getBlocks(selectedGrade)
-    }
   }
 
   createFormConfig(): void {
@@ -145,7 +135,6 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
 
       return { ...criteria, checked, colOneData, colTwoData, grade, block }
     })
-
     return { ...block, evaluationCriteria, colOneHead, colTwoHead }
   }
 
@@ -153,22 +142,33 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     this.loading = true
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
-        const savedBlockData = data.find(blockData => blockData.id === `${selectedGrade.id}-${this.subject.id}`)
-        if (savedBlockData?.blockData) {
-          return savedBlockData.blockData
+        const returnData = []
+        for (const block of data) {
+          if (block.subjectId === this.subject.id) {
+            if (!this.blockData.some(blockData => blockData.id === block.id)) {
+              this.blockData.push(this.createTableData(block, selectedGrade))
+            }
+            if (block.gradeId === selectedGrade.id) {
+              returnData.push(block)
+            }
+          }
         }
+        return returnData
       }))
       .subscribe(data => {
         if (!data?.length) {
           this.blockService.getWithQuery(
-            { gradeId: String(selectedGrade.id), subjectId: String(this.subject.id) }
+            { gradeIds: this.gradeIds.toString(), subjectId: String(this.subject.id) }
           )
         }
-        this.blocks = data?.map(block => {
-          return this.createTableData(block, selectedGrade)
-        })
-        if (data && !this.blockData.find(block => block.gradeId === selectedGrade.id)) {
-          this.blockData.push({ blockData: this.blocks, gradeId: selectedGrade.id })
+        this.blocks = this.blockData?.filter(block => block.gradeId === selectedGrade.id)
+
+        for (let blockData of this.blockData) {
+          for (const block of this.blocks) {
+            if (block.id === blockData.id) {
+              blockData = block
+            }
+          }
         }
       })
     this.changeCurrentBlock(0)
@@ -177,22 +177,12 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
 
   getTranslation(): void {
     this.subscriptions.sink = this.translateService.stream([
-      'OBJECTIVES.project_objectives_criteriawindow_curriculum',
-      'OBJECTIVES.project_objectives_criteriawindow_title',
       'OBJECTIVES.project_objectives_criteriawindow_combo_title',
       'OBJECTIVES.project_objectives_criteriawindow_combo_section_1',
       'OBJECTIVES.project_objectives_criteriawindow_combo_section_2',
-      'OBJECTIVES.project_objectives_criteriawindow_criterion',
-      'OBJECTIVES.project_objectives_criteriawindow_basic_skills',
-      'OBJECTIVES.project_objectives_criteriawindow_dimensions',
-      'OBJECTIVES.project_objectives_criteriawindow_showall',
-      'OBJECTIVES.project_objectives_criteriawindow_add',
     ]).subscribe(translations => {
       this.gradeDropdownConfig.label =
         translations['OBJECTIVES.project_objectives_criteriawindow_combo_title']
-      // Below lines must be uncommented after getting its translation
-      // this.gradeDropdownConfig.placeholder =
-      // translations['OBJECTIVES.project_objectives_criteriawindow_combo_placeholder']
       this.gradeDropdownConfig.settings.priorityTitle =
         translations['OBJECTIVES.project_objectives_criteriawindow_combo_section_1']
       this.gradeDropdownConfig.settings.normalTitle =
@@ -211,12 +201,10 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   handleButtonClick(): void {
     if (this.blocks?.length) {
       const selectedCriteria = []
-      for (const blocks of this.blockData) {
-        for (const block of blocks.blockData) {
-          for (const criteria of block.evaluationCriteria) {
-            if (criteria.checked === true) {
-              selectedCriteria.push({ id: criteria.id, name: criteria.name })
-            }
+      for (const block of this.blockData) {
+        for (const criteria of block.evaluationCriteria) {
+          if (criteria.checked === true) {
+            selectedCriteria.push({ id: criteria.id, name: criteria.name })
           }
         }
       }

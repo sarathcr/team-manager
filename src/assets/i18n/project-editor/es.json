@@ -102,7 +102,9 @@
       "project_content_placeholder":"Agrega contenidos del currículum.",
       "project_content_add_criteria":" + Añadir",
       "project_content_cvcontent":"Contenido del currículum",
-      "project_content_extracontent":"Añadir contenidos personalizados",
+      "project_content_extracontent":{
+        "one": "Añadir",
+        "two": "contenidos personalizados"},
       "project_content_extracontent_input":"Contenidos personalizados",
       "project_content_contentwindow_curriculum":"Currículum",	
       "project_content_contentwindow_title":"Selecciona los contenidos a trabajar:",	

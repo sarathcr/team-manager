@@ -37,24 +37,22 @@
           [colFour]="colHeading[1] ? {value:  heading.block, size: 's'} : ''"
         ></app-table-row>
           <div class="custom-tab__content-body-scroll">
-            <ng-container *ngFor="let blocks of blockData; let index = index;">
-              <ng-container *ngFor="let block of blocks.blockData">
-                <ng-container *ngFor="let criteria of block.evaluationCriteria">
-                  <app-table-row
-                    *ngIf="criteria.checked"
-                    [checkboxData]="criteria"
-                    [checkedOnly]="true"
-                    [colOne]="{value: criteria.name}"
-                    [colTwo]="colHeading[1] ?
-                              {value:  criteria.colTwoData, size: 'm'} :
-                              { value: criteria.grade.name, size: 'xs'}"
-                    [colThree]="colHeading[1] ?
-                                {value:  criteria.grade.name, size: 'xs'} :
-                                { value: block.name, size: 's'}"
-                    [colFour]="colHeading[1] ? {value:  block.name, size: 's'} : ''"
-                    [parentID]="block.id"
-                  ></app-table-row>
-                </ng-container>
+            <ng-container *ngFor="let block of blockData; let index = index;">
+              <ng-container *ngFor="let criteria of block.evaluationCriteria">
+                <app-table-row
+                  *ngIf="criteria.checked"
+                  [checkboxData]="criteria"
+                  [checkedOnly]="true"
+                  [colOne]="{value: criteria.name}"
+                  [colTwo]="colHeading[1] ?
+                            {value:  criteria.colTwoData, size: 'm'} :
+                            { value: criteria.grade.name, size: 'xs'}"
+                  [colThree]="colHeading[1] ?
+                              {value:  criteria.grade.name, size: 'xs'} :
+                              { value: block.name, size: 's'}"
+                  [colFour]="colHeading[1] ? {value:  block.name, size: 's'} : ''"
+                  [parentID]="block.id"
+                ></app-table-row>
               </ng-container>
             </ng-container>
           </div>

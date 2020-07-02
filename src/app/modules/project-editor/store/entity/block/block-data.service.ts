@@ -5,27 +5,26 @@ import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data'
 import { Observable } from 'rxjs'
 
 import { environment } from 'src/environments/environment'
-import { Block, BlockData } from 'src/app/shared/constants/block.model'
+import { Block } from 'src/app/shared/constants/block.model'
 import { map } from 'rxjs/operators'
 
 @Injectable()
-export class BlockDataService extends DefaultDataService<BlockData> {
+export class BlockDataService extends DefaultDataService<Block> {
 
   constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
     super('Block', http, httpUrlGenerator)
   }
 
-  getWithQuery(params: any): Observable<any> {
-    const gradeId = params.gradeId
+  getWithQuery(params: any): Observable<Block[]> {
     const subjectId = params.subjectId
-    return this.http.get<Block[]>(
-      `${environment.apiUrl.curriculumService}/grade/${gradeId}/subject/${subjectId}/blocks`
-    ).pipe(map(blockData => {
-      if (blockData?.length) {
-        return [{ id: `${gradeId}-${subjectId}`, blockData, gradeId: +gradeId, subjectId: +subjectId }]
-      }
+    if (params.gradeIds) {
+      const gradeIds = params.gradeIds
+      return this.http.get<Block[]>(
+        `${environment.apiUrl.curriculumService}/grade/list/${gradeIds}/subject/${subjectId}/blocks`)
+        .pipe(map(blockData => blockData)
+      )
     }
-    ))
+
   }
 
 }

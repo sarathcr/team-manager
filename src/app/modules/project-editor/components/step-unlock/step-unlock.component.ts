@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 
 import { FieldConfig } from 'src/app/shared/constants/field.model'
 
@@ -11,6 +11,8 @@ export class StepUnlockComponent implements OnInit {
 
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
+  @Input() StepThree: DefineStep
+  @Input() StepFour: DefineStep
 
   constructor() { }
 
@@ -36,4 +38,8 @@ export class StepUnlockComponent implements OnInit {
     }
   }
 
+}
+
+export interface DefineStep {
+  step?: 'stepThree' | 'stepFour'
 }

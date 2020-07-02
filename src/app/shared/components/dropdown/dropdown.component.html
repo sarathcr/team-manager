@@ -2,7 +2,6 @@
   <div class="dropdown__wrap  {{ config.settings.singleSelection ? 'dropdown_single-select':'' }}" 
     [ngClass]="{'selected' : config.selectedItems.length}" >
     <label class="dropdown__label" for='config.name'>{{label | translate}}</label>
-    
     <ng-multiselect-dropdown
       [placeholder]="placeholder | translate"
       [disabled] ="config.disabled"
