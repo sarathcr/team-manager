@@ -1,5 +1,5 @@
 import { Grade } from 'src/app/modules/project-editor/constants/project.model'
-import { BasicSkills } from './basic-skill.model'
+import { BasicSkills } from './curriculum-basic-skill.model'
 import { Standards } from './standard.model'
 import { EvaluationCriteria } from './evaluation-criteria.model'
 

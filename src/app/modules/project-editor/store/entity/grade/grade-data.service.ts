@@ -11,7 +11,7 @@ export class GradeDataService extends DefaultDataService<Grade> {
     regionId: number
     academicyearId: number
     constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
-        super('Country', http, httpUrlGenerator)
+        super('Grade', http, httpUrlGenerator)
 
     }
     getWithQuery(parm: any): Observable<Grade[]> {
