@@ -226,3 +226,6 @@ body,
     background: rgba(20,28,58,0.1);
   }
 }
+.dropdown .dropdown__wrap.selected .dropdown-btn:focus{
+  border: 1px solid $primary !important;
+}
