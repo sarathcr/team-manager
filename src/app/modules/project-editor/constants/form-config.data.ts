@@ -16,7 +16,6 @@ export class DropdownConfigInit implements DropDownConfig {
   name = ''
   disabled = true
   data = []
-  priorityData = []
   selectedItems = []
   status: Status = 'PENDING'
   canDeselect = true
