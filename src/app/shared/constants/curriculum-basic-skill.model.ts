@@ -7,3 +7,8 @@ export interface BasicSkills {
     name: string
     checkData?: CheckBoxData
 }
+export interface Curriculum {
+  id: number
+  name: string
+  basicSkills?: BasicSkills[]
+}

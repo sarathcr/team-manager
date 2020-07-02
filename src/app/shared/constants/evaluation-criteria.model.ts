@@ -1,4 +1,4 @@
-import { BasicSkills } from './basic-skill.model'
+import { BasicSkills } from './curriculum-basic-skill.model'
 import { Dimensions } from './dimensions.model'
 import { Standards } from './standard.model'
 import { Indicators } from './indicators.model'

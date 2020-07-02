@@ -1,4 +1,4 @@
-import { BasicSkills } from 'src/app/shared/constants/basic-skill.model'
+import { BasicSkills } from 'src/app/shared/constants/curriculum-basic-skill.model'
 import { Option } from 'src/app/shared/constants/field.model'
 
 export class Project {
