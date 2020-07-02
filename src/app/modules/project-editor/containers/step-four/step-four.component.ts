@@ -74,7 +74,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
     if (this.project$) {
       this.subscriptions.sink = this.project$.subscribe(data => {
         this.project = data
-        if (this.project) {
+        if (this.project?.subjects?.length) {
           this.project.subjects.forEach(subject => {
             this.subjectContents.push([...subject.contents])
             this.subjectTextArea.push({

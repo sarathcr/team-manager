@@ -88,21 +88,14 @@ export class StepThreeComponent implements OnInit, OnDestroy {
             this.getCriteriaDetails(this.project.subjects)
           }
           this.getGrades(this.project)
-        }
-      })
-      this.competencyObjectives$ = this.project$
-        .pipe(
-          map(data => data?.competencyObjectives)
-        )
-      this.subscriptions.sink = this.competencyObjectives$
-        .subscribe(competencyObjectives => {
           this.initialFormData.competencyObjectives = []
-          if (competencyObjectives) {
-            tempinitialFormData.competencyObjectives = [...competencyObjectives]
-            this.inputFormData.competencyObjectives = [...competencyObjectives]
+          if (data.competencyObjectives) {
+            tempinitialFormData.competencyObjectives = [...data.competencyObjectives]
+            this.inputFormData.competencyObjectives = [...data.competencyObjectives]
           }
           this.initialFormData.competencyObjectives = [...tempinitialFormData.competencyObjectives]
-        })
+        }
+      })
     }
     if (this.step$) {
       this.subscriptions.sink = this.step$.subscribe(

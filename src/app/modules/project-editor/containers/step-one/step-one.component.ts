@@ -263,7 +263,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
       this.gradesDropdown.status = 'PENDING'
       this.subjectsDropdown.status = 'PENDING'
     }
-    if (field === 'grades' && !this.gradesDropdown.selectedItems.length) {
+    if (field === 'grades') {
       this.subjectsDropdown.selectedItems = []
       this.subjectsDropdown.status = 'PENDING'
     }
