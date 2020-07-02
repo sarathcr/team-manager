@@ -160,8 +160,7 @@
     top: 80px;
   }
 }
-body,
-.dropdown{
+body{
   ::-webkit-scrollbar {
     width: 7px;
   }
@@ -191,7 +190,7 @@ body,
   }
   .dropdown{
     margin-bottom: 8px;
-    padding-right: 20px;
+    padding-right: 27px;
   }
 }
 
@@ -199,30 +198,5 @@ body,
   .project-editor__form{
     padding-left: 50px;
     padding-right: 50px;
-  }
-}
-
-.custom-scrollbar{
-  overflow-y: auto;
-  position: relative;
-
-  &::-webkit-scrollbar {
-    width: 7px;
-    border-radius: 3.5px;
-  }
-  
-  /* Track */
-  &::-webkit-scrollbar-track {
-    background: #fff;
-  }
-  
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    background: rgba(20,28,58,0.1);
-  }
-  
-  /* Handle on hover */
-  &::-webkit-scrollbar-thumb:hover {
-    background: rgba(20,28,58,0.1);
   }
 }

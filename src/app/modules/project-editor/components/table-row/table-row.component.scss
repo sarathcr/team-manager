@@ -2,7 +2,9 @@
 :host{
     display: block;
     &:last-child{
-        margin-bottom: 16px;
+        .table-row{
+            padding-bottom: 16px;
+        }
     }
 }
 
