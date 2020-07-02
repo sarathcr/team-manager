@@ -90,7 +90,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
         priorityTitle: 'Cursos preferentes',
         normalTitle: 'Otros cursos',
         allowRemoteDataSearch: false,
-        maxHeight: 225,
+        maxHeight: 225
       },
       canDeselect: false
     }
@@ -150,18 +150,14 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     this.loading = true
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
-        const returnData = []
         for (const block of data) {
           if (block.subjectId === this.subject.id) {
             if (!this.blockData.some(blockData => blockData.id === block.id)) {
               this.blockData.push(this.createTableData(block, selectedGrade))
             }
-            if (block.gradeId === selectedGrade.id) {
-              returnData.push(block)
-            }
           }
         }
-        return returnData
+        return true
       }))
       .subscribe(() => {
         this.blocks = this.blockData?.filter(block => block.gradeId === selectedGrade.id)
