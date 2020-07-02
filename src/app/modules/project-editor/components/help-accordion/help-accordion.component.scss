@@ -77,7 +77,8 @@
 
   &__body{
     min-height: 150px;
-
+    overflow-y: auto;
+    
     &-content{
       padding: 0 40px 25px 40px;
       height: 100%;
