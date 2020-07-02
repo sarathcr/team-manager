@@ -49,8 +49,8 @@
                             { value: criteria.grade.name, size: 'xs'}"
                   [colThree]="colHeading[1] ?
                               {value:  criteria.grade.name, size: 'xs'} :
-                              { value: block.name, size: 's'}"
-                  [colFour]="colHeading[1] ? {value:  block.blockIndex + '. ' + block.name, size: 's'} : ''"
+                              { value: (block.blockIndex + '. ' + block.name), size: 's'}"
+                  [colFour]="colHeading[1] ? {value:  (block.blockIndex + '. ' + block.name), size: 's'} : ''"
                   [parentID]="block.id"
                 ></app-table-row>
               </ng-container>

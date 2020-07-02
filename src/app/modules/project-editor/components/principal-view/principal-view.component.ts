@@ -148,12 +148,14 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
 
   getBlocks(selectedGrade: Grade): void {
     this.loading = true
+    const gradeBlocks = this.gradeIds.map(id => ({id, count: 0}))
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
-        for (const [index, block] of data.entries()) {
+        for (const block of data) {
+          const gradeOfBlock = gradeBlocks.find(gradeBlock => gradeBlock.id === block.gradeId)
           if (block.subjectId === this.subject.id) {
             if (!this.blockData.some(blockData => blockData.id === block.id)) {
-              this.blockData.push(this.createTableData(block, selectedGrade, index + 1))
+              this.blockData.push(this.createTableData(block, selectedGrade, ++gradeOfBlock.count))
             }
           }
         }
