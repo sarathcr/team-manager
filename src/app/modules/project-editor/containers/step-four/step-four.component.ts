@@ -322,6 +322,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
         ]
       }
     }
+    this.isFormUpdated = false
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
     this.handleButtonType()
   }
