@@ -22,6 +22,7 @@ export class DropdownConfigInit implements DropDownConfig {
   settings = {
     textField: '',
     singleSelection: true,
+    maxHeight: 250,
   }
   constructor(name: string, multiSelection?: string) {
     this.name = name
