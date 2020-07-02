@@ -125,7 +125,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     return { colOneHead, colTwoHead, colTwoData }
   }
 
-  createTableData(block: Block, grade: Grade): Block {
+  createTableData(block: Block, grade: Grade, blockIndex: number): Block {
     let colOneHead: string
     let colTwoHead: string
 
@@ -143,17 +143,17 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
 
       return { ...criteria, checked, colOneData, colTwoData, grade, block }
     })
-    return { ...block, evaluationCriteria, colOneHead, colTwoHead }
+    return { ...block, evaluationCriteria, colOneHead, colTwoHead, blockIndex }
   }
 
   getBlocks(selectedGrade: Grade): void {
     this.loading = true
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
-        for (const block of data) {
+        for (const [index, block] of data.entries()) {
           if (block.subjectId === this.subject.id) {
             if (!this.blockData.some(blockData => blockData.id === block.id)) {
-              this.blockData.push(this.createTableData(block, selectedGrade))
+              this.blockData.push(this.createTableData(block, selectedGrade, index + 1))
             }
           }
         }
