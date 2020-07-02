@@ -17,6 +17,10 @@ export class FormThreeInitData implements FormThreeInit {
   competencyObjectives = []
 }
 
+export class FormFourInitData {
+  contents = []
+}
+
 export class FormSixInitData implements FormSixInit {
   creativeTitle = ''
   creativeImage = ''

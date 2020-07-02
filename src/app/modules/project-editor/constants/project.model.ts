@@ -1,3 +1,5 @@
+import { Option } from 'src/app/shared/constants/field.model'
+
 export class Project {
   id?: number | null
   title?: string
@@ -72,6 +74,8 @@ export class EvaluationCriteria {
   id: number
   name: string
   subjectId?: number
+  dimensions?: Option[]
+  basicSkills?: Option[]
 }
 
 export function compareProjects(p1: Project, p2: Project): number {

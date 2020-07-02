@@ -7,8 +7,7 @@ import {
   AcademicYear,
   Region,
   Country,
-  CompetencyObjectives,
-  EvaluationCriteria
+  CompetencyObjectives
 } from 'src/app/modules/project-editor/constants/project.model'
 
 export interface FormOne {
