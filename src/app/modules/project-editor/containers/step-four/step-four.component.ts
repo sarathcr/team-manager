@@ -117,6 +117,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
     }
     return evaluationCriteriaIds
   }
+
   getBasicSkills(): void {
     const evaluationCriteriaIds = this.getEvaluationCriteiaIds()
     const checkData: CheckBoxData = { checked: false, variant: 'checkedOnly'}
@@ -126,7 +127,9 @@ export class StepFourComponent implements OnInit, OnDestroy {
         map(data => data.map( item => item?.basicSkills
           .map(({id, code, description, name}) => ({id, code, description, name})))))
       .subscribe( newData => {
-        if (!newData.length) { this.evaluationService.getWithQuery(evaluationCriteriaIds.toString()) }
+        if (!newData.length && evaluationCriteriaIds.length) {
+          this.evaluationService.getWithQuery(evaluationCriteriaIds.toString())
+        }
         newData.forEach( basicSkills  => {
           checkData.variant = 'checkedOnly'
           checkData.checked = !basicSkills.filter( basicSkill => this.selectedBasicSkills
@@ -139,6 +142,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
       })
     this.evaluationService.loading$.subscribe(loading => { this.loading = loading })
   }
+
   handleButtonClick(): void {
     if (this.basicSkills?.length) {
       const selectedBasicSkills = []
