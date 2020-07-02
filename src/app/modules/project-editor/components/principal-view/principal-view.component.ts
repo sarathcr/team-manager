@@ -49,6 +49,7 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.getBlockData()
     this.heading = {
       evaluationCriteria: 'OBJECTIVES.project_objectives_criteriawindow_criterion',
       basicSkills: 'OBJECTIVES.project_objectives_criteriawindow_basic_skills',
@@ -64,6 +65,12 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subject = null
     this.subscriptions.unsubscribe()
+  }
+
+  getBlockData(): void {
+    this.blockService.getWithQuery(
+      { gradeIds: this.gradeIds.toString(), subjectId: String(this.subject.id) }
+    )
   }
 
   createFormConfig(): void {
@@ -82,7 +89,8 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
         priorityList: true,
         priorityTitle: 'Cursos preferentes',
         normalTitle: 'Otros cursos',
-        allowRemoteDataSearch: false
+        allowRemoteDataSearch: false,
+        maxHeight: 225
       },
       canDeselect: false
     }
@@ -142,25 +150,16 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
     this.loading = true
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
-        const returnData = []
         for (const block of data) {
           if (block.subjectId === this.subject.id) {
             if (!this.blockData.some(blockData => blockData.id === block.id)) {
               this.blockData.push(this.createTableData(block, selectedGrade))
             }
-            if (block.gradeId === selectedGrade.id) {
-              returnData.push(block)
-            }
           }
         }
-        return returnData
+        return true
       }))
-      .subscribe(data => {
-        if (!data?.length) {
-          this.blockService.getWithQuery(
-            { gradeIds: this.gradeIds.toString(), subjectId: String(this.subject.id) }
-          )
-        }
+      .subscribe(() => {
         this.blocks = this.blockData?.filter(block => block.gradeId === selectedGrade.id)
 
         for (let blockData of this.blockData) {

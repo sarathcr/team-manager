@@ -35,7 +35,6 @@ export class DropdownComponent implements OnInit, OnDestroy {
       ...this.config.settings,
       itemsShowLimit: 3,
       closeDropDownOnSelection: true,
-      maxHeight: 265,
       enableCheckAll: false,
     }
     this.dropdownInit()
