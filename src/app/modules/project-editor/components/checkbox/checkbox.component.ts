@@ -1,4 +1,4 @@
-import { Component, Input  } from '@angular/core'
+import { Component, Input, Output, EventEmitter } from '@angular/core'
 
 @Component({
   selector: 'app-checkbox',
@@ -14,6 +14,7 @@ export class CheckBoxComponent {
   @Input() colThree: TableColumn
   @Input() colFour: TableColumn
   @Input() checkedOnly = false
+  @Output() checked: EventEmitter<any> = new EventEmitter()
 
   colCount: number
 
@@ -23,7 +24,9 @@ export class CheckBoxComponent {
     if (this.checkboxData) {
       this.checkboxData.checked = !this.checkboxData.checked
     }
+    this.checked.emit()
   }
+
 }
 // WIP To be Moved in to corresponding file while doing functionality
 export interface TableColumn {
