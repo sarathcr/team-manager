@@ -11,11 +11,11 @@
 
       <app-loader *ngIf="loading; else loaded"></app-loader>
       <ng-template #loaded>
-        <app-step-unlock *ngIf="!project.subjects?.length; else hasSubjects" [StepFour]="{step:'stepFour'}">
+        <app-step-unlock *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects" [StepFour]="{step:'stepFour'}">
         </app-step-unlock>
         <ng-template #hasSubjects>
           <div class="project-form__detail-selector-wrapper"
-            *ngFor="let subject of (editor.project$|async).subjects; let i = index; let last = last;"
+            *ngFor="let subject of project?.subjects; let i = index; let last = last;"
           >
             <app-details-selector
               [subject]="subject"
@@ -26,7 +26,7 @@
               (openModal)="pushContent(!!subject.evaluationCriteria.length, i)"
               (deleteCriteria)="popConent(i)"
             ></app-details-selector>
-            <div class="project-form__textarea-content"  *ngIf="!subjectTextArea[i]; else manualContent">
+            <div class="project-form__textarea-content"  *ngIf="!subjectTextArea[i]?.isShown; else manualContent">
               {{"CONTENT.project_content_extracontent.one" | translate}}
               <span class="project-form__textarea-content_link" (click)="toggleTextarea(i)">
                 {{"CONTENT.project_content_extracontent.two" | translate}}
@@ -38,12 +38,13 @@
                   [config]='textAreaConfig'
                   type="toggle"
                   (textareaBlur)="textareaBlur($event, i)"
+                  (inputChange)="textareaDataChange($event, i)"
                 >
                 </app-textarea-bullets>
               </div>
             </ng-template>
           </div>
-          <ng-container *ngIf="!this.project.basicSkills?.length">
+          <ng-container *ngIf="project && !project.basicSkills?.length">
             <div class="project-form__basic-skill">
               <h3 class="project-form__basic-skill__title">
                 {{"CONTENT.project_content_contentwindow_title" | translate}}
@@ -54,6 +55,7 @@
                 [colOne]="{ value: basicSkill.description }"
                 [parentID]="basicSkill.id"
                 [checkedOnly]="!!basicSkill.checkData.variant"
+                (checked)="handleSkillSelect()"
                 ></app-checkbox>
               </div>
             </div>

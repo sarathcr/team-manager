@@ -47,7 +47,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
     private modalService: BsModalService
   ) { }
   subjectContents: any[] = []
-  subjectTextArea: boolean[] = []
+  subjectTextArea: any[] = []
 
   ngOnInit(): void {
     // Temporory function
@@ -64,6 +64,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
   pushContent(hasCriteria: boolean, index: number): void {
     if (hasCriteria) {
       this.subjectContents[index].push({ name: 'Lenguajes básicos de programación.', id: this.contents.length })
+      this.checkStepStatus()
     }
     else {
       this.getModal()
@@ -83,10 +84,12 @@ export class StepFourComponent implements OnInit, OnDestroy {
     if (this.project$) {
       this.subscriptions.sink = this.project$.subscribe(data => {
         this.project = data
-        this.project.subjects.forEach(subject => {
-          this.subjectContents.push([...subject.contents])
-          this.subjectTextArea.push(false)
-        })
+        if (this.project) {
+          this.project.subjects.forEach(subject => {
+            this.subjectContents.push([...subject.contents])
+            this.subjectTextArea.push({ isShown: false })
+          })
+        }
       })
     }
   }
@@ -126,40 +129,42 @@ export class StepFourComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleTextarea(index: number): void{
-    this.subjectTextArea[index] = !this.subjectTextArea[index]
+  toggleTextarea(index: number): void {
+    this.subjectTextArea[index].isShown = !this.subjectTextArea[index].isShown
   }
 
   getEvaluationCriteiaIds(): number[] {
     const evaluationCriteriaIds = []
-    for (const subject of this.project.subjects) {
-      for ( const eCriteria of subject.evaluationCriteria) {
-        evaluationCriteriaIds.push(eCriteria.id)
+    if (this.project) {
+      for (const subject of this.project.subjects) {
+        for (const eCriteria of subject.evaluationCriteria) {
+          evaluationCriteriaIds.push(eCriteria.id)
+        }
       }
     }
     return evaluationCriteriaIds
   }
 
   getBasicSkills(): void {
-    if (!this.project.basicSkills?.length) {
+    if (this.project && !this.project.basicSkills?.length) {
       const evaluationCriteriaIds = this.getEvaluationCriteiaIds()
-      const checkData: CheckBoxData = { checked: false, variant: 'checkedOnly'}
+      const checkData: CheckBoxData = { checked: false, variant: 'checkedOnly' }
       this.selectedBasicSkills = [...this.project.basicSkills]
       this.subscriptions.sink = this.evaluationService.entities$
         .pipe(
-          map(data => data.map( item => item?.basicSkills
-            .map(({id, code, description, name}) => ({id, code, description, name})))))
-        .subscribe( newData => {
+          map(data => data.map(item => item?.basicSkills
+            .map(({ id, code, description, name }) => ({ id, code, description, name })))))
+        .subscribe(newData => {
           if (!newData.length && evaluationCriteriaIds.length) {
             this.evaluationService.getWithQuery(evaluationCriteriaIds.toString())
           }
-          newData.forEach( basicSkills  => {
+          newData.forEach(basicSkills => {
             checkData.variant = 'checkedOnly'
-            checkData.checked = !basicSkills.filter( basicSkill => this.selectedBasicSkills
-              .map( selected => selected.id).includes(basicSkill.id))
+            checkData.checked = !basicSkills.filter(basicSkill => this.selectedBasicSkills
+              .map(selected => selected.id).includes(basicSkill.id))
             this.basicSkills.push(...basicSkills)
-            this.basicSkills.forEach( basicSkill => {
-              basicSkill.checkData = {...checkData}
+            this.basicSkills.forEach(basicSkill => {
+              basicSkill.checkData = { ...checkData }
             })
           })
         })
@@ -175,7 +180,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
         }
       }
       this.selectedBasicSkills = selectedBasicSkills
-      console.log(this.selectedBasicSkills)
     }
   }
 
@@ -184,9 +188,83 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
-      if (result){
+      if (result) {
         this.editor.redirectToStep(3)
       }
     })
   }
+
+  textareaDataChange(data: Option[], index: number): void {
+    this.subjectTextArea[index].data = [...data]
+    this.checkStepStatus()
+  }
+
+  handleSkillSelect(): void {
+    this.checkStepStatus()
+  }
+
+  // Changes the button according to form status
+  handleButtonType(): void {
+    if (this.step.state === 'DONE') {
+      this.buttonConfig.submitted = true
+      this.buttonConfig.disabled = true
+    } else {
+      if (this.hasAnyEmptyFields()) {
+        this.buttonConfig.disabled = true
+        this.buttonConfig.submitted = false
+      } else {
+        this.buttonConfig.disabled = false
+        this.buttonConfig.submitted = false
+      }
+    }
+  }
+
+  checkStepStatus(): void {
+    let hasContents = false
+    let hasManualContents = false
+    let hasSelectedSkills = false
+    for (const contents of this.subjectContents) {
+      if (contents?.length) {
+        hasContents = true
+      }
+    }
+    for (const manualContents of this.subjectTextArea) {
+      if (manualContents?.data?.length) {
+        hasManualContents = true
+      }
+    }
+    if (this.basicSkills?.length) {
+      for (const skills of this.basicSkills) {
+        if (skills.checkData.checked === true) {
+          hasSelectedSkills = true
+        }
+      }
+    }
+    if (hasContents || hasManualContents || hasSelectedSkills) {
+      this.step.state = 'INPROCESS'
+    } else {
+      this.step.state = 'PENDING'
+    }
+    this.handleButtonType()
+  }
+
+  hasAnyEmptyFields(): boolean {
+    let hasEmptyField = false
+    for (const [index, contents] of this.subjectContents.entries()) {
+      if (!contents?.length && !this.subjectTextArea[index]?.data?.length) {
+        hasEmptyField = true
+      }
+    }
+    if (this.basicSkills?.length) {
+      const checkedArray = []
+      for (const basicSkill of this.basicSkills) {
+        checkedArray.push(basicSkill.checkData.checked)
+      }
+      if (!checkedArray.includes(true)) {
+        hasEmptyField = true
+      }
+    }
+    return hasEmptyField
+  }
+
 }
