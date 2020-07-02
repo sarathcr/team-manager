@@ -16,6 +16,7 @@
     top: 14px;
     left: 42px;
     color: rgba($primary-font-color,0.6);
+    padding-right: 22px;
   }
   &__list {
     padding: 14px 22px;
@@ -100,5 +101,9 @@
     .textarea-bullets__list{
       min-height: 148px;
     }
+  }
+  &:focus-within{
+    border: 1px solid $primary !important;
+    box-shadow: 0 0 0 2px $primary !important;
   }
 }
