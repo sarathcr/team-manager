@@ -42,7 +42,7 @@
                 [ngClass]="{ active: this.currentBlockIndex === index }"
                 (click)="changeCurrentBlock(index)"
               >
-                <strong class="custom-tab__links-index">{{ index + 1 }}. </strong>
+                <strong class="custom-tab__links-index">{{ block.blockIndex }}. </strong>
                 <span class="custom-tab__links-label">{{ block.name }}</span>
                   <span *ngIf="block.evaluationCriteria | checkCount" class="d-flex ml-auto" >
                     <strong class="custom-tab__links-selected">

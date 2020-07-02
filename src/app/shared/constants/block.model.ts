@@ -26,4 +26,5 @@ export interface Block {
   virtual: boolean
   gradeId?: number
   subjectId?: number
+  blockIndex?: number
 }
