@@ -119,13 +119,13 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
       colTwoData = criteria.dimensions.map(({ name }) => name).join(', ')
     }
     else if (criteria.basicSkills?.length) {
-      colTwoData = criteria.basicSkills.map(({ description }) => description).join(', ')
+      colTwoData = criteria.basicSkills.map(({ name }) => name).join(', ')
     }
 
     return { colOneHead, colTwoHead, colTwoData }
   }
 
-  createTableData(block: Block, grade: Grade): Block {
+  createTableData(block: Block, grade: Grade, blockIndex: number): Block {
     let colOneHead: string
     let colTwoHead: string
 
@@ -143,17 +143,19 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
 
       return { ...criteria, checked, colOneData, colTwoData, grade, block }
     })
-    return { ...block, evaluationCriteria, colOneHead, colTwoHead }
+    return { ...block, evaluationCriteria, colOneHead, colTwoHead, blockIndex }
   }
 
   getBlocks(selectedGrade: Grade): void {
     this.loading = true
+    const gradeBlocks = this.gradeIds.map(id => ({id, count: 0}))
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
         for (const block of data) {
+          const gradeOfBlock = gradeBlocks.find(gradeBlock => gradeBlock.id === block.gradeId)
           if (block.subjectId === this.subject.id) {
             if (!this.blockData.some(blockData => blockData.id === block.id)) {
-              this.blockData.push(this.createTableData(block, selectedGrade))
+              this.blockData.push(this.createTableData(block, selectedGrade, ++gradeOfBlock.count))
             }
           }
         }

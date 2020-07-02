@@ -241,7 +241,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   // checks current form status
   checkStepStatus(criterias?: EvaluationCriteria[]): void {
-    if (criterias?.length || !this.hasAnyEmptyFields()) {
+    if (criterias?.length || this.checkEmptyCriteria() || this.inputFormData.competencyObjectives.length) {
       this.step.state = 'INPROCESS'
     } else {
       this.step.state = 'PENDING'
@@ -249,15 +249,19 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
-  // checks the form is completely filled or not
-  hasAnyEmptyFields(): boolean {
+  checkEmptyCriteria(): boolean {
     let nonEmptyForm = true
     for (const subject of this.project.subjects) {
       if (!subject.evaluationCriteria?.length) {
         nonEmptyForm = false
       }
     }
-    if (!nonEmptyForm || !this.inputFormData.competencyObjectives.length) {
+    return nonEmptyForm
+  }
+
+  // checks the form is completely filled or not
+  hasAnyEmptyFields(): boolean {
+    if (!this.checkEmptyCriteria() || !this.inputFormData.competencyObjectives.length) {
       return true
     }
     return false
