@@ -120,7 +120,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   getGrades(project: Project): void {
-    if (this.project) {
+    if (this.project?.subjects?.length) {
       this.subscriptions.sink = this.gradeService.entities$
         .pipe(
           map(grades => grades.filter(grade => grade.academicYear?.id === project.academicYear.id
@@ -364,7 +364,6 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   // function to open principle view modal
   openModalWithComponent(subject: Subject): void {
     const { selectedGrades, gradeIds } = this.getAllGrades()
-    console.log(this.grades)
     const initialState = {
       grades: this.grades,
       selectedGrades,

@@ -54,6 +54,11 @@ export const entityMetadata: EntityMetadataMap = {
     entityDispatcherOptions: {
       optimisticUpdate: true
     }
+  },
+  CurriculumBasicSkills: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
   }
 
 }

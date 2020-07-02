@@ -9,6 +9,7 @@ import {
   Country,
   CompetencyObjectives
 } from 'src/app/modules/project-editor/constants/project.model'
+import { Option } from 'src/app/shared/constants/field.model'
 
 export interface FormOne {
   data: {
@@ -56,6 +57,14 @@ export interface FormThree {
   data: {
     competencyObjectives?: CompetencyObjectives[]
     subjects?: Subject[]
+  }
+  stepStatus: StepState
+}
+
+export interface FormFour {
+  data: {
+    subjects?: Subject[]
+    basicSkills?: Option[]
   }
   stepStatus: StepState
 }
