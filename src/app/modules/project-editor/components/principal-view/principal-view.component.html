@@ -31,7 +31,7 @@
       <div class="competency-modal__body-block-grade">
         <app-dropdown
           [config]='gradeDropdownConfig'
-          (dropdownSelect)='onDropdownSelect($event)'
+          (dropdownSelect)='getBlocks($event.val[0])'
           [canDeselect]="false"
         ></app-dropdown>
           <div class="competency-modal__body-scroll">

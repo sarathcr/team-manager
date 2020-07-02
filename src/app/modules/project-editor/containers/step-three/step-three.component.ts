@@ -7,6 +7,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
+import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
 
 import { Step, Status } from '../../constants/step.model'
 import { FieldConfig, Option } from 'src/app/shared/constants/field.model'
@@ -22,6 +23,7 @@ import { Project } from './../../constants/project.model'
 import { FormThreeInitData } from '../../constants/step-forms.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { GradeOptionAndId } from '../../constants/competency-modal.data'
 
 @Component({
   selector: 'app-step-three',
@@ -53,6 +55,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     public editor: EditorService,
     private modalService: BsModalService,
     private gradeService: GradeEntityService,
+    private criteriaEntityService: EvaluationCriteriaEntityService
   ) { }
 
   ngOnInit(): void {
@@ -79,8 +82,13 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     const tempinitialFormData = new FormThreeInitData()
     if (this.project$) {
       this.subscriptions.sink = this.project$.subscribe(data => {
-        this.project = data
-        this.getGrades(this.project)
+        if (data) {
+          this.project = data
+          if (data.subjects?.length) {
+            this.getCriteriaDetails(this.project.subjects)
+          }
+          this.getGrades(this.project)
+        }
       })
       this.competencyObjectives$ = this.project$
         .pipe(
@@ -100,7 +108,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       this.subscriptions.sink = this.step$.subscribe(
         formStatus => {
           if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state === 'DONE'
+            this.buttonConfig.submitted = formStatus.state === 'DONE' && !!this.project.subjects?.length
             this.initialFormStatus = formStatus.state
             if (formStatus.state !== 'DONE' && !this.hasAnyEmptyFields()) {
               this.buttonConfig.disabled = false
@@ -128,6 +136,57 @@ export class StepThreeComponent implements OnInit, OnDestroy {
           }
           this.grades = newData.map(({ id, name }) => ({ id, name }))
         })
+    }
+  }
+
+  // gets the criteria data
+  getCriteriaDetails(subjects: Subject[]): void {
+    const criteriaIds = []
+    for (const subject of subjects) {
+      if (subject.evaluationCriteria?.length) {
+        for (const criteria of subject.evaluationCriteria) {
+          criteriaIds.push(criteria.id)
+        }
+      }
+    }
+    if (criteriaIds.length) {
+      this.subscriptions.sink = this.criteriaEntityService.entities$.pipe(map(details => {
+        let idNotFound = false
+        if (details?.length) {
+          const detailIds = details.map(detail => detail.id)
+          for (const criteriaId of criteriaIds) {
+            if (!detailIds.includes(criteriaId)) {
+              idNotFound = true
+            }
+          }
+        }
+        return idNotFound ? null : details
+      }))
+        .subscribe(data => {
+          if (!data?.length) {
+            this.criteriaEntityService.getWithQuery(criteriaIds.toString())
+          } else {
+            this.addCriteriaDetails(data)
+          }
+        }
+        )
+    }
+  }
+
+  // Adds dimension or basic skills to the evaluation criteria
+  addCriteriaDetails(criteriaDetails: any): void {
+    for (const subject of this.project.subjects) {
+      for (const criteria of subject.evaluationCriteria) {
+        criteriaDetails.find(detail => {
+          if (detail.id === criteria.id) {
+            if (detail.dimensions?.length) {
+              criteria.dimensions = [...detail.dimensions]
+            } else {
+              criteria.basicSkills = [...detail.basicSkills]
+            }
+          }
+        })
+      }
     }
   }
 
@@ -292,11 +351,20 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     })
   }
 
+  getAllGrades(): GradeOptionAndId {
+    const selectedGrades = this.project.grades.map(({ id, name }) => ({ id, name }))
+    const gradeIds = this.grades.map(({id}) => id)
+    return { selectedGrades, gradeIds }
+  }
+
   // function to open principle view modal
   openModalWithComponent(subject: Subject): void {
+    const { selectedGrades, gradeIds } = this.getAllGrades()
+    console.log(this.grades)
     const initialState = {
       grades: this.grades,
-      selectedGrades: this.project.grades.map(({ id, name }) => ({ id, name })),
+      selectedGrades,
+      gradeIds,
       subject: { id: subject.id, name: subject.name },
       criteriaIds: subject.evaluationCriteria.map(criteria => criteria.id)
     }

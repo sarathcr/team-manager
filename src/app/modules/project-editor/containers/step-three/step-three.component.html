@@ -12,14 +12,14 @@
         <ng-template #hasSubjects>
           <div class="project-editor__subject-wrapper">
             <app-details-selector
-              *ngFor="let subject of (editor.project$|async)?.subjects; let i = index; let last = last;"
-              [data]="subject"
+              *ngFor="let subject of project?.subjects; let i = index; let last = last;"
               [subject]="subject"
-              [criterias]="subject.evaluationCriteria"
+              [subjectItem]="subject.evaluationCriteria"
               [isLast]="last"
               (deleteCriteria)="removeCriteria($event)"
               [project$]="editor.project$"
               (openModal)="openModalWithComponent($event)"
+              [icon]="{name:'add'}"
             ></app-details-selector>
             <div class="project-editor__goto-step">
               {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}
@@ -45,7 +45,7 @@
       <app-loader *ngIf="loading; else loaded"></app-loader>
     </div>
     <app-button
-      [disabled] = 'buttonConfig.disabled'
+      [disabled] = 'buttonConfig.disabled || !project.subjects?.length'
       [theme] = "buttonConfig.submitted ? 'success':'primary'"
       [icon]="'tick'"
       (click)='handleSubmit("DONE")'>

@@ -160,8 +160,7 @@
     top: 80px;
   }
 }
-body,
-.dropdown{
+body{
   ::-webkit-scrollbar {
     width: 7px;
   }
@@ -179,6 +178,7 @@ body,
     background-color: $desktop-border-color;
   }
 }
+
 
 .competency-modal{
   max-width: 87.5%; // 1260px;
@@ -225,7 +225,4 @@ body,
   &::-webkit-scrollbar-thumb:hover {
     background: rgba(20,28,58,0.1);
   }
-}
-.dropdown .dropdown__wrap.selected .dropdown-btn:focus{
-  border: 1px solid $primary !important;
 }
