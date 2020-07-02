@@ -43,6 +43,8 @@ export class StepFourComponent implements OnInit, OnDestroy {
   bsModalRef: BsModalRef
   subjectContents: any[] = []
   subjectTextArea: any[] = []
+  hasNoBasicSkill = false
+  isFormUpdated = false
 
   constructor(
     public editor: EditorService,
@@ -55,10 +57,12 @@ export class StepFourComponent implements OnInit, OnDestroy {
     // Temporory function
     this.createFormConfig()
     this.stepInit()
-    this.getBasicSkills()
   }
 
   ngOnDestroy(): void {
+    if (this.isFormUpdated) {
+      this.handleSubmit()
+    }
     this.subscriptions.unsubscribe()
   }
 
@@ -80,6 +84,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
             })
           })
         }
+        this.getBasicSkills()
       })
     }
     if (this.step$) {
@@ -131,6 +136,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
     if (hasCriteria) {
       this.subjectContents[index].push({ name: 'Lenguajes básicos de programación.', id: 1 })
       this.checkStepStatus()
+      this.isFormUpdated = true
     }
     else {
       this.getModal()
@@ -141,6 +147,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
   popConent(index: number): void {
     this.subjectContents[index].pop()
     this.checkStepStatus()
+    this.isFormUpdated = true
   }
 
   textareaBlur(data: Option[], index: number): void {
@@ -154,29 +161,38 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   getBasicSkills(): void {
-    if (this.project) {
-      const checkData: CheckBoxData = { checked: false, variant: 'checkedOnly'}
+    if (this.project.subjects?.length) {
+      const checkData: CheckBoxData = { checked: false, variant: 'checkedOnly' }
       this.selectedBasicSkills = [...this.project.basicSkills]
       this.subscriptions.sink = this.basicSkillsService.entities$
-      .pipe(
-        map(data => data.map(item => item?.basicSkills
-          .map(({ id, code, description, name }) => ({ id, code, description, name })))))
-      .subscribe( basicSkills => {
-          if (!basicSkills.length && this.project){
+        .pipe(
+          map(data => {
+            const basicSkills = []
+            for (const curriculum of data) {
+              for (const { id, code, description, name } of curriculum.basicSkills) {
+                basicSkills.push({ id, code, description, name })
+              }
+            }
+            return basicSkills
+          }))
+        .subscribe(basicSkills => {
+          console.log(basicSkills)
+          if (!basicSkills.length && this.project) {
             const parms = {
               regionId: this.project.region.id.toString(),
               academicyearId: this.project.academicYear.id.toString()
             }
             this.basicSkillsService.getWithQuery(parms)
           }
-          basicSkills.forEach( basicSkill => {
-            checkData.variant = 'checkedOnly'
-            // checkData.checked = !!this.selectedBasicSkills.map( selected => selected.id).includes(basicSkill.id)
-            this.basicSkills.push(...basicSkill)
-            this.basicSkills.forEach( skill => {
-              skill.checkData = {...checkData}
+          basicSkills.forEach(basicSkill => {
+            basicSkill.checkData = { ...checkData }
+            this.selectedBasicSkills.forEach(selectedSkill => {
+              if (basicSkill.id === selectedSkill.id) {
+                basicSkill.checkData.checked = true
+              }
             })
           })
+          this.basicSkills = [...basicSkills]
         })
     }
   }
@@ -195,10 +211,12 @@ export class StepFourComponent implements OnInit, OnDestroy {
   textareaDataChange(data: Option[], index: number): void {
     this.subjectTextArea[index].data = [...data]
     this.checkStepStatus()
+    this.isFormUpdated = true
   }
 
   handleSkillSelect(): void {
     this.checkStepStatus()
+    this.isFormUpdated = true
   }
 
   // Changes the button according to form status

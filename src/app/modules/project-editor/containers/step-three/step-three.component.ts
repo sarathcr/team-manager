@@ -120,7 +120,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   getGrades(project: Project): void {
-    if (this.project) {
+    if (this.project?.subjects?.length) {
       this.subscriptions.sink = this.gradeService.entities$
         .pipe(
           map(grades => grades.filter(grade => grade.academicYear?.id === project.academicYear.id
