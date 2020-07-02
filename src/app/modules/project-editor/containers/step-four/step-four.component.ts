@@ -141,7 +141,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
             })
           })
         })
-      // this.evaluationService.loading$.subscribe(loading => { this.loading = loading })
     }
   }
 
