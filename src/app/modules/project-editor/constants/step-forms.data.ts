@@ -1,5 +1,4 @@
 import {
-  FormOneInit,
   FormTwoInit,
   FormSevenInit,
   FormEightInit,
@@ -8,14 +7,6 @@ import {
   FormThreeInit
 } from './step-forms.model'
 
-export class FormOneInitData implements FormOneInit {
-  country = []
-  region = []
-  academicYear = []
-  grades = []
-  subjects = []
-  finalProduct = []
-}
 export class FormSevenInitData implements FormSevenInit {
   drivingQuestions = []
 }
@@ -24,6 +15,10 @@ export class FormTwoInitData implements FormTwoInit {
 }
 export class FormThreeInitData implements FormThreeInit {
   competencyObjectives = []
+}
+
+export class FormFourInitData {
+  contents = []
 }
 
 export class FormSixInitData implements FormSixInit {

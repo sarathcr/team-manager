@@ -7,16 +7,16 @@ import { map } from 'rxjs/operators'
 
 import { environment } from 'src/environments/environment'
 
+import { EvaluationCriteria } from 'src/app/shared/constants/evaluation-criteria.model'
+
 @Injectable()
-export class EvaluationCriteriaDataService extends DefaultDataService<object> {
-  regionId: number
-  academicyearId: number
+export class EvaluationCriteriaDataService extends DefaultDataService<EvaluationCriteria> {
   constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
     super('EvaluationCriteria', http, httpUrlGenerator)
 
   }
-  getWithQuery(parm: any): Observable<any> {
-    return this.http.get<object[]>(`${environment.apiUrl.curriculumService}/evaluationcriteria/${parm.criteriaId}/basicskills`)
+  getWithQuery(criteriaIds: string): Observable<EvaluationCriteria[]> {
+    return this.http.get<EvaluationCriteria[]>(`${environment.apiUrl.curriculumService}/evaluationcriteria/${criteriaIds}`)
       .pipe(map(res => res))
   }
 }

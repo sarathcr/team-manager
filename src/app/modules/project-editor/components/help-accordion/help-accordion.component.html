@@ -16,15 +16,12 @@
           <span class="icon icon-ic_dropdown"></span>
         </div>
     </div>
-    <div class="help-accordion__body" [ngStyle]="{ 'height' : arrayHeight }">
-      <ng-scrollbar>
-        <div 
-          class="help-accordion__body-content" 
-          [innerHTML]="accordian.body | stringDecoder" 
-          [ngStyle]="{ 'max-height' : arrayHeight }"
-          #accordionBody 
-        ></div>
-      </ng-scrollbar>
+    <div class="help-accordion__body" [ngStyle]="{ 'max-height' : arrayHeight }">
+      <div 
+        class="help-accordion__body-content" 
+        [innerHTML]="accordian.body | stringDecoder" 
+        #accordionBody 
+      ></div>
     </div>
   </accordion-group>
 </accordion>

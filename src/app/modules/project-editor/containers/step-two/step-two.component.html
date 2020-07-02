@@ -7,7 +7,11 @@
         <app-info-tooltip></app-info-tooltip>
       </h2>
       <p class="project-form__description" [innerHTML]="'THEMATIC.project_thematic_description' | translate"></p>
-      <app-textarea-bullets [config]='textAreaConfig' (inputChange)="textAreaUpdate($event)" [options$]="themes$">
+      <app-textarea-bullets 
+        [config]='textAreaConfig' 
+        (inputChange)="textAreaUpdate($event)" 
+        [options$]="themes$"
+      >
       </app-textarea-bullets>
     </div>
     <app-button

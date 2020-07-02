@@ -24,6 +24,7 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 export class TextareaBulletsComponent implements OnInit, AfterContentChecked, OnDestroy {
 
   @Input() variant: TextAreaVariants = 'bullet'
+  @Input() type: TextareaType
   @Input() config: FieldConfig
   @Input() options: Option[]
   @Input() options$: Observable<Option[]>
@@ -88,6 +89,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
           this.limit = this.configOptions.length + 1
         }
         if (this.configOptions.length < this.limit && this.configOptions[id].name?.trim()) {
+          this.inputChange.emit([...this.configOptions])
           this.configOptions.splice(id + 1, 0, { ...this.sampleOption })  // add a new bullet
           this.timeOut = setTimeout(() => {
             this.textArea.toArray()[id + 1].nativeElement.focus()
@@ -192,3 +194,5 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   }
 
 }
+export type TextareaType = 'toggle'
+

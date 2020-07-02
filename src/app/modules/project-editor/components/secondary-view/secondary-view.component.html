@@ -1,7 +1,7 @@
 <!-- Summary view Evaluation Criteria-->
 <div class="competency-modal__body">
   <h6 class="competency-modal__body-title">
-    ({{ blockData | checkCount }})
+    {{ blockData | checkCount }}
     {{ 'OBJECTIVES.project_objectives_criteriawindow_critera_selected' | translate }}
   </h6>
 
@@ -36,30 +36,26 @@
           [colThree]="colHeading[1] ? {value:  heading.course, size: 'xs'} : { value: heading.block, size: 's'}"
           [colFour]="colHeading[1] ? {value:  heading.block, size: 's'} : ''"
         ></app-table-row>
-        <ng-scrollbar>
           <div class="custom-tab__content-body-scroll">
-            <ng-container *ngFor="let blocks of blockData; let index = index;">
-              <ng-container *ngFor="let block of blocks.blockData">
-                <ng-container *ngFor="let criteria of block.evaluationCriteria">
-                  <app-table-row
-                    *ngIf="criteria.checked"
-                    [checkboxData]="criteria"
-                    [checkedOnly]="true"
-                    [colOne]="{value: criteria.name}"
-                    [colTwo]="colHeading[1] ?
-                              {value:  criteria.colTwoData, size: 'm'} :
-                              { value: criteria.grade.name, size: 'xs'}"
-                    [colThree]="colHeading[1] ?
-                                {value:  criteria.grade.name, size: 'xs'} :
-                                { value: block.name, size: 's'}"
-                    [colFour]="colHeading[1] ? {value:  block.name, size: 's'} : ''"
-                    [parentID]="block.id"
-                  ></app-table-row>
-                </ng-container>
+            <ng-container *ngFor="let block of blockData; let index = index;">
+              <ng-container *ngFor="let criteria of block.evaluationCriteria">
+                <app-table-row
+                  *ngIf="criteria.checked"
+                  [checkboxData]="criteria"
+                  [checkedOnly]="true"
+                  [colOne]="{value: criteria.name}"
+                  [colTwo]="colHeading[1] ?
+                            {value:  criteria.colTwoData, size: 'm'} :
+                            { value: criteria.grade.name, size: 'xs'}"
+                  [colThree]="colHeading[1] ?
+                              {value:  criteria.grade.name, size: 'xs'} :
+                              { value: block.name, size: 's'}"
+                  [colFour]="colHeading[1] ? {value:  block.name, size: 's'} : ''"
+                  [parentID]="block.id"
+                ></app-table-row>
               </ng-container>
             </ng-container>
           </div>
-        </ng-scrollbar>
       </div>
     </div>
   </div>

@@ -16,7 +16,8 @@
       "project_button_create": "Crear",
       "project_title_title_newtitle": "Nuevo proyecto",
       "project_title_title_edittitle": "Edita el título",
-      "project_title_input_title": "Título"
+      "project_title_input_title": "Título",
+      "project_dependancy_title_cv": "Desbloquea el currículum"
   },
   "STEPS_MENU":{
       "project_structure_stepsmenu_title": "Crea paso a paso",
@@ -101,7 +102,9 @@
       "project_content_placeholder":"Agrega contenidos del currículum.",
       "project_content_add_criteria":" + Añadir",
       "project_content_cvcontent":"Contenido del currículum",
-      "project_content_extracontent":"Añadir contenidos personalizados",
+      "project_content_extracontent":{
+        "one": "Añadir",
+        "two": "contenidos personalizados"},
       "project_content_extracontent_input":"Contenidos personalizados",
       "project_content_contentwindow_curriculum":"Currículum",	
       "project_content_contentwindow_title":"Selecciona los contenidos a trabajar:",	

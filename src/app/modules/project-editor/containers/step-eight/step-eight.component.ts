@@ -34,7 +34,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.formInit()
+    this.stepInIt()
   }
 
   ngOnDestroy(): void {
@@ -44,8 +44,8 @@ export class StepEightComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe()
   }
 
-  formInit(): void {
-    this.project$ = this.editor.getStepData(8)
+  stepInIt(): void {
+    this.project$ = this.editor.getDataByStep(8)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[7]
     if (this.project$) {

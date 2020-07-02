@@ -4,7 +4,7 @@
 .dropdown {
   width: 100%;
   margin-bottom: $m-36px;
-
+  $root: &;
   &__field {
     padding: $padding-input;
     font-size: $font-size-default;
@@ -20,8 +20,8 @@
 
     &:active,
     &:focus {
-      border: 1px solid $primary;
-      box-shadow: 0 0 0 1px $primary;
+      border: 1px solid $primary !important;
+      box-shadow: 0 0 0 1px $primary !important;
     }
   }
 
@@ -47,7 +47,6 @@
     .disabled {
       .dropdown-btn {
         background-color: inherit !important;
-        border-color: $creator-border !important;
         box-shadow: 0 0 0 0 transparent;
       }
 
@@ -55,8 +54,8 @@
         display: none !important;
       }
 
-      .dropdown-up {
-        transform: rotate(0deg) !important;
+      .dropdown-up,.dropdown-down {
+        transform: rotate(0deg) translateY(-50%) !important;
         transform-origin: center;
       }
     }
@@ -78,12 +77,11 @@
       align-items: center;
       border-radius: 3px !important;
       padding: 12px 12px 12px 18px !important;
-      border: 1px solid $creator-border !important;
-
+      border: 1px solid $creator-border-active !important;
       &:active,
       &:focus {
         border: 1px solid $primary !important;
-        box-shadow: 0 0 0 1px $primary;
+        box-shadow: 0 0 0 1px $primary !important;
       }
 
       >span:first-child {
@@ -141,20 +139,8 @@
         top: 50% !important;
         position: absolute;
         transform: translateY(-50%);
-        right: 19px;
+        right: 6px;
         transition: transform 0.3s ease;
-
-        &::before {
-          content: "\e903";
-          display: block;
-          width: 14px;
-          height: 14px;
-          position: absolute;
-          top: 0;
-          left: -3px;
-          line-height: 0.7;
-          text-align: center;
-        }
       }
 
       .dropdown-up {
@@ -283,6 +269,7 @@
         }
       }
     }
+    
   }
 
   & &__wrap {
@@ -311,11 +298,28 @@
       }
       
     }
+    &.selected{
+      .dropdown-btn{
+        border: 1px solid $creator-border !important;
+        &:active,
+        &:focus,
+        &:focus-within{
+          border: 1px solid $primary !important;
+          box-shadow: 0 0 0 1px $primary !important;
+        }
+      }
+    }
   }
   &.active {
-    .dropdown-btn {
+    .dropdown-btn{
       border: 1px solid $primary !important;
-      box-shadow: 0 0 0 1px $primary;
+      box-shadow: 0 0 0 1px $primary !important;
+    }
+    .selected{
+      .dropdown-btn {
+        border: 1px solid $primary !important;
+        box-shadow: 0 0 0 1px $primary !important;
+      }
     }
   }
 }

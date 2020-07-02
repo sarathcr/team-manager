@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, Input, HostBinding } from '@angular/core'
 import { ButtonVariants, Theme, ButtonIcon } from '../../constants/field.model'
 
 @Component({
@@ -12,6 +12,10 @@ export class ButtonComponent {
   @Input() disabled: boolean
   @Input() variant: ButtonVariants = 'contained'
   @Input() icon: ButtonIcon
+  @HostBinding('class.disabled') get t(): boolean {
+    return this.disabled
+  }
 
-  constructor() {}
+  constructor() { }
+
 }
