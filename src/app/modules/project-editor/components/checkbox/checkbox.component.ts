@@ -16,7 +16,6 @@ export class CheckBoxComponent {
   @Input() colFour: CheckBoxColumn
   @Input() checkedOnly = false
   @Output() checked: EventEmitter<any> = new EventEmitter()
-  colCount: number
 
   constructor() { }
 
