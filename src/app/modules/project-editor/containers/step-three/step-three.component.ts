@@ -88,14 +88,21 @@ export class StepThreeComponent implements OnInit, OnDestroy {
             this.getCriteriaDetails(this.project.subjects)
           }
           this.getGrades(this.project)
-          this.initialFormData.competencyObjectives = []
-          if (data.competencyObjectives) {
-            tempinitialFormData.competencyObjectives = [...data.competencyObjectives]
-            this.inputFormData.competencyObjectives = [...data.competencyObjectives]
-          }
-          this.initialFormData.competencyObjectives = [...tempinitialFormData.competencyObjectives]
         }
       })
+      this.competencyObjectives$ = this.project$
+        .pipe(
+          map(data => data?.competencyObjectives)
+        )
+      this.subscriptions.sink = this.competencyObjectives$
+        .subscribe(competencyObjectives => {
+          this.initialFormData.competencyObjectives = []
+          if (competencyObjectives) {
+            tempinitialFormData.competencyObjectives = [...competencyObjectives]
+            this.inputFormData.competencyObjectives = [...competencyObjectives]
+          }
+          this.initialFormData.competencyObjectives = [...tempinitialFormData.competencyObjectives]
+        })
     }
     if (this.step$) {
       this.subscriptions.sink = this.step$.subscribe(
@@ -120,7 +127,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
             && grade.region?.id === project.region.id))
         )
         .subscribe(newData => {
-          if (!newData.length) {
+          if (!newData?.length) {
             const parms = {
               regionId: project.region.id.toString(),
               academicyearId: project.academicYear.id.toString()
@@ -214,11 +221,11 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   checkFormEmpty(): void {
     const isCriteriaLength = []
     for (const subject of this.project.subjects) {
-      if (subject.evaluationCriteria.length) {
+      if (subject.evaluationCriteria?.length) {
         isCriteriaLength.push(true)
       }
     }
-    if (!isCriteriaLength.length && !this.inputFormData.competencyObjectives.length) {
+    if (!isCriteriaLength.length && !this.inputFormData.competencyObjectives?.length) {
       this.step.state = 'PENDING'
     } else {
       this.step.state = 'INPROCESS'
@@ -234,7 +241,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   // checks current form status
   checkStepStatus(criterias?: EvaluationCriteria[]): void {
-    if (criterias?.length || this.checkEmptyCriteria() || this.inputFormData.competencyObjectives.length) {
+    if (criterias?.length || this.checkEmptyCriteria() || this.inputFormData.competencyObjectives?.length) {
       this.step.state = 'INPROCESS'
     } else {
       this.step.state = 'PENDING'
@@ -254,7 +261,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   // checks the form is completely filled or not
   hasAnyEmptyFields(): boolean {
-    if (!this.checkEmptyCriteria() || !this.inputFormData.competencyObjectives.length) {
+    if (!this.checkEmptyCriteria() || !this.inputFormData.competencyObjectives?.length) {
       return true
     }
     return false
@@ -313,6 +320,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         ]
       }
     }
+    this.isFormUpdated = false
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
     this.handleButtonType()
   }

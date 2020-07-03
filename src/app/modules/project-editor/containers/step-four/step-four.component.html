@@ -37,7 +37,7 @@
                 <app-textarea-bullets
                   [onInitFocus]="true"
                   [config]='textAreaConfig'
-                  type="toggle"
+                  size="small"
                   (textareaBlur)="textareaBlur($event, i)"
                   (inputChange)="textareaDataChange($event, i)"
                   [options$]="subjectTextArea[i].options$"

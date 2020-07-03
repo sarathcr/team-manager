@@ -9,6 +9,7 @@ import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { PdfViewerModule } from 'ng2-pdf-viewer'
+import { NgScrollbarModule } from 'ngx-scrollbar'
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module'
 import { ProjectEditorRoutingModule } from './project-editor-routing.module'
@@ -46,7 +47,6 @@ import { InputComponent } from './components/input/input.component'
 import { ImageUploadComponent } from './components/image-upload/image-upload.component'
 import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component'
 import { PrincipalViewComponent } from './components/principal-view/principal-view.component'
-import { CheckBoxComponent } from './components/checkbox/checkbox.component'
 import { StepUnlockComponent } from './components/step-unlock/step-unlock.component'
 import { DetailsSelectorComponent } from './components/details-selector/details-selector.component'
 import { ModalComponent } from './components/modal/modal.component'
@@ -95,7 +95,6 @@ import { CheckCount } from './pipes/check-count.pipe'
     StringDecoder,
     CheckCount,
     PrincipalViewComponent,
-    CheckBoxComponent,
     StepUnlockComponent,
     DetailsSelectorComponent,
     ModalComponent,
@@ -115,7 +114,8 @@ import { CheckCount } from './pipes/check-count.pipe'
     AccordionModule.forRoot(),
     ModalModule.forRoot(),
     NgxDropzoneModule,
-    PdfViewerModule
+    PdfViewerModule,
+    NgScrollbarModule
   ],
   providers: [
     EditorService,

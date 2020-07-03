@@ -13,7 +13,7 @@ import {
 
 import { Observable } from 'rxjs'
 
-import { FieldConfig, Option, TextAreaVariants } from 'src/app/shared/constants/field.model'
+import { FieldConfig, Option, TextAreaVariants, TextareaSize } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
@@ -24,7 +24,7 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 export class TextareaBulletsComponent implements OnInit, AfterContentChecked, OnDestroy {
 
   @Input() variant: TextAreaVariants = 'bullet'
-  @Input() type: TextareaType
+  @Input() size: TextareaSize
   @Input() config: FieldConfig
   @Input() options: Option[]
   @Input() onInitFocus = false
@@ -208,5 +208,5 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   }
 
 }
-export type TextareaType = 'toggle'
+
 
