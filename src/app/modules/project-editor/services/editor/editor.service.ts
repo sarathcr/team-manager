@@ -101,10 +101,12 @@ export class EditorService {
               evaluationCriteria: data?.evaluationCriteria?.map(({ id, name, subjectId, gradeId }) => (
                 { id, name, subjectId, gradeId }))
             })
-            case 4: return({
-              ...data,
-              subjects: data?.subjects?.map(subject => ({
+            case 4: return ({
+                ...data,
+                subjects: data?.subjects?.map(subject => ({
                 ...subject,
+                contents: subject?.contents?.map(({ id, name }) => ({ id, name })),
+                customContents: subject?.customContents?.map(({ id, name }) => ({ id, name })),
                 evaluationCriteria: subject?.evaluationCriteria?.map(({ id, name }) => ({ id, name }))
               }))
             })

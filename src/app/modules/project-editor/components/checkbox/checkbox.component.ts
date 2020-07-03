@@ -1,11 +1,11 @@
-import { Component, Input  } from '@angular/core'
+import { Component, Input, Output, EventEmitter } from '@angular/core'
 
 @Component({
-  selector: 'app-table-row',
-  templateUrl: './table-row.component.html',
-  styleUrls: ['./table-row.component.scss']
+  selector: 'app-checkbox',
+  templateUrl: './checkbox.component.html',
+  styleUrls: ['./checkbox.component.scss']
 })
-export class TableRowComponent {
+export class CheckBoxComponent {
   @Input() isHead = false
   @Input() checkboxData: CheckBoxData
   @Input() parentID: number
@@ -14,6 +14,7 @@ export class TableRowComponent {
   @Input() colThree: TableColumn
   @Input() colFour: TableColumn
   @Input() checkedOnly = false
+  @Output() checked: EventEmitter<any> = new EventEmitter()
 
   colCount: number
 
@@ -23,7 +24,9 @@ export class TableRowComponent {
     if (this.checkboxData) {
       this.checkboxData.checked = !this.checkboxData.checked
     }
+    this.checked.emit()
   }
+
 }
 // WIP To be Moved in to corresponding file while doing functionality
 export interface TableColumn {

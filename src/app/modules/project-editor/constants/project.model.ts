@@ -1,3 +1,4 @@
+import { BasicSkills } from 'src/app/shared/constants/curriculum-basic-skill.model'
 import { Option } from 'src/app/shared/constants/field.model'
 
 export class Project {
@@ -20,6 +21,7 @@ export class Project {
   updatedAt?: string
   competencyObjectives?: CompetencyObjectives[]
   evaluationCriteria?: EvaluationCriteria[]
+  basicSkills?: BasicSkills[]
 }
 
 export class Country {
@@ -53,6 +55,8 @@ export class Subject {
   academicYear?: AcademicYear
   region?: Region
   evaluationCriteria?: EvaluationCriteria[]
+  contents?: Option[]
+  customContents?: Option[]
 }
 
 export interface DrivingQuestion {

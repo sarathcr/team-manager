@@ -9,8 +9,8 @@
       <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
       <app-loader *ngIf="loading; else loaded"></app-loader>
       <ng-template #loaded>
-        Unlock {{ !(editor.project$ | async)?.subjects?.length }}
-        <app-step-unlock *ngIf="!(editor.project$ | async)?.subjects?.length; else hasSubjects"></app-step-unlock>
+        <app-step-unlock *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects"
+          [StepThree]="{step:'stepThree'}"></app-step-unlock>
         <ng-template #hasSubjects>
           <div class="project-editor__subject-wrapper">
             <app-details-selector

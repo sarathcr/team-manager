@@ -29,17 +29,17 @@
   <div *ngIf="blockData | checkCount" class="competency-modal__body_summary">
     <div class="custom-tab__content active">
       <div class="custom-tab__content-body">
-        <app-table-row
+        <app-checkbox
           [isHead]="true"
           [colOne]="{value: heading.evaluationCriteria}"
           [colTwo]="colHeading[1] ? {value:  heading[colHeading[1]], size: 'm'} : { value: heading.course, size: 'xs'}"
           [colThree]="colHeading[1] ? {value:  heading.course, size: 'xs'} : { value: heading.block, size: 's'}"
           [colFour]="colHeading[1] ? {value:  heading.block, size: 's'} : ''"
-        ></app-table-row>
+        ></app-checkbox>
           <div class="custom-tab__content-body-scroll">
             <ng-container *ngFor="let block of blockData; let index = index;">
               <ng-container *ngFor="let criteria of block.evaluationCriteria">
-                <app-table-row
+                <app-checkbox
                   *ngIf="criteria.checked"
                   [checkboxData]="criteria"
                   [checkedOnly]="true"
@@ -52,7 +52,7 @@
                               { value: (block.blockIndex + '. ' + block.name), size: 's'}"
                   [colFour]="colHeading[1] ? {value:  (block.blockIndex + '. ' + block.name), size: 's'} : ''"
                   [parentID]="block.id"
-                ></app-table-row>
+                  ></app-checkbox>
               </ng-container>
             </ng-container>
           </div>
