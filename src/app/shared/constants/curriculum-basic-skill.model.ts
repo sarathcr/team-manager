@@ -1,4 +1,5 @@
-import { CheckBoxData } from 'src/app/modules/project-editor/components/checkbox/checkbox.component'
+import { CheckBoxData } from './checkbox.model'
+
 
 export interface BasicSkills {
     id: number
