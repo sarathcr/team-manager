@@ -41,8 +41,7 @@ export class CheckBoxComponent implements AfterContentInit {
     if (this.isHead === true && this.scrollBody) {
         this.hostWidth = this.elRef.nativeElement.scrollWidth
         this.scrollBodyWidth = this.scrollBody.scrollWidth
-        this.widthDifference = this.hostWidth - this.scrollBodyWidth
-        console.log(this.widthDifference)
+        this.widthDifference = this.hostWidth - this.scrollBodyWidth + 16
     }
   }
 
