@@ -62,22 +62,22 @@
           [ngClass]="{ active: currentBlockIndex === index }"
         >
           <div class="custom-tab__content-body">
-            <app-table-row
+            <app-checkbox
               [isHead]="true"
               [checkboxData]="false"
               [colOne]="{value: block.colOneHead }"
               [colTwo]="{value: block.colTwoHead, size: 'sm' }"
             >
-            </app-table-row>
-              <div class="custom-tab__content-body-scroll">
-                <app-table-row
-                  *ngFor="let criteria of block.evaluationCriteria"
-                  [checkboxData]="criteria"
-                  [colOne]="{ value: criteria.colOneData }"
-                  [colTwo]="{ value: criteria.colTwoData, size: 'sm' }"
-                  [parentID]="block.id"
-                ></app-table-row>
-              </div>
+            </app-checkbox>
+            <div class="custom-tab__content-body-scroll">
+              <app-checkbox
+                *ngFor="let criteria of block.evaluationCriteria"
+                [checkboxData]="criteria"
+                [colOne]="{ value: criteria.colOneData }"
+                [colTwo]="{ value: criteria.colTwoData, size: 'sm' }"
+                [parentID]="block.id"
+              ></app-checkbox>
+            </div>
           </div>
         </div>
       </div>
