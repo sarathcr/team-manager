@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ElementRef } from '@angular/core'
+import { Component, Input, Output, EventEmitter } from '@angular/core'
 import { CheckBoxColumn, CheckBoxData } from 'src/app/shared/constants/checkbox.model'
 
 @Component({
