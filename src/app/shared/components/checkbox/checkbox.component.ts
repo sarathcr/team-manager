@@ -6,7 +6,7 @@ import { CheckBoxColumn, CheckBoxData } from 'src/app/shared/constants/checkbox.
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss']
 })
-export class CheckBoxComponent implements AfterContentInit {
+export class CheckBoxComponent {
   @Input() isHead = false
   @Input() checkboxData: CheckBoxData
   @Input() parentID: number
@@ -14,8 +14,8 @@ export class CheckBoxComponent implements AfterContentInit {
   @Input() colTwo: CheckBoxColumn
   @Input() colThree: CheckBoxColumn
   @Input() colFour: CheckBoxColumn
-  @Input() checkedOnly = false
   @Input() scrollBody: Element
+  @Input() checkedOnly = false
   @Output() checked: EventEmitter<any> = new EventEmitter()
   scrollBodyWidth: number
   hostWidth: number
@@ -25,10 +25,6 @@ export class CheckBoxComponent implements AfterContentInit {
   constructor(
     private elRef: ElementRef
   ) { }
-
-  ngAfterContentInit(): void {
-    this.adjustScrollWidth()
-  }
 
   onCheck(): void {
     if (this.checkboxData) {
