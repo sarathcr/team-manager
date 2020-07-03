@@ -13,7 +13,7 @@ import {
 
 import { Observable } from 'rxjs'
 
-import { FieldConfig, Option, TextAreaVariants } from 'src/app/shared/constants/field.model'
+import { FieldConfig, Option, TextAreaVariants, TextareaSize } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
