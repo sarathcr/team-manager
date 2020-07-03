@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'
-import { CheckBoxData, CheckBoxColumn } from '../../constants/checkbox.model'
+import { Component, Input, Output, EventEmitter, ElementRef } from '@angular/core'
+import { CheckBoxColumn, CheckBoxData } from 'src/app/shared/constants/checkbox.model'
 
 @Component({
   selector: 'app-checkbox',
@@ -17,11 +17,14 @@ export class CheckBoxComponent {
   @Input() scrollBody: Element
   @Input() checkedOnly = false
   @Output() checked: EventEmitter<any> = new EventEmitter()
-
-  colCount: number
   scrollBodyWidth: number
+  hostWidth: number
+  colCount: number
+  widthDifference: number
 
-  constructor() { }
+  constructor(
+    private elRef: ElementRef
+  ) { }
 
   onCheck(): void {
     if (this.checkboxData) {
@@ -32,7 +35,9 @@ export class CheckBoxComponent {
 
   adjustScrollWidth(): void{
     if (this.isHead === true && this.scrollBody) {
+        this.hostWidth = this.elRef.nativeElement.scrollWidth
         this.scrollBodyWidth = this.scrollBody.scrollWidth
+        this.widthDifference = this.hostWidth - this.scrollBodyWidth + 16
     }
   }
 
