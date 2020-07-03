@@ -2,7 +2,8 @@
   <span class="textarea-bullets__placeholder">
     {{!configOptions[0]?.name && !focus ? config.placeholder : ''}}
   </span>
-  <ul
+    <label class="textarea-bullets__label" *ngIf="label">{{ label | translate }}</label>
+    <ul
     *ngIf="config"
     class="bullet-list textarea-bullets__list"
     [ngClass]="variant == 'bullet' ? 'bullet-list' : 'numbered-list'"
