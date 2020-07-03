@@ -7,8 +7,10 @@
         <app-info-tooltip></app-info-tooltip>
       </h1>
       <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
+      <app-loader *ngIf="loading; else loaded"></app-loader>
       <ng-template #loaded>
-        <app-step-unlock *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects"></app-step-unlock>
+        Unlock {{ !(editor.project$ | async)?.subjects?.length }}
+        <app-step-unlock *ngIf="!(editor.project$ | async)?.subjects?.length; else hasSubjects"></app-step-unlock>
         <ng-template #hasSubjects>
           <div class="project-editor__subject-wrapper">
             <app-details-selector
@@ -42,7 +44,6 @@
           </div>
         </ng-template>
       </ng-template>
-      <app-loader *ngIf="loading; else loaded"></app-loader>
     </div>
     <app-button
       [disabled] = 'buttonConfig.disabled || !project.subjects?.length'
