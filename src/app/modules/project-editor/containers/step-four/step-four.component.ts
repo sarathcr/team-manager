@@ -10,7 +10,6 @@ import { Step, Status } from '../../constants/step.model'
 import { Option, FieldConfig } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { BasicSkills } from 'src/app/shared/constants/curriculum-basic-skill.model'
-import { CheckBoxData } from '../../components/checkbox/checkbox.component'
 import { CurriculumBasicSkillsEntityService } from 'src/app/modules/project-editor/store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
@@ -18,6 +17,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { ModalComponent } from './../../components/modal/modal.component'
 import { ModalUnlock } from './../../constants/modal-config.data'
 import { FormFour } from '../../constants/step-forms.model'
+import { CheckBoxData } from 'src/app/shared/constants/checkbox.model'
 
 @Component({
   selector: 'app-step-four',

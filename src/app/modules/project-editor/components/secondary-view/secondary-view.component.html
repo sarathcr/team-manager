@@ -35,26 +35,29 @@
           [colTwo]="colHeading[1] ? {value:  heading[colHeading[1]], size: 'm'} : { value: heading.course, size: 'xs'}"
           [colThree]="colHeading[1] ? {value:  heading.course, size: 'xs'} : { value: heading.block, size: 's'}"
           [colFour]="colHeading[1] ? {value:  heading.block, size: 's'} : ''"
+          [scrollBody]="scrollBody"
         ></app-checkbox>
           <div class="custom-tab__content-body-scroll">
-            <ng-container *ngFor="let block of blockData; let index = index;">
-              <ng-container *ngFor="let criteria of block.evaluationCriteria">
-                <app-checkbox
-                  *ngIf="criteria.checked"
-                  [checkboxData]="criteria"
-                  [checkedOnly]="true"
-                  [colOne]="{value: criteria.name}"
-                  [colTwo]="colHeading[1] ?
-                            {value:  criteria.colTwoData, size: 'm'} :
-                            { value: criteria.grade.name, size: 'xs'}"
-                  [colThree]="colHeading[1] ?
-                              {value:  criteria.grade.name, size: 'xs'} :
-                              { value: (block.blockIndex + '. ' + block.name), size: 's'}"
-                  [colFour]="colHeading[1] ? {value:  (block.blockIndex + '. ' + block.name), size: 's'} : ''"
-                  [parentID]="block.id"
+            <div #scrollBody>
+              <ng-container *ngFor="let block of blockData; let index = index;">
+                <ng-container *ngFor="let criteria of block.evaluationCriteria">
+                  <app-checkbox
+                    *ngIf="criteria.checked"
+                    [checkboxData]="criteria"
+                    [checkedOnly]="true"
+                    [colOne]="{value: criteria.name}"
+                    [colTwo]="colHeading[1] ?
+                              {value:  criteria.colTwoData, size: 'm'} :
+                              { value: criteria.grade.name, size: 'xs'}"
+                    [colThree]="colHeading[1] ?
+                                {value:  criteria.grade.name, size: 'xs'} :
+                                { value: (block.blockIndex + '. ' + block.name), size: 's'}"
+                    [colFour]="colHeading[1] ? {value:  (block.blockIndex + '. ' + block.name), size: 's'} : ''"
+                    [parentID]="block.id"
                   ></app-checkbox>
+                </ng-container>
               </ng-container>
-            </ng-container>
+            </div>
           </div>
       </div>
     </div>

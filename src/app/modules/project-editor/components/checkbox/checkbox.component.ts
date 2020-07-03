@@ -1,24 +1,31 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { Component, Input, Output, EventEmitter, AfterContentInit } from '@angular/core'
+import { CheckBoxColumn, CheckBoxData } from 'src/app/shared/constants/checkbox.model'
 
 @Component({
   selector: 'app-checkbox',
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss']
 })
-export class CheckBoxComponent {
+export class CheckBoxComponent implements AfterContentInit {
   @Input() isHead = false
   @Input() checkboxData: CheckBoxData
   @Input() parentID: number
-  @Input() colOne: TableColumn
-  @Input() colTwo: TableColumn
-  @Input() colThree: TableColumn
-  @Input() colFour: TableColumn
+  @Input() colOne: CheckBoxColumn
+  @Input() colTwo: CheckBoxColumn
+  @Input() colThree: CheckBoxColumn
+  @Input() colFour: CheckBoxColumn
   @Input() checkedOnly = false
+  @Input() scrollBody: Element
   @Output() checked: EventEmitter<any> = new EventEmitter()
+  scrollBodyWidth: number
 
   colCount: number
 
   constructor() { }
+
+  ngAfterContentInit(): void {
+    this.adjustScrollWidth()
+  }
 
   onCheck(): void {
     if (this.checkboxData) {
@@ -27,14 +34,10 @@ export class CheckBoxComponent {
     this.checked.emit()
   }
 
-}
-// WIP To be Moved in to corresponding file while doing functionality
-export interface TableColumn {
-  value: string,
-  size?: 'xs' | 'm' | 's' | 'sm'
-}
+  adjustScrollWidth(): void{
+    if (this.isHead === true && this.scrollBody) {
+        this.scrollBodyWidth = this.scrollBody.scrollWidth
+    }
+  }
 
-export interface CheckBoxData {
-  checked: boolean,
-  variant?: 'checkedOnly' | 'checkbox'
 }
