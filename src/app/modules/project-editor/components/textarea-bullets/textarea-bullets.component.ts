@@ -208,5 +208,5 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   }
 
 }
-export type TextareaSize = 'small'
+
 
