@@ -29,13 +29,11 @@
         padding-left: 0px;
         &::before{
           font-family:  $font-family-tertiary !important;
-          position: absolute;
-          left: 0;
-          top: 1px;
           pointer-events: none;
+          position: static;
         }
         #{$root}__textarea{
-          padding-left: 20px;
+          padding-left: 10px;
         }
       }
     }

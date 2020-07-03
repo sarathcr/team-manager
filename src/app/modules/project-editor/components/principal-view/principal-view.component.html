@@ -31,6 +31,7 @@
       <div class="competency-modal__body-block-grade">
         <app-dropdown
           [config]='gradeDropdownConfig'
+          [label]='gradeDropdownConfig.label | translate'
           (dropdownSelect)='getBlocks($event.val[0])'
           [canDeselect]="false"
         ></app-dropdown>
@@ -63,7 +64,7 @@
           <div class="custom-tab__content-body">
             <app-table-row
               [isHead]="true"
-              [checkboxData]="false" 
+              [checkboxData]="false"
               [colOne]="{value: block.colOneHead }"
               [colTwo]="{value: block.colTwoHead, size: 'sm' }"
             >
