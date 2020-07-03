@@ -28,6 +28,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   @Input() config: FieldConfig
   @Input() options: Option[]
   @Input() onInitFocus = false
+  @Input() label: string
   @Input() options$: Observable<Option[]>
   @Output() inputChange = new EventEmitter()
   @Output() textareaBlur = new EventEmitter()
