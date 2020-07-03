@@ -9,6 +9,7 @@ import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { PdfViewerModule } from 'ng2-pdf-viewer'
+import { NgScrollbarModule } from 'ngx-scrollbar'
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module'
 import { ProjectEditorRoutingModule } from './project-editor-routing.module'
@@ -113,7 +114,8 @@ import { CheckCount } from './pipes/check-count.pipe'
     AccordionModule.forRoot(),
     ModalModule.forRoot(),
     NgxDropzoneModule,
-    PdfViewerModule
+    PdfViewerModule,
+    NgScrollbarModule
   ],
   providers: [
     EditorService,
