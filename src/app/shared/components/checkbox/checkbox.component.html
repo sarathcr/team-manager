@@ -1,7 +1,8 @@
 <div *ngIf="colOne" class="checkbox-row"
-  [ngClass]="{ 'checkbox-row__head' : isHead, 
-  'selected' : checkboxData?.checked && !checkedOnly}" 
-  (click)="!checkedOnly && onCheck()">
+  [ngClass]="{ 'checkbox-row__head' : isHead,
+  'selected' : checkboxData?.checked && !checkedOnly}"
+  (click)="!checkedOnly && onCheck()"
+>
   <div class="checkbox-row__cell" [ngClass]="{
     'checkbox-row__cell_xs' : colOne.size === 'xs',
     'checkbox-row__cell_m' : colOne.size === 'm',

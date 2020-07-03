@@ -47,7 +47,6 @@ import { InputComponent } from './components/input/input.component'
 import { ImageUploadComponent } from './components/image-upload/image-upload.component'
 import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component'
 import { PrincipalViewComponent } from './components/principal-view/principal-view.component'
-import { CheckBoxComponent } from './components/checkbox/checkbox.component'
 import { StepUnlockComponent } from './components/step-unlock/step-unlock.component'
 import { DetailsSelectorComponent } from './components/details-selector/details-selector.component'
 import { ModalComponent } from './components/modal/modal.component'
@@ -96,7 +95,6 @@ import { CheckCount } from './pipes/check-count.pipe'
     StringDecoder,
     CheckCount,
     PrincipalViewComponent,
-    CheckBoxComponent,
     StepUnlockComponent,
     DetailsSelectorComponent,
     ModalComponent,
