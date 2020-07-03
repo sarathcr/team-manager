@@ -121,8 +121,4 @@
       min-height: 148px;
     }
   }
-  &:focus-within{
-    border: 1px solid $primary !important;
-    box-shadow: 0 0 0 2px $primary !important;
-  }
 }
