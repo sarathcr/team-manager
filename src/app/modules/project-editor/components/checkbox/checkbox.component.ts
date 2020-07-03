@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, AfterContentInit } from '@angular/core'
+import { Component, Input, Output, EventEmitter, AfterContentInit, ElementRef } from '@angular/core'
 import { CheckBoxColumn, CheckBoxData } from 'src/app/shared/constants/checkbox.model'
 
 @Component({
@@ -18,10 +18,13 @@ export class CheckBoxComponent implements AfterContentInit {
   @Input() scrollBody: Element
   @Output() checked: EventEmitter<any> = new EventEmitter()
   scrollBodyWidth: number
-
+  hostWidth: number
   colCount: number
+  widthDifference: number
 
-  constructor() { }
+  constructor(
+    private elRef: ElementRef
+  ) { }
 
   ngAfterContentInit(): void {
     this.adjustScrollWidth()
@@ -36,7 +39,10 @@ export class CheckBoxComponent implements AfterContentInit {
 
   adjustScrollWidth(): void{
     if (this.isHead === true && this.scrollBody) {
+        this.hostWidth = this.elRef.nativeElement.scrollWidth
         this.scrollBodyWidth = this.scrollBody.scrollWidth
+        this.widthDifference = this.hostWidth - this.scrollBodyWidth
+        console.log(this.widthDifference)
     }
   }
 
