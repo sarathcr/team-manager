@@ -24,7 +24,7 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 export class TextareaBulletsComponent implements OnInit, AfterContentChecked, OnDestroy {
 
   @Input() variant: TextAreaVariants = 'bullet'
-  @Input() type: TextareaType
+  @Input() size: TextareaSize
   @Input() config: FieldConfig
   @Input() options: Option[]
   @Input() onInitFocus = false
@@ -208,5 +208,5 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   }
 
 }
-export type TextareaType = 'toggle'
+
 
