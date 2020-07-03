@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, AfterContentInit, ElementRef } from '@angular/core'
+import { Component, Input, Output, EventEmitter, ElementRef } from '@angular/core'
 import { CheckBoxColumn, CheckBoxData } from 'src/app/shared/constants/checkbox.model'
 
 @Component({
@@ -6,7 +6,7 @@ import { CheckBoxColumn, CheckBoxData } from 'src/app/shared/constants/checkbox.
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss']
 })
-export class CheckBoxComponent implements AfterContentInit {
+export class CheckBoxComponent {
   @Input() isHead = false
   @Input() checkboxData: CheckBoxData
   @Input() parentID: number
@@ -15,20 +15,10 @@ export class CheckBoxComponent implements AfterContentInit {
   @Input() colThree: CheckBoxColumn
   @Input() colFour: CheckBoxColumn
   @Input() checkedOnly = false
-  @Input() scrollBody: Element
   @Output() checked: EventEmitter<any> = new EventEmitter()
-  scrollBodyWidth: number
-  hostWidth: number
   colCount: number
-  widthDifference: number
 
-  constructor(
-    private elRef: ElementRef
-  ) { }
-
-  ngAfterContentInit(): void {
-    this.adjustScrollWidth()
-  }
+  constructor() { }
 
   onCheck(): void {
     if (this.checkboxData) {
@@ -36,13 +26,4 @@ export class CheckBoxComponent implements AfterContentInit {
     }
     this.checked.emit()
   }
-
-  adjustScrollWidth(): void{
-    if (this.isHead === true && this.scrollBody) {
-        this.hostWidth = this.elRef.nativeElement.scrollWidth
-        this.scrollBodyWidth = this.scrollBody.scrollWidth
-        this.widthDifference = this.hostWidth - this.scrollBodyWidth + 16
-    }
-  }
-
 }

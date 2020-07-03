@@ -21,9 +21,9 @@ $background-primary: $white !default;
 // border
 $color-border: rgba(255, 255, 255, 0.2);
 $article-border: rgba(20,28,58,0.2);
-$creator-border: rgba(20,28,58,0.1);
+$creator-border: rgba(20,28,58,0.1) !default;
 $creator-disabled: rgba(20,28,58,0.1);
-$creator-border-active: rgba(20,28,58,0.4);
+$creator-border-active: rgba(20,28,58,0.4) !default;
 $creator-background: $white-smoke;
 $subject-header-bg: rgba(20,28,58,0.05);
 
