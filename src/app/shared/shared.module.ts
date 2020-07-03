@@ -11,6 +11,7 @@ import { ButtonComponent } from './components/button/button.component'
 import { FormInputComponent } from './components/form-input/form-input.component'
 import { DropdownComponent } from './components/dropdown/dropdown.component'
 import { LoaderComponent } from './components/loader/loader.component'
+import { CheckBoxComponent } from './components/checkbox/checkbox.component'
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { LoaderComponent } from './components/loader/loader.component'
         ButtonComponent,
         FormInputComponent,
         DropdownComponent,
-        LoaderComponent
+        LoaderComponent,
+        CheckBoxComponent
     ],
     imports: [
         CommonModule,
@@ -36,7 +38,8 @@ import { LoaderComponent } from './components/loader/loader.component'
         DropdownComponent,
         FormInputComponent,
         ButtonComponent,
-        LoaderComponent
+        LoaderComponent,
+        CheckBoxComponent
     ]
 })
 
