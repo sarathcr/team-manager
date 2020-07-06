@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown'
+import { TranslateModule } from '@ngx-translate/core'
 
 import { DropdownComponent } from './dropdown.component'
 
@@ -11,7 +12,7 @@ describe('DropdownComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ DropdownComponent ],
-      imports: [ NgMultiSelectDropDownModule ]
+      imports: [ NgMultiSelectDropDownModule, TranslateModule.forRoot() ]
     })
 
     fixture = TestBed.createComponent(DropdownComponent)
