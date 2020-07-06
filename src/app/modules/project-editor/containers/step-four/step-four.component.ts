@@ -176,7 +176,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
             return basicSkills
           }))
         .subscribe(basicSkills => {
-          console.log(basicSkills)
           if (!basicSkills.length && this.project) {
             const parms = {
               regionId: this.project.region.id.toString(),

@@ -4,10 +4,10 @@
   </div>
   <ul class="details-selector__list">
     <li class="details-selector__item">
-      <span *ngIf="subjectItem.length === 0" class="details-selector__text">
+      <span *ngIf="subjectItem?.length === 0" class="details-selector__text">
         {{'OBJECTIVES.project_objectives_criteria_placeholder' | translate}}
       </span>
-      <span *ngIf="subjectItem.length > 0" class="details-selector__text_evaluation">
+      <span *ngIf="subjectItem?.length > 0" class="details-selector__text_evaluation">
         {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{subjectItem.length}})
       </span>
       <span class="details-selector__add" (click)="addItem()">

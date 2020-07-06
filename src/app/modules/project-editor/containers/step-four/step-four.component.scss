@@ -43,6 +43,17 @@
       ::ng-deep{
         .checkbox-row {
           padding: 0;
+          &__cell{
+            padding: 5px 15px;
+            line-height: 28px;
+          }
+          &__box {
+            margin-top:0;
+            margin-bottom: 0;
+            height: 19px;
+            width: 19px;
+            align-self: center;
+        }
         }
       }
     }

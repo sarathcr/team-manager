@@ -16,9 +16,9 @@ export class CurriculumBasicSkillsDataService extends DefaultDataService<Curricu
   }
 
   getWithQuery(parm: any): Observable<Curriculum[]> {
+    const urlstring = `/regions/${parm.regionId}/academicyears/${parm.academicyearId}/curriculum/basicskills`
     return this.http.get<Curriculum[]>(
-      `${environment.apiUrl.curriculumService}/regions/
-      ${parm.regionId}/academicyears/${parm.academicyearId}/curriculum/basicskills`
+      `${environment.apiUrl.curriculumService}` + urlstring
       )
       .pipe(
           map(res => res)

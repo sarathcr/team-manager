@@ -193,6 +193,10 @@
       border: none;
       margin-top: 1px;
       padding-bottom: 5px;
+      left: -1px;
+      right: -1px;
+      width: auto;
+      margin-bottom: 5px;
 
       .multiselect-item-checkbox {
         padding: 10px 15px;
