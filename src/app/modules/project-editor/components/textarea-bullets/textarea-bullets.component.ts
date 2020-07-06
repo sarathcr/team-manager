@@ -44,7 +44,6 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   limit = 0
   focus = false
   subscriptions = new SubSink()
-  clickEvent: any
 
   constructor() { }
 
