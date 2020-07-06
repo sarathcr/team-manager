@@ -44,6 +44,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   limit = 0
   focus = false
   subscriptions = new SubSink()
+  clickEvent: any
 
   constructor() { }
 
@@ -203,7 +204,9 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   focusTextArea(): void{
     if (this.onInitFocus){
       setTimeout(() => {
-        this.textArea.first.nativeElement.focus()
+        if (!this.textArea.first.nativeElement.value.length) {
+          this.textArea.first.nativeElement.focus()
+        }
       }, 0)
     }
   }
