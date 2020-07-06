@@ -1,9 +1,9 @@
 import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core'
+import { PlatformLocation } from '@angular/common'
 import { BsModalRef } from 'ngx-bootstrap/modal'
 
 import { Subject } from 'rxjs'
 
-import { EditorService } from '../../services/editor/editor.service'
 import { FieldConfig } from 'src/app/shared/constants/field.model'
 import { ModalConfig } from './../../constants/modal-config.model'
 
@@ -23,8 +23,11 @@ export class ModalComponent implements OnInit {
 
   constructor(
     public bsModalRef: BsModalRef,
-    private editor: EditorService
-  ) { }
+    private location: PlatformLocation
+  ) {
+    // closes modal when back button is clicked
+    this.location.onPopState(() => this.bsModalRef.hide())
+  }
 
   ngOnInit(): void {
     this.onClose = new Subject()
@@ -39,5 +42,4 @@ export class ModalComponent implements OnInit {
     this.onClose.next('cancel')
     this.bsModalRef.hide()
   }
-
 }

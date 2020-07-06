@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
+import { PlatformLocation } from '@angular/common'
 
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateService } from '@ngx-translate/core'
@@ -45,8 +46,12 @@ export class PrincipalViewComponent implements OnInit, OnDestroy {
   constructor(
     public bsModalRef: BsModalRef,
     private translateService: TranslateService,
-    private blockService: BlockEntityService
-  ) { }
+    private blockService: BlockEntityService,
+    private location: PlatformLocation
+  ) {
+    // closes modal when back button is clicked
+    this.location.onPopState(() => this.bsModalRef.hide())
+  }
 
   ngOnInit(): void {
     this.getBlockData()
