@@ -188,9 +188,12 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
     this.focus = true
   }
 
-  onBlur(i: number): void {
-    this.focus = false
-    if (this.configOptions.length > 1 && !this.configOptions[i]?.name?.trim()) {
+  onBlur($event: any, i: number): void {
+    if ($event.relatedTarget !== $event.target.parentElement) {
+      this.focus = false
+    }
+    if (this.configOptions.length > 1 && !this.configOptions[i]?.name?.trim() &&
+    $event.relatedTarget !== $event.target.parentElement) {
       this.configOptions.splice(i, 1)
     }
     if (this.configOptions.length === 1 && !this.configOptions[0]?.name?.trim()) {
