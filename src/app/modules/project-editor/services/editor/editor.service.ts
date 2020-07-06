@@ -110,6 +110,10 @@ export class EditorService {
                 evaluationCriteria: subject?.evaluationCriteria?.map(({ id, name }) => ({ id, name }))
               }))
             })
+            case 5:  return({
+              ...data
+
+            });
             case 6: return {
               creativeImage: data.creativeImage,
               creativeTitle: data.creativeTitle,
