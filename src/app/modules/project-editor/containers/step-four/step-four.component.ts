@@ -10,7 +10,9 @@ import { Step, Status } from '../../constants/step.model'
 import { Option, FieldConfig } from 'src/app/shared/constants/field.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { BasicSkills } from 'src/app/shared/constants/curriculum-basic-skill.model'
-import { CurriculumBasicSkillsEntityService } from 'src/app/modules/project-editor/store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
+import {
+  CurriculumBasicSkillsEntityService
+} from 'src/app/modules/project-editor/store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
@@ -176,7 +178,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
             return basicSkills
           }))
         .subscribe(basicSkills => {
-          console.log(basicSkills)
           if (!basicSkills.length && this.project) {
             const parms = {
               regionId: this.project.region.id.toString(),

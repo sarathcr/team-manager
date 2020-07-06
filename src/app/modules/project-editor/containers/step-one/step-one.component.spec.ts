@@ -67,7 +67,7 @@ describe('StartPointComponent', () => {
   })
 
   afterEach((): void => {
-    spyOn(component, 'isFormUpdated').and.returnValue(false)
+    // spyOn(component, 'isFormUpdated').and.returnValue()
 
     fixture.destroy()
   })
