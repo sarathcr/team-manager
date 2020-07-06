@@ -67,10 +67,6 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     if (this.isFormUpdated && this.step.state !== 'DONE') {
       this.handleSubmit()
     }
-    const modalCount = this.modalService.getModalsCount()
-    if (modalCount > 0) {
-      this.modalService._hideModal(modalCount)
-    }
     this.subscriptions.unsubscribe()
   }
 
