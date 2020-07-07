@@ -12,14 +12,18 @@
         <app-loader *ngIf="loading; else loaded"></app-loader>
         <ng-template #loaded>
             <app-details-selector
-              *ngFor="let competency of project.competencyObjectives; let i = index; let last = last;"
-              [subject]="competency"
-              [subjectItem]="competency.name"
-              [isLast]="last"
-              [project$]="project$"
-              [icon]="{name:'add'}"
-            ></app-details-selector>
+                *ngFor="let competency of project.competencyObjectives; let i = index; let last = last;"
+                [subject]="competency" [subjectItem]="competency.name" [isLast]="last" [project$]="project$"
+                [icon]="{name:'add'}">
+            </app-details-selector>
+
+            <app-textarea-bullets [config]='textAreaConfig' label="estándares personalizados" size="small">
+            </app-textarea-bullets>
         </ng-template>
 
+        <app-button [disabled]='buttonConfig.disabled || !project.subjects?.length'
+            [theme]="buttonConfig.submitted ? 'success':'primary'" [icon]="'tick'" (click)='handleSubmit("DONE")'>
+            {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
+        </app-button>
     </div>
 </div>

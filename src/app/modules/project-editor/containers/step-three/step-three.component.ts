@@ -167,7 +167,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         }
         )
     }
-    
+
   }
 
   // Adds dimension or basic skills to the evaluation criteria
@@ -355,7 +355,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   getAllGrades(): GradeOptionAndId {
     const selectedGrades = this.project.grades.map(({ id, name }) => ({ id, name }))
-    const gradeIds = this.grades.map(({id}) => id)
+    const gradeIds = this.grades.map(({ id }) => id)
     return { selectedGrades, gradeIds }
   }
 
