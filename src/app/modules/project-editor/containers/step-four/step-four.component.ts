@@ -16,10 +16,10 @@ import {
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
-import { ModalComponent } from './../../components/modal/modal.component'
 import { ModalUnlock } from './../../constants/modal-config.data'
 import { FormFour } from '../../constants/step-forms.model'
 import { CheckBoxData } from 'src/app/shared/constants/checkbox.model'
+import { ModalInfoComponent } from '../../components/modal-info/modal-info.component'
 
 @Component({
   selector: 'app-step-four',
@@ -200,7 +200,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   getModal(): void {
     const initialState = { modalConfig: { ...ModalUnlock } }
-    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal', initialState })
+    this.bsModalRef = this.modalService.show(ModalInfoComponent, { class: 'common-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
       if (result) {

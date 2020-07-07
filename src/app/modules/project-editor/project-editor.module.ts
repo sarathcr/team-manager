@@ -49,9 +49,11 @@ import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thum
 import { PrincipalViewComponent } from './components/principal-view/principal-view.component'
 import { StepUnlockComponent } from './components/step-unlock/step-unlock.component'
 import { DetailsSelectorComponent } from './components/details-selector/details-selector.component'
-import { ModalComponent } from './components/modal/modal.component'
+import { ModalInfoComponent } from './components/modal-info/modal-info.component'
 import { VideoPlayerComponent } from './components/video-player/video-player.component'
 import { StatusComponent } from './components/status/status.component'
+import { ModalFormComponent } from './components/modal-form/modal-form.component'
+import { CounterComponent } from './components/counter/counter.component'
 // service
 import { EditorService } from './services/editor/editor.service'
 import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service'
@@ -97,10 +99,12 @@ import { CheckCount } from './pipes/check-count.pipe'
     PrincipalViewComponent,
     StepUnlockComponent,
     DetailsSelectorComponent,
-    ModalComponent,
+    ModalInfoComponent,
     InputComponent,
     ImageUploadComponent,
-    SecondaryViewComponent
+    SecondaryViewComponent,
+    ModalFormComponent,
+    CounterComponent
   ],
   imports: [
     CommonModule,

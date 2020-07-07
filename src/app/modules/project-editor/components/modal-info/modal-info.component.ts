@@ -5,15 +5,15 @@ import { BsModalRef } from 'ngx-bootstrap/modal'
 import { Subject } from 'rxjs'
 
 import { FieldConfig } from 'src/app/shared/constants/field.model'
-import { ModalConfig } from './../../constants/modal-config.model'
+import { ModalConfig } from '../../constants/modal-config.model'
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
+  selector: 'app-modal-info',
+  templateUrl: './modal-info.component.html',
+  styleUrls: ['./modal-info.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ModalComponent implements OnInit {
+export class ModalInfoComponent implements OnInit {
 
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig

@@ -1,5 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core'
 import { ProjectTitle } from '../../constants/title-data.model'
+import { ModalInput } from '../../constants/modal-form-config.data'
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
+import { ModalFormComponent } from '../modal-form/modal-form.component'
 
 @Component({
   selector: 'app-project-title',
@@ -15,8 +18,9 @@ export class ProjectTitleComponent implements OnInit {
   @Output() titleBlur = new EventEmitter()
   tempTitle: string
   showInputfield = true
+  bsModalRef: BsModalRef
 
-  constructor() { }
+  constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
     if (this.projectData?.title) {
@@ -39,6 +43,12 @@ export class ProjectTitleComponent implements OnInit {
       && (this.tempTitle !== this.projectData?.title)) { // check for same this.temptitle value
       this.titleBlur.emit({ title: this.tempTitle })
     }
+  }
+
+  getModal(): void {
+    const initialState = { modalConfig: { ...ModalInput } }
+    this.bsModalRef = this.modalService.show(ModalFormComponent, { class: 'modal-form', initialState })
+    this.bsModalRef.content.closeBtnName = 'Close'
   }
 
 }

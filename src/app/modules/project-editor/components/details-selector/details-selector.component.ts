@@ -4,11 +4,11 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-import { ModalComponent } from '../modal/modal.component'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { ModalDelete } from '../../constants/modal-config.data'
 import { IconSelect } from 'src/app/shared/constants/select-icon.model'
+import { ModalInfoComponent } from '../modal-info/modal-info.component'
 
 @Component({
   selector: 'app-details-selector',
@@ -57,7 +57,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
 
   getModal(criteriaId: number): void {
     const initialState = { modalConfig: { ...ModalDelete } }
-    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal', initialState })
+    this.bsModalRef = this.modalService.show(ModalInfoComponent, { class: 'common-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
       if (result === 'delete') {

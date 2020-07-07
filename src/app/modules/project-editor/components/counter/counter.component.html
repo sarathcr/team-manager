@@ -1,0 +1,12 @@
+<div class="counter" [ngClass]="{'counter__error' : (titleInput >= 70)}">
+  <div>
+    <div class="counter__helper-text" *ngIf="helperText">
+      {{ helperText | translate }}
+    </div>
+  </div>
+  <div class="counter__wrap">
+    <span class="counter__count">{{ titleInput }}</span>
+    <span class="counter__bar">/</span>
+    <span class="counter__max-count">70</span>
+  </div>
+</div>
