@@ -2,22 +2,23 @@
     <div class="project-form">
         <h1 class="project-form__title title_s">
             <span class="project-form__title-number">5.</span>
-            Estándares
+            {{'STANDARDS.project_standards_title' | translate }}
             <app-info-tooltip></app-info-tooltip>
         </h1>
         <p class="project-form__description">
-            Especifica los estándares o indicadores de aprendizaje para cada uno de los
-            objetivos competenciales.
+            {{ 'project_standards_initial_label' | translate }}
         </p>
         <app-loader *ngIf="loading; else loaded"></app-loader>
         <ng-template #loaded>
             <app-details-selector
                 *ngFor="let competency of project.competencyObjectives; let i = index; let last = last;"
-                [subject]="competency" [subjectItem]="competency.name" [isLast]="last" [project$]="project$"
+                [subject]="competency" [subjectItem]="competency" [isLast]="last" [project$]="project$"
                 [icon]="{name:'add'}">
             </app-details-selector>
 
-            <app-textarea-bullets [config]='textAreaConfig' label="estándares personalizados" size="small">
+            <app-textarea-bullets [config]='textAreaConfig'
+                label="{{'STANDARDS.project_standards_extrastandards_input' | translate}}"
+                size="small">
             </app-textarea-bullets>
         </ng-template>
 
