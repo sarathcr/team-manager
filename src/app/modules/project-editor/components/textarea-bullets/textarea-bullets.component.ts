@@ -44,13 +44,13 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   limit = 0
   focus = false
   subscriptions = new SubSink()
+  isShown = false
 
   constructor() { }
 
   ngOnInit(): void {
     this.limit = this.config.limit
     this.optionInit()
-    this.focusTextArea()
   }
 
   ngAfterContentChecked(): void {
@@ -191,6 +191,9 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   onBlur($event: any, i: number): void {
     if ($event.relatedTarget !== $event.target.parentElement) {
       this.focus = false
+      if (!this.textArea.first.nativeElement.value.length) {
+        this.isShown = !this.isShown
+      }
     }
     if (this.configOptions.length > 1 && !this.configOptions[i]?.name?.trim() &&
     $event.relatedTarget !== $event.target.parentElement) {
@@ -210,6 +213,14 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
           this.textArea.first.nativeElement.focus()
         }
       }, 0)
+    }
+  }
+
+  // toggle text area on link click
+  toggleTextarea(): void{
+    this.isShown = !this.isShown
+    if (this.isShown){
+      this.focusTextArea()
     }
   }
 

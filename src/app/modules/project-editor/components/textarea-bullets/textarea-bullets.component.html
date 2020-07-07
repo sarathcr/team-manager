@@ -1,4 +1,10 @@
-<div class="textarea-bullets" [ngClass]="{'textarea-bullets_focus': focus, 'toggle-textarea': size == 'small'}">
+<div class="textarea-bullets-toggle__content"  *ngIf="variant === 'toggle'">
+  {{"CONTENT.project_content_extracontent" | translate | TranslateCut:0 }}
+  <span class="textarea-bullets-toggle__content_link" (click)="toggleTextarea()">
+    {{"CONTENT.project_content_extracontent" | translate | TranslateCut:1 }}
+  </span>
+</div>
+<div class="textarea-bullets" [ngClass]="{'textarea-bullets_focus': focus, 'toggle-textarea': size == 'small'}" *ngIf="variant === 'toggle' && isShown">
   <span class="textarea-bullets__placeholder">
     {{!configOptions[0]?.name && !focus ? config.placeholder : ''}}
   </span>
@@ -6,7 +12,8 @@
     <ul
     *ngIf="config"
     class="bullet-list textarea-bullets__list"
-    [ngClass]="variant == 'bullet' ? 'bullet-list' : 'numbered-list'"
+    [ngClass.bulletList]="variant !== 'number'"
+    [ngClass.numberedList]="variant === 'number'"
   >
     <li
       *ngFor="let text of configOptions; let i = index"

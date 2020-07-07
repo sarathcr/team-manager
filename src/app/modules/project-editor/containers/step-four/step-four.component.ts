@@ -152,15 +152,15 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.isFormUpdated = true
   }
 
-  textareaBlur(data: Option[], index: number): void {
-    if (data.length === 1 && data[0].name === null) {
-      this.toggleTextarea(index)
-    }
-  }
+  // textareaBlur(data: Option[], index: number): void {
+  //   if (data.length === 1 && data[0].name === null) {
+  //     this.toggleTextarea(index)
+  //   }
+  // }
 
-  toggleTextarea(index: number): void {
-    this.subjectTextArea[index].isShown = !this.subjectTextArea[index].isShown
-  }
+  // toggleTextarea(index: number): void {
+  //   this.subjectTextArea[index].isShown = !this.subjectTextArea[index].isShown
+  // }
 
   getBasicSkills(): void {
     if (this.project.subjects?.length) {
