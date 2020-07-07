@@ -12,7 +12,7 @@
         <ng-template #loaded>
             <app-details-selector
                 *ngFor="let competency of project.competencyObjectives; let i = index; let last = last;"
-                [subject]="competency" [subjectItem]="competency.name" [isLast]="last" [project$]="project$"
+                [subject]="competency" [subjectItem]="competency.standards" [isLast]="last" [project$]="project$"
                 [icon]="{name:'add'}">
             </app-details-selector>
 
