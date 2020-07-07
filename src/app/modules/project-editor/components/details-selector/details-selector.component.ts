@@ -8,7 +8,8 @@ import { ModalComponent } from '../modal/modal.component'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { ModalDelete } from '../../constants/modal-config.data'
-import { IconSelect } from 'src/app/shared/constants/select-icon.model'
+import { ButtonSubmitConfig } from '../../constants/form-config.data'
+import { ButtonIcon } from 'src/app/shared/constants/field.model'
 
 @Component({
   selector: 'app-details-selector',
@@ -22,11 +23,12 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() subject: Subject
   @Input() i: number
   @Input() isLast = false
-  @Input() icon: IconSelect
+  @Input() icon: ButtonIcon
   @Input() project$: Observable<Project>
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() openModal: EventEmitter<any> = new EventEmitter()
   @Output() deleteCriteria: EventEmitter<any> = new EventEmitter()
+  buttonConfig = new ButtonSubmitConfig()
   count = 0
   bsModalRef: BsModalRef
   subscriptions = new SubSink()

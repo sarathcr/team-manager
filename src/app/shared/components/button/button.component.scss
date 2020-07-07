@@ -1,7 +1,8 @@
 @import 'helpers/_helpers-master';
 .form-button{
+  $root: &;
   ::ng-deep{
-    .form-button__icon{
+    #{$root}__icon{
       font-size: 24px;
       line-height: 1;
       margin-left: -7px;
@@ -44,7 +45,7 @@
   }
   .btn-secondary{
     color: $button-outline;
-    background: $background-primary;
+    background: inherit;
   }
   .btn-outline{
     border: 1px solid $button-outline;
@@ -55,6 +56,15 @@
     text-transform: capitalize;
     font-family: $font-family-tertiary;
     letter-spacing: 0.2px;
+    padding: 0 17px;
+    min-height: auto;
+    &.btn-primary{
+      color: $primary;
+      background: inherit;
+    }
+    #{$root}__icon{
+      margin-right: 2px;
+    }
   }
 }
 
