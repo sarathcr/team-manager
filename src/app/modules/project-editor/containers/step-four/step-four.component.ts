@@ -81,7 +81,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
             this.subjectContents.push([...subject.contents])
             this.subjectTextArea.push({
               data: [...subject.customContents],
-              isShown: !!subject.customContents?.length,
               options$: new BehaviorSubject([...subject.customContents]),
             })
           })
@@ -151,16 +150,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.checkStepStatus()
     this.isFormUpdated = true
   }
-
-  // textareaBlur(data: Option[], index: number): void {
-  //   if (data.length === 1 && data[0].name === null) {
-  //     this.toggleTextarea(index)
-  //   }
-  // }
-
-  // toggleTextarea(index: number): void {
-  //   this.subjectTextArea[index].isShown = !this.subjectTextArea[index].isShown
-  // }
 
   getBasicSkills(): void {
     if (this.project.subjects?.length) {

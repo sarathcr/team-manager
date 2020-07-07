@@ -45,12 +45,14 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   focus = false
   subscriptions = new SubSink()
   isShown = false
-
+  isToggle = false
   constructor() { }
 
   ngOnInit(): void {
     this.limit = this.config.limit
     this.optionInit()
+    this.isToggle = (this.variant === String('toggle'))
+    this.isShown = this.isToggle ? this.isShown : true
   }
 
   ngAfterContentChecked(): void {
@@ -73,6 +75,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
         } else {
           this.configOptions = [{ ...this.sampleOption }]
         }
+        this.isShown = (this.configOptions.length === 1 && !this.configOptions[0]?.name) ? false : true
       })
     } else {
       this.configOptions = [{ ...this.sampleOption }]
@@ -191,7 +194,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   onBlur($event: any, i: number): void {
     if ($event.relatedTarget !== $event.target.parentElement) {
       this.focus = false
-      if (!this.textArea.first.nativeElement.value.length) {
+      if (this.configOptions.length === 1 && !this.configOptions[0]?.name  && this.isToggle) {
         this.isShown = !this.isShown
       }
     }
@@ -202,7 +205,6 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
     if (this.configOptions.length === 1 && !this.configOptions[0]?.name?.trim()) {
       this.configOptions[0].name = null
     }
-    this.textareaBlur.emit([...this.configOptions])
   }
 
   // focus the text area initially
