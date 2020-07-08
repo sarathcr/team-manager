@@ -10,13 +10,15 @@
       <span *ngIf="subjectItem?.length > 0" class="details-selector__text_evaluation">
         {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{subjectItem.length}})
       </span>
-      <span class="details-selector__add" (click)="addItem()">
-        <span class="icon details-selector__add_icon" [ngClass]="{
-          'icon-ic_add_small' : icon.name === 'add',
-          'icon-ic_locked' : icon.name === 'locked'
-        }"></span>
+      <app-button
+        class="details-selector__add-btn"
+        [theme]="'primary'"
+        [variant] = "'text'"
+        [icon]="icon"
+        (click)="addItem()"
+      >
         {{'OBJECTIVES.project_objectives_criteriawindow_add' | translate}}
-      </span>
+      </app-button>
     </li>
     <span *ngFor="let item of subjectItem">
       <li class="details-selector__item">

@@ -22,7 +22,7 @@
               [subjectItem]="subjectContents[i]"
               [isLast]="last"
               [project$]="editor.project$"
-              [icon]="subject.evaluationCriteria.length ? {name:'add'} : {name: 'locked'}"
+              [icon]="subject.evaluationCriteria.length ? 'add' : 'locked'"
               (openModal)="pushContent(!!subject.evaluationCriteria.length, i)"
               (deleteCriteria)="popConent(i)"
             ></app-details-selector>
