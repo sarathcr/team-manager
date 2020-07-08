@@ -1,6 +1,9 @@
 <div class="modal-form__header">
-  <h4 class="modal-form__title title_xs">
+  <h4 class="modal-form__title title_xs" *ngIf="!editor.projectId">
     {{ modalConfig.title | translate }}
+  </h4>
+  <h4 class="modal-form__title title_xs" *ngIf="editor.projectId">
+    {{ modalConfig.editTitle | translate }}
   </h4>
   <button
     *ngIf="modalConfig.variant === 'input'"
@@ -15,8 +18,9 @@
 <div class="modal-form__body">
   <div class="modal-form__input">
     <app-input 
+    [(value)]="modalInput"
+    (inputChange)="onValueChange($event)"
     [onInitFocus]="true"
-    placeholder=""
     maxlength="70"
     label="PROJECT.project_title_input_title"></app-input>
   </div>
@@ -25,6 +29,7 @@
   <ng-container>
     <div class="modal-form__button-wrapper">
       <app-button 
+      [disabled]= "buttonConfig.disabled"
       (click)="onConfirm()" 
       #inputButton>
         {{ modalConfig.confirmLabel | translate }}

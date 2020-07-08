@@ -10,10 +10,11 @@
 		[attr.maxlength]="maxlength"
 		[ngModel]="value" 
 		(ngModelChange)="onValueChange($event)" 
-		(focus)="setFocus()" 
-		(blur)="onBlur()" 
+		(focus)="setFocus()"  
+		value={{this.projectData?.title}}
+    (blur)="handleBlur($event.target.value)"
 		#titleInput />
 	<div class="input__counter-wrapper">
-		<app-validator [value]="titleInput.value.length"></app-validator>
+		<app-validator [value]="titleInput.value.length" [maxlength]="maxlength"></app-validator>
 	</div>
 </div>

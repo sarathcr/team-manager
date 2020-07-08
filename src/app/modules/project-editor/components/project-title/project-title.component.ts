@@ -16,6 +16,7 @@ export class ProjectTitleComponent implements OnInit {
   @Input() maxLength: number
   @Input() placeholder: string
   @Output() titleBlur = new EventEmitter()
+  @Output() checkEditTitle = new EventEmitter()
   tempTitle: string
   showInputfield = true
   bsModalRef: BsModalRef

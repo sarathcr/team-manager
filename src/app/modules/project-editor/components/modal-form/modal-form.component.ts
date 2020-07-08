@@ -2,8 +2,10 @@ import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core'
 import { ModalFormConfig } from '../../constants/modal-form-config.model'
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { PlatformLocation } from '@angular/common'
-import { Subject } from 'rxjs'
+import { Subject, Observable } from 'rxjs'
+import { EditorService } from '../../services/editor/editor.service'
 import { ButtonSubmitConfig } from '../../constants/form-config.data'
+import { ProjectTitle } from '../../constants/title-data.model'
 
 @Component({
   selector: 'app-modal-form',
@@ -14,9 +16,14 @@ import { ButtonSubmitConfig } from '../../constants/form-config.data'
 export class ModalFormComponent implements OnInit {
 
   @Input() modalConfig: ModalFormConfig
+  @Input() projectData: ProjectTitle
+  buttonConfig = new ButtonSubmitConfig()
+  project$: Observable<any>
+  modalInput: any = ''
 
   public onClose: Subject<string>
   constructor(
+    public editor: EditorService,
     public bsModalRef: BsModalRef,
     private location: PlatformLocation
   ) {
@@ -31,5 +38,12 @@ export class ModalFormComponent implements OnInit {
     this.onClose.next(this.modalConfig.variant)
     this.bsModalRef.hide()
   }
+
+  // Function to trigger the value in the textarea
+  onValueChange(value: string): void {
+    // this.finalProduct = value
+    this.buttonConfig.disabled = false
+  }
+
 
 }
