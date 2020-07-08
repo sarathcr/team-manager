@@ -6,7 +6,7 @@
     height: 100%;
 }
 
-.competency-modal{
+.principal-modal{
     &,
     &__content,
     .modal-content{
@@ -48,6 +48,7 @@
           margin-right: -36px;
           margin-top: -24px;
           cursor: pointer;
+          z-index: 1;
         }
         &__icon{
             font-size: $font-size-xs;
@@ -97,6 +98,7 @@
             height: 100%;
             display: inline-flex;
             flex-direction: column;
+            min-width: 220px;
         }
 
         &-scroll{
@@ -223,6 +225,7 @@
 
         &-index{
            margin-right: 9px;
+           align-self: flex-start;
         }
 
         &-label{

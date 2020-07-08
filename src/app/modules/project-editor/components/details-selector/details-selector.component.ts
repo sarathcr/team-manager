@@ -5,10 +5,12 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { ModalComponent } from '../modal/modal.component'
-import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
+import { Subject, Project } from 'src/app/modules/project-editor/constants/model/project.model'
+import { ButtonIcon } from 'src/app/shared/constants/model/form-config.model'
+
+import { ModalDelete } from '../../constants/Data/modal-info.data'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { ModalDelete } from '../../constants/modal-config.data'
-import { IconSelect } from 'src/app/shared/constants/select-icon.model'
 
 @Component({
   selector: 'app-details-selector',
@@ -22,7 +24,8 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() subject: Subject
   @Input() i: number
   @Input() isLast = false
-  @Input() icon: IconSelect
+  @Input() icon: ButtonIcon
+  @Input() loading = false
   @Input() project$: Observable<Project>
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() openModal: EventEmitter<any> = new EventEmitter()

@@ -5,7 +5,8 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { environment } from 'src/environments/environment'
-import { Curriculum } from 'src/app/shared/constants/curriculum-basic-skill.model'
+
+import { Curriculum } from '../../../constants/model/curriculum.model'
 
 @Injectable()
 export class CurriculumBasicSkillsDataService extends DefaultDataService<Curriculum> {
@@ -16,9 +17,9 @@ export class CurriculumBasicSkillsDataService extends DefaultDataService<Curricu
   }
 
   getWithQuery(parm: any): Observable<Curriculum[]> {
+    const urlstring = `/regions/${parm.regionId}/academicyears/${parm.academicyearId}/curriculum/basicskills`
     return this.http.get<Curriculum[]>(
-      `${environment.apiUrl.curriculumService}/regions/
-      ${parm.regionId}/academicyears/${parm.academicyearId}/curriculum/basicskills`
+      `${environment.apiUrl.curriculumService}` + urlstring
       )
       .pipe(
           map(res => res)

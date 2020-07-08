@@ -4,37 +4,48 @@
   </div>
   <ul class="details-selector__list">
     <li class="details-selector__item">
-      <span *ngIf="subjectItem.length === 0" class="details-selector__text">
+      <span *ngIf="subjectItem?.length === 0" class="details-selector__text">
         {{'OBJECTIVES.project_objectives_criteria_placeholder' | translate}}
       </span>
-      <span *ngIf="subjectItem.length > 0" class="details-selector__text_evaluation">
+      <span *ngIf="subjectItem?.length > 0" class="details-selector__text_evaluation">
         {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{subjectItem.length}})
       </span>
-      <span class="details-selector__add" (click)="addItem()">
-        <span class="icon details-selector__add_icon" [ngClass]="{
-          'icon-ic_add_small' : icon.name === 'add',
-          'icon-ic_locked' : icon.name === 'locked'
-        }"></span>
+      <app-button
+        class="details-selector__add-btn"
+        [theme]="'primary'"
+        [variant] = "'text'"
+        [icon]="icon"
+        (click)="addItem()"
+      >
         {{'OBJECTIVES.project_objectives_criteriawindow_add' | translate}}
-      </span>
+      </app-button>
     </li>
-    <span *ngFor="let item of subjectItem">
-      <li class="details-selector__item">
-        <div class="details-selector__text_normal">{{item.name}}</div>
-        <div *ngIf=" item.dimensions?.length" class="details-selector__text_normal">
-          <ng-container *ngFor="let dimension of item.dimensions">
-            <span class="details-selector__item-details">{{dimension.name}}</span>
-          </ng-container>
-        </div>
-        <div *ngIf="item.basicSkills?.length && !item.dimensions?.length" class="details-selector__text_normal">
-          <ng-container *ngFor="let skill of item.basicSkills">
-            <span class="details-selector__item-details">{{skill.name}}</span>
-          </ng-container>
-        </div>
-        <div class="details-selector__close" (click)="getModal(item.id)">
-          <span class="icon icon-ic_share_close"></span>
-        </div>
-      </li>
-    </span>
+    <ng-template #loaded>
+      <ng-container *ngFor="let item of subjectItem">
+        <li class="details-selector__item">
+          <div class="details-selector__text_normal">{{item.name}}</div>
+          <div
+            *ngIf="item.dimensions?.length"
+            class="details-selector__text_normal"
+          >
+            <ng-container *ngFor="let dimension of item.dimensions">
+              <span class="details-selector__item-details">{{dimension.name}}</span>
+            </ng-container>
+          </div>
+          <div
+            *ngIf="item.basicSkills?.length && !item.dimensions?.length"
+            class="details-selector__text_normal"
+          >
+            <ng-container *ngFor="let skill of item.basicSkills">
+              <span class="details-selector__item-details">{{skill.name}}</span>
+            </ng-container>
+          </div>
+          <div class="details-selector__close" (click)="getModal(item.id)">
+            <span class="icon icon-ic_share_close"></span>
+          </div>
+        </li>
+      </ng-container>
+    </ng-template>
+    <app-loader *ngIf="loading; else loaded" variant="block"></app-loader>
   </ul>
 </div>

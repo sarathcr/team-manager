@@ -9,20 +9,8 @@
       }
     }
   }
-  &__textarea-content{
-    letter-spacing: normal;
-    padding: 0 18px;
-    &_link{
-      font-weight: 900;
-      border-bottom: 1px solid $link-color;
-      cursor: pointer;
-    }
-  }
   &__wrap{
     margin-bottom: 15px;
-  }
-  &__textarea-wrapper{
-    margin-top:42px;
   }
   &__basic-skill{
     margin-bottom: 41px;
@@ -43,6 +31,17 @@
       ::ng-deep{
         .checkbox-row {
           padding: 0;
+          &__cell{
+            padding: 5px 15px;
+            line-height: 28px;
+          }
+          &__box {
+            margin-top:0;
+            margin-bottom: 0;
+            height: 19px;
+            width: 19px;
+            align-self: center;
+        }
         }
       }
     }
