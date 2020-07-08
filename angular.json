@@ -128,6 +128,12 @@
           "configurations": {
             "production": {
               "browserTarget": "thinko-creator:build:production"
+            },
+            "qa": {
+               "browserTarget": "thinko-creator:build:qa"
+            },
+            "dev": {
+              "browserTarget": "thinko-creator:build:dev"
             }
           }
         },
