@@ -11,7 +11,7 @@ import {
 } from 'src/app/modules/project-editor/store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 
 import { Project, Subject, Step, Status, BasicSkill } from '../../constants/model/project.model'
-import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/field.model'
+import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/form-config.model'
 import { FormFour } from '../../constants/model/step-forms.model'
 
 import { ModalUnlock } from '../../constants/Data/modal-info.data'

@@ -10,7 +10,7 @@ import {
   Status,
   StepState
 } from 'src/app/modules/project-editor/constants/model/project.model'
-import { Option } from 'src/app/shared/constants/model/field.model'
+import { Option } from 'src/app/shared/constants/model/form-config.model'
 
 export interface FormOne {
   data: {

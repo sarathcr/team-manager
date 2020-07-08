@@ -4,7 +4,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal'
 
 import { Subject } from 'rxjs'
 
-import { FieldConfig } from 'src/app/shared/constants/model/field.model'
+import { FieldConfig } from 'src/app/shared/constants/model/form-config.model'
 import { ModalConfig } from '../../constants/model/modal-info.model'
 
 @Component({

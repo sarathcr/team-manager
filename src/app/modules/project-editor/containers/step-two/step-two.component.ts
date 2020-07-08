@@ -1,4 +1,3 @@
-import { Option } from '../../../../shared/constants/model/field.model'
 import { Component, OnInit, OnDestroy } from '@angular/core'
 
 import { Observable } from 'rxjs'
@@ -9,7 +8,7 @@ import { EditorService } from '../../services/editor/editor.service'
 
 import { FormTwoInit, FormTwo } from '../../constants/model/step-forms.model'
 import { Theme, Step, Status } from 'src/app/modules/project-editor/constants/model/project.model'
-import { FieldConfig } from '../../../../shared/constants/model/field.model'
+import { Option, FieldConfig } from '../../../../shared/constants/model/form-config.model'
 
 import { FormTwoInitData } from '../../constants/Data/step-forms.data'
 

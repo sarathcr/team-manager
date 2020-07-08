@@ -7,9 +7,8 @@ import { map } from 'rxjs/operators'
 import { EditorService } from '../../services/editor/editor.service'
 
 import { FormSevenInit, FormSeven } from '../../constants/model/step-forms.model'
-import { FieldConfig } from 'src/app/shared/constants/model/field.model'
+import { Option, FieldConfig } from '../../../../shared/constants/model/form-config.model'
 import { DrivingQuestion, Step, Status } from 'src/app/modules/project-editor/constants/model/project.model'
-import { Option } from '../../../../shared/constants/model/field.model'
 import { FormSevenInitData } from '../../constants/Data/step-forms.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'

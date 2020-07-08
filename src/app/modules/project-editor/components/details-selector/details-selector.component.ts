@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators'
 
 import { ModalComponent } from '../modal/modal.component'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/model/project.model'
-import { ButtonIcon } from 'src/app/shared/constants/model/field.model'
+import { ButtonIcon } from 'src/app/shared/constants/model/form-config.model'
 
 import { ModalDelete } from '../../constants/Data/modal-info.data'
 

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
 
-import { CheckBoxData, CheckBoxColumn } from '../../constants/model/field.model'
+import { CheckBoxData, CheckBoxColumn } from '../../constants/model/form-config.model'
 
 @Component({
   selector: 'app-checkbox',

@@ -10,7 +10,7 @@ import { ObjectiveService } from '../../services/objectives/objectives.service'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
 
-import { FieldConfig, Option } from 'src/app/shared/constants/model/field.model'
+import { FieldConfig, Option } from 'src/app/shared/constants/model/form-config.model'
 import {
   CompetencyObjective,
   EvaluationCriteria,

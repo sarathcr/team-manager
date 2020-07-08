@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 
 import { CompetencyModal } from '../../constants/model/principle-view.model'
-import { Option, DropdownCustom } from 'src/app/shared/constants/model/field.model'
+import { Option, DropdownCustom } from 'src/app/shared/constants/model/form-config.model'
 import { Block } from '../../constants/model/curriculum.model'
 import {
   PrincipalModalColData,

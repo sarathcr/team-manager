@@ -1,4 +1,4 @@
-import { FieldConfig, DropDownConfig } from 'src/app/shared/constants/model/field.model'
+import { FieldConfig, DropDownConfig } from 'src/app/shared/constants/model/form-config.model'
 import { Status } from 'src/app/modules/project-editor/constants/model/project.model'
 
 export class ButtonSubmitConfig implements FieldConfig {

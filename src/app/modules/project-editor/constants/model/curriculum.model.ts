@@ -1,5 +1,5 @@
 import { Content, EvaluationCriteria, BasicSkill } from './project.model'
-import { Option } from 'src/app/shared/constants/model/field.model'
+import { Option } from 'src/app/shared/constants/model/form-config.model'
 
 export class Block {
   id: number

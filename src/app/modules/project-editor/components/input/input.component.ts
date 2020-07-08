@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
 
 import { FormGroup } from '@angular/forms'
 
-import { FieldConfig } from 'src/app/shared/constants/model/field.model'
+import { FieldConfig } from 'src/app/shared/constants/model/form-config.model'
 
 @Component({
   selector: 'app-input',
