@@ -7,8 +7,8 @@ import { map } from 'rxjs/operators'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { ModalDelete } from '../../constants/modal-config.data'
-import { IconSelect } from 'src/app/shared/constants/select-icon.model'
 import { ModalInfoComponent } from '../modal-info/modal-info.component'
+import { ButtonIcon } from 'src/app/shared/constants/field.model'
 
 @Component({
   selector: 'app-details-selector',
@@ -22,7 +22,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() subject: Subject
   @Input() i: number
   @Input() isLast = false
-  @Input() icon: IconSelect
+  @Input() icon: ButtonIcon
   @Input() project$: Observable<Project>
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() openModal: EventEmitter<any> = new EventEmitter()
