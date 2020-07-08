@@ -23,6 +23,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() i: number
   @Input() isLast = false
   @Input() icon: ButtonIcon
+  @Input() loading = false
   @Input() project$: Observable<Project>
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() openModal: EventEmitter<any> = new EventEmitter()
