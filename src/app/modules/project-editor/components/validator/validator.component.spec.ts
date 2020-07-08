@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { CounterComponent } from './counter.component'
+import { ValidatorComponent } from './validator.component'
 
-describe('CounterComponent', () => {
-  let component: CounterComponent
-  let fixture: ComponentFixture<CounterComponent>
+describe('ValidatorComponent', () => {
+  let component: ValidatorComponent
+  let fixture: ComponentFixture<ValidatorComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CounterComponent ]
+      declarations: [ ValidatorComponent ]
     })
     .compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CounterComponent)
+    fixture = TestBed.createComponent(ValidatorComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

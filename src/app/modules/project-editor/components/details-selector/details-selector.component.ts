@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
 
+import { ModalInfoComponent } from '../modal-info/modal-info.component'
+
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -7,7 +9,6 @@ import { map } from 'rxjs/operators'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { ModalDelete } from '../../constants/modal-config.data'
-import { ModalInfoComponent } from '../modal-info/modal-info.component'
 import { ButtonIcon } from 'src/app/shared/constants/field.model'
 
 @Component({

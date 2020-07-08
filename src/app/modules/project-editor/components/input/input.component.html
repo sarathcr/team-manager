@@ -14,21 +14,6 @@
 		(blur)="onBlur()" 
 		#titleInput />
 	<div class="input__counter-wrapper">
-		<app-counter 
-			*ngIf="(value.length == 0)" 
-			helperText="PROJECT.project_title_helpertext"
-			[value]="value.length">
-		</app-counter>
-		<app-counter 
-			*ngIf="(value.length > 0) && !(value.length == maxlength)" 
-			helperText=""
-			[value]="value.length">
-		</app-counter>
-			<!-- WIP Localization Not updated in the Sheet -->
-		<app-counter 
-			*ngIf="(value.length == maxlength)" 
-			helperText="PROJECT.Error_textlimit_specified_singleinput"
-			[value]="value.length">
-		</app-counter>
+		<app-validator [value]="titleInput.value.length"></app-validator>
 	</div>
 </div>

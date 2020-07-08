@@ -53,7 +53,7 @@ import { ModalInfoComponent } from './components/modal-info/modal-info.component
 import { VideoPlayerComponent } from './components/video-player/video-player.component'
 import { StatusComponent } from './components/status/status.component'
 import { ModalFormComponent } from './components/modal-form/modal-form.component'
-import { CounterComponent } from './components/counter/counter.component'
+import { ValidatorComponent } from './components/validator/validator.component'
 // service
 import { EditorService } from './services/editor/editor.service'
 import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service'
@@ -104,7 +104,7 @@ import { CheckCount } from './pipes/check-count.pipe'
     ImageUploadComponent,
     SecondaryViewComponent,
     ModalFormComponent,
-    CounterComponent
+    ValidatorComponent
   ],
   imports: [
     CommonModule,
