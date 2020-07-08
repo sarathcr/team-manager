@@ -5,9 +5,9 @@
 export const environment = {
   production: false,
   apiUrl: {
-    projectService: 'https://api.qa.abp.thinkoeducation.com/project-service',
-    curriculumService: 'https://api.qa.abp.thinkoeducation.com/curriculum-service',
-    imgUpload: 'https://api.qa.abp.thinkoeducation.com/uploads/'
+    projectService: 'https://api.dev.abp.thinkoeducation.com/project-service',
+    curriculumService: 'https://api.dev.abp.thinkoeducation.com/curriculum-service',
+    imgUpload: 'https://api.dev.abp.thinkoeducation.com/uploads/'
   }
 }
 
