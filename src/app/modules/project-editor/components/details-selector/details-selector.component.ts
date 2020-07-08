@@ -28,7 +28,6 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() openModal: EventEmitter<any> = new EventEmitter()
   @Output() deleteCriteria: EventEmitter<any> = new EventEmitter()
-  buttonConfig = new ButtonSubmitConfig()
   count = 0
   bsModalRef: BsModalRef
   subscriptions = new SubSink()
