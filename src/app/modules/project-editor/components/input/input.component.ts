@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, ViewChildren, QueryList, ElementRef, OnInit } from '@angular/core'
 import { FormGroup } from '@angular/forms'
 
-import { ProjectTitle } from '../../constants/title-data.model'
 import { FieldConfig } from 'src/app/shared/constants/model/form-config.model'
+import { ProjectTitle } from '../../constants/model/project.model'
 
 @Component({
   selector: 'app-input',

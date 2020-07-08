@@ -4,8 +4,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal'
 import { PlatformLocation } from '@angular/common'
 import { Subject, Observable } from 'rxjs'
 import { EditorService } from '../../services/editor/editor.service'
-import { ButtonSubmitConfig } from '../../constants/form-config.data'
-import { ProjectTitle } from '../../constants/title-data.model'
+import { ProjectTitle } from '../../constants/model/project.model'
+import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
 
 @Component({
   selector: 'app-modal-form',
@@ -41,7 +41,7 @@ export class ModalFormComponent implements OnInit {
 
   // Function to trigger the value in the textarea
   onValueChange(value: string): void {
-    // this.finalProduct = value
+
     this.buttonConfig.disabled = false
   }
 
