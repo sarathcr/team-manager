@@ -10,18 +10,19 @@ import { ObjectiveService } from '../../services/objectives/objectives.service'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
 
-import { Step, Status } from '../../constants/step.model'
-import { FieldConfig, Option } from 'src/app/shared/constants/field.model'
+import { FieldConfig, Option } from 'src/app/shared/constants/model/form-config.model'
 import {
-  CompetencyObjectives,
+  CompetencyObjective,
   EvaluationCriteria,
-  Subject
-} from 'src/app/modules/project-editor/constants/project.model'
-import { FormThreeInit, FormThree } from '../../constants/step-forms.model'
+  Subject,
+  Step,
+  Status
+} from 'src/app/modules/project-editor/constants/model/project.model'
+import { FormThreeInit, FormThree } from '../../constants/model/step-forms.model'
 import { PrincipalViewComponent } from '../../components/principal-view/principal-view.component'
-import { Project } from './../../constants/project.model'
+import { Project } from '../../constants/model/project.model'
 
-import { FormThreeInitData } from '../../constants/step-forms.data'
+import { FormThreeInitData } from '../../constants/Data/step-forms.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -38,7 +39,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   step: Step
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  competencyObjectives$: Observable<CompetencyObjectives[]>
+  competencyObjectives$: Observable<CompetencyObjective[]>
   evaluationCriteria$: Observable<EvaluationCriteria[]>
   loading = true
   inputFormData: FormThreeInit = new FormThreeInitData()
@@ -202,7 +203,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     }
     this.project.competencyObjectives = [...this.inputFormData.competencyObjectives]
     this.checkFormEmpty()
-    const formData = {
+    const formData: FormThree = {
       data: { ...this.project, updateType: 'removeCriteria', ...criteriaData },
       stepStatus: {
         steps: [

@@ -4,11 +4,11 @@ import { PlatformLocation } from '@angular/common'
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { Subject } from 'rxjs'
 
-import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
-
-import { PrincipalModalColData } from '../../constants/modal-table.data'
 import { ObjectiveService } from '../../services/objectives/objectives.service'
-import { Block } from 'src/app/shared/constants/block.model'
+
+import { Block } from '../../constants/model/curriculum.model'
+import { PrincipalModalColData } from '../../constants/model/principle-view.model'
+import { DropDownConfig, Option } from 'src/app/shared/constants/model/form-config.model'
 
 @Component({
   selector: 'app-competency-modal-content',

@@ -6,7 +6,8 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { environment } from 'src/environments/environment'
-import { EvaluationCriteria } from 'src/app/shared/constants/evaluation-criteria.model'
+
+import { EvaluationCriteria } from '../../../constants/model/project.model'
 
 @Injectable()
 export class EvaluationCriteriaDataService extends DefaultDataService<EvaluationCriteria> {

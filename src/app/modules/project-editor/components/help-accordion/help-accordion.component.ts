@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, Input, OnDestroy, ElementRef, Renderer2, HostListener } from '@angular/core'
-import { Help } from 'src/app/shared/constants/contextual-help.model'
+
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+
 import { HelpModalContentComponent } from '../help-modal-content/help-modal-content.component'
+import { Help } from '../../constants/model/project.model'
 
 @Component({
   selector: 'app-help-accordion',

@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core'
-import { Status } from '../../constants/step.model'
+
+import { Status } from '../../constants/model/project.model'
+
 @Component({
   selector: 'app-status',
   templateUrl: './status.component.html',

@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core'
-import { ProjectTitle } from '../../constants/title-data.model'
+import { ProjectTitle } from '../../constants/model/project.model'
 
 @Component({
   selector: 'app-project-title',
