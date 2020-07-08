@@ -76,7 +76,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
         } else {
           this.configOptions = [{ ...this.sampleOption }]
         }
-        this.isShown = (this.configOptions.length === 1 && !this.configOptions[0]?.name) ? false : true
+        this.isShown = (this.configOptions.length === 1 && !this.configOptions[0]?.name && this.isToggle) ? false : true
       })
     } else {
       this.configOptions = [{ ...this.sampleOption }]
