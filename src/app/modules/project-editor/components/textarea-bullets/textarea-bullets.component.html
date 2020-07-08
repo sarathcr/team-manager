@@ -1,7 +1,7 @@
 <div class="textarea-bullets-toggle__content"  *ngIf="isToggle && !isShown">
-  {{"CONTENT.project_content_extracontent" | translate | TranslateCut:0 }}
+  {{ toggleData | translate | TranslateCut:0 }}
   <span class="textarea-bullets-toggle__content_link" (click)="toggleTextarea()">
-    {{"CONTENT.project_content_extracontent" | translate | TranslateCut:1 }}
+    {{ toggleData | translate | TranslateCut:1 }}
   </span>
 </div>
 <div class="textarea-bullets" [ngClass]="{'textarea-bullets_focus': focus, 'toggle-textarea': size == 'small'}" *ngIf="isShown">

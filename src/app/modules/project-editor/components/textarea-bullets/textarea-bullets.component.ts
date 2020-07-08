@@ -25,6 +25,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
 
   @Input() variant: TextAreaVariants = 'bullet'
   @Input() size: TextareaSize
+  @Input() toggleData = ''
   @Input() config: FieldConfig
   @Input() options: Option[]
   @Input() onInitFocus = false
