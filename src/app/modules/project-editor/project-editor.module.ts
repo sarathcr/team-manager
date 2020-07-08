@@ -54,7 +54,7 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
 import { StatusComponent } from './components/status/status.component'
 // service
 import { EditorService } from './services/editor/editor.service'
-import { ObjectiveService } from './services/step-three/objective.service'
+import { ObjectiveService } from './services/objectives/objectives.service'
 import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service'
 import { SecondaryViewComponent } from './components/secondary-view/secondary-view.component'
 // pipe
