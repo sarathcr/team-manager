@@ -59,4 +59,8 @@ describe('StepSixComponent', (): void => {
     expect(component).toBeTruthy()
 
   })
+
+  // it('creative title should have max-length 70 ', () => {
+  //   //test title
+  // })
 })
