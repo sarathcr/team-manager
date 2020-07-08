@@ -7,7 +7,7 @@ import { Subject } from 'rxjs'
 import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
 
 import { PrincipalModalColData } from '../../constants/modal-table.data'
-import { ObjectiveService } from '../../services/step-three/objective.service'
+import { ObjectiveService } from '../../services/objectives/objectives.service'
 import { Block } from 'src/app/shared/constants/block.model'
 
 @Component({
