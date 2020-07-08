@@ -59,7 +59,7 @@ import { SecondaryViewComponent } from './components/secondary-view/secondary-vi
 // pipe
 import { StringDecoder } from './pipes/string-decoder.pipe'
 import { CheckCount } from './pipes/check-count.pipe'
-import { TranslateCut } from './pipes/translate-cut.pipe'
+import { TranslateCut } from '../../shared/pipe/translate-cut.pipe'
 
 @NgModule({
   declarations: [
