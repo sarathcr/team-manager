@@ -6,14 +6,15 @@ import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
 import { Subject } from 'rxjs'
 
-import { DropDownConfig, Option } from 'src/app/shared/constants/field.model'
-import { SubSink } from 'src/app/shared/utility/subsink.utility'
-
-import { CriteriaWithSkills, Block } from 'src/app/shared/constants/block.model'
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
-import { EvaluationCriteria, Grade } from '../../constants/project.model'
-import { CompetencyModal } from '../../constants/competency-modal.data'
-import { ModalTable } from '../../constants/modal-table.data'
+
+import { EvaluationCriteria, Grade, CriteriaWithSkills } from '../../constants/model/project.model'
+import { CompetencyModal } from '../../constants/model/principle-view.model'
+import { ModalTable } from '../../constants/model/principle-view-table.model'
+import { Block } from '../../constants/model/curriculum.model'
+import { DropDownConfig, Option } from 'src/app/shared/constants/model/field.model'
+
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-competency-modal-content',

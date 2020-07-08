@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 
-import { Step } from '../../constants/step.model'
+import { Step } from '../../constants/model/project.model'
 
 @Component({
   selector: 'app-step-menu',

@@ -6,12 +6,11 @@ import { map } from 'rxjs/operators'
 
 import { EditorService } from '../../services/editor/editor.service'
 
-import { FormSevenInit, FormSeven } from '../../constants/step-forms.model'
-import { Step, Status } from '../../constants/step.model'
-import { FieldConfig } from 'src/app/shared/constants/field.model'
-import { DrivingQuestion } from 'src/app/modules/project-editor/constants/project.model'
-import { Option } from './../../../../shared/constants/field.model'
-import { FormSevenInitData } from '../../constants/step-forms.data'
+import { FormSevenInit, FormSeven } from '../../constants/model/step-forms.model'
+import { FieldConfig } from 'src/app/shared/constants/model/field.model'
+import { DrivingQuestion, Step, Status } from 'src/app/modules/project-editor/constants/model/project.model'
+import { Option } from '../../../../shared/constants/model/field.model'
+import { FormSevenInitData } from '../../constants/Data/step-forms.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { compareArray } from 'src/app/shared/utility/array.utility'

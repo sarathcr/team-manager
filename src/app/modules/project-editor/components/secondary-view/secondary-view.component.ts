@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
-import { Block } from 'src/app/shared/constants/block.model'
-import { CompetencyModal } from '../../constants/competency-modal.data'
+
+import { CompetencyModal } from '../../constants/model/principle-view.model'
+import { Block } from '../../constants/model/curriculum.model'
 
 @Component({
   selector: 'app-secondary-view',

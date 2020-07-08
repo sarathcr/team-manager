@@ -4,11 +4,11 @@ import { Observable } from 'rxjs'
 
 import { EditorService } from '../../services/editor/editor.service'
 
-import { Step, Status } from '../../constants/step.model'
-import { FormNineInit, FormNine } from '../../constants/step-forms.model'
+import { Step, Status } from '../../constants/model/project.model'
+import { FormNineInit, FormNine } from '../../constants/model/step-forms.model'
 
-import { FormNineInitData } from '../../constants/step-forms.data'
-import { ButtonSubmitConfig } from '../../constants/form-config.data'
+import { FormNineInitData } from '../../constants/Data/step-forms.data'
+import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-config.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 

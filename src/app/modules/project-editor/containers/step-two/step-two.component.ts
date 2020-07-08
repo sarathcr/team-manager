@@ -1,4 +1,4 @@
-import { Option } from './../../../../shared/constants/field.model'
+import { Option } from '../../../../shared/constants/model/field.model'
 import { Component, OnInit, OnDestroy } from '@angular/core'
 
 import { Observable } from 'rxjs'
@@ -7,12 +7,11 @@ import { TranslateService } from '@ngx-translate/core'
 
 import { EditorService } from '../../services/editor/editor.service'
 
-import { FormTwoInit, FormTwo } from '../../constants/step-forms.model'
-import { Step, Status } from '../../constants/step.model'
-import { Theme } from 'src/app/modules/project-editor/constants/project.model'
-import { FieldConfig } from '../../../../shared/constants/field.model'
+import { FormTwoInit, FormTwo } from '../../constants/model/step-forms.model'
+import { Theme, Step, Status } from 'src/app/modules/project-editor/constants/model/project.model'
+import { FieldConfig } from '../../../../shared/constants/model/field.model'
 
-import { FormTwoInitData } from '../../constants/step-forms.data'
+import { FormTwoInitData } from '../../constants/Data/step-forms.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { compareArray } from 'src/app/shared/utility/array.utility'

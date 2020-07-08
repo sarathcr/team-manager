@@ -1,4 +1,4 @@
-import { Option } from 'src/app/shared/constants/field.model'
+import { Option } from 'src/app/shared/constants/model/field.model'
 
 export interface CompetencyModal {
   evaluationCriteria?: string

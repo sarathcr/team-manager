@@ -1,5 +1,6 @@
 import { Component, Input, HostBinding } from '@angular/core'
-import { ButtonVariants, Theme, ButtonIcon } from '../../constants/field.model'
+
+import { ButtonVariants, Theme, ButtonIcon } from '../../constants/model/field.model'
 
 @Component({
   selector: 'app-button',

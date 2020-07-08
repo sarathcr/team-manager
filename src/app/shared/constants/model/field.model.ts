@@ -1,5 +1,5 @@
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
-import { Status } from 'src/app/modules/project-editor/constants/step.model'
+import { Status } from 'src/app/modules/project-editor/constants/model/project.model'
 
 export interface FieldConfig {
   disabled?: boolean
@@ -16,7 +16,7 @@ export interface FieldConfig {
   limit?: number,
 }
 
-export interface Option {
+export class Option {
   id: number
   name: string
 }
@@ -44,4 +44,14 @@ export type TextAreaVariants = 'bullet' | 'number'
 export type TextareaSize = 'small'
 
 export type ButtonIcon = 'tick'
+
+export interface CheckBoxColumn {
+  value: string,
+  size?: 'xs' | 'm' | 's' | 'sm'
+}
+
+export interface CheckBoxData {
+  checked: boolean,
+  variant?: 'checkedOnly' | 'checkbox'
+}
 

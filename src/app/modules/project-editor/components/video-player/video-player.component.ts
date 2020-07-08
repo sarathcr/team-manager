@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy, ElementRef, ViewChild, Input } from '@angular/core'
+
 import videojs from 'video.js'
 import '@devmobiliza/videojs-vimeo/dist/videojs-vimeo.cjs'
 import 'videojs-youtube'
-import { VideoOptions } from 'src/app/shared/constants/video.model'
+
+import { VideoOptions } from 'src/app/shared/constants/model/video.model'
 
 @Component({
   selector: 'app-video-player',

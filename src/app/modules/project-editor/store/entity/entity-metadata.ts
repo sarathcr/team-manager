@@ -1,6 +1,6 @@
 import { EntityMetadataMap } from '@ngrx/data'
-import { compareProjects } from '../../constants/project.model'
-import { ContextualHelp } from 'src/app/shared/constants/contextual-help.model'
+
+import { compareProjects, ContextualHelp } from '../../constants/model/project.model'
 
 export const entityMetadata: EntityMetadataMap = {
   Project: {

@@ -5,10 +5,12 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { ModalComponent } from '../modal/modal.component'
-import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
+import { Subject, Project } from 'src/app/modules/project-editor/constants/model/project.model'
+import { IconSelect } from 'src/app/shared/constants/model/select-icon.model'
+
+import { ModalDelete } from '../../constants/Data/modal-info.data'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { ModalDelete } from '../../constants/modal-config.data'
-import { IconSelect } from 'src/app/shared/constants/select-icon.model'
 
 @Component({
   selector: 'app-details-selector',

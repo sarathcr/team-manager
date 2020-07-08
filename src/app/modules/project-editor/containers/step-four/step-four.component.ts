@@ -3,21 +3,20 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Observable, BehaviorSubject } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
-
-import { EditorService } from '../../services/editor/editor.service'
-import { Project, Subject } from '../../constants/project.model'
-import { Step, Status } from '../../constants/step.model'
-import { Option, FieldConfig } from 'src/app/shared/constants/field.model'
-import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { BasicSkills } from 'src/app/shared/constants/curriculum-basic-skill.model'
-import { CurriculumBasicSkillsEntityService } from 'src/app/modules/project-editor/store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
-
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
+import { EditorService } from '../../services/editor/editor.service'
+import { CurriculumBasicSkillsEntityService } from 'src/app/modules/project-editor/store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
+
+import { Project, Subject, Step, Status, BasicSkill } from '../../constants/model/project.model'
+import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/field.model'
+import { FormFour } from '../../constants/model/step-forms.model'
+
+import { ModalUnlock } from '../../constants/Data/modal-info.data'
+
 import { ModalComponent } from './../../components/modal/modal.component'
-import { ModalUnlock } from './../../constants/modal-config.data'
-import { FormFour } from '../../constants/step-forms.model'
-import { CheckBoxData } from 'src/app/shared/constants/checkbox.model'
+
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-four',
@@ -38,8 +37,8 @@ export class StepFourComponent implements OnInit, OnDestroy {
   showTextarea = false
   initialFormStatus: Status = 'PENDING'
   contents: Option[] = []
-  basicSkills: BasicSkills[] = []
-  selectedBasicSkills: BasicSkills[] = []
+  basicSkills: BasicSkill[] = []
+  selectedBasicSkills: BasicSkill[] = []
   bsModalRef: BsModalRef
   subjectContents: any[] = []
   subjectTextArea: any[] = []
