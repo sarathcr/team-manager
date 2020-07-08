@@ -10,6 +10,8 @@
         </p>
         <app-loader *ngIf="loading; else loaded"></app-loader>
         <ng-template #loaded>
+            <app-step-unlock *ngIf="!(project$|async)?.subjects?.length"
+          [StepFive]="{step:'stepFive'}"></app-step-unlock>
             <app-details-selector
                 *ngFor="let competency of project.competencyObjectives; let i = index; let last = last;"
                 [subject]="competency" [subjectItem]="competency.standards" [isLast]="last" [project$]="project$"

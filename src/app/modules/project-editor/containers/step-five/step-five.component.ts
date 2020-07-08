@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core'
 import { Observable } from 'rxjs'
 import { EditorService } from '../../services/editor/editor.service'
-import { Step, Status } from '../../constants/step.model'
-import { Project, Subject, CompetencyObjectives, EvaluationCriteria } from '../../constants/project.model'
 
 import { SubSink } from '../../../../shared/utility/subsink.utility'
-import { FieldConfig, Option } from 'src/app/shared/constants/field.model'
-import { FormThreeInitData } from '../../constants/step-forms.data'
-import { FormThreeInit, FormThree } from '../../constants/step-forms.model'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
 import { TranslateService } from '@ngx-translate/core'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
+import { Project, Step, EvaluationCriteria, CompetencyObjective, Status, Subject } from '../../constants/model/project.model'
+import { FieldConfig, Option } from 'src/app/shared/constants/model/form-config.model'
+import { FormThreeInit, FormThree } from '../../constants/model/step-forms.model'
+import { FormThreeInitData } from '../../constants/Data/step-forms.data'
 
 @Component({
   selector: 'app-step-five',
@@ -25,7 +24,7 @@ export class StepFiveComponent implements OnInit {
   step: Step
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  competencyObjectives$: Observable<CompetencyObjectives[]>
+  competencyObjectives$: Observable<CompetencyObjective[]>
   evaluationCriteria$: Observable<EvaluationCriteria[]>
   loading = true
   inputFormData: FormThreeInit = new FormThreeInitData()
