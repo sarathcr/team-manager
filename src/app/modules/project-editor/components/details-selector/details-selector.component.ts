@@ -8,7 +8,6 @@ import { ModalComponent } from '../modal/modal.component'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { ModalDelete } from '../../constants/modal-config.data'
-import { ButtonSubmitConfig } from '../../constants/form-config.data'
 import { ButtonIcon } from 'src/app/shared/constants/field.model'
 
 @Component({
