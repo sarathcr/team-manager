@@ -54,13 +54,10 @@ export class StepFiveComponent implements OnInit {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[3]
     this.subscriptions.sink = this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
-    console.log('step: ', this.step)
     if (this.project$) {
       this.subscriptions.sink = this.project$.subscribe(data => {
         if (data) {
-          console.log('competencyObjectives: ', data.competencyObjectives)
           this.project = data
-          console.log('data: ', data)
         }
       })
     }
