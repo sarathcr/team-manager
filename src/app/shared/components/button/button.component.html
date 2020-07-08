@@ -5,10 +5,17 @@
                 'btn-text' : variant === 'text',
                 'btn-primary' : theme === 'primary',
                 'btn-secondary': theme === 'secondary',
-                'btn-success': theme === 'success'}"
+                'btn-success': theme === 'success'
+              }"
     [disabled]="disabled"
   >
-    <span class="form-button__icon icon-ic_check" *ngIf="icon === 'tick'"></span>
+    <span 
+      class="form-button__icon"
+      [ngClass]="{
+        'icon-ic_check' : icon === 'tick',
+        'icon-ic_add_small' : icon === 'add',
+        'icon-ic_locked' : icon === 'locked'
+      }"></span>
     <ng-content></ng-content>
   </button>
 </div>
