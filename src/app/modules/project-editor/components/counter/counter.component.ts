@@ -8,7 +8,8 @@ import { Component, OnInit, Input } from '@angular/core'
 export class CounterComponent implements OnInit {
 
   @Input() helperText: string
-  @Input() titleInput: number
+  @Input() value: number
+  @Input() maxlength = 70
   constructor() { }
 
   ngOnInit(): void {

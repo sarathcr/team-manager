@@ -25,7 +25,6 @@
   <ng-container>
     <div class="modal-form__button-wrapper">
       <app-button 
-      [disabled]='buttonConfig.disabled'
       (click)="onConfirm()" 
       #inputButton>
         {{ modalConfig.confirmLabel | translate }}

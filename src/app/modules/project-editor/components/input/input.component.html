@@ -1,7 +1,7 @@
 <div class="input" [ngClass]="{
 	'input_focus':focus ,
 	'input_border' : value ,
-	'input_error' : (titleInput.value.length == 70)}">
+	'input_error' : (titleInput.value.length == maxlength)}">
 	<label class="input__label" *ngIf="label">
 		{{label | translate}}
 	</label>
@@ -15,20 +15,20 @@
 		#titleInput />
 	<div class="input__counter-wrapper">
 		<app-counter 
-			*ngIf="(titleInput.value.length == 0)" 
+			*ngIf="(value.length == 0)" 
 			helperText="PROJECT.project_title_helpertext"
-			[titleInput]="titleInput.value.length">
+			[value]="value.length">
 		</app-counter>
 		<app-counter 
-			*ngIf="(titleInput.value.length > 0) && !(titleInput.value.length == 70)" 
+			*ngIf="(value.length > 0) && !(value.length == maxlength)" 
 			helperText=""
-			[titleInput]="titleInput.value.length">
+			[value]="value.length">
 		</app-counter>
 			<!-- WIP Localization Not updated in the Sheet -->
 		<app-counter 
-			*ngIf="(titleInput.value.length == 70)" 
+			*ngIf="(value.length == maxlength)" 
 			helperText="PROJECT.Error_textlimit_specified_singleinput"
-			[titleInput]="titleInput.value.length">
+			[value]="value.length">
 		</app-counter>
 	</div>
 </div>

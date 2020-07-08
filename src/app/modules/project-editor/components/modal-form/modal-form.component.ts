@@ -14,7 +14,6 @@ import { ButtonSubmitConfig } from '../../constants/form-config.data'
 export class ModalFormComponent implements OnInit {
 
   @Input() modalConfig: ModalFormConfig
-  buttonConfig = new ButtonSubmitConfig()
 
   public onClose: Subject<string>
   constructor(
@@ -31,12 +30,6 @@ export class ModalFormComponent implements OnInit {
   public onConfirm(): void {
     this.onClose.next(this.modalConfig.variant)
     this.bsModalRef.hide()
-  }
-
-  // Changes the button according to form status
-  handleButtonType(): void {
-    this.buttonConfig.submitted = true
-    this.buttonConfig.disabled = true
   }
 
 }
