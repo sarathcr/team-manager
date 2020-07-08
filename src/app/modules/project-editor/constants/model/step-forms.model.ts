@@ -1,4 +1,3 @@
-import { Status, StepState } from './step.model'
 import {
   DrivingQuestion,
   Theme,
@@ -7,9 +6,11 @@ import {
   AcademicYear,
   Region,
   Country,
-  CompetencyObjectives
-} from 'src/app/modules/project-editor/constants/project.model'
-import { Option } from 'src/app/shared/constants/field.model'
+  CompetencyObjective,
+  Status,
+  StepState
+} from 'src/app/modules/project-editor/constants/model/project.model'
+import { Option } from 'src/app/shared/constants/model/form-config.model'
 
 export interface FormOne {
   data: {
@@ -55,7 +56,7 @@ export interface FormTwoInit {
 
 export interface FormThree {
   data: {
-    competencyObjectives?: CompetencyObjectives[]
+    competencyObjectives?: CompetencyObjective[]
     subjects?: Subject[]
   }
   stepStatus: StepState
@@ -69,10 +70,10 @@ export interface FormFour {
   stepStatus: StepState
 }
 export interface FormThreeData {
-  competencyObjectives: CompetencyObjectives[]
+  competencyObjectives: CompetencyObjective[]
 }
 export interface FormThreeInit {
-  competencyObjectives?: CompetencyObjectives[],
+  competencyObjectives?: CompetencyObjective[],
   placeholder?: string
 }
 

@@ -5,10 +5,11 @@ import { ModalFormComponent } from '../../components/modal-form/modal-form.compo
 
 import { Observable } from 'rxjs'
 
-import { Step } from '../../constants/step.model'
 import { EditorService } from '../../services/editor/editor.service'
 import { ModalInput } from '../../constants/modal-form-config.data'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
+
+import { Step } from '../../constants/model/project.model'
 
 @Component({
   selector: 'app-editor',

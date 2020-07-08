@@ -56,11 +56,13 @@ import { ModalFormComponent } from './components/modal-form/modal-form.component
 import { ValidatorComponent } from './components/validator/validator.component'
 // service
 import { EditorService } from './services/editor/editor.service'
+import { ObjectiveService } from './services/objectives/objectives.service'
 import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service'
 import { SecondaryViewComponent } from './components/secondary-view/secondary-view.component'
 // pipe
 import { StringDecoder } from './pipes/string-decoder.pipe'
 import { CheckCount } from './pipes/check-count.pipe'
+import { TranslateCut } from '../../shared/pipe/translate-cut.pipe'
 
 @NgModule({
   declarations: [
@@ -104,7 +106,8 @@ import { CheckCount } from './pipes/check-count.pipe'
     ImageUploadComponent,
     SecondaryViewComponent,
     ModalFormComponent,
-    ValidatorComponent
+    ValidatorComponent,
+    TranslateCut
   ],
   imports: [
     CommonModule,
@@ -124,7 +127,8 @@ import { CheckCount } from './pipes/check-count.pipe'
   providers: [
     EditorService,
     AwsImgUploadService,
-    BsModalRef
+    BsModalRef,
+    ObjectiveService
   ]
 })
 

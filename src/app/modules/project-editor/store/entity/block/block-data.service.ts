@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http'
 
 import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data'
 import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 import { environment } from 'src/environments/environment'
-import { Block } from 'src/app/shared/constants/block.model'
-import { map } from 'rxjs/operators'
+
+import { Block } from '../../../constants/model/curriculum.model'
 
 @Injectable()
 export class BlockDataService extends DefaultDataService<Block> {

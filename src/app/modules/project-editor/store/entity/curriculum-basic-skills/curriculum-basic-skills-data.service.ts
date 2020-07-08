@@ -5,7 +5,8 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { environment } from 'src/environments/environment'
-import { Curriculum } from 'src/app/shared/constants/curriculum-basic-skill.model'
+
+import { Curriculum } from '../../../constants/model/curriculum.model'
 
 @Injectable()
 export class CurriculumBasicSkillsDataService extends DefaultDataService<Curriculum> {

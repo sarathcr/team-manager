@@ -1,8 +1,11 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter } from '@angular/core'
-import { ProjectTitle } from '../../constants/title-data.model'
-import { ModalInput } from '../../constants/modal-form-config.data'
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
+
 import { ModalFormComponent } from '../modal-form/modal-form.component'
+
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
+import { ProjectTitle } from '../../constants/model/project.model'
+
+import { ModalInput } from '../../constants/modal-form-config.data'
 
 @Component({
   selector: 'app-project-title',

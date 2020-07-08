@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { StepState } from '../../../constants/step.model'
+import { StepState } from '../../../constants/model/project.model'
 
 @Injectable()
 export class StepStatusDataService extends DefaultDataService<StepState[]> {

@@ -1,14 +1,13 @@
-<div class="project-editor__form step-three">
-  <app-status [status]='step.state'></app-status>
-  <div class="project-form d-flex flex-column justify-content-between">
-    <div>
-      <h1 class="project-form__title title_s">
-        <span class="project-form__title-number">3.</span>{{'OBJECTIVES.project_objectives_title' | translate}}
-        <app-info-tooltip></app-info-tooltip>
-      </h1>
-      <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
-      <app-loader *ngIf="loading; else loaded"></app-loader>
-      <ng-template #loaded>
+<ng-template #loaded>
+  <div class="project-editor__form step-three">
+    <app-status [status]='step.state'></app-status>
+    <div class="project-form d-flex flex-column justify-content-between">
+      <div>
+        <h1 class="project-form__title title_s">
+          <span class="project-form__title-number">3.</span>{{'OBJECTIVES.project_objectives_title' | translate}}
+          <app-info-tooltip></app-info-tooltip>
+        </h1>
+        <p class="project-form__description">{{'OBJECTIVES.project_objectives_description'  | translate}}</p>
         <app-step-unlock *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects"
           [StepThree]="{step:'stepThree'}"></app-step-unlock>
         <ng-template #hasSubjects>
@@ -21,7 +20,8 @@
               (deleteCriteria)="removeCriteria($event)"
               [project$]="editor.project$"
               (openModal)="openModalWithComponent($event)"
-              [icon]="'add'"
+              icon="add"
+              [loading]="criteriaLoader"
             ></app-details-selector>
             <div class="project-editor__goto-step">
               {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}
@@ -43,14 +43,15 @@
             </app-textarea-bullets>
           </div>
         </ng-template>
-      </ng-template>
+      </div>
+      <app-button
+        [disabled] = 'buttonConfig.disabled || !project.subjects?.length'
+        [theme] = "buttonConfig.submitted ? 'success':'primary'"
+        [icon]="'tick'"
+        (click)='handleSubmit("DONE")'>
+        {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
+      </app-button>
     </div>
-    <app-button
-      [disabled] = 'buttonConfig.disabled || !project.subjects?.length'
-      [theme] = "buttonConfig.submitted ? 'success':'primary'"
-      [icon]="'tick'"
-      (click)='handleSubmit("DONE")'>
-      {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
-    </app-button>
   </div>
-</div>
+</ng-template>
+<app-loader *ngIf="loading; else loaded"></app-loader>
