@@ -6,11 +6,16 @@ import { TranslateService } from '@ngx-translate/core'
 
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 
-import { PrincipalModalColData, TranslatePrincipalData, GradeIndex, PrincipalModalColHead } from '../../constants/modal-table.data'
-import { CompetencyModal } from '../../constants/competency-modal.data'
-import { Grade } from '../../constants/project.model'
-import { Option, DropdownCustom } from 'src/app/shared/constants/field.model'
-import { Block, CriteriaWithSkills } from 'src/app/shared/constants/block.model'
+import { CompetencyModal } from '../../constants/model/principle-view.model'
+import { Option, DropdownCustom } from 'src/app/shared/constants/model/form-config.model'
+import { Block } from '../../constants/model/curriculum.model'
+import {
+  PrincipalModalColData,
+  TranslatePrincipalData,
+  PrincipalModalColHead,
+  GradeIndex
+} from '../../constants/model/principle-view.model'
+import { Grade, CriteriaWithSkills } from '../../constants/model/project.model'
 
 @Injectable({
   providedIn: 'root'
@@ -147,7 +152,7 @@ export class ObjectiveService {
   }
 
   getBlocks(selectedGrade: Grade): void {
-    const gradeBlocks = this.gradeIds.map(id => ({id, count: 0}))
+    const gradeBlocks = this.gradeIds.map(id => ({ id, count: 0 }))
     this.blockService.entities$
       .pipe(map(data => {
         this.createBlockData(data, gradeBlocks, selectedGrade)

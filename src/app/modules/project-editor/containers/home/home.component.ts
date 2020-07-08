@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit, OnDestroy } from '@angular/
 import { Observable } from 'rxjs'
 import { tap, filter, first } from 'rxjs/operators'
 
-import { Project } from 'src/app/modules/project-editor/constants/project.model'
+import { Project } from 'src/app/modules/project-editor/constants/model/project.model'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 

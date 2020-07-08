@@ -3,9 +3,11 @@ import { Component, ViewEncapsulation, Output, EventEmitter, OnDestroy } from '@
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-import { Help, ContextualHelp } from 'src/app/shared/constants/contextual-help.model'
 import { EditorService } from '../../services/editor/editor.service'
 import { HelpEntityService } from '../../store/entity/help/help-entity.service'
+
+import { Help, ContextualHelp } from '../../constants/model/project.model'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
