@@ -35,11 +35,17 @@ export interface DropDownConfig {
   status?: Status
 }
 
+export interface DropdownCustom {
+  label: string
+  priorityTitle: string
+  normalTitle: string
+}
+
 export type ButtonVariants = 'contained' | 'outlined' | 'text'
 
 export type Theme = 'primary' | 'secondary' | 'success'
 
-export type TextAreaVariants = 'bullet' | 'number'
+export type TextAreaVariants = 'bullet' | 'number' | 'toggle'
 
 export type TextareaSize = 'small'
 

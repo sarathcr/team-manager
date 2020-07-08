@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
 import { EditorService } from '../../services/editor/editor.service'
+import { ObjectiveService } from '../../services/step-three/objective.service'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
 
@@ -24,7 +25,6 @@ import { Project } from '../../constants/model/project.model'
 import { FormThreeInitData } from '../../constants/Data/step-forms.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { GradeOptionAndId } from '../../constants/model/principle-view.model'
 
 @Component({
   selector: 'app-step-three',
@@ -50,13 +50,15 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink()
   criteriaPayload: Subject
   isFormUpdated = false
+  criteriaLoader = false
 
   constructor(
     private translateService: TranslateService,
     public editor: EditorService,
     private modalService: BsModalService,
     private gradeService: GradeEntityService,
-    private criteriaEntityService: EvaluationCriteriaEntityService
+    private criteriaEntityService: EvaluationCriteriaEntityService,
+    private objective: ObjectiveService
   ) { }
 
   ngOnInit(): void {
@@ -138,6 +140,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   // gets the criteria data
   getCriteriaDetails(subjects: Subject[]): void {
+    this.criteriaEntityService.loading$.subscribe(loading => this.criteriaLoader = loading)
     const criteriaIds = []
     for (const subject of subjects) {
       if (subject.evaluationCriteria?.length) {
@@ -353,26 +356,35 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     })
   }
 
-  getAllGrades(): GradeOptionAndId {
+  getBlocksFromSelectedGrades(): void {
     const selectedGrades = this.project.grades.map(({ id, name }) => ({ id, name }))
-    const gradeIds = this.grades.map(({ id }) => id)
-    return { selectedGrades, gradeIds }
+    this.objective.getBlocks(selectedGrades[0])
+    this.objective.selectedGrades = selectedGrades
+  }
+
+  getModalData(subject: Subject): void {
+    const gradeIds = this.grades.map(({id}) => id)
+    this.objective.gradeIds = gradeIds
+    this.objective.subject = { id: subject.id, name: subject.name }
+    this.objective.criteriaIds = subject.evaluationCriteria.map(criteria => criteria.id)
+    this.objective.getTranslationText()
+    this.objective.getHeading()
+    this.getBlocksFromSelectedGrades()
+    this.objective.getDropDownData()
   }
 
   // function to open principle view modal
   openModalWithComponent(subject: Subject): void {
-    const { selectedGrades, gradeIds } = this.getAllGrades()
+    this.objective.resetData()
+    this.getModalData(subject)
     const initialState = {
       grades: this.grades,
-      selectedGrades,
-      gradeIds,
-      subject: { id: subject.id, name: subject.name },
-      criteriaIds: subject.evaluationCriteria.map(criteria => criteria.id)
+      stepId: 3
     }
     this.bsModalRef = this.modalService.show(PrincipalViewComponent,
       { class: 'competency-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
-    this.bsModalRef.content.selectedCriterias.subscribe(criterias => {
+    this.bsModalRef.content.selectedItems.subscribe(criterias => {
       this.criteriaPayload = {
         evaluationCriteria: criterias,
         id: subject.id,

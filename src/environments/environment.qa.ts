@@ -5,4 +5,4 @@ export const environment = {
     curriculumService: 'https://api.qa.abp.thinkoeducation.com/curriculum-service',
     imgUpload: 'https://api.qa.abp.thinkoeducation.com/uploads/'
   }
-}; 
+}

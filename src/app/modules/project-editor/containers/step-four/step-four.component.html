@@ -26,26 +26,19 @@
               (openModal)="pushContent(!!subject.evaluationCriteria.length, i)"
               (deleteCriteria)="popConent(i)"
             ></app-details-selector>
-            <div class="project-form__textarea-content"  *ngIf="!subjectTextArea[i]?.isShown; else manualContent">
-              {{"CONTENT.project_content_extracontent.one" | translate}}
-              <span class="project-form__textarea-content_link" (click)="toggleTextarea(i)">
-                {{"CONTENT.project_content_extracontent.two" | translate}}
-              </span>
-            </div>
-            <ng-template #manualContent>
               <div class="project-form__textarea-wrapper">
                 <app-textarea-bullets
+                  [variant]="'toggle'"
+                  [toggleData]="'CONTENT.project_content_extracontent'"
                   [onInitFocus]="true"
                   [config]='textAreaConfig'
                   label="CONTENT.project_content_extracontent_input"
                   size="small"
-                  (textareaBlur)="textareaBlur($event, i)"
                   (inputChange)="textareaDataChange($event, i)"
                   [options$]="subjectTextArea[i].options$"
                 >
                 </app-textarea-bullets>
               </div>
-            </ng-template>
           </div>
           <ng-container *ngIf="basicSkills?.length">
             <div class="project-form__basic-skill">
