@@ -6,7 +6,9 @@ import { map } from 'rxjs/operators'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { CurriculumBasicSkillsEntityService } from 'src/app/modules/project-editor/store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
+import {
+  CurriculumBasicSkillsEntityService
+} from 'src/app/modules/project-editor/store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 
 import { Project, Subject, Step, Status, BasicSkill } from '../../constants/model/project.model'
 import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/field.model'

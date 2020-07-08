@@ -43,7 +43,7 @@ export type TextAreaVariants = 'bullet' | 'number'
 
 export type TextareaSize = 'small'
 
-export type ButtonIcon = 'tick'
+export type ButtonIcon = 'tick' | 'add' | 'locked'
 
 export interface CheckBoxColumn {
   value: string,
