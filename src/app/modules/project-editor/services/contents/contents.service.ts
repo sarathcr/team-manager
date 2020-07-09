@@ -45,8 +45,7 @@ export class ContentService {
     }
   }
 
-  getTableData(content: ContentsWithSkills, colOneHead: PrincipalModalColHead)
-  : PrincipalModalColData {
+  getTableData(content: ContentsWithSkills, colOneHead: PrincipalModalColHead): PrincipalModalColData {
     if (!colOneHead && content.name) {
       colOneHead = { key: 'contents', value: this.heading.contents }
     }
