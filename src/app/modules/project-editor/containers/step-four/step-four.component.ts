@@ -10,13 +10,13 @@ import {
   CurriculumBasicSkillsEntityService
 } from 'src/app/modules/project-editor/store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 
+import { ModalInfoComponent } from '../../components/modal-info/modal-info.component'
+
 import { Project, Subject, Step, Status, BasicSkill } from '../../constants/model/project.model'
 import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/form-config.model'
 import { FormFour } from '../../constants/model/step-forms.model'
 
 import { ModalUnlock } from '../../constants/Data/modal-info.data'
-
-import { ModalComponent } from './../../components/modal/modal.component'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -188,7 +188,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   getModal(): void {
     const initialState = { modalConfig: { ...ModalUnlock } }
-    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal', initialState })
+    this.bsModalRef = this.modalService.show(ModalInfoComponent, { class: 'common-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
       if (result) {

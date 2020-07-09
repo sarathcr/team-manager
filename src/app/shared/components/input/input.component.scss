@@ -1,0 +1,54 @@
+@import 'helpers/_helpers-master';
+.input{
+    $root: &;
+    border: 1px solid $creator-textarea-border;
+    box-shadow: 0 0 0 0 transparent;
+    border-radius: 3px;
+    position: relative;
+    &__field{
+        min-height: 48px;
+        padding: 12px 20px;
+        font-size: $font-size-body-s;
+        line-height: 24px;
+        width: 100%;
+        border: none;
+        background: transparent;
+        caret-color: $electric-indigo;
+        &::placeholder{
+            color: $overtitle-grey;
+            font-size: $font-size-body-s;
+            line-height: 24px;
+        }
+    }
+    &_border{
+        border: 1px solid $creator-border;
+    }
+    &__label{
+        position: absolute;
+        font-size: $font-size-body-input;
+        font-weight: 900;
+        letter-spacing: 0.2px;
+        line-height: 12px;
+        top: -2px;
+        transform: translateY(-50%);
+        padding: 2px 5px;
+        background-color: $background-primary;
+        left: 14px;
+        z-index: 2;
+        color: $primary-font-color;
+    }
+    &__counter-wrapper {
+        width: 100%;
+        position: absolute;
+    }
+    &_focus, &_error{
+        border: 1px solid transparent !important;
+        box-shadow: 0 0 0 2px $primary !important;
+    }
+    &_error{
+        box-shadow: 0 0 0 2px $error-input-border !important;
+        #{$root}__field{
+            caret-color: $error-input-border;
+        }
+    }
+}
