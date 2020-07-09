@@ -43,10 +43,10 @@
     }
     &_focus, &_error{
         border: 1px solid transparent !important;
-        box-shadow: 0 0 0 2px $primary !important;
+        box-shadow: 0 0 0 3px $primary !important;
     }
     &_error{
-        box-shadow: 0 0 0 2px $error-input-border !important;
+        box-shadow: 0 0 0 3px $error-input-border !important;
         #{$root}__field{
             caret-color: $error-input-border;
         }
