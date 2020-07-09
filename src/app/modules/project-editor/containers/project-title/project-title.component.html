@@ -2,7 +2,7 @@
   <div class="project-title__input">
     {{this.projectData?.title || tempTitle}}
   </div>
-  <div class="icon-ic_edit_small project-title__edit" (click)="openModal(titleModal)" *ngIf="projectData">
+  <div class="icon-ic_edit_small project-title__edit" (click)="openModal()" *ngIf="projectData">
   </div>
 </div>
 <ng-template #titleModal>

@@ -46,7 +46,7 @@ export class ProjectTitleComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.projectUrl === 'create') {
-      this.openModal(this.titleModal)
+      this.openModal()
     }
   }
 
@@ -60,10 +60,10 @@ export class ProjectTitleComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openModal(modalTemplate: TemplateRef<any>): void {
+  openModal(): void {
     this.modalTitle = !this.projectData?.id ? 'PROJECT.project_title_title_newtitle' : 'PROJECT.project_title_title_edittitle'
     this.modalConfirmLabel = !this.projectData?.id ? 'PROJECT.project_button_create' : 'PROJECT.project_button_save'
-    this.modalRef = this.modalService.show(modalTemplate, {
+    this.modalRef = this.modalService.show(this.titleModal, {
       ignoreBackdropClick: true,
       class: 'modal-form'
     })
