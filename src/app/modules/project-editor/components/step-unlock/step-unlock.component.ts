@@ -13,6 +13,7 @@ export class StepUnlockComponent implements OnInit {
   textAreaConfig: FieldConfig
   @Input() StepThree: DefineStep
   @Input() StepFour: DefineStep
+  @Input() StepFive: DefineStep
 
   constructor() { }
 
@@ -41,5 +42,5 @@ export class StepUnlockComponent implements OnInit {
 }
 
 export interface DefineStep {
-  step?: 'stepThree' | 'stepFour'
+  step?: 'stepThree' | 'stepFour' | 'stepFive'
 }

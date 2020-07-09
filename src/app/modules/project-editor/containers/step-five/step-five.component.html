@@ -1,8 +1,32 @@
 <div class="project-editor__form step-five">
     <div class="project-form">
-        <h1 class="project-form__title title_s"><span class="project-form__title-number">5.</span>Estándares<app-info-tooltip></app-info-tooltip>
+        <h1 class="project-form__title title_s">
+            <span class="project-form__title-number">5.</span>
+            {{'STANDARDS.project_standards_title' | translate }}
+            <app-info-tooltip></app-info-tooltip>
         </h1>
-        <p class="project-form__description">Especifica los estándares o indicadores de aprendizaje para cada uno de los
-            objetivos competenciales.</p>
+        <p class="project-form__description">
+            {{ 'STANDARDS.project_standards_initial_label' | translate }}
+        </p>
+        <app-loader *ngIf="loading; else loaded"></app-loader>
+        <ng-template #loaded>
+            <app-step-unlock *ngIf="!(project$|async)?.subjects?.length"
+          [StepFive]="{step:'stepFive'}"></app-step-unlock>
+            <app-details-selector
+                *ngFor="let competency of project.competencyObjectives; let i = index; let last = last;"
+                [subject]="competency" [subjectItem]="competency.standards" [isLast]="last" [project$]="project$"
+                [icon]="{name:'add'}">
+            </app-details-selector>
+
+            <app-textarea-bullets [config]='textAreaConfig'
+                label="{{'STANDARDS.project_standards_extrastandards_input' | translate}}"
+                size="small">
+            </app-textarea-bullets>
+        </ng-template>
+
+        <app-button [disabled]='buttonConfig.disabled || !project.subjects?.length'
+            [theme]="buttonConfig.submitted ? 'success':'primary'" [icon]="'tick'" (click)='handleSubmit("DONE")'>
+            {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
+        </app-button>
     </div>
 </div>
