@@ -1,4 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
+
+import { Observable } from 'rxjs'
+
+import { TextAreaVariants, TextareaSize } from 'src/app/shared/constants/model/form-config.model'
 @Component({
   selector: 'app-textarea',
   templateUrl: './textarea.component.html',
@@ -6,15 +10,42 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core'
 })
 export class TextareaComponent implements OnInit {
 
-  @Input() value: string
+  // @Input() value: string
   @Input() placeholder: string
+  @Input() label: string
   @Input() maxlength: number
+  @Input() size: TextareaSize
+  @Input() variant: TextAreaVariants = 'default'
+  @Input() toggleData = ''
+  @Input() onInitFocus = false
+  @Input() limit: number
+  @Input() value$: Observable<any>
   @Output() inputChange = new EventEmitter()
+  @Input() config
   focus = false
+  initialValue: string
+  value: string
+  updated = false
 
   constructor() { }
 
   ngOnInit(): void {
+    if (this.variant === 'default') {
+      this.valueInit()
+    }
+  }
+
+  valueInit(): void {
+    if (this.value$) {
+      this.value$.subscribe(data => {
+        if (data) {
+          this.value = data
+          this.initialValue = data
+        }
+      })
+      const status = this.value ? 'INPROCESS' : 'PENDING'
+      this.inputChange.emit({ val: this.value, updated: this.updated, status })
+    }
   }
 
   // Function to get and emit value on textarea
@@ -23,7 +54,9 @@ export class TextareaComponent implements OnInit {
       value = value.substring(0, this.maxlength)
     }
     this.value = value
-    this.inputChange.emit(value.trim())
+    this.updated = true
+    const status = this.value.trim() ? 'INPROCESS' : 'PENDING'
+    this.inputChange.emit({ val: value.trim(), updated: this.updated, status })
   }
 
   onKeyDown(event: any): void {
@@ -39,9 +72,12 @@ export class TextareaComponent implements OnInit {
 
   onBlur(): void {
     this.focus = false
-    if (!this.value.trim()) {
+    if (!this.updated) {
+      this.updated = this.initialValue !== this.value
+    }
+    if (!this.value?.trim()) {
       this.value = ''
-      this.inputChange.emit('')
+      this.inputChange.emit({ val: '', updated: this.updated, status: 'PENDING' })
     }
   }
 

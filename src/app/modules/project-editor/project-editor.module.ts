@@ -61,6 +61,7 @@ import { SecondaryViewComponent } from './components/secondary-view/secondary-vi
 import { StringDecoder } from './pipes/string-decoder.pipe'
 import { CheckCount } from './pipes/check-count.pipe'
 import { TranslateCut } from '../../shared/pipe/translate-cut.pipe'
+import { TextareaListComponent } from './components/textarea/textarea-list/textarea-list.component'
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import { TranslateCut } from '../../shared/pipe/translate-cut.pipe'
     InputComponent,
     ImageUploadComponent,
     SecondaryViewComponent,
-    TranslateCut
+    TranslateCut,
+    TextareaListComponent
   ],
   imports: [
     CommonModule,

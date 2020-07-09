@@ -1,4 +1,4 @@
-<div class="textarea d-flex" [ngClass]="{'textarea_focus': focus}">
+<div class="textarea d-flex" [ngClass]="{'textarea_focus': focus}" *ngIf="variant=='default'; else otherVariants">
   <textarea
     class="textarea__description"
     [attr.maxlength]="maxlength"
@@ -10,3 +10,18 @@
     (keydown)="onKeyDown($event)"
   ></textarea>
 </div>
+<ng-template #otherVariants> 
+<app-textarea-list 
+  [placeholder]="placeholder"
+  [label]="label"
+  [maxlength]="maxlength"
+  [limit]="limit"
+  [value$]="value$"
+  [config]="config"
+  [size]="size"
+  [variant]="variant"
+  [toggleData] = "toggleData"
+  [onInitFocus] = "onInitFocus"
+  (inputChange)="inputChange.emit($event)"
+  ></app-textarea-list>
+</ng-template>

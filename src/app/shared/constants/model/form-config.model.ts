@@ -45,7 +45,7 @@ export type ButtonVariants = 'contained' | 'outlined' | 'text'
 
 export type Theme = 'primary' | 'secondary' | 'success'
 
-export type TextAreaVariants = 'bullet' | 'number' | 'toggle'
+export type TextAreaVariants = 'default' | 'bullet' | 'number' | 'toggle'
 
 export type TextareaSize = 'small'
 

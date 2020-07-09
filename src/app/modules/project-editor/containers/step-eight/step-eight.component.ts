@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 
 import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 import { EditorService } from '../../services/editor/editor.service'
 
@@ -21,6 +22,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
 
   project$: Observable<any>
   step$: Observable<Step>
+  finalProduct$: Observable<string>
   step: Step
   finalProduct: any = ''
   buttonConfig = new ButtonSubmitConfig()
@@ -28,6 +30,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
   active = false
   initialFormStatus: Status = 'PENDING'
   subscription = new SubSink()
+  isFormUpdated = false
 
   constructor(
     private editor: EditorService
@@ -38,7 +41,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.isFormUpdated()) {
+    if (this.isFormUpdated) {
       this.handleSubmit()
     }
     this.subscription.unsubscribe()
@@ -49,12 +52,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[7]
     if (this.project$) {
-      this.subscription.sink = this.project$.subscribe(data => {
-        if (data?.finalProduct) {
-          this.finalProduct = data.finalProduct
-          this.initialFormData = data.finalProduct
-        }
-      })
+      this.finalProduct$ = this.project$.pipe(map(data => data.finalProduct))
     }
     if (this.step$) {
       this.subscription.sink = this.step$.subscribe(
@@ -62,38 +60,22 @@ export class StepEightComponent implements OnInit, OnDestroy {
           if (formStatus) {
             this.buttonConfig.submitted = formStatus.state === 'DONE'
             this.initialFormStatus = formStatus.state
-            if (formStatus.state !== 'DONE' && this.finalProduct?.length) {
-              this.buttonConfig.disabled = false
-            }
           }
         }
       )
     }
   }
 
-  // Function to check status of step
-  checkStatus(): void {
-    if (this.finalProduct.length && this.finalProduct !== this.initialFormData) {
-      this.step.state = 'INPROCESS'
-    }
-    if (!this.finalProduct.length) {
-      this.step.state = 'PENDING'
-    }
-    this.handleButtonType()
-  }
-
   // Function to trigger the value in the textarea
-  onValueChange(value: string): void {
-    this.finalProduct = value
-    this.checkStatus()
-  }
-
-  // Function to check whether the form is updated
-  isFormUpdated(): boolean {
-    if (this.initialFormData !== this.finalProduct || this.initialFormStatus !== this.step.state) {
-      return true
+  onValueChange(value: any): void {
+    this.finalProduct = value.val
+    this.isFormUpdated = value.updated
+    if (value.updated) {
+      this.step.state = value.status
+      this.handleButtonType()
+    } else if (this.initialFormStatus !== 'DONE' && this.initialFormStatus === 'INPROCESS') {
+      this.buttonConfig.disabled = false
     }
-    return false
   }
 
   // Changes the button according to form status
@@ -132,6 +114,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
         ]
       }
     }
+    this.isFormUpdated = false
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
   }
 }
