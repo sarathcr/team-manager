@@ -19,6 +19,7 @@
   margin-bottom: 56px;
   box-shadow: 0 0 0 0 transparent;
   position: relative;
+  box-sizing: border-box;
   &__placeholder{
     position: absolute;
     top: 14px;
