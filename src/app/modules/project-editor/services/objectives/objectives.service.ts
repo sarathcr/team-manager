@@ -6,8 +6,8 @@ import { TranslateService } from '@ngx-translate/core'
 
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 
-import { CompetencyModal } from '../../constants/model/principle-view.model'
 import { Option, DropdownCustom } from 'src/app/shared/constants/model/form-config.model'
+import { CompetencyModal } from '../../constants/model/principle-view.model'
 import { Block } from '../../constants/model/curriculum.model'
 import {
   PrincipalModalColData,
@@ -16,6 +16,8 @@ import {
   GradeIndex
 } from '../../constants/model/principle-view.model'
 import { Grade, CriteriaWithSkills } from '../../constants/model/project.model'
+
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +35,7 @@ export class ObjectiveService {
   translateData: TranslatePrincipalData
   dropDownConfig: DropdownCustom
   selectedGrades: Grade[]
+  subscriptions = new SubSink()
 
   constructor(
     private blockService: BlockEntityService,
@@ -53,7 +56,6 @@ export class ObjectiveService {
     let colTwoData = ''
     if (!colOneHead && criteria.name) {
       colOneHead = { key: 'evaluationCriteria', value: this.heading.evaluationCriteria }
-      this.changeColHead(colOneHead, 'colOneHead')
     }
 
     if (!colTwoHead) {
@@ -102,8 +104,9 @@ export class ObjectiveService {
       block: 'OBJECTIVES.project_objectives_criteriawindow_block',
       dimension: 'OBJECTIVES.project_objectives_criteriawindow_dimensions'
     }
-    this.modalColumns.colThreeHead = { key: 'course', value: this.heading.course }
+    this.modalColumns.colOneHead = { key: 'evaluationCriteria', value: this.heading.evaluationCriteria }
     this.modalColumns.colFourHead = { key: 'block', value: this.heading.block }
+    this.modalColumns.colThreeHead = { key: 'course', value: this.heading.course }
   }
 
   getTranslationText(): void {
@@ -127,7 +130,7 @@ export class ObjectiveService {
   }
 
   getDropDownData(): void {
-    this.translateService.stream([
+    this.subscriptions.sink = this.translateService.stream([
       'OBJECTIVES.project_objectives_criteriawindow_combo_title',
       'OBJECTIVES.project_objectives_criteriawindow_combo_section_1',
       'OBJECTIVES.project_objectives_criteriawindow_combo_section_2',
@@ -153,7 +156,7 @@ export class ObjectiveService {
 
   getBlocks(selectedGrade: Grade): void {
     const gradeBlocks = this.gradeIds.map(id => ({ id, count: 0 }))
-    this.blockService.entities$
+    this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
         this.createBlockData(data, gradeBlocks, selectedGrade)
         return data.filter(block => block.subjectId === this.subject.id && this.gradeIds.includes(block.gradeId))
@@ -177,6 +180,7 @@ export class ObjectiveService {
   }
 
   resetData(): void {
+    this.subscriptions.unsubscribe()
     this.gradeIds = []
     this.criteriaIds = []
     this.blockData = []

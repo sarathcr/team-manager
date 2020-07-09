@@ -50,6 +50,13 @@ export class ProjectsDataService extends DefaultDataService<Project> {
                     map(() => data.changes)
                 )
         }
+        if (data.changes?.updateType === 'removeContent') {
+          const { subjectId, contentId, id } = data.changes
+          return this.http.delete<any>(`${environment.apiUrl.projectService}/projects/${id}/subjects/${subjectId}/contents/${contentId}`)
+              .pipe(
+                  map(() => data.changes)
+              )
+      }
     }
 
 

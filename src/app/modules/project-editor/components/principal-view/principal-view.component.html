@@ -46,9 +46,9 @@
               >
                 <strong class="custom-tab__links-index">{{ block.blockIndex }}. </strong>
                 <span class="custom-tab__links-label">{{ block.name }}</span>
-                  <span *ngIf="block[serviceData.modalColumns.colOneHead.key] | checkCount" class="d-flex ml-auto" >
+                  <span *ngIf="block[serviceData.modalColumns.colOneHead?.key] | checkCount" class="d-flex ml-auto" >
                     <strong class="custom-tab__links-selected">
-                      {{ block[serviceData.modalColumns.colOneHead.key] | checkCount }}
+                      {{ block[serviceData.modalColumns.colOneHead?.key] | checkCount }}
                     </strong>
                   <span class="custom-tab__links-icon icon-ic_check"></span>
                 </span>
@@ -67,7 +67,7 @@
             <app-checkbox
               [isHead]="true"
               [checkboxData]="false"
-              [colOne]="{value: block.colOneHead }"
+              [colOne]="{value: serviceData.modalColumns.colOneHead?.value }"
               [colTwo]="{
                 value: block.colTwoHead === serviceData.modalColumns.colTwoHead?.value ? block.colTwoHead : '',
                 size: 'sm'
@@ -77,7 +77,7 @@
             <ng-scrollbar class="custom-scrollbar">
               <div class="custom-tab__content-body-scroll">
                 <app-checkbox
-                *ngFor="let column of block[serviceData.modalColumns.colOneHead.key]"
+                *ngFor="let column of block[serviceData.modalColumns.colOneHead?.key]"
                 [checkboxData]="column"
                 [colOne]="{ value: column.colOneData }"
                 [colTwo]="{ value: column.colTwoData, size: 'sm' }"

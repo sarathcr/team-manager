@@ -9,6 +9,7 @@ import { ObjectiveService } from '../../services/objectives/objectives.service'
 import { Block } from '../../constants/model/curriculum.model'
 import { PrincipalModalColData } from '../../constants/model/principle-view.model'
 import { DropDownConfig, Option } from 'src/app/shared/constants/model/form-config.model'
+import { ContentService } from '../../services/contents/contents.service'
 
 @Component({
   selector: 'app-competency-modal-content',
@@ -23,20 +24,29 @@ export class PrincipalViewComponent implements OnInit {
   grades: Option[]
   showPrimaryView = true
   selectedItems: Subject<any> = new Subject()
-  serviceData: ObjectiveService
+  serviceData: ObjectiveService | ContentService
   stepId: 3 | 4
 
   constructor(
     public bsModalRef: BsModalRef,
     private location: PlatformLocation,
-    private objectiveService: ObjectiveService
+    private objectiveService: ObjectiveService,
+    private contentService: ContentService
   ) {
     this.location.onPopState(() => this.bsModalRef.hide())
   }
 
   ngOnInit(): void {
-    if (this.stepId === 3) {
-      this.serviceData = this.objectiveService
+    switch (this.stepId){
+      case 3:
+        this.serviceData = this.objectiveService
+        break
+      case 4:
+        this.serviceData = this.contentService
+        break
+      default:
+        this.serviceData = this.objectiveService
+        break
     }
     this.createFormConfig()
     this.getModalData()

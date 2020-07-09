@@ -6,18 +6,27 @@ import { map } from 'rxjs/operators'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
 import { EditorService } from '../../services/editor/editor.service'
+import { ContentService } from '../../services/contents/contents.service'
+import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import {
   CurriculumBasicSkillsEntityService
-} from 'src/app/modules/project-editor/store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
-
+} from '../../store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
+import { PrincipalViewComponent } from '../../components/principal-view/principal-view.component'
 import { ModalInfoComponent } from '../../components/modal-info/modal-info.component'
 
-import { Project, Subject, Step, Status, BasicSkill } from '../../constants/model/project.model'
+import { Project,
+  Subject,
+  Step,
+  Status,
+  BasicSkill,
+  ProjectContent,
+  Content } from '../../constants/model/project.model'
 import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/form-config.model'
-import { FormFour } from '../../constants/model/step-forms.model'
+import { FormFour, FormFourInit } from '../../constants/model/step-forms.model'
 
 import { ModalUnlock } from '../../constants/Data/modal-info.data'
-
+import { FormFourInitData } from '../../constants/Data/step-forms.data'
+import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
@@ -33,16 +42,18 @@ export class StepFourComponent implements OnInit, OnDestroy {
   step: Step
   project: Project
   loading = true
-  buttonConfig: FieldConfig
+  buttonConfig = new ButtonSubmitConfig()
   textAreaConfig: FieldConfig
   subscriptions = new SubSink()
   showTextarea = false
   initialFormStatus: Status = 'PENDING'
-  contents: Option[] = []
+  inputFormData: FormFourInit = new FormFourInitData()
+  initialFormData: FormFourInit = new FormFourInitData()
+  contents: ProjectContent[] = []
   basicSkills: BasicSkill[] = []
   selectedBasicSkills: BasicSkill[] = []
   bsModalRef: BsModalRef
-  subjectContents: any[] = []
+  dataPayload: Subject
   subjectTextArea: any[] = []
   hasNoBasicSkill = false
   isFormUpdated = false
@@ -50,12 +61,13 @@ export class StepFourComponent implements OnInit, OnDestroy {
   constructor(
     public editor: EditorService,
     private translateService: TranslateService,
-    private basicSkillsService: CurriculumBasicSkillsEntityService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private contentService: ContentService,
+    private gradeService: GradeEntityService,
+    private basicSkillsService: CurriculumBasicSkillsEntityService
   ) { }
 
   ngOnInit(): void {
-    // Temporory function
     this.createFormConfig()
     this.stepInit()
   }
@@ -67,6 +79,16 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe()
   }
 
+  createFormConfig(): void {
+    this.textAreaConfig = {
+      name: 'textarea',
+      field: 'competencyObjectives',
+      id: 'competencyObjectives',
+      maxLength: 150,
+      limit: 0
+    }
+  }
+
   stepInit(): void {
     this.project$ = this.editor.getDataByStep(4)
     this.step$ = this.editor.getStepStatus()
@@ -75,15 +97,17 @@ export class StepFourComponent implements OnInit, OnDestroy {
     if (this.project$) {
       this.subscriptions.sink = this.project$.subscribe(data => {
         this.project = data
+        this.subjectTextArea = []
         if (this.project?.subjects?.length) {
           this.project.subjects.forEach(subject => {
-            this.subjectContents.push([...subject.contents])
             this.subjectTextArea.push({
               data: [...subject.customContents],
               options$: new BehaviorSubject([...subject.customContents]),
+              id: subject.id
             })
           })
         }
+        this.getGrades(this.project)
         this.getBasicSkills()
       })
     }
@@ -102,54 +126,147 @@ export class StepFourComponent implements OnInit, OnDestroy {
     }
   }
 
-  createFormConfig(): void {
-    this.buttonConfig = {
-      name: 'submit',
-      field: 'button',
-      id: 'submitButton',
-      disabled: true,
-      submitted: false,
-      label: 'IR A PUNTO DE PARTIDA'
+  getGrades(project: Project): void {
+    if (this.project?.subjects?.length) {
+      this.subscriptions.sink = this.gradeService.entities$
+        .pipe(
+          map(grades => grades.filter(grade => grade.academicYear?.id === project.academicYear.id
+            && grade.region?.id === project.region.id))
+        )
+        .subscribe(newData => {
+          if (!newData?.length) {
+            const parms = {
+              regionId: project.region.id.toString(),
+              academicyearId: project.academicYear.id.toString()
+            }
+            this.gradeService.getWithQuery(parms)
+          }
+          this.grades = newData.map(({ id, name }) => ({ id, name }))
+        })
     }
-    this.textAreaConfig = {
-      name: 'textarea',
-      field: 'competencyObjectives',
-      id: 'competencyObjectives',
-      maxLength: 150,
-      limit: 0
-    }
-
-    // Translation
-    this.subscriptions.sink = this.translateService.stream([
-      'PROJECT.project_button_markdone',
-      'PROJECT.project_button_done',
-      'OBJECTIVES.project_objectives_title',
-      'OBJECTIVES.project_objectives_description'
-    ]).subscribe(translations => {
-      this.buttonConfig.label = translations['PROJECT.project_button_markdone']
-      this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
-    })
   }
 
-  // Temperory Function
-  pushContent(hasCriteria: boolean, index: number): void {
+  openModalWithComponent(hasCriteria: boolean, index: number): void {
+    this.contentService.resetData()
     if (hasCriteria) {
-      this.subjectContents[index].push({ name: 'Lenguajes básicos de programación.', id: 1 })
-      this.checkStepStatus()
-      this.isFormUpdated = true
+      const subject = this.project.subjects[index]
+      this.getModalData(subject)
+      const initialState = {
+        grades: this.grades,
+        stepId: 4
+      }
+      this.bsModalRef = this.modalService.show(PrincipalViewComponent,
+        { class: 'competency-modal', initialState })
+      this.bsModalRef.content.closeBtnName = 'Close'
+      this.bsModalRef.content.selectedItems.subscribe( contents => {
+        this.dataPayload = {
+          contents,
+          id: subject.id,
+          name: subject.name
+        }
+        this.checkStepStatus(contents)
+        this.handleSubmit()
+      })
     }
     else {
       this.getModal()
     }
   }
 
-  // Temperory Function
-  popConent(index: number): void {
-    this.subjectContents[index].pop()
+  getBlocksFromSelectedGrades(): void {
+    const selectedGrades = this.project.grades.map(({ id, name }) => ({ id, name }))
+    this.contentService.getBlocks(selectedGrades[0])
+    this.contentService.selectedGrades = selectedGrades
+  }
+
+  getModalData(subject: Subject): void {
+    const gradeIds = this.grades.map(({id}) => id)
+    this.contentService.gradeIds = gradeIds
+    this.contentService.subject = { id: subject.id, name: subject.name }
+    this.contentService.contentIds = subject.contents.map( content => content.id)
+    this.contentService.getTranslationText()
+    this.contentService.getHeading()
+    this.getBlocksFromSelectedGrades()
+    this.contentService.getBlockData()
+    this.contentService.getDropDownData()
+  }
+
+  // Delete selected criteria
+  deleteContent(contentData: any): void {
+    for (const subject of this.project.subjects) {
+      if (subject.id === contentData.subjectId) {
+        for (const [index, content] of subject.contents.entries()) {
+          if (content.id === contentData.id) {
+            subject.contents.splice(index, 1)
+          }
+        }
+      }
+    }
+    for (const [index, manualContent] of this.subjectTextArea.entries()) {
+      const tempData = manualContent?.data?.map(item => item.id == null ? { name: item.name } : item)
+      this.project.subjects[index].customContents = tempData
+    }
+    this.project.basicSkills = this.selectedBasicSkills
+    this.checkFormEmpty()
+    const formData: FormFour = {
+      data: { ...this.project,
+        updateType: 'removeContent',
+        contentId: contentData.id,
+        subjectId: contentData.subjectId
+      },
+      stepStatus: {
+        steps: [
+          {
+            state: this.step.state,
+            stepid: this.step.stepid
+          }
+        ]
+      }
+    }
+    this.editor.handleStepSubmit(formData)
+  }
+
+  checkFormEmpty(): void {
+    const contentLength = []
+    for (const subject of this.project.subjects) {
+      if (subject.contents.length) {
+        contentLength.push(true)
+      }
+    }
+    for (const customContent of this.subjectTextArea){
+      if (customContent.data.length) {
+        contentLength.push(true)
+      }
+    }
+    if (this.basicSkills?.length && this.selectedBasicSkills?.length){
+      contentLength.push(true)
+    }
+    if (!contentLength.length) {
+      this.step.state = 'PENDING'
+    } else {
+      this.step.state = 'INPROCESS'
+    }
+    this.handleButtonType()
+  }
+
+  getModal(): void {
+    const initialState = { modalConfig: { ...ModalUnlock } }
+    this.bsModalRef = this.modalService.show(ModalInfoComponent, { class: 'common-modal', initialState })
+    this.bsModalRef.content.closeBtnName = 'Close'
+    this.bsModalRef.content.onClose.subscribe(result => {
+      if (result) {
+        this.editor.redirectToStep(3)
+      }
+    })
+  }
+
+  textareaDataChange(data: Option[], index: number): void {
+    this.subjectTextArea[index].data = [...data]
     this.checkStepStatus()
     this.isFormUpdated = true
   }
 
+  // Basic skills area
   getBasicSkills(): void {
     if (this.project.subjects?.length) {
       const checkData: CheckBoxData = { checked: false, variant: 'checkedOnly' }
@@ -186,24 +303,13 @@ export class StepFourComponent implements OnInit, OnDestroy {
     }
   }
 
-  getModal(): void {
-    const initialState = { modalConfig: { ...ModalUnlock } }
-    this.bsModalRef = this.modalService.show(ModalInfoComponent, { class: 'common-modal', initialState })
-    this.bsModalRef.content.closeBtnName = 'Close'
-    this.bsModalRef.content.onClose.subscribe(result => {
-      if (result) {
-        this.editor.redirectToStep(3)
-      }
-    })
-  }
-
-  textareaDataChange(data: Option[], index: number): void {
-    this.subjectTextArea[index].data = [...data]
-    this.checkStepStatus()
-    this.isFormUpdated = true
-  }
-
   handleSkillSelect(): void {
+    this.selectedBasicSkills = []
+    for (const skill of this.basicSkills) {
+      if (skill.checkData.checked === true) {
+        this.selectedBasicSkills.push({ id: skill.id, name: skill.name })
+      }
+    }
     this.checkStepStatus()
     this.isFormUpdated = true
   }
@@ -224,15 +330,10 @@ export class StepFourComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkStepStatus(): void {
-    let hasContents = false
+  checkStepStatus(contents?: Content[]): void {
+    const hasContents = !!contents?.length
     let hasManualContents = false
     let hasSelectedSkills = false
-    for (const contents of this.subjectContents) {
-      if (contents?.length) {
-        hasContents = true
-      }
-    }
     for (const manualContents of this.subjectTextArea) {
       if (manualContents?.data?.length) {
         hasManualContents = true
@@ -255,9 +356,11 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   hasAnyEmptyFields(): boolean {
     let hasEmptyField = false
-    for (const [index, contents] of this.subjectContents.entries()) {
-      if (!contents?.length && !this.subjectTextArea[index]?.data?.length) {
-        hasEmptyField = true
+    for (const subject of this.project.subjects){
+      for (const textArea of this.subjectTextArea) {
+        if (!subject.contents?.length && !textArea.data?.length){
+          hasEmptyField = true
+        }
       }
     }
     if (this.basicSkills?.length) {
@@ -275,8 +378,12 @@ export class StepFourComponent implements OnInit, OnDestroy {
   // Create subject
   createSubjectPayload(): Subject[] {
     const subjectPayload = [...this.project.subjects]
-    for (const [index, contents] of this.subjectContents.entries()) {
-      subjectPayload[index].contents = contents
+    if (this.dataPayload) {
+      for (const subject of subjectPayload) {
+        if (subject.id === this.dataPayload.id){
+          subject.contents = this.dataPayload.contents
+        }
+      }
     }
     for (const [index, manualContent] of this.subjectTextArea.entries()) {
       const tempData = manualContent?.data?.map(item => item.id == null ? { name: item.name } : item)
@@ -291,16 +398,10 @@ export class StepFourComponent implements OnInit, OnDestroy {
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'
     }
-    const selectedBasicSkills = []
-    for (const skill of this.basicSkills) {
-      if (skill.checkData.checked === true) {
-        selectedBasicSkills.push({ id: skill.id, name: skill.name })
-      }
-    }
     const formData: FormFour = {
       data: {
         subjects: this.createSubjectPayload(),
-        basicSkills: selectedBasicSkills
+        basicSkills: this.selectedBasicSkills
       },
       stepStatus: {
         steps: [
@@ -315,5 +416,4 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
     this.handleButtonType()
   }
-
 }

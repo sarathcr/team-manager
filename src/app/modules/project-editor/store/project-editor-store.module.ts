@@ -27,8 +27,6 @@ import { ProjectListDataService } from './entity/project-list/project-list-data.
 import { CurriculumBasicSkillsDataService } from './entity/curriculum-basic-skills/curriculum-basic-skills-data.service'
 import { CurriculumBasicSkillsEntityService } from './entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 
-
-
 @NgModule({
   declarations: [],
   imports: [
@@ -77,7 +75,7 @@ export class ProjectEditorStoreModule {
     private contextualHelpService: HelpDataService,
     private blockDataService: BlockDataService,
     private evaluatioCriteriaDataService: EvaluationCriteriaDataService,
-    private basicSkillsDataService: CurriculumBasicSkillsDataService
+    private basicSkillsDataService: CurriculumBasicSkillsDataService,
   ) {
     eds.registerMetadataMap(entityMetadata)
     entityDataService.registerService('Project', projectsDataService)
