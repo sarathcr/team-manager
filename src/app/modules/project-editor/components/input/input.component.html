@@ -1,7 +1,7 @@
 <div class="input" [ngClass]="{
 	'input_focus':focus ,
 	'input_border' : value ,
-	'input_error' : (titleInput.value.length == maxlength)}">
+	'input_error' : validator.limitExceeds}">
 	<label class="input__label" *ngIf="label">
 		{{label | translate}}
 	</label>
@@ -12,9 +12,9 @@
 		(ngModelChange)="onValueChange($event)" 
 		(focus)="setFocus()"  
 		value={{this.projectData?.title}}
-    (blur)="handleBlur($event.target.value)"
+		(keyup)="validator.valueChange($event.target.value)"
 		#titleInput />
 	<div class="input__counter-wrapper">
-		<app-validator [value]="titleInput.value.length" [maxlength]="maxlength"></app-validator>
+		<app-validator [value]="titleInput.value" [maxlength]="maxlength" #validator></app-validator>
 	</div>
 </div>

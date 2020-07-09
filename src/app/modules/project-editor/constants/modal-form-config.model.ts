@@ -1,10 +1,10 @@
 export interface ModalFormConfig {
   variant: ModalFormVariant
   title: string
-  editTitle?: string
-  description?: string
-  confirmLabel?: string
-  cancelLabel?: string
+  confirmLabel: string
+  inputValue?: string
 }
 
 export type ModalFormVariant = 'input'
+
+export type ModalFormHideType = 'submit' | 'cancel'

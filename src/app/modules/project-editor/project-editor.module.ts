@@ -34,7 +34,6 @@ import { ProjectThumbnailComponent } from './components/project-thumbnail/projec
 import { CreateProjectComponent } from './components/create-project/create-project.component'
 import { EditorHeaderComponent } from './components/editor-header/editor-header.component'
 import { EditorSidebarComponent } from './components/editor-sidebar/editor-sidebar.component'
-import { ProjectTitleComponent } from './components/project-title/project-title.component'
 import { StepMenuComponent } from './components/step-menu/step-menu.component'
 import { TextareaBulletsComponent } from './components/textarea-bullets/textarea-bullets.component'
 import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.component'
@@ -63,6 +62,7 @@ import { SecondaryViewComponent } from './components/secondary-view/secondary-vi
 import { StringDecoder } from './pipes/string-decoder.pipe'
 import { CheckCount } from './pipes/check-count.pipe'
 import { TranslateCut } from '../../shared/pipe/translate-cut.pipe'
+import { ProjectTitleComponent } from './containers/project-title/project-title.component'
 
 @NgModule({
   declarations: [

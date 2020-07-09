@@ -9,7 +9,7 @@ import { ProjectTitle } from '../../constants/model/project.model'
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class InputComponent implements OnInit{
+export class InputComponent implements OnInit {
 
   @Input() placeholder = ''
   @Input() maxlength: number
@@ -19,17 +19,19 @@ export class InputComponent implements OnInit{
   @Input() projectData: ProjectTitle
   @Output() inputChange = new EventEmitter()
   @Output() titleBlur = new EventEmitter()
+  @Output() status = new EventEmitter()
   config: FieldConfig
   group: FormGroup
   focus = false
   tempTitle: string
   showInputfield = true
+  error = false
   @ViewChildren('titleInput') titleInput: QueryList<ElementRef>
 
   constructor() { }
 
   ngOnInit(): void {
-    this.focusTextArea()
+    this.focusInput()
   }
 
   // Function to get and emit value on textarea
@@ -50,21 +52,12 @@ export class InputComponent implements OnInit{
     }
   }
   // focus the text area initially
-  focusTextArea(): void{
-    if (this.onInitFocus){
+  focusInput(): void {
+    if (this.onInitFocus) {
       setTimeout(() => {
         this.titleInput.first.nativeElement.focus()
       }, 0)
     }
   }
 
-  // Function to handle blur event of input field.
-  handleBlur(value: string): void {
-    this.tempTitle = value.trim()
-    this.showInputfield = !this.tempTitle
-    if ((this.tempTitle || this.projectData?.id)
-      && (this.tempTitle !== this.projectData?.title)) { // check for same this.temptitle value
-      this.titleBlur.emit({ title: this.tempTitle })
-    }
-  }
 }
