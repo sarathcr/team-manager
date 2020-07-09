@@ -62,6 +62,7 @@ import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.se
 // pipe
 import { StringDecoder } from './pipes/string-decoder.pipe'
 import { CheckCount } from './pipes/check-count.pipe'
+import { ContentService } from './services/contents/contents.service'
 import { TranslateCut } from '../../shared/pipe/translate-cut.pipe'
 import { TextareaListComponent } from './components/textarea/textarea-list/textarea-list.component'
 
@@ -130,7 +131,8 @@ import { TextareaListComponent } from './components/textarea/textarea-list/texta
     EditorService,
     AwsImgUploadService,
     BsModalRef,
-    ObjectiveService
+    ObjectiveService,
+    ContentService
   ]
 })
 

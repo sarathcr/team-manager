@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core'
 import { ProjectTitle, Status } from '../../constants/model/project.model'
-import { ModalFormVariant } from '../../constants/modal-form-config.model'
+import { ModalFormVariant } from '../../constants/model/modal-form-config.model'
 
 @Component({
   selector: 'app-modal-form',

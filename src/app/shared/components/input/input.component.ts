@@ -13,7 +13,8 @@ export class InputComponent implements OnInit {
   @Input() maxlength: number
   @Input() value: string
   @Input() label: string
-  @Input() onInitFocus: false
+  @Input() onInitFocus = false
+  @Input() enableValidator = false
   @Output() inputChange = new EventEmitter()
   config: FieldConfig
   group: FormGroup
