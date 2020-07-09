@@ -8,9 +8,11 @@ import {
   Country,
   CompetencyObjective,
   Status,
-  StepState
+  StepState,
+  Project
 } from 'src/app/modules/project-editor/constants/model/project.model'
 import { Option } from 'src/app/shared/constants/model/form-config.model'
+import { Content } from './project.model'
 
 export interface FormOne {
   data: {
@@ -55,28 +57,32 @@ export interface FormTwoInit {
 }
 
 export interface FormThree {
-  data: {
-    competencyObjectives?: CompetencyObjective[]
-    subjects?: Subject[]
-  }
+  data: FormThreeData
   stepStatus: StepState
 }
 
 export interface FormFour {
-  data: {
-    subjects?: Subject[]
-    basicSkills?: Option[]
-  }
+  data: FormfourData
   stepStatus: StepState
 }
-export interface FormThreeData {
-  competencyObjectives: CompetencyObjective[]
+export interface FormfourData extends Project {
+  updateType?: string
+  contentId?: number
+  subjectId?: number
+}
+export interface FormThreeData extends Project {
+  updateType?: string
+  criteriaId?: number
+  subjectId?: number
 }
 export interface FormThreeInit {
   competencyObjectives?: CompetencyObjective[],
   placeholder?: string
 }
-
+export interface FormFourInit {
+  contents: Content[]
+  basicSkills?: Option[]
+}
 export interface FormSix {
   data: {
     creativeTitle?: string
@@ -107,6 +113,10 @@ export interface FormNine {
     status?: Status
   }
   stepStatus: StepState
+}
+
+export interface DefineUnlockStep {
+  step?: 'stepThree' | 'stepFour'
 }
 
 export type FormNineInit = string

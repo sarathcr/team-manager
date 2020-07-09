@@ -1,10 +1,10 @@
-import { Content, EvaluationCriteria, BasicSkill } from './project.model'
+import { EvaluationCriteria, BasicSkill, Grade, ContentsWithSkills } from './project.model'
 import { Option } from 'src/app/shared/constants/model/form-config.model'
 
 export class Block {
   id: number
   name: string
-  contents: Content[]
+  contents: ContentsWithSkills[]
   description: string
   evaluationCriteria: EvaluationCriteria[]
   numeration: number
@@ -33,4 +33,8 @@ export class SpecificSkills extends Option {
 
 export interface Curriculum extends Option {
   basicSkills?: BasicSkill[]
+}
+
+interface Content extends Option {
+  basicSkills: BasicSkill[]
 }
