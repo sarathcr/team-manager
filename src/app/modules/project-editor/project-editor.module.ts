@@ -36,13 +36,11 @@ import { EditorHeaderComponent } from './components/editor-header/editor-header.
 import { EditorSidebarComponent } from './components/editor-sidebar/editor-sidebar.component'
 import { StepMenuComponent } from './components/step-menu/step-menu.component'
 import { TextareaBulletsComponent } from './components/textarea-bullets/textarea-bullets.component'
-import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.component'
 import { TextareaComponent } from './components/textarea/textarea.component'
 import { HelpAccordionComponent } from './components/help-accordion/help-accordion.component'
 import { HelpModalContentComponent } from './components/help-modal-content/help-modal-content.component'
 import { HelpLinkComponent } from './components/help-link/help-link.component'
 import { HelpVideoThumbComponent } from './components/help-video-thumb/help-video-thumb.component'
-import { InputComponent } from './components/input/input.component'
 import { ImageUploadComponent } from './components/image-upload/image-upload.component'
 import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component'
 import { PrincipalViewComponent } from './components/principal-view/principal-view.component'
@@ -52,17 +50,19 @@ import { ModalInfoComponent } from './components/modal-info/modal-info.component
 import { VideoPlayerComponent } from './components/video-player/video-player.component'
 import { StatusComponent } from './components/status/status.component'
 import { ModalFormComponent } from './components/modal-form/modal-form.component'
-import { ValidatorComponent } from './components/validator/validator.component'
+import { ProjectTitleComponent } from './components/project-title/project-title.component'
+import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
+import { InputComponent } from 'src/app/shared/components/input/input.component'
+import { ValidatorComponent } from 'src/app/shared/components/validator/validator.component'
+import { SecondaryViewComponent } from './components/secondary-view/secondary-view.component'
 // service
 import { EditorService } from './services/editor/editor.service'
 import { ObjectiveService } from './services/objectives/objectives.service'
 import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service'
-import { SecondaryViewComponent } from './components/secondary-view/secondary-view.component'
 // pipe
 import { StringDecoder } from './pipes/string-decoder.pipe'
 import { CheckCount } from './pipes/check-count.pipe'
 import { TranslateCut } from '../../shared/pipe/translate-cut.pipe'
-import { ProjectTitleComponent } from './containers/project-title/project-title.component'
 
 @NgModule({
   declarations: [
