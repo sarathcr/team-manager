@@ -5,11 +5,8 @@ import {
   ViewChild, Input, Output, EventEmitter, TemplateRef, AfterViewInit } from '@angular/core'
 import { Router, ActivatedRoute } from '@angular/router'
 
-
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { ProjectTitle } from '../../constants/model/project.model'
-
-import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-project-title',
@@ -26,7 +23,6 @@ export class ProjectTitleComponent implements OnInit, AfterViewInit {
   tempTitle: string
   showInputfield = true
   modalRef: BsModalRef
-  subscription = new SubSink()
   projectUrl: string
   modalTitle: string
   modalConfirmLabel: string
