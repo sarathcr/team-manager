@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 
 import { Observable, BehaviorSubject } from 'rxjs'
-import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
@@ -60,7 +59,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   constructor(
     public editor: EditorService,
-    private translateService: TranslateService,
     private modalService: BsModalService,
     private contentService: ContentService,
     private gradeService: GradeEntityService,
@@ -187,7 +185,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.contentService.getTranslationText()
     this.contentService.getHeading()
     this.getBlocksFromSelectedGrades()
-    this.contentService.getBlockData()
     this.contentService.getDropDownData()
   }
 
