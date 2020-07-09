@@ -24,9 +24,11 @@ export class Project {
   basicSkills?: BasicSkill[]
 }
 
-export class ProjectRP {
-  projectCount: number
+export class ProjectList {
   projects: Project[]
+  projectCount: number
+  pageNumber: number
+  pageSize: number
 }
 
 export class Country extends Option { }
