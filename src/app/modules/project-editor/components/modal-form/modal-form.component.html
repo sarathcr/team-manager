@@ -9,7 +9,7 @@
 <div class="modal-form__body">
   <div class="modal-form__input">
     <app-input [(value)]="data" (inputChange)="onValueChange($event)"
-      [onInitFocus]="true" maxlength="70"
+      [onInitFocus]="true" [maxlength]="maxLength"
       label="PROJECT.project_title_input_title"></app-input>
   </div>
 </div>

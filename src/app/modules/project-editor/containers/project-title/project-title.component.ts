@@ -2,14 +2,14 @@ import {
   Component,
   OnInit,
   ElementRef,
-  ViewChild, Input, Output, EventEmitter, ChangeDetectorRef, TemplateRef, AfterViewInit } from '@angular/core'
+  ViewChild, Input, Output, EventEmitter, TemplateRef, AfterViewInit } from '@angular/core'
+import { Router, ActivatedRoute } from '@angular/router'
 
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { ProjectTitle } from '../../constants/model/project.model'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { Router, ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-project-title',
@@ -21,20 +21,18 @@ export class ProjectTitleComponent implements OnInit, AfterViewInit {
   @ViewChild('titleInput') inputElement: ElementRef
   @Input() projectData: ProjectTitle
   @Input() maxLength: number
-  @Input() placeholder: string
   @Output() titleSubmit = new EventEmitter()
-  @Output() checkEditTitle = new EventEmitter()
+  @ViewChild('titleModal') titleModal: TemplateRef<any>
   tempTitle: string
   showInputfield = true
   modalRef: BsModalRef
   subscription = new SubSink()
   projectUrl: string
-  isShow = true
-  @ViewChild('titleModal') titleModal: TemplateRef<any>
+  modalTitle: string
+  modalConfirmLabel: string
 
   constructor(
     private modalService: BsModalService,
-    private changeDetection: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute) { }
 
@@ -63,44 +61,22 @@ export class ProjectTitleComponent implements OnInit, AfterViewInit {
   }
 
   openModal(modalTemplate: TemplateRef<any>): void {
-    // this.subscription.sink = this.modalService.onHidden.subscribe(() => this.changeDetection.markForCheck())
-    // const initialState = { modalConfig:
-    //   {
-    //     title: this.projectUrl === 'create' ?
-      // 'PROJECT.project_title_title_newtitle' : 'PROJECT.project_title_title_edittitle',
-    //     confirmLabel: 'PROJECT.project_button_create',
-    //     inputValue: this.projectData?.title ? this.projectData?.title : '',
-    //     variant: 'input'
-    //   }}
+    this.modalTitle = !this.projectData?.id ? 'PROJECT.project_title_title_newtitle' : 'PROJECT.project_title_title_edittitle'
+    this.modalConfirmLabel = !this.projectData?.id ? 'PROJECT.project_button_create' : 'PROJECT.project_button_save'
     this.modalRef = this.modalService.show(modalTemplate, {
       ignoreBackdropClick: true,
-      class: 'modal-form',
-      initialState: {
-        title: (this.projectUrl === 'create' ?
-          'PROJECT.project_title_title_newtitle' : 'PROJECT.project_title_title_edittitle'),
-      }
+      class: 'modal-form'
     })
-    console.log(this.modalRef.content)
-    // this.subscription.sink = this.modalService.onHidden.subscribe((reason: string) => {
-    //   const hideType = this.bsModalRef.content.modalConfig.hideType
-    //   const titleValue = this.bsModalRef.content.modalConfig.inputValue
-    //   if (hideType === 'cancel' && !this.projectData.id) {
-    //     this.router.navigate([`editor/projects`])
-    //   }
-    //   if (hideType === 'submit') {
-    //     this.handleSubmit(titleValue)
-    //   }
-    //   this.subscription.unsubscribe()
-    // })
   }
 
   declineModal(): void {
+    if (!this.projectData?.id) {
+      this.router.navigate([`editor/projects`])
+    }
     this.modalRef.hide()
-    this.isShow = false
   }
 
   confirmModal(data: string): void {
-    // this.isShow = true
     this.handleSubmit(data)
     this.modalRef.hide()
   }
