@@ -16,6 +16,7 @@ export class ModalFormComponent implements OnInit {
   @Input() title: string
   @Input() confirmLabel = 'PROJECT.project_button_create'
   @Input() data: string
+  @Input() maxLength: number
   @Output() decline = new EventEmitter()
   @Output() confirm = new EventEmitter()
   status: Status
