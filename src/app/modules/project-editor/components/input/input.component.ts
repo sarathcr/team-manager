@@ -1,29 +1,37 @@
 import { Component, Input, Output, EventEmitter, ViewChildren, QueryList, ElementRef, OnInit } from '@angular/core'
-import { FieldConfig } from 'src/app/shared/constants/field.model'
 import { FormGroup } from '@angular/forms'
+
+import { FieldConfig } from 'src/app/shared/constants/model/form-config.model'
+import { ProjectTitle } from '../../constants/model/project.model'
 
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class InputComponent implements OnInit{
+export class InputComponent implements OnInit {
 
-  @Input() placeholder: string
+  @Input() placeholder = ''
   @Input() maxlength: number
   @Input() value: string
   @Input() label: string
   @Input() onInitFocus: false
+  @Input() projectData: ProjectTitle
   @Output() inputChange = new EventEmitter()
+  @Output() titleBlur = new EventEmitter()
+  @Output() status = new EventEmitter()
   config: FieldConfig
   group: FormGroup
   focus = false
+  tempTitle: string
+  showInputfield = true
+  error = false
   @ViewChildren('titleInput') titleInput: QueryList<ElementRef>
 
   constructor() { }
 
   ngOnInit(): void {
-    this.focusTextArea()
+    this.focusInput()
   }
 
   // Function to get and emit value on textarea
@@ -44,11 +52,12 @@ export class InputComponent implements OnInit{
     }
   }
   // focus the text area initially
-  focusTextArea(): void{
-    if (this.onInitFocus){
+  focusInput(): void {
+    if (this.onInitFocus) {
       setTimeout(() => {
         this.titleInput.first.nativeElement.focus()
       }, 0)
     }
   }
+
 }

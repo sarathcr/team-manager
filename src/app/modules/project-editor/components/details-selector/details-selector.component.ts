@@ -6,10 +6,12 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
+import { Subject, Project } from 'src/app/modules/project-editor/constants/model/project.model'
+import { ButtonIcon } from 'src/app/shared/constants/model/form-config.model'
+
+import { ModalDelete } from '../../constants/Data/modal-info.data'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { ModalDelete } from '../../constants/modal-config.data'
-import { ButtonIcon } from 'src/app/shared/constants/field.model'
 
 @Component({
   selector: 'app-details-selector',
@@ -24,6 +26,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() i: number
   @Input() isLast = false
   @Input() icon: ButtonIcon
+  @Input() loading = false
   @Input() project$: Observable<Project>
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() openModal: EventEmitter<any> = new EventEmitter()

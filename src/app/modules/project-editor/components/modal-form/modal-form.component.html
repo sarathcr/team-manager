@@ -1,33 +1,23 @@
 <div class="modal-form__header">
   <h4 class="modal-form__title title_xs">
-    {{ modalConfig.title | translate }}
+    {{ title | translate }}
   </h4>
-  <button
-    *ngIf="modalConfig.variant === 'input'"
-    class="close modal-form__close"
-    type="button"
-    aria-label="Close"
-    (click)="bsModalRef.hide()"
-    >
+  <button class="close modal-form__close" type="button" aria-label="Close" (click)="onDecline()">
     <span class="icon icon-ic_share_close"></span>
   </button>
 </div>
 <div class="modal-form__body">
   <div class="modal-form__input">
-    <app-input 
-    [onInitFocus]="true"
-    placeholder=""
-    maxlength="70"
-    label="PROJECT.project_title_input_title"></app-input>
+    <app-input [(value)]="data" (inputChange)="onValueChange($event)"
+      [onInitFocus]="true" maxlength="70"
+      label="PROJECT.project_title_input_title"></app-input>
   </div>
 </div>
 <div class="modal-form__footer">
   <ng-container>
     <div class="modal-form__button-wrapper">
-      <app-button 
-      (click)="onConfirm()" 
-      #inputButton>
-        {{ modalConfig.confirmLabel | translate }}
+      <app-button [disabled]="status === 'PENDING'" (click)="onConfirm()" #inputButton>
+        {{ confirmLabel | translate }}
       </app-button>
     </div>
   </ng-container>

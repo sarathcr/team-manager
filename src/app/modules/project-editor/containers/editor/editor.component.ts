@@ -3,8 +3,10 @@ import { ActivatedRoute } from '@angular/router'
 
 import { Observable } from 'rxjs'
 
-import { Step } from '../../constants/step.model'
 import { EditorService } from '../../services/editor/editor.service'
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
+
+import { Step } from '../../constants/model/project.model'
 
 @Component({
   selector: 'app-editor',
@@ -18,10 +20,12 @@ export class EditorComponent implements OnInit, OnDestroy {
   steps: Step[]
   contextualStatus = false
   loaded: boolean
+  bsModalRef: BsModalRef
 
   constructor(
     private route: ActivatedRoute,
-    public editor: EditorService
+    public editor: EditorService,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
@@ -29,6 +33,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.projectUrl = this.route.snapshot.paramMap.get('id')
     this.editor.getProject(this.projectUrl)
     this.loaded$ = this.editor.loaded$
+    // this.getModal()
   }
 
   ngOnDestroy(): void {

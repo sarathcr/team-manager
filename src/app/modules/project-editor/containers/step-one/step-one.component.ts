@@ -9,11 +9,10 @@ import { RegionEntityService } from '../../store/entity/region/region-entity.ser
 import { AcademicYearEntityService } from '../../store/entity/academic-year/academic-year-entity.service'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 
-import { FormOne } from '../../constants/step-forms.model'
-import { Step, Status } from '../../constants/step.model'
-import { Country, Region, AcademicYear, Grade, Subject } from '../../constants/project.model'
+import { FormOne } from '../../constants/model/step-forms.model'
+import { Country, Region, AcademicYear, Grade, Subject, Step, Status } from '../../constants/model/project.model'
 
-import { ButtonSubmitConfig, DropdownConfigInit } from '../../constants/form-config.data'
+import { ButtonSubmitConfig, DropdownConfigInit } from '../../../../shared/constants/data/form-config.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 

@@ -5,7 +5,7 @@ import {
   FormNineInit,
   FormSixInit,
   FormThreeInit
-} from './step-forms.model'
+} from '../model/step-forms.model'
 
 export class FormSevenInitData implements FormSevenInit {
   drivingQuestions = []

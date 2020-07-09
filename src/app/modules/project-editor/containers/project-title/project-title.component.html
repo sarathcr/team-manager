@@ -1,0 +1,18 @@
+<div class="project-title d-flex align-items-center">
+  <div class="project-title__input">
+    {{this.projectData?.title||tempTitle}}
+  </div>
+  <div class="icon-ic_edit_small project-title__edit" (click)="openModal(titleModal)" *ngIf="projectData">
+  </div>
+</div>
+<ng-template #titleModal>
+  <app-modal-form 
+  *ngIf="isShow"
+    [variant]="'input'"
+    [confirmLabel]="'PROJECT.project_button_save'"
+    [data]="projectData?.title ? this.projectData?.title : ''"
+    (decline)="declineModal()"
+    (confirm)="confirmModal($event)"
+  ></app-modal-form>
+</ng-template>
+<!-- [title]="'PROJECT.project_title_title_newtitle'" -->

@@ -1,4 +1,4 @@
-import { ModalConfig } from './modal-config.model'
+import { ModalConfig } from '../model/modal-info.model'
 
 export const ModalDelete: ModalConfig = {
   variant: 'delete',

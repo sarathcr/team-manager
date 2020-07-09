@@ -3,23 +3,22 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { Observable, BehaviorSubject } from 'rxjs'
 import { TranslateService } from '@ngx-translate/core'
 import { map } from 'rxjs/operators'
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { Project, Subject } from '../../constants/project.model'
-import { Step, Status } from '../../constants/step.model'
-import { Option, FieldConfig } from 'src/app/shared/constants/field.model'
-import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { BasicSkills } from 'src/app/shared/constants/curriculum-basic-skill.model'
 import {
   CurriculumBasicSkillsEntityService
 } from 'src/app/modules/project-editor/store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
-
-import { ModalUnlock } from './../../constants/modal-config.data'
-import { FormFour } from '../../constants/step-forms.model'
-import { CheckBoxData } from 'src/app/shared/constants/checkbox.model'
 import { ModalInfoComponent } from '../../components/modal-info/modal-info.component'
+
+import { Project, Subject, Step, Status, BasicSkill } from '../../constants/model/project.model'
+import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/form-config.model'
+import { FormFour } from '../../constants/model/step-forms.model'
+
+import { ModalUnlock } from '../../constants/Data/modal-info.data'
+
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-four',
@@ -40,8 +39,8 @@ export class StepFourComponent implements OnInit, OnDestroy {
   showTextarea = false
   initialFormStatus: Status = 'PENDING'
   contents: Option[] = []
-  basicSkills: BasicSkills[] = []
-  selectedBasicSkills: BasicSkills[] = []
+  basicSkills: BasicSkill[] = []
+  selectedBasicSkills: BasicSkill[] = []
   bsModalRef: BsModalRef
   subjectContents: any[] = []
   subjectTextArea: any[] = []
@@ -81,7 +80,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
             this.subjectContents.push([...subject.contents])
             this.subjectTextArea.push({
               data: [...subject.customContents],
-              isShown: !!subject.customContents?.length,
               options$: new BehaviorSubject([...subject.customContents]),
             })
           })
@@ -150,16 +148,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.subjectContents[index].pop()
     this.checkStepStatus()
     this.isFormUpdated = true
-  }
-
-  textareaBlur(data: Option[], index: number): void {
-    if (data.length === 1 && data[0].name === null) {
-      this.toggleTextarea(index)
-    }
-  }
-
-  toggleTextarea(index: number): void {
-    this.subjectTextArea[index].isShown = !this.subjectTextArea[index].isShown
   }
 
   getBasicSkills(): void {

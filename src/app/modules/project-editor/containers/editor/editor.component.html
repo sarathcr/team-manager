@@ -3,7 +3,7 @@
   <app-editor-header
     id="editor-header"
     [projectData]="editor.titleData"
-    (titleBlur)="editor.handleSubmit($event)"
+    (titleSubmit)="editor.handleSubmit($event)"
   ></app-editor-header>
   <div *ngIf="(loaded$ | async)" class="editor-aside">
     <app-editor-sidebar

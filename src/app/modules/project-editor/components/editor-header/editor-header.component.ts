@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { ProjectTitle } from '../../constants/model/project.model'
 
-import { ProjectTitle } from '../../constants/title-data.model'
 
 @Component({
   selector: 'app-editor-header',
@@ -10,11 +10,11 @@ import { ProjectTitle } from '../../constants/title-data.model'
 export class EditorHeaderComponent {
 
   @Input() projectData: ProjectTitle
-  @Output() titleBlur = new EventEmitter()
+  @Output() titleSubmit = new EventEmitter()
 
   constructor() { }
 
-  handleTitleBlur(event: Event): void {
-    this.titleBlur.emit(event)
+  handleTitleSubmit(event: Event): void {
+    this.titleSubmit.emit(event)
   }
 }
