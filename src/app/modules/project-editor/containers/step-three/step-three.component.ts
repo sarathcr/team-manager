@@ -171,6 +171,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         }
         )
     }
+
   }
 
   // Adds dimension or basic skills to the evaluation criteria

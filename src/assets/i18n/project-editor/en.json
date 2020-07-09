@@ -17,7 +17,8 @@
       "project_title_title_newtitle": "Nuevo proyecto",
       "project_title_title_edittitle": "Edita el título",
       "project_title_input_title": "Título",
-      "project_dependancy_title_cv": "Desbloquea el currículum"
+      "project_dependancy_title_cv": "Desbloquea el currículum",
+      "Error_textlimit_specified_singleinput": "Has excedido los caracteres permitidos."
   },
   "STEPS_MENU":{
       "project_structure_stepsmenu_title": "Crea paso a paso",
@@ -118,6 +119,33 @@
       "project_content_contentwindow_empty_title":"No tienes contenidos seleccionados",	
       "project_content_contentwindow_empty_description":"Selecciona contenidos del currículum y visualiza el listado de seleccionados aquí para añadirlos.",	
       "project_content_contentwindow_empty_button":"Ver contenidos"	
+    },
+    "STANDARDS": {
+      "project_standards_dependancy_description": "",
+      "project_standards_dependancy_button" : "",
+      "project_standards_dependancy_filterbycriteria_description" : "",
+      "project_standards_dependancy_filterbycriteria_button" : "",
+      "project_standards_title" : "",
+      "project_standards_initial_label": "",
+      "project_standards_description" : "",
+      "project_standards_standards_placeholder": "",
+      "project_standards_extrastandards_placeholder" : "",
+      "project_standards_add" : "",
+      "project_standards_cvstandards" : "",
+      "project_standards_extrastandards" : "",
+      "project_standards_extrastandards_input" : "",
+      "project_standards_standardswindow_title" : "",
+      "project_standards_standardswindow_combo_title" : "",
+      "project_standards_standardswindow_criteria" : "",
+      "project_standards_standardswindow_standar" : "",
+      "project_standards_standardswindow_subject" : "",
+      "project_standards_standardswindow_showall" : "",
+      "project_standards_standardswindow_add" : "",
+      "project_standards_standardswindow_selected" : "",
+      "project_standards_standardswindow_selected_back" : "",
+      "project_standards_standardswindow_empty_title" : "",
+      "project_standards_contentwindow_empty_description" : "",
+      "project_standards_contentwindow_empty_button" : ""
     },
     "RETHINK_TITLE":{
       "project_rethinktitle_title": "Título creativo",

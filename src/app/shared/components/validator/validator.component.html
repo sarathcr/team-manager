@@ -1,0 +1,15 @@
+<div class="counter" [ngClass]="{'counter__error' : limitExceeds}">
+  <div>
+    <div class="counter__helper-text" *ngIf="(value.length == 0)">
+      {{ "PROJECT.project_title_helpertext" | translate }}
+    </div>
+    <div class="counter__helper-text" *ngIf="limitExceeds">
+      {{ "PROJECT.Error_textlimit_specified_singleinput" | translate }}
+    </div>
+  </div>
+  <div class="counter__wrap">
+    <span class="counter__count">{{ value.length }}</span>
+    <span class="counter__bar">/</span>
+    <span class="counter__max-count">{{ maxlength }}</span>
+  </div>
+</div>

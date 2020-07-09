@@ -8,9 +8,12 @@
       </h1>
       <p class="project-form__description" [innerHTML]="'RETHINK_TITLE.project_rethinktitle_description' | translate">
       </p>
-      <app-input placeholder="{{'RETHINK_TITLE.project_rethinktitle_creativetitle_placeholder' | translate }}"
-        maxlength="70" [(value)]="creativeTitle" (inputChange)="onValueChange($event)">
-      </app-input>
+      <div class="project-editor__input-wrapper">
+        <app-input placeholder="{{'RETHINK_TITLE.project_rethinktitle_creativetitle_placeholder' | translate }}"
+        maxlength="150" [(value)]="creativeTitle" (inputChange)="onValueChange($event)">
+        </app-input>
+      </div>
+      
       <h2 class="title_xs project-form__subtitle mb-4">
         {{'RETHINK_TITLE.project_rethinktitle_addimage' | translate}}
       </h2>

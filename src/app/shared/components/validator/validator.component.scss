@@ -1,0 +1,28 @@
+@import 'helpers/_helpers-master';
+.counter{
+  $root: &;
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 3px;
+  padding-left: 20px;
+  &__wrap {
+    letter-spacing: normal;
+    color: $counter-text;
+    line-height: 24px;
+    font-size: $font-size-body-s;
+  }
+  &__helper-text{
+    font-size: $font-size-body-input;
+    letter-spacing: 0.2px;
+    line-height: 12px;
+    color: $helper-text;
+    display: inline-block;
+  }
+  &__error{
+    #{$root}__helper-text,  #{$root}__wrap{
+      color: $error-text;
+    }
+  }
+}

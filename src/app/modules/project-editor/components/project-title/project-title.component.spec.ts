@@ -89,7 +89,7 @@ describe('ProjectTitleComponent', (): void => {
   it('should emit title if text is filled in input field and blurred', (): void => {
     const title = 'lorem ipsum'
     const event = { target: { value: title }}
-    const titleBlur = spyOn(component.titleBlur, 'emit')
+    const titleSubmit = spyOn(component.titleSubmit, 'emit')
     fixture.detectChanges()
 
     const inputDebugElement: DebugElement = getDebugElementByCss('.project-title__input', fixture)
@@ -98,7 +98,7 @@ describe('ProjectTitleComponent', (): void => {
     fixture.detectChanges()
     const titleElement: HTMLElement = getDebugElementByCss('.project-title__text', fixture).nativeElement
 
-    expect(titleBlur).toHaveBeenCalledWith({ title })
+    expect(titleSubmit).toHaveBeenCalledWith({ title })
     expect(titleElement.innerText).toContain(title)
   })
 

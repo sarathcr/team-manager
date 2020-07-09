@@ -1,25 +1,33 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'
-
+import { Component, Input, Output, EventEmitter, ViewChildren, QueryList, ElementRef, OnInit } from '@angular/core'
 import { FormGroup } from '@angular/forms'
 
 import { FieldConfig } from 'src/app/shared/constants/model/form-config.model'
-
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss']
 })
-export class InputComponent {
+export class InputComponent implements OnInit {
 
-  @Input() placeholder: string
+  @Input() placeholder = ''
   @Input() maxlength: number
   @Input() value: string
+  @Input() label: string
+  @Input() onInitFocus: false
   @Output() inputChange = new EventEmitter()
   config: FieldConfig
   group: FormGroup
   focus = false
+  tempTitle: string
+  showInputfield = true
+  error = false
+  @ViewChildren('titleInput') titleInput: QueryList<ElementRef>
 
   constructor() { }
+
+  ngOnInit(): void {
+    this.focusInput()
+  }
 
   // Function to get and emit value on textarea
   onValueChange(value: string): void {
@@ -33,9 +41,18 @@ export class InputComponent {
 
   onBlur(): void {
     this.focus = false
-    if (!this.value.trim()) {
+    if (!this.value?.trim()) {
       this.value = ''
       this.inputChange.emit('')
     }
   }
+  // focus the Input initially
+  focusInput(): void {
+    if (this.onInitFocus) {
+      setTimeout(() => {
+        this.titleInput.first.nativeElement.focus()
+      }, 0)
+    }
+  }
+
 }

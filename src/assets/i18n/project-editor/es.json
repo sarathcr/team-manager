@@ -17,7 +17,8 @@
       "project_title_title_newtitle": "Nuevo proyecto",
       "project_title_title_edittitle": "Edita el título",
       "project_title_input_title": "Título",
-      "project_dependancy_title_cv": "Desbloquea el currículum"
+      "project_dependancy_title_cv": "Desbloquea el currículum",
+      "Error_textlimit_specified_singleinput": "Has excedido los caracteres permitidos."
   },
   "STEPS_MENU":{
       "project_structure_stepsmenu_title": "Crea paso a paso",
@@ -119,6 +120,33 @@
       "project_content_contentwindow_empty_title":"No tienes contenidos seleccionados",	
       "project_content_contentwindow_empty_description":"Selecciona contenidos del currículum y visualiza el listado de seleccionados aquí para añadirlos.",	
       "project_content_contentwindow_empty_button":"Ver contenidos"	
+    },
+    "STANDARDS": {
+      "project_standards_dependancy_description": "Para poder especificar los estándares o indicadores de aprendizaje, primero completa el paso objetivos de aprendizaje.",
+      "project_standards_dependancy_button" : "Especifica los objetivos",
+      "project_standards_dependancy_filterbycriteria_description" : "Para seleccionar los estándares de aprendizaje, primero tienes que tienes que especificar los criterios de evaluación de esta asignatura en el paso Objetivos de aprendizaje.",
+      "project_standards_dependancy_filterbycriteria_button" : "Especifica los criterios",
+      "project_standards_title" : "Estándares",
+      "project_standards_initial_label": "Especifica los estándares o indicadores de aprendizaje para cada uno de los objetivos competenciales.",
+      "project_standards_description" : "Los estándares o indicadores permiten definir los resultados de aprendizaje y graduar el rendimiento o logros que alcance el alumnado. Asocia estándares a cada objetivo de aprendizaje.",
+      "project_standards_standards_placeholder": "Asocia estándares del currículum.",
+      "project_standards_extrastandards_placeholder" : "Asocia estándares personalizados. (opcional)",
+      "project_standards_add" : " + Añadir",
+      "project_standards_cvstandards" : "Estándares del currículum",
+      "project_standards_extrastandards" : "Añadir estándares personalizados",
+      "project_standards_extrastandards_input" : "Estándares personalizados",
+      "project_standards_standardswindow_title" : "Selecciona los estándares de aprendizaje a trabajar:",
+      "project_standards_standardswindow_combo_title" : "Asignatura",
+      "project_standards_standardswindow_criteria" : "Criterio de evaluación",
+      "project_standards_standardswindow_standar" : "Estándar de aprendizaje",
+      "project_standards_standardswindow_subject" : "Asignatura",
+      "project_standards_standardswindow_showall" : "Ver todos los estándares seleccionados",
+      "project_standards_standardswindow_add" : "Añadir",
+      "project_standards_standardswindow_selected" : "estándares seleccionados",
+      "project_standards_standardswindow_selected_back" : "Volver",
+      "project_standards_standardswindow_empty_title" : "No tienes estándares seleccionados",
+      "project_standards_contentwindow_empty_description" : "Selecciona estándares de aprendizaje del currículum y visualiza el listado de seleccionados aquí para añadirlos.",
+      "project_standards_contentwindow_empty_button" : "Ver estándares"
     },
     "RETHINK_TITLE":{
       "project_rethinktitle_title": "Título creativo",
