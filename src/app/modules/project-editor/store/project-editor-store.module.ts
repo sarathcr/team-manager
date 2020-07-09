@@ -22,6 +22,8 @@ import { BlockEntityService } from './entity/block/block-entity.service'
 import { BlockDataService } from './entity/block/block-data.service'
 import { EvaluationCriteriaDataService } from './entity/evaluation-criteria/evaluation-criteria-data.service'
 import { EvaluationCriteriaEntityService } from './entity/evaluation-criteria/evaluation-criteria-entity.service'
+import { ProjectListEntityService } from './entity/project-list/project-list-entity.service'
+import { ProjectListDataService } from './entity/project-list/project-list-data.service'
 import { CurriculumBasicSkillsDataService } from './entity/curriculum-basic-skills/curriculum-basic-skills-data.service'
 import { CurriculumBasicSkillsEntityService } from './entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 
@@ -35,6 +37,8 @@ import { CurriculumBasicSkillsEntityService } from './entity/curriculum-basic-sk
   providers: [
     ProjectEntityService,
     ProjectsDataService,
+    ProjectListEntityService,
+    ProjectListDataService,
     CountryEntityService,
     CountryDataService,
     SubjectDataService,
@@ -63,6 +67,7 @@ export class ProjectEditorStoreModule {
     private eds: EntityDefinitionService,
     private entityDataService: EntityDataService,
     private projectsDataService: ProjectsDataService,
+    private projectListDataService: ProjectListDataService,
     private countryDataService: CountryDataService,
     private regionDataService: RegionDataService,
     private subjectDataService: SubjectDataService,
@@ -76,6 +81,7 @@ export class ProjectEditorStoreModule {
   ) {
     eds.registerMetadataMap(entityMetadata)
     entityDataService.registerService('Project', projectsDataService)
+    entityDataService.registerService('ProjectList', projectListDataService)
     entityDataService.registerService('Country', countryDataService)
     entityDataService.registerService('Subject', subjectDataService)
     entityDataService.registerService('Region', regionDataService)

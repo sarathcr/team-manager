@@ -1,10 +1,16 @@
 import { EntityMetadataMap } from '@ngrx/data'
 
-import { compareProjects, ContextualHelp } from '../../constants/model/project.model'
+import { compareProjects, ContextualHelp, ProjectList } from '../../constants/model/project.model'
 
 export const entityMetadata: EntityMetadataMap = {
   Project: {
     sortComparer: compareProjects,
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  ProjectList: {
+    selectId: (projectList: ProjectList) => projectList.pageNumber,
     entityDispatcherOptions: {
       optimisticUpdate: true
     }

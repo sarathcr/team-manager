@@ -4,3 +4,14 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
+.creator-home{
+  display: flex;
+  flex-direction: column;
+  &__body {
+    flex: 1 1 auto;
+  }
+  &__pagination {
+    margin-bottom: 22px;
+  }
+}
+
