@@ -6,9 +6,9 @@ import { map } from 'rxjs/operators'
 import { EditorService } from '../../services/editor/editor.service'
 
 import { Step, Status } from '../../constants/model/project.model'
-import { FormNineInit, FormNine } from '../../constants/model/step-forms.model'
+import { FormNine } from '../../constants/model/step-forms.model'
+import { FieldEvent } from 'src/app/shared/constants/model/form-config.model'
 
-import { FormNineInitData } from '../../constants/Data/step-forms.data'
 import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-config.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
@@ -25,7 +25,6 @@ export class StepNineComponent implements OnInit, OnDestroy {
   synopsis$: Observable<any>
   step: Step
   synopsis: any = ''
-  initialFormData: FormNineInit = FormNineInitData
   initialFormStatus: Status = 'PENDING'
   buttonConfig = new ButtonSubmitConfig()
   subscriptions = new SubSink()
@@ -64,8 +63,8 @@ export class StepNineComponent implements OnInit, OnDestroy {
   }
 
   // Function to trigger the value in the textarea
-  onValueChange(value: any): void {
-    this.synopsis = value.val
+  onValueChange(value: FieldEvent): void {
+    this.synopsis = value.textValue
     this.isFormUpdated = value.updated
     if (value.updated) {
       this.step.state = value.status
@@ -96,7 +95,6 @@ export class StepNineComponent implements OnInit, OnDestroy {
     if (formStatus === 'DONE') {
       this.step.state = formStatus
     }
-    this.initialFormData = this.synopsis
     this.handleButtonType()
     const formData: FormNine = {
       data: {

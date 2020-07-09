@@ -61,3 +61,10 @@ export interface CheckBoxData {
   variant?: 'checkedOnly' | 'checkbox'
 }
 
+export interface FieldEvent {
+  textValue?: string
+  val?: Option[]
+  updated?: boolean
+  status?: 'INPROCESS' | 'PENDING'
+}
+

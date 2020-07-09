@@ -6,10 +6,10 @@ import { map } from 'rxjs/operators'
 import { EditorService } from '../../services/editor/editor.service'
 
 import { Step, Status } from '../../constants/model/project.model'
-import { FormEightInit, FormEight } from '../../constants/model/step-forms.model'
+import { FormEight } from '../../constants/model/step-forms.model'
+import { FieldEvent } from 'src/app/shared/constants/model/form-config.model'
 
 import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-config.data'
-import { FormEightInitData } from '../../constants/Data/step-forms.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -26,8 +26,6 @@ export class StepEightComponent implements OnInit, OnDestroy {
   step: Step
   finalProduct: any = ''
   buttonConfig = new ButtonSubmitConfig()
-  initialFormData: FormEightInit = FormEightInitData
-  active = false
   initialFormStatus: Status = 'PENDING'
   subscription = new SubSink()
   isFormUpdated = false
@@ -67,8 +65,8 @@ export class StepEightComponent implements OnInit, OnDestroy {
   }
 
   // Function to trigger the value in the textarea
-  onValueChange(value: any): void {
-    this.finalProduct = value.val
+  onValueChange(value: FieldEvent): void {
+    this.finalProduct = value.textValue
     this.isFormUpdated = value.updated
     if (value.updated) {
       this.step.state = value.status
@@ -99,7 +97,6 @@ export class StepEightComponent implements OnInit, OnDestroy {
     if (formStatus === 'DONE') {
       this.step.state = 'DONE'
     }
-    this.initialFormData = this.finalProduct
     this.handleButtonType()
     const formData: FormEight = {
       data: {

@@ -18,10 +18,9 @@ export class TextareaComponent implements OnInit {
   @Input() variant: TextAreaVariants = 'default'
   @Input() toggleData = ''
   @Input() onInitFocus = false
-  @Input() limit: number
+  @Input() limit = 0
   @Input() value$: Observable<any>
   @Output() inputChange = new EventEmitter()
-  @Input() config
   focus = false
   initialValue: string
   value: string
@@ -44,7 +43,7 @@ export class TextareaComponent implements OnInit {
         }
       })
       const status = this.value ? 'INPROCESS' : 'PENDING'
-      this.inputChange.emit({ val: this.value, updated: this.updated, status })
+      this.inputChange.emit({ textValue: this.value, updated: this.updated, status })
     }
   }
 
@@ -56,7 +55,7 @@ export class TextareaComponent implements OnInit {
     this.value = value
     this.updated = true
     const status = this.value.trim() ? 'INPROCESS' : 'PENDING'
-    this.inputChange.emit({ val: value.trim(), updated: this.updated, status })
+    this.inputChange.emit({ textValue: value.trim(), updated: this.updated, status })
   }
 
   onKeyDown(event: any): void {
@@ -77,7 +76,7 @@ export class TextareaComponent implements OnInit {
     }
     if (!this.value?.trim()) {
       this.value = ''
-      this.inputChange.emit({ val: '', updated: this.updated, status: 'PENDING' })
+      this.inputChange.emit({ textValue: '', updated: this.updated, status: 'PENDING' })
     }
   }
 

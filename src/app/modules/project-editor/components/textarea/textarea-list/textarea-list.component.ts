@@ -13,9 +13,8 @@ import {
 
 import { Observable } from 'rxjs'
 
-import { FieldConfig, Option, TextAreaVariants, TextareaSize } from 'src/app/shared/constants/model/form-config.model'
+import { Option, TextAreaVariants, TextareaSize } from 'src/app/shared/constants/model/form-config.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { ThrowStmt } from '@angular/compiler'
 
 @Component({
   selector: 'app-textarea-list',
@@ -27,11 +26,10 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   @Input() variant: TextAreaVariants = 'bullet'
   @Input() size: TextareaSize
   @Input() toggleData: string
-  @Input() config: FieldConfig
   @Input() onInitFocus: boolean
   @Input() label: string
   @Input() placeholder: string
-  @Input() limit = 0
+  @Input() limit: number
   @Input() maxlength: number
   @Input() value$: Observable<Option[]>
   @Output() inputChange = new EventEmitter()
@@ -104,7 +102,6 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
           this.maxlimit = this.configOptions.length + 1
         }
         if (this.configOptions.length < this.maxlimit && this.configOptions[id].name?.trim()) {
-          // this.inputChange.emit([...this.configOptions])
           this.handleChange([...this.configOptions])
           this.configOptions.splice(id + 1, 0, { ...this.sampleOption })  // add a new bullet
           this.timeOut = setTimeout(() => {
@@ -128,11 +125,9 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
           this.configOptions[0].name = ''
         }
         if (this.configOptions.length === 1 && !this.configOptions[0].name) {
-          // this.inputChange.emit([])
           this.handleChange([])
         }
         else {
-          // this.inputChange.emit([...this.configOptions])
           this.handleChange([...this.configOptions])
         }
         break
@@ -197,7 +192,6 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
     this.configOptions[i].name = value
     let newConfigOptions = this.configOptions.filter(option => option.name?.trim() && option)
     if (this.configOptions.length === 1 && !this.configOptions[0].name.trim()) { newConfigOptions = [] }
-    // this.inputChange.emit(newConfigOptions)
     this.handleChange(newConfigOptions)
 
   }

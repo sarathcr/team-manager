@@ -7,9 +7,14 @@
       </h2>
       <p class="project-form__description"
         [innerHTML]="'DRIVING_QUESTIONS.project_drivingquestions_description' | translate"></p>
-      <app-textarea-bullets [config]='textAreaConfig' (inputChange)="textAreaUpdate($event)"
-        [options$]="drivingQuestions$">
-      </app-textarea-bullets>
+      <app-textarea
+      variant='bullet'
+      [maxlength]="150"
+      [placeholder]="'DRIVING_QUESTIONS.project_drivingquestions_placeholder' | translate"
+      [value$]="drivingQuestions$"
+      (inputChange)="textAreaUpdate($event)" 
+    >
+    </app-textarea>
     </div>
     <app-button
       [disabled] = 'buttonConfig.disabled'
