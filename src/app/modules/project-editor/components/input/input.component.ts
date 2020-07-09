@@ -51,7 +51,7 @@ export class InputComponent implements OnInit {
       this.inputChange.emit('')
     }
   }
-  // focus the text area initially
+  // focus the Input initially
   focusInput(): void {
     if (this.onInitFocus) {
       setTimeout(() => {
