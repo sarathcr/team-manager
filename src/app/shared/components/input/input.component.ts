@@ -2,8 +2,6 @@ import { Component, Input, Output, EventEmitter, ViewChildren, QueryList, Elemen
 import { FormGroup } from '@angular/forms'
 
 import { FieldConfig } from 'src/app/shared/constants/model/form-config.model'
-import { ProjectTitle } from 'src/app/modules/project-editor/constants/model/project.model'
-
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
@@ -16,10 +14,7 @@ export class InputComponent implements OnInit {
   @Input() value: string
   @Input() label: string
   @Input() onInitFocus: false
-  @Input() projectData: ProjectTitle
   @Output() inputChange = new EventEmitter()
-  @Output() titleBlur = new EventEmitter()
-  @Output() status = new EventEmitter()
   config: FieldConfig
   group: FormGroup
   focus = false

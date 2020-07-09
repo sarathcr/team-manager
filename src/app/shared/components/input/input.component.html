@@ -11,7 +11,7 @@
 		[ngModel]="value" 
 		(ngModelChange)="onValueChange($event)" 
 		(focus)="setFocus()"  
-		value={{this.projectData?.title}}
+		value={{value}}
 		(keyup)="validator.valueChange($event.target.value)"
 		#titleInput />
 	<div class="input__counter-wrapper">
