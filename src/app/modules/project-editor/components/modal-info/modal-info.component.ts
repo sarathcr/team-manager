@@ -1,11 +1,5 @@
-import { Component, ViewEncapsulation, OnInit, Input } from '@angular/core'
+import { Component, ViewEncapsulation, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { PlatformLocation } from '@angular/common'
-import { BsModalRef } from 'ngx-bootstrap/modal'
-
-import { Subject } from 'rxjs'
-
-import { FieldConfig } from 'src/app/shared/constants/model/form-config.model'
-import { ModalConfig } from '../../constants/model/modal-info.model'
 
 @Component({
   selector: 'app-modal-info',
@@ -14,32 +8,26 @@ import { ModalConfig } from '../../constants/model/modal-info.model'
   encapsulation: ViewEncapsulation.None
 })
 export class ModalInfoComponent implements OnInit {
+  @Input() variant: string
+  @Input() title: string
+  @Input() description: string
+  @Input() confirmLabel: string
+  @Input() cancelLabel = 'PROJECT.project_button_cancel'
+  @Output() decline = new EventEmitter()
+  @Output() confirm = new EventEmitter()
 
-  buttonConfig: FieldConfig
-  textAreaConfig: FieldConfig
-  @Input() modalConfig: ModalConfig
-
-  public onClose: Subject<string>
-
-  constructor(
-    public bsModalRef: BsModalRef,
-    private location: PlatformLocation
-  ) {
+  constructor(private location: PlatformLocation) {
     // closes modal when back button is clicked
-    this.location.onPopState(() => this.bsModalRef.hide())
+    this.location.onPopState(() => this.onDecline())
   }
 
-  ngOnInit(): void {
-    this.onClose = new Subject()
+  ngOnInit(): void {}
+
+  onDecline(): void {
+    this.decline.emit()
   }
 
-  public onConfirm(): void {
-    this.onClose.next(this.modalConfig.variant)
-    this.bsModalRef.hide()
-  }
-
-  public onCancel(): void {
-    this.onClose.next('cancel')
-    this.bsModalRef.hide()
+  onConfirm(): void {
+    this.confirm.emit()
   }
 }
