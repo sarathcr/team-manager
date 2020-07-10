@@ -71,3 +71,14 @@
     </app-button>
   </div>
 </div>
+
+<ng-template #infoModal>
+  <app-modal-info
+    [variant]="'unlock'"
+    [title]="'PROJECT.project_dependancy_title_cv'"
+    [description]="'CONTENT.project_content_dependancy_filterbycriteria_description'"
+    [confirmLabel]="'CONTENT.project_content_dependancy_filterbycriteria_button'"
+    (confirm)="confirmModal()"
+    (decline)="declineModal()"
+  ></app-modal-info>
+</ng-template>

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core'
+import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core'
+import { PlatformLocation } from '@angular/common'
 import { ProjectTitle, Status } from '../../constants/model/project.model'
 import { ModalFormVariant } from '../../constants/model/modal-form-config.model'
 
@@ -6,8 +7,7 @@ import { ModalFormVariant } from '../../constants/model/modal-form-config.model'
   selector: 'app-modal-form',
   templateUrl: './modal-form.component.html',
   styleUrls: ['./modal-form.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  encapsulation: ViewEncapsulation.None
 })
 export class ModalFormComponent implements OnInit {
 
@@ -21,7 +21,10 @@ export class ModalFormComponent implements OnInit {
   @Output() confirm = new EventEmitter()
   status: Status
 
-  constructor() {}
+  constructor(private location: PlatformLocation) {
+    // closes modal when back button is clicked
+    this.location.onPopState(() => this.onDecline())
+  }
 
   ngOnInit(): void {
     this.checkStatus(this.data)
