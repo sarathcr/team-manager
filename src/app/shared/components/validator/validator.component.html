@@ -1,9 +1,9 @@
-<div class="counter" [ngClass]="{'counter__error' : limitExceeds}" *ngIf="isEnabled">
+<div class="counter" [ngClass]="{'counter__error' : limitExceeds && !(value.length == 0)}" *ngIf="isEnabled">
   <div>
-    <div class="counter__helper-text" *ngIf="(value.length == 0)">
+    <div class="counter__helper-text" *ngIf="value.length == 0">
       {{ "PROJECT.project_title_helpertext" | translate }}
     </div>
-    <div class="counter__helper-text" *ngIf="limitExceeds">
+    <div class="counter__helper-text" *ngIf="value.length !== 0 && limitExceeds">
       {{ "PROJECT.Error_textlimit_specified_singleinput" | translate }}
     </div>
   </div>
