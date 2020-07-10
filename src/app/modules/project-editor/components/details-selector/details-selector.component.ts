@@ -59,7 +59,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   getModal(id: number): void {
     this.id = id
     this.bsModalRef = this.modalService.show(this.infoModal, {
-      class: 'common-modal'
+      class: 'common-modal  modal-dialog-centered'
     })
   }
 

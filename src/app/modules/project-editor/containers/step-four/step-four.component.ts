@@ -155,7 +155,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
         stepId: 4
       }
       this.bsModalRef = this.modalService.show(PrincipalViewComponent,
-        { class: 'competency-modal', initialState })
+        { class: 'competency-modal modal-dialog-centered', initialState })
       this.bsModalRef.content.closeBtnName = 'Close'
       this.bsModalRef.content.selectedItems.subscribe(contents => {
         this.dataPayload = {
@@ -250,7 +250,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   getModal(): void {
     this.bsModalRef = this.modalService.show(this.infoModal, {
-      class: 'common-modal'
+      class: 'common-modal modal-dialog-centered'
     })
   }
 
