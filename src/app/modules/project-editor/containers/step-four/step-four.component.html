@@ -18,6 +18,7 @@
             *ngFor="let subject of project?.subjects; let i = index; let last = last;"
           >
             <app-details-selector
+              [placeholder]="'CONTENT.project_content_placeholder'"
               [subject]="subject"
               [subjectItem]="subjectContents[i]"
               [isLast]="last"
