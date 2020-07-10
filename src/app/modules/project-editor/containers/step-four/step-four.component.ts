@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core'
 
 import { Observable, BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -11,7 +11,6 @@ import {
   CurriculumBasicSkillsEntityService
 } from '../../store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 import { PrincipalViewComponent } from '../../components/principal-view/principal-view.component'
-import { ModalInfoComponent } from '../../components/modal-info/modal-info.component'
 
 import { Project,
   Subject,
@@ -23,7 +22,6 @@ import { Project,
 import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/form-config.model'
 import { FormFour, FormFourInit } from '../../constants/model/step-forms.model'
 
-import { ModalUnlock } from '../../constants/Data/modal-info.data'
 import { FormFourInitData } from '../../constants/Data/step-forms.data'
 import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
@@ -34,7 +32,7 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
   styleUrls: ['./step-four.component.scss']
 })
 export class StepFourComponent implements OnInit, OnDestroy {
-
+  @ViewChild('infoModal') infoModal: TemplateRef<any>
   project$: Observable<Project>
   step$: Observable<Step>
   grades: Option[]
@@ -247,14 +245,18 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   getModal(): void {
-    const initialState = { modalConfig: { ...ModalUnlock } }
-    this.bsModalRef = this.modalService.show(ModalInfoComponent, { class: 'common-modal', initialState })
-    this.bsModalRef.content.closeBtnName = 'Close'
-    this.bsModalRef.content.onClose.subscribe(result => {
-      if (result) {
-        this.editor.redirectToStep(3)
-      }
+    this.bsModalRef = this.modalService.show(this.infoModal, {
+      class: 'common-modal'
     })
+  }
+
+  declineModal(): void {
+    this.bsModalRef.hide()
+  }
+
+  confirmModal(): void {
+    this.editor.redirectToStep(3)
+    this.bsModalRef.hide()
   }
 
   textareaDataChange(data: Option[], index: number): void {
