@@ -1,10 +1,16 @@
 import { EntityMetadataMap } from '@ngrx/data'
-import { compareProjects } from '../../constants/project.model'
-import { ContextualHelp } from 'src/app/shared/constants/contextual-help.model'
+
+import { compareProjects, ContextualHelp, ProjectList } from '../../constants/model/project.model'
 
 export const entityMetadata: EntityMetadataMap = {
   Project: {
     sortComparer: compareProjects,
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  ProjectList: {
+    selectId: (projectList: ProjectList) => projectList.pageNumber,
     entityDispatcherOptions: {
       optimisticUpdate: true
     }
@@ -51,6 +57,11 @@ export const entityMetadata: EntityMetadataMap = {
     }
   },
   EvaluationCriteria: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
+  },
+  CurriculumBasicSkills: {
     entityDispatcherOptions: {
       optimisticUpdate: true
     }

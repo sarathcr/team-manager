@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data'
-import { AcademicYear } from 'src/app/modules/project-editor/constants/project.model'
+import { AcademicYear } from 'src/app/modules/project-editor/constants/model/project.model'
 
 @Injectable()
 export class AcademicYearEntityService extends EntityCollectionServiceBase<AcademicYear> {

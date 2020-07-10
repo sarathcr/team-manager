@@ -9,20 +9,8 @@
       }
     }
   }
-  &__textarea-content{
-    letter-spacing: normal;
-    padding: 0 18px;
-    &_link{
-      font-weight: 900;
-      border-bottom: 1px solid $link-color;
-      cursor: pointer;
-    }
-  }
   &__wrap{
     margin-bottom: 15px;
-  }
-  &__textarea-wrapper{
-    margin-top:42px;
   }
   &__basic-skill{
     margin-bottom: 41px;
@@ -31,19 +19,32 @@
       line-height: 28px;
       letter-spacing: 0.2px;
       font-weight: 900;
-      margin-bottom: 21px;
+      margin-bottom: 10px;
     }
-  }
-  &__cell{
-    // padding: 12px 15px;
-    font-family: $font-family-tertiary;
-    font-size: $font-size-body-s;
-    line-height: $line-height-24px;
-    letter-spacing: 0;
-    font-weight: 400;
-    display: flex;
-    flex-direction: row;
-    flex: 1 1 100%;
+    &_row{
+      font-family: $font-family-tertiary;
+      font-size: $font-size-body-s;
+      line-height: $line-height-24px;
+      letter-spacing: 0;
+      font-weight: 400;
+      margin: 0 -15px;
+      ::ng-deep{
+        .checkbox-row {
+          padding: 0;
+          &__cell{
+            padding: 5px 15px;
+            line-height: 28px;
+          }
+          &__box {
+            margin-top:0;
+            margin-bottom: 0;
+            height: 19px;
+            width: 19px;
+            align-self: center;
+        }
+        }
+      }
+    }
   }
   &__box{
         display: block;
@@ -74,7 +75,7 @@
             left: 0;
             height: 19px;
             width: 19px;
-            background-color: $table-row-secondary-color;
+            background-color: $checkbox-row-secondary-color;
             border: 1px solid $primary-font-color;
             opacity: 0.1;
             border-radius: 2px;
@@ -90,10 +91,10 @@
         }
 
         #{$root}__checkbox:checked ~ #{$root}__checkmark{
-            background-color: $table-row-secondary-color;
-            color: $table-row-primary-color;
+            background-color: $checkbox-row-secondary-color;
+            color: $checkbox-row-primary-color;
             opacity: 1;
-            border: 1px solid $table-row-primary-color;
+            border: 1px solid $checkbox-row-primary-color;
         }
 
         #{$root}__checkbox:checked ~ #{$root}__checkmark::before{

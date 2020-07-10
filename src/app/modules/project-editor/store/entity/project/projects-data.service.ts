@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data'
-import { Project } from 'src/app/modules/project-editor/constants/project.model'
+import { Project } from 'src/app/modules/project-editor/constants/model/project.model'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -50,6 +50,13 @@ export class ProjectsDataService extends DefaultDataService<Project> {
                     map(() => data.changes)
                 )
         }
+        if (data.changes?.updateType === 'removeContent') {
+          const { subjectId, contentId, id } = data.changes
+          return this.http.delete<any>(`${environment.apiUrl.projectService}/projects/${id}/subjects/${subjectId}/contents/${contentId}`)
+              .pipe(
+                  map(() => data.changes)
+              )
+      }
     }
 
 

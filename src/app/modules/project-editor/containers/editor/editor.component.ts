@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router'
 
 import { Observable } from 'rxjs'
 
-import { Step } from '../../constants/step.model'
 import { EditorService } from '../../services/editor/editor.service'
+
+import { Step } from '../../constants/model/project.model'
 
 @Component({
   selector: 'app-editor',

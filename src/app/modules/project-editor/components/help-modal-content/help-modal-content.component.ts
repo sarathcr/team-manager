@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core'
+
 import { BsModalRef } from 'ngx-bootstrap/modal'
-import { VideoOptions } from 'src/app/shared/constants/video.model'
+
+import { VideoOptions } from 'src/app/shared/constants/model/video.model'
 
 @Component({
   selector: 'app-help-modal',

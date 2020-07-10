@@ -18,7 +18,7 @@
 }
 
 .add-project,.list-project{
-  height: 194px;
+  height: 204px;
   width: 194px;
   border-radius: 4px;
   background-color: $add-card-background;
@@ -140,9 +140,10 @@
   }
 }
 
-.textarea_focus, .textarea-bullets_focus, .input_focus{
-  border: 1px solid transparent !important;
-  box-shadow: 0 0 0 3px $primary !important;
+.textarea_focus,
+.textarea-bullets_focus{
+  border: 1px solid $primary !important;
+  box-shadow: inset 0 0 0 1px $primary !important;
 }
 .modal{
   &.show{
@@ -181,17 +182,14 @@ body{
 
 
 .competency-modal{
-  max-width: 87.5%; // 1260px;
-  height: 750px; // 750px
+  height: 750px;
+  max-width: 1260px;
   .modal-content{
     height: 100%;
   }
-  @media (min-width: 1440px) and (min-height: 810px) {
-    max-width: 1260px;
-  }
   .dropdown{
     margin-bottom: 8px;
-    padding-right: 20px;
+    padding-right: 26px;
   }
 }
 
@@ -199,5 +197,19 @@ body{
   .project-editor__form{
     padding-left: 50px;
     padding-right: 50px;
+  }
+}
+
+.ng-scrollbar{
+  &.custom-scrollbar {
+    --scrollbar-color: transparent;
+    --scrollbar-container-color: transparent;
+    --scrollbar-thumb-color: rgba(20,28,58,0.1);
+    --scrollbar-thumb-hover-color: rgba(20,28,58,0.4);
+    --scrollbar-border-radius: 3.5px;
+    --scrollbar-size: 7px;
+    --scrollbar-padding: 6px;
+    --scroll-view-margin: 0;
+    --scroll-view-color: transparent;
   }
 }

@@ -17,7 +17,8 @@
       "project_title_title_newtitle": "Nuevo proyecto",
       "project_title_title_edittitle": "Edita el título",
       "project_title_input_title": "Título",
-      "project_dependancy_title_cv": "Desbloquea el currículum"
+      "project_dependancy_title_cv": "Desbloquea el currículum",
+      "Error_textlimit_specified_singleinput": "Has excedido los caracteres permitidos."
   },
   "STEPS_MENU":{
       "project_structure_stepsmenu_title": "Crea paso a paso",
@@ -80,7 +81,7 @@
       "project_objectives_criteriawindow_combo_section_1": "Cursos preferentes",
       "project_objectives_criteriawindow_combo_section_2": "Otros cursos",
       "project_objectives_criteriawindow_criterion": "Criterio de evaluación",
-      "project_objectives_criteriawindow_basic_skills": "Competencias asociadas",
+      "project_objectives_criteriawindow_basic_skills": "Competencias",
       "project_objectives_criteriawindow_grade": "Curso",
       "project_objectives_criteriawindow_block": "Bloque",
       "project_objectives_criteriawindow_dimensions": "Dimensiones asociadas",
@@ -101,9 +102,7 @@
       "project_content_placeholder":"Agrega contenidos del currículum.",
       "project_content_add_criteria":" + Añadir",
       "project_content_cvcontent":"Contenido del currículum",
-      "project_content_extracontent":{
-        "one": "Añadir",
-        "two": "contenidos personalizados"},
+      "project_content_extracontent": "Añadir |contenidos personalizados|",
       "project_content_extracontent_input":"Contenidos personalizados",
       "project_content_contentwindow_curriculum":"Currículum",	
       "project_content_contentwindow_title":"Selecciona los contenidos a trabajar:",	

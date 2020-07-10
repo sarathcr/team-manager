@@ -1,14 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
 
+import { ModalInfoComponent } from '../modal-info/modal-info.component'
+
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-import { ModalComponent } from '../modal/modal.component'
-import { Subject, Project } from 'src/app/modules/project-editor/constants/project.model'
+import { Subject, Project } from 'src/app/modules/project-editor/constants/model/project.model'
+import { ButtonIcon } from 'src/app/shared/constants/model/form-config.model'
+
+import { ModalDelete } from '../../constants/Data/modal-info.data'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { ModalDelete } from '../../constants/modal-config.data'
-import { IconSelect } from 'src/app/shared/constants/select-icon.model'
 
 @Component({
   selector: 'app-details-selector',
@@ -20,11 +23,10 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   showList = false
   @Input() subjectItem: any[]
   @Input() subject: Subject
-  @Input() i: number
   @Input() isLast = false
-  @Input() icon: IconSelect
+  @Input() icon: ButtonIcon
+  @Input() loading = false
   @Input() project$: Observable<Project>
-  @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() openModal: EventEmitter<any> = new EventEmitter()
   @Output() deleteCriteria: EventEmitter<any> = new EventEmitter()
   count = 0
@@ -55,13 +57,13 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
       })
   }
 
-  getModal(criteriaId: number): void {
+  getModal(id: number): void {
     const initialState = { modalConfig: { ...ModalDelete } }
-    this.bsModalRef = this.modalService.show(ModalComponent, { class: 'common-modal', initialState })
+    this.bsModalRef = this.modalService.show(ModalInfoComponent, { class: 'common-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
       if (result === 'delete') {
-        this.deleteCriteria.emit({ subjectId: this.subject.id, criteriaId })
+        this.deleteCriteria.emit({ subjectId: this.subject.id, id })
         this.count = this.subjectItem.filter(criteria => criteria === this.subject.id).length
       }
     })
