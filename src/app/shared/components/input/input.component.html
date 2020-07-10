@@ -1,0 +1,17 @@
+<div class="input" [ngClass]="{
+	'input_focus':focus ,
+	'input_border' : value ,
+	'input_error' : enableValidator ? validator.limitExceeds : null}">
+	<label class="input__label" *ngIf="label">
+		{{label | translate}}
+	</label>
+	<input class="form-control input__field" [placeholder]="!focus ? placeholder : ''" [attr.maxlength]="maxlength"
+		[ngModel]="value" (ngModelChange)="onValueChange($event)" (focus)="setFocus()" (blur)="onBlur()" value={{value}}
+		(keyup)="enableValidator ? validator.valueChange($event.target.value) : null" #titleInput />
+
+	<div class="input__counter-wrapper">
+		<app-validator [value]="titleInput.value" [maxlength]="maxlength" [isEnabled]="enableValidator" #validator>
+		</app-validator>
+	</div>
+
+</div>

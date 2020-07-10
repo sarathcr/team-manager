@@ -21,9 +21,9 @@ $background-primary: $white !default;
 // border
 $color-border: rgba(255, 255, 255, 0.2);
 $article-border: rgba(20,28,58,0.2);
-$creator-border: rgba(20,28,58,0.1);
+$creator-border: rgba(20,28,58,0.1) !default;
 $creator-disabled: rgba(20,28,58,0.1);
-$creator-border-active: rgba(20,28,58,0.4);
+$creator-border-active: rgba(20,28,58,0.4) !default;
 $creator-background: $white-smoke;
 $subject-header-bg: rgba(20,28,58,0.05);
 
@@ -269,8 +269,17 @@ $custom-tab-checkbox-border: rgba($primary,0) !default;
 $custom-tab-arrow-bg: $magnolia !default;
 $custom-tab-arrow-border: rgba($primary, 0) !default;
 
-//Table Row
-$table-row-border-color: rgba($primary-font-color,0.1) !default;
-$table-row-active-bg-color:  rgba($primary,0.1) !default;
-$table-row-primary-color: $primary !default;
-$table-row-secondary-color: $white !default;
+//checkbox Row
+$checkbox-row-border-color: rgba($primary-font-color,0.1) !default;
+$checkbox-row-active-bg-color:  rgba($primary,0.1) !default;
+$checkbox-row-primary-color: $primary !default;
+$checkbox-row-secondary-color: $white !default;
+
+//header
+$btn-color: $medium-turquoise !default;
+
+//Input Pop up
+$counter-text: rgba($blue-whale,0.4) !default;
+$helper-text: rgba($blue-whale,0.5) !default;
+$error-text: #E61F7F !default;
+$error-input-border: #E61F7F !default;

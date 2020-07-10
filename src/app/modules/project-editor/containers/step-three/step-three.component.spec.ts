@@ -14,12 +14,14 @@ import { EditorService } from '../../services/editor/editor.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
+import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
 
 class EditorServiceStub { }
 class ProjectEntityServiceStub { }
 class StepStatusEntityServiceStub { }
 class RouterStub { }
 class GradeEntityServiceStub { }
+class EvaluationCriteriaEntityServiceStub { }
 class BsModalServiceStub {
   getModalsCount = (): number => 0
 }
@@ -44,7 +46,8 @@ describe('StepThreeComponent', (): void => {
         { provide: StepStatusEntityService, useClass: StepStatusEntityServiceStub },
         { provide: Router, useClass: RouterStub },
         { provide: BsModalService, useClass: BsModalServiceStub },
-        { provide: GradeEntityService, useClass: GradeEntityServiceStub }
+        { provide: GradeEntityService, useClass: GradeEntityServiceStub },
+        { provide: EvaluationCriteriaEntityService, useClass: EvaluationCriteriaEntityServiceStub },
 
       ],
       imports: [ TranslateModule.forRoot() ]
@@ -55,7 +58,6 @@ describe('StepThreeComponent', (): void => {
   })
 
   afterEach((): void => {
-    spyOn(component, 'isFormUpdated').and.returnValue(false)
 
     fixture.destroy()
   })

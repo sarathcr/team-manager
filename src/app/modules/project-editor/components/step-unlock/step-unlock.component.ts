@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
 
-import { FieldConfig } from 'src/app/shared/constants/field.model'
+import { FieldConfig } from 'src/app/shared/constants/model/form-config.model'
+import { DefineUnlockStep } from '../../constants/model/step-forms.model'
 
 @Component({
   selector: 'app-step-unlock',
@@ -11,8 +12,8 @@ export class StepUnlockComponent implements OnInit {
 
   buttonConfig: FieldConfig
   textAreaConfig: FieldConfig
-  @Input() StepThree: DefineStep
-  @Input() StepFour: DefineStep
+  @Input() StepThree: DefineUnlockStep
+  @Input() StepFour: DefineUnlockStep
 
   constructor() { }
 
@@ -38,8 +39,4 @@ export class StepUnlockComponent implements OnInit {
     }
   }
 
-}
-
-export interface DefineStep {
-  step?: 'stepThree' | 'stepFour'
 }

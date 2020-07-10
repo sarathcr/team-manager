@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core'
-import { Project } from 'src/app/modules/project-editor/constants/project.model'
+import { Project } from 'src/app/modules/project-editor/constants/model/project.model'
 
 @Component({
   selector: 'app-project-thumbnail',

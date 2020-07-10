@@ -5,12 +5,10 @@ import { TranslateService } from '@ngx-translate/core'
 import { Observable, BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-import { StepState, statusId, Step } from '../../constants/step.model'
-import { Project } from 'src/app/modules/project-editor/constants/project.model'
-import { ProjectTitle } from '../../constants/title-data.model'
+import { Project, Step, StepState, statusId, ProjectTitle } from 'src/app/modules/project-editor/constants/model/project.model'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
-import { FormsData } from '../../constants/step-forms.model'
+import { FormsData } from '../../constants/model/step-forms.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Injectable({
@@ -101,10 +99,12 @@ export class EditorService {
               evaluationCriteria: data?.evaluationCriteria?.map(({ id, name, subjectId, gradeId }) => (
                 { id, name, subjectId, gradeId }))
             })
-            case 4: return({
-              ...data,
-              subjects: data?.subjects?.map(subject => ({
+            case 4: return ({
+                ...data,
+                subjects: data?.subjects?.map(subject => ({
                 ...subject,
+                contents: subject?.contents?.map(({ id, name }) => ({ id, name })),
+                customContents: subject?.customContents?.map(({ id, name }) => ({ id, name })),
                 evaluationCriteria: subject?.evaluationCriteria?.map(({ id, name }) => ({ id, name }))
               }))
             })

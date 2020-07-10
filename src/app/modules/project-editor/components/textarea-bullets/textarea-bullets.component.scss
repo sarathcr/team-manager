@@ -1,5 +1,12 @@
 @import 'helpers/_helpers-master';
 
+:host{
+  display: block;
+  p + & .textarea-bullets {
+    margin-top: 0;
+  }
+}
+
 .textarea-bullets {
   $root: &;
   width: 100%;
@@ -8,42 +15,48 @@
   overflow: auto;
   border: 1px solid $creator-border-active;
   border-radius: 3px;
+  margin-top: 42px;
   margin-bottom: 56px;
   box-shadow: 0 0 0 0 transparent;
   position: relative;
+  box-sizing: border-box;
   &__placeholder{
     position: absolute;
     top: 14px;
     left: 42px;
     color: rgba($primary-font-color,0.6);
+    padding-right: 22px;
+    z-index: -1;
   }
   &__list {
-    padding: 14px 22px;
+    padding-left: 0;
     margin-bottom: 0;
     min-height: 295px;
     display: flex;
     flex-direction: column;
     &.numbered-list {
       #{$root}__item{
-        padding-left: 0px;
         &::before{
           font-family:  $font-family-tertiary !important;
-          position: absolute;
-          left: 0;
-          top: 1px;
           pointer-events: none;
+          position: static;
         }
         #{$root}__textarea{
-          padding-left: 20px;
+          padding-left: 10px;
         }
       }
     }
     &.bullet-list:not(.numbered-list){
       #{$root}__item{
-        padding-left: 0;
+        &:first-child{
+          &::before{
+            top: 14px;
+          }
+        }
         &::before{
           pointer-events: none;
-          left: -8px;
+          left: 14px;
+          top: 0;
         }
         #{$root}__textarea{
           padding-left: 20px;
@@ -55,9 +68,13 @@
   &__item {
     display: flex;
     margin-bottom: 8px;
+    padding: 0 22px;
     &:last-child{
       flex:1 1 100%;
-      
+      padding-bottom: 14px;
+    }
+    &:first-child{
+      padding-top: 14px;
     }
     &:before {
       top: 0px;
@@ -73,12 +90,11 @@
     color: $blue-whale;
     line-height: 24px;
     height: 24px;
-    // height: auto;
     padding: 0;
     overflow: hidden;
     resize: none;
     caret-color: $electric-indigo;
-    
+
   }
   &__label{
     position: absolute;
@@ -99,6 +115,18 @@
     overflow: visible;
     .textarea-bullets__list{
       min-height: 148px;
+      max-height: 148px;
+      overflow-y: auto;
+    }
+  }
+  &-toggle__content{
+    letter-spacing: normal;
+    padding: 0 18px;
+    margin-bottom:42px;
+    &_link{
+      font-weight: 900;
+      border-bottom: 1px solid $link-color;
+      cursor: pointer;
     }
   }
 }

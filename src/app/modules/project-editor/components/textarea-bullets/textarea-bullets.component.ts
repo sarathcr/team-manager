@@ -13,7 +13,7 @@ import {
 
 import { Observable } from 'rxjs'
 
-import { FieldConfig, Option, TextAreaVariants } from 'src/app/shared/constants/field.model'
+import { FieldConfig, Option, TextAreaVariants, TextareaSize } from 'src/app/shared/constants/model/form-config.model'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
@@ -24,11 +24,16 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 export class TextareaBulletsComponent implements OnInit, AfterContentChecked, OnDestroy {
 
   @Input() variant: TextAreaVariants = 'bullet'
-  @Input() type: TextareaType
+  @Input() size: TextareaSize
+  @Input() toggleData = ''
   @Input() config: FieldConfig
   @Input() options: Option[]
+  @Input() onInitFocus = false
+  @Input() label: string
   @Input() options$: Observable<Option[]>
   @Output() inputChange = new EventEmitter()
+  @Output() textareaBlur = new EventEmitter()
+
   @ViewChildren('textArea') textArea: QueryList<ElementRef>
   index = 0
   initResize = false
@@ -40,11 +45,14 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   limit = 0
   focus = false
   subscriptions = new SubSink()
-
+  isShown = false
+  isToggle = false
   constructor() { }
 
   ngOnInit(): void {
     this.limit = this.config.limit
+    this.isToggle = (this.variant === String('toggle'))
+    this.isShown = this.isToggle ? this.isShown : true
     this.optionInit()
   }
 
@@ -68,6 +76,7 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
         } else {
           this.configOptions = [{ ...this.sampleOption }]
         }
+        this.isShown = (this.configOptions.length === 1 && !this.configOptions[0]?.name && this.isToggle) ? false : true
       })
     } else {
       this.configOptions = [{ ...this.sampleOption }]
@@ -183,9 +192,15 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
     this.focus = true
   }
 
-  onBlur(i: number): void {
-    this.focus = false
-    if (this.configOptions.length > 1 && !this.configOptions[i]?.name?.trim()) {
+  onBlur($event: any, i: number): void {
+    if ($event.relatedTarget !== $event.target.parentElement) {
+      this.focus = false
+      if (this.configOptions.length === 1 && !this.configOptions[0]?.name  && this.isToggle) {
+        this.isShown = !this.isShown
+      }
+    }
+    if (this.configOptions.length > 1 && !this.configOptions[i]?.name?.trim() &&
+    $event.relatedTarget !== $event.target.parentElement) {
       this.configOptions.splice(i, 1)
     }
     if (this.configOptions.length === 1 && !this.configOptions[0]?.name?.trim()) {
@@ -193,6 +208,25 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
     }
   }
 
+  // focus the text area initially
+  focusTextArea(): void{
+    if (this.onInitFocus){
+      setTimeout(() => {
+        if (!this.textArea.first.nativeElement.value.length) {
+          this.textArea.first.nativeElement.focus()
+        }
+      }, 0)
+    }
+  }
+
+  // toggle text area on link click
+  toggleTextarea(): void{
+    this.isShown = !this.isShown
+    if (this.isShown){
+      this.focusTextArea()
+    }
+  }
+
 }
-export type TextareaType = 'toggle'
+
 
