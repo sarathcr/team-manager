@@ -1,4 +1,4 @@
-<div class="counter" [ngClass]="{'counter__error' : limitExceeds}" *ngIf="isEnabled">
+<div class="counter" [ngClass]="{'counter__error' : limitExceeds && !(value.length == 0)}" *ngIf="isEnabled">
   <div>
     <div class="counter__helper-text" *ngIf="(value.length == 0 && !limitExceeds)">
       {{ "PROJECT.project_title_helpertext" | translate }}

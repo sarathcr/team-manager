@@ -1,7 +1,7 @@
 <div class="input" [ngClass]="{
 	'input_focus':focus ,
 	'input_border' : value ,
-	'input_error' : enableValidator ? validator.limitExceeds : null}">
+	'input_error' : enableValidator ? validator.limitExceeds && !(value.length == 0) : null}">
 	<label class="input__label" *ngIf="label">
 		{{label | translate}}
 	</label>
