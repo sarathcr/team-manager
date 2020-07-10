@@ -27,7 +27,9 @@ export class HelpVideoThumbComponent implements OnDestroy {
       }
     }
 
-    this.bsModalRef = this.modalService.show(HelpModalContentComponent, { class: 'help-modal', initialState })
+    this.bsModalRef = this.modalService.show(HelpModalContentComponent, {
+      class: 'help-modal modal-dialog-centered', initialState
+    })
     this.bsModalRef.content.closeBtnName = 'Close'
   }
 

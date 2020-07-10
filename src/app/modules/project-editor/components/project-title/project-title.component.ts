@@ -61,7 +61,7 @@ export class ProjectTitleComponent implements OnInit, AfterViewInit {
     this.modalConfirmLabel = !this.projectData?.id ? 'PROJECT.project_button_create' : 'PROJECT.project_button_save'
     this.modalRef = this.modalService.show(this.titleModal, {
       ignoreBackdropClick: true,
-      class: 'modal-form'
+      class: 'modal-form modal-dialog-centered'
     })
   }
 
