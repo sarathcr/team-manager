@@ -23,7 +23,6 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   showList = false
   @Input() subjectItem: any[]
   @Input() subject: Subject
-  @Input() i: number
   @Input() isLast = false
   @Input() icon: ButtonIcon
   @Input() loading = false
@@ -60,13 +59,13 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
       })
   }
 
-  getModal(criteriaId: number): void {
+  getModal(id: number): void {
     const initialState = { modalConfig: { ...ModalDelete } }
     this.bsModalRef = this.modalService.show(ModalInfoComponent, { class: 'common-modal', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.onClose.subscribe(result => {
       if (result === 'delete') {
-        this.deleteCriteria.emit({ subjectId: this.subject.id, criteriaId })
+        this.deleteCriteria.emit({ subjectId: this.subject.id, id })
         this.count = this.subjectItem.filter(criteria => criteria === this.subject.id).length
       }
     })

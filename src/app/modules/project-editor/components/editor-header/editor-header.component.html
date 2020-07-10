@@ -1,4 +1,4 @@
-<div class="project-editor-header">
+<header class="project-editor-header">
   <div class="container-fluid d-flex align-items-center">
     <div class="app-logo">
       <a class="app-logo__link" routerLink="/">
@@ -15,5 +15,33 @@
       [projectData]="projectData"
       (titleSubmit)="handleTitleSubmit($event)"
     ></app-project-title>
+    <div class="project-editor-header__collapse">
+      <nav class="project-editor-header__nav">
+        <!-- navigation list -->
+        <ul class="project-editor-header__menu-list">
+          <li class="project-editor-header__menu-item active">
+            <span class="project-editor-header__menu-link">
+              Estructura
+            </span>
+          </li>
+          <li class="project-editor-header__menu-item">
+            <span class="project-editor-header__menu-link">
+              Actividades
+            </span>
+          </li>
+          <li class="project-editor-header__menu-item">
+            <span class="project-editor-header__menu-link">
+              Evaluación
+            </span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="project-editor-header__toolbar">
+      <span class="project-editor-header__toolbar-link">
+        <span class="icon icon-ic_view_small project-editor-header__toolbar-icon"></span>
+        Programación
+      </span>
+    </div>
   </div>
-</div>
+</header>

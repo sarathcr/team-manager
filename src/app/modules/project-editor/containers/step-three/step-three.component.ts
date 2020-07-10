@@ -9,6 +9,7 @@ import { EditorService } from '../../services/editor/editor.service'
 import { ObjectiveService } from '../../services/objectives/objectives.service'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
+import { PrincipalViewComponent } from '../../components/principal-view/principal-view.component'
 
 import { FieldConfig, Option } from 'src/app/shared/constants/model/form-config.model'
 import {
@@ -16,15 +17,15 @@ import {
   EvaluationCriteria,
   Subject,
   Step,
-  Status
+  Status,
+  Project
 } from 'src/app/modules/project-editor/constants/model/project.model'
 import { FormThreeInit, FormThree } from '../../constants/model/step-forms.model'
-import { PrincipalViewComponent } from '../../components/principal-view/principal-view.component'
-import { Project } from '../../constants/model/project.model'
 
 import { FormThreeInitData } from '../../constants/Data/step-forms.data'
-
+import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+
 
 @Component({
   selector: 'app-step-three',
@@ -37,7 +38,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   step$: Observable<Step>
   grades: Option[]
   step: Step
-  buttonConfig: FieldConfig
+  buttonConfig = new ButtonSubmitConfig()
   textAreaConfig: FieldConfig
   competencyObjectives$: Observable<CompetencyObjective[]>
   evaluationCriteria$: Observable<EvaluationCriteria[]>
@@ -171,7 +172,6 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         }
         )
     }
-
   }
 
   // Adds dimension or basic skills to the evaluation criteria
@@ -196,7 +196,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     for (const subject of this.project.subjects) {
       if (subject.id === criteriaData.subjectId) {
         for (const [index, criteria] of subject.evaluationCriteria.entries()) {
-          if (criteria.id === criteriaData.criteriaId) {
+          if (criteria.id === criteriaData.id) {
             subject.evaluationCriteria.splice(index, 1)
           }
         }
@@ -205,7 +205,11 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     this.project.competencyObjectives = [...this.inputFormData.competencyObjectives]
     this.checkFormEmpty()
     const formData: FormThree = {
-      data: { ...this.project, updateType: 'removeCriteria', ...criteriaData },
+      data: { ...this.project,
+        updateType: 'removeCriteria',
+        criteriaId: criteriaData.id,
+        subjectId: criteriaData.subjectId
+      },
       stepStatus: {
         steps: [
           {
@@ -327,14 +331,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   createFormConfig(): void {
-    this.buttonConfig = {
-      name: 'submit',
-      field: 'button',
-      id: 'submitButton',
-      disabled: true,
-      submitted: false,
-      label: 'IR A PUNTO DE PARTIDA'
-    }
+
     this.textAreaConfig = {
       name: 'textarea',
       field: 'competencyObjectives',
@@ -345,14 +342,8 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
     // Translation
     this.subscriptions.sink = this.translateService.stream([
-      'PROJECT.project_button_markdone',
-      'PROJECT.project_button_done',
-      'OBJECTIVES.project_objectives_title',
-      'OBJECTIVES.project_objectives_description',
       'OBJECTIVES.project_objectives_objectives_placeholder'
     ]).subscribe(translations => {
-      this.buttonConfig.label = translations['PROJECT.project_button_markdone']
-      this.buttonConfig.successLabel = translations['PROJECT.project_button_done']
       this.textAreaConfig.placeholder = translations['OBJECTIVES.project_objectives_objectives_placeholder']
     })
   }
@@ -396,3 +387,4 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     })
   }
 }
+

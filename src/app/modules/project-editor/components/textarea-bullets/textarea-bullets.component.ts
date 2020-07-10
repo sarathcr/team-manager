@@ -51,9 +51,9 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
 
   ngOnInit(): void {
     this.limit = this.config.limit
-    this.optionInit()
     this.isToggle = (this.variant === String('toggle'))
     this.isShown = this.isToggle ? this.isShown : true
+    this.optionInit()
   }
 
   ngAfterContentChecked(): void {

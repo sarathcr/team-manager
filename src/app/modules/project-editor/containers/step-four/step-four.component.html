@@ -20,17 +20,17 @@
             <app-details-selector
               [placeholder]="'CONTENT.project_content_placeholder'"
               [subject]="subject"
-              [subjectItem]="subjectContents[i]"
+              [subjectItem]="subject.contents"
               [isLast]="last"
               [project$]="editor.project$"
               [icon]="subject.evaluationCriteria.length ? 'add' : 'locked'"
-              (openModal)="pushContent(!!subject.evaluationCriteria.length, i)"
-              (deleteCriteria)="popConent(i)"
+              (openModal)="openModalWithComponent(!!subject.evaluationCriteria.length, i)"
+              (deleteCriteria)="deleteContent($event)"
             ></app-details-selector>
               <div class="project-form__textarea-wrapper">
                 <app-textarea-bullets
-                  [variant]="'toggle'"
-                  [toggleData]="'CONTENT.project_content_extracontent'"
+                  variant="toggle"
+                  toggleData="CONTENT.project_content_extracontent"
                   [onInitFocus]="true"
                   [config]='textAreaConfig'
                   label="CONTENT.project_content_extracontent_input"

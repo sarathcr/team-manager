@@ -87,6 +87,22 @@ export class EvaluationCriteria extends Option {
   standards?: Standard[]
   checked?: boolean
 }
+export interface ProjectContent {
+  basicSkills: BasicSkill[]
+  code: string
+  description: string
+  id: number
+  name: string
+  numeration: number
+}
+
+export interface ContentModal {
+  contents?: string
+  basicSkills?: string
+  course?: string
+  block?: string
+  checked?: boolean
+}
 
 export class BasicSkill {
   id?: number
@@ -163,6 +179,12 @@ export class CriteriaWithSkills extends EvaluationCriteria {
   grade?: Grade
 }
 
+export interface ContentsWithSkills extends ProjectContent {
+  checked?: boolean
+  colTwoData?: string
+  colOneData?: string
+  grade?: Grade
+}
 
 export type ProjectId = number
 export type statusId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
