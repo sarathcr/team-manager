@@ -47,7 +47,7 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   subscriptions = new SubSink()
   isShown = false
   isToggle = false
-  isupdated = false
+  updated = false
 
   constructor() { }
 
@@ -73,11 +73,13 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   optionInit(): void {
     if (this.value$) {
       this.subscriptions.sink = this.value$.subscribe(data => {
+        this.updated = false
         if (data?.length) {
           this.configOptions = data
           this.handleChange([...this.configOptions])
         } else {
           this.configOptions = [{ ...this.sampleOption }]
+          this.handleChange()
         }
         this.isShown = (this.configOptions.length === 1 && !this.configOptions[0]?.name && this.isToggle) ? false : true
       })
@@ -94,7 +96,7 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   }
 
   keyAction(event: any, id: number): void {
-    this.isupdated = true
+    this.updated = true
     switch (event.keyCode) {
       case 13: // Enter
         event.preventDefault()
@@ -125,7 +127,7 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
           this.configOptions[0].name = ''
         }
         if (this.configOptions.length === 1 && !this.configOptions[0].name) {
-          this.handleChange([])
+          this.handleChange()
         }
         else {
           this.handleChange([...this.configOptions])
@@ -236,9 +238,9 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   }
 
   // funtion to handle all the emits in the component
-  handleChange(value: Option[]): void {
+  handleChange(value: Option[] = []): void {
     const status = value?.length ? 'INPROCESS' : 'PENDING'
-    this.inputChange.emit({ val: value, updated: this.isupdated, status })
+    this.inputChange.emit({ val: value, updated: this.updated, status })
   }
 
 }

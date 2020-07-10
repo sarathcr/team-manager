@@ -42,6 +42,7 @@ export class TextareaComponent implements OnInit {
           this.initialValue = data
         }
       })
+      this.updated = false
       const status = this.value ? 'INPROCESS' : 'PENDING'
       this.inputChange.emit({ textValue: this.value, updated: this.updated, status })
     }

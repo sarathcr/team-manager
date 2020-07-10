@@ -38,9 +38,16 @@
             <p class="project-form__sub-description mb-5">
               {{'OBJECTIVES.project_objectives_objectives_subtitle.description' | translate}}
             </p>
-            <app-textarea-bullets [config]='textAreaConfig' (inputChange)="textAreaUpdate($event)"
+            <!-- <app-textarea-bullets [config]='textAreaConfig' (inputChange)="textAreaUpdate($event)"
               [options$]="competencyObjectives$" [variant]="'number'">
-            </app-textarea-bullets>
+            </app-textarea-bullets> -->
+            <app-textarea
+            variant='number'
+            [maxlength]="150"
+            [placeholder]="'OBJECTIVES.project_objectives_objectives_placeholder' | translate"
+            [value$]="competencyObjectives$"
+            (inputChange)="textAreaUpdate($event)" 
+          ></app-textarea>
           </div>
         </ng-template>
       </div>
