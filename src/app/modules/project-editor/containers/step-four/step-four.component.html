@@ -26,7 +26,7 @@
               [icon]="subject.evaluationCriteria.length ? 'add' : 'locked'"
               (openModal)="openModalWithComponent(!!subject.evaluationCriteria.length, i)"
               (deleteCriteria)="deleteContent($event)"
-              (callModal)="getDelModal($event)"
+              (deleteById)="openModal($event)"
             ></app-details-selector>
               <div class="project-form__textarea-wrapper">
                 <app-textarea-bullets
@@ -79,8 +79,8 @@
     [title]="'PROJECT.project_dependancy_title_cv'"
     [description]="'CONTENT.project_content_dependancy_filterbycriteria_description'"
     [confirmLabel]="'CONTENT.project_content_dependancy_filterbycriteria_button'"
-    (confirm)="confirmInfoModal()"
-    (decline)="declineInfoModal()"
+    (confirm)="confirmModal({ type: modalConst.unlock })"
+    (decline)="declineModal()"
   ></app-modal-info>
 </ng-template>
 
@@ -90,7 +90,7 @@
     [title]="'CONTENT.project_content_delete_confirmation_title'"
     [description]="'OBJECTIVES.project_objectives_delete_confirmation_message_nonrelated'"
     [confirmLabel]="'PROJECT.project_button_delete'"
-    (decline)="declineDelModal()"
-    (confirm)="confirmDelModal()"
+    (confirm)="confirmModal({ type: modalConst.delete })"
+    (decline)="declineModal()"
   ></app-modal-info>
 </ng-template>

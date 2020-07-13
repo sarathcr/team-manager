@@ -25,7 +25,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() placeholder: string
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() openModal: EventEmitter<any> = new EventEmitter()
-  @Output() callModal: EventEmitter<any> = new EventEmitter()
+  @Output() deleteById: EventEmitter<any> = new EventEmitter()
   count = 0
   subscriptions = new SubSink()
   constructor() { }
@@ -52,8 +52,8 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
       })
   }
 
-  callModalFunc(id: number): void{
-    this.callModal.emit({ subjectId: this.subject.id, id })
+  onDeleteById(id: number): void{
+    this.deleteById.emit({ type: 'delete', subjectId: this.subject.id, id })
   }
 
   addItem(): void {

@@ -389,7 +389,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     })
   }
 
-  getModal(data: object): void {
+  openModal(data: object): void {
     this.data = data
     this.bsModalRef = this.modalService.show(this.infoModal, {
       class: 'common-modal  modal-dialog-centered'
