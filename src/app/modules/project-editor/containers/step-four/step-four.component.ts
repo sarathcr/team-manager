@@ -23,7 +23,7 @@ import {
 } from '../../constants/model/project.model'
 import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/form-config.model'
 import { FormFour, FormFourInit } from '../../constants/model/step-forms.model'
-import { OpenModalConfig } from './../../constants/model/modal.model'
+import { ModalDeleteConfig } from './../../constants/model/modal.model'
 
 import { FormFourInitData } from '../../constants/Data/step-forms.data'
 import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
@@ -259,7 +259,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   // Open Modal for delete
-  openModalDelete(data: OpenModalConfig): void {
+  openModalDelete(data: ModalDeleteConfig): void {
     this.delData = data
     this.bsModalRef = this.modalService.show(this.modalDelete, {
       class: 'common-modal  modal-dialog-centered'

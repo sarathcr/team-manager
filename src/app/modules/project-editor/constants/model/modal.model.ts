@@ -1,4 +1,4 @@
-export interface OpenModalConfig {
+export interface ModalDeleteConfig {
   subjectId?: number
   id?: number
 }

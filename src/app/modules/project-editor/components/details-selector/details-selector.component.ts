@@ -54,7 +54,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   }
 
   onDeleteById(id: number): void{
-    this.deleteById.emit({ type: 'delete', subjectId: this.subject.id, id })
+    this.deleteById.emit({ subjectId: this.subject.id, id })
   }
 
   addItem(): void {
