@@ -343,9 +343,9 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getBlocksFromSelectedGrades(): void {
-    const selectedGrades = this.project.grades.map(({ id, name }) => ({ id, name }))
-    this.objective.getBlocks(selectedGrades[0])
-    this.objective.selectedGrades = selectedGrades
+    this.selectedGrades = this.project.grades.map(({ id, name }) => ({ id, name }))
+    this.objective.getBlocks(this.selectedGrades[0])
+    this.objective.selectedGrades = this.selectedGrades
   }
 
   getModalData(subject: CurriculumSubject): void {
