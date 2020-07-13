@@ -15,6 +15,7 @@
             <app-details-selector
               *ngFor="let subject of project?.subjects; let i = index; let last = last;"
               [placeholder]="'OBJECTIVES.project_objectives_criteria_placeholder'"
+              [afterSelectionLabel]="'OBJECTIVES.project_objectives_criterion'"
               [subject]="subject"
               [subjectItem]="subject.evaluationCriteria"
               [isLast]="last"
@@ -57,7 +58,7 @@
 </ng-template>
 <app-loader *ngIf="loading; else loaded"></app-loader>
 
-<ng-template #infoModal>
+<ng-template #modalDelete>
   <app-modal-info
     [variant]="'delete'"
     [title]="'OBJECTIVES.project_objectives_delete_confirmation_title'"

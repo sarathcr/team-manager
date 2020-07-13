@@ -53,7 +53,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   isFormUpdated = false
   criteriaLoader = false
   data: object
-  @ViewChild('infoModal') infoModal: TemplateRef<any>
+  @ViewChild('modalDelete') modalDelete: TemplateRef<any>
 
   constructor(
     private translateService: TranslateService,
@@ -391,7 +391,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   openModal(data: object): void {
     this.data = data
-    this.bsModalRef = this.modalService.show(this.infoModal, {
+    this.bsModalRef = this.modalService.show(this.modalDelete, {
       class: 'common-modal  modal-dialog-centered'
     })
   }

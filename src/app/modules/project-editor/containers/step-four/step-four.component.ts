@@ -26,7 +26,6 @@ import { FormFour, FormFourInit } from '../../constants/model/step-forms.model'
 import { OpenModalConfig } from './../../constants/model/modal.model'
 
 import { FormFourInitData } from '../../constants/Data/step-forms.data'
-import { MODAL_CONFIG } from './../../constants/Data/modal.data'
 import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -36,8 +35,8 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
   styleUrls: ['./step-four.component.scss']
 })
 export class StepFourComponent implements OnInit, OnDestroy {
-  @ViewChild('infoModal') infoModal: TemplateRef<any>
-  @ViewChild('delModal') delModal: TemplateRef<any>
+  @ViewChild('modalUnlock') modalUnlock: TemplateRef<any>
+  @ViewChild('modalDelete') modalDelete: TemplateRef<any>
   project$: Observable<Project>
   step$: Observable<Step>
   grades: Option[]
@@ -60,7 +59,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
   hasNoBasicSkill = false
   isFormUpdated = false
   delData: object
-  modalConst = MODAL_CONFIG
+
   constructor(
     public editor: EditorService,
     private modalService: BsModalService,
@@ -172,7 +171,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
       })
     }
     else {
-      this.openModal({ type: 'unlock' })
+      this.openModalUnlock()
     }
   }
 
@@ -252,32 +251,35 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
-  // Open Modal for both info and delete
-  openModal(data: OpenModalConfig): void {
-    if (data.type === MODAL_CONFIG.unlock){
-      this.bsModalRef = this.modalService.show(this.infoModal, {
-        class: 'common-modal modal-dialog-centered'
-      })
-    }else if (data.type === MODAL_CONFIG.delete){
-      this.delData = data
-      this.bsModalRef = this.modalService.show(this.delModal, {
-        class: 'common-modal  modal-dialog-centered'
-      })
-    }
+  // Open Modal for unlock
+  openModalUnlock(): void {
+    this.bsModalRef = this.modalService.show(this.modalUnlock, {
+      class: 'common-modal modal-dialog-centered'
+    })
   }
 
-  // Decline Modal for both info and delete
+  // Open Modal for delete
+  openModalDelete(data: OpenModalConfig): void {
+    this.delData = data
+    this.bsModalRef = this.modalService.show(this.modalDelete, {
+      class: 'common-modal  modal-dialog-centered'
+    })
+  }
+
+  // Decline Modal for both Unlock and delete
   declineModal(): void {
     this.bsModalRef.hide()
   }
 
-  // Confirm Modal for both info and delete
-  confirmModal(data: OpenModalConfig): void {
-    if (data.type === MODAL_CONFIG.unlock){
-      this.editor.redirectToStep(3)
-    }else if (data.type === MODAL_CONFIG.delete){
-      this.deleteContent(this.delData)
-    }
+  // Confirm Modal for Unlock
+  confirmModalUnlock(): void {
+    this.editor.redirectToStep(3)
+    this.bsModalRef.hide()
+  }
+
+  // Confirm Modal for Delete
+  confirmModalDelete(): void {
+    this.deleteContent(this.delData)
     this.bsModalRef.hide()
   }
 

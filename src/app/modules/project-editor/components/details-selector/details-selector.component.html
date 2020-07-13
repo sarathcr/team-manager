@@ -8,7 +8,7 @@
         {{ placeholder | translate}}
       </span>
       <span *ngIf="subjectItem?.length > 0" class="details-selector__text_evaluation">
-        {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{subjectItem.length}})
+        {{ afterSelectionLabel | translate}} ({{subjectItem.length}})
       </span>
       <app-button
         class="details-selector__add-btn"
