@@ -1,17 +1,16 @@
-<div class="textarea-bullets-toggle__content"  *ngIf="isToggle && !isShown">
+<div class="textarea__toggle"  *ngIf="isToggle && !isShown">
   {{ toggleData | translate | TranslateCut:0 }}
-  <span class="textarea-bullets-toggle__content_link" (click)="toggleTextarea()">
+  <span class="textarea__toggle_link" (click)="toggleTextarea()">
     {{ toggleData | translate | TranslateCut:1 }}
   </span>
 </div>
-<div class="textarea-bullets" [ngClass]="{'textarea-bullets_focus': focus, 'toggle-textarea': size == 'small'}" *ngIf="isShown">
-  <span class="textarea-bullets__placeholder">
-    {{!configOptions[0]?.name && !focus ? config.placeholder : ''}}
+<div class="textarea" [ngClass]="{'textarea_focus': focus, 'toggle-textarea': size == 'small'}" *ngIf="isShown">
+  <span class="textarea__placeholder">
+    {{!configOptions[0]?.name && !focus ? placeholder : ''}}
   </span>
-    <label class="textarea-bullets__label" *ngIf="label">{{ label | translate }}</label>
+    <label class="textarea__label" *ngIf="label">{{ label | translate }}</label>
     <ul
-    *ngIf="config"
-    class="bullet-list textarea-bullets__list"
+    class="bullet-list textarea__list"
     [ngClass]="{
       'numbered-list' : variant == 'number',
       'bullet-list' : variant == 'bullet' || isToggle
@@ -19,16 +18,16 @@
   >
     <li
       *ngFor="let text of configOptions; let i = index"
-      class="textarea-bullets__item"
+      class="textarea__item"
       [attr.data-index]='i'
       (click)="textArea.focus()"
       tabindex="0"
     >
       <textarea
         id="list-item-{{text.id}}"
-        class="textarea-bullets__textarea"
+        class="textarea__textarea"
         name='textArea'
-        [attr.maxlength]='config.maxLength'
+        [attr.maxlength]='maxLength'
         [ngModel]=text.name
         oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
         (keydown)='keyAction($event, i)'

@@ -1,4 +1,4 @@
-import { Option } from 'src/app/shared/constants/model/form-config.model'
+import { Option } from 'src/app/shared/constants/model/form-elements.model'
 
 export interface CompetencyModal {
   evaluationCriteria?: string

@@ -19,14 +19,15 @@
             *ngFor="let subject of project?.subjects; let i = index; let last = last;"
           >
             <app-details-selector
-              [placeholder]="'CONTENT.project_content_placeholder'"
+              [unselectedLabel]="'CONTENT.project_content_placeholder'"
+              [selectedLabel]="'CONTENT.project_content_cvcontent'"
               [subject]="subject"
               [subjectItem]="subject.contents"
               [isLast]="last"
               [project$]="editor.project$"
               [icon]="subject.evaluationCriteria.length ? 'add' : 'locked'"
-              (openModal)="openModalWithComponent(!!subject.evaluationCriteria.length, i)"
-              (deleteCriteria)="deleteContent($event)"
+              (add)="openModalWithComponent(!!subject.evaluationCriteria.length, i)"
+              (deleteById)="openModalDelete($event)"
             ></app-details-selector>
             <ng-template #principalViewModal>
               <app-principal-view-modal
@@ -41,23 +42,23 @@
               ></app-principal-view-modal>
             </ng-template>
               <div class="project-form__textarea-wrapper">
-                <app-textarea-bullets
+                <app-textarea
                   variant="toggle"
                   toggleData="CONTENT.project_content_extracontent"
                   [onInitFocus]="true"
-                  [config]='textAreaConfig'
                   label="CONTENT.project_content_extracontent_input"
                   size="small"
+                  [maxLength]="150"
                   (inputChange)="textareaDataChange($event, i)"
-                  [options$]="subjectTextArea[i].options$"
+                  [value$]="subjectTextArea[i].options$"
                 >
-                </app-textarea-bullets>
+                </app-textarea>
               </div>
           </div>
           <ng-container *ngIf="basicSkills?.length">
             <div class="project-form__basic-skill">
               <h3 class="project-form__basic-skill__title">
-                {{"CONTENT.project_content_contentwindow_title" | translate}}
+                {{"CONTENT.project_content_competencies" | translate}}
               </h3>
               <div class="project-form__basic-skill_row">
                 <app-checkbox *ngFor="let basicSkill of basicSkills"
@@ -85,13 +86,24 @@
   </div>
 </div>
 
-<ng-template #infoModal>
+<ng-template #modalUnlock>
   <app-modal-info
     [variant]="'unlock'"
     [title]="'PROJECT.project_dependancy_title_cv'"
     [description]="'CONTENT.project_content_dependancy_filterbycriteria_description'"
     [confirmLabel]="'CONTENT.project_content_dependancy_filterbycriteria_button'"
-    (confirm)="confirmModal()"
+    (confirm)="confirmModalUnlock()"
+    (decline)="declineModal()"
+  ></app-modal-info>
+</ng-template>
+
+<ng-template #modalDelete>
+  <app-modal-info
+    [variant]="'delete'"
+    [title]="'CONTENT.project_content_delete_confirmation_title'"
+    [description]="'OBJECTIVES.project_objectives_delete_confirmation_message_nonrelated'"
+    [confirmLabel]="'PROJECT.project_button_delete'"
+    (confirm)="confirmModalDelete()"
     (decline)="declineModal()"
   ></app-modal-info>
 </ng-template>

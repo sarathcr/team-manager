@@ -68,10 +68,10 @@
               [isHead]="true"
               [checkboxData]="false"
               [colOne]="{value: serviceData.modalColumns.colOneHead?.value }"
-              [colTwo]="{
-                value: block.colTwoHead === serviceData.modalColumns.colTwoHead?.value ? block.colTwoHead : '',
+              [colTwo]="block.colTwoHead === serviceData.modalColumns.colTwoHead?.value ? {
+                value: block.colTwoHead,
                 size: 'sm'
-              }"
+              } : null"
             >
             </app-checkbox>
             <ng-scrollbar class="custom-scrollbar">
@@ -80,7 +80,8 @@
                 *ngFor="let column of block[serviceData.modalColumns.colOneHead?.key]"
                 [checkboxData]="column"
                 [colOne]="{ value: column.colOneData }"
-                [colTwo]="{ value: column.colTwoData, size: 'sm' }"
+                [colTwo]="block.colTwoHead === serviceData.modalColumns.colTwoHead?.value ?
+                { value: column.colTwoData, size: 'sm' } : null"
                 [parentID]="block.id"
                 ></app-checkbox>
               </div>

@@ -12,7 +12,7 @@ import { GradeEntityService } from '../../store/entity/grade/grade-entity.servic
 import { FormOne } from '../../constants/model/step-forms.model'
 import { Country, Region, AcademicYear, Grade, Subject, Step, Status } from '../../constants/model/project.model'
 
-import { ButtonSubmitConfig, DropdownConfigInit } from '../../../../shared/constants/data/form-config.data'
+import { ButtonSubmitConfig, DropdownConfigInit } from '../../../../shared/constants/data/form-elements.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 

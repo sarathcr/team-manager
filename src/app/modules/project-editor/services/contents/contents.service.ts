@@ -10,7 +10,7 @@ import { PrincipalModalColData,
   PrincipalModalColHead,
   TranslatePrincipalData
 } from '../../constants/model/principle-view.model'
-import { Option, DropdownCustom } from 'src/app/shared/constants/model/form-config.model'
+import { Option } from 'src/app/shared/constants/model/form-elements.model'
 import { Observable } from 'rxjs'
 import { Block } from '../../constants/model/curriculum.model'
 
@@ -33,6 +33,7 @@ export class ContentService {
   selectedGrades: Grade[]
 
   subscriptions = new SubSink()
+  grades: Grade[]
 
 
   constructor(
@@ -52,13 +53,13 @@ export class ContentService {
     return { colOneHead }
   }
 
-  createTableData(block: Block, grade: Grade, blockIndex: number): Block {
+  createTableData(block: Block, blockIndex: number): Block {
     let colOneHead: PrincipalModalColHead
     const contents = block.contents.map( content => {
       const colOneData = content.name
       const { colOneHead: colOneHeadData } = this.getTableData(content, colOneHead )
       colOneHead = colOneHeadData
-      const colThreeData = grade.name
+      const colThreeData = this.grades.find(grade => grade.id === block.gradeId ).name
       const colFourData = `${blockIndex}. ${block.name}`
       const checked = this.contentIds.includes(content.id)
       return { ...content, checked, colOneData, colThreeData, colFourData }
@@ -78,12 +79,12 @@ export class ContentService {
     )
   }
 
-  createBlockData(data: Block[], gradeBlocks: Array<{ id: number, count: number }>, selectedGrade: Grade): void {
+  createBlockData(data: Block[], gradeBlocks: Array<{ id: number, count: number }>): void {
     for (const block of data) {
       const gradeOfBlock = gradeBlocks.find(gradeBlock => gradeBlock.id === block.gradeId)
       if (block.subjectId === this.subject.id) {
         if (!this.blockData.some(blockData => blockData.id === block.id)) {
-          this.blockData.push(this.createTableData(block, selectedGrade, ++gradeOfBlock.count))
+          this.blockData.push(this.createTableData(block, ++gradeOfBlock.count))
         }
       }
     }
@@ -93,7 +94,7 @@ export class ContentService {
     const gradeBlocks = this.gradeIds.map(id => ({id, count: 0}))
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
-        this.createBlockData(data, gradeBlocks, selectedGrade)
+        this.createBlockData(data, gradeBlocks)
         return data.filter(block => block.subjectId === this.subject.id && this.gradeIds.includes(block.gradeId))
       }))
       .subscribe(data => {

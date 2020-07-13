@@ -7,8 +7,12 @@
                 <app-info-tooltip></app-info-tooltip>
             </h1>
             <p class="project-form__description" [innerHTML]="'SINOPSIS.project_synopsis_description' | translate"></p>
-            <app-textarea placeholder="{{'SINOPSIS.project_synopsis_placeholder' | translate }}" [(value)]="synopsis"
-                maxlength="500" (inputChange)="onValueChange($event)"></app-textarea>
+            <app-textarea 
+                placeholder="{{'SINOPSIS.project_synopsis_placeholder' | translate }}" 
+                [maxLength]="500" 
+                [value$]= 'synopsis$'
+                (inputChange)="onValueChange($event)"
+                ></app-textarea>
         </div>
         <app-button
           [disabled] = 'buttonConfig.disabled'
