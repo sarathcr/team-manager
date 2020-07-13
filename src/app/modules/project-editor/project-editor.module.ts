@@ -36,7 +36,6 @@ import { EditorHeaderComponent } from './components/editor-header/editor-header.
 import { EditorSidebarComponent } from './components/editor-sidebar/editor-sidebar.component'
 import { StepMenuComponent } from './components/step-menu/step-menu.component'
 import { TextareaBulletsComponent } from './components/textarea-bullets/textarea-bullets.component'
-import { TextareaComponent } from './components/textarea/textarea.component'
 import { HelpAccordionComponent } from './components/help-accordion/help-accordion.component'
 import { HelpModalContentComponent } from './components/help-modal-content/help-modal-content.component'
 import { HelpLinkComponent } from './components/help-link/help-link.component'
@@ -59,12 +58,10 @@ import { SecondaryViewComponent } from './components/secondary-view/secondary-vi
 import { EditorService } from './services/editor/editor.service'
 import { ObjectiveService } from './services/objectives/objectives.service'
 import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service'
+import { ContentService } from './services/contents/contents.service'
 // pipe
 import { StringDecoder } from './pipes/string-decoder.pipe'
 import { CheckCount } from './pipes/check-count.pipe'
-import { ContentService } from './services/contents/contents.service'
-import { TranslateCut } from '../../shared/pipe/translate-cut.pipe'
-import { TextareaListComponent } from './components/textarea/textarea-list/textarea-list.component'
 
 @NgModule({
   declarations: [
@@ -83,7 +80,6 @@ import { TextareaListComponent } from './components/textarea/textarea-list/texta
     InfoToolTipComponent,
     StepSevenComponent,
     StepEightComponent,
-    TextareaComponent,
     StepThreeComponent,
     StepFourComponent,
     StepFiveComponent,
@@ -107,10 +103,8 @@ import { TextareaListComponent } from './components/textarea/textarea-list/texta
     InputComponent,
     ImageUploadComponent,
     SecondaryViewComponent,
-    TextareaListComponent,
     ModalFormComponent,
     ValidatorComponent,
-    TranslateCut
   ],
   imports: [
     CommonModule,
@@ -132,7 +126,7 @@ import { TextareaListComponent } from './components/textarea/textarea-list/texta
     AwsImgUploadService,
     BsModalRef,
     ObjectiveService,
-    ContentService
+    ContentService,
   ]
 })
 

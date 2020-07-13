@@ -44,12 +44,14 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   inputFormData: FormThreeInit = new FormThreeInitData()
   project: Project
   initialFormStatus: Status = 'PENDING'
-  textareaStatus: Status = 'PENDING'
   bsModalRef: BsModalRef
   subscriptions = new SubSink()
   criteriaPayload: Subject
   isFormUpdated = false
   criteriaLoader = false
+  buttonShown = false
+  projectData = false
+  stepData = false
 
   constructor(
     public editor: EditorService,
@@ -75,7 +77,6 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[2]
     this.subscriptions.sink = this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
-    const tempinitialFormData = new FormThreeInitData()
     if (this.project$) {
       this.subscriptions.sink = this.project$.subscribe(data => {
         if (data) {
@@ -90,6 +91,13 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         .pipe(
           map(data => data?.competencyObjectives)
         )
+      this.subscriptions.sink = this.competencyObjectives$
+        .subscribe(competencyObjectives => {
+          if (competencyObjectives) {
+            this.inputFormData.competencyObjectives = [...competencyObjectives]
+          }
+        })
+
     }
     if (this.step$) {
       this.subscriptions.sink = this.step$.subscribe(
@@ -97,6 +105,9 @@ export class StepThreeComponent implements OnInit, OnDestroy {
           if (formStatus) {
             this.buttonConfig.submitted = formStatus.state === 'DONE' && !!this.project.subjects?.length
             this.initialFormStatus = formStatus.state
+            if (formStatus.state !== 'DONE' && !this.hasAnyEmptyFields()) {
+              this.buttonConfig.disabled = false
+            }
           }
         }
       )
@@ -215,7 +226,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         isCriteriaLength.push(true)
       }
     }
-    if (!isCriteriaLength.length && this.textareaStatus === 'PENDING') {
+    if (!isCriteriaLength.length && !this.inputFormData.competencyObjectives?.length) {
       this.step.state = 'PENDING'
     } else {
       this.step.state = 'INPROCESS'
@@ -225,18 +236,15 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   textAreaUpdate(data: FieldEvent): void { // calls on every update
     this.inputFormData.competencyObjectives = data.val
-    this.textareaStatus = data.status
     this.isFormUpdated = data.updated
     if (data.updated) {
       this.checkStepStatus()
-    } else if (this.initialFormStatus !== 'DONE' && !this.hasAnyEmptyFields()) {
-      this.buttonConfig.disabled = false
     }
   }
 
   // checks current form status
   checkStepStatus(criterias?: EvaluationCriteria[]): void {
-    if (criterias?.length || this.checkEmptyCriteria() || this.textareaStatus === 'INPROCESS') {
+    if (criterias?.length || this.checkEmptyCriteria() || this.inputFormData.competencyObjectives?.length) {
       this.step.state = 'INPROCESS'
     } else {
       this.step.state = 'PENDING'
@@ -256,7 +264,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   // checks the form is completely filled or not
   hasAnyEmptyFields(): boolean {
-    if (!this.checkEmptyCriteria() || this.textareaStatus === 'PENDING') {
+    if (!this.checkEmptyCriteria() || !this.inputFormData.competencyObjectives?.length) {
       return true
     }
     return false
