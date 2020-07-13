@@ -23,7 +23,7 @@ import {
 } from '../../constants/model/project.model'
 import { Option, CheckBoxData, FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
 import { FormFour } from '../../constants/model/step-forms.model'
-import { ModalDeleteConfig } from './../../constants/model/modal.model'
+
 import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -425,4 +425,8 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
     this.handleButtonType()
   }
+}
+export interface ModalDeleteConfig {
+  subjectId?: number
+  id?: number
 }

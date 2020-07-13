@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { PlatformLocation } from '@angular/common'
 
+import { ModalInfoVariant } from './../../constants/model/modal-info.model'
 @Component({
   selector: 'app-modal-info',
   templateUrl: './modal-info.component.html',
@@ -8,7 +9,7 @@ import { PlatformLocation } from '@angular/common'
   encapsulation: ViewEncapsulation.None
 })
 export class ModalInfoComponent implements OnInit {
-  @Input() variant: string
+  @Input() variant: ModalInfoVariant
   @Input() title: string
   @Input() description: string
   @Input() confirmLabel: string
