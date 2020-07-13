@@ -35,6 +35,7 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 })
 export class StepFourComponent implements OnInit, OnDestroy {
   @ViewChild('infoModal') infoModal: TemplateRef<any>
+  @ViewChild('delModal') delModal: TemplateRef<any>
   project$: Observable<Project>
   step$: Observable<Step>
   grades: Option[]
@@ -51,12 +52,14 @@ export class StepFourComponent implements OnInit, OnDestroy {
   contents: ProjectContent[] = []
   basicSkills: BasicSkill[] = []
   selectedBasicSkills: BasicSkill[] = []
-  bsModalRef: BsModalRef
+  principleModalRef: BsModalRef
+  infoModalRef: BsModalRef
+  delModalRef: BsModalRef
   dataPayload: Subject
   subjectTextArea: any[] = []
   hasNoBasicSkill = false
   isFormUpdated = false
-
+  delData: object
   constructor(
     public editor: EditorService,
     private modalService: BsModalService,
@@ -154,10 +157,10 @@ export class StepFourComponent implements OnInit, OnDestroy {
         grades: this.grades,
         stepId: 4
       }
-      this.bsModalRef = this.modalService.show(PrincipalViewComponent,
+      this.principleModalRef = this.modalService.show(PrincipalViewComponent,
         { class: 'competency-modal modal-dialog-centered', initialState })
-      this.bsModalRef.content.closeBtnName = 'Close'
-      this.bsModalRef.content.selectedItems.subscribe(contents => {
+      this.principleModalRef.content.closeBtnName = 'Close'
+      this.principleModalRef.content.selectedItems.subscribe(contents => {
         this.dataPayload = {
           contents,
           id: subject.id,
@@ -249,18 +252,18 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   getModal(): void {
-    this.bsModalRef = this.modalService.show(this.infoModal, {
+    this.infoModalRef = this.modalService.show(this.infoModal, {
       class: 'common-modal modal-dialog-centered'
     })
   }
 
-  declineModal(): void {
-    this.bsModalRef.hide()
+  declineInfoModal(): void {
+    this.infoModalRef.hide()
   }
 
-  confirmModal(): void {
+  confirmInfoModal(): void {
     this.editor.redirectToStep(3)
-    this.bsModalRef.hide()
+    this.infoModalRef.hide()
   }
 
   textareaDataChange(data: Option[], index: number): void {
@@ -418,5 +421,21 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.isFormUpdated = false
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
     this.handleButtonType()
+  }
+
+  getDelModal(data: object): void {
+    this.delData = data
+    this.delModalRef = this.modalService.show(this.delModal, {
+      class: 'common-modal  modal-dialog-centered'
+    })
+  }
+
+  declineDelModal(): void {
+    this.delModalRef.hide()
+  }
+
+  confirmDelModal(): void {
+    this.deleteContent(this.delData)
+    this.delModalRef.hide()
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core'
 
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -52,6 +52,8 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   criteriaPayload: Subject
   isFormUpdated = false
   criteriaLoader = false
+  data: object
+  @ViewChild('infoModal') infoModal: TemplateRef<any>
 
   constructor(
     private translateService: TranslateService,
@@ -385,6 +387,22 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       this.checkStepStatus(criterias)
       this.handleSubmit()
     })
+  }
+
+  getModal(data: object): void {
+    this.data = data
+    this.bsModalRef = this.modalService.show(this.infoModal, {
+      class: 'common-modal  modal-dialog-centered'
+    })
+  }
+
+  declineModal(): void {
+    this.bsModalRef.hide()
+  }
+
+  confirmModal(): void {
+    this.removeCriteria(this.data)
+    this.bsModalRef.hide()
   }
 }
 

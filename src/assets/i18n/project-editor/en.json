@@ -120,7 +120,8 @@
     "project_content_contentwindow_empty_title": "No tienes contenidos seleccionados",
     "project_content_contentwindow_empty_description": "Selecciona contenidos del currículum y visualiza el listado de seleccionados aquí para añadirlos.",
     "project_content_contentwindow_empty_button": "Ver contenidos",
-    "project_content_competencies": "Selecciona las competencias a trabajar:"
+    "project_content_competencies": "Selecciona las competencias a trabajar:",
+    "project_content_delete_confirmation_title": "¿Seguro que quieres eliminar este contenido?"
   },
   "RETHINK_TITLE": {
     "project_rethinktitle_title": "Título creativo",
