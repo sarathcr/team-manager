@@ -5,7 +5,7 @@
   <ul class="details-selector__list">
     <li class="details-selector__item">
       <span *ngIf="subjectItem?.length === 0" class="details-selector__text">
-        {{'OBJECTIVES.project_objectives_criteria_placeholder' | translate}}
+        {{ placeholder | translate}}
       </span>
       <span *ngIf="subjectItem?.length > 0" class="details-selector__text_evaluation">
         {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{subjectItem.length}})
@@ -49,3 +49,14 @@
     <app-loader *ngIf="loading; else loaded" variant="block"></app-loader>
   </ul>
 </div>
+
+<ng-template #infoModal>
+  <app-modal-info
+    [variant]="'delete'"
+    [title]="'OBJECTIVES.project_objectives_delete_confirmation_title'"
+    [description]="'OBJECTIVES.project_objectives_delete_confirmation_message_nonrelated'"
+    [confirmLabel]="'PROJECT.project_button_delete'"
+    (decline)="declineModal()"
+    (confirm)="confirmModal()"
+  ></app-modal-info>
+</ng-template>

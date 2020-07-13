@@ -1,7 +1,7 @@
 <div class="list-project" [routerLink]="'../project/' + project.id" [attr.data-project-id]='project.id'>
     <div class="list-project__figure">
         <img class="list-project__image" src="../../../../../assets/images/150.png" alt="{{project.title}}"></div>
-    <div class="list-project__title">
+    <div class="list-project__title mt-1">
         {{project.title? project.title: 'PROJECT.project_notitle'|translate}}
     </div>
 </div>

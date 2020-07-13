@@ -353,7 +353,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       stepId: 3
     }
     this.bsModalRef = this.modalService.show(PrincipalViewComponent,
-      { class: 'competency-modal', initialState })
+      { class: 'competency-modal modal-dialog-centered', initialState })
     this.bsModalRef.content.closeBtnName = 'Close'
     this.bsModalRef.content.selectedItems.subscribe(criterias => {
       this.criteriaPayload = {

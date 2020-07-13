@@ -18,6 +18,7 @@
             *ngFor="let subject of project?.subjects; let i = index; let last = last;"
           >
             <app-details-selector
+              [placeholder]="'CONTENT.project_content_placeholder'"
               [subject]="subject"
               [subjectItem]="subject.contents"
               [isLast]="last"
@@ -43,7 +44,7 @@
           <ng-container *ngIf="basicSkills?.length">
             <div class="project-form__basic-skill">
               <h3 class="project-form__basic-skill__title">
-                {{"CONTENT.project_content_contentwindow_title" | translate}}
+                {{"CONTENT.project_content_competencies" | translate}}
               </h3>
               <div class="project-form__basic-skill_row">
                 <app-checkbox *ngFor="let basicSkill of basicSkills"
@@ -61,7 +62,7 @@
     </div>
 
     <app-button
-    [disabled] = 'buttonConfig.disabled'
+    [disabled] = 'buttonConfig.disabled || !project.subjects?.length'
     [theme] = "buttonConfig.submitted ? 'success':'primary'"
     [icon]="'tick'"
     (click)="handleSubmit('DONE')"
@@ -70,3 +71,14 @@
     </app-button>
   </div>
 </div>
+
+<ng-template #infoModal>
+  <app-modal-info
+    [variant]="'unlock'"
+    [title]="'PROJECT.project_dependancy_title_cv'"
+    [description]="'CONTENT.project_content_dependancy_filterbycriteria_description'"
+    [confirmLabel]="'CONTENT.project_content_dependancy_filterbycriteria_button'"
+    (confirm)="confirmModal()"
+    (decline)="declineModal()"
+  ></app-modal-info>
+</ng-template>

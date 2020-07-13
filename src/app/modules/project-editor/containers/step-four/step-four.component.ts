@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core'
 
 import { Observable, BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -11,19 +11,19 @@ import {
   CurriculumBasicSkillsEntityService
 } from '../../store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 import { PrincipalViewComponent } from '../../components/principal-view/principal-view.component'
-import { ModalInfoComponent } from '../../components/modal-info/modal-info.component'
 
-import { Project,
+import {
+  Project,
   Subject,
   Step,
   Status,
   BasicSkill,
   ProjectContent,
-  Content } from '../../constants/model/project.model'
+  Content
+} from '../../constants/model/project.model'
 import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/form-config.model'
 import { FormFour, FormFourInit } from '../../constants/model/step-forms.model'
 
-import { ModalUnlock } from '../../constants/Data/modal-info.data'
 import { FormFourInitData } from '../../constants/Data/step-forms.data'
 import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
@@ -34,7 +34,7 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
   styleUrls: ['./step-four.component.scss']
 })
 export class StepFourComponent implements OnInit, OnDestroy {
-
+  @ViewChild('infoModal') infoModal: TemplateRef<any>
   project$: Observable<Project>
   step$: Observable<Step>
   grades: Option[]
@@ -98,9 +98,10 @@ export class StepFourComponent implements OnInit, OnDestroy {
         this.subjectTextArea = []
         if (this.project?.subjects?.length) {
           this.project.subjects.forEach(subject => {
+            const customContents = subject?.customContents || []
             this.subjectTextArea.push({
-              data: [...subject.customContents],
-              options$: new BehaviorSubject([...subject.customContents]),
+              data: [...customContents],
+              options$: new BehaviorSubject([...customContents]),
               id: subject.id
             })
           })
@@ -154,9 +155,9 @@ export class StepFourComponent implements OnInit, OnDestroy {
         stepId: 4
       }
       this.bsModalRef = this.modalService.show(PrincipalViewComponent,
-        { class: 'competency-modal', initialState })
+        { class: 'competency-modal modal-dialog-centered', initialState })
       this.bsModalRef.content.closeBtnName = 'Close'
-      this.bsModalRef.content.selectedItems.subscribe( contents => {
+      this.bsModalRef.content.selectedItems.subscribe(contents => {
         this.dataPayload = {
           contents,
           id: subject.id,
@@ -178,10 +179,10 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   getModalData(subject: Subject): void {
-    const gradeIds = this.grades.map(({id}) => id)
+    const gradeIds = this.grades.map(({ id }) => id)
     this.contentService.gradeIds = gradeIds
     this.contentService.subject = { id: subject.id, name: subject.name }
-    this.contentService.contentIds = subject.contents.map( content => content.id)
+    this.contentService.contentIds = subject.contents.map(content => content.id)
     this.contentService.getTranslationText()
     this.contentService.getHeading()
     this.getBlocksFromSelectedGrades()
@@ -206,7 +207,8 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.project.basicSkills = this.selectedBasicSkills
     this.checkFormEmpty()
     const formData: FormFour = {
-      data: { ...this.project,
+      data: {
+        ...this.project,
         updateType: 'removeContent',
         contentId: contentData.id,
         subjectId: contentData.subjectId
@@ -230,12 +232,12 @@ export class StepFourComponent implements OnInit, OnDestroy {
         contentLength.push(true)
       }
     }
-    for (const customContent of this.subjectTextArea){
+    for (const customContent of this.subjectTextArea) {
       if (customContent.data.length) {
         contentLength.push(true)
       }
     }
-    if (this.basicSkills?.length && this.selectedBasicSkills?.length){
+    if (this.basicSkills?.length && this.selectedBasicSkills?.length) {
       contentLength.push(true)
     }
     if (!contentLength.length) {
@@ -247,14 +249,18 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   getModal(): void {
-    const initialState = { modalConfig: { ...ModalUnlock } }
-    this.bsModalRef = this.modalService.show(ModalInfoComponent, { class: 'common-modal', initialState })
-    this.bsModalRef.content.closeBtnName = 'Close'
-    this.bsModalRef.content.onClose.subscribe(result => {
-      if (result) {
-        this.editor.redirectToStep(3)
-      }
+    this.bsModalRef = this.modalService.show(this.infoModal, {
+      class: 'common-modal modal-dialog-centered'
     })
+  }
+
+  declineModal(): void {
+    this.bsModalRef.hide()
+  }
+
+  confirmModal(): void {
+    this.editor.redirectToStep(3)
+    this.bsModalRef.hide()
   }
 
   textareaDataChange(data: Option[], index: number): void {
@@ -353,9 +359,9 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   hasAnyEmptyFields(): boolean {
     let hasEmptyField = false
-    for (const subject of this.project.subjects){
+    for (const subject of this.project.subjects) {
       for (const textArea of this.subjectTextArea) {
-        if (!subject.contents?.length && !textArea.data?.length){
+        if (!subject.contents?.length && !textArea.data?.length) {
           hasEmptyField = true
         }
       }
@@ -377,7 +383,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
     const subjectPayload = [...this.project.subjects]
     if (this.dataPayload) {
       for (const subject of subjectPayload) {
-        if (subject.id === this.dataPayload.id){
+        if (subject.id === this.dataPayload.id) {
           subject.contents = this.dataPayload.contents
         }
       }
