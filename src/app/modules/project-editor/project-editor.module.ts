@@ -35,7 +35,6 @@ import { CreateProjectComponent } from './components/create-project/create-proje
 import { EditorHeaderComponent } from './components/editor-header/editor-header.component'
 import { EditorSidebarComponent } from './components/editor-sidebar/editor-sidebar.component'
 import { StepMenuComponent } from './components/step-menu/step-menu.component'
-import { TextareaBulletsComponent } from './components/textarea-bullets/textarea-bullets.component'
 import { HelpAccordionComponent } from './components/help-accordion/help-accordion.component'
 import { HelpModalContentComponent } from './components/help-modal-content/help-modal-content.component'
 import { HelpLinkComponent } from './components/help-link/help-link.component'
@@ -75,7 +74,6 @@ import { CheckCount } from './pipes/check-count.pipe'
     ProjectTitleComponent,
     StepMenuComponent,
     StepTwoComponent,
-    TextareaBulletsComponent,
     StatusComponent,
     InfoToolTipComponent,
     StepSevenComponent,

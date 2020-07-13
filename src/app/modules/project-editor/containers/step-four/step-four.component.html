@@ -28,17 +28,17 @@
               (deleteCriteria)="deleteContent($event)"
             ></app-details-selector>
               <div class="project-form__textarea-wrapper">
-                <app-textarea-bullets
+                <app-textarea
                   variant="toggle"
                   toggleData="CONTENT.project_content_extracontent"
                   [onInitFocus]="true"
-                  [config]='textAreaConfig'
                   label="CONTENT.project_content_extracontent_input"
                   size="small"
+                  [maxlength]="150"
                   (inputChange)="textareaDataChange($event, i)"
-                  [options$]="subjectTextArea[i].options$"
+                  [value$]="subjectTextArea[i].options$"
                 >
-                </app-textarea-bullets>
+                </app-textarea>
               </div>
           </div>
           <ng-container *ngIf="basicSkills?.length">
