@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild } from '@angular/core'
+import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, AfterViewInit } from '@angular/core'
 
-import { Observable, BehaviorSubject } from 'rxjs'
+import { Observable, BehaviorSubject, Subject } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
@@ -10,31 +10,34 @@ import { GradeEntityService } from '../../store/entity/grade/grade-entity.servic
 import {
   CurriculumBasicSkillsEntityService
 } from '../../store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
-import { PrincipalViewComponent } from '../../components/principal-view/principal-view.component'
 
 import {
   Project,
-  Subject,
   Step,
+  Subject  as CurriculumSubject,
   Status,
   BasicSkill,
   ProjectContent,
   Content
 } from '../../constants/model/project.model'
-import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/form-config.model'
+import { Option, FieldConfig, CheckBoxData, DropdownCustom } from 'src/app/shared/constants/model/form-config.model'
 import { FormFour, FormFourInit } from '../../constants/model/step-forms.model'
 
 import { FormFourInitData } from '../../constants/Data/step-forms.data'
 import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { PrincipalModalColData } from '../../constants/model/principle-view.model'
+import { Block } from '../../constants/model/curriculum.model'
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-step-four',
   templateUrl: './step-four.component.html',
   styleUrls: ['./step-four.component.scss']
 })
-export class StepFourComponent implements OnInit, OnDestroy {
+export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('infoModal') infoModal: TemplateRef<any>
+  @ViewChild('principalViewModal') principalViewModal: TemplateRef<any>
   project$: Observable<Project>
   step$: Observable<Step>
   grades: Option[]
@@ -52,22 +55,36 @@ export class StepFourComponent implements OnInit, OnDestroy {
   basicSkills: BasicSkill[] = []
   selectedBasicSkills: BasicSkill[] = []
   bsModalRef: BsModalRef
-  dataPayload: Subject
+  dataPayload: CurriculumSubject
   subjectTextArea: any[] = []
   hasNoBasicSkill = false
   isFormUpdated = false
+  selectedContents: Subject<any> = new Subject()
+  dropDownConfig: DropdownCustom
+
+  // Modal
+  modalColumns: PrincipalModalColData
+  blockData: Block[]
+  currentBlockIndex = 0
+  selectedGrades: Option[]
 
   constructor(
     public editor: EditorService,
     private modalService: BsModalService,
     private contentService: ContentService,
     private gradeService: GradeEntityService,
-    private basicSkillsService: CurriculumBasicSkillsEntityService
+    private basicSkillsService: CurriculumBasicSkillsEntityService,
+    private translateService: TranslateService,
   ) { }
 
   ngOnInit(): void {
     this.createFormConfig()
     this.stepInit()
+  }
+
+  ngAfterViewInit(): void {
+    this.getGrades(this.project)
+    this.getBasicSkills()
   }
 
   ngOnDestroy(): void {
@@ -106,8 +123,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
             })
           })
         }
-        this.getGrades(this.project)
-        this.getBasicSkills()
       })
     }
     if (this.step$) {
@@ -125,7 +140,9 @@ export class StepFourComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Get all grades
   getGrades(project: Project): void {
+    console.log(project)
     if (this.project?.subjects?.length) {
       this.subscriptions.sink = this.gradeService.entities$
         .pipe(
@@ -141,23 +158,20 @@ export class StepFourComponent implements OnInit, OnDestroy {
             this.gradeService.getWithQuery(parms)
           }
           this.grades = newData.map(({ id, name }) => ({ id, name }))
+          this.selectedGrades = this.contentService.selectedGrades
         })
     }
   }
 
+  // Open modal and render data
   openModalWithComponent(hasCriteria: boolean, index: number): void {
     this.contentService.resetData()
     if (hasCriteria) {
       const subject = this.project.subjects[index]
       this.getModalData(subject)
-      const initialState = {
-        grades: this.grades,
-        stepId: 4
-      }
-      this.bsModalRef = this.modalService.show(PrincipalViewComponent,
-        { class: 'competency-modal', initialState })
-      this.bsModalRef.content.closeBtnName = 'Close'
-      this.bsModalRef.content.selectedItems.subscribe(contents => {
+      this.bsModalRef = this.modalService.show( this.principalViewModal,
+        { class: 'competency-modal', ignoreBackdropClick: true, })
+      this.selectedContents.subscribe(contents => {
         this.dataPayload = {
           contents,
           id: subject.id,
@@ -172,21 +186,67 @@ export class StepFourComponent implements OnInit, OnDestroy {
     }
   }
 
-  getBlocksFromSelectedGrades(): void {
-    const selectedGrades = this.project.grades.map(({ id, name }) => ({ id, name }))
-    this.contentService.getBlocks(selectedGrades[0])
-    this.contentService.selectedGrades = selectedGrades
+  //  Get translation content
+  getTranslationText(): void {
+    this.contentService.translateData = {
+      subjectTitle: 'CONTENT.project_content_contentwindow_curriculum',
+      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected',
+      bodyTitle: 'CONTENT.project_content_contentwindow_title',
+      countText: 'CONTENT.project_objectives_contentwindow_showall',
+      addButton: 'CONTENT.project_objectives_contentwindow_add',
+      selectedItem: 'CONTENT.project_objectives_contentwindow_content_selected',
+      emptyTitle: 'CONTENT.project_content_contentwindow_empty_title',
+      emptyDescription: 'CONTENT.project_content_contentwindow_empty_description',
+      emptyButton: 'CONTENT.project_content_contentwindow_empty_button'
+    }
+    this.contentService.heading = {
+      contents: 'CONTENT.project_objectives_contentwindow_content',
+      course: 'CONTENT.project_objectives_contentwindow_course',
+      block: 'CONTENT.project_objectives_contentwindow_block',
+    }
   }
 
-  getModalData(subject: Subject): void {
+  // Dropdown titles translation
+  getDropDownData(): void {
+    this.subscriptions.sink = this.translateService.stream([
+      'CONTENT.project_objectives_contentwindow_combo_title',
+      'CONTENT.project_objectives_contentwindow_combo_section_1',
+      'CONTENT.project_objectives_contentwindow_combo_section_2',
+    ]).subscribe(translations => {
+      this.dropDownConfig = {
+        label: translations['CONTENT.project_objectives_contentwindow_combo_title'],
+        priorityTitle: translations['CONTENT.project_objectives_contentwindow_combo_section_1'],
+        normalTitle: translations['CONTENT.project_objectives_contentwindow_combo_section_2'],
+        placeholder: 'Selecciona un curso'
+      }
+    })
+  }
+
+  // Modal submit click
+  handleModalSubmit(event: Option): void{
+    this.selectedContents.next(event)
+    this.bsModalRef.hide()
+  }
+
+  // Get related blocks
+  getBlocksFromSelectedGrades(): void {
+    this.selectedGrades = this.project.grades.map(({ id, name }) => ({ id, name }))
+    this.contentService.getBlocks(this.selectedGrades[0])
+    this.contentService.selectedGrades = this.selectedGrades
+  }
+
+  // Get modal data
+  getModalData(subject: CurriculumSubject): void {
     const gradeIds = this.grades.map(({ id }) => id)
     this.contentService.gradeIds = gradeIds
     this.contentService.subject = { id: subject.id, name: subject.name }
     this.contentService.contentIds = subject.contents.map(content => content.id)
-    this.contentService.getTranslationText()
+    this.getTranslationText()
     this.contentService.getHeading()
     this.getBlocksFromSelectedGrades()
-    this.contentService.getDropDownData()
+    this.getDropDownData()
+    this.modalColumns = this.contentService.modalColumns
+    this.blockData = this.contentService.blockData
   }
 
   // Delete selected criteria
@@ -225,6 +285,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.editor.handleStepSubmit(formData)
   }
 
+  // Check for empty data
   checkFormEmpty(): void {
     const contentLength = []
     for (const subject of this.project.subjects) {
@@ -248,21 +309,25 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
+  // get unloack modal
   getModal(): void {
     this.bsModalRef = this.modalService.show(this.infoModal, {
       class: 'common-modal'
     })
   }
 
+  // Close all modals
   declineModal(): void {
     this.bsModalRef.hide()
   }
 
+  // Redirect to step 3
   confirmModal(): void {
     this.editor.redirectToStep(3)
     this.bsModalRef.hide()
   }
 
+  // Get textarea change
   textareaDataChange(data: Option[], index: number): void {
     this.subjectTextArea[index].data = [...data]
     this.checkStepStatus()
@@ -306,6 +371,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Update basic skills selection
   handleSkillSelect(): void {
     this.selectedBasicSkills = []
     for (const skill of this.basicSkills) {
@@ -333,6 +399,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Check step status
   checkStepStatus(contents?: Content[]): void {
     const hasContents = !!contents?.length
     let hasManualContents = false
@@ -357,6 +424,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
+  // Check for empty fields
   hasAnyEmptyFields(): boolean {
     let hasEmptyField = false
     for (const subject of this.project.subjects) {
@@ -379,7 +447,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   // Create subject
-  createSubjectPayload(): Subject[] {
+  createSubjectPayload(): CurriculumSubject[] {
     const subjectPayload = [...this.project.subjects]
     if (this.dataPayload) {
       for (const subject of subjectPayload) {
@@ -397,6 +465,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   // function to submit form data
   handleSubmit(formStatus?: Status): void {
+    console.log('Hi')
     if (formStatus === 'DONE') {
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'

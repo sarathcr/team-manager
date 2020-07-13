@@ -31,12 +31,12 @@ export class ContentService {
   currentBlockIndex = 0
   translateData: TranslatePrincipalData
   selectedGrades: Grade[]
-  dropDownConfig: DropdownCustom
+
   subscriptions = new SubSink()
+
 
   constructor(
     private blockService: BlockEntityService,
-    private translateService: TranslateService,
   ) { }
 
   changeColHead(colHead: PrincipalModalColHead, colName: string): void {
@@ -67,41 +67,9 @@ export class ContentService {
   }
 
   getHeading(): void {
-    this.heading = {
-      contents: 'CONTENT.project_objectives_contentwindow_content',
-      course: 'CONTENT.project_objectives_contentwindow_course',
-      block: 'CONTENT.project_objectives_contentwindow_block',
-    }
     this.modalColumns.colFourHead = { key: 'block', value: this.heading.block }
     this.modalColumns.colThreeHead = { key: 'course', value: this.heading.course }
     this.modalColumns.colOneHead = { key: 'contents', value: this.heading.contents }
-  }
-
-  getTranslationText(): void {
-    this.translateData = {
-      subjectTitle: 'CONTENT.project_content_contentwindow_curriculum',
-      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected',
-      bodyTitle: 'CONTENT.project_content_contentwindow_title',
-      countText: 'CONTENT.project_objectives_contentwindow_showall',
-      addButton: 'CONTENT.project_objectives_contentwindow_add',
-      selectedItem: 'CONTENT.project_objectives_contentwindow_content_selected',
-      emptyTitle: 'CONTENT.project_content_contentwindow_empty_title',
-      emptyDescription: 'CONTENT.project_content_contentwindow_empty_description',
-      emptyButton: 'CONTENT.project_content_contentwindow_empty_button'
-    }
-  }
-  getDropDownData(): void {
-    this.subscriptions.sink = this.translateService.stream([
-      'CONTENT.project_objectives_contentwindow_combo_title',
-      'CONTENT.project_objectives_contentwindow_combo_section_1',
-      'CONTENT.project_objectives_contentwindow_combo_section_2',
-    ]).subscribe(translations => {
-      this.dropDownConfig = {
-        label: translations['CONTENT.project_objectives_contentwindow_combo_title'],
-        priorityTitle: translations['CONTENT.project_objectives_contentwindow_combo_section_1'],
-        normalTitle: translations['CONTENT.project_objectives_contentwindow_combo_section_2']
-      }
-    })
   }
 
   getBlockData(): void {

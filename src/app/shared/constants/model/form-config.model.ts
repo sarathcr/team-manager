@@ -39,6 +39,7 @@ export interface DropdownCustom {
   label: string
   priorityTitle: string
   normalTitle: string
+  placeholder?: string
 }
 
 export type ButtonVariants = 'contained' | 'outlined' | 'text'
