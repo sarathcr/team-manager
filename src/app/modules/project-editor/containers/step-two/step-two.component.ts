@@ -5,12 +5,11 @@ import { map } from 'rxjs/operators'
 
 import { EditorService } from '../../services/editor/editor.service'
 
-import { FormTwoInit, FormTwo } from '../../constants/model/step-forms.model'
+import { FormTwo } from '../../constants/model/step-forms.model'
 import { Theme, Step, Status } from 'src/app/modules/project-editor/constants/model/project.model'
-import { FieldEvent } from 'src/app/shared/constants/model/form-config.model'
+import { FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
 
-import { FormTwoInitData } from '../../constants/Data/step-forms.data'
-import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
+import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -25,7 +24,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   step$: Observable<Step>
   step: Step
   themes$: Observable<Theme[]>
-  inputFormData: FormTwoInit = new FormTwoInitData()
+  themes: Theme[] = []
   buttonConfig = new ButtonSubmitConfig()
   initialFormStatus: Status = 'PENDING'
   subscriptions = new SubSink()
@@ -67,7 +66,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
   }
 
   textAreaUpdate(data: FieldEvent): void { // calls on every update
-    this.inputFormData.themes = data.val
+    this.themes = data.values
     this.isFormUpdated = data.updated
     if (data.updated) {
       this.step.state = data.status
@@ -98,11 +97,11 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.initialFormStatus = 'DONE'
     }
     this.handleButtonType()
-    const tempData = this.inputFormData.themes.map(item => item.id == null ? { name: item.name } : item)
-    this.inputFormData.themes = tempData
+    const tempData = this.themes.map(item => item.id == null ? { name: item.name } : item)
+    this.themes = tempData
     const formData: FormTwo = {
       data: {
-        themes: tempData.length ? this.inputFormData.themes : []
+        themes: tempData.length ? this.themes : []
       },
       stepStatus: {
         steps: [

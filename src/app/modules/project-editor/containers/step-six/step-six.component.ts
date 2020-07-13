@@ -5,10 +5,9 @@ import { Observable } from 'rxjs'
 import { EditorService } from '../../services/editor/editor.service'
 
 import { Step, Status } from '../../constants/model/project.model'
-import { FormSixInit, FormSix } from '../../constants/model/step-forms.model'
+import { FormSix } from '../../constants/model/step-forms.model'
 
-import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-config.data'
-import { FormSixInitData } from '../../constants/Data/step-forms.data'
+import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-elements.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -22,9 +21,10 @@ export class StepSixComponent implements OnInit, OnDestroy {
   project$: Observable<any>
   step$: Observable<Step>
   step: Step
-  initialFormData: FormSixInit = new FormSixInitData()
   buttonConfig = new ButtonSubmitConfig()
   initialFormStatus: Status = 'PENDING'
+  initialCreativeTitle = ''
+  initialCreativeImage = ''
   creativeTitle = ''
   creativeImage = ''
   subscriptions = new SubSink()
@@ -50,9 +50,9 @@ export class StepSixComponent implements OnInit, OnDestroy {
       this.subscriptions.sink = this.project$.subscribe(data => {
         if (data) {
           this.creativeTitle = data.creativeTitle
-          this.initialFormData.creativeTitle = data.creativeTitle
+          this.initialCreativeTitle = data.creativeTitle
           this.creativeImage = data.creativeImage
-          this.initialFormData.creativeImage = data.creativeImage
+          this.initialCreativeImage = data.creativeImage
         }
       })
     }
@@ -95,8 +95,8 @@ export class StepSixComponent implements OnInit, OnDestroy {
 
   // Function to check whether the form is updated
   isFormUpdated(): boolean {
-    if (this.initialFormData.creativeTitle !== this.creativeTitle ||
-      this.initialFormData.creativeImage !== this.creativeImage ||
+    if (this.initialCreativeTitle !== this.creativeTitle ||
+      this.initialCreativeImage !== this.creativeImage ||
       this.initialFormStatus !== this.step.state) {
       return true
     }
@@ -147,7 +147,8 @@ export class StepSixComponent implements OnInit, OnDestroy {
         ]
       }
     }
-    this.initialFormData = formData.data
+    this.initialCreativeTitle = formData.data.creativeTitle
+    this.initialCreativeImage = formData.data.creativeImage
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
   }
 }

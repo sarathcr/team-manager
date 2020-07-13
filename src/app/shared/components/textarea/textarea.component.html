@@ -1,7 +1,7 @@
 <div class="textarea d-flex" [ngClass]="{'textarea_focus': focus}" *ngIf="variant=='default'; else otherVariants">
   <textarea
     class="textarea__description"
-    [attr.maxlength]="maxlength"
+    [attr.maxlength]="maxLength"
     [placeholder]="focus?'':placeholder"
     [ngModel]="value"
     (ngModelChange)="onValueChange($event)"
@@ -14,8 +14,8 @@
 <app-textarea-list 
   [placeholder]="placeholder"
   [label]="label"
-  [maxlength]="maxlength"
-  [limit]="limit"
+  [maxLength]="maxLength"
+  [lineLimit]="lineLimit"
   [value$]="value$"
   [size]="size"
   [variant]="variant"

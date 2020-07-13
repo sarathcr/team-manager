@@ -9,8 +9,8 @@
       <p class="project-form__description" [innerHTML]="'THEMATIC.project_thematic_description' | translate"></p>
       <app-textarea
         variant='bullet'
-        [maxlength]="150"
-        [limit]="5"
+        [maxLength]="150"
+        [lineLimit]="5"
         [placeholder]="'THEMATIC.project_thematic_placeholder' | translate"
         [value$]="themes$"
         (inputChange)="textAreaUpdate($event)" 

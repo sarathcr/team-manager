@@ -27,7 +27,7 @@
         id="list-item-{{text.id}}"
         class="textarea__textarea"
         name='textArea'
-        [attr.maxlength]='maxlength'
+        [attr.maxlength]='maxLength'
         [ngModel]=text.name
         oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
         (keydown)='keyAction($event, i)'

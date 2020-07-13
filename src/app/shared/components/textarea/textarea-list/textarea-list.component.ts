@@ -13,7 +13,8 @@ import {
 
 import { Observable } from 'rxjs'
 
-import { Option, TextAreaVariants, TextareaSize } from 'src/app/shared/constants/model/form-config.model'
+import { Option, TextAreaVariants, TextareaSize } from 'src/app/shared/constants/model/form-elements.model'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
@@ -29,8 +30,8 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   @Input() onInitFocus: boolean
   @Input() label: string
   @Input() placeholder: string
-  @Input() limit: number
-  @Input() maxlength: number
+  @Input() lineLimit: number
+  @Input() maxLength: number
   @Input() value$: Observable<Option[]>
   @Output() inputChange = new EventEmitter()
 
@@ -42,7 +43,7 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   arrayHeight = ''
   sampleOption: Option = { id: null, name: null }
   configOptions: Option[] = []
-  maxlimit = 0
+  limit = 0
   focus = false
   subscriptions = new SubSink()
   isShown = false
@@ -52,7 +53,7 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   constructor() { }
 
   ngOnInit(): void {
-    this.maxlimit = this.limit
+    this.limit = this.lineLimit
     this.isToggle = (this.variant === String('toggle'))
     this.isShown = this.isToggle ? this.isShown : true
     this.optionInit()
@@ -100,10 +101,10 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
     switch (event.keyCode) {
       case 13: // Enter
         event.preventDefault()
-        if (this.limit === 0) {
-          this.maxlimit = this.configOptions.length + 1
+        if (this.lineLimit === 0) {
+          this.limit = this.configOptions.length + 1
         }
-        if (this.configOptions.length < this.maxlimit && this.configOptions[id].name?.trim()) {
+        if (this.configOptions.length < this.limit && this.configOptions[id].name?.trim()) {
           this.handleChange([...this.configOptions])
           this.configOptions.splice(id + 1, 0, { ...this.sampleOption })  // add a new bullet
           this.timeOut = setTimeout(() => {
@@ -188,8 +189,8 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
 
   onValueChange(value: string, i: number): void {
     this.index = i
-    if (this.isFirefox() && value.length > this.maxlength) {
-      value = value.substring(0, this.maxlength)
+    if (this.isFirefox() && value.length > this.maxLength) {
+      value = value.substring(0, this.maxLength)
     }
     this.configOptions[i].name = value
     let newConfigOptions = this.configOptions.filter(option => option.name?.trim() && option)
@@ -240,7 +241,7 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   // funtion to handle all the emits in the component
   handleChange(value: Option[] = []): void {
     const status = value?.length ? 'INPROCESS' : 'PENDING'
-    this.inputChange.emit({ val: value, updated: this.updated, status })
+    this.inputChange.emit({ values: value, updated: this.updated, status })
   }
 
 }

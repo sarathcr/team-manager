@@ -62,8 +62,8 @@ export interface CheckBoxData {
 }
 
 export interface FieldEvent {
-  textValue?: string
-  val?: Option[]
+  value?: string
+  values?: Option[]
   updated?: boolean
   status?: 'INPROCESS' | 'PENDING'
 }

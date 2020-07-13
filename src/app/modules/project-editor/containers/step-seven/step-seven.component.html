@@ -9,7 +9,7 @@
         [innerHTML]="'DRIVING_QUESTIONS.project_drivingquestions_description' | translate"></p>
       <app-textarea
       variant='bullet'
-      [maxlength]="150"
+      [maxLength]="150"
       [placeholder]="'DRIVING_QUESTIONS.project_drivingquestions_placeholder' | translate"
       [value$]="drivingQuestions$"
       (inputChange)="textAreaUpdate($event)" 

@@ -5,12 +5,11 @@ import { map } from 'rxjs/operators'
 
 import { EditorService } from '../../services/editor/editor.service'
 
-import { FormSevenInit, FormSeven } from '../../constants/model/step-forms.model'
-import { FieldEvent } from '../../../../shared/constants/model/form-config.model'
+import { FormSeven } from '../../constants/model/step-forms.model'
+import { FieldEvent } from '../../../../shared/constants/model/form-elements.model'
 import { DrivingQuestion, Step, Status } from 'src/app/modules/project-editor/constants/model/project.model'
-import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
 
-import { FormSevenInitData } from '../../constants/Data/step-forms.data'
+import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -25,7 +24,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   step$: Observable<Step>
   step: Step
   drivingQuestions$: Observable<DrivingQuestion[]>
-  inputFormData: FormSevenInit = new FormSevenInitData()
+  drivingQuestions: DrivingQuestion[] = []
   buttonConfig = new ButtonSubmitConfig()
   initialFormStatus: Status = 'PENDING'
   subscriptions = new SubSink()
@@ -67,7 +66,7 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   }
 
   textAreaUpdate(data: FieldEvent): void { // calls on every update
-    this.inputFormData.drivingQuestions = data.val
+    this.drivingQuestions = data.values
     this.isFormUpdated = data.updated
     if (data.updated) {
       this.step.state = data.status
@@ -98,11 +97,11 @@ export class StepSevenComponent implements OnInit, OnDestroy {
       this.initialFormStatus = 'DONE'
     }
     this.handleButtonType()
-    const tempData = this.inputFormData.drivingQuestions.map(item => item.id == null ? { name: item.name } : item)
-    this.inputFormData.drivingQuestions = tempData
+    const tempData = this.drivingQuestions.map(item => item.id == null ? { name: item.name } : item)
+    this.drivingQuestions = tempData
     const formData: FormSeven = {
       data: {
-        drivingQuestions: tempData.length ? this.inputFormData.drivingQuestions : [],
+        drivingQuestions: tempData.length ? this.drivingQuestions : [],
       },
       stepStatus: {
         steps: [

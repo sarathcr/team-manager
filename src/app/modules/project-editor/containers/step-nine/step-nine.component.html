@@ -9,7 +9,7 @@
             <p class="project-form__description" [innerHTML]="'SINOPSIS.project_synopsis_description' | translate"></p>
             <app-textarea 
                 placeholder="{{'SINOPSIS.project_synopsis_placeholder' | translate }}" 
-                [maxlength]="500" 
+                [maxLength]="500" 
                 [value$]= 'synopsis$'
                 (inputChange)="onValueChange($event)"
                 ></app-textarea>

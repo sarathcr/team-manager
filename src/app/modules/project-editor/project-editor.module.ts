@@ -124,7 +124,7 @@ import { CheckCount } from './pipes/check-count.pipe'
     AwsImgUploadService,
     BsModalRef,
     ObjectiveService,
-    ContentService,
+    ContentService
   ]
 })
 

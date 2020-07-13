@@ -10,7 +10,7 @@
                 [innerHTML]="'FINAL_PRODUCT.project_finalproduct_description' | translate"></p>
             <app-textarea 
             placeholder="{{'FINAL_PRODUCT.project_finalproduct_placeholder' | translate }}"
-            maxlength="500" 
+            [maxLength]="500" 
             [value$]="finalProduct$"
             (inputChange)="onValueChange($event)"
             ></app-textarea>

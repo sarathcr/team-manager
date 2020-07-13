@@ -7,9 +7,9 @@ import { EditorService } from '../../services/editor/editor.service'
 
 import { Step, Status } from '../../constants/model/project.model'
 import { FormNine } from '../../constants/model/step-forms.model'
-import { FieldEvent } from 'src/app/shared/constants/model/form-config.model'
+import { FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
 
-import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-config.data'
+import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-elements.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -24,7 +24,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
   step$: Observable<Step>
   synopsis$: Observable<any>
   step: Step
-  synopsis: any = ''
+  synopsis = ''
   initialFormStatus: Status = 'PENDING'
   buttonConfig = new ButtonSubmitConfig()
   subscriptions = new SubSink()
@@ -64,7 +64,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
 
   // Function to trigger the value in the textarea
   onValueChange(value: FieldEvent): void {
-    this.synopsis = value.textValue
+    this.synopsis = value.value
     this.isFormUpdated = value.updated
     if (value.updated) {
       this.step.state = value.status

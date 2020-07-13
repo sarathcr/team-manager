@@ -7,9 +7,9 @@ import { EditorService } from '../../services/editor/editor.service'
 
 import { Step, Status } from '../../constants/model/project.model'
 import { FormEight } from '../../constants/model/step-forms.model'
-import { FieldEvent } from 'src/app/shared/constants/model/form-config.model'
+import { FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
 
-import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-config.data'
+import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-elements.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -24,7 +24,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
   step$: Observable<Step>
   finalProduct$: Observable<string>
   step: Step
-  finalProduct: any = ''
+  finalProduct = ''
   buttonConfig = new ButtonSubmitConfig()
   initialFormStatus: Status = 'PENDING'
   subscription = new SubSink()
@@ -66,7 +66,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
 
   // Function to trigger the value in the textarea
   onValueChange(value: FieldEvent): void {
-    this.finalProduct = value.textValue
+    this.finalProduct = value.value
     this.isFormUpdated = value.updated
     if (value.updated) {
       this.step.state = value.status

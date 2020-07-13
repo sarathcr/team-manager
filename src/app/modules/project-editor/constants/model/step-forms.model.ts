@@ -11,7 +11,7 @@ import {
   StepState,
   Project
 } from 'src/app/modules/project-editor/constants/model/project.model'
-import { Option } from 'src/app/shared/constants/model/form-config.model'
+import { Option } from 'src/app/shared/constants/model/form-elements.model'
 import { Content } from './project.model'
 
 export interface FormOne {
