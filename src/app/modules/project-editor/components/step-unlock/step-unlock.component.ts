@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
 
-import { FieldConfig } from 'src/app/shared/constants/model/form-config.model'
+import { FieldConfig } from 'src/app/shared/constants/model/form-elements.model'
 import { DefineUnlockStep } from '../../constants/model/step-forms.model'
 
 @Component({

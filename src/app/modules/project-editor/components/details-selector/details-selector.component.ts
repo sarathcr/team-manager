@@ -5,7 +5,7 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { Subject, Project } from 'src/app/modules/project-editor/constants/model/project.model'
-import { ButtonIcon } from 'src/app/shared/constants/model/form-config.model'
+import { ButtonIcon } from 'src/app/shared/constants/model/form-elements.model'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 

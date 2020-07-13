@@ -14,6 +14,9 @@ import { DropdownComponent } from './components/dropdown/dropdown.component'
 import { LoaderComponent } from './components/loader/loader.component'
 import { PaginationComponent } from './components/pagination/pagination.component'
 import { CheckBoxComponent } from './components/checkbox/checkbox.component'
+import { TextareaComponent } from './components/textarea/textarea.component'
+import { TextareaListComponent } from './components/textarea/textarea-list/textarea-list.component'
+import { TranslateCut } from './pipe/translate-cut.pipe'
 
 @NgModule({
     declarations: [
@@ -25,7 +28,10 @@ import { CheckBoxComponent } from './components/checkbox/checkbox.component'
         DropdownComponent,
         LoaderComponent,
         PaginationComponent,
-        CheckBoxComponent
+        CheckBoxComponent,
+        TextareaComponent,
+        TextareaListComponent,
+        TranslateCut
     ],
     imports: [
         CommonModule,
@@ -44,8 +50,11 @@ import { CheckBoxComponent } from './components/checkbox/checkbox.component'
         ButtonComponent,
         LoaderComponent,
         PaginationComponent,
-        CheckBoxComponent
-    ]
+        CheckBoxComponent,
+        TextareaComponent,
+        TextareaListComponent,
+        TranslateCut
+    ],
 })
 
 export class SharedModule { }

@@ -21,11 +21,10 @@ import {
   ProjectContent,
   Content
 } from '../../constants/model/project.model'
-import { Option, FieldConfig, CheckBoxData } from 'src/app/shared/constants/model/form-config.model'
-import { FormFour, FormFourInit } from '../../constants/model/step-forms.model'
+import { Option, CheckBoxData, FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
+import { FormFour } from '../../constants/model/step-forms.model'
 
-import { FormFourInitData } from '../../constants/Data/step-forms.data'
-import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
+import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
@@ -42,12 +41,9 @@ export class StepFourComponent implements OnInit, OnDestroy {
   project: Project
   loading = true
   buttonConfig = new ButtonSubmitConfig()
-  textAreaConfig: FieldConfig
   subscriptions = new SubSink()
   showTextarea = false
   initialFormStatus: Status = 'PENDING'
-  inputFormData: FormFourInit = new FormFourInitData()
-  initialFormData: FormFourInit = new FormFourInitData()
   contents: ProjectContent[] = []
   basicSkills: BasicSkill[] = []
   selectedBasicSkills: BasicSkill[] = []
@@ -66,7 +62,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.createFormConfig()
     this.stepInit()
   }
 
@@ -75,16 +70,6 @@ export class StepFourComponent implements OnInit, OnDestroy {
       this.handleSubmit()
     }
     this.subscriptions.unsubscribe()
-  }
-
-  createFormConfig(): void {
-    this.textAreaConfig = {
-      name: 'textarea',
-      field: 'competencyObjectives',
-      id: 'competencyObjectives',
-      maxLength: 150,
-      limit: 0
-    }
   }
 
   stepInit(): void {
@@ -263,10 +248,12 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.bsModalRef.hide()
   }
 
-  textareaDataChange(data: Option[], index: number): void {
-    this.subjectTextArea[index].data = [...data]
-    this.checkStepStatus()
-    this.isFormUpdated = true
+  textareaDataChange(data: FieldEvent, index: number): void {
+    this.subjectTextArea[index].data = [...data.values]
+    this.isFormUpdated = data.updated
+    if (data.updated) {
+      this.checkStepStatus()
+    }
   }
 
   // Basic skills area

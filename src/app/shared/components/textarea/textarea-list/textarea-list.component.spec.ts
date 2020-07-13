@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { TextareaBulletsComponent } from './textarea-bullets.component'
+import { TextareaListComponent } from './textarea-list.component'
 
 describe('TextareaWithBulletsComponent', (): void => {
-  let component: TextareaBulletsComponent
-  let fixture: ComponentFixture<TextareaBulletsComponent>
+  let component: TextareaListComponent
+  let fixture: ComponentFixture<TextareaListComponent>
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ TextareaBulletsComponent ]
+      declarations: [ TextareaListComponent ]
     })
 
-    fixture = TestBed.createComponent(TextareaBulletsComponent)
+    fixture = TestBed.createComponent(TextareaListComponent)
     component = fixture.componentInstance
   })
 

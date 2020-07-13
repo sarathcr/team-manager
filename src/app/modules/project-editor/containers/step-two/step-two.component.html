@@ -7,12 +7,14 @@
         <app-info-tooltip></app-info-tooltip>
       </h2>
       <p class="project-form__description" [innerHTML]="'THEMATIC.project_thematic_description' | translate"></p>
-      <app-textarea-bullets 
-        [config]='textAreaConfig' 
+      <app-textarea
+        variant='bullet'
+        [maxLength]="150"
+        [lineLimit]="5"
+        [placeholder]="'THEMATIC.project_thematic_placeholder' | translate"
+        [value$]="themes$"
         (inputChange)="textAreaUpdate($event)" 
-        [options$]="themes$"
-      >
-      </app-textarea-bullets>
+      ></app-textarea>
     </div>
     <app-button
       [disabled] = 'buttonConfig.disabled'

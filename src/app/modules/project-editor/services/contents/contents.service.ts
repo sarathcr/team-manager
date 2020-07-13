@@ -10,7 +10,7 @@ import { PrincipalModalColData,
   PrincipalModalColHead,
   TranslatePrincipalData
 } from '../../constants/model/principle-view.model'
-import { Option, DropdownCustom } from 'src/app/shared/constants/model/form-config.model'
+import { Option, DropdownCustom } from 'src/app/shared/constants/model/form-elements.model'
 import { Observable } from 'rxjs'
 import { Block } from '../../constants/model/curriculum.model'
 
