@@ -40,15 +40,19 @@
             <p class="project-form__sub-description mb-5">
               {{'OBJECTIVES.project_objectives_objectives_subtitle.description' | translate}}
             </p>
-            <app-textarea-bullets [config]='textAreaConfig' (inputChange)="textAreaUpdate($event)"
-              [options$]="competencyObjectives$" [variant]="'number'">
-            </app-textarea-bullets>
+            <app-textarea
+            variant='number'
+            [maxLength]="150"
+            [placeholder]="'OBJECTIVES.project_objectives_objectives_placeholder' | translate"
+            [value$]="competencyObjectives$"
+            (inputChange)="textAreaUpdate($event)" 
+          ></app-textarea>
           </div>
         </ng-template>
       </div>
       <app-button
-        [disabled] = 'buttonConfig.disabled || !project.subjects?.length'
-        [theme] = "buttonConfig.submitted ? 'success':'primary'"
+        [disabled]='buttonConfig.disabled || !project.subjects?.length'
+        [theme]="buttonConfig.submitted ? 'success':'primary'"
         [icon]="'tick'"
         (click)='handleSubmit("DONE")'>
         {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}

@@ -13,26 +13,27 @@ import {
 
 import { Observable } from 'rxjs'
 
-import { FieldConfig, Option, TextAreaVariants, TextareaSize } from 'src/app/shared/constants/model/form-config.model'
+import { Option, TextAreaVariants, TextareaSize } from 'src/app/shared/constants/model/form-elements.model'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
-  selector: 'app-textarea-bullets',
-  templateUrl: './textarea-bullets.component.html',
-  styleUrls: ['./textarea-bullets.component.scss']
+  selector: 'app-textarea-list',
+  templateUrl: './textarea-list.component.html',
+  styleUrls: ['./textarea-list.component.scss']
 })
-export class TextareaBulletsComponent implements OnInit, AfterContentChecked, OnDestroy {
+export class TextareaListComponent implements OnInit, AfterContentChecked, OnDestroy {
 
   @Input() variant: TextAreaVariants = 'bullet'
   @Input() size: TextareaSize
-  @Input() toggleData = ''
-  @Input() config: FieldConfig
-  @Input() options: Option[]
-  @Input() onInitFocus = false
+  @Input() toggleData: string
+  @Input() onInitFocus: boolean
   @Input() label: string
-  @Input() options$: Observable<Option[]>
+  @Input() placeholder: string
+  @Input() lineLimit: number
+  @Input() maxLength: number
+  @Input() value$: Observable<Option[]>
   @Output() inputChange = new EventEmitter()
-  @Output() textareaBlur = new EventEmitter()
 
   @ViewChildren('textArea') textArea: QueryList<ElementRef>
   index = 0
@@ -47,10 +48,12 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   subscriptions = new SubSink()
   isShown = false
   isToggle = false
+  updated = false
+
   constructor() { }
 
   ngOnInit(): void {
-    this.limit = this.config.limit
+    this.limit = this.lineLimit
     this.isToggle = (this.variant === String('toggle'))
     this.isShown = this.isToggle ? this.isShown : true
     this.optionInit()
@@ -69,12 +72,15 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   }
 
   optionInit(): void {
-    if (this.options$) {
-      this.subscriptions.sink = this.options$.subscribe(data => {
+    if (this.value$) {
+      this.subscriptions.sink = this.value$.subscribe(data => {
+        this.updated = false
         if (data?.length) {
           this.configOptions = data
+          this.handleChange([...this.configOptions])
         } else {
           this.configOptions = [{ ...this.sampleOption }]
+          this.handleChange()
         }
         this.isShown = (this.configOptions.length === 1 && !this.configOptions[0]?.name && this.isToggle) ? false : true
       })
@@ -91,14 +97,15 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   }
 
   keyAction(event: any, id: number): void {
+    this.updated = true
     switch (event.keyCode) {
       case 13: // Enter
         event.preventDefault()
-        if (this.config.limit === 0) {
+        if (this.lineLimit === 0) {
           this.limit = this.configOptions.length + 1
         }
         if (this.configOptions.length < this.limit && this.configOptions[id].name?.trim()) {
-          this.inputChange.emit([...this.configOptions])
+          this.handleChange([...this.configOptions])
           this.configOptions.splice(id + 1, 0, { ...this.sampleOption })  // add a new bullet
           this.timeOut = setTimeout(() => {
             this.textArea.toArray()[id + 1].nativeElement.focus()
@@ -120,8 +127,12 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
         else {
           this.configOptions[0].name = ''
         }
-        if (this.configOptions.length === 1 && !this.configOptions[0].name) { this.inputChange.emit([]) }
-        else { this.inputChange.emit([...this.configOptions]) }
+        if (this.configOptions.length === 1 && !this.configOptions[0].name) {
+          this.handleChange()
+        }
+        else {
+          this.handleChange([...this.configOptions])
+        }
         break
 
       case 32: // spacebar
@@ -178,13 +189,13 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
 
   onValueChange(value: string, i: number): void {
     this.index = i
-    if (this.isFirefox() && value.length > this.config.maxLength) {
-      value = value.substring(0, this.config.maxLength)
+    if (this.isFirefox() && value.length > this.maxLength) {
+      value = value.substring(0, this.maxLength)
     }
     this.configOptions[i].name = value
     let newConfigOptions = this.configOptions.filter(option => option.name?.trim() && option)
     if (this.configOptions.length === 1 && !this.configOptions[0].name.trim()) { newConfigOptions = [] }
-    this.inputChange.emit(newConfigOptions)
+    this.handleChange(newConfigOptions)
 
   }
 
@@ -195,12 +206,12 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   onBlur($event: any, i: number): void {
     if ($event.relatedTarget !== $event.target.parentElement) {
       this.focus = false
-      if (this.configOptions.length === 1 && !this.configOptions[0]?.name  && this.isToggle) {
+      if (this.configOptions.length === 1 && !this.configOptions[0]?.name && this.isToggle) {
         this.isShown = !this.isShown
       }
     }
     if (this.configOptions.length > 1 && !this.configOptions[i]?.name?.trim() &&
-    $event.relatedTarget !== $event.target.parentElement) {
+      $event.relatedTarget !== $event.target.parentElement) {
       this.configOptions.splice(i, 1)
     }
     if (this.configOptions.length === 1 && !this.configOptions[0]?.name?.trim()) {
@@ -209,8 +220,8 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   }
 
   // focus the text area initially
-  focusTextArea(): void{
-    if (this.onInitFocus){
+  focusTextArea(): void {
+    if (this.onInitFocus) {
       setTimeout(() => {
         if (!this.textArea.first.nativeElement.value.length) {
           this.textArea.first.nativeElement.focus()
@@ -220,11 +231,17 @@ export class TextareaBulletsComponent implements OnInit, AfterContentChecked, On
   }
 
   // toggle text area on link click
-  toggleTextarea(): void{
+  toggleTextarea(): void {
     this.isShown = !this.isShown
-    if (this.isShown){
+    if (this.isShown) {
       this.focusTextArea()
     }
+  }
+
+  // funtion to handle all the emits in the component
+  handleChange(value: Option[] = []): void {
+    const status = value?.length ? 'INPROCESS' : 'PENDING'
+    this.inputChange.emit({ values: value, updated: this.updated, status })
   }
 
 }

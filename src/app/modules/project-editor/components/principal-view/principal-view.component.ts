@@ -8,7 +8,7 @@ import { ObjectiveService } from '../../services/objectives/objectives.service'
 
 import { Block } from '../../constants/model/curriculum.model'
 import { PrincipalModalColData } from '../../constants/model/principle-view.model'
-import { DropDownConfig, Option } from 'src/app/shared/constants/model/form-config.model'
+import { DropDownConfig, Option } from 'src/app/shared/constants/model/form-elements.model'
 import { ContentService } from '../../services/contents/contents.service'
 
 @Component({
