@@ -205,6 +205,7 @@
 }
 
 .custom-tab{
+    $root-tab: &;
     &__links{
         width: 100%;
         border: 1px solid $custom-tab-border-color;
@@ -247,6 +248,10 @@
         &.active{
             border: 1px solid $custom-tab-primary-color;
             background-color: $custom-tab-active-bg-color;
+
+            #{$root-tab}__links-label{
+                font-weight: 700;
+            }
 
             &:after,
             &:before {

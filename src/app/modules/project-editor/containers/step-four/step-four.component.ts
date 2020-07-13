@@ -33,7 +33,8 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
   styleUrls: ['./step-four.component.scss']
 })
 export class StepFourComponent implements OnInit, OnDestroy {
-  @ViewChild('infoModal') infoModal: TemplateRef<any>
+  @ViewChild('modalUnlock') modalUnlock: TemplateRef<any>
+  @ViewChild('modalDelete') modalDelete: TemplateRef<any>
   project$: Observable<Project>
   step$: Observable<Step>
   grades: Option[]
@@ -52,6 +53,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
   subjectTextArea: any[] = []
   hasNoBasicSkill = false
   isFormUpdated = false
+  delData: object
 
   constructor(
     public editor: EditorService,
@@ -153,7 +155,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
       })
     }
     else {
-      this.getModal()
+      this.openModalUnlock()
     }
   }
 
@@ -233,18 +235,35 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
-  getModal(): void {
-    this.bsModalRef = this.modalService.show(this.infoModal, {
+  // Open Modal for unlock
+  openModalUnlock(): void {
+    this.bsModalRef = this.modalService.show(this.modalUnlock, {
       class: 'common-modal modal-dialog-centered'
     })
   }
 
+  // Open Modal for delete
+  openModalDelete(data: { subjectId: number, id: number }): void {
+    this.delData = data
+    this.bsModalRef = this.modalService.show(this.modalDelete, {
+      class: 'common-modal  modal-dialog-centered'
+    })
+  }
+
+  // Decline Modal for both Unlock and delete
   declineModal(): void {
     this.bsModalRef.hide()
   }
 
-  confirmModal(): void {
+  // Confirm Modal for Unlock
+  confirmModalUnlock(): void {
     this.editor.redirectToStep(3)
+    this.bsModalRef.hide()
+  }
+
+  // Confirm Modal for Delete
+  confirmModalDelete(): void {
+    this.deleteContent(this.delData)
     this.bsModalRef.hide()
   }
 
