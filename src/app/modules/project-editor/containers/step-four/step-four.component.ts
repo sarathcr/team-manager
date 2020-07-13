@@ -254,7 +254,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   // Open Modal for both info and delete
   openModal(data: OpenModalConfig): void {
-    if(data.type === MODAL_CONFIG.unlock){
+    if (data.type === MODAL_CONFIG.unlock){
       this.bsModalRef = this.modalService.show(this.infoModal, {
         class: 'common-modal modal-dialog-centered'
       })
@@ -273,7 +273,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   // Confirm Modal for both info and delete
   confirmModal(data: OpenModalConfig): void {
-    if(data.type === MODAL_CONFIG.unlock){
+    if (data.type === MODAL_CONFIG.unlock){
       this.editor.redirectToStep(3)
     }else if (data.type === MODAL_CONFIG.delete){
       this.deleteContent(this.delData)
