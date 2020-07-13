@@ -21,7 +21,7 @@
               [isLast]="last"
               (deleteById)="openModal($event)"
               [project$]="editor.project$"
-              (openModal)="openModalWithComponent($event)"
+              (add)="openModalWithComponent($event)"
               icon="add"
               [loading]="criteriaLoader"
             ></app-details-selector>

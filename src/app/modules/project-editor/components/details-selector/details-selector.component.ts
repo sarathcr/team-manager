@@ -25,7 +25,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() unselectedLabel: string
   @Input() selectedLabel: string
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
-  @Output() openModal: EventEmitter<any> = new EventEmitter()
+  @Output() add: EventEmitter<any> = new EventEmitter()
   @Output() deleteById: EventEmitter<any> = new EventEmitter()
   count = 0
   subscriptions = new SubSink()
@@ -58,7 +58,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   }
 
   addItem(): void {
-    this.openModal.emit(this.subject)
+    this.add.emit(this.subject)
     this.getCount()
   }
 

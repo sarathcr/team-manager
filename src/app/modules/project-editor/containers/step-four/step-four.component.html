@@ -25,8 +25,7 @@
               [isLast]="last"
               [project$]="editor.project$"
               [icon]="subject.evaluationCriteria.length ? 'add' : 'locked'"
-              (openModal)="openModalWithComponent(!!subject.evaluationCriteria.length, i)"
-              (deleteCriteria)="deleteContent($event)"
+              (add)="openModalWithComponent(!!subject.evaluationCriteria.length, i)"
               (deleteById)="openModalDelete($event)"
             ></app-details-selector>
               <div class="project-form__textarea-wrapper">
