@@ -22,8 +22,8 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() icon: ButtonIcon
   @Input() loading = false
   @Input() project$: Observable<Project>
-  @Input() placeholder: string
-  @Input() afterSelectionLabel: string
+  @Input() unselectedLabel: string
+  @Input() selectedLabel: string
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() openModal: EventEmitter<any> = new EventEmitter()
   @Output() deleteById: EventEmitter<any> = new EventEmitter()

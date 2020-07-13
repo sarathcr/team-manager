@@ -14,8 +14,8 @@
           <div class="project-editor__subject-wrapper">
             <app-details-selector
               *ngFor="let subject of project?.subjects; let i = index; let last = last;"
-              [placeholder]="'OBJECTIVES.project_objectives_criteria_placeholder'"
-              [afterSelectionLabel]="'OBJECTIVES.project_objectives_criterion'"
+              [unselectedLabel]="'OBJECTIVES.project_objectives_criteria_placeholder'"
+              [selectedLabel]="'OBJECTIVES.project_objectives_criterion'"
               [subject]="subject"
               [subjectItem]="subject.evaluationCriteria"
               [isLast]="last"

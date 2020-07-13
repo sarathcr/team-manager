@@ -5,10 +5,10 @@
   <ul class="details-selector__list">
     <li class="details-selector__item">
       <span *ngIf="subjectItem?.length === 0" class="details-selector__text">
-        {{ placeholder | translate}}
+        {{ unselectedLabel | translate}}
       </span>
       <span *ngIf="subjectItem?.length > 0" class="details-selector__text_evaluation">
-        {{ afterSelectionLabel | translate}} ({{subjectItem.length}})
+        {{ selectedLabel | translate}} ({{subjectItem.length}})
       </span>
       <app-button
         class="details-selector__add-btn"

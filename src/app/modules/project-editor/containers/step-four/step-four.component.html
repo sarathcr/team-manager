@@ -18,8 +18,8 @@
             *ngFor="let subject of project?.subjects; let i = index; let last = last;"
           >
             <app-details-selector
-              [placeholder]="'CONTENT.project_content_placeholder'"
-              [afterSelectionLabel]="'CONTENT.project_content_cvcontent'"
+              [unselectedLabel]="'CONTENT.project_content_placeholder'"
+              [selectedLabel]="'CONTENT.project_content_cvcontent'"
               [subject]="subject"
               [subjectItem]="subject.contents"
               [isLast]="last"
