@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core'
 
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
-import { TranslateService } from '@ngx-translate/core'
 
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 
@@ -40,7 +39,6 @@ export class ObjectiveService {
 
   constructor(
     private blockService: BlockEntityService,
-    private translateService: TranslateService,
   ) { }
 
   changeColHead(colHead: PrincipalModalColHead, colName: string): void {

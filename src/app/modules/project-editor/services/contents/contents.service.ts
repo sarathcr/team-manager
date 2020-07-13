@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 
 import { map } from 'rxjs/operators'
-import { TranslateService } from '@ngx-translate/core'
 
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 
