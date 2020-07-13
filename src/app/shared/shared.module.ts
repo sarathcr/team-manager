@@ -14,6 +14,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component'
 import { LoaderComponent } from './components/loader/loader.component'
 import { PaginationComponent } from './components/pagination/pagination.component'
 import { CheckBoxComponent } from './components/checkbox/checkbox.component'
+import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.component'
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { CheckBoxComponent } from './components/checkbox/checkbox.component'
         DropdownComponent,
         LoaderComponent,
         PaginationComponent,
-        CheckBoxComponent
+        CheckBoxComponent,
+        InfoToolTipComponent
     ],
     imports: [
         CommonModule,
@@ -44,7 +46,8 @@ import { CheckBoxComponent } from './components/checkbox/checkbox.component'
         ButtonComponent,
         LoaderComponent,
         PaginationComponent,
-        CheckBoxComponent
+        CheckBoxComponent,
+        InfoToolTipComponent
     ]
 })
 
