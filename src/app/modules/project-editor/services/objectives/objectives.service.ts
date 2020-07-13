@@ -36,6 +36,7 @@ export class ObjectiveService {
   dropDownConfig: DropdownCustom
   selectedGrades: Grade[]
   subscriptions = new SubSink()
+  grades: Grade[]
 
   constructor(
     private blockService: BlockEntityService,
@@ -75,7 +76,7 @@ export class ObjectiveService {
     return { colTwoData, colOneHead, colTwoHead }
   }
 
-  createTableData(block: Block, grade: Grade, blockIndex: number): Block {
+  createTableData(block: Block, blockIndex: number): Block {
     let colOneHead: PrincipalModalColHead
     let colTwoHead: PrincipalModalColHead
     const evaluationCriteria = block.evaluationCriteria.map(criteria => {
@@ -87,7 +88,7 @@ export class ObjectiveService {
       } = this.getTableData(criteria, colOneHead, colTwoHead)
       colOneHead = colOneHeadData
       colTwoHead = colTwoHeadData
-      const colThreeData = grade.name
+      const colThreeData = this.grades.find(grade => (grade.id === block.gradeId)).name
       const colFourData = `${blockIndex}. ${block.name}`
       const checked = this.criteriaIds.includes(criteria.id)
 
@@ -143,12 +144,12 @@ export class ObjectiveService {
     })
   }
 
-  createBlockData(data: Block[], gradeBlocks: GradeIndex[], selectedGrade: Grade): void {
+  createBlockData(data: Block[], gradeBlocks: GradeIndex[]): void {
     for (const block of data) {
       const gradeOfBlock = gradeBlocks.find(gradeBlock => gradeBlock.id === block.gradeId)
       if (block.subjectId === this.subject.id) {
         if (!this.blockData.some(blockData => blockData.id === block.id)) {
-          this.blockData.push(this.createTableData(block, selectedGrade, ++gradeOfBlock.count))
+          this.blockData.push(this.createTableData(block, ++gradeOfBlock.count))
         }
       }
     }
@@ -158,7 +159,7 @@ export class ObjectiveService {
     const gradeBlocks = this.gradeIds.map(id => ({ id, count: 0 }))
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
-        this.createBlockData(data, gradeBlocks, selectedGrade)
+        this.createBlockData(data, gradeBlocks)
         return data.filter(block => block.subjectId === this.subject.id && this.gradeIds.includes(block.gradeId))
       }))
       .subscribe(data => {
