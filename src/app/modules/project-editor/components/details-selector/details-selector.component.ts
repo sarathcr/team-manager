@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators'
 import { Subject, Project } from 'src/app/modules/project-editor/constants/model/project.model'
 import { ButtonIcon } from 'src/app/shared/constants/model/form-config.model'
 
+import { MODAL_CONFIG } from './../../constants/Data/modal.data'
+
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
@@ -53,7 +55,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   }
 
   onDeleteById(id: number): void{
-    this.deleteById.emit({ type: 'delete', subjectId: this.subject.id, id })
+    this.deleteById.emit({ type: MODAL_CONFIG.delete, subjectId: this.subject.id, id })
   }
 
   addItem(): void {
