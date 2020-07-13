@@ -166,6 +166,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   getModalData(subject: Subject): void {
+    this.contentService.grades = this.grades
     const gradeIds = this.grades.map(({ id }) => id)
     this.contentService.gradeIds = gradeIds
     this.contentService.subject = { id: subject.id, name: subject.name }

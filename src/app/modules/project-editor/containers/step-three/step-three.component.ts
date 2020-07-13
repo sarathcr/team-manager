@@ -332,6 +332,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   getModalData(subject: Subject): void {
+    this.objective.grades = this.grades
     const gradeIds = this.grades.map(({ id }) => id)
     this.objective.gradeIds = gradeIds
     this.objective.subject = { id: subject.id, name: subject.name }
