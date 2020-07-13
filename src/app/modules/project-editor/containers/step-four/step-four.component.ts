@@ -243,7 +243,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   // Open Modal for delete
-  openModalDelete(data: ModalDeleteConfig): void {
+  openModalDelete(data: { subjectId: number, id: number }): void {
     this.delData = data
     this.bsModalRef = this.modalService.show(this.modalDelete, {
       class: 'common-modal  modal-dialog-centered'
@@ -425,8 +425,4 @@ export class StepFourComponent implements OnInit, OnDestroy {
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
     this.handleButtonType()
   }
-}
-export interface ModalDeleteConfig {
-  subjectId?: number
-  id?: number
 }
