@@ -49,7 +49,6 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
 import { StatusComponent } from './components/status/status.component'
 import { ModalFormComponent } from './components/modal-form/modal-form.component'
 import { ProjectTitleComponent } from './components/project-title/project-title.component'
-import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
 import { InputComponent } from 'src/app/shared/components/input/input.component'
 import { ValidatorComponent } from 'src/app/shared/components/validator/validator.component'
 import { SecondaryViewComponent } from './components/secondary-view/secondary-view.component'
@@ -75,7 +74,6 @@ import { CheckCount } from './pipes/check-count.pipe'
     StepMenuComponent,
     StepTwoComponent,
     StatusComponent,
-    InfoToolTipComponent,
     StepSevenComponent,
     StepEightComponent,
     StepThreeComponent,
