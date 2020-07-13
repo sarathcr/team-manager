@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, TemplateRef, ViewChild } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
 
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { Subject, Project } from 'src/app/modules/project-editor/constants/model/project.model'
-import { ButtonIcon } from 'src/app/shared/constants/model/form-config.model'
+import { ButtonIcon } from 'src/app/shared/constants/model/form-elements.model'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -23,16 +22,14 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() icon: ButtonIcon
   @Input() loading = false
   @Input() project$: Observable<Project>
-  @Input() placeholder: string
+  @Input() unselectedLabel: string
+  @Input() selectedLabel: string
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
-  @Output() openModal: EventEmitter<any> = new EventEmitter()
-  @Output() deleteCriteria: EventEmitter<any> = new EventEmitter()
-  @ViewChild('infoModal') infoModal: TemplateRef<any>
+  @Output() add: EventEmitter<any> = new EventEmitter()
+  @Output() deleteById: EventEmitter<any> = new EventEmitter()
   count = 0
-  bsModalRef: BsModalRef
   subscriptions = new SubSink()
-  id = 0
-  constructor(private modalService: BsModalService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.formInit()
@@ -56,25 +53,12 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
       })
   }
 
-  getModal(id: number): void {
-    this.id = id
-    this.bsModalRef = this.modalService.show(this.infoModal, {
-      class: 'common-modal  modal-dialog-centered'
-    })
-  }
-
-  declineModal(): void {
-    this.bsModalRef.hide()
-  }
-
-  confirmModal(): void {
-    this.deleteCriteria.emit({ subjectId: this.subject.id, id: this.id })
-    this.count = this.subjectItem.filter(criteria => criteria === this.subject.id).length
-    this.bsModalRef.hide()
+  onDeleteById(id: number): void{
+    this.deleteById.emit({ subjectId: this.subject.id, id })
   }
 
   addItem(): void {
-    this.openModal.emit(this.subject)
+    this.add.emit(this.subject)
     this.getCount()
   }
 

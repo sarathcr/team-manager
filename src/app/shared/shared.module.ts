@@ -15,6 +15,9 @@ import { LoaderComponent } from './components/loader/loader.component'
 import { PaginationComponent } from './components/pagination/pagination.component'
 import { CheckBoxComponent } from './components/checkbox/checkbox.component'
 import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.component'
+import { TextareaComponent } from './components/textarea/textarea.component'
+import { TextareaListComponent } from './components/textarea/textarea-list/textarea-list.component'
+import { TranslateCut } from './pipe/translate-cut.pipe'
 
 @NgModule({
     declarations: [
@@ -27,7 +30,10 @@ import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.com
         LoaderComponent,
         PaginationComponent,
         CheckBoxComponent,
-        InfoToolTipComponent
+        InfoToolTipComponent,
+        TextareaComponent,
+        TextareaListComponent,
+        TranslateCut
     ],
     imports: [
         CommonModule,
@@ -47,8 +53,11 @@ import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.com
         LoaderComponent,
         PaginationComponent,
         CheckBoxComponent,
-        InfoToolTipComponent
-    ]
+        InfoToolTipComponent,
+        TextareaComponent,
+        TextareaListComponent,
+        TranslateCut
+    ],
 })
 
 export class SharedModule { }
