@@ -365,11 +365,9 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   hasAnyEmptyFields(): boolean {
     let hasEmptyField = false
-    for (const subject of this.project.subjects) {
-      for (const textArea of this.subjectTextArea) {
-        if (!subject.contents?.length && !textArea.data?.length) {
-          hasEmptyField = true
-        }
+    for (const [index, subject] of this.project.subjects.entries()) {
+      if (!subject.contents?.length && !this.subjectTextArea[index].data?.length) {
+        hasEmptyField = true
       }
     }
     if (this.basicSkills?.length) {
