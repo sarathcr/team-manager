@@ -80,7 +80,7 @@ export class ContentService {
   getTranslationText(): void {
     this.translateData = {
       subjectTitle: 'CONTENT.project_content_contentwindow_curriculum',
-      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected',
+      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected_back',
       bodyTitle: 'CONTENT.project_content_contentwindow_title',
       countText: 'CONTENT.project_objectives_contentwindow_showall',
       addButton: 'CONTENT.project_objectives_contentwindow_add',
