@@ -130,7 +130,7 @@
             flex-direction: row;
             align-items: center;
             padding-bottom: 28px;
-            padding-right: 32px;
+            padding-right: 30px;
             margin-left: 40px;
           }
 
@@ -153,8 +153,8 @@
             border: none;
             color: $context-close-color;
             font-size: 24px;
-            margin-right: -8px;
             cursor: pointer;
+            padding: 0;
           }
         }
       }
