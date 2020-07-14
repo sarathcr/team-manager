@@ -19,7 +19,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() subjectItem: any[]
   @Input() subject: Subject
   @Input() isLast = false
-  @Input() variant: string
+  @Input() variant: ButtonIcon
   @Input() loading = false
   @Input() project$: Observable<Project>
   @Input() unselectedLabel: string
@@ -28,7 +28,6 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Output() add: EventEmitter<any> = new EventEmitter()
   @Output() deleteById: EventEmitter<any> = new EventEmitter()
   count = 0
-  icon: ButtonIcon
   subscriptions = new SubSink()
   constructor() { }
 
@@ -52,7 +51,6 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
           })
         }
       })
-    this.icon = this.variant as ButtonIcon
   }
 
   onDeleteById(id: number): void{
