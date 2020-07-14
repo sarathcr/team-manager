@@ -46,7 +46,7 @@
       ></app-dropdown>
     </div>
     <app-button
-      [disabled] = 'buttonConfig.disabled'
+      [disabled]="buttonConfig.disabled"
       [theme]="buttonConfig.submitted ? 'success':'primary'"
       [icon]="'tick'"
       (click)='handleSubmit("DONE")'>
