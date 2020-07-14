@@ -99,9 +99,9 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.labels = {
       subjectTitle: 'OBJECTIVES.project_objectives_criteriawindow_curriculum',
-      summaryTitle: 'OBJECTIVES.project_objectives_criteriawindow_curriculum',
+      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected_back',
       bodyTitle: 'OBJECTIVES.project_objectives_criteriawindow_title',
-      countText: 'OBJECTIVES.project_objectives_criteriawindow_title',
+      countText: 'OBJECTIVES.project_objectives_criteriawindow_showall',
       addButtonText: 'OBJECTIVES.project_objectives_criteriawindow_add',
       secondaryViewLabels: secondarViewLabels
     }
