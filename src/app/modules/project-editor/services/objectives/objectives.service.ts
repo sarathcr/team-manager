@@ -31,7 +31,6 @@ export class ObjectiveService {
   criteriaIds: number[]
   modalColumns: PrincipalModalColData = {}
   currentBlockIndex = 0
-  translateData: TranslatePrincipalData
   dropDownConfig: DropdownCustom
   selectedGrades: Grade[]
   subscriptions = new SubSink()

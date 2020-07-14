@@ -28,7 +28,6 @@ export class ContentService {
   contentIds: number[]
   modalColumns: PrincipalModalColData = {}
   currentBlockIndex = 0
-  translateData: TranslatePrincipalData
   selectedGrades: Grade[]
 
   subscriptions = new SubSink()

@@ -25,22 +25,10 @@
               [subjectItem]="subject.contents"
               [isLast]="last"
               [project$]="editor.project$"
-              [icon]="subject.evaluationCriteria.length ? 'add' : 'locked'"
-              (add)="openModalWithComponent(!!subject.evaluationCriteria.length, i)"
+              [variant]="subject.evaluationCriteria.length ? 'add' : 'locked'"
+              (add)="openPrincipalView($event)"
               (deleteById)="openModalDelete($event)"
             ></app-details-selector>
-            <ng-template #principalViewModal>
-              <app-principal-view-modal
-                [grades] = grades
-                [stepId] = 4
-                [modalColumns] = modalColumns
-                [blockData] = blockData
-                [dropdownTitles] = dropDownConfig
-                [selectedGrades] = selectedGrades
-                (modalSubmit) = handleModalSubmit($event)
-                (decline)="declineModal()"
-              ></app-principal-view-modal>
-            </ng-template>
               <div class="project-form__textarea-wrapper">
                 <app-textarea
                   variant="toggle"
@@ -106,4 +94,25 @@
     (confirm)="confirmModalDelete()"
     (decline)="declineModal()"
   ></app-modal-info>
+</ng-template>
+<ng-template #principalViewModal>
+  <app-principal-view-modal
+    [grades]="grades"
+    [stepId]=4
+    [modalColumns]="modalColumns"
+    [blockData]="blockData"
+    [dropdownTitles]="dropDownConfig"
+    [selectedGrades]="selectedGrades"
+    [subjectTitle]="'CONTENT.project_content_contentwindow_curriculum'"
+    [summaryTitle]="'CONTENT.project_objectives_contentwindow_content_selected_back'"
+    [bodyTitle]="'CONTENT.project_content_contentwindow_title'"
+    [countText]="'CONTENT.project_objectives_contentwindow_showall'"
+    [addButtonText]="'CONTENT.project_objectives_contentwindow_add'"
+    [selectedItemText]="'CONTENT.project_objectives_contentwindow_content_selected'"
+    [emptyTitle]="'CONTENT.project_content_contentwindow_empty_title'"
+    [emptyDescription]="'CONTENT.project_content_contentwindow_empty_description'"
+    [emptyButtonText]="'CONTENT.project_content_contentwindow_empty_button'"
+    (modalSubmit)="handleModalSubmit($event)"
+    (decline)="declineModal()"
+  ></app-principal-view-modal>
 </ng-template>

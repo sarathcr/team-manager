@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, AfterViewInit } f
 
 import { Observable, Subject } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { TranslateService } from '@ngx-translate/core'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
 import { EditorService } from '../../services/editor/editor.service'
@@ -19,12 +20,11 @@ import {
   Project,
 } from 'src/app/modules/project-editor/constants/model/project.model'
 import { FormThree } from '../../constants/model/step-forms.model'
+import { PrincipalModalColData } from '../../constants/model/principle-view.model'
+import { Block } from '../../constants/model/curriculum.model'
 
 import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { PrincipalModalColData, TranslatePrincipalData, CompetencyModal } from '../../constants/model/principle-view.model'
-import { Block } from '../../constants/model/curriculum.model'
-import { TranslateService } from '@ngx-translate/core'
 
 
 @Component({
@@ -45,14 +45,13 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
   competencyObjectives: CompetencyObjective[] = []
   project: Project
   initialFormStatus: Status = 'PENDING'
-  bsModalRef: BsModalRef
+  modalRef: BsModalRef
   subscriptions = new SubSink()
   criteriaPayload: CurriculumSubject
   isFormUpdated = false
   criteriaLoader = false
   data: object
   dropDownConfig: DropdownCustom
-  selectedItems: Subject<any> = new Subject()
   @ViewChild('modalDelete') modalDelete: TemplateRef<any>
   @ViewChild('principalViewModal') principalViewModal: TemplateRef<any>
 
@@ -370,17 +369,6 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
       block: 'OBJECTIVES.project_objectives_criteriawindow_block',
       dimension: 'OBJECTIVES.project_objectives_criteriawindow_dimensions'
     }
-    this.objective.translateData = {
-      subjectTitle: 'OBJECTIVES.project_objectives_criteriawindow_curriculum',
-      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected_back',
-      bodyTitle: 'OBJECTIVES.project_objectives_criteriawindow_title',
-      countText: 'OBJECTIVES.project_objectives_criteriawindow_showall',
-      addButton: 'OBJECTIVES.project_objectives_criteriawindow_add',
-      selectedItem: 'OBJECTIVES.project_objectives_criteriawindow_critera_selected',
-      emptyTitle: 'OBJECTIVES.project_objectives_criteriawindow_empty_title',
-      emptyDescription: 'OBJECTIVES.project_objectives_criteriawindow_empty_description',
-      emptyButton: 'OBJECTIVES.project_objectives_criteriawindow_empty_button'
-    }
   }
 
   getDropDownData(): void {
@@ -397,44 +385,41 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
     })
   }
 
-
   // function to open principle view modal
-  openModalWithComponent(subject: CurriculumSubject): void {
+  openPrincipalView(subject: CurriculumSubject): void {
     this.objective.resetData()
     this.getModalData(subject)
-
-    this.bsModalRef = this.modalService.show( this.principalViewModal,
-      { class: 'competency-modal modal-dialog-centered' })
-    this.selectedItems.subscribe(criterias => {
-      this.criteriaPayload = {
-        evaluationCriteria: criterias,
-        id: subject.id,
-        name: subject.name
-      }
-      this.checkStepStatus(criterias)
-      this.handleSubmit()
-    })
+    this.modalRef = this.modalService.show( this.principalViewModal,
+      { class: 'competency-modal modal-dialog-centered', ignoreBackdropClick: true })
   }
 
   openModal(data: object): void {
     this.data = data
-    this.bsModalRef = this.modalService.show(this.modalDelete, {
+    this.modalRef = this.modalService.show(this.modalDelete, {
       class: 'common-modal  modal-dialog-centered'
     })
   }
 
   declineModal(): void {
-    this.bsModalRef.hide()
+    this.modalRef.hide()
   }
 
   confirmModal(): void {
     this.removeCriteria(this.data)
-    this.bsModalRef.hide()
+    this.modalRef.hide()
   }
   // Modal submit click
-  handleModalSubmit(event: Option): void{
-    this.selectedItems.next(event)
-    this.bsModalRef.hide()
+  handleModalSubmit(event: any): void{
+    const subject = event.subject
+    const selectedItems = event.selectedItem
+    this.modalRef.hide()
+    this.criteriaPayload = {
+      evaluationCriteria: selectedItems,
+      id: subject.id,
+      name: subject.name
+    }
+    this.checkStepStatus(selectedItems)
+    this.handleSubmit()
   }
 }
 

@@ -10,6 +10,7 @@ import { PrincipalModalColData } from '../../constants/model/principle-view.mode
 import { DropDownConfig, Option, DropdownCustom } from 'src/app/shared/constants/model/form-elements.model'
 import { ContentService } from '../../services/contents/contents.service'
 import { TranslateService } from '@ngx-translate/core'
+import { Subject } from '../../constants/model/project.model'
 
 @Component({
   selector: 'app-principal-view-modal',
@@ -21,14 +22,24 @@ export class PrincipalViewComponent implements OnInit {
   @Input() blockData: Block[]
   @Input() selectedGrades: Option[]
   @Input() dropdownTitles: DropdownCustom
-  currentBlockIndex = 0
-  gradeDropdownConfig: DropDownConfig
   @Input() grades: Option[]
-  showPrimaryView = true
-  serviceData: ObjectiveService | ContentService
   @Input() stepId: 3 | 4
+  @Input() subjectTitle: string
+  @Input() summaryTitle: string
+  @Input() bodyTitle: string
+  @Input() countText: string
+  @Input() addButtonText: string
+  @Input() selectedItemText: string
+  @Input() emptyTitle: string
+  @Input() emptyDescription: string
+  @Input() emptyButtonText: string
   @Output() modalSubmit = new EventEmitter()
   @Output() decline = new EventEmitter()
+  currentBlockIndex = 0
+  gradeDropdownConfig: DropDownConfig
+  showPrimaryView = true
+  serviceData: ObjectiveService | ContentService
+  subject: Subject
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -56,6 +67,9 @@ export class PrincipalViewComponent implements OnInit {
   }
 
   createFormConfig(): void {
+    if (this.serviceData?.subject){
+      this.subject = this.serviceData?.subject
+    }
     const otherGrades = this.grades.filter(grade =>
       !this.selectedGrades.map(selected => selected.id).includes(grade.id))
     this.gradeDropdownConfig = {
@@ -101,7 +115,7 @@ export class PrincipalViewComponent implements OnInit {
           }
         }
       }
-      this.modalSubmit.emit(selectedItem)
+      this.modalSubmit.emit({subject: this.subject, selectedItem})
     }
   }
 }

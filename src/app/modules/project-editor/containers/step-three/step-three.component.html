@@ -21,22 +21,10 @@
               [isLast]="last"
               (deleteById)="openModal($event)"
               [project$]="editor.project$"
-              (add)="openModalWithComponent($event)"
-              icon="add"
+              (add)="openPrincipalView($event)"
+              [variant]="'add'"
               [loading]="criteriaLoader"
             ></app-details-selector>
-            <ng-template #principalViewModal>
-              <app-principal-view-modal
-                [grades] = grades
-                [stepId] = 3
-                [modalColumns] = modalColumns
-                [blockData] = blockData
-                [dropdownTitles] = dropDownConfig
-                [selectedGrades] = selectedGrades
-                (modalSubmit) = handleModalSubmit($event)
-                (decline)="declineModal()"
-              ></app-principal-view-modal>
-            </ng-template>
             <div class="project-editor__goto-step">
               {{'OBJECTIVES.project_objectivies_add_more_subjects.one' | translate}}
               <span class="project-editor__point" [routerLink]="'stepOne'">
@@ -83,4 +71,25 @@
     (decline)="declineModal()"
     (confirm)="confirmModal()"
   ></app-modal-info>
+</ng-template>
+<ng-template #principalViewModal>
+  <app-principal-view-modal
+    [grades]="grades"
+    [stepId]=3
+    [modalColumns]="modalColumns"
+    [blockData]="blockData"
+    [dropdownTitles]="dropDownConfig"
+    [selectedGrades]="selectedGrades"
+    [subjectTitle]="'OBJECTIVES.project_objectives_criteriawindow_curriculum'"
+    [summaryTitle]="'CONTENT.project_objectives_contentwindow_content_selected_back'"
+    [bodyTitle]="'OBJECTIVES.project_objectives_criteriawindow_title'"
+    [countText]="'OBJECTIVES.project_objectives_criteriawindow_showall'"
+    [addButtonText]="'OBJECTIVES.project_objectives_criteriawindow_add'"
+    [selectedItemText]="'OBJECTIVES.project_objectives_criteriawindow_critera_selected'"
+    [emptyTitle]="'OBJECTIVES.project_objectives_criteriawindow_empty_title'"
+    [emptyDescription]="'OBJECTIVES.project_objectives_criteriawindow_empty_description'"
+    [emptyButtonText]="'OBJECTIVES.project_objectives_criteriawindow_empty_description'"
+    (modalSubmit)="handleModalSubmit($event)"
+    (decline)="declineModal()"
+  ></app-principal-view-modal>
 </ng-template>

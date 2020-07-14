@@ -15,6 +15,10 @@ export class SecondaryViewComponent {
   @Input() heading: CompetencyModal
   @Input() modalColumns: PrincipalModalColData
   @Input() translateData: TranslatePrincipalData
+  @Input() selectedItemText: string
+  @Input() emptyTitle: string
+  @Input() emptyDescription: string
+  @Input() emptyButtonText: string
   @Output() getPrimary: EventEmitter<null> = new EventEmitter()
 
   constructor() { }
