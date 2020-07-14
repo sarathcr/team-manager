@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, AfterViewInit } from '@angular/core'
 
-import { Observable, BehaviorSubject, Subject } from 'rxjs'
+import { Observable, BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { TranslateService } from '@ngx-translate/core'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
