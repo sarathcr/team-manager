@@ -349,19 +349,6 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getModalData(subject: CurriculumSubject): void {
     this.objective.grades = this.grades
-    const gradeIds = this.grades.map(({ id }) => id)
-    this.objective.gradeIds = gradeIds
-    this.objective.subject = { id: subject.id, name: subject.name }
-    this.objective.criteriaIds = subject.evaluationCriteria.map(criteria => criteria.id)
-    this.getTranslationText()
-    this.objective.getHeading()
-    this.getBlocksFromSelectedGrades()
-    this.getDropDownData()
-    this.modalColumns = this.objective.modalColumns
-    this.blockData = this.objective.blockData
-  }
-
-  getTranslationText(): void {
     this.objective.heading = {
       evaluationCriteria: 'OBJECTIVES.project_objectives_criteriawindow_criterion',
       basicSkills: 'OBJECTIVES.project_objectives_criteriawindow_basic_skills',
@@ -369,6 +356,15 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
       block: 'OBJECTIVES.project_objectives_criteriawindow_block',
       dimension: 'OBJECTIVES.project_objectives_criteriawindow_dimensions'
     }
+    const gradeIds = this.grades.map(({ id }) => id)
+    this.objective.gradeIds = gradeIds
+    this.objective.subject = { id: subject.id, name: subject.name }
+    this.objective.criteriaIds = subject.evaluationCriteria.map(criteria => criteria.id)
+    this.objective.getHeading()
+    this.getBlocksFromSelectedGrades()
+    this.getDropDownData()
+    this.modalColumns = this.objective.modalColumns
+    this.blockData = this.objective.blockData
   }
 
   getDropDownData(): void {

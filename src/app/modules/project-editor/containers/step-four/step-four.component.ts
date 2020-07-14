@@ -161,15 +161,6 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  //  Get translation content
-  getTranslationText(): void {
-    this.contentService.heading = {
-      contents: 'CONTENT.project_objectives_contentwindow_content',
-      course: 'CONTENT.project_objectives_contentwindow_course',
-      block: 'CONTENT.project_objectives_contentwindow_block',
-    }
-  }
-
   // Dropdown titles translation
   getDropDownData(): void {
     this.subscriptions.sink = this.translateService.stream([
@@ -209,11 +200,15 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   // Get modal data
   getModalData(subject: CurriculumSubject): void {
     this.contentService.grades = this.grades
+    this.contentService.heading = {
+      contents: 'CONTENT.project_objectives_contentwindow_content',
+      course: 'CONTENT.project_objectives_contentwindow_course',
+      block: 'CONTENT.project_objectives_contentwindow_block',
+    }
     const gradeIds = this.grades.map(({ id }) => id)
     this.contentService.gradeIds = gradeIds
     this.contentService.subject = { id: subject.id, name: subject.name }
     this.contentService.contentIds = subject.contents.map(content => content.id)
-    this.getTranslationText()
     this.contentService.getHeading()
     this.getBlocksFromSelectedGrades()
     this.getDropDownData()
