@@ -54,18 +54,18 @@ export interface GradeIndex {
 }
 
 export interface SecondaryViewLabels {
-  selectedItemText?: string
-  emptyTitle?: string
-  emptyDescription?: string
-  emptyButtonText?: string
+  selectedItemText: string
+  emptyTitle: string
+  emptyDescription: string
+  emptyButtonText: string
 }
 
-export interface ModalLabels {
-  subjectTitle?: string
-  summaryTitle?: string
-  bodyTitle?: string
-  countText?: string
-  addButtonText?: string
-  secondaryViewLabels?: SecondaryViewLabels
+export interface PrincipalViewLabels {
+  subjectTitle: string
+  summaryTitle: string
+  bodyTitle: string
+  countText: string
+  addButtonText: string
+  secondaryViewLabels: SecondaryViewLabels
 }
 

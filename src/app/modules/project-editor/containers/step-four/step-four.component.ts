@@ -23,7 +23,7 @@ import {
 } from '../../constants/model/project.model'
 import { Option, CheckBoxData, FieldEvent, DropdownCustom } from 'src/app/shared/constants/model/form-elements.model'
 import { FormFour } from '../../constants/model/step-forms.model'
-import { PrincipalModalColData, ModalLabels, SecondaryViewLabels } from '../../constants/model/principle-view.model'
+import { PrincipalModalColData, PrincipalViewLabels, SecondaryViewLabels } from '../../constants/model/principle-view.model'
 import { Block } from '../../constants/model/curriculum.model'
 
 import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
@@ -58,7 +58,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   isFormUpdated = false
   dropDownConfig: DropdownCustom
   delData: object
-  labels: ModalLabels
+  labels: PrincipalViewLabels
 
   // Modal
   modalColumns: PrincipalModalColData

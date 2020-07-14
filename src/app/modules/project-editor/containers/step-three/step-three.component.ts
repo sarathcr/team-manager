@@ -20,7 +20,7 @@ import {
   Project,
 } from 'src/app/modules/project-editor/constants/model/project.model'
 import { FormThree } from '../../constants/model/step-forms.model'
-import { PrincipalModalColData, ModalLabels, SecondaryViewLabels } from '../../constants/model/principle-view.model'
+import { PrincipalModalColData, PrincipalViewLabels, SecondaryViewLabels } from '../../constants/model/principle-view.model'
 import { Block } from '../../constants/model/curriculum.model'
 
 import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
@@ -52,7 +52,7 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
   criteriaLoader = false
   data: object
   dropDownConfig: DropdownCustom
-  labels: ModalLabels
+  labels: PrincipalViewLabels
   @ViewChild('modalDelete') modalDelete: TemplateRef<any>
   @ViewChild('principalViewModal') principalViewModal: TemplateRef<any>
 

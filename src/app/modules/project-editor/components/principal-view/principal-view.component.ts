@@ -6,7 +6,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal'
 import { ObjectiveService } from '../../services/objectives/objectives.service'
 
 import { Block } from '../../constants/model/curriculum.model'
-import { PrincipalModalColData, ModalLabels } from '../../constants/model/principle-view.model'
+import { PrincipalModalColData, PrincipalViewLabels } from '../../constants/model/principle-view.model'
 import { DropDownConfig, Option, DropdownCustom } from 'src/app/shared/constants/model/form-elements.model'
 import { ContentService } from '../../services/contents/contents.service'
 import { TranslateService } from '@ngx-translate/core'
@@ -24,7 +24,7 @@ export class PrincipalViewComponent implements OnInit {
   @Input() dropdownTitles: DropdownCustom
   @Input() grades: Option[]
   @Input() stepId: 3 | 4
-  @Input() labels: ModalLabels
+  @Input() labels: PrincipalViewLabels
   @Output() modalSubmit = new EventEmitter()
   @Output() decline = new EventEmitter()
   currentBlockIndex = 0
