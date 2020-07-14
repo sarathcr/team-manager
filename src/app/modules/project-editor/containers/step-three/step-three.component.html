@@ -21,8 +21,8 @@
               [isLast]="last"
               (deleteById)="openModal($event)"
               [project$]="editor.project$"
-              (add)="openModalWithComponent($event)"
-              icon="add"
+              (add)="openPrincipalView($event)"
+              [variant]="'add'"
               [loading]="criteriaLoader"
             ></app-details-selector>
             <div class="project-editor__goto-step">
@@ -45,7 +45,7 @@
             [maxLength]="150"
             [placeholder]="'OBJECTIVES.project_objectives_objectives_placeholder' | translate"
             [value$]="competencyObjectives$"
-            (inputChange)="textAreaUpdate($event)" 
+            (inputChange)="textAreaUpdate($event)"
           ></app-textarea>
           </div>
         </ng-template>
@@ -71,4 +71,18 @@
     (decline)="declineModal()"
     (confirm)="confirmModal()"
   ></app-modal-info>
+</ng-template>
+
+<ng-template #principalViewModal>
+  <app-principal-view-modal
+    [grades]="grades"
+    [stepId]=3
+    [modalColumns]="modalColumns"
+    [blockData]="blockData"
+    [dropdownTitles]="dropDownConfig"
+    [selectedGrades]="selectedGrades"
+    [labels]="labels"
+    (modalSubmit)="handleModalSubmit($event)"
+    (decline)="declineModal()"
+  ></app-principal-view-modal>
 </ng-template>

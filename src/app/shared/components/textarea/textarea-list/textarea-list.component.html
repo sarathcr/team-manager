@@ -29,7 +29,7 @@
         name='textArea'
         [attr.maxlength]='maxLength'
         [ngModel]=text.name
-        oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+        oninput='this.style.height="";this.style.height = this.scrollHeight + "px"'
         (keydown)='keyAction($event, i)'
         (ngModelChange)='onValueChange($event, i)'
         (focus)="setFocus()"

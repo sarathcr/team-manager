@@ -19,7 +19,7 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() subjectItem: any[]
   @Input() subject: Subject
   @Input() isLast = false
-  @Input() icon: ButtonIcon
+  @Input() variant: ButtonIcon
   @Input() loading = false
   @Input() project$: Observable<Project>
   @Input() unselectedLabel: string

@@ -2,7 +2,7 @@
 <div class="principal-modal__body">
   <h6 class="principal-modal__body-title">
     {{ blockData | checkCount: modalColumns?.colOneHead?.key }}
-    {{ translateData.selectedItem | translate }}
+    {{ labels.selectedItemText | translate }}
   </h6>
 
   <!-- View when No item is selected -->
@@ -12,14 +12,14 @@
   >
     <div class="principal-modal__body__no-content-wrapper d-flex align-items-center justify-content-center">
       <h3 class="title_xs principal-modal__body__no-content-wrapper__title">
-        {{ translateData.emptyTitle | translate }}
+        {{ labels.emptyTitle | translate }}
       </h3>
       <div class="principal-modal__body__no-content-wrapper__description">
-        {{ translateData.emptyDescription | translate }}
+        {{ labels.emptyDescription | translate }}
       </div>
       <div>
         <app-button (click)="showPrimary()">
-          {{ translateData.emptyButton | translate}}
+          {{ labels.emptyButtonText | translate}}
         </app-button>
       </div>
     </div>

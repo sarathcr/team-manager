@@ -11,7 +11,8 @@
 
       <app-loader *ngIf="loading; else loaded"></app-loader>
       <ng-template #loaded>
-        <app-step-unlock *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects" [StepFour]="{step:'stepFour'}">
+        <app-step-unlock
+        *ngIf="!(editor.project$|async)?.subjects?.length; else hasSubjects" [StepFour]="{step:'stepFour'}">
         </app-step-unlock>
         <ng-template #hasSubjects>
           <div class="project-form__detail-selector-wrapper"
@@ -24,8 +25,8 @@
               [subjectItem]="subject.contents"
               [isLast]="last"
               [project$]="editor.project$"
-              [icon]="subject.evaluationCriteria.length ? 'add' : 'locked'"
-              (add)="openModalWithComponent(!!subject.evaluationCriteria.length, i)"
+              [variant]="subject.evaluationCriteria.length ? 'add' : 'locked'"
+              (add)="openPrincipalView($event)"
               (deleteById)="openModalDelete($event)"
             ></app-details-selector>
               <div class="project-form__textarea-wrapper">
@@ -63,8 +64,8 @@
     </div>
 
     <app-button
-    [disabled] = 'buttonConfig.disabled || !project.subjects?.length'
-    [theme] = "buttonConfig.submitted ? 'success':'primary'"
+    [disabled]="buttonConfig.disabled || !project.subjects?.length"
+    [theme]="buttonConfig.submitted ? 'success':'primary'"
     [icon]="'tick'"
     (click)="handleSubmit('DONE')"
     >
@@ -93,4 +94,18 @@
     (confirm)="confirmModalDelete()"
     (decline)="declineModal()"
   ></app-modal-info>
+</ng-template>
+
+<ng-template #principalViewModal>
+  <app-principal-view-modal
+    [grades]="grades"
+    [stepId]=4
+    [modalColumns]="modalColumns"
+    [blockData]="blockData"
+    [dropdownTitles]="dropDownConfig"
+    [selectedGrades]="selectedGrades"
+    [labels]="labels"
+    (modalSubmit)="handleModalSubmit($event)"
+    (decline)="declineModal()"
+  ></app-principal-view-modal>
 </ng-template>

@@ -1,14 +1,14 @@
 <div class="principal-modal__content">
   <div class="principal-modal__header">
     <h4 *ngIf="showPrimaryView else return" class="principal-modal__header-title">
-      {{ serviceData.translateData?.subjectTitle | translate }}
-      {{ serviceData?.subject?.name }}
+      {{ labels.subjectTitle | translate }}
+      {{ subject.name }}
     </h4>
     <ng-template #return>
       <div class="principal-modal__header__summary-title">
         <h4 class="principal-modal__header-title" (click)="togglePrimaryView()">
           <span class="icon icon-ic_back principal-modal__header__icon"></span>
-          {{ serviceData.translateData.summaryTitle | translate }}
+          {{ labels.summaryTitle | translate }}
         </h4>
       </div>
     </ng-template>
@@ -17,7 +17,7 @@
       class="close principal-modal__header-close"
       type="button"
       aria-label="Close"
-      (click)="bsModalRef.hide()"
+      (click)="onDecline()"
     >
       <span class="icon icon-ic_share_close"></span>
     </button>
@@ -25,7 +25,7 @@
   <app-loader *ngIf="serviceData?.loading$ | async"></app-loader>
   <div *ngIf="showPrimaryView else summary" class="principal-modal__body">
     <h6 class="principal-modal__body-title">
-      {{ serviceData.translateData.bodyTitle | translate }}
+      {{ labels.bodyTitle | translate }}
     </h6>
     <div class="principal-modal__body-block">
       <div class="principal-modal__body-block-grade">
@@ -98,14 +98,14 @@
       [blockData]="serviceData.blockData"
       [heading]="serviceData.heading"
       [modalColumns]="modalColumns"
-      [translateData]="serviceData.translateData"
+      [labels]="labels.secondaryViewLabels"
       (getPrimary)="togglePrimaryView()"
     ></app-secondary-view>
   </ng-template>
   <div class="principal-modal__footer">
     <div class="principal-modal__footer-btn-group">
       <div class="principal-modal__footer-btn-link" (click)="togglePrimaryView()" *ngIf="showPrimaryView">
-        {{ serviceData.translateData.countText | translate }}
+        {{ labels.countText | translate }}
         ({{ (serviceData.blockData | checkCount: serviceData.modalColumns?.colOneHead?.key) || 0 }})
       </div>
       <app-button
@@ -114,7 +114,7 @@
         [disabled]="!(blockData | checkCount: serviceData.modalColumns?.colOneHead?.key)"
         (click)="handleButtonClick()"
       >
-        {{ serviceData.translateData.addButton | translate }}
+        {{ labels.addButtonText | translate }}
       </app-button>
     </div>
   </div>

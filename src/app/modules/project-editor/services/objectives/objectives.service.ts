@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core'
 
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
-import { TranslateService } from '@ngx-translate/core'
 
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 
@@ -11,7 +10,6 @@ import { CompetencyModal } from '../../constants/model/principle-view.model'
 import { Block } from '../../constants/model/curriculum.model'
 import {
   PrincipalModalColData,
-  TranslatePrincipalData,
   PrincipalModalColHead,
   GradeIndex
 } from '../../constants/model/principle-view.model'
@@ -32,7 +30,6 @@ export class ObjectiveService {
   criteriaIds: number[]
   modalColumns: PrincipalModalColData = {}
   currentBlockIndex = 0
-  translateData: TranslatePrincipalData
   dropDownConfig: DropdownCustom
   selectedGrades: Grade[]
   subscriptions = new SubSink()
@@ -40,7 +37,6 @@ export class ObjectiveService {
 
   constructor(
     private blockService: BlockEntityService,
-    private translateService: TranslateService,
   ) { }
 
   changeColHead(colHead: PrincipalModalColHead, colName: string): void {
@@ -98,50 +94,15 @@ export class ObjectiveService {
   }
 
   getHeading(): void {
-    this.heading = {
-      evaluationCriteria: 'OBJECTIVES.project_objectives_criteriawindow_criterion',
-      basicSkills: 'OBJECTIVES.project_objectives_criteriawindow_basic_skills',
-      course: 'OBJECTIVES.project_objectives_criteriawindow_grade',
-      block: 'OBJECTIVES.project_objectives_criteriawindow_block',
-      dimension: 'OBJECTIVES.project_objectives_criteriawindow_dimensions'
-    }
     this.modalColumns.colOneHead = { key: 'evaluationCriteria', value: this.heading.evaluationCriteria }
     this.modalColumns.colFourHead = { key: 'block', value: this.heading.block }
     this.modalColumns.colThreeHead = { key: 'course', value: this.heading.course }
-  }
-
-  getTranslationText(): void {
-    this.translateData = {
-      subjectTitle: 'OBJECTIVES.project_objectives_criteriawindow_curriculum',
-      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected_back',
-      bodyTitle: 'OBJECTIVES.project_objectives_criteriawindow_title',
-      countText: 'OBJECTIVES.project_objectives_criteriawindow_showall',
-      addButton: 'OBJECTIVES.project_objectives_criteriawindow_add',
-      selectedItem: 'OBJECTIVES.project_objectives_criteriawindow_critera_selected',
-      emptyTitle: 'OBJECTIVES.project_objectives_criteriawindow_empty_title',
-      emptyDescription: 'OBJECTIVES.project_objectives_criteriawindow_empty_description',
-      emptyButton: 'OBJECTIVES.project_objectives_criteriawindow_empty_button'
-    }
   }
 
   getBlockData(): void {
     this.blockService.getWithQuery(
       { gradeIds: this.gradeIds.toString(), subjectId: String(this.subject.id) }
     )
-  }
-
-  getDropDownData(): void {
-    this.subscriptions.sink = this.translateService.stream([
-      'OBJECTIVES.project_objectives_criteriawindow_combo_title',
-      'OBJECTIVES.project_objectives_criteriawindow_combo_section_1',
-      'OBJECTIVES.project_objectives_criteriawindow_combo_section_2',
-    ]).subscribe(translations => {
-      this.dropDownConfig = {
-        label: translations['OBJECTIVES.project_objectives_criteriawindow_combo_title'],
-        priorityTitle: translations['OBJECTIVES.project_objectives_criteriawindow_combo_section_1'],
-        normalTitle: translations['OBJECTIVES.project_objectives_criteriawindow_combo_section_2']
-      }
-    })
   }
 
   createBlockData(data: Block[], gradeBlocks: GradeIndex[]): void {
