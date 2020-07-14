@@ -7,16 +7,16 @@
                 <app-info-tooltip></app-info-tooltip>
             </h1>
             <p class="project-form__description" [innerHTML]="'SINOPSIS.project_synopsis_description' | translate"></p>
-            <app-textarea 
-                placeholder="{{'SINOPSIS.project_synopsis_placeholder' | translate }}" 
-                [maxLength]="500" 
+            <app-textarea
+                placeholder="{{'SINOPSIS.project_synopsis_placeholder' | translate }}"
+                [maxLength]="500"
                 [value$]= 'synopsis$'
                 (inputChange)="onValueChange($event)"
                 ></app-textarea>
         </div>
         <app-button
           [disabled] = 'buttonConfig.disabled'
-          [theme] = "buttonConfig.submitted ? 'success':'primary'"
+          [theme]="buttonConfig.submitted ? 'success':'primary'"
           [icon]="'tick'"
           (click)='handleSubmit("DONE")'>
           {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}

@@ -10,8 +10,8 @@
     (keydown)="onKeyDown($event)"
   ></textarea>
 </div>
-<ng-template #otherVariants> 
-<app-textarea-list 
+<ng-template #otherVariants>
+<app-textarea-list
   [placeholder]="placeholder"
   [label]="label"
   [maxLength]="maxLength"
@@ -19,8 +19,8 @@
   [value$]="value$"
   [size]="size"
   [variant]="variant"
-  [toggleData] = "toggleData"
-  [onInitFocus] = "onInitFocus"
+  [toggleData]="toggleData"
+  [onInitFocus]="onInitFocus"
   (inputChange)="inputChange.emit($event)"
   ></app-textarea-list>
 </ng-template>

@@ -65,7 +65,7 @@
 
     <app-button
     [disabled] = 'buttonConfig.disabled || !project.subjects?.length'
-    [theme] = "buttonConfig.submitted ? 'success':'primary'"
+    [theme]="buttonConfig.submitted ? 'success':'primary'"
     [icon]="'tick'"
     (click)="handleSubmit('DONE')"
     >

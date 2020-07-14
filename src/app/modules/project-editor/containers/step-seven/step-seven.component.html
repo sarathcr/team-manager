@@ -12,13 +12,13 @@
       [maxLength]="150"
       [placeholder]="'DRIVING_QUESTIONS.project_drivingquestions_placeholder' | translate"
       [value$]="drivingQuestions$"
-      (inputChange)="textAreaUpdate($event)" 
+      (inputChange)="textAreaUpdate($event)"
     >
     </app-textarea>
     </div>
     <app-button
       [disabled] = 'buttonConfig.disabled'
-      [theme] = "buttonConfig.submitted ? 'success':'primary'"
+      [theme]="buttonConfig.submitted ? 'success':'primary'"
       [icon]="'tick'"
       (click)='handleSubmit("DONE")'>
       {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
