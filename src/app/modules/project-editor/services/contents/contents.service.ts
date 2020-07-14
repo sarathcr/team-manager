@@ -6,8 +6,7 @@ import { BlockEntityService } from '../../store/entity/block/block-entity.servic
 
 import { Grade, ContentModal, ContentsWithSkills } from 'src/app/modules/project-editor/constants/model/project.model'
 import { PrincipalModalColData,
-  PrincipalModalColHead,
-  TranslatePrincipalData
+  PrincipalModalColHead
 } from '../../constants/model/principle-view.model'
 import { Option } from 'src/app/shared/constants/model/form-elements.model'
 import { Observable } from 'rxjs'

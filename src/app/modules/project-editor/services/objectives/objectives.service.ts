@@ -10,7 +10,6 @@ import { CompetencyModal } from '../../constants/model/principle-view.model'
 import { Block } from '../../constants/model/curriculum.model'
 import {
   PrincipalModalColData,
-  TranslatePrincipalData,
   PrincipalModalColHead,
   GradeIndex
 } from '../../constants/model/principle-view.model'
