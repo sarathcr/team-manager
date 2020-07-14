@@ -20,7 +20,7 @@ import {
   Project,
 } from 'src/app/modules/project-editor/constants/model/project.model'
 import { FormThree } from '../../constants/model/step-forms.model'
-import { PrincipalModalColData } from '../../constants/model/principle-view.model'
+import { PrincipalModalColData, ModalLabels, SecondaryViewLabels } from '../../constants/model/principle-view.model'
 import { Block } from '../../constants/model/curriculum.model'
 
 import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
@@ -52,6 +52,7 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
   criteriaLoader = false
   data: object
   dropDownConfig: DropdownCustom
+  labels: ModalLabels
   @ViewChild('modalDelete') modalDelete: TemplateRef<any>
   @ViewChild('principalViewModal') principalViewModal: TemplateRef<any>
 
@@ -90,6 +91,20 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[2]
     this.subscriptions.sink = this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
+    const secondarViewLabels: SecondaryViewLabels = {
+      selectedItemText: 'OBJECTIVES.project_objectives_criteriawindow_critera_selected',
+      emptyTitle: 'OBJECTIVES.project_objectives_criteriawindow_empty_title',
+      emptyDescription: 'OBJECTIVES.project_objectives_criteriawindow_empty_description',
+      emptyButtonText: 'OBJECTIVES.project_objectives_criteriawindow_empty_button'
+    }
+    this.labels = {
+      subjectTitle: 'OBJECTIVES.project_objectives_criteriawindow_curriculum',
+      summaryTitle: 'OBJECTIVES.project_objectives_criteriawindow_curriculum',
+      bodyTitle: 'OBJECTIVES.project_objectives_criteriawindow_title',
+      countText: 'OBJECTIVES.project_objectives_criteriawindow_title',
+      addButtonText: 'OBJECTIVES.project_objectives_criteriawindow_add',
+      secondaryViewLabels: secondarViewLabels
+    }
     if (this.project$) {
       this.subscriptions.sink = this.project$.subscribe(data => {
         if (data) {
@@ -386,7 +401,7 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.objective.resetData()
     this.getModalData(subject)
     this.modalRef = this.modalService.show( this.principalViewModal,
-      { class: 'competency-modal modal-dialog-centered', ignoreBackdropClick: true })
+      { class: 'competency-modal modal-dialog-centered' })
   }
 
   openModal(data: object): void {

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core'
 
-import { CompetencyModal } from '../../constants/model/principle-view.model'
+import { CompetencyModal, SecondaryViewLabels } from '../../constants/model/principle-view.model'
 import { Block } from '../../constants/model/curriculum.model'
 import { PrincipalModalColData, TranslatePrincipalData } from '../../constants/model/principle-view.model'
 
@@ -15,10 +15,8 @@ export class SecondaryViewComponent {
   @Input() heading: CompetencyModal
   @Input() modalColumns: PrincipalModalColData
   @Input() translateData: TranslatePrincipalData
-  @Input() selectedItemText: string
-  @Input() emptyTitle: string
-  @Input() emptyDescription: string
-  @Input() emptyButtonText: string
+  @Input() labels: SecondaryViewLabels
+
   @Output() getPrimary: EventEmitter<null> = new EventEmitter()
 
   constructor() { }

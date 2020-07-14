@@ -53,3 +53,19 @@ export interface GradeIndex {
   count: number
 }
 
+export interface SecondaryViewLabels {
+  selectedItemText?: string
+  emptyTitle?: string
+  emptyDescription?: string
+  emptyButtonText?: string
+}
+
+export interface ModalLabels {
+  subjectTitle?: string
+  summaryTitle?: string
+  bodyTitle?: string
+  countText?: string
+  addButtonText?: string
+  secondaryViewLabels?: SecondaryViewLabels
+}
+

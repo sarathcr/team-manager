@@ -23,7 +23,7 @@ import {
 } from '../../constants/model/project.model'
 import { Option, CheckBoxData, FieldEvent, DropdownCustom } from 'src/app/shared/constants/model/form-elements.model'
 import { FormFour } from '../../constants/model/step-forms.model'
-import { PrincipalModalColData } from '../../constants/model/principle-view.model'
+import { PrincipalModalColData, ModalLabels, SecondaryViewLabels } from '../../constants/model/principle-view.model'
 import { Block } from '../../constants/model/curriculum.model'
 
 import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
@@ -58,6 +58,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   isFormUpdated = false
   dropDownConfig: DropdownCustom
   delData: object
+  labels: ModalLabels
 
   // Modal
   modalColumns: PrincipalModalColData
@@ -95,6 +96,20 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[3]
     this.subscriptions.sink = this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
+    const secondarViewLabels: SecondaryViewLabels = {
+      selectedItemText: 'CONTENT.project_objectives_contentwindow_content_selected',
+      emptyTitle: 'CONTENT.project_content_contentwindow_empty_title',
+      emptyDescription: 'CONTENT.project_content_contentwindow_empty_description',
+      emptyButtonText: 'CONTENT.project_content_contentwindow_empty_button'
+    }
+    this.labels = {
+      subjectTitle: 'CONTENT.project_content_contentwindow_curriculum',
+      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected_back',
+      bodyTitle: 'CONTENT.project_content_contentwindow_title',
+      countText: 'CONTENT.project_objectives_contentwindow_showall',
+      addButtonText: 'CONTENT.project_objectives_contentwindow_add',
+      secondaryViewLabels: secondarViewLabels
+    }
     if (this.project$) {
       this.subscriptions.sink = this.project$.subscribe(data => {
         this.project = data
@@ -154,7 +169,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
     if (subject.evaluationCriteria.length) {
       this.getModalData(subject)
       this.modalRef = this.modalService.show( this.principalViewModal,
-        { class: 'competency-modal  modal-dialog-centered', ignoreBackdropClick: true })
+        { class: 'competency-modal  modal-dialog-centered' })
     }
     else {
       this.openModalUnlock()
