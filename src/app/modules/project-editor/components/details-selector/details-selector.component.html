@@ -5,16 +5,16 @@
   <ul class="details-selector__list">
     <li class="details-selector__item">
       <span *ngIf="subjectItem?.length === 0" class="details-selector__text">
-        {{'OBJECTIVES.project_objectives_criteria_placeholder' | translate}}
+        {{ unselectedLabel | translate}}
       </span>
       <span *ngIf="subjectItem?.length > 0" class="details-selector__text_evaluation">
-        {{'OBJECTIVES.project_objectives_criterion' | translate}} ({{subjectItem.length}})
+        {{ selectedLabel | translate}} ({{subjectItem.length}})
       </span>
       <app-button
         class="details-selector__add-btn"
         [theme]="'primary'"
-        [variant] = "'text'"
-        [icon]="icon"
+        [variant]="'text'"
+        [icon]="variant"
         (click)="addItem()"
       >
         {{'OBJECTIVES.project_objectives_criteriawindow_add' | translate}}
@@ -40,7 +40,7 @@
               <span class="details-selector__item-details">{{skill.name}}</span>
             </ng-container>
           </div>
-          <div class="details-selector__close" (click)="getModal(item.id)">
+          <div class="details-selector__close" (click)="onDeleteById(item.id)">
             <span class="icon icon-ic_share_close"></span>
           </div>
         </li>

@@ -1,9 +1,9 @@
 export interface ModalConfig {
-  variant: ModalVariant
+  variant: ModalInfoVariant
   title: string
   description: string
   confirmLabel: string
   cancelLabel?: string
 }
 
-export type ModalVariant = 'delete' | 'unlock'
+export type ModalInfoVariant = 'delete' | 'unlock'

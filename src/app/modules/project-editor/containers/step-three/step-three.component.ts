@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, AfterViewInit } from '@angular/core'
 
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -9,21 +9,21 @@ import { EditorService } from '../../services/editor/editor.service'
 import { ObjectiveService } from '../../services/objectives/objectives.service'
 import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
-import { PrincipalViewComponent } from '../../components/principal-view/principal-view.component'
 
-import { FieldConfig, Option } from 'src/app/shared/constants/model/form-config.model'
+import { Option, FieldEvent, DropdownCustom } from 'src/app/shared/constants/model/form-elements.model'
 import {
   CompetencyObjective,
   EvaluationCriteria,
-  Subject,
+  Subject as CurriculumSubject,
   Step,
   Status,
-  Project
+  Project,
 } from 'src/app/modules/project-editor/constants/model/project.model'
-import { FormThreeInit, FormThree } from '../../constants/model/step-forms.model'
+import { FormThree } from '../../constants/model/step-forms.model'
+import { PrincipalModalColData, PrincipalViewLabels, SecondaryViewLabels } from '../../constants/model/principle-view.model'
+import { Block } from '../../constants/model/curriculum.model'
 
-import { FormThreeInitData } from '../../constants/Data/step-forms.data'
-import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-config.data'
+import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 
@@ -32,39 +32,51 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
   templateUrl: './step-three.component.html',
   styleUrls: ['./step-three.component.scss']
 })
-export class StepThreeComponent implements OnInit, OnDestroy {
+export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   project$: Observable<Project>
   step$: Observable<Step>
   grades: Option[]
   step: Step
   buttonConfig = new ButtonSubmitConfig()
-  textAreaConfig: FieldConfig
   competencyObjectives$: Observable<CompetencyObjective[]>
   evaluationCriteria$: Observable<EvaluationCriteria[]>
   loading = true
-  inputFormData: FormThreeInit = new FormThreeInitData()
-  initialFormData: FormThreeInit = new FormThreeInitData()
+  competencyObjectives: CompetencyObjective[] = []
   project: Project
   initialFormStatus: Status = 'PENDING'
-  bsModalRef: BsModalRef
+  modalRef: BsModalRef
   subscriptions = new SubSink()
-  criteriaPayload: Subject
+  criteriaPayload: CurriculumSubject
   isFormUpdated = false
   criteriaLoader = false
+  data: object
+  dropDownConfig: DropdownCustom
+  labels: PrincipalViewLabels
+  @ViewChild('modalDelete') modalDelete: TemplateRef<any>
+  @ViewChild('principalViewModal') principalViewModal: TemplateRef<any>
+
+  // Modal
+  modalColumns: PrincipalModalColData
+  blockData: Block[]
+  currentBlockIndex = 0
+  selectedGrades: Option[]
 
   constructor(
-    private translateService: TranslateService,
     public editor: EditorService,
     private modalService: BsModalService,
     private gradeService: GradeEntityService,
     private criteriaEntityService: EvaluationCriteriaEntityService,
-    private objective: ObjectiveService
+    private objective: ObjectiveService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
-    this.createFormConfig()
     this.stepInIt()
+  }
+
+  ngAfterViewInit(): void {
+    this.getGrades(this.project)
   }
 
   ngOnDestroy(): void {
@@ -79,7 +91,20 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[2]
     this.subscriptions.sink = this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
-    const tempinitialFormData = new FormThreeInitData()
+    const secondarViewLabels: SecondaryViewLabels = {
+      selectedItemText: 'OBJECTIVES.project_objectives_criteriawindow_critera_selected',
+      emptyTitle: 'OBJECTIVES.project_objectives_criteriawindow_empty_title',
+      emptyDescription: 'OBJECTIVES.project_objectives_criteriawindow_empty_description',
+      emptyButtonText: 'OBJECTIVES.project_objectives_criteriawindow_empty_button'
+    }
+    this.labels = {
+      subjectTitle: 'OBJECTIVES.project_objectives_criteriawindow_curriculum',
+      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected_back',
+      bodyTitle: 'OBJECTIVES.project_objectives_criteriawindow_title',
+      countText: 'OBJECTIVES.project_objectives_criteriawindow_showall',
+      addButtonText: 'OBJECTIVES.project_objectives_criteriawindow_add',
+      secondaryViewLabels: secondarViewLabels
+    }
     if (this.project$) {
       this.subscriptions.sink = this.project$.subscribe(data => {
         if (data) {
@@ -96,13 +121,11 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         )
       this.subscriptions.sink = this.competencyObjectives$
         .subscribe(competencyObjectives => {
-          this.initialFormData.competencyObjectives = []
           if (competencyObjectives) {
-            tempinitialFormData.competencyObjectives = [...competencyObjectives]
-            this.inputFormData.competencyObjectives = [...competencyObjectives]
+            this.competencyObjectives = [...competencyObjectives]
           }
-          this.initialFormData.competencyObjectives = [...tempinitialFormData.competencyObjectives]
         })
+
     }
     if (this.step$) {
       this.subscriptions.sink = this.step$.subscribe(
@@ -135,12 +158,13 @@ export class StepThreeComponent implements OnInit, OnDestroy {
             this.gradeService.getWithQuery(parms)
           }
           this.grades = newData.map(({ id, name }) => ({ id, name }))
+          this.selectedGrades = this.objective.selectedGrades
         })
     }
   }
 
   // gets the criteria data
-  getCriteriaDetails(subjects: Subject[]): void {
+  getCriteriaDetails(subjects: CurriculumSubject[]): void {
     this.criteriaEntityService.loading$.subscribe(loading => this.criteriaLoader = loading)
     const criteriaIds = []
     for (const subject of subjects) {
@@ -202,10 +226,11 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         }
       }
     }
-    this.project.competencyObjectives = [...this.inputFormData.competencyObjectives]
+    this.project.competencyObjectives = [...this.competencyObjectives]
     this.checkFormEmpty()
     const formData: FormThree = {
-      data: { ...this.project,
+      data: {
+        ...this.project,
         updateType: 'removeCriteria',
         criteriaId: criteriaData.id,
         subjectId: criteriaData.subjectId
@@ -230,7 +255,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
         isCriteriaLength.push(true)
       }
     }
-    if (!isCriteriaLength.length && !this.inputFormData.competencyObjectives?.length) {
+    if (!isCriteriaLength.length && !this.competencyObjectives?.length) {
       this.step.state = 'PENDING'
     } else {
       this.step.state = 'INPROCESS'
@@ -238,15 +263,17 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
-  textAreaUpdate(data: Option[]): void { // calls on every update
-    this.inputFormData.competencyObjectives = data
-    this.checkStepStatus()
-    this.isFormUpdated = true
+  textAreaUpdate(data: FieldEvent): void { // calls on every update
+    this.competencyObjectives = data.values
+    this.isFormUpdated = data.updated
+    if (data.updated) {
+      this.checkStepStatus()
+    }
   }
 
   // checks current form status
   checkStepStatus(criterias?: EvaluationCriteria[]): void {
-    if (criterias?.length || this.checkEmptyCriteria() || this.inputFormData.competencyObjectives?.length) {
+    if (criterias?.length || this.checkEmptyCriteria() || this.competencyObjectives?.length) {
       this.step.state = 'INPROCESS'
     } else {
       this.step.state = 'PENDING'
@@ -266,7 +293,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
 
   // checks the form is completely filled or not
   hasAnyEmptyFields(): boolean {
-    if (!this.checkEmptyCriteria() || !this.inputFormData.competencyObjectives?.length) {
+    if (!this.checkEmptyCriteria() || !this.competencyObjectives?.length) {
       return true
     }
     return false
@@ -289,7 +316,7 @@ export class StepThreeComponent implements OnInit, OnDestroy {
   }
 
   // Create subject
-  createSubjectPayload(): Subject[] {
+  createSubjectPayload(): CurriculumSubject[] {
     const subjectPayload = [...this.project.subjects]
     if (this.criteriaPayload) {
       for (const subject of subjectPayload) {
@@ -308,13 +335,12 @@ export class StepThreeComponent implements OnInit, OnDestroy {
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'
     }
-    const tempData = this.inputFormData.competencyObjectives.map(item => item.id == null ? { name: item.name } : item)
-    this.inputFormData.competencyObjectives = tempData
-    this.initialFormData.competencyObjectives = tempData
+    const tempData = this.competencyObjectives.map(item => item.id == null ? { name: item.name } : item)
+    this.competencyObjectives = tempData
     const formData: FormThree = {
       data: {
         subjects: this.createSubjectPayload(),
-        competencyObjectives: this.inputFormData.competencyObjectives,
+        competencyObjectives: this.competencyObjectives,
       },
       stepStatus: {
         steps: [
@@ -330,61 +356,82 @@ export class StepThreeComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
-  createFormConfig(): void {
-
-    this.textAreaConfig = {
-      name: 'textarea',
-      field: 'competencyObjectives',
-      id: 'competencyObjectives',
-      maxLength: 150,
-      limit: 0
-    }
-
-    // Translation
-    this.subscriptions.sink = this.translateService.stream([
-      'OBJECTIVES.project_objectives_objectives_placeholder'
-    ]).subscribe(translations => {
-      this.textAreaConfig.placeholder = translations['OBJECTIVES.project_objectives_objectives_placeholder']
-    })
-  }
-
   getBlocksFromSelectedGrades(): void {
-    const selectedGrades = this.project.grades.map(({ id, name }) => ({ id, name }))
-    this.objective.getBlocks(selectedGrades[0])
-    this.objective.selectedGrades = selectedGrades
+    this.selectedGrades = this.project.grades.map(({ id, name }) => ({ id, name }))
+    this.objective.getBlocks(this.selectedGrades[0])
+    this.objective.selectedGrades = this.selectedGrades
   }
 
-  getModalData(subject: Subject): void {
-    const gradeIds = this.grades.map(({id}) => id)
+  getModalData(subject: CurriculumSubject): void {
+    this.objective.grades = this.grades
+    this.objective.heading = {
+      evaluationCriteria: 'OBJECTIVES.project_objectives_criteriawindow_criterion',
+      basicSkills: 'OBJECTIVES.project_objectives_criteriawindow_basic_skills',
+      course: 'OBJECTIVES.project_objectives_criteriawindow_grade',
+      block: 'OBJECTIVES.project_objectives_criteriawindow_block',
+      dimension: 'OBJECTIVES.project_objectives_criteriawindow_dimensions'
+    }
+    const gradeIds = this.grades.map(({ id }) => id)
     this.objective.gradeIds = gradeIds
     this.objective.subject = { id: subject.id, name: subject.name }
     this.objective.criteriaIds = subject.evaluationCriteria.map(criteria => criteria.id)
-    this.objective.getTranslationText()
     this.objective.getHeading()
     this.getBlocksFromSelectedGrades()
-    this.objective.getDropDownData()
+    this.getDropDownData()
+    this.modalColumns = this.objective.modalColumns
+    this.blockData = this.objective.blockData
+  }
+
+  getDropDownData(): void {
+    this.subscriptions.sink = this.translateService.stream([
+      'OBJECTIVES.project_objectives_criteriawindow_combo_title',
+      'OBJECTIVES.project_objectives_criteriawindow_combo_section_1',
+      'OBJECTIVES.project_objectives_criteriawindow_combo_section_2',
+    ]).subscribe(translations => {
+      this.dropDownConfig = {
+        label: translations['OBJECTIVES.project_objectives_criteriawindow_combo_title'],
+        priorityTitle: translations['OBJECTIVES.project_objectives_criteriawindow_combo_section_1'],
+        normalTitle: translations['OBJECTIVES.project_objectives_criteriawindow_combo_section_2']
+      }
+    })
   }
 
   // function to open principle view modal
-  openModalWithComponent(subject: Subject): void {
+  openPrincipalView(subject: CurriculumSubject): void {
     this.objective.resetData()
     this.getModalData(subject)
-    const initialState = {
-      grades: this.grades,
-      stepId: 3
-    }
-    this.bsModalRef = this.modalService.show(PrincipalViewComponent,
-      { class: 'competency-modal', initialState })
-    this.bsModalRef.content.closeBtnName = 'Close'
-    this.bsModalRef.content.selectedItems.subscribe(criterias => {
-      this.criteriaPayload = {
-        evaluationCriteria: criterias,
-        id: subject.id,
-        name: subject.name
-      }
-      this.checkStepStatus(criterias)
-      this.handleSubmit()
+    this.modalRef = this.modalService.show( this.principalViewModal,
+      { ignoreBackdropClick: true,
+        class: 'competency-modal modal-dialog-centered' })
+  }
+
+  openModal(data: object): void {
+    this.data = data
+    this.modalRef = this.modalService.show(this.modalDelete, {
+      class: 'common-modal  modal-dialog-centered'
     })
+  }
+
+  declineModal(): void {
+    this.modalRef.hide()
+  }
+
+  confirmModal(): void {
+    this.removeCriteria(this.data)
+    this.modalRef.hide()
+  }
+  // Modal submit click
+  handleModalSubmit(event: any): void{
+    const subject = event.subject
+    const selectedItems = event.selectedItem
+    this.modalRef.hide()
+    this.criteriaPayload = {
+      evaluationCriteria: selectedItems,
+      id: subject.id,
+      name: subject.name
+    }
+    this.checkStepStatus(selectedItems)
+    this.handleSubmit()
   }
 }
 

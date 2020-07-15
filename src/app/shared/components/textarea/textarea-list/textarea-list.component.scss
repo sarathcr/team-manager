@@ -2,24 +2,22 @@
 
 :host{
   display: block;
-  p + & .textarea-bullets {
+  p + & .textarea-list {
     margin-top: 0;
   }
 }
 
-.textarea-bullets {
+.textarea {
   $root: &;
   width: 100%;
   height: 300px;
   border: none;
-  overflow: auto;
   border: 1px solid $creator-border-active;
   border-radius: 3px;
   margin-top: 42px;
   margin-bottom: 56px;
   box-shadow: 0 0 0 0 transparent;
   position: relative;
-  box-sizing: border-box;
   &__placeholder{
     position: absolute;
     top: 14px;
@@ -34,6 +32,10 @@
     min-height: 295px;
     display: flex;
     flex-direction: column;
+    height: calc(100% - 2px);
+    overflow: auto;
+    margin-right: 1px;
+    margin-top: 1px;
     &.numbered-list {
       #{$root}__item{
         &::before{
@@ -113,13 +115,13 @@
   &.toggle-textarea{
     height: 150px;
     overflow: visible;
-    .textarea-bullets__list{
-      min-height: 148px;
-      max-height: 148px;
+    .textarea__list{
+      min-height: 146px;
+      max-height: 146px;
       overflow-y: auto;
     }
   }
-  &-toggle__content{
+  &__toggle{
     letter-spacing: normal;
     padding: 0 18px;
     margin-bottom:42px;

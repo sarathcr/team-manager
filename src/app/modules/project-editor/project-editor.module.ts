@@ -35,8 +35,6 @@ import { CreateProjectComponent } from './components/create-project/create-proje
 import { EditorHeaderComponent } from './components/editor-header/editor-header.component'
 import { EditorSidebarComponent } from './components/editor-sidebar/editor-sidebar.component'
 import { StepMenuComponent } from './components/step-menu/step-menu.component'
-import { TextareaBulletsComponent } from './components/textarea-bullets/textarea-bullets.component'
-import { TextareaComponent } from './components/textarea/textarea.component'
 import { HelpAccordionComponent } from './components/help-accordion/help-accordion.component'
 import { HelpModalContentComponent } from './components/help-modal-content/help-modal-content.component'
 import { HelpLinkComponent } from './components/help-link/help-link.component'
@@ -51,7 +49,6 @@ import { VideoPlayerComponent } from './components/video-player/video-player.com
 import { StatusComponent } from './components/status/status.component'
 import { ModalFormComponent } from './components/modal-form/modal-form.component'
 import { ProjectTitleComponent } from './components/project-title/project-title.component'
-import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
 import { InputComponent } from 'src/app/shared/components/input/input.component'
 import { ValidatorComponent } from 'src/app/shared/components/validator/validator.component'
 import { SecondaryViewComponent } from './components/secondary-view/secondary-view.component'
@@ -59,11 +56,10 @@ import { SecondaryViewComponent } from './components/secondary-view/secondary-vi
 import { EditorService } from './services/editor/editor.service'
 import { ObjectiveService } from './services/objectives/objectives.service'
 import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service'
+import { ContentService } from './services/contents/contents.service'
 // pipe
 import { StringDecoder } from './pipes/string-decoder.pipe'
 import { CheckCount } from './pipes/check-count.pipe'
-import { ContentService } from './services/contents/contents.service'
-import { TranslateCut } from '../../shared/pipe/translate-cut.pipe'
 
 @NgModule({
   declarations: [
@@ -77,12 +73,9 @@ import { TranslateCut } from '../../shared/pipe/translate-cut.pipe'
     ProjectTitleComponent,
     StepMenuComponent,
     StepTwoComponent,
-    TextareaBulletsComponent,
     StatusComponent,
-    InfoToolTipComponent,
     StepSevenComponent,
     StepEightComponent,
-    TextareaComponent,
     StepThreeComponent,
     StepFourComponent,
     StepFiveComponent,
@@ -108,7 +101,6 @@ import { TranslateCut } from '../../shared/pipe/translate-cut.pipe'
     SecondaryViewComponent,
     ModalFormComponent,
     ValidatorComponent,
-    TranslateCut
   ],
   imports: [
     CommonModule,

@@ -18,7 +18,7 @@
 }
 
 .add-project,.list-project{
-  height: 204px;
+  height: 209px;
   width: 194px;
   border-radius: 4px;
   background-color: $add-card-background;
@@ -146,13 +146,8 @@
   box-shadow: inset 0 0 0 1px $primary !important;
 }
 .modal{
-  &.show{
-    padding: 15px;
-    display: flex !important;
-    .modal-dialog{
-      margin: auto;
-      width: 87.5%;
-    }
+  .modal-dialog{
+    width: 87.5%;
   }
 }
 
@@ -182,10 +177,9 @@ body{
 
 
 .competency-modal{
-  height: 750px;
   max-width: 1260px;
   .modal-content{
-    height: 100%;
+    height: 750px;
   }
   .dropdown{
     margin-bottom: 8px;

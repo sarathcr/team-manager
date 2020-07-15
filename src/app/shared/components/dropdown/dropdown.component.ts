@@ -15,7 +15,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown'
 import { Observable } from 'rxjs'
 
 // Interfaces
-import { DropDownConfig, Option } from '../../constants/model/form-config.model'
+import { DropDownConfig, Option } from '../../constants/model/form-elements.model'
 
 import { SubSink } from '../../utility/subsink.utility'
 

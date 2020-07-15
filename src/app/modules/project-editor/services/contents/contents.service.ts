@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core'
 
 import { map } from 'rxjs/operators'
-import { TranslateService } from '@ngx-translate/core'
 
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 
 import { Grade, ContentModal, ContentsWithSkills } from 'src/app/modules/project-editor/constants/model/project.model'
 import { PrincipalModalColData,
-  PrincipalModalColHead,
-  TranslatePrincipalData
+  PrincipalModalColHead
 } from '../../constants/model/principle-view.model'
-import { Option, DropdownCustom } from 'src/app/shared/constants/model/form-config.model'
+import { Option } from 'src/app/shared/constants/model/form-elements.model'
 import { Observable } from 'rxjs'
 import { Block } from '../../constants/model/curriculum.model'
 
@@ -29,14 +27,14 @@ export class ContentService {
   contentIds: number[]
   modalColumns: PrincipalModalColData = {}
   currentBlockIndex = 0
-  translateData: TranslatePrincipalData
   selectedGrades: Grade[]
-  dropDownConfig: DropdownCustom
+
   subscriptions = new SubSink()
+  grades: Grade[]
+
 
   constructor(
     private blockService: BlockEntityService,
-    private translateService: TranslateService,
   ) { }
 
   changeColHead(colHead: PrincipalModalColHead, colName: string): void {
@@ -52,13 +50,13 @@ export class ContentService {
     return { colOneHead }
   }
 
-  createTableData(block: Block, grade: Grade, blockIndex: number): Block {
+  createTableData(block: Block, blockIndex: number): Block {
     let colOneHead: PrincipalModalColHead
     const contents = block.contents.map( content => {
       const colOneData = content.name
       const { colOneHead: colOneHeadData } = this.getTableData(content, colOneHead )
       colOneHead = colOneHeadData
-      const colThreeData = grade.name
+      const colThreeData = this.grades.find(grade => grade.id === block.gradeId ).name
       const colFourData = `${blockIndex}. ${block.name}`
       const checked = this.contentIds.includes(content.id)
       return { ...content, checked, colOneData, colThreeData, colFourData }
@@ -67,41 +65,9 @@ export class ContentService {
   }
 
   getHeading(): void {
-    this.heading = {
-      contents: 'CONTENT.project_objectives_contentwindow_content',
-      course: 'CONTENT.project_objectives_contentwindow_course',
-      block: 'CONTENT.project_objectives_contentwindow_block',
-    }
     this.modalColumns.colFourHead = { key: 'block', value: this.heading.block }
     this.modalColumns.colThreeHead = { key: 'course', value: this.heading.course }
     this.modalColumns.colOneHead = { key: 'contents', value: this.heading.contents }
-  }
-
-  getTranslationText(): void {
-    this.translateData = {
-      subjectTitle: 'CONTENT.project_content_contentwindow_curriculum',
-      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected',
-      bodyTitle: 'CONTENT.project_content_contentwindow_title',
-      countText: 'CONTENT.project_objectives_contentwindow_showall',
-      addButton: 'CONTENT.project_objectives_contentwindow_add',
-      selectedItem: 'CONTENT.project_objectives_contentwindow_content_selected',
-      emptyTitle: 'CONTENT.project_content_contentwindow_empty_title',
-      emptyDescription: 'CONTENT.project_content_contentwindow_empty_description',
-      emptyButton: 'CONTENT.project_content_contentwindow_empty_button'
-    }
-  }
-  getDropDownData(): void {
-    this.subscriptions.sink = this.translateService.stream([
-      'CONTENT.project_objectives_contentwindow_combo_title',
-      'CONTENT.project_objectives_contentwindow_combo_section_1',
-      'CONTENT.project_objectives_contentwindow_combo_section_2',
-    ]).subscribe(translations => {
-      this.dropDownConfig = {
-        label: translations['CONTENT.project_objectives_contentwindow_combo_title'],
-        priorityTitle: translations['CONTENT.project_objectives_contentwindow_combo_section_1'],
-        normalTitle: translations['CONTENT.project_objectives_contentwindow_combo_section_2']
-      }
-    })
   }
 
   getBlockData(): void {
@@ -110,12 +76,12 @@ export class ContentService {
     )
   }
 
-  createBlockData(data: Block[], gradeBlocks: Array<{ id: number, count: number }>, selectedGrade: Grade): void {
+  createBlockData(data: Block[], gradeBlocks: Array<{ id: number, count: number }>): void {
     for (const block of data) {
       const gradeOfBlock = gradeBlocks.find(gradeBlock => gradeBlock.id === block.gradeId)
       if (block.subjectId === this.subject.id) {
         if (!this.blockData.some(blockData => blockData.id === block.id)) {
-          this.blockData.push(this.createTableData(block, selectedGrade, ++gradeOfBlock.count))
+          this.blockData.push(this.createTableData(block, ++gradeOfBlock.count))
         }
       }
     }
@@ -125,7 +91,7 @@ export class ContentService {
     const gradeBlocks = this.gradeIds.map(id => ({id, count: 0}))
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
-        this.createBlockData(data, gradeBlocks, selectedGrade)
+        this.createBlockData(data, gradeBlocks)
         return data.filter(block => block.subjectId === this.subject.id && this.gradeIds.includes(block.gradeId))
       }))
       .subscribe(data => {

@@ -39,13 +39,14 @@ export interface DropdownCustom {
   label: string
   priorityTitle: string
   normalTitle: string
+  placeholder?: string
 }
 
 export type ButtonVariants = 'contained' | 'outlined' | 'text'
 
 export type Theme = 'primary' | 'secondary' | 'success'
 
-export type TextAreaVariants = 'bullet' | 'number' | 'toggle'
+export type TextAreaVariants = 'default' | 'bullet' | 'number' | 'toggle'
 
 export type TextareaSize = 'small'
 
@@ -59,5 +60,12 @@ export interface CheckBoxColumn {
 export interface CheckBoxData {
   checked: boolean,
   variant?: 'checkedOnly' | 'checkbox'
+}
+
+export interface FieldEvent {
+  value?: string
+  values?: Option[]
+  updated?: boolean
+  status?: 'INPROCESS' | 'PENDING'
 }
 

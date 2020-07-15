@@ -1,4 +1,4 @@
-import { Option } from 'src/app/shared/constants/model/form-config.model'
+import { Option } from 'src/app/shared/constants/model/form-elements.model'
 
 export interface CompetencyModal {
   evaluationCriteria?: string
@@ -51,5 +51,21 @@ export interface ModalTableData {
 export interface GradeIndex {
   id?: number
   count: number
+}
+
+export interface SecondaryViewLabels {
+  selectedItemText: string
+  emptyTitle: string
+  emptyDescription: string
+  emptyButtonText: string
+}
+
+export interface PrincipalViewLabels {
+  subjectTitle: string
+  summaryTitle: string
+  bodyTitle: string
+  countText: string
+  addButtonText: string
+  secondaryViewLabels: SecondaryViewLabels
 }
 

@@ -27,6 +27,7 @@
   }
 
   &__label {
+    display: flex;
     position: absolute;
     font-size: $font-size-body-input;
     font-weight: 900;
@@ -38,7 +39,9 @@
     background-color: inherit;
     left: $padding-m;
     z-index: 2;
-
+    &_disabled{
+      color: $input-label-disabled;
+    }
     &::first-letter {
       text-transform: uppercase;
     }
@@ -47,8 +50,11 @@
   .multiselect-dropdown {
     .disabled {
       .dropdown-btn {
+        border: 1px solid $dropdown-border-disabled !important;
+        opacity: 0.25;
         background-color: inherit !important;
         box-shadow: 0 0 0 0 transparent;
+        pointer-events: none;
       }
 
       +.dropdown-list {
@@ -58,6 +64,19 @@
       .dropdown-up,.dropdown-down {
         transform: rotate(0deg) translateY(-50%) !important;
         transform-origin: center;
+      }
+      &:active,
+      &:focus,
+      &:focus-within {
+        .dropdown-btn {
+          border: 1px solid $dropdown-border-disabled !important;
+          box-shadow: none !important;
+        }
+      }
+      .dropdown__control{
+        .dropdown-down{
+          opacity: 0.25;
+        }
       }
     }
 
@@ -79,8 +98,7 @@
       border-radius: 3px !important;
       padding: 12px 12px 12px 18px !important;
       border: 1px solid $creator-border-active !important;
-      &:active,
-      &:focus {
+      &:focus{
         border: 1px solid $primary !important;
         box-shadow: inset 0 0 0 1px $primary !important;
       }
@@ -300,15 +318,21 @@
     }
     &.selected{
       .dropdown-btn{
-        border: 1px solid $creator-border !important;
         &:active,
         &:focus,
         &:focus-within{
           border: 1px solid $primary !important;
           box-shadow: inset 0 0 0 1px $primary !important;
         }
+        
       }
     }
+  }
+  .selected {
+    .dropdown-btn {
+      border: 1px solid $creator-border !important;
+    }
+
   }
   &.active {
     .dropdown-btn{

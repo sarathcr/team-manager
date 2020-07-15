@@ -1,15 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
 
-import { ModalInfoComponent } from '../modal-info/modal-info.component'
-
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { Subject, Project } from 'src/app/modules/project-editor/constants/model/project.model'
-import { ButtonIcon } from 'src/app/shared/constants/model/form-config.model'
-
-import { ModalDelete } from '../../constants/Data/modal-info.data'
+import { ButtonIcon } from 'src/app/shared/constants/model/form-elements.model'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -24,16 +19,17 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
   @Input() subjectItem: any[]
   @Input() subject: Subject
   @Input() isLast = false
-  @Input() icon: ButtonIcon
+  @Input() variant: ButtonIcon
   @Input() loading = false
   @Input() project$: Observable<Project>
-  @Output() openModal: EventEmitter<any> = new EventEmitter()
-  @Output() deleteCriteria: EventEmitter<any> = new EventEmitter()
+  @Input() unselectedLabel: string
+  @Input() selectedLabel: string
+  @Output() addCriteria: EventEmitter<any> = new EventEmitter()
+  @Output() add: EventEmitter<any> = new EventEmitter()
+  @Output() deleteById: EventEmitter<any> = new EventEmitter()
   count = 0
-  bsModalRef: BsModalRef
   subscriptions = new SubSink()
-
-  constructor(private modalService: BsModalService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.formInit()
@@ -57,20 +53,12 @@ export class DetailsSelectorComponent implements OnInit, OnDestroy {
       })
   }
 
-  getModal(id: number): void {
-    const initialState = { modalConfig: { ...ModalDelete } }
-    this.bsModalRef = this.modalService.show(ModalInfoComponent, { class: 'common-modal', initialState })
-    this.bsModalRef.content.closeBtnName = 'Close'
-    this.bsModalRef.content.onClose.subscribe(result => {
-      if (result === 'delete') {
-        this.deleteCriteria.emit({ subjectId: this.subject.id, id })
-        this.count = this.subjectItem.filter(criteria => criteria === this.subject.id).length
-      }
-    })
+  onDeleteById(id: number): void{
+    this.deleteById.emit({ subjectId: this.subject.id, id })
   }
 
   addItem(): void {
-    this.openModal.emit(this.subject)
+    this.add.emit(this.subject)
     this.getCount()
   }
 

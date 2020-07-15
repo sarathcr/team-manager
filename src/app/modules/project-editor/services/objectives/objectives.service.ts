@@ -2,16 +2,14 @@ import { Injectable } from '@angular/core'
 
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs'
-import { TranslateService } from '@ngx-translate/core'
 
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 
-import { Option, DropdownCustom } from 'src/app/shared/constants/model/form-config.model'
+import { Option, DropdownCustom } from 'src/app/shared/constants/model/form-elements.model'
 import { CompetencyModal } from '../../constants/model/principle-view.model'
 import { Block } from '../../constants/model/curriculum.model'
 import {
   PrincipalModalColData,
-  TranslatePrincipalData,
   PrincipalModalColHead,
   GradeIndex
 } from '../../constants/model/principle-view.model'
@@ -32,14 +30,13 @@ export class ObjectiveService {
   criteriaIds: number[]
   modalColumns: PrincipalModalColData = {}
   currentBlockIndex = 0
-  translateData: TranslatePrincipalData
   dropDownConfig: DropdownCustom
   selectedGrades: Grade[]
   subscriptions = new SubSink()
+  grades: Grade[]
 
   constructor(
     private blockService: BlockEntityService,
-    private translateService: TranslateService,
   ) { }
 
   changeColHead(colHead: PrincipalModalColHead, colName: string): void {
@@ -75,7 +72,7 @@ export class ObjectiveService {
     return { colTwoData, colOneHead, colTwoHead }
   }
 
-  createTableData(block: Block, grade: Grade, blockIndex: number): Block {
+  createTableData(block: Block, blockIndex: number): Block {
     let colOneHead: PrincipalModalColHead
     let colTwoHead: PrincipalModalColHead
     const evaluationCriteria = block.evaluationCriteria.map(criteria => {
@@ -87,7 +84,7 @@ export class ObjectiveService {
       } = this.getTableData(criteria, colOneHead, colTwoHead)
       colOneHead = colOneHeadData
       colTwoHead = colTwoHeadData
-      const colThreeData = grade.name
+      const colThreeData = this.grades.find(grade => (grade.id === block.gradeId)).name
       const colFourData = `${blockIndex}. ${block.name}`
       const checked = this.criteriaIds.includes(criteria.id)
 
@@ -97,30 +94,9 @@ export class ObjectiveService {
   }
 
   getHeading(): void {
-    this.heading = {
-      evaluationCriteria: 'OBJECTIVES.project_objectives_criteriawindow_criterion',
-      basicSkills: 'OBJECTIVES.project_objectives_criteriawindow_basic_skills',
-      course: 'OBJECTIVES.project_objectives_criteriawindow_grade',
-      block: 'OBJECTIVES.project_objectives_criteriawindow_block',
-      dimension: 'OBJECTIVES.project_objectives_criteriawindow_dimensions'
-    }
     this.modalColumns.colOneHead = { key: 'evaluationCriteria', value: this.heading.evaluationCriteria }
     this.modalColumns.colFourHead = { key: 'block', value: this.heading.block }
     this.modalColumns.colThreeHead = { key: 'course', value: this.heading.course }
-  }
-
-  getTranslationText(): void {
-    this.translateData = {
-      subjectTitle: 'OBJECTIVES.project_objectives_criteriawindow_curriculum',
-      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected_back',
-      bodyTitle: 'OBJECTIVES.project_objectives_criteriawindow_title',
-      countText: 'OBJECTIVES.project_objectives_criteriawindow_showall',
-      addButton: 'OBJECTIVES.project_objectives_criteriawindow_add',
-      selectedItem: 'OBJECTIVES.project_objectives_criteriawindow_critera_selected',
-      emptyTitle: 'OBJECTIVES.project_objectives_criteriawindow_empty_title',
-      emptyDescription: 'OBJECTIVES.project_objectives_criteriawindow_empty_description',
-      emptyButton: 'OBJECTIVES.project_objectives_criteriawindow_empty_button'
-    }
   }
 
   getBlockData(): void {
@@ -129,26 +105,12 @@ export class ObjectiveService {
     )
   }
 
-  getDropDownData(): void {
-    this.subscriptions.sink = this.translateService.stream([
-      'OBJECTIVES.project_objectives_criteriawindow_combo_title',
-      'OBJECTIVES.project_objectives_criteriawindow_combo_section_1',
-      'OBJECTIVES.project_objectives_criteriawindow_combo_section_2',
-    ]).subscribe(translations => {
-      this.dropDownConfig = {
-        label: translations['OBJECTIVES.project_objectives_criteriawindow_combo_title'],
-        priorityTitle: translations['OBJECTIVES.project_objectives_criteriawindow_combo_section_1'],
-        normalTitle: translations['OBJECTIVES.project_objectives_criteriawindow_combo_section_2']
-      }
-    })
-  }
-
-  createBlockData(data: Block[], gradeBlocks: GradeIndex[], selectedGrade: Grade): void {
+  createBlockData(data: Block[], gradeBlocks: GradeIndex[]): void {
     for (const block of data) {
       const gradeOfBlock = gradeBlocks.find(gradeBlock => gradeBlock.id === block.gradeId)
       if (block.subjectId === this.subject.id) {
         if (!this.blockData.some(blockData => blockData.id === block.id)) {
-          this.blockData.push(this.createTableData(block, selectedGrade, ++gradeOfBlock.count))
+          this.blockData.push(this.createTableData(block, ++gradeOfBlock.count))
         }
       }
     }
@@ -158,7 +120,7 @@ export class ObjectiveService {
     const gradeBlocks = this.gradeIds.map(id => ({ id, count: 0 }))
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
-        this.createBlockData(data, gradeBlocks, selectedGrade)
+        this.createBlockData(data, gradeBlocks)
         return data.filter(block => block.subjectId === this.subject.id && this.gradeIds.includes(block.gradeId))
       }))
       .subscribe(data => {

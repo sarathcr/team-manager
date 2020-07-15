@@ -1,5 +1,5 @@
 import { Dimensions, Indicator } from './curriculum.model'
-import { Option, CheckBoxData } from 'src/app/shared/constants/model/form-config.model'
+import { Option, CheckBoxData } from 'src/app/shared/constants/model/form-elements.model'
 
 export class Project {
   id?: number | null
