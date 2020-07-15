@@ -27,6 +27,7 @@
   }
 
   &__label {
+    display: flex;
     position: absolute;
     font-size: $font-size-body-input;
     font-weight: 900;
