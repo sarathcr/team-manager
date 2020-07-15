@@ -169,7 +169,8 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
     if (subject.evaluationCriteria.length) {
       this.getModalData(subject)
       this.modalRef = this.modalService.show( this.principalViewModal,
-        { class: 'competency-modal  modal-dialog-centered' })
+        { ignoreBackdropClick: true,
+          class: 'competency-modal  modal-dialog-centered' })
     }
     else {
       this.openModalUnlock()
