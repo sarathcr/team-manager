@@ -401,7 +401,8 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.objective.resetData()
     this.getModalData(subject)
     this.modalRef = this.modalService.show( this.principalViewModal,
-      { class: 'competency-modal modal-dialog-centered' })
+      { ignoreBackdropClick: true,
+        class: 'competency-modal modal-dialog-centered' })
   }
 
   openModal(data: object): void {
