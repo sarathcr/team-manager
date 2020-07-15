@@ -206,7 +206,7 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   onBlur($event: any, i: number): void {
     if ($event.relatedTarget !== $event.target.parentElement) {
       this.focus = false
-      if (this.configOptions.length === 1 && !this.configOptions[0]?.name && this.isToggle) {
+      if (this.configOptions.length === 1 && !this.configOptions[0]?.name?.trim() && this.isToggle) {
         this.isShown = !this.isShown
       }
     }
