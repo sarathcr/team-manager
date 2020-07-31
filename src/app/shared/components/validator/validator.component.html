@@ -1,15 +1,29 @@
-<div class="counter" [ngClass]="{'counter__error' : limitExceeds && !(value.length == 0)}" *ngIf="isEnabled">
-  <div>
-    <div class="counter__helper-text" *ngIf="value.length == 0">
-      {{ "PROJECT.project_title_helpertext" | translate }}
+<ng-container *ngIf="isEnabled">
+  <div
+    class="counter"
+    [ngClass]="{ counter__error: limitExceeds && !(value.length == 0) }"
+    *ngIf="variant === 'counter'"
+  >
+    <div>
+      <div class="counter__helper-text" *ngIf="value.length == 0 && helperText">
+        {{ helperText | translate }}
+      </div>
+      <div
+        class="counter__helper-text"
+        *ngIf="value.length !== 0 && limitExceeds"
+      >
+        {{ errorText | translate }}
+      </div>
     </div>
-    <div class="counter__helper-text" *ngIf="value.length !== 0 && limitExceeds">
-      {{ "PROJECT.Error_textlimit_specified_singleinput" | translate }}
+    <div class="counter__wrap" *ngIf="maxlength">
+      <span class="counter__count">{{ value.length }}</span>
+      <span class="counter__bar">/</span>
+      <span class="counter__max-count">{{ maxlength }}</span>
     </div>
   </div>
-  <div class="counter__wrap">
-    <span class="counter__count">{{ value.length }}</span>
-    <span class="counter__bar">/</span>
-    <span class="counter__max-count">{{ maxlength }}</span>
+  <div *ngIf="variant === 'text'">
+    <div class="error__text" *ngIf="error">
+      {{ errorText | translate }}
+    </div>
   </div>
-</div>
+</ng-container>

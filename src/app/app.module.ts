@@ -6,8 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 // ngx translate
-import { TranslateModule, TranslateLoader, TranslateCompiler } from '@ngx-translate/core'
-import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import {
+  TranslateModule,
+  TranslateLoader,
+  TranslateCompiler,
+} from '@ngx-translate/core'
+import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader'
 import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler'
 import { SharedModule } from './shared/shared.module'
 import { StoreModule } from '@ngrx/store'
@@ -20,14 +24,8 @@ import { EffectsModule } from '@ngrx/effects'
 import { EntityDataModule } from '@ngrx/data'
 import { CoreModule } from './core/core.module'
 
-// AoT requires an exported function for factories
-export function rootLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, 'assets/i18n/project-editor/', '.json')
-}
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     CoreModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -38,39 +36,55 @@ export function rootLoaderFactory(http: HttpClient): TranslateHttpLoader {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: rootLoaderFactory,
-        deps: [HttpClient]
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
       },
       compiler: {
         provide: TranslateCompiler,
-        useClass: TranslateMessageFormatCompiler
-      }
+        useClass: TranslateMessageFormatCompiler,
+      },
     }),
     AuthModule.forRoot(),
     HttpClientModule,
-    StoreModule.forRoot(
-      appReducers, {
+    StoreModule.forRoot(appReducers, {
       metaReducers,
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,
         strictActionSerializability: true,
-        strictStateSerializability: true
-      }
-    }
-    ),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+        strictStateSerializability: true,
+      },
+    }),
+    HttpClientModule,
+    StoreModule.forRoot(appReducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictActionSerializability: true,
+        strictStateSerializability: true,
+      },
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot({}),
     StoreRouterConnectingModule.forRoot({
       stateKey: 'router',
-      routerState: RouterState.Minimal
-    })
+      routerState: RouterState.Minimal,
+    }),
   ],
-  providers: [
-    AppRoutingModule,
-    Title
-  ],
-  bootstrap: [AppComponent]
+  providers: [AppRoutingModule, Title],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient): any {
+  return new MultiTranslateHttpLoader(http, [
+    { prefix: 'assets/i18n/project-editor/', suffix: '.json' },
+    { prefix: 'assets/i18n/auth/', suffix: '.json' },
+  ])
+}

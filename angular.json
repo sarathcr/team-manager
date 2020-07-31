@@ -20,17 +20,11 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "crossOrigin": "anonymous",
-            "assets": [
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/assets"],
+            "styles": ["src/styles/_main.scss"],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/styles/"
-              ]
+              "includePaths": ["src/styles/"]
             }
           },
           "configurations": {
@@ -130,7 +124,7 @@
               "browserTarget": "thinko-creator:build:production"
             },
             "qa": {
-               "browserTarget": "thinko-creator:build:qa"
+              "browserTarget": "thinko-creator:build:qa"
             },
             "dev": {
               "browserTarget": "thinko-creator:build:dev"
@@ -150,17 +144,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/assets"],
+            "styles": ["src/styles/_main.scss"],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/styles/"
-              ]
+              "includePaths": ["src/styles/"]
             }
           }
         },
@@ -172,9 +160,7 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**", "e2e/**/*"]
           }
         },
         "e2e": {
@@ -228,9 +214,7 @@
           "options": {
             "browserTarget": "thinko-creator:build:production",
             "serverTarget": "thinko-creator:server:production",
-            "routes": [
-              "/"
-            ]
+            "routes": ["/"]
           },
           "configurations": {
             "production": {}

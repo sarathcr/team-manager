@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { FormsModule } from '@angular/forms'
 
 import { InputComponent } from './input.component'
-import { FormsModule } from '@angular/forms'
+import { ValidatorComponent } from '../validator/validator.component'
 
 describe('InputComponent', () => {
   let component: InputComponent
@@ -9,7 +10,7 @@ describe('InputComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputComponent ],
+      declarations: [ InputComponent, ValidatorComponent ],
       imports: [ FormsModule ]
     })
 

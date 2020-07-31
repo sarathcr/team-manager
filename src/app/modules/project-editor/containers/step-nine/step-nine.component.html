@@ -1,20 +1,24 @@
-<div class="project-editor__form step-nine">
-    <app-status [status]='step.state'></app-status>
+<div class="project-editor__form step-nine" id="step-nine">
+    <app-status 
+      id="step-nine-status"
+      [status]='step.state'></app-status>
     <div class="project-form d-flex flex-column justify-content-between">
         <div>
             <h1 class="project-form__title title_s">
                 <span class="project-form__title-number">9.</span>{{'SINOPSIS.project_synopsis_title' | translate}}
-                <app-info-tooltip></app-info-tooltip>
+                <app-info-tooltip id="step-nine-info-tooltip"></app-info-tooltip>
             </h1>
             <p class="project-form__description" [innerHTML]="'SINOPSIS.project_synopsis_description' | translate"></p>
             <app-textarea
-                placeholder="{{'SINOPSIS.project_synopsis_placeholder' | translate }}"
-                [maxLength]="500"
-                [value$]= 'synopsis$'
-                (inputChange)="onValueChange($event)"
-                ></app-textarea>
+              id="step-nine-textarea"
+              placeholder="{{'SINOPSIS.project_synopsis_placeholder' | translate }}"
+              [maxLength]="500"
+              [value$]= 'synopsis$'
+              (inputChange)="onValueChange($event)"
+            ></app-textarea>
         </div>
         <app-button
+          id="step-nine-button"
           [disabled]="buttonConfig.disabled"
           [theme]="buttonConfig.submitted ? 'success':'primary'"
           [icon]="'tick'"

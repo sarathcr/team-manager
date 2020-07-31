@@ -1,56 +1,71 @@
 @import 'helpers/_helpers-master';
 .input{
-    $root: &;
-    border: 1px solid $creator-textarea-border;
-    box-shadow: inset 0 0 0 0 transparent;
-    box-sizing: border-box;
-    border-radius: 3px;
-    position: relative;
-    &__field{
-        min-height: 48px;
-        padding: 12px 20px;
-        font-size: $font-size-body-s;
-        line-height: 24px;
-        width: 100%;
-        border: none;
-        background: transparent;
-        caret-color: $electric-indigo;
-        &::placeholder{
-            color: $overtitle-grey;
-            font-size: $font-size-body-s;
-            line-height: 24px;
-        }
+  $root: &;
+  border: 1px solid rgba($color-tertiary,0.4);
+  box-shadow: inset 0 0 0 0 transparent;
+  box-sizing: border-box;
+  border-radius: 3px;
+  position: relative;
+  &__field{
+    min-height: 48px;
+    padding: 12px 20px;
+    font-size: $font-size-body-s;
+    line-height: 24px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    caret-color: $color-primary;
+    &::placeholder{
+      color: rgba($color-tertiary,0.6);
+      font-size: $font-size-body-s;
+      line-height: 24px;
     }
-    &_border{
-        border: 1px solid $creator-border;
+    &::-ms-reveal, &::-ms-clear {
+      display: none;
     }
-    &__label{
-        position: absolute;
-        font-size: $font-size-body-input;
-        font-weight: 900;
-        letter-spacing: 0.2px;
-        line-height: 12px;
-        top: -2px;
-        transform: translateY(-50%);
-        padding: 2px 5px;
-        background-color: $background-primary;
-        left: 14px;
-        z-index: 2;
-        color: $primary-font-color;
+    &_password{
+      padding-right: $padding * 3
     }
-    &__counter-wrapper {
-        width: 100%;
-        position: absolute;
+  }
+  &_border{
+    border: 1px solid rgba($color-tertiary,0.1);
+  }
+  &__label{
+    position: absolute;
+    font-size: $font-size-body-label;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 12px;
+    top: 0;
+    transform: translateY(-50%);
+    padding: 2px 5px;
+    background-color: $color-quaternary;
+    left: 14px;
+    z-index: 2;
+    color: $color-tertiary;
+  }
+  &__counter-wrapper {
+    width: 100%;
+    position: absolute;
+  }
+  &_focus{
+    border: 1px solid $color-primary !important;
+    box-shadow: inset 0 0 0 1px $color-primary !important;
+  }
+  &_error{
+    border: 1px solid $color-quinary !important;
+    box-shadow: inset 0 0 0 1px $color-quinary !important;
+    #{$root}__field{
+        caret-color: $color-quinary;
     }
-    &_focus{
-        border: 1px solid $primary !important;
-        box-shadow: inset 0 0 0 1px $primary !important;
-    }
-    &_error{
-        border: 1px solid $error-input-border !important;
-        box-shadow: inset 0 0 0 1px $error-input-border !important;
-        #{$root}__field{
-            caret-color: $error-input-border;
-        }
-    }
+  }
+  &__icon{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+    font-size: 24px;
+    color: $color-tertiary;
+    cursor: pointer;
+  }
 }

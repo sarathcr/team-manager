@@ -1,6 +1,8 @@
 <div class="details-selector" [ngClass]="{'details-selector_last' : isLast}">
   <div class="details-selector__header">
-    <h2 class="title_xs details-selector__title m-0">{{subject.name}}</h2>
+    <h2 class="title_xs m-0" class="details-selector__title">
+      {{subject.name}}
+    </h2>
   </div>
   <ul class="details-selector__list">
     <li class="details-selector__item">
@@ -8,7 +10,7 @@
         {{ unselectedLabel | translate}}
       </span>
       <span *ngIf="subjectItem?.length > 0" class="details-selector__text_evaluation">
-        {{ selectedLabel | translate}} ({{subjectItem.length}})
+        {{ selectedLabel | translate}}
       </span>
       <app-button
         class="details-selector__add-btn"

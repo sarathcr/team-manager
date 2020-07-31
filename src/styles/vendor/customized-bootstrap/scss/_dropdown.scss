@@ -25,10 +25,10 @@
   padding: $dropdown-padding-y 0;
   margin: $dropdown-spacer 0 0; // override default ul
   @include font-size($dropdown-font-size);
-  color: $dropdown-color;
+  color: rgba($color-tertiary,0.6);
   text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
   list-style: none;
-  background-color: $dropdown-bg;
+  background-color: $color-quaternary;
   background-clip: padding-box;
   border: $dropdown-border-width solid $dropdown-border-color;
   @include border-radius($dropdown-border-radius);

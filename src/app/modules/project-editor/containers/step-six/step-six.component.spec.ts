@@ -3,13 +3,15 @@ import { TranslateModule } from '@ngx-translate/core'
 import { Router } from '@angular/router'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
 
+import { NgxDropzoneComponent } from 'ngx-dropzone'
+
 import { StepSixComponent } from './step-six.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
-import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip.component'
 import { StatusComponent } from '../../components/status/status.component'
 import { ImageUploadComponent } from '../../components/image-upload/image-upload.component'
-import { InputComponent } from '../../components/input/input.component'
-import { NgxDropzoneComponent } from 'ngx-dropzone'
+import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
+import { InputComponent } from 'src/app/shared/components/input/input.component'
+import { ValidatorComponent } from 'src/app/shared/components/validator/validator.component'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
@@ -30,11 +32,12 @@ describe('StepSixComponent', (): void => {
       declarations: [
         StepSixComponent,
         ButtonComponent,
-        InfoToolTipComponent,
         StatusComponent,
         ImageUploadComponent,
+        NgxDropzoneComponent,
+        InfoToolTipComponent,
         InputComponent,
-        NgxDropzoneComponent
+        ValidatorComponent
       ],
       providers: [
         { provider: EditorService, useClass: EditorServiceStub },

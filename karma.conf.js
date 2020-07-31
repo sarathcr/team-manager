@@ -28,7 +28,7 @@ module.exports = (config) => {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome', 'Firefox', 'Safari', 'Edge'],
+    browsers: ['Chrome'],
     singleRun: false,
     restartOnFileChange: true
   })

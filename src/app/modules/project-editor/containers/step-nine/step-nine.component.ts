@@ -9,7 +9,7 @@ import { Step, Status } from '../../constants/model/project.model'
 import { FormNine } from '../../constants/model/step-forms.model'
 import { FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
 
-import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-elements.data'
+import { StepButtonSubmitConfig } from '../../../../shared/constants/data/form-elements.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -26,7 +26,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
   step: Step
   synopsis = ''
   initialFormStatus: Status = 'PENDING'
-  buttonConfig = new ButtonSubmitConfig()
+  buttonConfig = new StepButtonSubmitConfig()
   subscriptions = new SubSink()
   isFormUpdated = false
 

@@ -14,11 +14,11 @@
       display: inline-flex;
       font-family: $font-family-secondary;
       font-size: $font-size-body-overtitle;
-      line-height: $line-height-24px;
+      line-height: 24px;
       letter-spacing: 1px;
       font-weight: 900;
       text-transform: uppercase;
-      color: $context-content-title;
+      color: rgba($color-tertiary,0.5);
       margin: 0;
       align-items: center;
       justify-content: center;
@@ -29,7 +29,7 @@
       justify-self: flex-end;
       background-color: transparent;
       border: none;
-      color: $context-close-color;
+      color: rgba($color-tertiary,0.6);
       font-size: 20px;
       margin-right: -8px;
       cursor: pointer;

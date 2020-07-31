@@ -65,6 +65,11 @@ export const entityMetadata: EntityMetadataMap = {
     entityDispatcherOptions: {
       optimisticUpdate: true
     }
+  },
+  Standard: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true
+    }
   }
 
 }

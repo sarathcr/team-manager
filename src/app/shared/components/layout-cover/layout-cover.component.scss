@@ -1,0 +1,32 @@
+@import 'helpers/_helpers-master';
+@import 'helpers/_bt-mixins';
+.cover{
+  width: 43.06%;
+  height: 100vh;
+  right: 0;
+  top: 0;
+  &__image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &__mask{
+    position: absolute;
+    display: block;
+    &_upper{
+      width: 118%;
+      right: 0;
+      top: 0;
+    }
+    &_lower{
+      width: 118%;
+      right: 0;
+      bottom: 0;
+    }
+    &_logo{
+      width: 16%;
+      right: 60px;
+      top: 45px;
+    }
+  }
+}

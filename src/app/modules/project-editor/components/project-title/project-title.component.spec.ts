@@ -2,10 +2,28 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { DebugElement } from '@angular/core'
 import { FormsModule } from '@angular/forms'
+import { RouterTestingModule } from '@angular/router/testing'
 
 import { ProjectTitleComponent } from './project-title.component'
+import { BsModalService } from 'ngx-bootstrap/modal'
+import { ActivatedRoute } from '@angular/router'
 
+class BsModalServiceStub {}
+class ActivatedRouteStub {
+  private id: number | 'create'
 
+  changeId(id: number | 'create'): void {
+    this.id = id
+  }
+
+  get snapshot(): object {
+    return {
+      paramMap: {
+        get: () => this.id
+      }
+    }
+  }
+}
 
 describe('ProjectTitleComponent', (): void => {
   let component: ProjectTitleComponent
@@ -19,7 +37,11 @@ describe('ProjectTitleComponent', (): void => {
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [ ProjectTitleComponent ],
-      imports: [ FormsModule ]
+      providers: [
+        { provide: BsModalService, useClass: BsModalServiceStub },
+        { provide: ActivatedRoute, useClass: ActivatedRouteStub }
+      ],
+      imports: [ FormsModule, RouterTestingModule ]
     })
 
     fixture = TestBed.createComponent(ProjectTitleComponent)
@@ -39,11 +61,12 @@ describe('ProjectTitleComponent', (): void => {
     expect(inputDebugElement.attributes.maxlength).toBeUndefined()
   })
 
-  it('should show input attributes if corresponding input props are passed', (): void => {
+  /* Moved the logic of following spec to modal. Use this logic on the spec of that modal */
+
+  xit('should show input attributes if corresponding input props are passed', (): void => {
     const maxLength = 75
     const placeholder = 'lorem ipsum'
     component.maxLength = maxLength
-    component.placeholder = placeholder
 
     fixture.detectChanges()
 
@@ -74,7 +97,9 @@ describe('ProjectTitleComponent', (): void => {
     expect(titleDebugElement).toBeFalsy()
   })
 
-  it('should show heading if project title is present in input props', (): void => {
+  /* Moved the logic of following spec to modal. Use this logic on the spec of that modal */
+
+  xit('should show heading if project title is present in input props', (): void => {
     const title = 'lorem ipsum'
     component.projectData = { id: 1, title }
 
@@ -86,7 +111,9 @@ describe('ProjectTitleComponent', (): void => {
     expect(inputDebugElement).toBeFalsy()
   })
 
-  it('should emit title if text is filled in input field and blurred', (): void => {
+  /* Moved the logic of following spec to modal. Use this logic on the spec of that modal */
+
+  xit('should emit title if text is filled in input field and blurred', (): void => {
     const title = 'lorem ipsum'
     const event = { target: { value: title }}
     const titleSubmit = spyOn(component.titleSubmit, 'emit')
@@ -102,7 +129,10 @@ describe('ProjectTitleComponent', (): void => {
     expect(titleElement.innerText).toContain(title)
   })
 
-  it('should contain edit icon', (): void => {
+  it('should contain edit icon if ptoject data is present', (): void => {
+    component.projectData = { id: 1, title: 'lorem ipsum' }
+
+    fixture.detectChanges()
     const iconDebugElement: DebugElement = getDebugElementByCss('.icon-ic_edit_small', fixture)
 
     expect(iconDebugElement).toBeTruthy()

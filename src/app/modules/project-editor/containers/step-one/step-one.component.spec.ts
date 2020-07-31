@@ -7,8 +7,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown'
 import { StepOneComponent } from './step-one.component'
 import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
-import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip.component'
 import { StatusComponent } from '../../components/status/status.component'
+import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
@@ -43,8 +43,8 @@ describe('StartPointComponent', () => {
         StepOneComponent,
         DropdownComponent,
         ButtonComponent,
-        InfoToolTipComponent,
-        StatusComponent
+        StatusComponent,
+        InfoToolTipComponent
       ],
       providers: [
         { provider: EditorService, useClass: EditorServiceStub },

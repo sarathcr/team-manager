@@ -4,9 +4,9 @@ import { Router } from '@angular/router'
 
 import { StepSevenComponent } from './step-seven.component'
 import { StatusComponent } from '../../components/status/status.component'
-import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip.component'
-import { TextareaBulletsComponent } from '../../components/textarea-bullets/textarea-bullets.component'
+import { TextareaComponent } from 'src/app/shared/components/textarea/textarea.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
+import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
@@ -27,9 +27,9 @@ describe('StepSevenComponent', () => {
       declarations: [
         StepSevenComponent,
         StatusComponent,
-        InfoToolTipComponent,
-        TextareaBulletsComponent,
-        ButtonComponent
+        TextareaComponent,
+        ButtonComponent,
+        InfoToolTipComponent
       ],
       providers: [
         { provider: EditorService, useClass: EditorServiceStub },
@@ -45,7 +45,7 @@ describe('StepSevenComponent', () => {
   })
 
   afterEach((): void => {
-    spyOn(component, 'isFormUpdated').and.returnValue(false)
+    component.isFormUpdated = false
 
     fixture.destroy()
   })

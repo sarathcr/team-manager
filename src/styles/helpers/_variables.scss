@@ -1,63 +1,48 @@
 // Color system
 // color names are auto generated in http://www.color-blindness.com/color-name-hue/
-
 $electric-indigo: #6400E4 !default;
 $medium-turquoise: #37D4C8 !default;
+$deep-cerise: #E61F7F !default;
 $blue-whale: #141C3A !default;
-$white: #fff !default;
-$black: #000;
-$mischika: #B0AFBB;
-$creator-border-color:#f1f1f1;
-$white-smoke:#f8f8f9;
-$transparent-shadow: rgba(0,0,0,0.1);
+$black: #000000 !default;
+$mischika: #B0AFBB !default;
+$very-light-grey:#CCCCCC !default;
+$link-water: #CBCDD4 !default;
 $frenchgray:#C2C3C7 !default;
-$overtitle-grey: rgba($blue-whale,0.6) !default;
-$magnolia: #efe8fd !default;
-$button-outline: #E61F7F;
+$magnolia: #EFE8FD !default;
+$white-lilac:#F8F8F9 !default;
+$white-smoke: #F1F1F1 !default;
+$white: #FFFFFF !default;
 
-// background
-$background-primary: $white !default;
+// Theme colors
+$color-primary: $electric-indigo !default;
+$color-secondary: $medium-turquoise !default;
+$color-tertiary: $blue-whale !default;
+$color-quaternary: $white !default;
+$color-quinary: $deep-cerise !default;
 
-// border
-$color-border: rgba(255, 255, 255, 0.2);
-$article-border: rgba(20,28,58,0.2);
-$creator-border: rgba(20,28,58,0.1) !default;
-$creator-disabled: rgba(20,28,58,0.1);
-$creator-border-active: rgba(20,28,58,0.4) !default;
-$creator-background: $white-smoke;
-$subject-header-bg: rgba(20,28,58,0.05);
+// backgrounds
+$color-background-primary: $white-lilac !default;
+$color-background-secondary: $very-light-grey !default;
 
-// Gradient colors
-// Padding and margin
-// $spacer:18px;
-$spacer-sm:12.5px;
-$padding-m: 15px;
-$padding: 18px;
-$padding-default: $padding;
-$padding-fluid-grid: 100px;
-$padding-fluid-grid-m: $padding-default;
+// border colors
+$color-border-primary: $white-smoke !default;
+$color-border-secondary: $link-water !default;
+$color-border-tertiary: $magnolia !default;
+
+// Shadow color
+$shadow-color: $black !default;
 
 // Fonts
-//
-// Font, line-height, and color for body text, headings, and more.
-// stylelint-disable value-keyword-case
-$font-family-museo-sans: 'Museo Sans Rounded',
-sans-serif !default;
-$font-family-brandon: 'Brandon Grotesque',
-sans-serif !default;
-$font-family-pt-sans: 'PT_Sans',
-serif !default;
+$font-family-museo-sans: 'Museo Sans Rounded', sans-serif !default;
+$font-family-brandon: 'Brandon Grotesque', sans-serif !default;
+$font-family-pt-sans: 'PT_Sans', serif !default;
 
 $font-family-default: $font-family-pt-sans !default;
 $font-family-primary: $font-family-museo-sans !default;
 $font-family-secondary: $font-family-brandon !default;
 $font-family-tertiary: $font-family-pt-sans !default;
 $font-icons: 'icomoon' !default;
-
-// stylelint-enable value-keyword-case
-$font-size-default: 14px !default; // Assumes the browser default,
-$font-size-large: ($font-size-default * 1.75) !default;
-$font-size-small: ($font-size-default * .875) !default;
 
 //Font Size for Mobile
 $font-size-xxl-mob: 44px !default;
@@ -83,207 +68,46 @@ $font-size-body-s: 14px !default;
 $font-size-button: 14px !default;
 $font-size-body-overtitle: 14px !default;
 $font-size-body-caption: 14px !default;
-$font-size-body-input: 12px !default;
+$font-size-body-input: 14px !default;
+$font-size-default: 14px !default;
+$font-size-body-label: 12px !default;
 
-$primary-font-color: $blue-whale !default;
-$secondary-font-color: $white !default;
-$primary: $electric-indigo !default;
-$success: $medium-turquoise !default;
+// Bootstrap variables alterations
+$primary: $color-primary !default;
+$secondary: $color-tertiary !default;
+$success:$color-secondary !default;
+
+$font-weight-default: 400 !default;
+
 $btn-font-family: $font-family-secondary;
 $btn-font-weight: 700;
 $btn-font-size: $font-size-body-s;
-$input-btn-padding-y: 0.375rem;
-$input-btn-padding-x: 1.75rem;
 $btn-line-height: 1.5rem;
-$btn-disabled-color : $mischika;
-$secondary: $blue-whale !default;
+$btn-disabled-color: $mischika;
+
+$input-btn-padding-x: 1.75rem !default;
 $input-btn-border-width: 2px !default;
-$tertiary-font-color : rgba($primary-font-color, 0.6);
-$top-article-title:$overtitle-grey;
 
-//btn link
-$link-color: $blue-whale;
-$link-hover-color: $electric-indigo;
+$link-color: $color-tertiary !default;
+$link-hover-color: $color-primary !default;
 
-//footer link
-$footer-link-color: $white !default;
-
-//btn-play
-$play-btn-bg-color:$medium-turquoise !default;
-$play-btn-color: $white !default;
-
-//dropdown
-$dropdown-bg : $white !default;
-$dropdown-color : rgba($primary-font-color, 0.6);
-
-// nav bar width
-// offset fot
+// Offset margins
 $page-max-width: 1320px !default;
-$page-offset-x: 60px !default;
-$page-offset-x-mob: 24px !default;
+
+// Module margins
 $module-margin-default: 70px !default;
+$module-margin-default-mob: 50px !default;
+
 $module-margin-large: 120px !default;
 $module-margin-large-mob: 50px !default;
-$module-margin-default-mob: 50px !default;
-$grid-gutter-width-mob:  16px !default;
-$grid-gutter-width: 60px !default;
 
+// Gutter margins
+$grid-gutter-width-primary: 30px !default;
+$grid-gutter-width-secondary: 40px !default;
 
-$font-weight-lighter: lighter !default;
-$font-weight-light: 300 !default;
-$font-weight-normal: 400 !default;
-$font-weight-bold: 700 !default;
-$font-weight-900: 900 !default;
-$font-weight-bolder: bolder !default;
-$font-weight-default: $font-weight-normal !default;
-$line-height-default: 24px !default;
-
-// Padding
-$padding-x-24px:0 24px;
-$padding-y-67px: 67px 0;
-$padding-input: 12px 18px;
-
-// margin
-$m-24px: 24px;
-$m-20px: 20px;
-$m-36px: 36px;
-
-// line heights
-$line-height-12px: 12px;
-$line-height-24px: 24px;
-$line-height-28px: 28px;
-$line-height-22px: 22px;
-$line-height-32px: 32px;
-$line-height-36px: 36px;
-$line-height-40px: 40px;
-$line-height-44px: 44px;
-$line-height-48px: 48px;
-$line-height-60px: 60px;
-$line-height-84px: 84px;
-$line-height-92px: 92px;
-
-//Unordered-list
-$ul-disc-color: $electric-indigo !default;
-
-//desktop header
-$desktop-header-bg : $white !default;
-$desktop-border-color : rgba($blue-whale, 0.1) !default;
-$desktop-header-height : 85px !default;
-$desktop-icon-font-size : 24px;
-$desktop-shadow-color : $black;
-$desktop-overlay : rgba($blue-whale, 0.1) !default;
-
-//desktop transparent header
-$desktop-transparent-border-color : rgba($white, 0.1);
-
-//mobile header
-$mobile-header-bg :$blue-whale !default;
-$mobile-header-text-color : $white !default;
-$mobile-border-color : rgba($white, 0.1);
-$mobile-header-height : 56px !default;
-$mobile-header-btn-bg: $white !default;
-$mobile-icon-font-size : 22px;
-
-//hero bannner card
-$hero-card-bg: $electric-indigo !default;
-$hero-card-color: $white !default;
-$hero-card-border-radius: 4px !default;
-$hero-image-max-height: 670px !default;
-
-//Landing hero banner
-$landing-hero-bg: $electric-indigo !default;
-$landing-btn-color: $medium-turquoise !default;
-$landing-hero-overlay: rgba($black,0.2) !default;
-
-//ratio padding
-$desktop-ratio: 56.25% !default; /* 16:9 Aspect Ratio */
-$mobile-ratio: 75% !default; /* 4:3 Aspect Ratio */
-$mobile-media-l-ratio: 100% !default; /* 1:1 Aspect Ratio */
-
-//tags
-$tag-font-color: rgba($blue-whale,0.6) !default;
-$tag-bg-color: rgba($blue-whale,0.1) !default;
-$tag-icon-font-size: 34px !default;
-
-//floating share btn
-$share-btn-bg-color: $electric-indigo !default;
-$share-btn-color: $white !default;
-
-//share
-$share-icon-font-size: 48px !default;
-$share-float-btn-icon-size: 22px !default;
-
-$normal-btn-icon-size: 24px !default;
-$scroll-btn-icon-size: 38px  !default;
-
-//split section
-$split-section-overtitle-color: $primary !default;
-
-//Grouped Items
-$grouped-item-bg-color: $blue-whale !default;
-
-
-//Bio
-$bio-border-color: rgba($blue-whale,0.2) !default;
-$bio-author-border-color: $medium-turquoise !default;
-
-//Creator
-$add-card-color: $white;
-$add-card-background: $electric-indigo;
-$list-card-background: $white;
-$list-figure-background: #ccc;
-$sidebar-text: rgba($blue-whale,0.5) !default;
-$edit-icon: rgba($blue-whale,0.4) !default;
-$sidebar-text-active:$blue-whale;
-$icon-green:#37D4C8;
-$border-color-active:$electric-indigo;
-$creator-textarea-border: rgba($blue-whale,0.4);
-$subject-border:#CBCDD4;
-//Cookies
-$cookies-bg-color:  $white !default;
-
-//Contextual Help
-$context-bg-color: $white !default;
-$context-border-color: rgba($primary-font-color,0.1) !default;
-$context-close-color: rgba($primary-font-color,0.6) !default;
-$context-content-title: rgba($primary-font-color,0.5) !default;
-
-//Contextual Help link
-$context-link-bg-color: $white !default;
-
-//Competency Modal
-$comptency-bg-color: $white !default;
-$comptency-border-color: rgba($primary-font-color,0.1) !default;
-$comptency-close-color: rgba($primary-font-color,0.6) !default;
-$comptency-content-title: rgba($primary-font-color,0.5) !default;
-$comptency-primary-color: $primary !default;
-$comptency-icon-size: 24px !default;
-
-//Custom Tab
-$custom-tab-border-color: rgba($primary-font-color,0.1) !default;
-$custom-tab-bg-color: rgba($primary-font-color,0.05) !default;
-$custom-tab-active-bg-color: rgba($primary,0.1) !default;
-$custom-tab-primary-color: $primary !default;
-$custom-tab-icon-size: 24px !default;
-$custom-tab-checkbox-border: rgba($primary,0) !default;
-$custom-tab-arrow-bg: $magnolia !default;
-$custom-tab-arrow-border: rgba($primary, 0) !default;
-
-//checkbox Row
-$checkbox-row-border-color: rgba($primary-font-color,0.1) !default;
-$checkbox-row-active-bg-color:  rgba($primary,0.1) !default;
-$checkbox-row-primary-color: $primary !default;
-$checkbox-row-secondary-color: $white !default;
-
-//header
-$btn-color: $medium-turquoise !default;
-
-//Input Pop up
-$counter-text: rgba($blue-whale,0.4) !default;
-$helper-text: rgba($blue-whale,0.5) !default;
-$error-text: #E61F7F !default;
-$error-input-border: #E61F7F !default;
-
-//Dropdown
-$input-label-disabled:  rgba($blue-whale,0.25) !default;
-$dropdown-border-disabled: rgba(20,28,58,0.4) !default;
+// Component Paddings
+$padding-primary: $grid-gutter-width-primary/2 !default;
+$padding-secondary: $grid-gutter-width-secondary/2 !default;
+$padding: $padding-primary;
+$margin: $padding-primary;
+$margin-secondary: $padding-secondary;

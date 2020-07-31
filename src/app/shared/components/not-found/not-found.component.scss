@@ -1,0 +1,69 @@
+@import 'helpers/_helpers-master';
+
+.not-found {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: -1;
+  }
+
+  &::before {
+    width: 282px;
+    height: 50%;
+    max-width: 18%;
+    left: 0;
+    background-image: url(./../../../../assets/images/Left_shapes.png);
+    background-position: left top;
+  }
+
+  &::after {
+    width: 464px;
+    height: 100%;
+    max-width: 32%;
+    right: 0;
+    background-image: url(./../../../../assets/images/Right_shapes.png);
+    background-position: right top;
+  }
+
+  &__inner {
+    max-width: 600px;
+    max-height: 600px;
+  }
+
+  &__head {
+    font-size: 148px;
+    line-height: 92px;
+    letter-spacing: .3px;
+    font-family: $font-family-primary;
+    font-weight: 900;
+    color: $color-secondary;
+    display: flex;
+    justify-content: center;
+    margin-bottom: $margin * 2;
+  }
+
+  &__desc {
+    font-size: 24px;
+    line-height: 36px;
+    letter-spacing: .3px;
+    margin-bottom: $margin * 2;
+    font-family: $font-family-tertiary;
+    text-align: center;
+  }
+
+  &__desc,
+  &__btn {
+    display: flex;
+    justify-content: center;
+  }
+}

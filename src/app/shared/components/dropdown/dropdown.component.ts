@@ -45,7 +45,6 @@ export class DropdownComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.dropdownSettings = {
       ...this.config.settings,
-      itemsShowLimit: 3,
       closeDropDownOnSelection: true,
       enableCheckAll: false,
     }

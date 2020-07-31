@@ -9,10 +9,10 @@ import {
   CompetencyObjective,
   Status,
   StepState,
-  Project
+  Project,
+  Content,
 } from 'src/app/modules/project-editor/constants/model/project.model'
 import { Option } from 'src/app/shared/constants/model/form-elements.model'
-import { Content } from './project.model'
 
 export interface FormOne {
   data: {
@@ -79,10 +79,30 @@ export interface FormThreeInit {
   competencyObjectives?: CompetencyObjective[],
   placeholder?: string
 }
+
+export interface FormFiveInit {
+  competencyObjectives?: CompetencyObjective[],
+  placeholder?: string
+}
+
 export interface FormFourInit {
   contents: Content[]
   basicSkills?: Option[]
 }
+
+export interface FormFive {
+  data: FormFiveData
+  stepStatus: StepState
+}
+
+export interface FormFiveData extends Project {
+  updateType?: string
+  contentId?: number
+  subjectId?: number
+  competencyObjectiveId?: number
+  standardId?: number
+}
+
 export interface FormSix {
   data: {
     creativeTitle?: string
@@ -91,6 +111,7 @@ export interface FormSix {
   }
   stepStatus: StepState
 }
+
 
 export interface FormSixInit {
   creativeTitle?: string
@@ -120,6 +141,6 @@ export interface DefineUnlockStep {
 }
 
 export type FormNineInit = string
-export type FormsData = FormOne | FormTwo | FormThree | FormSix | FormSeven | FormEight | FormNine
+export type FormsData = FormOne | FormTwo | FormThree | FormSix | FormSeven | FormEight | FormNine | FormFive
 
 

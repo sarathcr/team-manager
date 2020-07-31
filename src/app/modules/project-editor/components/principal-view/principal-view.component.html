@@ -5,9 +5,9 @@
       {{ subject.name }}
     </h4>
     <ng-template #return>
-      <div class="principal-modal__header__summary-title">
+      <div class="principal-modal__summary-title">
         <h4 class="principal-modal__header-title" (click)="togglePrimaryView()">
-          <span class="icon icon-ic_back principal-modal__header__icon"></span>
+          <span class="icon icon-ic_back principal-modal__header-icon"></span>
           {{ labels.summaryTitle | translate }}
         </h4>
       </div>
@@ -44,7 +44,7 @@
                 [ngClass]="{ active: this.currentBlockIndex === index }"
                 (click)="changeCurrentBlock(index)"
               >
-                <strong class="custom-tab__links-index">{{ block.blockIndex }}. </strong>
+                <strong class="custom-tab__links-index">{{ index + 1 }}. </strong>
                 <span class="custom-tab__links-label">{{ block.name }}</span>
                   <span *ngIf="block[serviceData.modalColumns.colOneHead?.key] | checkCount" class="d-flex ml-auto" >
                     <strong class="custom-tab__links-selected">
@@ -75,14 +75,15 @@
             >
             </app-checkbox>
             <ng-scrollbar class="custom-scrollbar">
-              <div class="custom-tab__content-body-scroll">
+              <div class="custom-tab__content-body-scroll pb-5">
                 <app-checkbox
-                *ngFor="let column of block[serviceData.modalColumns.colOneHead?.key]"
-                [checkboxData]="column"
-                [colOne]="{ value: column.colOneData }"
-                [colTwo]="block.colTwoHead === serviceData.modalColumns.colTwoHead?.value ?
-                { value: column.colTwoData, size: 'sm' } : null"
-                [parentID]="block.id"
+                  *ngFor="let column of block[serviceData.modalColumns.colOneHead?.key]"
+                  [checkboxData]="column"
+                  [colOne]="{ value: column.colOneData }"
+                  [colTwo]="block.colTwoHead === serviceData.modalColumns.colTwoHead?.value ?
+                  { value: column.colTwoData, size: 'sm' } : null"
+                  [parentID]="block.id"
+                  [changeBg]="true"
                 ></app-checkbox>
               </div>
             </ng-scrollbar>

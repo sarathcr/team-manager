@@ -1,0 +1,62 @@
+<header class="project-editor-header">
+  <div class="container-fluid d-flex align-items-center">
+    <div class="app-logo">
+      <a class="app-logo__link" routerLink="/">
+        <img
+          class="app-logo__img"
+          src="../assets/images/thinko_logo.svg"
+          alt="thinko"
+        />
+      </a>
+    </div>
+    <app-project-title
+      id="project-title"
+      [maxLength]="70"
+      [projectData]="projectData"
+      (titleSubmit)="handleTitleSubmit($event)"
+    ></app-project-title>
+    <div class="project-editor-header__collapse">
+      <nav class="project-editor-header__nav">
+        <!-- navigation list -->
+        <ul class="project-editor-header__menu-list">
+          <li class="project-editor-header__menu-item active">
+            <span class="project-editor-header__menu-link">
+              Estructura
+            </span>
+          </li>
+          <li class="project-editor-header__menu-item">
+            <span class="project-editor-header__menu-link">
+              Actividades
+            </span>
+          </li>
+          <li class="project-editor-header__menu-item">
+            <span class="project-editor-header__menu-link">
+              Evaluación
+            </span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="project-editor-header__toolbar">
+      <app-button
+        [size]="'small'"
+        [theme]="'success'"
+        [icon]="stepOneStatus === 'DONE' ? 'view' : 'locked'"
+        (click)="onClick(projectData.id, $event)"
+        >Programación</app-button
+      >
+    </div>
+  </div>
+</header>
+
+<ng-template #modalUnlock>
+  <app-modal-info
+    id="step-four-modal-info"
+    [variant]="'unlock'"
+    modalTitle="PROGRAMACION.output_dependancy_title"
+    [description]="'PROGRAMACION.output_dependancy_description'"
+    [confirmLabel]="'PROGRAMACION.output_dependancy_button'"
+    (confirm)="confirmModalUnlock()"
+    (decline)="declineModal()"
+  ></app-modal-info>
+</ng-template>

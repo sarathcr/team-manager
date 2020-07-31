@@ -5,11 +5,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { setTheme } from 'ngx-bootstrap/utils'
 import { TabsModule } from 'ngx-bootstrap/tabs'
 import { AccordionModule } from 'ngx-bootstrap/accordion'
-import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgxDropzoneModule } from 'ngx-dropzone'
 import { PdfViewerModule } from 'ng2-pdf-viewer'
 import { NgScrollbarModule } from 'ngx-scrollbar'
+import { AlertModule } from 'ngx-bootstrap/alert'
 // Modules
 import { SharedModule } from 'src/app/shared/shared.module'
 import { ProjectEditorRoutingModule } from './project-editor-routing.module'
@@ -32,8 +32,8 @@ import { EditorComponent } from './containers/editor/editor.component'
 import { ProjectEditorComponent } from './project-editor.component'
 import { ProjectThumbnailComponent } from './components/project-thumbnail/project-thumbnail.component'
 import { CreateProjectComponent } from './components/create-project/create-project.component'
-import { EditorHeaderComponent } from './components/editor-header/editor-header.component'
-import { EditorSidebarComponent } from './components/editor-sidebar/editor-sidebar.component'
+import { HeaderComponent } from './components/header/header.component'
+import { SidebarComponent } from './components/sidebar/sidebar.component'
 import { StepMenuComponent } from './components/step-menu/step-menu.component'
 import { HelpAccordionComponent } from './components/help-accordion/help-accordion.component'
 import { HelpModalContentComponent } from './components/help-modal-content/help-modal-content.component'
@@ -42,16 +42,15 @@ import { HelpVideoThumbComponent } from './components/help-video-thumb/help-vide
 import { ImageUploadComponent } from './components/image-upload/image-upload.component'
 import { HelpImgThumbComponent } from './components/help-img-thumb/help-img-thumb.component'
 import { PrincipalViewComponent } from './components/principal-view/principal-view.component'
+import { ModalStandardsComponent } from './components/modal-standards/modal-standards.component'
 import { StepUnlockComponent } from './components/step-unlock/step-unlock.component'
 import { DetailsSelectorComponent } from './components/details-selector/details-selector.component'
-import { ModalInfoComponent } from './components/modal-info/modal-info.component'
 import { VideoPlayerComponent } from './components/video-player/video-player.component'
 import { StatusComponent } from './components/status/status.component'
-import { ModalFormComponent } from './components/modal-form/modal-form.component'
 import { ProjectTitleComponent } from './components/project-title/project-title.component'
-import { InputComponent } from 'src/app/shared/components/input/input.component'
-import { ValidatorComponent } from 'src/app/shared/components/validator/validator.component'
 import { SecondaryViewComponent } from './components/secondary-view/secondary-view.component'
+
+import { ErrorToastComponent } from './components/error-toast/error-toast.component'
 // service
 import { EditorService } from './services/editor/editor.service'
 import { ObjectiveService } from './services/objectives/objectives.service'
@@ -60,6 +59,7 @@ import { ContentService } from './services/contents/contents.service'
 // pipe
 import { StringDecoder } from './pipes/string-decoder.pipe'
 import { CheckCount } from './pipes/check-count.pipe'
+import { FilterBySubjectId } from './pipes/filter-by-subject.pipe'
 
 @NgModule({
   declarations: [
@@ -68,8 +68,8 @@ import { CheckCount } from './pipes/check-count.pipe'
     StepOneComponent,
     ProjectThumbnailComponent,
     CreateProjectComponent,
-    EditorHeaderComponent,
-    EditorSidebarComponent,
+    HeaderComponent,
+    SidebarComponent,
     ProjectTitleComponent,
     StepMenuComponent,
     StepTwoComponent,
@@ -92,15 +92,14 @@ import { CheckCount } from './pipes/check-count.pipe'
     HelpImgThumbComponent,
     StringDecoder,
     CheckCount,
+    FilterBySubjectId,
     PrincipalViewComponent,
+    ModalStandardsComponent,
     StepUnlockComponent,
     DetailsSelectorComponent,
-    ModalInfoComponent,
-    InputComponent,
     ImageUploadComponent,
     SecondaryViewComponent,
-    ModalFormComponent,
-    ValidatorComponent,
+    ErrorToastComponent,
   ],
   imports: [
     CommonModule,
@@ -112,15 +111,14 @@ import { CheckCount } from './pipes/check-count.pipe'
     ReactiveFormsModule,
     TabsModule.forRoot(),
     AccordionModule.forRoot(),
-    ModalModule.forRoot(),
     NgxDropzoneModule,
     PdfViewerModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    AlertModule.forRoot()
   ],
   providers: [
     EditorService,
     AwsImgUploadService,
-    BsModalRef,
     ObjectiveService,
     ContentService
   ]

@@ -1,21 +1,31 @@
-<div class="dynamic-field form-button">
-  <button
-    class="btn"
-    [ngClass]="{'btn-outline' : variant === 'outlined',
-                'btn-text' : variant === 'text',
-                'btn-primary' : theme === 'primary',
-                'btn-secondary': theme === 'secondary',
-                'btn-success': theme === 'success'
-              }"
-    [disabled]="disabled"
-  >
-    <span 
-      class="form-button__icon"
-      [ngClass]="{
-        'icon-ic_check' : icon === 'tick',
-        'icon-ic_add_small' : icon === 'add',
-        'icon-ic_locked' : icon === 'locked'
-      }"></span>
-    <ng-content></ng-content>
-  </button>
-</div>
+<button
+  class="btn"
+  [ngClass]="{
+    btn_outline: variant === 'outlined',
+    btn_text: variant === 'text',
+    btn_block: variant === 'block',
+    btn_icon: variant === 'icon',
+    btn_primary: theme === 'primary' && variant !== 'icon',
+    btn_secondary: theme === 'secondary',
+    btn_success: theme === 'success',
+    btn_small: size === 'small',
+    btn_medium: size === 'medium'
+  }"
+  [disabled]="disabled"
+>
+  <span
+    class="btn__icon"
+    *ngIf="icon"
+    [ngClass]="{
+      'icon-ic_check': icon === 'tick',
+      'icon-ic_add_small': icon === 'add',
+      'icon-ic_locked': icon === 'locked',
+      'icon-ic_view_small': icon === 'view',
+      'icon-ic_download': icon === 'download',
+      'icon-ic_print': icon === 'print',
+      'icon-ic_zoom_in': icon === 'zoomIn',
+      'icon-ic_zoom_out': icon === 'zoomOut'
+    }"
+  ></span>
+  <ng-content></ng-content>
+</button>

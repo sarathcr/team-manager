@@ -1,8 +1,125 @@
-<div class="project-editor__form step-five">
-    <div class="project-form">
-        <h1 class="project-form__title title_s"><span class="project-form__title-number">5.</span>Estándares<app-info-tooltip></app-info-tooltip>
+<ng-template #loaded>
+  <div class="project-editor__form step-five" id="step-five">
+    <app-status id="step-five-status" [status]="step.state"></app-status>
+    <div class="project-form d-flex flex-column justify-content-between">
+      <div>
+        <h1 class="project-form__title title_s">
+          <span class="project-form__title-number">5.</span>
+          {{ 'STANDARDS.project_standards_title' | translate }}
+          <app-info-tooltip id="step-five-info-tool-tip"></app-info-tooltip>
         </h1>
-        <p class="project-form__description">Especifica los estándares o indicadores de aprendizaje para cada uno de los
-            objetivos competenciales.</p>
+        <p class="project-form__description">
+          {{ 'STANDARDS.project_standards_description' | translate }}
+        </p>
+        <app-step-unlock
+          id="step-five-step-unlock"
+          *ngIf="
+            project === undefined || !project.competencyObjectives.length;
+            else hasCriteria
+          "
+          [description]="'STANDARDS.project_standards_dependancy_description'"
+          [buttonText]="'STANDARDS.project_standards_dependancy_button'"
+          [buttonLink]="'../3'"
+        >
+        </app-step-unlock>
+        <ng-template #hasCriteria>
+          <div
+            class="project-form__detail-selector-wrapper"
+            *ngFor="
+              let competency of project.competencyObjectives;
+              let i = index;
+              let last = last
+            "
+          >
+            <app-details-selector
+              *ngIf="competency.standards"
+              [unselectedLabel]="
+                'STANDARDS.project_standards_standards_placeholder'
+              "
+              [selectedLabel]="'STANDARDS.project_standards_cvstandards'"
+              [subject]="competency"
+              [subjectItem]="competency.standards"
+              (deleteById)="openDeleteStandardConfirmationModal($event)"
+              [project$]="project$"
+              (add)="openModalWithComponent(i, $event)"
+              [variant]="allSubjectshasCriterias ? 'add' : 'locked'"
+            >
+            </app-details-selector>
+            <div class="project-form__textarea-wrapper">
+              <app-textarea
+                variant="toggle"
+                toggleData="STANDARDS.project_standards_extrastandards"
+                label="STANDARDS.project_standards_extrastandards_input"
+                size="small"
+                [initFocus]="true"
+                [maxLength]="150"
+                (inputChange)="textareaDataChange($event, i)"
+                [value$]="subjectTextArea[i]?.options$"
+              >
+              </app-textarea>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      <app-button
+        id="step-five-button"
+        [disabled]="buttonConfig.disabled || !project.subjects?.length"
+        [theme]="buttonConfig.submitted ? 'success' : 'primary'"
+        [icon]="'tick'"
+        (click)="handleSubmit('DONE')"
+      >
+        {{
+          (buttonConfig.submitted
+            ? buttonConfig.successLabel
+            : buttonConfig.label
+          ) | translate
+        }}
+      </app-button>
     </div>
-</div>
+  </div>
+</ng-template>
+<app-loader id="step-five-loader" *ngIf="loading; else loaded"></app-loader>
+
+<ng-template #infoModal>
+  <app-modal-info
+    id="step-five-modal-info"
+    variant="unlock"
+    modalTitle="PROJECT.project_dependancy_title_cv"
+    [description]="
+      'STANDARDS.project_standards_dependancy_filterbycriteria_description'
+    "
+    [confirmLabel]="
+      'STANDARDS.project_standards_dependancy_filterbycriteria_button'
+    "
+    (confirm)="confirmModal()"
+    (decline)="declineModal()"
+  >
+  </app-modal-info>
+</ng-template>
+
+<ng-template #modalDelete>
+  <app-modal-info
+    id="step-five-modal-info-delete"
+    variant="delete"
+    theme="secondary"
+    modalTitle="STANDARDS.project_standards_delete_confirmation_title"
+    [description]="
+      'OBJECTIVES.project_objectives_delete_confirmation_message_nonrelated'
+    "
+    [confirmLabel]="'PROJECT.project_button_delete'"
+    (decline)="declineModal()"
+    (confirm)="confirmModalDelete()"
+  >
+  </app-modal-info>
+</ng-template>
+
+<ng-template #standardsModal>
+  <app-modal-standards
+    [project]="project"
+    [competencyObjectiveSelected]="competencyObjectiveSelected"
+    [dropdownData]="project?.subjects"
+    (modalSubmit)="handleModalSubmit($event)"
+    (decline)="declineModal()"
+  >
+  </app-modal-standards>
+</ng-template>

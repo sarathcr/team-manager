@@ -3,17 +3,13 @@
 // Used only by Bootstrap to generate the correct number of grid classes given
 // any value of `$grid-columns`.
 
-@mixin make-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints, $gutter-mob : $grid-gutter-width-mob) {
+@mixin make-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
   // Common properties for all breakpoints
   %grid-column {
     position: relative;
     width: 100%;
     padding-right: $gutter / 2;
     padding-left: $gutter / 2;
-    @include media-breakpoint-down(md) {
-      padding-right: $gutter-mob / 2;
-      padding-left: $gutter-mob / 2;
-    }
   }
 
   @each $breakpoint in map-keys($breakpoints) {

@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { DebugElement } from '@angular/core'
 
 import { StepMenuComponent } from './step-menu.component'
-import { Step } from '../../constants/step.model'
+import { Step } from '../../constants/model/project.model'
 
 describe('StepMenuComponent', (): void => {
   let component: StepMenuComponent

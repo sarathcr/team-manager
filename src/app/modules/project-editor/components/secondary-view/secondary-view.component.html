@@ -31,32 +31,32 @@
       <div class="custom-tab__content-body">
         <app-checkbox
           [isHead]="true"
-          [colOne]="{value: heading[modalColumns.colOneHead.key]}"
+          [colOne]="{value: heading[modalColumns.colOneHead.key], size: modalColumns.colOneHead.size ||'' }"
           [colTwo]="modalColumns.colTwoHead?.key ? {
-            value:  heading[modalColumns.colTwoHead.key], size: 'm'
-          } : { value: heading[modalColumns.colThreeHead.key], size: 'xs'}"
+            value:  heading[modalColumns.colTwoHead.key], size: modalColumns.colTwoHead.size || 'm'
+          } : { value: heading[modalColumns.colThreeHead.key], size: modalColumns.colThreeHead.size || 'xs'}"
           [colThree]="modalColumns.colTwoHead?.key ? {
-            value:  heading[modalColumns.colThreeHead.key], size: 'xs'
-          } :{ value: heading[modalColumns.colFourHead.key], size: 's'}"
-          [colFour]="modalColumns.colTwoHead?.key ? {value:  heading[modalColumns.colFourHead.key], size: 's'} : ''"
+            value:  heading[modalColumns.colThreeHead.key], size: modalColumns.colThreeHead.size || 'xs'
+          } :{ value: heading[modalColumns.colFourHead.key], size: modalColumns.colFourHead.size || 's'}"
+          [colFour]="modalColumns.colTwoHead?.key ? {value:  heading[modalColumns.colFourHead?.key], size: modalColumns.colFourHead?.size || 's'} : ''"
         ></app-checkbox>
         <ng-scrollbar class="custom-scrollbar">
-          <div class="custom-tab__content-body-scroll">
+          <div class="custom-tab__content-body-scroll pb-5">
             <ng-container *ngFor="let block of blockData; let index = index;">
               <ng-container *ngFor="let column of block[modalColumns.colOneHead.key]">
                 <app-checkbox
                   *ngIf="column.checked"
                   [checkboxData]="column"
-                  [checkedOnly]="true"
-                  [colOne]="{value: column.colOneData}"
+                  [colOne]="{value: column.colOneData, size: modalColumns.colOneHead.size ||''}"
                   [colTwo]="modalColumns.colTwoHead?.key ?
-                            {value:  column.colTwoData, size: 'm'} :
-                            { value: column.colThreeData, size: 'xs'}"
+                            {value:  column.colTwoData, size:  modalColumns.colTwoHead.size || 'm'} :
+                            { value: column.colThreeData, size:  modalColumns.colThreeHead.size || 'xs'}"
                   [colThree]="modalColumns.colTwoHead?.key ?
-                              {value:  column.colThreeData, size: 'xs'} :
-                              { value: column.colFourData, size: 's'}"
-                  [colFour]="modalColumns.colTwoHead?.key ? {value:  column.colFourData, size: 's'} : ''"
+                              {value:  column.colThreeData, size:  modalColumns.colThreeHead.size || 'xs'} :
+                              { value: column.colFourData, size: modalColumns.colFourHead.size || 's'}"
+                  [colFour]="modalColumns.colTwoHead?.key ? {value:  column.colFourData, size: modalColumns.colFourHead.size || 's'} : ''"
                   [parentID]="block.id"
+                  [clickableLabel]="false"
                 ></app-checkbox>
               </ng-container>
             </ng-container>

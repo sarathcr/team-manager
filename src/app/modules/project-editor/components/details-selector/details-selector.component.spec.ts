@@ -4,6 +4,7 @@ import { BsModalService, BsModalRef, ModalModule } from 'ngx-bootstrap/modal'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { DetailsSelectorComponent } from './details-selector.component'
+import { ButtonComponent } from 'src/app/shared/components/button/button.component'
 
 describe('DetailsSelectorComponent', (): void => {
   let component: DetailsSelectorComponent
@@ -11,7 +12,7 @@ describe('DetailsSelectorComponent', (): void => {
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ DetailsSelectorComponent ],
+      declarations: [ DetailsSelectorComponent, ButtonComponent ],
       providers: [ BsModalService, BsModalRef ],
       imports: [ ModalModule.forRoot(), TranslateModule.forRoot() ]
     })

@@ -27,7 +27,7 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   @Input() variant: TextAreaVariants = 'bullet'
   @Input() size: TextareaSize
   @Input() toggleData: string
-  @Input() onInitFocus: boolean
+  @Input() initFocus: boolean
   @Input() label: string
   @Input() placeholder: string
   @Input() lineLimit: number
@@ -220,8 +220,8 @@ export class TextareaListComponent implements OnInit, AfterContentChecked, OnDes
   }
 
   // focus the text area initially
-  focusTextArea(): void {
-    if (this.onInitFocus) {
+  focusTextArea(): void{
+    if (this.initFocus){
       setTimeout(() => {
         if (!this.textArea.first.nativeElement.value.length) {
           this.textArea.first.nativeElement.focus()

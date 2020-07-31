@@ -1,7 +1,7 @@
 import { FieldConfig, DropDownConfig } from 'src/app/shared/constants/model/form-elements.model'
 import { Status } from 'src/app/modules/project-editor/constants/model/project.model'
 
-export class ButtonSubmitConfig implements FieldConfig {
+export class StepButtonSubmitConfig implements FieldConfig {
   name = 'submit'
   field = 'button'
   id = 'submitButton'
@@ -19,10 +19,12 @@ export class DropdownConfigInit implements DropDownConfig {
   selectedItems = []
   status: Status = 'PENDING'
   canDeselect = true
+  loading = false
   settings = {
     textField: '',
     singleSelection: true,
     maxHeight: 250,
+    noDataAvailablePlaceholderText: 'PROJECT.Error_nodata_dropdown | translate'
   }
   constructor(name: string, multiSelection?: string) {
     this.name = name

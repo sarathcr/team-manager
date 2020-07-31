@@ -1,17 +1,58 @@
-<div class="input" [ngClass]="{
-	'input_focus':focus ,
-	'input_border' : value ,
-	'input_error' : enableValidator ? validator.limitExceeds && !(value.length == 0) : null}">
-	<label class="input__label" *ngIf="label">
-		{{label | translate}}
-	</label>
-	<input class="form-control input__field" [placeholder]="!focus ? placeholder : ''" [attr.maxlength]="maxlength"
-		[ngModel]="value" (ngModelChange)="onValueChange($event)"
-		(focus)="setFocus(); enableValidator ? validator.valueChange($event) : null" (blur)="onBlur()" value={{value}}
-		(keyup)="enableValidator ? validator.valueChange($event.target.value) : null" #titleInput />
-
-	<div class="input__counter-wrapper">
-		<app-validator [value]="titleInput.value" [maxlength]="maxlength" [isEnabled]="enableValidator" #validator>
-		</app-validator>
-	</div>
+<div
+  class="input"
+  [ngClass]="{
+    input_focus: focus,
+    input_border: value,
+    input_error:
+      (enableValidator
+        ? validator.limitExceeds && !(value.length == 0)
+        : null) || error
+  }"
+>
+  <label class="input__label" *ngIf="label">
+    {{ label | translate }}
+  </label>
+  <input
+    class="form-control input__field"
+    [ngClass]="{ input__field_password: variant === 'password' }"
+    [type]="
+      variant === 'password' || variant === 'email'
+        ? toggle && variant !== 'email'
+          ? 'password'
+          : 'text'
+        : variant
+    "
+    [placeholder]="!focus ? placeholder : ''"
+    autocomplete="off"
+    [attr.maxlength]="maxlength"
+    [ngModel]="value"
+    (ngModelChange)="onValueChange($event)"
+    (focus)="setFocus($event, validator)"
+    (blur)="onBlur($event)"
+    value="{{ value }}"
+    (keydown)="handleKeyPress($event, validator)"
+    (keyup)="handleKeyPress($event, validator)"
+    #titleInput
+  />
+  <span
+    *ngIf="variant === 'password'"
+    class="input__icon icon"
+    [ngClass]="toggle ? 'icon-ic_view_small' : 'icon-ic_hide_small'"
+    tabindex="0"
+    (click)="toggle = !toggle"
+  ></span>
+  <div class="input__counter-wrapper">
+    <app-validator
+      [helperText]="helperText"
+      [errorText]="errorText"
+      [value]="titleInput.value"
+      [maxlength]="maxlength"
+      [isEnabled]="enableValidator"
+      [variant]="
+        variant === 'password' || variant === 'email' ? 'text' : 'counter'
+      "
+      [error]="error"
+      #validator
+    ></app-validator>
+  </div>
 </div>

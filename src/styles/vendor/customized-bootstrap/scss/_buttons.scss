@@ -5,13 +5,16 @@
 //
 
 .btn {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding-left: 17px;
+    padding-right: 17px;
     font-family: $btn-font-family;
     font-weight: $btn-font-weight;
-    color: $body-color;
     text-align: center;
-    min-width: 180px;
-    min-height: 52px;
+    min-width: auto;
     white-space: $btn-white-space;
     vertical-align: middle;
     text-transform: uppercase;
@@ -20,7 +23,6 @@
     background-color: transparent;
     letter-spacing: 1px;
     border: $btn-border-width solid transparent;
-    @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-line-height, $btn-border-radius);
     @include transition($btn-transition);
   
     @include hover() {
@@ -56,7 +58,7 @@
   //
   
   @each $color, $value in $theme-colors {
-    .btn-#{$color} {
+    .btn_#{$color} {
       @include button-variant($value, $value);
     }
   }

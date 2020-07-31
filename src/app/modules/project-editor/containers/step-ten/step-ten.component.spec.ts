@@ -4,7 +4,7 @@ import { Router } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { StepTenComponent } from './step-ten.component'
-import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip.component'
+import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'

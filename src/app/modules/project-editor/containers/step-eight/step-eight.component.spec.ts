@@ -3,10 +3,10 @@ import { TranslateModule } from '@ngx-translate/core'
 import { Router } from '@angular/router'
 
 import { StepEightComponent } from './step-eight.component'
-import { TextareaComponent } from '../../components/textarea/textarea.component'
+import { TextareaComponent } from 'src/app/shared/components/textarea/textarea.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
-import { InfoToolTipComponent } from '../../components/info-tooltip/info-tooltip.component'
 import { StatusComponent } from '../../components/status/status.component'
+import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
@@ -28,8 +28,8 @@ describe('FinalProductComponent', (): void => {
         StepEightComponent,
         TextareaComponent,
         ButtonComponent,
-        InfoToolTipComponent,
-        StatusComponent
+        StatusComponent,
+        InfoToolTipComponent
       ],
       providers: [
         { provider: EditorService, useClass: EditorServiceStub },
@@ -45,7 +45,7 @@ describe('FinalProductComponent', (): void => {
   })
 
   afterEach((): void => {
-    spyOn(component, 'isFormUpdated').and.returnValue(false)
+    component.isFormUpdated = false
 
     fixture.destroy()
   })

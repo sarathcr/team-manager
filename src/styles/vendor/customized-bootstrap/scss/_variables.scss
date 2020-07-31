@@ -134,14 +134,20 @@ $enable-deprecation-messages:                 true !default;
 // variables. Mostly focused on spacing.
 // You can add more entries to the $spacers map, should you need more variation.
 
-$spacer: 1rem !default;
+$spacer: 20px !default;
 $spacers: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $spacers: map-merge(
   (
     0: 0,
-    component:  56px,
-    module: 80px
+    1: ($spacer * 0.25),
+    2: ($spacer * 0.5),
+    3: ($spacer * 0.75),
+    4: $spacer,
+    5: ($spacer * 1.25),
+    6: ($spacer * 1.5),
+    7: ($spacer * 1.75),
+    8: ($spacer * 2),
   ),
   $spacers
 );
@@ -224,7 +230,7 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 $grid-columns:                12 !default;
-$grid-gutter-width:           24px !default;
+$grid-gutter-width:           30px !default;
 $grid-row-columns:            6 !default;
 
 

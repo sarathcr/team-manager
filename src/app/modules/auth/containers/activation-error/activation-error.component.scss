@@ -1,0 +1,28 @@
+@import 'helpers/_helpers-master';
+.activation-error{
+  min-height: 100vh;
+  &__left-layout{
+    max-width: 820px;
+  }
+  &__right-layout{
+    min-width: 43.06%;
+  }
+  &__wrap{
+    max-width: 470px;
+  }
+  &__overtitle{
+    letter-spacing: 1px;
+  }
+  &__text,&__link{
+    font-size: $font-size-body;
+    line-height: 32px;
+    letter-spacing: 0.2px;
+    &:last-child{
+      margin-bottom: 38px;
+    }
+  }
+  &__link{
+    color: $color-tertiary;
+    font-weight: 900;
+  }
+}

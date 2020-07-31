@@ -1,0 +1,46 @@
+{
+  "GENERAL": {
+    "platform_button-primary_ok": "ACEPTAR",
+    "platform_button-tertiary_signupnow": "Unirme ahora"
+  },
+  "LOGIN": {
+    "login_title_title": "Accede a Thinkö",
+    "login_label_email": "E-mail",
+    "login_input_email_placeholder": "Introduce tu e-mail",
+    "login_label_password": "Contraseña",
+    "login_input_password_placeholder": "Introduce tu contraseña",
+    "login_checkbox_rememberpassword": "Recordar contraseña",
+    "login_button-tertiary_forgotpassword": "He olvidado mi contraseña",
+    "login_button-primary_login": "ACCEDER A THINKÖ",
+    "login_button-secondary_sociallogin": "INICIA SESIÓN CON GOOGLE",
+    "login_button-tertiary_signup": {
+      "one": "¿No tienes una cuenta?",
+      "two": "Únete"
+    },
+    "Error_login_email": "Nombre de usuario y/o contraseña incorrectos",
+    "Error_login_password": "Nombre de usuario y/o contraseña incorrectos"
+  },
+  "ACTIVATION-ERROR": {
+    "login_activation-error_headline": "¡UPS!",
+    "login_activation-error_title": "Se ha producido un error al activar el usuario.",
+    "login_activation-error_description": "Puede que el link sea erróneo o el usuario ya esté activado. |Si tienes problemas para activar la cuenta vuelve a unirte o escríbenos a |info@thinkoeducation.com||.",
+    "platform_button-tertiary_signupnow": "Unirme ahora",
+    "platform_button-primary_signupnow": "UNIRME AHORA"
+  },
+  "ACTIVATION": {
+    "login_activation_headline": "¡YA CASI LO TIENES!",
+    "login_activation_title": "Activa tu cuenta",
+    "login_invalid-link_description": "Te hemos enviado un e-mail a |para que puedas activar tu cuenta. |Es posible que la llegada del e-mail pueda demorarse unos minutos. También te recomendamos que revises tu carpeta de spam o de correo no deseado.|||",
+    "login_invalid-link_resend": "¿No has recibido el e-mail? |Reenvía|"
+  },
+  "INVALID-LINK": {
+    "login_invalid-link_headline": "¡UPS!",
+    "login_invalid-link_title": "Lo sentimos, |el link ha caducado|",
+    "login_invalid-link_description": "Han pasado más de 24h para activar tu cuenta y por motivos de seguridad hemos borrado tus datos de nuestro sistema. Si quieres acceder a Thinkö debes volver a unirte."
+  },
+  "RESEND-POPUP": {
+    "login_resent-activation_headline": "¡EN CAMINO!",
+    "login_resent-activation_title": "E-mail reenviado",
+    "login_resent-activation_description": "Te hemos reenviado un e-mail a |para que puedas activar tu cuenta. Si la dirección de e-mail no es correcta debes volver a unirte."
+  }
+}

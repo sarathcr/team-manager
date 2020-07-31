@@ -1,0 +1,68 @@
+<div class="activation-error d-flex align-items-center justify-content-between">
+  <div class="activation-error__left-layout m-auto">
+    <div class="container-fluid">
+      <div class="col">
+        <div class="activation-error__wrap" *ngIf="!show">
+          <div class="activation-error__overtitle title_secondary mb-3">
+            {{ "ACTIVATION-ERROR.login_activation-error_headline" | translate }}
+          </div>
+          <h1 class="activation-error__title title_m mb-4">
+            {{ "ACTIVATION-ERROR.login_activation-error_title" | translate }}
+          </h1>
+          <div class="activation-error__description">
+            <p class="activation-error__text mb-3">
+              {{ "ACTIVATION-ERROR.login_activation-error_description" | translate | TranslateCut:0 }}
+            </p>
+            <p class="activation-error__text">
+              {{ "ACTIVATION-ERROR.login_activation-error_description" | translate | TranslateCut:1 }}
+              <a href="mailto:info@thinkoeducation.com" class="activation-error__link">
+                {{ "ACTIVATION-ERROR.login_activation-error_description" | translate | TranslateCut:2 }}
+              </a>
+            </p>
+          </div>
+          <app-button
+            [theme]="'primary'"
+            [size]="'medium'"
+          >
+            {{ "ACTIVATION-ERROR.platform_button-primary_signupnow" | translate }}
+          </app-button>
+        </div>
+        <ng-container *ngIf="show">
+          <div class="activation-error__wrap">
+            <div class="expired__overtitle title_secondary mb-3">
+              {{ "INVALID-LINK.login_invalid-link_headline" | translate }}
+            </div>
+            <h1 class="activation-error__title title_m mb-4">
+              {{ "INVALID-LINK.login_invalid-link_title" | translate | TranslateCut:0 }}
+              <span class="d-block">
+                {{ "INVALID-LINK.login_invalid-link_title" | translate | TranslateCut:1 }}
+              </span>
+            </h1>
+            <div class="activation-error__description">
+              <p class="activation-error__text">
+                {{ "INVALID-LINK.login_invalid-link_description" | translate }}
+              </p>
+            </div>
+            <app-button
+              [size]="'medium'"
+              [theme]="'primary'"
+            >
+              {{ "ACTIVATION-ERROR.platform_button-primary_signupnow" | translate }}
+            </app-button>
+          </div>
+        </ng-container>
+        <div class="my-5">
+          <app-button
+            [size]="'medium'"
+            [theme]="'primary'"
+            (click)="showExpiredContent()">
+            Toggle view
+          </app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="activation-error__right-layout">
+    <app-layout-cover [img]="'../assets/images/activation-error.png'"></app-layout-cover>
+  </div>
+</div>

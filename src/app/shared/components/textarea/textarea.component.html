@@ -1,26 +1,68 @@
-<div class="textarea d-flex" [ngClass]="{'textarea_focus': focus}" *ngIf="variant=='default'; else otherVariants">
-  <textarea
-    class="textarea__description"
-    [attr.maxlength]="maxLength"
-    [placeholder]="focus?'':placeholder"
-    [ngModel]="value"
-    (ngModelChange)="onValueChange($event)"
-    (blur)="onBlur()"
-    (focus)="setFocus()"
-    (keydown)="onKeyDown($event)"
-  ></textarea>
+<div
+  class="textarea-wrapper"
+  *ngIf="variant == 'default' || variant == 'listItem'; else otherVariants"
+>
+  <div
+    class="textarea d-flex"
+    [ngClass]="{
+      textarea_focus: focus,
+      textarea__list: variant == 'listItem',
+      textarea_error: enableValidator
+        ? validator.limitExceeds && !(value.length == 0)
+        : null,
+      textarea_small: size == 'small',
+      textarea_active: value
+    }"
+  >
+    <label class="textarea__label" *ngIf="label">{{ label | translate }}</label>
+    <textarea
+      class="textarea__description"
+      [attr.maxlength]="maxLength"
+      [placeholder]="focus ? '' : placeholder"
+      [ngModel]="value"
+      (ngModelChange)="onValueChange($event)"
+      (blur)="onBlur($event)"
+      (focus)="setFocus()"
+      value="{{ value }}"
+      (keydown)="onKeyDown($event, validator.limitExceeds)"
+      (keyup)="onKeyUp($event, validator)"
+      #textarea
+    ></textarea>
+    <span
+      *ngIf="variant == 'listItem'"
+      class="textarea__enter icon-ic_enter"
+      [ngClass]="{
+        textarea__enter_active:
+          (focus && value && !validator.limitExceeds) || (!focus && value)
+      }"
+      tabindex="0"
+      (click)="handleClick()"
+    ></span>
+  </div>
+  <div class="textarea-wrapper__counter-wrapper">
+    <app-validator
+      [value]="textarea.value"
+      [maxlength]="maxLength"
+      [helperText]="focus ? helperText : ''"
+      [errorText]="errorText"
+      [isEnabled]="enableValidator"
+      #validator
+    >
+    </app-validator>
+  </div>
 </div>
+
 <ng-template #otherVariants>
-<app-textarea-list
-  [placeholder]="placeholder"
-  [label]="label"
-  [maxLength]="maxLength"
-  [lineLimit]="lineLimit"
-  [value$]="value$"
-  [size]="size"
-  [variant]="variant"
-  [toggleData]="toggleData"
-  [onInitFocus]="onInitFocus"
-  (inputChange)="inputChange.emit($event)"
+  <app-textarea-list
+    [placeholder]="placeholder"
+    [label]="label"
+    [maxLength]="maxLength"
+    [lineLimit]="lineLimit"
+    [value$]="value$"
+    [size]="size"
+    [variant]="variant"
+    [toggleData]="toggleData"
+    [initFocus]="initFocus"
+    (inputChange)="inputChange.emit($event)"
   ></app-textarea-list>
 </ng-template>

@@ -44,8 +44,8 @@
 
     &::before,
     &::after {
-      width: $line-height-12px;
-      height: $line-height-12px;
+      width: 12px;
+      height: 12px;
     }
   }
 
@@ -53,8 +53,8 @@
 
     &::before,
     &::after {
-      width: $line-height-24px;
-      height: $line-height-24px;
+      width: 24px;
+      height: 24px;
     }
   }
 
@@ -62,8 +62,8 @@
 
     &::before,
     &::after {
-      width: $line-height-36px;
-      height: $line-height-36px;
+      width: 36px;
+      height: 36px;
     }
   }
 }

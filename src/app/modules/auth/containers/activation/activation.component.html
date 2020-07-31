@@ -1,0 +1,86 @@
+<div class="activation d-flex align-items-center justify-content-between">
+  <div class="activation__left-layout m-auto">
+    <div class="container-fluid">
+      <div class="col">
+        <div class="activation__wrap">
+          <div class="activation__overtitle title_secondary mb-3">
+            {{ 'ACTIVATION.login_activation_headline' | translate }}
+          </div>
+          <h1 class="activation__title title_m mb-4">
+            {{ 'ACTIVATION.login_activation_title' | translate }}
+          </h1>
+          <div class="activation__description">
+            <p class="activation__text mb-3">
+              {{
+                'ACTIVATION.login_invalid-link_description'
+                  | translate
+                  | TranslateCut: 0
+              }}
+              <a href="mailto:" class="activation__link">
+                {{ email }}
+              </a>
+              <span>
+                {{
+                  'ACTIVATION.login_invalid-link_description'
+                    | translate
+                    | TranslateCut: 1
+                }}
+              </span>
+            </p>
+            <p class="activation__text mb-8">
+              {{
+                'ACTIVATION.login_invalid-link_description'
+                  | translate
+                  | TranslateCut: 2
+              }}
+            </p>
+            <p class="activation__text">
+              {{
+                'ACTIVATION.login_invalid-link_resend'
+                  | translate
+                  | TranslateCut: 0
+              }}
+              <span class="activation__resend-link" (click)="openModal()">
+                {{
+                  'ACTIVATION.login_invalid-link_resend'
+                    | translate
+                    | TranslateCut: 1
+                }}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="activation__right-layout">
+    <app-layout-cover
+      [img]="'../assets/images/img_teacher.png'"
+    ></app-layout-cover>
+  </div>
+</div>
+
+<ng-template #resendModal>
+  <app-modal-info
+    id="resend-activation-link-modal"
+    [appearance]="'medium'"
+    overTitle="RESEND-POPUP.login_resent-activation_headline"
+    modalTitle="RESEND-POPUP.login_resent-activation_title"
+    confirmLabel="GENERAL.platform_button-primary_ok"
+    cancelLabel="GENERAL.platform_button-tertiary_signupnow"
+    (confirm)="sendActivationLink()"
+    (decline)="declineModal()"
+  >
+    <p>
+      {{
+        'RESEND-POPUP.login_resent-activation_description'
+          | translate
+          | TranslateCut: 0
+      }}
+      <a href="mailto:" class="activation__link">
+        {{ email }}
+      </a>
+      {{ "RESEND-POPUP.login_resent-activation_description" | translate | TranslateCut:1 }}
+    </p>
+  </app-modal-info>
+</ng-template>

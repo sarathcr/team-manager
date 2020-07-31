@@ -19,7 +19,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   steps: Step[]
   contextualStatus = false
   loaded: boolean
-
+  stepOne
   constructor(
     private route: ActivatedRoute,
     public editor: EditorService
@@ -30,6 +30,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.projectUrl = this.route.snapshot.paramMap.get('id')
     this.editor.getProject(this.projectUrl)
     this.loaded$ = this.editor.loaded$
+    this.stepOne = this.editor.steps[0]
   }
 
   ngOnDestroy(): void {

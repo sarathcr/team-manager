@@ -1,76 +1,86 @@
-@mixin button-style($color :$primary-font-color) {
-    letter-spacing: 1px;
-    line-height: 24px;
-    font-size: $font-size-button;
-    color: $color;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-family: $font-family-secondary;
-}
-
-@mixin mobile-m($color :$primary-font-color) {
-    font-size: $font-size-m-mob;
+.subtitle {
+  //Font size and styles common for both Mobile and Desktop
+  &_m {
     font-family: $font-family-primary;
+    font-size: $font-size-sub-m;
+    line-height: 28px;
+    letter-spacing: 0.3px;
+    font-weight: 700;
+  }
+
+  &_s {
+    font-family: $font-family-secondary;
+    font-size: $font-size-sub-s;
+    line-height: 24px;
+    letter-spacing: 0.5px;
     font-weight: 900;
-    line-height: 36px;
-    color: $color;
+  }
+
+  &_upper-case {
+    text-transform: uppercase;
+  }
+}
+
+.body {
+
+  //Font size and styles common for both Mobile and Desktop
+  &_m {
+    font-family: $font-family-tertiary;
+    font-size: $font-size-body;
+    line-height: 32px;
+    letter-spacing: 0.2px;
+    font-weight: 400;
+  }
+
+  &_s {
+    font-family: $font-family-tertiary;
+    font-size: $font-size-body-s;
+    line-height: 24px;
     letter-spacing: normal;
-}
-
-@mixin link-style($type:"normal") {
-    font-weight: 900;
-
-    @if $type=="normal" {
-        color: $link-color;
-        border-bottom: 1px solid $link-color;
-
-        @include hover() {
-            border-bottom: 1px solid $link-hover-color;
-            color: $link-hover-color;
-        }
-    }
-    @else if $type=="footer" {
-        color: $footer-link-color;
-        border-bottom: 1px solid $footer-link-color;
-    }
-}
-
-$site-sizes: 10;
-
-@mixin margin-classes {
-  @for $i from 1 through $site-sizes {
-     $margin: $i * 5px;
-    /* margin #{$margin} */
-    .m-#{$i}  {margin: $margin;}
-    .ml-#{$i} {margin-left: $margin;}
-    .mr-#{$i} {margin-right: $margin;}
-    .mt-#{$i} {margin-top: $margin;}
-    .mb-#{$i} {margin-bottom: $margin;}
-    .mx-#{$i} {margin-left: $margin; margin-right: $margin;}
-    .my-#{$i} {margin-top: $margin; margin-bottom: $margin;}
-  }
-}
-@include margin-classes;
-
-
-@mixin padding-classes {
-  @for $i from 1 through $site-sizes {
-    $padding: $i * 5px;
-    /* padding #{$padding} */
-    .p-#{$i} {padding: $padding;}
-    .pl-#{$i} {padding-left: $padding;}
-    .pr-#{$i} {padding-right: $padding;}
-    .pt-#{$i} {padding-top: $padding;}
-    .pb-#{$i} {padding-bottom: $padding;}
-    .px-#{$i} {padding-left: $padding; padding-right: $padding;}
-    .py-#{$i} {padding-top: $padding; padding-bottom: $padding;}
+    font-weight: 400;
   }
 }
 
+.overtitle {
+  font-family: $font-family-secondary;
+  font-size: $font-size-body-overtitle;
+  line-height: 24px;
+  letter-spacing: 1px;
+  font-weight: 900;
 
+  &_upper-case {
+    text-transform: uppercase;
+  }
 
+  &_grey {
+    color: rgba($color-tertiary,0.6);
+  }
+}
 
+.caption {
+  font-family: $font-family-tertiary;
+  font-weight: 400;
+  font-size: $font-size-body-caption;
+  line-height: 24px;
+  letter-spacing: normal;
+  color: rgba($color-tertiary,0.6);
+}
 
+.input {
+  font-family: $font-family-tertiary;
+  color: rgba($color-tertiary,0.6);
+  font-weight: 400;
+  font-size: $font-size-body-input;
+  line-height: 12px;
+  letter-spacing: 0.2px;
+}
 
-
- 
+.quote {
+  font-family: $font-family-tertiary;
+  font-style: italic;
+  font-weight: 400;
+  font-size: $font-size-q;
+  line-height: 40px;
+  letter-spacing: normal;
+  color: $color-tertiary;
+}
