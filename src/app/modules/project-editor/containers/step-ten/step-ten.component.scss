@@ -1,3 +1,9 @@
-.step-ten{
+.step-ten {
     min-height: 900px;
+
+    &:last-child {
+        .status-indicator__bar_bottom {
+            display: none;
+        }
+    }
 }

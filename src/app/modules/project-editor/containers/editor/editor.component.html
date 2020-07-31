@@ -1,21 +1,22 @@
 <div class="editor" id="editor" [ngClass]="{ 'editor_short' : contextualStatus}">
   <div class="editor__bg"></div>
-  <app-editor-header
+  <app-header
     id="editor-header"
     [projectData]="editor.titleData"
+    [stepOneStatus]="stepOne.state"
     (titleSubmit)="editor.handleSubmit($event)"
-  ></app-editor-header>
+  ></app-header>
   <div *ngIf="(loaded$ | async)" class="editor-aside">
-    <app-editor-sidebar
+    <app-sidebar
     id="editor-sidebar"
     title="{{ 'STEPS_MENU.project_structure_stepsmenu_title' | translate }}"
     view="{{'STEPS_MENU.project_structure_stepsmenu_output' | translate}}"
     [steps]="steps"
-    ></app-editor-sidebar>
+    ></app-sidebar>
   </div>
   <div *ngIf="(loaded$ | async)" class="editor__forms">
     <router-outlet></router-outlet>
   </div>
-  <app-contextual-help (status)="getContextualStatus($event)"></app-contextual-help>
-  <app-loader *ngIf="(loaded$ | async) === false"></app-loader>
+  <app-contextual-help id="editor-contextual-help" (status)="getContextualStatus($event)"></app-contextual-help>
+  <app-loader id="editor-loader" *ngIf="(loaded$ | async) === false"></app-loader>
 </div>

@@ -1,0 +1,57 @@
+@import 'helpers/_helpers-master';
+
+.editable-list {
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 12px 63px 12px 18px;
+    border-bottom: 1px solid $link-water;
+    margin-bottom: 0;
+    position: relative;
+
+    &:first-child {
+      border-top: 1px solid $link-water;
+    }
+  }
+
+  &__text {
+    font-weight: normal;
+    font-size: $font-size-default;
+    letter-spacing: 0;
+    word-break: break-word;
+    word-wrap: break-word;
+    margin-right: 50px;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 10px;
+    right: 17px;
+
+    &-edit {
+      color: rgba($blue-whale, 0.4);
+      margin-right: 12px;
+      cursor: pointer;
+
+      .icon {
+        font-size: $font-size-s;
+      }
+    }
+
+    &-close {
+      color: rgba($blue-whale, 0.4);
+      cursor: pointer;
+
+      .icon {
+        font-size: $font-size-icon;
+      }
+    }
+  }
+}

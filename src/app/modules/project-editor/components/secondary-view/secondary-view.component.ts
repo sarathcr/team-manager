@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { Component, Input, Output, EventEmitter} from '@angular/core'
 
 import { CompetencyModal, SecondaryViewLabels } from '../../constants/model/principle-view.model'
 import { Block } from '../../constants/model/curriculum.model'
@@ -9,7 +9,7 @@ import { PrincipalModalColData, TranslatePrincipalData } from '../../constants/m
   templateUrl: './secondary-view.component.html',
   styleUrls: ['./secondary-view.component.scss']
 })
-export class SecondaryViewComponent {
+export class SecondaryViewComponent{
 
   @Input() blockData: Block[]
   @Input() heading: CompetencyModal

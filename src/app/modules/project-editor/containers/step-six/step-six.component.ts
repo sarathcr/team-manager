@@ -7,7 +7,7 @@ import { EditorService } from '../../services/editor/editor.service'
 import { Step, Status } from '../../constants/model/project.model'
 import { FormSix } from '../../constants/model/step-forms.model'
 
-import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-elements.data'
+import { StepButtonSubmitConfig } from '../../../../shared/constants/data/form-elements.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -21,7 +21,7 @@ export class StepSixComponent implements OnInit, OnDestroy {
   project$: Observable<any>
   step$: Observable<Step>
   step: Step
-  buttonConfig = new ButtonSubmitConfig()
+  buttonConfig = new StepButtonSubmitConfig()
   initialFormStatus: Status = 'PENDING'
   initialCreativeTitle = ''
   initialCreativeImage = ''

@@ -1,7 +1,7 @@
 //Numbered List Style
 .numbered-list{
     list-style: none;
-    padding-left: 15px;
+    padding-left: $padding;
     margin-bottom: 44px;
     font-size: $font-size-body;
     counter-reset: list;
@@ -11,7 +11,7 @@
         padding-left: 10px;
         &:before{
             content: counter(step-counter)'.';
-            color: $primary-font-color;
+            color: $color-tertiary;
             font-weight: $font-weight-bold;
             font-size: $font-size-button;
             position: relative;

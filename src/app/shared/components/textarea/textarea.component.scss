@@ -1,28 +1,109 @@
 @import 'helpers/_helpers-master';
-.textarea{
+
+.textarea-wrapper {
+  margin-bottom: 56px;
+  position: relative;
+
+  &__counter-wrapper {
+    position: absolute;
     width: 100%;
-    min-height: 300px;
-    border: 1px solid $creator-textarea-border;
-    border-radius: 3px;
+  }
+}
+
+.textarea {
+  $root: &;
+  width: 100%;
+  min-height: 300px;
+  border: 1px solid rgba($color-tertiary, 0.4);
+  border-radius: 3px;
+  position: relative;
+  box-shadow: 0 0 0 0 transparent;
+  box-sizing: border-box;
+  display: flex;
+
+  &__description {
+    background: none;
+    border: none;
+    width: 100%;
+    font-family: $font-family-tertiary;
+    font-size: $font-size-body-s;
+    color: $blue-whale;
+    line-height: 24px;
+    padding: 0;
+    overflow: auto;
+    resize: none;
     padding: 15px 19px;
-    margin-bottom: 56px;
-    position: relative;
-    box-shadow: 0 0 0 0 transparent;
-    box-sizing: border-box;
-    display: flex;
-    &__description{
-        background: none;
-        border: none;
-        width: 100%;
-        font-family: $font-family-tertiary;
-        font-size: $font-size-body-s;
-        color: $blue-whale;
-        line-height: 24px;
-        padding: 0;
-        overflow: hidden;
-        resize: none;
-        &:placeholder{
-            color: $overtitle-grey;
-        }
+    caret-color: $color-primary;
+
+    &:placeholder {
+      color: rgba($color-tertiary, 0.6);
     }
+  }
+
+  &_focus {
+    border: 1px solid $color-primary !important;
+    box-shadow: inset 0 0 0 1px $color-primary !important;
+  }
+
+  &_error {
+    border: 1px solid $deep-cerise !important;
+    box-shadow: inset 0 0 0 1px $deep-cerise !important;
+
+    #{$root}__enter {
+      pointer-events: none;
+    }
+
+    .textarea__description {
+      caret-color: $color-quinary;
+    }
+  }
+  &_active {
+    border: 1px solid rgba($color-tertiary, 0.1);
+  }
+
+  &__list {
+    min-height: 72px !important;
+    max-height: 72px !important;
+
+    .textarea__description {
+      padding: 11px 50px 11px 21px;
+    }
+  }
+
+  &__enter {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    font-size: $font-size-s;
+
+    &:before {
+      color: rgba($color-tertiary, 0.3) !important;
+    }
+
+    &_active {
+      &:before {
+        color: $color-primary !important;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__label {
+    position: absolute;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    line-height: 12px;
+    top: 0;
+    transform: translateY(-50%);
+    padding: 2px 5px;
+    left: 14px;
+    z-index: 2;
+    background-color: $color-quaternary;
+  }
+
+  &_small {
+    min-height: 100px;
+    max-height: 100px;
+  }
 }

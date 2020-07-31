@@ -1,0 +1,104 @@
+<div class="modal-standards modal-standards-content">
+  <div class="modal-standards__header">
+    <div class="title-drop" *ngIf="showModalStandards" [ngClass]="showModalStandards ? 'modal-standards__header_main' : 'modal-standards__header_secondary'">
+      <app-dropdown
+        [config]='subjectDropdownConfig'
+        [label]="'STANDARDS.project_standards_standardswindow_combo_title' | translate"
+        [canDeselect]="false"
+        (dropdownSelect)='onDropdownSelect($event)'>
+      </app-dropdown>
+      <h6 class="modal-standards__header-title-standards"> {{'STANDARDS.project_standards_standardswindow_title' | translate}}</h6>
+    </div>
+    <button
+      *ngIf="showModalStandards"
+      class="close modal-standards__header-close"
+      type="button"
+      aria-label="Close"
+      (click)="onDecline()">
+        <span class="icon icon-ic_share_close"></span>
+    </button>
+
+    <div class="modal-standards__header-summary-title" *ngIf="!showModalStandards"  >
+      <h4 class="modal-standards__header-title" (click)="toggleModalStandards()">
+        <span class="icon icon-ic_back principal-modal__header-icon"></span>
+        {{ 'STANDARDS.project_standards_standardswindow_selected_back' | translate }}
+      </h4>
+    </div>
+
+  </div>
+
+
+  <div class="modal-standards__body modal-standards__body-standards" *ngIf="showModalStandards else summary">
+    <div class="modal-standards__body-block">
+      <div class="modal-standards__body-criteria">
+        <div class="custom-tab__content-body">
+          <div class="checkbox-row checkbox-row__head">
+            <div class="checkbox-row__cell checkbox-row__tableLeft">
+              <span class="checkbox-row__desc-header">{{'STANDARDS.project_standards_standardswindow_criteria' | translate}}</span>
+            </div>
+            <div class="checkbox-row__cell checkbox-row__tableRight">
+              <span class="checkbox-row__desc-header">{{'STANDARDS.project_standards_standardswindow_standar' | translate}}</span>
+            </div>
+          </div>
+          <ng-scrollbar class="custom-scrollbar">
+            <div class="checkbox-row checkbox-row__bottom-border" *ngFor="let cs of blockData | filterBySubjectId: this.subjectSelected.id ; let i = index;">
+              <div class="checkbox-row__cell checkbox-row__tableLeft">
+                {{ cs.name}}
+              </div>
+              <div class="checkbox-row__tableRight">
+                <div *ngFor="let s of cs?.standard; let j = index;" 
+                  class="checkbox-row__cell"
+                  [ngClass]="{'selected': s.checked === true}"
+                  id="standard_container_{{s['id']}}"
+                >
+                  <div class="checkbox-row__box" (click)="onCheck(s)">
+                    <input class="checkbox-row__checkbox" 
+                      id="standard_{{s['id']}}"
+                      type="checkbox" 
+                      value="s['id']" 
+                      reflect-model='false'
+                      [checked]="s.checked"
+                    >
+                    <span class="icon-ic_check checkbox-row__checkmark"></span>
+                  </div>
+                  <span class="checkbox-row__desc">
+                      {{ s['name'] }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </ng-scrollbar>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary view -->
+  <ng-template #summary>
+    <app-secondary-view
+      [heading]="heading"
+      [blockData]="blockData"
+      [modalColumns]="modalColumns"
+      [labels]="secondaryViewLabels"
+      (getPrimary)="toggleModalStandards()"
+    ></app-secondary-view> 
+
+  </ng-template>
+
+  <div class="modal-standards__footer" [ngClass]= "showModalStandards ? 'modal-standards__footer_main' : 'modal-standards__footer_secondary'">
+    <div class="modal-standards__footer-btn-group">
+        <div class="modal-standards__footer-btn-link" (click)="toggleModalStandards()" *ngIf="showModalStandards">
+          {{ 'STANDARDS.project_standards_standardswindow_showall' | translate }}
+         ({{ (blockData | checkCount: modalColumns?.colOneHead?.key) || 0 }})
+        </div>
+        <app-button
+          class="ml-auto"
+          icon="tick"
+          [disabled]="!(blockData | checkCount: modalColumns?.colOneHead?.key)"
+          (click)="handleButtonClick()"
+        >
+          {{ 'STANDARDS.project_standards_standardswindow_add' | translate }}
+        </app-button>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 @import 'helpers/_helpers-master';
 @import 'helpers/_bt-mixins';
 
-.editor{
+.editor {
   $root: &;
   width: 100%;
   padding: 75px 15px 0 0;
@@ -10,15 +10,29 @@
   position: relative;
   height: 100%;
   z-index: 1;
-  &__forms{
+  min-height: 100vh;
+  background-color: $color-background-primary;
+  margin-left: auto;
+  
+  &__head-text {
+    font-family: $font-family-tertiary;
+    font-size: $font-size-xs;
+    line-height: 36px;
+    letter-spacing: 0.3px;
+    font-weight: 700;
+    margin-bottom: 35px;
+  }
+
+  &__forms {
     display: inline-block;
     width: 100%;
     max-width: 672px;
     min-width: 430px;
     @include transitions(all, 0.5s, ease-in-out);
   }
-  &_short{
-    #{$root}__forms{
+
+  &_short {
+    #{$root}__forms {
       @include media-breakpoint-down(xl) {
         max-width: 672px;
         padding-right: 0;
@@ -26,11 +40,13 @@
       }
     }
   }
-  .step-section{
+
+  .step-section {
     scroll-margin-top: 110px;
     display: block;
   }
-  &-aside{
+
+  &-aside {
     width: 236px;
     min-width: 236px;
     max-width: 280px;
@@ -38,8 +54,8 @@
   }
 
   @include media-breakpoint-up(xl) {
-    &__bg{
-      background-image:url('../../../../../../images/img_background_shapes.png');
+    &__bg {
+      background-image: url('../../../../../../images/img_background_shapes.png');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: right center;
@@ -54,13 +70,94 @@
   }
 
   @include media-breakpoint-up(xxl) {
-    &__forms{
+    &__forms {
       min-width: 672px;
       width: 49.5%;
       max-width: 800px;
     }
-    &-aside{
+
+    &-aside {
       width: 14.5%;
+    }
+  }
+}
+
+::ng-deep{
+  .project-editor {
+    &__goto-step {
+      letter-spacing: 0;
+      line-height: 24px;
+      display: flex;
+    }
+  
+    &__form {
+      display: flex;
+      width: 100%;
+      min-height: calc(100vh - 75px);
+      padding: 28px 40px 57px;
+      padding-left: 40px;
+      padding-right: 40px;
+      flex-direction: column;
+      position: relative;
+    }
+  
+    &__subject-wrapper {
+      margin-bottom: 44px;
+    }
+  
+    &__point {
+      font-weight: bold;
+      border-bottom: 1px solid $blue-whale;
+      cursor: pointer;
+      margin: 0 6px;
+    }
+  
+    &__title {
+      font-size: $font-size-sub-s;
+      line-height: 28px;
+      letter-spacing: .2px;
+      margin-bottom: 7px;
+    }
+  
+    &__sub-description {
+      margin-bottom: 25px;
+    }
+  
+    @include media-breakpoint-up(xxl) {
+      &__form {
+        padding-left: 50px;
+        padding-right: 50px;
+      }
+    }
+  }
+  
+  .project-form {
+    min-height: calc(100vh - 160px);
+  
+    &__wrapper {
+      margin-bottom: 20px;
+    }
+  
+    &__subtitle {
+      line-height: 28px;
+      letter-spacing: .2px;
+      font-size: $font-size-body;
+    }
+  
+    &__title {
+      line-height: 32px;
+      display: flex;
+      flex-direction: row;
+      padding-bottom: $padding;
+      
+      &-number {
+        display: flex;
+        margin-right: 10px;
+      }
+    }
+
+    &__description{
+      margin-bottom: $margin*2;
     }
   }
 }

@@ -7,7 +7,6 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { ContentService } from '../../services/contents/contents.service'
-import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import {
   CurriculumBasicSkillsEntityService
 } from '../../store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
@@ -26,7 +25,7 @@ import { FormFour } from '../../constants/model/step-forms.model'
 import { PrincipalModalColData, PrincipalViewLabels, SecondaryViewLabels } from '../../constants/model/principle-view.model'
 import { Block } from '../../constants/model/curriculum.model'
 
-import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
+import { StepButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
@@ -44,7 +43,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   step: Step
   project: Project
   loading = true
-  buttonConfig = new ButtonSubmitConfig()
+  buttonConfig = new StepButtonSubmitConfig()
   subscriptions = new SubSink()
   showTextarea = false
   initialFormStatus: Status = 'PENDING'
@@ -63,25 +62,23 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   // Modal
   modalColumns: PrincipalModalColData
   blockData: Block[]
-  currentBlockIndex = 0
   selectedGrades: Option[]
 
   constructor(
     public editor: EditorService,
     private modalService: BsModalService,
     private contentService: ContentService,
-    private gradeService: GradeEntityService,
     private basicSkillsService: CurriculumBasicSkillsEntityService,
-    private translateService: TranslateService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
     this.stepInit()
+    this.getBasicSkills()
   }
 
   ngAfterViewInit(): void {
     this.getGrades(this.project)
-    this.getBasicSkills()
   }
 
   ngOnDestroy(): void {
@@ -143,24 +140,25 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Get all grades
   getGrades(project: Project): void {
-    if (this.project?.subjects?.length) {
-      this.subscriptions.sink = this.gradeService.entities$
-        .pipe(
-          map(grades => grades.filter(grade => grade.academicYear?.id === project.academicYear.id
-            && grade.region?.id === project.region.id))
-        )
-        .subscribe(newData => {
-          if (!newData?.length) {
-            const parms = {
-              regionId: project.region.id.toString(),
-              academicyearId: project.academicYear.id.toString()
-            }
-            this.gradeService.getWithQuery(parms)
-          }
-          this.grades = newData.map(({ id, name }) => ({ id, name }))
-          this.selectedGrades = this.contentService.selectedGrades
-        })
+    if (project.subjects?.length) {
+      const criteriaIds = []
+      for ( const subject of this.project.subjects) {
+        criteriaIds.push(...subject.evaluationCriteria?.map(evaluationCriteria =>  evaluationCriteria.id))
+      }
+      if (criteriaIds.length) {
+        const params = {
+          evaluationcriteriaIds: criteriaIds
+        }
+        this.subscriptions.sink = this.contentService.getGrades(params).subscribe( data => {
+          this.grades = data
+          this.filterGrades()
+         })
+      }
     }
+  }
+
+  filterGrades(): void {
+    this.selectedGrades = this.grades.filter( grade => this.project.grades.some( item => grade.id === item.id))
   }
 
   // Open modal and render data
@@ -169,8 +167,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
     if (subject.evaluationCriteria.length) {
       this.getModalData(subject)
       this.modalRef = this.modalService.show( this.principalViewModal,
-        { ignoreBackdropClick: true,
-          class: 'competency-modal  modal-dialog-centered' })
+        { class: 'principal-modal-dialog  modal-dialog-centered' })
     }
     else {
       this.openModalUnlock()
@@ -207,26 +204,26 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   // Get related blocks
-  getBlocksFromSelectedGrades(): void {
-    this.selectedGrades = this.project.grades.map(({ id, name }) => ({ id, name }))
-    this.contentService.getBlocks(this.selectedGrades[0])
+  getBlocksFromGrades(): void {
+    const selectedGrade = this.selectedGrades.length ? this.selectedGrades[0] : this.grades[0]
     this.contentService.selectedGrades = this.selectedGrades
+    this.contentService.getBlocks(selectedGrade)
   }
 
   // Get modal data
   getModalData(subject: CurriculumSubject): void {
     this.contentService.grades = this.grades
+    const gradeIds = this.grades.map(({ id }) => id)
+    this.contentService.gradeIds = gradeIds
     this.contentService.heading = {
       contents: 'CONTENT.project_objectives_contentwindow_content',
       course: 'CONTENT.project_objectives_contentwindow_course',
       block: 'CONTENT.project_objectives_contentwindow_block',
     }
-    const gradeIds = this.grades.map(({ id }) => id)
-    this.contentService.gradeIds = gradeIds
     this.contentService.subject = { id: subject.id, name: subject.name }
     this.contentService.contentIds = subject.contents.map(content => content.id)
     this.contentService.getHeading()
-    this.getBlocksFromSelectedGrades()
+    this.getBlocksFromGrades()
     this.getDropDownData()
     this.modalColumns = this.contentService.modalColumns
     this.blockData = this.contentService.blockData
@@ -281,7 +278,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
         contentLength.push(true)
       }
     }
-    if (this.basicSkills?.length && this.selectedBasicSkills?.length) {
+    if (this.basicSkills.length && this.selectedBasicSkills.length) {
       contentLength.push(true)
     }
     if (!contentLength.length) {
@@ -335,8 +332,13 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   // Basic skills area
   getBasicSkills(): void {
     if (this.project.subjects?.length) {
-      const checkData: CheckBoxData = { checked: false, variant: 'checkedOnly' }
-      this.selectedBasicSkills = [...this.project.basicSkills]
+      const checkData: CheckBoxData = { checked: false }
+      if (this.project?.basicSkills?.length) {
+        this.selectedBasicSkills = [...this.project.basicSkills]
+      }
+      else {
+        this.selectedBasicSkills = []
+      }
       this.subscriptions.sink = this.basicSkillsService.entities$
         .pipe(
           map(data => {
@@ -407,7 +409,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
         hasManualContents = true
       }
     }
-    if (this.basicSkills?.length) {
+    if (this.basicSkills.length) {
       for (const skills of this.basicSkills) {
         if (skills.checkData.checked === true) {
           hasSelectedSkills = true
@@ -451,6 +453,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
           subject.contents = this.dataPayload.contents
         }
       }
+      this.dataPayload = null
     }
     for (const [index, manualContent] of this.subjectTextArea.entries()) {
       const tempData = manualContent?.data?.map(item => item.id == null ? { name: item.name } : item)

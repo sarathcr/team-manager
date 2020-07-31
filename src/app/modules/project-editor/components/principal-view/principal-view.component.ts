@@ -9,7 +9,6 @@ import { Block } from '../../constants/model/curriculum.model'
 import { PrincipalModalColData, PrincipalViewLabels } from '../../constants/model/principle-view.model'
 import { DropDownConfig, Option, DropdownCustom } from 'src/app/shared/constants/model/form-elements.model'
 import { ContentService } from '../../services/contents/contents.service'
-import { TranslateService } from '@ngx-translate/core'
 import { Subject } from '../../constants/model/project.model'
 
 @Component({
@@ -38,7 +37,6 @@ export class PrincipalViewComponent implements OnInit {
     private location: PlatformLocation,
     private objectiveService: ObjectiveService,
     private contentService: ContentService,
-    private translateService: TranslateService,
   ) {
     this.location.onPopState(() => this.bsModalRef.hide())
   }
@@ -64,12 +62,13 @@ export class PrincipalViewComponent implements OnInit {
     }
     const otherGrades = this.grades.filter(grade =>
       !this.selectedGrades.map(selected => selected.id).includes(grade.id))
+    const selectedGrade = this.selectedGrades.length ? this.selectedGrades[0] : otherGrades[0]
     this.gradeDropdownConfig = {
       name: '',
       data: otherGrades,
       id: '',
       priorityData: this.selectedGrades,
-      selectedItems: [this.selectedGrades[0]],
+      selectedItems: [selectedGrade],
       placeholder: this.dropdownTitles.placeholder,
       label: this.dropdownTitles.label,
       settings: {
@@ -98,7 +97,7 @@ export class PrincipalViewComponent implements OnInit {
   }
 
   handleButtonClick(): void {
-    if (this.serviceData.blocks?.length) {
+    if (this.serviceData.blockData?.length) {
       const selectedItem = []
       for (const block of this.serviceData.blockData) {
         for (const item of block[this.modalColumns.colOneHead.key]) {

@@ -3,7 +3,7 @@
 .image-upload {
   width: 424px;
   min-height: 238px;
-  border: 1px dashed $article-border !important;
+  border: 1px dashed rgba($color-tertiary,0.2) !important;
   box-sizing: border-box !important;
   border-radius: 4px !important;
   background: none !important;
@@ -14,7 +14,7 @@
   &__close {
     width: 34px;
     height: 34px;
-    background: $background-primary;
+    background: $color-quaternary;
     border-radius: 50%;
     position: absolute;
     top: 18px;
@@ -24,7 +24,7 @@
 
   &__icon {
     font-size: $font-size-sub-m;
-    color: $overtitle-grey;
+    color: rgba($color-tertiary,0.6);
   }
 
   &__preview {
@@ -68,6 +68,6 @@
 
   &__label-text {
     color: $blue-whale;
-    line-height: $line-height-24px;
+    line-height: 24px;
   }
 }

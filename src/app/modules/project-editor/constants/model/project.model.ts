@@ -126,8 +126,9 @@ export class Standard {
   id?: number
   name?: string
   code?: string
-  decscription?: string
+  description?: string
   numeration?: number
+  evaluationCriteria?: EvaluationCriteria
 }
 
 export class Content extends Option {
@@ -184,6 +185,13 @@ export interface ContentsWithSkills extends ProjectContent {
   colTwoData?: string
   colOneData?: string
   grade?: Grade
+}
+
+export interface StandardsWithSkills extends Standard {
+  checked?: boolean
+  colTwoData?: string
+  colOneData?: string
+  colThreeData?: string
 }
 
 export type ProjectId = number

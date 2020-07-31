@@ -1,12 +1,12 @@
-import { EvaluationCriteria, BasicSkill, ContentsWithSkills } from './project.model'
+import { EvaluationCriteria, BasicSkill, ContentsWithSkills, Standard, StandardsWithSkills } from './project.model'
 import { Option } from 'src/app/shared/constants/model/form-elements.model'
 
 export class Block {
   id: number
   name: string
-  contents: ContentsWithSkills[]
-  description: string
-  evaluationCriteria: EvaluationCriteria[]
+  contents?: ContentsWithSkills[]
+  description?: string
+  evaluationCriteria?: EvaluationCriteria[]
   numeration: number
   virtual: boolean
   subjectId?: number
@@ -14,6 +14,7 @@ export class Block {
   colTwoHead?: string
   colOneHead?: string
   blockIndex?: number
+  standard?: StandardsWithSkills[]
 }
 
 export class Dimensions extends Option {

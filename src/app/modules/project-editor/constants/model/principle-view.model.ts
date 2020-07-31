@@ -7,6 +7,8 @@ export interface CompetencyModal {
   block?: string
   dimension?: string
   checked?: boolean
+  standard?: string
+  subject?: string
 }
 
 export interface GradeOptionAndId {
@@ -17,6 +19,7 @@ export interface GradeOptionAndId {
 export interface PrincipalModalColHead {
   key?: string
   value?: string
+  size?: 'xs' | 's' | 'm'
 }
 
 export interface PrincipalModalColData {

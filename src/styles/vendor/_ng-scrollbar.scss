@@ -1,0 +1,13 @@
+.ng-scrollbar {
+  &.custom-scrollbar {
+    --scrollbar-color: transparent;
+    --scrollbar-container-color: transparent;
+    --scrollbar-thumb-color: rgba(20, 28, 58, 0.1);
+    --scrollbar-thumb-hover-color: rgba(20, 28, 58, 0.4);
+    --scrollbar-border-radius: 3.5px;
+    --scrollbar-size: 7px;
+    --scrollbar-padding: 6px;
+    --scroll-view-margin: 0;
+    --scroll-view-color: transparent;
+  }
+}

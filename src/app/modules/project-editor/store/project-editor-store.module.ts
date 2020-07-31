@@ -26,6 +26,9 @@ import { ProjectListEntityService } from './entity/project-list/project-list-ent
 import { ProjectListDataService } from './entity/project-list/project-list-data.service'
 import { CurriculumBasicSkillsDataService } from './entity/curriculum-basic-skills/curriculum-basic-skills-data.service'
 import { CurriculumBasicSkillsEntityService } from './entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
+import { StandardDataService } from './entity/standard/standard-data.service'
+import { StandardEntityService } from './entity/standard/standard-entity.service'
+import { ProjectEditorToastService } from '../services/project-editor-toast/project-editor-toast.service'
 
 @NgModule({
   declarations: [],
@@ -56,7 +59,9 @@ import { CurriculumBasicSkillsEntityService } from './entity/curriculum-basic-sk
     EvaluationCriteriaDataService,
     EvaluationCriteriaEntityService,
     CurriculumBasicSkillsDataService,
-    CurriculumBasicSkillsEntityService
+    CurriculumBasicSkillsEntityService,
+    StandardDataService,
+    StandardEntityService
   ]
 })
 export class ProjectEditorStoreModule {
@@ -76,6 +81,8 @@ export class ProjectEditorStoreModule {
     private blockDataService: BlockDataService,
     private evaluatioCriteriaDataService: EvaluationCriteriaDataService,
     private basicSkillsDataService: CurriculumBasicSkillsDataService,
+    private standardDataService: StandardDataService,
+    projectEditorToastService: ProjectEditorToastService
   ) {
     eds.registerMetadataMap(entityMetadata)
     entityDataService.registerService('Project', projectsDataService)
@@ -90,5 +97,6 @@ export class ProjectEditorStoreModule {
     entityDataService.registerService('Block', blockDataService)
     entityDataService.registerService('EvaluationCriteria', evaluatioCriteriaDataService)
     entityDataService.registerService('CurriculumBasicSkills', basicSkillsDataService)
+    entityDataService.registerService('Standard', standardDataService)
   }
 }

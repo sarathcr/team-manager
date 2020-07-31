@@ -18,7 +18,10 @@
     "project_title_title_edittitle": "Edita el título",
     "project_title_input_title": "Título",
     "project_dependancy_title_cv": "Desbloquea el currículum",
-    "Error_textlimit_specified_singleinput": "Has excedido los caracteres permitidos."
+    "Error_textlimit_specified_singleinput": "Has excedido los caracteres permitidos.",
+    "Error_nodata_dropdown": "No existen opciones disponibles de selección.",
+    "Error_API_query_dropdown": "Lo sentimos, no se han encontrado opciones de selección. Vuelve a intentarlo.",
+    "project_input_singleitem_helpertext": "Pulsa la tecla intro para agregar un nuevo elemento a la lista."
   },
   "STEPS_MENU": {
     "project_structure_stepsmenu_title": "Crea paso a paso",
@@ -51,8 +54,12 @@
   },
   "THEMATIC": {
     "project_thematic_title": "Temática",
-    "project_thematic_description": "¿Sobre qué tratará el proyecto? Escribe las temáticas que tienes previsto abordar. Más adelante te ayudaremos a contectarlas con los contenidos curriculares.",
-    "project_thematic_placeholder": "Especifica uno o más temas..."
+    "project_thematic_description": "¿Sobre qué tratará el proyecto? <br>Escribe las temáticas que tienes previsto abordar. Más adelante te ayudaremos a contectarlas con los contenidos curriculares.",
+    "project_thematic_placeholder": "Escribe y añade una temática",
+    "project_thematic_edit_title": "Edita la temática",
+    "project_thematic_edit_label": "Temática",
+    "project_thematic_delete_confirmation_title": "¿Seguro que quieres eliminar esta temática?",
+    "project_thematic_delete_confirmation_message": "Si la eliminas la tendrás que volver a introducir."
   },
   "OBJECTIVES": {
     "project_objectives_dependancy_description": "Para acceder al currículum y seleccionar los criterios de evaluación tienes que completar el paso Punto de partida.",
@@ -67,7 +74,7 @@
       "subtitle": "Transforma los criterios de evaluación en objetivos de aprendizaje:",
       "description": "Al final del proyecto queremos que nuestros/as alumnos/as sepan..."
     },
-    "project_objectives_objectives_placeholder": "Escribe el primer objetivo de aprendizaje. Por ejemplo: \"...comprender que la cultura hace valorar la historia propia.\"",
+    "project_objectives_objectives_placeholder": "Escribe y agrega un objetivo de aprendizaje. Por ejemplo: \"...comprender que la cultura hace valorar la historia propia.\"",
     "project_objectives_add_criteria": " + Añadir",
     "project_objectivies_add_more_subjects": {
       "one": "Accede al",
@@ -91,7 +98,11 @@
     "project_objectives_criteriawindow_critera_selected": "criterios seleccionados",
     "project_objectives_criteriawindow_empty_title": "No tienes criterios seleccionados",
     "project_objectives_criteriawindow_empty_description": "Selecciona criterios de evaluación del currículum y visualiza el listado de seleccionados aquí para añadirlos.",
-    "project_objectives_criteriawindow_empty_button": "Ver criterios"
+    "project_objectives_criteriawindow_empty_button": "Ver criterios",
+    "project_objectives_delete_objectives_confirmation_title": "¿Seguro que quieres eliminar este objetivo?",
+    "project_objectives_delete_objectives_confirmation_message": "Si lo eliminas se eliminará de todas las actividades a las lo hayas asociado.",
+    "project_objectives_edit_title": "Edita el objetivo",
+    "project_objectives_edit_label": "Objetivo de aprendizaje"
   },
   "CONTENT": {
     "project_content_dependancy_description": "Para acceder al currículum y seleccionar los contenidos tienes que completar el paso Punto de partida.",
@@ -103,7 +114,7 @@
     "project_content_placeholder": "Agrega contenidos del currículum.",
     "project_content_add_criteria": " + Añadir",
     "project_content_cvcontent": "Contenido del currículum",
-    "project_content_extracontent": "Añadir |contenidos personalizados|",
+    "project_content_extracontent": "Añadir |Contenidos personalizados|",
     "project_content_extracontent_input": "Contenidos personalizados",
     "project_content_contentwindow_curriculum": "Currículum",
     "project_content_contentwindow_title": "Selecciona los contenidos a trabajar:",
@@ -123,6 +134,34 @@
     "project_content_competencies": "Selecciona las competencias a trabajar:",
     "project_content_delete_confirmation_title": "¿Seguro que quieres eliminar este contenido?"
   },
+  "STANDARDS": {
+    "project_standards_dependancy_description": "Para poder especificar los estándares o indicadores de aprendizaje, primero completa el paso objetivos de aprendizaje.",
+    "project_standards_dependancy_button": "Especifica los objetivos",
+    "project_standards_dependancy_filterbycriteria_description": "Para seleccionar los estándares de aprendizaje, primero tienes que tienes que especificar los criterios de evaluación de esta asignatura en el paso Objetivos de aprendizaje.",
+    "project_standards_dependancy_filterbycriteria_button": "Especifica los criterios",
+    "project_standards_title": "Estándares",
+    "project_standards_initial_label": "Especifica los estándares o indicadores de aprendizaje para cada uno de los objetivos competenciales.",
+    "project_standards_description": "Los estándares o indicadores permiten definir los resultados de aprendizaje y graduar el rendimiento o logros que alcance el alumnado. Asocia estándares a cada objetivo de aprendizaje.",
+    "project_standards_standards_placeholder": "Asocia estándares del currículum.",
+    "project_standards_extrastandards_placeholder": "Asocia estándares personalizados. (opcional)",
+    "project_standards_add": " + Añadir",
+    "project_standards_cvstandards": "Estándares del currículum",
+    "project_standards_extrastandards": "Añadir |Estándares personalizados|",
+    "project_standards_extrastandards_input": "Estándares personalizados",
+    "project_standards_standardswindow_title": "Selecciona los estándares de aprendizaje a trabajar:",
+    "project_standards_standardswindow_combo_title": "Asignatura",
+    "project_standards_standardswindow_criteria": "Criterio de evaluación",
+    "project_standards_standardswindow_standar": "Estándar de aprendizaje",
+    "project_standards_standardswindow_subject": "Asignatura",
+    "project_standards_standardswindow_showall": "Ver todos los estándares seleccionados",
+    "project_standards_standardswindow_add": "Añadir",
+    "project_standards_standardswindow_selected": "estándares seleccionados",
+    "project_standards_standardswindow_selected_back": "Volver",
+    "project_standards_standardswindow_empty_title": "No tienes estándares seleccionados",
+    "project_standards_contentwindow_empty_description": "Selecciona estándares de aprendizaje del currículum y visualiza el listado de seleccionados aquí para añadirlos.",
+    "project_standards_contentwindow_empty_button": "Ver estándares",
+    "project_standards_delete_confirmation_title": "¿Seguro que quieres eliminar este estándar?"
+  },
   "RETHINK_TITLE": {
     "project_rethinktitle_title": "Título creativo",
     "project_rethinktitle_description": "¿Mantienes el nombre que le has dado a tu proyecto o prefieres cambiarlo? <br>Ahora puedes repensar el título inicial y darle un plus de creatividad. Si no se te ocurre nada, sigue nuestros consejos de la guía pedagógica. También puedes subir una imagen que te inspire. ",
@@ -132,7 +171,11 @@
   "DRIVING_QUESTIONS": {
     "project_drivingquestions_title": "Preguntas guía",
     "project_drivingquestions_description": "Formula las cuestiones esenciales a las que l@s alumn@s intentarán dar respuesta durante el proyecto.  Estas preguntas reflejan el <em>para qué</em> del proyecto.",
-    "project_drivingquestions_placeholder": "Escribe la primera pregunta..."
+    "project_drivingquestions_placeholder": "Escribe y añade una o más preguntas guía",
+    "project_drivingquestions_edit_title": "Edita la pregunta",
+    "project_drivingquestions_edit_label": "Pregunta",
+    "project_drivingquestions_delete_confirmation_title": "¿Seguro que quieres eliminar esta pregunta?",
+    "project_drivingquestions_delete_confirmation_message": "Si la eliminas la tendrás que volver a introducir."
   },
   "FINAL_PRODUCT": {
     "project_finalproduct_title": "Producto final",
@@ -146,5 +189,20 @@
   },
   "PROJECTGUIDE": {
     "projectguide_pedagogical_guide": "GUÍA PEDAGÓGICA"
+  },
+  "PROGRAMACION": {
+    "output_dependancy_title": "Desbloquea la programación didáctica",
+    "output_dependancy_description": "En la programación didáctica se muestra toda la información recopilada que vas completando en las secciones de Estructura y Actividades. Para poder acceder a la programación tienes que completar, como mínimo, el paso Punto de partida en Estructura.",
+    "output_dependancy_button": "Empieza a programar",
+    "output_footer": "Sigue creando en www.thinkoeducation.com",
+    "output_button_download": "Descargar",
+    "output_button_print": "Imprimir",
+    "output_index_title": "Programación didáctica",
+    "output_index_cover": "Portada",
+    "output_index_overview": "Visión general",
+    "output_index_curriculum": "Conexión con el currículum",
+    "output_index_objectives": "Objetivos de aprendiaje",
+    "output_index_standards": "Estándares/indicadores",
+    "output_index_drivingquestions": "Preguntas guía"
   }
 }

@@ -1,27 +1,61 @@
-<div class="project-editor__form step-seven">
-  <app-status [status]='step.state'></app-status>
+<div class="project-editor__form step-seven" id="step-seven">
+  <app-status id="step-seven-status" [status]="step.state"></app-status>
   <div class="project-form d-flex flex-column justify-content-between">
     <div>
-      <h2 class="project-form__title title_s"><span class="project-form__title-number">7.</span>{{'DRIVING_QUESTIONS.project_drivingquestions_title' | translate}}
-        <app-info-tooltip></app-info-tooltip>
+      <h2 class="project-form__title title_s">
+        <span class="project-form__title-number">7.</span
+        >{{ 'DRIVING_QUESTIONS.project_drivingquestions_title' | translate }}
+        <app-info-tooltip id="step-seven-info-tooltip"></app-info-tooltip>
       </h2>
-      <p class="project-form__description"
-        [innerHTML]="'DRIVING_QUESTIONS.project_drivingquestions_description' | translate"></p>
+      <p
+        class="project-form__description"
+        [innerHTML]="
+          'DRIVING_QUESTIONS.project_drivingquestions_description' | translate
+        "
+      ></p>
+      <div class="mb-5">
+        <app-editable-list
+          id="step-seven-editable-list"
+          [list]="drivingQuestions"
+          [maxLength]="150"
+          editModalTitle="DRIVING_QUESTIONS.project_drivingquestions_edit_title"
+          editModalLabel="DRIVING_QUESTIONS.project_drivingquestions_edit_label"
+          editModalbuttonLabel="PROJECT.project_button_save"
+          deleteModalTitle="DRIVING_QUESTIONS.project_drivingquestions_delete_confirmation_title"
+          deleteModalDescription="DRIVING_QUESTIONS.project_drivingquestions_delete_confirmation_message"
+          deleteModalbuttonLabel="PROJECT.project_button_delete"
+          helperText="PROJECT.project_input_singleitem_helpertext"
+          errorText="PROJECT.Error_textlimit_specified_singleinput"
+          (editItem)="editQuestion($event)"
+          (deleteItem)="deleteQuestion($event)"
+        ></app-editable-list>
+      </div>
       <app-textarea
-      variant='bullet'
-      [maxLength]="150"
-      [placeholder]="'DRIVING_QUESTIONS.project_drivingquestions_placeholder' | translate"
-      [value$]="drivingQuestions$"
-      (inputChange)="textAreaUpdate($event)"
-    >
-    </app-textarea>
+        id="step-seven-textarea"
+        variant="listItem"
+        [maxLength]="150"
+        [enableValidator]="true"
+        helperText="PROJECT.project_input_singleitem_helpertext"
+        errorText="PROJECT.Error_textlimit_specified_singleinput"
+        placeholder="{{
+          'DRIVING_QUESTIONS.project_drivingquestions_placeholder' | translate
+        }}"
+        (inputChange)="textAreaUpdate($event)"
+      ></app-textarea>
     </div>
     <app-button
+      id="step-seven-button"
       [disabled]="buttonConfig.disabled"
-      [theme]="buttonConfig.submitted ? 'success':'primary'"
+      [theme]="buttonConfig.submitted ? 'success' : 'primary'"
       [icon]="'tick'"
-      (click)='handleSubmit("DONE")'>
-      {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}
+      (click)="handleSubmit('DONE')"
+    >
+      {{
+        (buttonConfig.submitted
+          ? buttonConfig.successLabel
+          : buttonConfig.label
+        ) | translate
+      }}
     </app-button>
   </div>
 </div>

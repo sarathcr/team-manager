@@ -1,27 +1,34 @@
-<div class="project-editor__form step-eight">
-  <app-status [status]='step.state'></app-status>
+<div class="project-editor__form step-six" id="step-six">
+  <app-status 
+    id="step-six-status" [status]='step.state'></app-status>
   <div class="project-form d-flex flex-column justify-content-between">
     <div>
       <h1 class="project-form__title title_s">
         <span class="project-form__title-number">6.</span>{{'RETHINK_TITLE.project_rethinktitle_title' | translate}}
-        <app-info-tooltip></app-info-tooltip>
+        <app-info-tooltip id="step-six-info-tooltip"></app-info-tooltip>
       </h1>
       <p class="project-form__description" [innerHTML]="'RETHINK_TITLE.project_rethinktitle_description' | translate">
       </p>
       <div class="project-editor__input-wrapper">
-        <app-input placeholder="{{'RETHINK_TITLE.project_rethinktitle_creativetitle_placeholder' | translate }}"
-        maxlength="70" [(value)]="creativeTitle" (inputChange)="onValueChange($event)">
+        <app-input 
+          id="step-six-input"
+          placeholder="{{'RETHINK_TITLE.project_rethinktitle_creativetitle_placeholder' | translate }}"
+          maxlength="70" [(value)]="creativeTitle" (inputChange)="onValueChange($event)">
         </app-input>
       </div>
       
       <h2 class="title_xs project-form__subtitle mb-4">
         {{'RETHINK_TITLE.project_rethinktitle_addimage' | translate}}
       </h2>
-      <app-image-upload [imageURL]="creativeImage" [maxFileSize]="5242880" acceptedType="image/jpeg,image/jpg,image/png"
+      <app-image-upload 
+        id="step-six-image-upload"
+        [imageURL]="creativeImage" [maxFileSize]="5242880" acceptedType="image/jpeg,image/jpg,image/png"
         [label]="'Cargar archivo'" (fileSelect)="onFileSelect($event)">
       </app-image-upload>
     </div>
-    <app-button [disabled]='buttonConfig.disabled' [theme]="buttonConfig.submitted ? 'success':'primary'"
+    <app-button 
+      id="step-six-button"
+      [disabled]='buttonConfig.disabled' [theme]="buttonConfig.submitted ? 'success':'primary'"
       [icon]="'tick'"
       (click)='handleSubmit("DONE")'>
       {{ (buttonConfig.submitted ? buttonConfig.successLabel : buttonConfig.label) | translate }}

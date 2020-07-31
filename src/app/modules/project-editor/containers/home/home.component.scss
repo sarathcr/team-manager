@@ -1,17 +1,31 @@
 @import 'helpers/_helpers-master';
-.project{
+
+.project {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
-.creator-home{
+
+.creator-home {
   display: flex;
   flex-direction: column;
+  width: calc(100% - 187px);
+  min-height: 100vh;
+  background-color: $color-background-primary;
+  margin-left: auto;
+  padding: 75px 15px 0 38px;
+  position: relative;
+
   &__body {
     flex: 1 1 auto;
   }
-  &__pagination {
-    margin-bottom: 22px;
+
+  &__head-text {
+    font-family: $font-family-tertiary;
+    font-size: $font-size-xs;
+    line-height: 36px;
+    letter-spacing: 0.3px;
+    font-weight: 700;
+    margin-bottom: 35px;
   }
 }
-

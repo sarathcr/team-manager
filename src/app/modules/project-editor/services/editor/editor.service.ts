@@ -40,23 +40,27 @@ export class EditorService {
 
   getProject(projectId: string | number): void {
     if (projectId !== 'create') {
-      this.project$ = this.projectsService.entities$
-        .pipe(
-          map(projects => projects.find(project => {
-            return project.id === +(projectId)
-          }))
-        )
-      this.subscriptions.sink = this.project$.subscribe(project => {
-        if (project) {
-          this.projectId = project.id
-          this.notFound = false
-          this.titleData = { id: project.id, title: project.title }
-          this.getStepsStatus()
-        } else {
-          this.projectsService.getByKey(projectId.toString())
-          this.notFound = true
-        }
-      })
+      if (!(/^\d+$/.test(projectId?.toString()))) {
+        this.router.navigate(['not-found'])
+      } else {
+        this.project$ = this.projectsService.entities$
+          .pipe(
+            map(projects => projects.find(project => {
+              return project.id === +(projectId)
+            }))
+          )
+        this.subscriptions.sink = this.project$.subscribe(project => {
+          if (project) {
+            this.projectId = project.id
+            this.notFound = false
+            this.titleData = { id: project.id, title: project.title }
+            this.getStepsStatus()
+          } else {
+            this.projectsService.getByKey(projectId.toString())
+            this.notFound = true
+          }
+        })
+      }
     }
     this.loading$ = this.projectsService.loading$
     this.subscriptions.sink = this.loading$.subscribe(loading => {
@@ -95,18 +99,35 @@ export class EditorService {
                 ...subject,
                 evaluationCriteria: subject?.evaluationCriteria?.map(({ id, name }) => ({ id, name }))
               })),
-              competencyObjectives: data?.competencyObjectives?.map(({ id, name }) => ({ id, name })),
+              competencyObjectives: data?.competencyObjectives?.map(({ id, name, standards, customStandards }) => {
+                return ({ id, name,
+                  standards: standards?.map(standard => standard),
+                  customStandards: customStandards?.map(customStandard => customStandard) })
+              }),
               evaluationCriteria: data?.evaluationCriteria?.map(({ id, name, subjectId, gradeId }) => (
                 { id, name, subjectId, gradeId }))
             })
             case 4: return ({
-                ...data,
-                subjects: data?.subjects?.map(subject => ({
+              ...data,
+              subjects: data?.subjects?.map(subject => ({
                 ...subject,
                 contents: subject?.contents?.map(({ id, name }) => ({ id, name })),
                 customContents: subject?.customContents?.map(({ id, name }) => ({ id, name })),
                 evaluationCriteria: subject?.evaluationCriteria?.map(({ id, name }) => ({ id, name }))
               }))
+            })
+            case 5: return ({
+              ...data,
+              subjects: data?.subjects?.map(subject => ({
+                ...subject,
+              })),
+              competencyObjectives: data?.competencyObjectives?.map(({ id, name, standards, customStandards }) => {
+                return ({
+                  id, name,
+                  standards: standards.map(standard => standard),
+                  customStandards: customStandards.map(customStandard => customStandard)
+                })
+              }),
             })
             case 6: return {
               creativeImage: data.creativeImage,
@@ -250,6 +271,7 @@ export class EditorService {
     this.currentStepId = null
     this.nextStepId = null
     this.isStepDone = false
+    this.loaded$.next(false)
   }
 
   createSteps(): Step[] {

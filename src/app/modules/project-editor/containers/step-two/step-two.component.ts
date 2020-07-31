@@ -6,31 +6,32 @@ import { map } from 'rxjs/operators'
 import { EditorService } from '../../services/editor/editor.service'
 
 import { FormTwo } from '../../constants/model/step-forms.model'
-import { Theme, Step, Status } from 'src/app/modules/project-editor/constants/model/project.model'
-import { FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
+import {
+  Theme,
+  Step,
+  Status,
+} from 'src/app/modules/project-editor/constants/model/project.model'
 
-import { ButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
+import { StepButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-two',
   templateUrl: './step-two.component.html',
-  styleUrls: ['./step-two.component.scss']
+  styleUrls: ['./step-two.component.scss'],
 })
 export class StepTwoComponent implements OnInit, OnDestroy {
-
   project$: Observable<any>
   step$: Observable<Step>
   step: Step
-  themes$: Observable<Theme[]>
   themes: Theme[] = []
-  buttonConfig = new ButtonSubmitConfig()
+  buttonConfig = new StepButtonSubmitConfig()
   initialFormStatus: Status = 'PENDING'
   subscriptions = new SubSink()
   isFormUpdated = false
 
-  constructor(private editor: EditorService) { }
+  constructor(private editor: EditorService) {}
 
   ngOnInit(): void {
     this.stepInIt()
@@ -48,30 +49,52 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[1]
     if (this.project$) {
-      this.themes$ = this.project$.pipe(map(data => data?.themes))
+      this.subscriptions.sink = this.project$
+        .pipe(map((data) => data?.themes))
+        .subscribe((themes) => (this.themes = themes ? themes : []))
     }
     if (this.step$) {
-      this.subscriptions.sink = this.step$.subscribe(
-        formStatus => {
-          if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state === 'DONE'
-            this.initialFormStatus = formStatus.state
-            if (formStatus.state === 'INPROCESS') {
-              this.buttonConfig.disabled = false
-            }
+      this.subscriptions.sink = this.step$.subscribe((formStatus) => {
+        if (formStatus) {
+          this.buttonConfig.submitted = formStatus.state === 'DONE'
+          this.initialFormStatus = formStatus.state
+          if (formStatus.state === 'INPROCESS') {
+            this.buttonConfig.disabled = false
           }
         }
-      )
+      })
     }
   }
 
-  textAreaUpdate(data: FieldEvent): void { // calls on every update
-    this.themes = data.values
-    this.isFormUpdated = data.updated
-    if (data.updated) {
-      this.step.state = data.status
-      this.handleButtonType()
+  textAreaUpdate(data: Theme): void {
+    // calls on every update
+    this.themes.push(data)
+    this.checkStepStatus()
+    this.handleSubmit()
+  }
+
+  // Funtion updates the edited list
+  editTheme(themes: Theme[]): void {
+    this.themes = themes
+    this.checkStepStatus()
+    this.handleSubmit()
+  }
+
+  // Function updates the deleted
+  deleteTheme(themes: Theme[]): void {
+    this.themes = themes
+    this.checkStepStatus()
+    this.isFormUpdated = true
+  }
+
+  // checks current form status
+  checkStepStatus(): void {
+    if (this.themes?.length) {
+      this.step.state = 'INPROCESS'
+    } else {
+      this.step.state = 'PENDING'
     }
+    this.handleButtonType()
   }
 
   // Changes the button according to form status
@@ -97,23 +120,24 @@ export class StepTwoComponent implements OnInit, OnDestroy {
       this.initialFormStatus = 'DONE'
     }
     this.handleButtonType()
-    const tempData = this.themes.map(item => item.id == null ? { name: item.name } : item)
+    const tempData = this.themes.map((item) =>
+      item.id == null ? { name: item.name } : item
+    )
     this.themes = tempData
     const formData: FormTwo = {
       data: {
-        themes: tempData.length ? this.themes : []
+        themes: tempData.length ? this.themes : [],
       },
       stepStatus: {
         steps: [
           {
             state: this.step.state,
-            stepid: this.step.stepid
-          }
-        ]
-      }
+            stepid: this.step.stepid,
+          },
+        ],
+      },
     }
     this.isFormUpdated = false
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')
   }
-
 }

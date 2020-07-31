@@ -9,7 +9,7 @@ import { Step, Status } from '../../constants/model/project.model'
 import { FormEight } from '../../constants/model/step-forms.model'
 import { FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
 
-import { ButtonSubmitConfig } from '../../../../shared/constants/data/form-elements.data'
+import { StepButtonSubmitConfig } from '../../../../shared/constants/data/form-elements.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 
@@ -25,7 +25,7 @@ export class StepEightComponent implements OnInit, OnDestroy {
   finalProduct$: Observable<string>
   step: Step
   finalProduct = ''
-  buttonConfig = new ButtonSubmitConfig()
+  buttonConfig = new StepButtonSubmitConfig()
   initialFormStatus: Status = 'PENDING'
   subscription = new SubSink()
   isFormUpdated = false

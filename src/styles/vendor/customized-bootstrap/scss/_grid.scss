@@ -5,11 +5,11 @@
 @if $enable-grid-classes {
   // Single container class with breakpoint max-widths
   .container {
-    @include make-container($gutter: $page-offset-x *2);
-    max-width: $page-max-width + ($page-offset-x * 2);
+    @include make-container($gutter: $grid-gutter-width-primary *2);
+    max-width: $page-max-width + ($grid-gutter-width-primary * 2);
 
     @include media-breakpoint-down(md) {
-      @include make-container($gutter: $page-offset-x-mob *2);
+      @include make-container($gutter: $grid-gutter-width-primary *2);
     }
   }
 

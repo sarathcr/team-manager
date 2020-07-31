@@ -1,6 +1,6 @@
 @mixin animated-button($color, $background, $border-color, $border: false, $gradient: false, $solid: false, $hover-color: black) {
     display: inline-block;
-    padding: $padding-default/1.5 $padding-default * 1.5;
+    padding: $padding-primary/1.5 $padding-primary * 1.5;
     border: 2px solid $border-color;
     color: $color;
     margin-bottom: 0;
@@ -23,7 +23,7 @@
     outline: 0;
     @include media-query(xl) {
         font-size: $font-size-default +2;
-        padding: $padding-default+2 $padding-default * 2;
+        padding: $padding-primary+2 $padding-primary * 2;
     }
     @include transitions($duration: .2s);
     &::before {

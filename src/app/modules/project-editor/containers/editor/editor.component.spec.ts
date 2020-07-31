@@ -6,12 +6,14 @@ import { FormsModule } from '@angular/forms'
 import { DebugElement } from '@angular/core'
 
 import { TabsModule } from 'ngx-bootstrap/tabs'
+import { BehaviorSubject } from 'rxjs'
+import { BsModalService } from 'ngx-bootstrap/modal'
 
 import { EditorComponent } from './editor.component'
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component'
 import { ContextualHelpComponent } from '../contextual-help/contextual-help.component'
-import { EditorHeaderComponent } from '../../components/editor-header/editor-header.component'
-import { EditorSidebarComponent } from '../../components/editor-sidebar/editor-sidebar.component'
+import { HeaderComponent } from '../../components/header/header.component'
+import { SidebarComponent } from '../../components/sidebar/sidebar.component'
 import { ProjectTitleComponent } from '../../components/project-title/project-title.component'
 import { StepMenuComponent } from '../../components/step-menu/step-menu.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
@@ -19,7 +21,7 @@ import { ButtonComponent } from 'src/app/shared/components/button/button.compone
 import { EditorService } from '../../services/editor/editor.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { HelpEntityService } from '../../store/entity/help/help-entity.service'
-import { BehaviorSubject } from 'rxjs'
+import { Step } from '../../constants/model/project.model'
 
 class ActivatedRouteStub {
   private id: number | 'create'
@@ -39,11 +41,29 @@ class ActivatedRouteStub {
 
 class EditorServiceStub {
   loaded$ = new BehaviorSubject(true)
+  steps: Step[] = [
+    { stepid: 1, state: 'PENDING', name: '' },
+    { stepid: 2, state: 'PENDING', name: '' },
+    { stepid: 3, state: 'PENDING', name: '' },
+    { stepid: 4, state: 'PENDING', name: '' },
+    { stepid: 5, state: 'PENDING', name: '' },
+    { stepid: 6, state: 'PENDING', name: '' },
+    { stepid: 7, state: 'PENDING', name: '' },
+    { stepid: 8, state: 'PENDING', name: '' },
+    { stepid: 9, state: 'PENDING', name: '' },
+    { stepid: 10, state: 'PENDING', name: '' }
+  ]
   getProject(): void { }
   clearData(): void { }
-  createSteps(): void { }
+  createSteps(): Step[] {
+    return this.steps
+  }
   getStepData(): void { }
   getStepStatus(): void { }
+}
+
+class BsModalServiceStub {
+  show(): void { }
 }
 
 class HelpEntityServiceStub { }
@@ -59,8 +79,8 @@ describe('EditorComponent', (): void => {
         EditorComponent,
         LoaderComponent,
         ContextualHelpComponent,
-        EditorHeaderComponent,
-        EditorSidebarComponent,
+        HeaderComponent,
+        SidebarComponent,
         ProjectTitleComponent,
         StepMenuComponent,
         ButtonComponent
@@ -75,6 +95,7 @@ describe('EditorComponent', (): void => {
         { provide: EditorService, useClass: EditorServiceStub },
         { provide: ActivatedRoute, useClass: ActivatedRouteStub },
         { provide: HelpEntityService, useClass: HelpEntityServiceStub },
+        { provide: BsModalService, useClass: BsModalServiceStub }
       ]
     })
 
@@ -109,7 +130,7 @@ describe('EditorComponent', (): void => {
     expect(project).toHaveBeenCalledWith(1)
   })
 
-  it(`should get project from url if route param id is 'create'`, (): void => {
+  it(`should call service method from url if route param id is 'create'`, (): void => {
     const editor = TestBed.inject(EditorService)
     const project = spyOn(editor, 'getProject')
     const create = 'create'

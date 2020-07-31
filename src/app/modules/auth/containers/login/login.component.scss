@@ -1,0 +1,45 @@
+@import 'helpers/_helpers-master';
+.login {
+  min-height: 100vh;
+  &__left-layout {
+    max-width: 56.94%;
+  }
+  &__right-layout {
+    min-width: 43.06%;
+  }
+  &__wrap {
+    width: 470px;
+    max-width: 100%;
+  }
+  &__title {
+    line-height: 34px;
+    letter-spacing: 0.3px;
+    margin-bottom: $margin * 3;
+  }
+  &__input-wrapper {
+    margin-bottom: 38px;
+    position: relative;
+  }
+  &__forgot-password,
+  &__link {
+    cursor: pointer;
+    font-weight: 900;
+    border-bottom: 1px solid $color-tertiary;
+  }
+  &__button-wrapper {
+    margin-bottom: 28px;
+    .icon {
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+  }
+  &__password {
+    margin-bottom: $margin * 3;
+    ::ng-deep {
+      .checkbox-row__cell,
+      .checkbox-row {
+        padding: 0 !important;
+      }
+    }
+  }
+}

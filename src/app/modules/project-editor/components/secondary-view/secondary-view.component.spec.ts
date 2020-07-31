@@ -19,7 +19,13 @@ describe('SecondaryViewComponent', () => {
 
     fixture = TestBed.createComponent(SecondaryViewComponent)
     component = fixture.componentInstance
-    fixture.detectChanges()
+
+    component.labels = {
+      selectedItemText: '',
+      emptyTitle: '',
+      emptyButtonText: '',
+      emptyDescription: ''
+    }
   })
 
   it('should create', () => {

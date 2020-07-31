@@ -1,14 +1,14 @@
 <div *ngIf="colOne" class="checkbox-row"
   [ngClass]="{ 'checkbox-row__head' : isHead,
-  'selected' : checkboxData?.checked && !checkedOnly}"
-  (click)="!checkedOnly && onCheck()"
+  'selected' : checkboxData?.checked && changeBg}"
+  (click)="clickableLabel && onCheck()"
 >
   <div class="checkbox-row__cell" [ngClass]="{
     'checkbox-row__cell_xs' : colOne.size === 'xs',
     'checkbox-row__cell_m' : colOne.size === 'm',
     'checkbox-row__cell_sm' : colOne.size === 'sm',
     'checkbox-row__cell_s' : colOne.size === 's'}">
-    <div *ngIf="checkboxData" class="checkbox-row__box"  (click)="checkedOnly && onCheck()">
+    <div *ngIf="checkboxData" class="checkbox-row__box"  (click)="!clickableLabel && onCheck()">
       <input class="checkbox-row__checkbox" type="checkbox" [(ngModel)]="checkboxData.checked">
       <span class="icon-ic_check checkbox-row__checkmark"></span>
     </div>

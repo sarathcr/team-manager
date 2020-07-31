@@ -1,76 +1,112 @@
-@import 'helpers/_helpers-master';
-.form-button{
+@import "helpers/_helpers-master";
+.btn {
   $root: &;
-  ::ng-deep{
-    #{$root}__icon{
-      font-size: 24px;
-      line-height: 1;
-      margin-left: -7px;
-      margin-right: 7px;
+  border-radius: 4px;
+  font-size: $font-size-button;
+  line-height: 24px;
+  &_primary {
+    &#{$root}_text {
+      color: $color-primary;
     }
-  }
-  .btn{
-    display: flex;
-    align-items: center;
-    min-height: 48px;
-    border-radius: 4px;
-    min-width: auto;
-    padding-left: 17px;
-    padding-right: 17px;
-    font-size: $font-size-button;
-    line-height: 24px;
-    letter-spacing: 1px;
-  }
-  .btn-primary{
-    &:disabled{
-      background-color: $creator-disabled;
+    &:disabled {
+      background-color: rgba($color-tertiary, 0.1);
       border-color: transparent;
+      color: $color-quaternary;
     }
   }
-  .btn-success{
-    padding-left: 20px;
-    padding-right: 20px;
-    min-width: 120px;
-    .form-button__icon{
-      margin-left: -8px;
-    }
-    &:disabled{
-      background-color: $success;
-      border-color: $success;
-      cursor: default;
-    }
-  }
-  .btn-no-icon{
-    display: inline-block;
-  }
-  .btn-secondary{
-    color: $button-outline;
+  &_secondary {
+    color: $color-quinary;
     background: inherit;
+    &#{$root}_medium {
+      font-size: $font-size-body;
+    }
+    &:active, &:disabled {
+      background-color: unset !important;
+      border-color: unset !important;
+    }
   }
-  .btn-outline{
-    border: 1px solid $button-outline;
+  &_success {
+    &:disabled {
+      background: $color-secondary;
+      border-color: $color-secondary;
+    }
   }
-  .btn-text{
+  &_outline {
+    border: 1px solid $color-quinary;
+  }
+  &_text {
     border: none;
-    color: $primary-font-color;
     text-transform: capitalize;
+    color: $color-tertiary;
     font-family: $font-family-tertiary;
     letter-spacing: 0.2px;
     padding: 0 17px;
     min-height: auto;
-    &.btn-primary{
-      color: $primary;
-      background: inherit;
-    }
-    #{$root}__icon{
+    background: inherit;
+    #{$root}__icon {
       margin-right: 2px;
+    }
+    &:active {
+      background: none !important;
+    }
+  }
+  &_block {
+    min-width: 100%;
+    &#{$root}_secondary {
+      color: $color-tertiary;
+    }
+  }
+  &_no-icon {
+    display: inline-block;
+  }
+  &_small {
+    text-transform: capitalize;
+    min-height: 36px;
+    font-family: $font-family-tertiary;
+    font-weight: 700;
+    letter-spacing: normal;
+    min-width: auto;
+    padding: 4px 14px;
+  }
+  &_icon {
+    background-color: transparent;
+    border: none;
+    color: $color-tertiary;
+    padding: 0;
+    min-height: auto;
+    margin: 0 7px;
+    position: relative;
+    #{$root}__icon {
+      margin: 0;
+      font-size: 24px;
+    }
+    #{$root} {
+      min-width: auto;
+    }
+    &:disabled {
+      min-height: auto;
+      padding: 0;
+      color: rgba($color-tertiary, 0.1);
+      background-color: transparent;
+    }
+  }
+  &_medium {
+    padding-right: 28px;
+    padding-left: 28px;
+    min-height: 52px;
+  }
+  ::ng-deep {
+    #{$root}__icon {
+      font-size: 24px;
+      line-height: 1;
+      margin-left: -5px;
+      margin-right: 5px;
     }
   }
 }
-
-:host{
+:host {
   align-self: flex-start;
 }
-:host(.disabled){
+:host(.disabled) {
   pointer-events: none;
 }

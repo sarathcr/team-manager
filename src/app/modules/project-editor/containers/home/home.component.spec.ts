@@ -1,14 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { HomeComponent } from './home.component'
-import { HeaderComponent } from 'src/app/shared/components/header/header.component'
-import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component'
+import { MainHeaderComponent } from 'src/app/shared/components/main-header/main-header.component'
+import { MainSidebarComponent } from 'src/app/shared/components/main-sidebar/main-sidebar.component'
 import { CreateProjectComponent } from '../../components/create-project/create-project.component'
 
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
+import { ProjectListEntityService } from '../../store/entity/project-list/project-list-entity.service'
 
 
 class ProjectEntityServiceStub { }
+class ProjectListEntityServiceStub { }
 
 describe('HomeComponent', (): void => {
   let component: HomeComponent
@@ -16,8 +18,11 @@ describe('HomeComponent', (): void => {
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent, HeaderComponent, SidebarComponent, CreateProjectComponent ],
-      providers: [ { provide: ProjectEntityService, useClass: ProjectEntityServiceStub } ]
+      declarations: [ HomeComponent, MainHeaderComponent, MainSidebarComponent, CreateProjectComponent ],
+      providers: [
+        { provide: ProjectEntityService, useClass: ProjectEntityServiceStub },
+        { provide: ProjectListEntityService, useClass: ProjectListEntityServiceStub },
+      ]
     })
 
     fixture = TestBed.createComponent(HomeComponent)

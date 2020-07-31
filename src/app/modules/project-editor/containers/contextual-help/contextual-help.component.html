@@ -1,4 +1,4 @@
-<div class="contextual-help" [ngClass]="{ 'contextual-help_open' : closeContext}">
+<div id="contextual-help" class="contextual-help" [ngClass]="{ 'contextual-help_open' : closeContext}">
   <tabset class="contextual-help__tabset">
     <tab customClass="contextual-help__tabset-item contextual-help__tabset-item_multi-icon" [active]="false" (selectTab)="openTab($event)">
       <ng-template tabHeading>
@@ -12,8 +12,10 @@
             <span class="icon icon-ic_share_close"></span>
           </button>
         </div>
-        <app-loader *ngIf="!loaded"></app-loader>
-        <app-help-accordion  *ngIf="loaded" [content]='help' [isOpen]='closeContext'></app-help-accordion>
+        <app-loader id="contextual-help-loader" *ngIf="!loaded"></app-loader>
+        <app-help-accordion id="contextual-help-accordian" 
+          *ngIf="loaded" [content]='help' [isOpen]='closeContext'>
+        </app-help-accordion>
       </div>
     </tab>
     <!-- <tab customClass="contextual-help__tabset-item" (selectTab)="openTab($event)">

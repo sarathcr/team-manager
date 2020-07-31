@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
 
 import { map } from 'rxjs/operators'
 
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 
 import { Grade, ContentModal, ContentsWithSkills } from 'src/app/modules/project-editor/constants/model/project.model'
-import { PrincipalModalColData,
+import {
+  PrincipalModalColData,
   PrincipalModalColHead
 } from '../../constants/model/principle-view.model'
 import { Option } from 'src/app/shared/constants/model/form-elements.model'
@@ -13,6 +15,7 @@ import { Observable } from 'rxjs'
 import { Block } from '../../constants/model/curriculum.model'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { environment } from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -26,15 +29,13 @@ export class ContentService {
   blockData: Block[] = []
   contentIds: number[]
   modalColumns: PrincipalModalColData = {}
-  currentBlockIndex = 0
   selectedGrades: Grade[]
-
   subscriptions = new SubSink()
   grades: Grade[]
 
 
   constructor(
-    private blockService: BlockEntityService,
+    private blockService: BlockEntityService, private http: HttpClient
   ) { }
 
   changeColHead(colHead: PrincipalModalColHead, colName: string): void {
@@ -87,11 +88,19 @@ export class ContentService {
     }
   }
 
+  flattenArray(arr: any): [] {
+    return arr.reduce((flat, toFlatten) => {
+      return flat.concat(Array.isArray(toFlatten) ? this.flattenArray(toFlatten) : toFlatten)
+    }, [])
+  }
+
   getBlocks(selectedGrade: Grade): void {
     const gradeBlocks = this.gradeIds.map(id => ({id, count: 0}))
     this.subscriptions.sink = this.blockService.entities$
       .pipe(map(data => {
-        this.createBlockData(data, gradeBlocks)
+        const filteredData = this.flattenArray(gradeBlocks.map(gradeBlock =>
+          data.filter(item => item.gradeId === gradeBlock.id)))
+        this.createBlockData(filteredData, gradeBlocks)
         return data.filter(block => block.subjectId === this.subject.id && this.gradeIds.includes(block.gradeId))
       }))
       .subscribe(data => {
@@ -110,6 +119,14 @@ export class ContentService {
         }
         this.loading$ = this.blockService.loading$
       })
+  }
+
+  getGrades(params: any): Observable<Grade[]> {
+    return this.http.get<Grade[]>
+      (`${environment.apiUrl.curriculumService}/evaluationcriteria/${params.evaluationcriteriaIds}/grades`)
+    .pipe(
+        map(res => res)
+    )
   }
 
   resetData(): void {

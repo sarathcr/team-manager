@@ -24,7 +24,6 @@
 
 html {
   font-family: sans-serif; // 2
-  line-height: 1.15; // 3
   -webkit-text-size-adjust: 100%; // 4
   -webkit-tap-highlight-color: rgba($black, 0); // 5
 }
@@ -48,8 +47,8 @@ body {
   font-family: $font-family-default;
   font-size: $font-size-default;
   font-weight: $font-weight-default;
-  line-height: $line-height-default;
-  color: $primary-font-color;
+  line-height: 24px;
+  color: $color-tertiary;
   text-align: left; // 3
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -87,8 +86,7 @@ hr {
 // margin for easier control within type scales as it avoids margin collapsing.
 // stylelint-disable-next-line selector-list-comma-newline-after
 h1, h2, h3, h4, h5, h6 {
-  margin-top: 0;
-  margin-bottom: $padding-default;
+  margin: 0;
 }
 
 // Reset margins on paragraphs
@@ -97,7 +95,6 @@ h1, h2, h3, h4, h5, h6 {
 // bottom margin to use `rem` units instead of `em`.
 p {
   margin-top: 0;
-  margin-bottom: $padding-default;
 }
 
 // Abbreviations
@@ -126,8 +123,7 @@ address {
 ol,
 ul,
 dl {
-  margin-top: 0;
-  margin-bottom: $padding-default
+  margin: 0;
 }
 
 ol ol,
@@ -141,10 +137,6 @@ ul ol {
 dd {
   margin-bottom: .5rem;
   margin-left: 0; // Undo browser default
-}
-
-blockquote {
-  margin: 0 0 1rem;
 }
 
 b,
@@ -204,14 +196,6 @@ table {
   border-collapse: collapse; // Prevent double borders
 }
 
-caption {
-  padding-top: $table-cell-padding;
-  padding-bottom: $table-cell-padding;
-  color: $table-caption-color;
-  text-align: left;
-  caption-side: bottom;
-}
-
 th {
   // Matches default `<td>` alignment by inheriting from the `<body>`, or the
   // closest parent with a set `text-align`.
@@ -244,7 +228,6 @@ svg {
 label {
   // Allow labels to use `margin` for spacing.
   display: inline-block;
-  margin-bottom: $padding-default;
 }
 
 // Remove the default `border-radius` that macOS Chrome adds.
@@ -348,8 +331,7 @@ legend {
   width: 100%;
   max-width: 100%; // 1
   padding: 0;
-  margin-bottom: .5rem;
-  font-size: 1.5rem;
+  margin: 0;
   line-height: inherit;
   color: inherit; // 2
   white-space: normal; // 1
@@ -413,4 +395,37 @@ template {
 // Needed for proper display in IE 10-.
 [hidden] {
   display: none !important;
+}
+
+body{
+  ::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3.5px;
+    background-color: rgba($color-tertiary,0.1);
+  }
+
+  ::-webkit-scrollbar:horizontal {
+    height: 7px;
+  }
+}
+
+:focus{
+  outline: none;
+}
+
+.modal{
+  .modal-dialog{
+    width: 87.5%;
+  }
 }

@@ -11,17 +11,23 @@ import { CheckBoxComponent } from 'src/app/shared/components/checkbox/checkbox.c
 import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 import { CheckCount } from '../../pipes/check-count.pipe'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
+import { ContentService } from '../../services/contents/contents.service'
 
 class BlockEntityServiceStub { }
+class ContentServiceStub { }
 
-describe('CompetencyModalContentComponent', () => {
+describe('PrincipalViewComponent', () => {
   let component: PrincipalViewComponent
   let fixture: ComponentFixture<PrincipalViewComponent>
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ PrincipalViewComponent, CheckBoxComponent, DropdownComponent, CheckCount, ButtonComponent  ],
-      providers: [ BsModalRef, { provide: BlockEntityService, useClass: BlockEntityServiceStub } ],
+      providers: [
+        BsModalRef,
+        { provide: BlockEntityService, useClass: BlockEntityServiceStub },
+        { provide: ContentService, useClass: ContentServiceStub }
+      ],
       imports: [ TranslateModule.forRoot(), FormsModule ]
     })
 

@@ -15,7 +15,8 @@ export class CheckBoxComponent {
   @Input() colTwo: CheckBoxColumn
   @Input() colThree: CheckBoxColumn
   @Input() colFour: CheckBoxColumn
-  @Input() checkedOnly = false
+  @Input() changeBg = false
+  @Input() clickableLabel = true
   @Output() checked: EventEmitter<any> = new EventEmitter()
 
   constructor() { }

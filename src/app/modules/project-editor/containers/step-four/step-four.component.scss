@@ -24,7 +24,7 @@
     &_row{
       font-family: $font-family-tertiary;
       font-size: $font-size-body-s;
-      line-height: $line-height-24px;
+      line-height: 24px;
       letter-spacing: 0;
       font-weight: 400;
       margin: 0 -15px;
@@ -76,8 +76,8 @@
             left: 0;
             height: 19px;
             width: 19px;
-            background-color: $checkbox-row-secondary-color;
-            border: 1px solid $primary-font-color;
+            background-color: $color-quaternary;
+            border: 1px solid $color-tertiary;
             opacity: 0.1;
             border-radius: 2px;
 
@@ -92,10 +92,10 @@
         }
 
         #{$root}__checkbox:checked ~ #{$root}__checkmark{
-            background-color: $checkbox-row-secondary-color;
-            color: $checkbox-row-primary-color;
+            background-color: $color-quaternary;
+            color: $color-primary;
             opacity: 1;
-            border: 1px solid $checkbox-row-primary-color;
+            border: 1px solid $color-primary;
         }
 
         #{$root}__checkbox:checked ~ #{$root}__checkmark::before{

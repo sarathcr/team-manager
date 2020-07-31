@@ -1,0 +1,54 @@
+<div class="modal-form__header">
+  <h4 class="modal-form__title title_xs">
+    {{ title | translate }}
+  </h4>
+  <button
+    class="close modal-form__close"
+    type="button"
+    aria-label="Close"
+    (click)="onDecline()"
+  >
+    <span class="icon icon-ic_share_close"></span>
+  </button>
+</div>
+<div class="modal-form__body">
+  <div class="modal-form__input" *ngIf="variant == 'input'">
+    <app-input
+      [(value)]="data"
+      (inputChange)="onValueChange($event)"
+      [initFocus]="true"
+      [maxlength]="maxLength"
+      [enableValidator]="true"
+      [label]="label"
+      [helperText]="helperText"
+      [errorText]="errorText"
+    ></app-input>
+  </div>
+  <div class="modal-form__textarea" *ngIf="variant == 'textarea'">
+    <app-textarea
+      [value]="data"
+      size="small"
+      [initFocus]="true"
+      [maxLength]="maxLength"
+      [enableValidator]="true"
+      [label]="label"
+      [helperText]="helperText"
+      [errorText]="errorText"
+      (inputChange)="onTextareaValueChange($event)"
+    ></app-textarea>
+  </div>
+</div>
+<div class="modal-form__footer">
+  <ng-container>
+    <div class="modal-form__button-wrapper">
+      <app-button
+        id="project-title-submit-button"
+        [disabled]="status === 'PENDING'"
+        (click)="onConfirm()"
+        #inputButton
+      >
+        {{ confirmLabel | translate }}
+      </app-button>
+    </div>
+  </ng-container>
+</div>

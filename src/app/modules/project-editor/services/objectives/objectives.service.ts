@@ -29,7 +29,6 @@ export class ObjectiveService {
   blockData: Block[] = []
   criteriaIds: number[]
   modalColumns: PrincipalModalColData = {}
-  currentBlockIndex = 0
   dropDownConfig: DropdownCustom
   selectedGrades: Grade[]
   subscriptions = new SubSink()
@@ -85,7 +84,7 @@ export class ObjectiveService {
       colOneHead = colOneHeadData
       colTwoHead = colTwoHeadData
       const colThreeData = this.grades.find(grade => (grade.id === block.gradeId)).name
-      const colFourData = `${blockIndex}. ${block.name}`
+      const colFourData = `${block.name}`
       const checked = this.criteriaIds.includes(criteria.id)
 
       return { ...criteria, checked, colOneData, colTwoData, colThreeData, colFourData }
