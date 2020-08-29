@@ -1,6 +1,6 @@
+import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { HttpRequest, HttpHandler, HttpInterceptor } from '@angular/common/http'
-import { Observable, BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { AuthService } from 'src/app/modules/auth/services/auth.service'
 
 @Injectable()
@@ -13,8 +13,8 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(public authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    // if (this.authService.getJwtToken()) {
-    //   request = this.addToken(request, this.authService.getJwtToken())
+    // if (this.authService.isLoggedIn()) {
+    //   request = this.addToken(request, this.authService.isLoggedIn())
     // }
 
     return next.handle(request)

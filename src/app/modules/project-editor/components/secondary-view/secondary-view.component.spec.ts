@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { TranslateModule } from '@ngx-translate/core'
 
-import { SecondaryViewComponent } from './secondary-view.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
+import { SecondaryViewComponent } from './secondary-view.component'
 
 import { CheckCount } from '../../pipes/check-count.pipe'
 
@@ -13,8 +13,8 @@ describe('SecondaryViewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ SecondaryViewComponent, CheckCount, ButtonComponent ],
-      imports: [ TranslateModule.forRoot() ]
+      declarations: [SecondaryViewComponent, CheckCount, ButtonComponent],
+      imports: [TranslateModule.forRoot()],
     })
 
     fixture = TestBed.createComponent(SecondaryViewComponent)
@@ -24,7 +24,7 @@ describe('SecondaryViewComponent', () => {
       selectedItemText: '',
       emptyTitle: '',
       emptyButtonText: '',
-      emptyDescription: ''
+      emptyDescription: '',
     }
   })
 

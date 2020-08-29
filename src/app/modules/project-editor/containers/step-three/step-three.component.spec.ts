@@ -1,29 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { TranslateModule } from '@ngx-translate/core'
-import { Router } from '@angular/router'
 import { DebugElement } from '@angular/core'
-import { By } from '@angular/platform-browser'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
+import { By } from '@angular/platform-browser'
+import { Router } from '@angular/router'
+import { TranslateModule } from '@ngx-translate/core'
 
 import { BsModalService } from 'ngx-bootstrap/modal'
 import { BehaviorSubject, Observable } from 'rxjs'
 
-import { StepThreeComponent } from './step-three.component'
-import { TextareaComponent } from 'src/app/shared/components/textarea/textarea.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
-import { StatusComponent } from '../../components/status/status.component'
 import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
-import { StepUnlockComponent } from '../../components/step-unlock/step-unlock.component'
 import { LoaderComponent } from 'src/app/shared/components/loader/loader.component'
-import { DetailsSelectorComponent } from '../../components/details-selector/details-selector.component'
-import { TextareaListComponent } from 'src/app/shared/components/textarea/textarea-list/textarea-list.component'
+import { TextareaComponent } from 'src/app/shared/components/textarea/textarea.component'
+import { StepStatusComponent } from '../../components/step-status/step-status.component'
+import { StepUnlockComponent } from '../../components/step-unlock/step-unlock.component'
+import { StepThreeComponent } from './step-three.component'
 
+import { DetailsSelectorComponent } from 'src/app/shared/components/details-selector/details-selector.component'
 import { EditorService } from '../../services/editor/editor.service'
+import { ObjectiveService } from '../../services/objectives/objectives.service'
+import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
+import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
-import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
-import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
-import { ObjectiveService } from '../../services/objectives/objectives.service'
 
 import { Status } from '../../constants/model/project.model'
 import { FormThree } from '../../constants/model/step-forms.model'
@@ -98,13 +97,12 @@ describe('StepThreeComponent', (): void => {
         StepThreeComponent,
         TextareaComponent,
         ButtonComponent,
-        StatusComponent,
+        StepStatusComponent,
         InfoToolTipComponent,
         LoaderComponent,
         StepUnlockComponent,
         DetailsSelectorComponent,
         TextareaComponent,
-        TextareaListComponent,
       ],
       providers: [
         { provide: ProjectEntityService, useClass: ProjectEntityServiceStub },
@@ -176,19 +174,15 @@ describe('StepThreeComponent', (): void => {
     expect(unlockElement).toBeTruthy()
   })
 
-  it('should show textarea and button section if subjects are present in project', () => {
+  it('should show button section if subjects are present in project', () => {
     editorSpies('PENDING')
     editor.loading$ = new BehaviorSubject(false)
     editor.project$ = new BehaviorSubject(dummyProject)
     component.project = dummyProject
 
     fixture.detectChanges()
-    const textAreaElement: Element = fixture.debugElement.query(
-      By.directive(TextareaComponent)
-    ).nativeElement
     const buttonElement: Element = getButtonElement().nativeElement
 
-    expect(textAreaElement).toBeTruthy()
     expect(component.buttonConfig.submitted).toBeFalsy()
     expect(component.buttonConfig.disabled).toBeTruthy()
     expect(buttonElement.textContent).toContain(
@@ -203,16 +197,12 @@ describe('StepThreeComponent', (): void => {
     component.project = dummyProject
 
     fixture.detectChanges()
-    const textAreaElement: Element = fixture.debugElement.query(
-      By.directive(TextareaComponent)
-    ).nativeElement
     const buttonElement: Element = getButtonElement().nativeElement
-
-    component.textAreaUpdate({ name: 'lorem ipsum' })
+    component.competencyObjectives = [{ id: 1, name: 'lorem ipsum' }]
+    component.addObjectives()
 
     fixture.detectChanges()
 
-    expect(textAreaElement).toBeTruthy()
     expect(component.buttonConfig.submitted).toBeFalsy()
     expect(component.buttonConfig.disabled).toBeTruthy()
     expect(buttonElement.textContent).toContain(
@@ -227,16 +217,12 @@ describe('StepThreeComponent', (): void => {
     component.project = dummyProject
 
     fixture.detectChanges()
-    const textAreaElement: Element = fixture.debugElement.query(
-      By.directive(TextareaComponent)
-    ).nativeElement
     const buttonElement: Element = getButtonElement().nativeElement
 
-    component.textAreaUpdate({ name: 'lorem ipsum' })
+    component.addObjectives()
 
     fixture.detectChanges()
 
-    expect(textAreaElement).toBeTruthy()
     expect(component.buttonConfig.submitted).toBeFalsy()
     expect(component.buttonConfig.disabled).toBeTruthy()
     expect(buttonElement.textContent).toContain(
@@ -271,19 +257,16 @@ describe('StepThreeComponent', (): void => {
     spyOn(component.modalRef, 'hide')
 
     fixture.detectChanges()
-    const textAreaElement: Element = fixture.debugElement.query(
-      By.directive(TextareaComponent)
-    ).nativeElement
     const buttonElement: Element = getButtonElement().nativeElement
     component.project.subjects[0].evaluationCriteria.push(dummyData)
     component.handleModalSubmit({
       subject: dummyProject.subjects[0],
       selectedItem: [dummyData],
     })
-    component.textAreaUpdate({ name: 'lorem ipsum' })
+    component.competencyObjectives = [{ id: 1, name: 'lorem ipsum' }]
+    component.addObjectives()
     fixture.detectChanges()
 
-    expect(textAreaElement).toBeTruthy()
     expect(component.buttonConfig.submitted).toBeFalsy()
     expect(component.buttonConfig.disabled).toBeFalsy()
     expect(buttonElement.textContent).toContain(
@@ -304,23 +287,19 @@ describe('StepThreeComponent', (): void => {
     spyOn(component.modalRef, 'hide')
 
     fixture.detectChanges()
-    const textAreaElement: Element = fixture.debugElement.query(
-      By.directive(TextareaComponent)
-    ).nativeElement
     const buttonElement: DebugElement = getButtonElement()
     component.project.subjects[0].evaluationCriteria.push(dummyData)
     component.handleModalSubmit({
       subject: dummyProject.subjects[0],
       selectedItem: [dummyData],
     })
-    component.textAreaUpdate({ name: 'lorem ipsum' })
+    component.addObjectives()
     fixture.detectChanges()
 
     buttonElement.triggerEventHandler('click', null)
 
     fixture.detectChanges()
 
-    expect(textAreaElement).toBeTruthy()
     expect(component.buttonConfig.submitted).toBeTruthy()
     expect(component.buttonConfig.disabled).toBeTruthy()
     expect(buttonElement.nativeElement.textContent).toContain(
@@ -350,7 +329,7 @@ describe('StepThreeComponent', (): void => {
         subject: dummyProject.subjects[0],
         selectedItem: [dummyData],
       })
-      component.textAreaUpdate({ name: 'lorem ipsum' })
+      component.addObjectives()
       fixture.detectChanges()
       const formData: FormThree = {
         data: {
@@ -460,7 +439,8 @@ describe('StepThreeComponent', (): void => {
       subject: dummyProject.subjects[0],
       selectedItem: [dummyData],
     })
-    component.textAreaUpdate({ name: 'lorem ipsum' })
+    component.competencyObjectives = [{ id: 1, name: 'lorem ipsum' }]
+    component.addObjectives()
 
     fixture.detectChanges()
 

@@ -1,0 +1,114 @@
+<app-modal-layout
+  class="add-material"
+  [modalTitle]="currentView === 1 ? 'ADD_MATERIAL.material_add_title' : ''"
+  [titleLighten]="true"
+  [hasClose]="currentView != 3"
+  [confirmLabel]="
+    currentView == 3
+      ? 'ADD_MATERIAL.material_add_checktemplates_button_create'
+      : activeTab == 1
+      ? 'ADD_MATERIAL.material_add_button_add'
+      : ''
+  "
+  [backLabel]="
+    currentView == 2 ? 'ACTIVITY_HEADER.activity_header_button_back' : ''
+  "
+  [isDisabled]="currentView === 1 && activeTab === 1 && linkStatus !== 'success'"
+  (decline)="onDecline($event)"
+  (confirm)="onConfirm($event)"
+  (backClick)="previousView()"
+>
+  <ng-container *ngIf="currentView === 1">
+    <div class="add-material__tabset">
+      <app-tabset
+        [tabs]="addMaterialTabs"
+        (activeTab)="getActiveTab($event)"
+      ></app-tabset>
+    </div>
+    <div class="add-material__card" *ngIf="activeTab === 0">
+      <div class="add-material__card-wrapper">
+        <app-google-card
+          variant="slide"
+          title="ADD_MATERIAL.material_add_type_presentation"
+          subtitle="ADD_MATERIAL.material_add_type_presentation_gslides"
+          (openModal)="changeView($event)"
+        ></app-google-card>
+      </div>
+      <div class="add-material__card-wrapper">
+        <app-google-card
+          variant="site"
+          title="ADD_MATERIAL.material_add_type_web"
+          subtitle="ADD_MATERIAL.material_add_type_web_gsites"
+        ></app-google-card>
+      </div>
+
+      <div class="add-material__card-wrapper">
+        <app-google-card
+          variant="doc"
+          title="ADD_MATERIAL.material_add_type_doc"
+          subtitle="ADD_MATERIAL.material_add_type_gdocs"
+        ></app-google-card>
+      </div>
+
+      <div class="add-material__card-wrapper">
+        <app-google-card
+          variant="form"
+          title="ADD_MATERIAL.material_add_type_form"
+          subtitle="ADD_MATERIAL.material_add_type_gforms"
+        ></app-google-card>
+      </div>
+
+      <div class="add-material__card-wrapper">
+        <app-google-card
+          variant="sheet"
+          title="ADD_MATERIAL.material_add_type_table"
+          subtitle="ADD_MATERIAL.material_add_type_gsheets"
+        ></app-google-card>
+      </div>
+    </div>
+    <div class="d-flex flex-column" *ngIf="activeTab === 1">
+      <div class="material-link-wrapper">
+        <app-material-link
+          linkTitle="ADD_MATERIAL.material_add_link_title"
+          [link]="url"
+          [linkContent]="linkContent"
+          [status]="linkStatus"
+          (submitted)="getLinkDetails($event)"
+        ></app-material-link>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 2"></div>
+    <div *ngIf="activeTab === 3"></div>
+  </ng-container>
+  <div *ngIf="currentView === 2" class="presentation">
+    <h4 class="presentation__title">
+      {{
+        'ADD_MATERIAL.material_add_material_presentation_choosetemplate_title'
+          | translate
+      }}
+    </h4>
+    <p class="presentation__content">
+      {{
+        'ADD_MATERIAL.material_add_material_choosetemplate_description'
+          | translate
+      }}
+    </p>
+    <div (click)="nextView()" class="add-material__card">
+      <div class="add-material__card-wrapper w-25">
+        <app-presentation-card variant="create"> </app-presentation-card>
+      </div>
+      <div class="add-material__card-wrapper w-25">
+        <app-presentation-card> </app-presentation-card>
+      </div>
+      <div class="add-material__card-wrapper w-25">
+        <app-presentation-card [isPremium]="true"> </app-presentation-card>
+      </div>
+      <div class="add-material__card-wrapper w-25">
+        <app-presentation-card [isPremium]="true"> </app-presentation-card>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="currentView === 3">
+    Third View
+  </ng-container>
+</app-modal-layout>

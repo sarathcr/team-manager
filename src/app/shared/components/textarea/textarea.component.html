@@ -1,6 +1,6 @@
 <div
-  class="textarea-wrapper"
-  *ngIf="variant == 'default' || variant == 'listItem'; else otherVariants"
+  class="textarea-wrapper {{ customClass }}"
+  *ngIf="variant == 'default' || variant == 'listItem'"
 >
   <div
     class="textarea d-flex"
@@ -8,17 +8,27 @@
       textarea_focus: focus,
       textarea__list: variant == 'listItem',
       textarea_error: enableValidator
-        ? validator.limitExceeds && !(value.length == 0)
+        ? validator.limitExceeds && !(value?.length == 0)
         : null,
+      textarea_active: value,
       textarea_small: size == 'small',
-      textarea_active: value
+      textarea_medium: size == 'medium'
     }"
   >
-    <label class="textarea__label" *ngIf="label">{{ label | translate }}</label>
+    <label
+      class="textarea__label"
+      [ngClass]="{
+        textarea__label_white: background === 'white',
+        'textarea__label_white-lilac': background === 'white-lilac'
+      }"
+      *ngIf="label"
+      >{{ label | translate }}</label
+    >
     <textarea
       class="textarea__description"
       [attr.maxlength]="maxLength"
       [placeholder]="focus ? '' : placeholder"
+      background="background"
       [ngModel]="value"
       (ngModelChange)="onValueChange($event)"
       (blur)="onBlur($event)"
@@ -26,6 +36,7 @@
       value="{{ value }}"
       (keydown)="onKeyDown($event, validator.limitExceeds)"
       (keyup)="onKeyUp($event, validator)"
+      (paste)="onPaste($event, validator)"
       #textarea
     ></textarea>
     <span
@@ -51,18 +62,3 @@
     </app-validator>
   </div>
 </div>
-
-<ng-template #otherVariants>
-  <app-textarea-list
-    [placeholder]="placeholder"
-    [label]="label"
-    [maxLength]="maxLength"
-    [lineLimit]="lineLimit"
-    [value$]="value$"
-    [size]="size"
-    [variant]="variant"
-    [toggleData]="toggleData"
-    [initFocus]="initFocus"
-    (inputChange)="inputChange.emit($event)"
-  ></app-textarea-list>
-</ng-template>

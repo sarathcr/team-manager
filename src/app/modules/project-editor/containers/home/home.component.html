@@ -1,28 +1,38 @@
 <div class="creator-home" id="creator-home">
-    <app-main-sidebar id="sidebar"></app-main-sidebar>
-    <app-main-header id="creator-header"></app-main-header>
-    <h1 class="creator-home__head-text">{{title}}</h1>
-    <div class="creator-home__body">
-        <div class="project">
-            <app-create-project 
-              id="create-project"
-              routerLink="../project/create" id="add-project">
-            </app-create-project>
-            <app-project-thumbnail *ngFor="let project of (projects$ | async)?.projects; index as i;"
-                id="list-project-{{i}}" [project]="project">
-            </app-project-thumbnail>
-        </div>
-        <app-loader id="create-home-loader" *ngIf="loading" variant="block"></app-loader>
+  <app-main-sidebar id="sidebar"></app-main-sidebar>
+  <app-main-header id="creator-header"></app-main-header>
+  <h1 class="creator-home__head-text">{{ title }}</h1>
+  <div class="creator-home__body">
+    <div class="project">
+      <app-create-project
+        id="create-project"
+        routerLink="../project/create/1"
+        id="add-project"
+      >
+      </app-create-project>
+      <app-project-thumbnail
+        *ngFor="let project of (projects$ | async)?.projects; index as i"
+        id="list-project-{{ i }}"
+        [project]="project"
+      >
+      </app-project-thumbnail>
     </div>
-    <div class="creator-home__pagination mb-8">
-        <app-pagination 
-            id="pagination"
-            *ngIf="loaded"
-            [totalItems]="totalItems" 
-            [maxSize]="7"
-            [itemsPerPage]="10"
-            [disabled]="loading"
-            (pageChanged)="pageChanged($event)">
-        </app-pagination>
-    </div>
+    <app-loader
+      id="create-home-loader"
+      *ngIf="loading"
+      variant="block"
+    ></app-loader>
+  </div>
+  <div class="creator-home__pagination mb-8">
+    <app-pagination
+      id="pagination"
+      *ngIf="loaded"
+      [totalItems]="totalItems"
+      [maxSize]="7"
+      [itemsPerPage]="10"
+      [disabled]="loading"
+      (pageChanged)="pageChanged($event)"
+    >
+    </app-pagination>
+  </div>
 </div>

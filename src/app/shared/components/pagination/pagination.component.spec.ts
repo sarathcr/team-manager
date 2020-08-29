@@ -10,8 +10,8 @@ describe('PaginationComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ PaginationComponent ],
-      imports: [ PaginationModule.forRoot() ]
+      declarations: [PaginationComponent],
+      imports: [PaginationModule.forRoot()],
     })
     fixture = TestBed.createComponent(PaginationComponent)
     component = fixture.componentInstance

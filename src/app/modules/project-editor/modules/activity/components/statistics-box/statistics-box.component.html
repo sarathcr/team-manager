@@ -1,0 +1,98 @@
+<div class="statistics-box p-6">
+  <div class="statistics-box__upper-icon" *ngIf="variant == 'chart'">
+    <span class="icon icon-ic" [ngClass]="getIconClass(data.icon)"></span>
+  </div>
+  <div class="statistics-box__body">
+    <div
+      class="statistics-box__title"
+      [ngClass]="
+        variant === 'chart'
+          ? 'statistics-box__title_chart'
+          : 'statistics-box__title_resume'
+      "
+    >
+      <div class="statistics-box__title_supertitle" *ngIf="variant == 'resume'">
+        {{ data.supertitle }}
+      </div>
+      <div class="statistics-box__title_main title_s">
+        {{ data.title }}
+      </div>
+    </div>
+    <div class="statistics-box__content" *ngIf="variant == 'resume'">
+      <ng-container *ngFor="let phase of data.phases; let i = index">
+        <div class="statistics-box__content-firstRow">
+          <span
+            class="statistics-box__report statistics-box__report-number"
+            [ngClass]="{
+              'statistics-box__report-completed': phase.total > 0
+            }"
+          >
+            {{ phase.total }}
+          </span>
+          <span class="statistics-box__report-text">
+            {{ phase.text }}
+          </span>
+        </div>
+        <div
+          class="statistics-box__content-firstRow-separator"
+          *ngIf="i != data.phases.length - 1"
+        ></div>
+      </ng-container>
+    </div>
+    <div class="statistics-box__content" *ngIf="variant == 'chart'">
+      <div class="statistics-box__content-row">
+        <div
+          (click)="
+            !data.hasValue && !data?.charDoubleValue?.current
+              ? updateInfo(data)
+              : null
+          "
+          class="statistics-box__status"
+          [ngClass]="
+            !data.hasValue && !data?.charDoubleValue?.current
+              ? 'statistics-box__status-link'
+              : ''
+          "
+        >
+          {{ data.infoText }}
+        </div>
+        <div class="statistics-box__status" *ngIf="data.hasValue">
+          <span class="statistics-box__status-result">
+            {{ data.actionValue | minutesToHour }}
+          </span>
+          <span class="statistics-box__status-total">
+            {{ data.actionValueUnit }}
+          </span>
+          <span
+            class="statistics-box__status-icon"
+            (click)="updateInfo(data)"
+          ></span>
+        </div>
+      </div>
+    </div>
+    <div class="statistics-box__chart" *ngIf="variant == 'chart'">
+      <div
+        class="statistics-box__chart-filled-box"
+        [ngStyle]="{
+          transform: 'rotate(' + transformPercentage(data.progress) + 'deg)'
+        }"
+      >
+        <div class="statistics-box__chart-quarter"></div>
+        <div class="statistics-box__chart-ball"></div>
+      </div>
+    </div>
+    <div class="statistics-box__chart-cover" *ngIf="variant == 'chart'"></div>
+
+    <div class="statistics-box__chart-content" *ngIf="variant == 'chart'">
+      <div class="statistics-box__chart-data data-time" *ngIf="data.chartText">
+        {{ data.chartText }}
+      </div>
+      <div class="statistics-box__chart-data" *ngIf="!data.chartText">
+        <span>{{ data.charDoubleValue.current }}</span>
+        <span class="statistics-box__chart-total">
+          / {{ data.charDoubleValue.total }}</span
+        >
+      </div>
+    </div>
+  </div>
+</div>

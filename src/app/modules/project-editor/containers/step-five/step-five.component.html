@@ -1,6 +1,9 @@
 <ng-template #loaded>
   <div class="project-editor__form step-five" id="step-five">
-    <app-status id="step-five-status" [status]="step.state"></app-status>
+    <app-step-status
+      id="step-five-status"
+      [status]="step.state"
+    ></app-step-status>
     <div class="project-form d-flex flex-column justify-content-between">
       <div>
         <h1 class="project-form__title title_s">
@@ -40,24 +43,33 @@
               [subject]="competency"
               [subjectItem]="competency.standards"
               (deleteById)="openDeleteStandardConfirmationModal($event)"
-              [project$]="project$"
               (add)="openModalWithComponent(i, $event)"
               [variant]="allSubjectshasCriterias ? 'add' : 'locked'"
             >
             </app-details-selector>
-            <div class="project-form__textarea-wrapper">
-              <app-textarea
-                variant="toggle"
-                toggleData="STANDARDS.project_standards_extrastandards"
-                label="STANDARDS.project_standards_extrastandards_input"
-                size="small"
-                [initFocus]="true"
-                [maxLength]="150"
-                (inputChange)="textareaDataChange($event, i)"
-                [value$]="subjectTextArea[i]?.options$"
-              >
-              </app-textarea>
-            </div>
+            <app-editable-list
+              id="step-five-editable-list"
+              [variant]="'optional'"
+              [list]="competency.customStandards"
+              [maxLength]="150"
+              [isTextareaActive]="activeEditableLists.includes(competency.id)"
+              [initFocus]="competency.id == activeTextarea"
+              editModalTitle="STANDARDS.project_standards_extrastandards_edit_title"
+              editModalLabel="STANDARDS.project_standards_extrastandards_edit_label"
+              editModalbuttonLabel="PROJECT.project_button_save"
+              deleteModalTitle="STANDARDS.project_standards_extrastandards_delete_confirmation_title"
+              deleteModalDescription="STANDARDS.project_standards_extrastandards_delete_confirmation_message"
+              deleteModalbuttonLabel="PROJECT.project_button_delete"
+              helperText="PROJECT.project_input_singleitem_helpertext"
+              errorText="PROJECT.Error_textlimit_specified_singleinput"
+              optionalButtonLabel="OBJECTIVES.project_objectives_criteriawindow_add"
+              optionalTitle="STANDARDS.project_standards_extrastandards_input"
+              optionalPlaceholder="STANDARDS.project_standards_extrastandards_placeholder"
+              (addItem)="textareaDataChange($event, i)"
+              (editItem)="textItemEdit($event, i)"
+              (deleteItem)="textItemDelete($event, i)"
+              (textareaActive)="updateEditableListStatus(competency.id)"
+            ></app-editable-list>
           </div>
         </ng-template>
       </div>

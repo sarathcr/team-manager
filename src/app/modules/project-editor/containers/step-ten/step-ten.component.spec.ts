@@ -3,17 +3,17 @@ import { Router } from '@angular/router'
 
 import { TranslateModule } from '@ngx-translate/core'
 
-import { StepTenComponent } from './step-ten.component'
 import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
+import { StepTenComponent } from './step-ten.component'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 
-class EditorServiceStub { }
-class ProjectEntityServiceStub { }
-class StepStatusEntityServiceStub { }
-class RouterStub { }
+class EditorServiceStub {}
+class ProjectEntityServiceStub {}
+class StepStatusEntityServiceStub {}
+class RouterStub {}
 
 describe('StepTenComponent', (): void => {
   let component: StepTenComponent
@@ -21,14 +21,17 @@ describe('StepTenComponent', (): void => {
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ StepTenComponent, InfoToolTipComponent ],
+      declarations: [StepTenComponent, InfoToolTipComponent],
       providers: [
         { provider: EditorService, useClass: EditorServiceStub },
         { provide: ProjectEntityService, useClass: ProjectEntityServiceStub },
-        { provide: StepStatusEntityService, useClass: StepStatusEntityServiceStub },
-        { provide: Router, useClass: RouterStub }
+        {
+          provide: StepStatusEntityService,
+          useClass: StepStatusEntityServiceStub,
+        },
+        { provide: Router, useClass: RouterStub },
       ],
-      imports: [ TranslateModule.forRoot() ]
+      imports: [TranslateModule.forRoot()],
     })
 
     fixture = TestBed.createComponent(StepTenComponent)

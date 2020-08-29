@@ -1,0 +1,44 @@
+<div class="card">
+  <div class="card-header">
+    <img
+      class="card-header__image"
+      src="{{
+        variant === 'slide'
+          ? './assets/images/bitmap7.png'
+          : variant === 'site'
+          ? './assets/images/bitmap1.png'
+          : variant === 'form'
+          ? './assets/images/bitmap8.png'
+          : variant === 'doc'
+          ? './assets/images/bitmap10.png'
+          : variant === 'sheet'
+          ? './assets/images/bitmap9.png'
+          : ''
+      }}"
+      alt=""
+    />
+    <span
+      class="icon card-header__icon"
+      [ngClass]="{
+        'icon-ic_presentacion': variant === 'slide',
+        'icon-ic2': variant === 'site',
+        'icon-ic_list_w': variant === 'form',
+        'icon-ic_doc2_w': variant === 'doc',
+        'icon-group': variant === 'sheet'
+      }"
+    ></span>
+  </div>
+
+  <div class="card-body">
+    <div class="card-body__title">
+      {{ title | translate }}
+    </div>
+    <div class="card-body__subtitle">
+      {{ subtitle | translate }}
+    </div>
+  </div>
+  <div class="card-footer" (click)="onClick()">
+    <span class="card-footer__text">{{ 'GCARD.see' | translate }}</span>
+    <span class="icon icon-ic_br_next card-footer__arrow"></span>
+  </div>
+</div>

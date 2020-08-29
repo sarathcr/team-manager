@@ -5,11 +5,11 @@
 @if $enable-grid-classes {
   // Single container class with breakpoint max-widths
   .container {
-    @include make-container($gutter: $grid-gutter-width-primary *2);
+    @include make-container($gutter: $grid-gutter-width-primary * 2);
     max-width: $page-max-width + ($grid-gutter-width-primary * 2);
 
     @include media-breakpoint-down(md) {
-      @include make-container($gutter: $grid-gutter-width-primary *2);
+      @include make-container($gutter: $grid-gutter-width-primary * 2);
     }
   }
 
@@ -18,7 +18,6 @@
     @include make-container();
   }
 }
-
 
 // Row
 //
@@ -36,7 +35,7 @@
     margin-left: 0;
 
     > .col,
-    > [class*="col-"] {
+    > [class*='col-'] {
       padding-right: 0;
       padding-left: 0;
     }

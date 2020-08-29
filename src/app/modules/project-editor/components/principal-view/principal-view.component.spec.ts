@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
 
-import { BsModalRef } from 'ngx-bootstrap/modal'
 import { TranslateModule } from '@ngx-translate/core'
+import { BsModalRef } from 'ngx-bootstrap/modal'
 
-import { PrincipalViewComponent } from './principal-view.component'
 import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.component'
-import { CheckBoxComponent } from 'src/app/shared/components/checkbox/checkbox.component'
+import { PrincipalViewComponent } from './principal-view.component'
 
-import { BlockEntityService } from '../../store/entity/block/block-entity.service'
-import { CheckCount } from '../../pipes/check-count.pipe'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
+import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component'
+import { CheckCount } from '../../pipes/check-count.pipe'
 import { ContentService } from '../../services/contents/contents.service'
+import { BlockEntityService } from '../../store/entity/block/block-entity.service'
 
-class BlockEntityServiceStub { }
-class ContentServiceStub { }
+class BlockEntityServiceStub {}
+class ContentServiceStub {}
 
 describe('PrincipalViewComponent', () => {
   let component: PrincipalViewComponent
@@ -22,13 +22,19 @@ describe('PrincipalViewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrincipalViewComponent, CheckBoxComponent, DropdownComponent, CheckCount, ButtonComponent  ],
+      declarations: [
+        PrincipalViewComponent,
+        CheckboxComponent,
+        DropdownComponent,
+        CheckCount,
+        ButtonComponent,
+      ],
       providers: [
         BsModalRef,
         { provide: BlockEntityService, useClass: BlockEntityServiceStub },
-        { provide: ContentService, useClass: ContentServiceStub }
+        { provide: ContentService, useClass: ContentServiceStub },
       ],
-      imports: [ TranslateModule.forRoot(), FormsModule ]
+      imports: [TranslateModule.forRoot(), FormsModule],
     })
 
     fixture = TestBed.createComponent(PrincipalViewComponent)

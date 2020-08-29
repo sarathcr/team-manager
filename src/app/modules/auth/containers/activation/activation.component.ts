@@ -1,4 +1,4 @@
-import { Component, ViewChild, TemplateRef, OnInit } from '@angular/core'
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
@@ -21,35 +21,40 @@ export class ActivationComponent implements OnInit {
     private modalService: BsModalService,
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (!this.authService.isLoggedIn() && this.authService.loggedUser?.id) {
       this.email = this.authService.loggedUser?.email
-    }
-    else {
+    } else {
       this.logoutUser()
     }
   }
-  
+
   logoutUser(): void {
-    this.authService.doLogoutUser()
+    this.authService.logout()
     this.router.navigate(['/login'])
   }
 
   openModal(): void {
+    this.authService.sendActivation().subscribe()
     this.modalRef = this.modalService.show(this.resendModal, {
-      class: 'modal-form modal-dialog-centered',
+      class: 'modal-info modal-dialog-centered',
     })
   }
 
-  sendActivationLink(): void {
-    this.authService.activate().subscribe()
-    this.modalRef.hide()
+  closeModal(): void {
+    this.hideModal()
     this.logoutUser()
   }
+  
+  redirectToSignUp(): void {
+    this.logoutUser()
+    this.hideModal()
+    this.router.navigate(['/register'])
+  }
 
-  declineModal(): void {
+  hideModal(): void {
     this.modalRef.hide()
   }
 }

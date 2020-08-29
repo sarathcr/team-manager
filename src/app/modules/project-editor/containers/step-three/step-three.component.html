@@ -1,6 +1,9 @@
 <ng-template #loaded>
   <div class="project-editor__form step-three" id="step-three">
-    <app-status id="step-three-status" [status]="step.state"></app-status>
+    <app-step-status
+      id="step-three-status"
+      [status]="step.state"
+    ></app-step-status>
     <div class="project-form d-flex flex-column justify-content-between">
       <div>
         <h1 class="project-form__title title_s">
@@ -35,7 +38,6 @@
               [subjectItem]="subject.evaluationCriteria"
               [isLast]="last"
               (deleteById)="openModal($event)"
-              [project$]="editor.project$"
               (add)="openPrincipalView($event)"
               [variant]="'add'"
               [loading]="criteriaLoader"
@@ -45,7 +47,7 @@
                 'OBJECTIVES.project_objectivies_add_more_subjects.one'
                   | translate
               }}
-              <span class="project-editor__point" [routerLink]="'stepOne'">
+              <span class="project-editor__point" [routerLink]="'../1'">
                 {{
                   'OBJECTIVES.project_objectivies_add_more_subjects.two'
                     | translate
@@ -73,7 +75,7 @@
             <div class="mb-5">
               <app-editable-list
                 id="step-three-editable-list"
-                variant="number"
+                [isNumbered]="true"
                 [list]="competencyObjectives"
                 [maxLength]="150"
                 editModalTitle="OBJECTIVES.project_objectives_edit_title"
@@ -84,23 +86,14 @@
                 deleteModalbuttonLabel="PROJECT.project_button_delete"
                 helperText="PROJECT.project_input_singleitem_helpertext"
                 errorText="PROJECT.Error_textlimit_specified_singleinput"
+                textareaHelperText="PROJECT.project_input_singleitem_helpertext"
+                textareaErrorText="PROJECT.Error_textlimit_specified_singleinput"
+                textareaPlaceholder="OBJECTIVES.project_objectives_objectives_placeholder"
                 (editItem)="editObjective($event)"
                 (deleteItem)="deleteObjective($event)"
+                (addItem)="addObjectives()"
               ></app-editable-list>
             </div>
-            <app-textarea
-              id="step-three-textarea"
-              variant="listItem"
-              [maxLength]="150"
-              [enableValidator]="true"
-              helperText="PROJECT.project_input_singleitem_helpertext"
-              errorText="PROJECT.Error_textlimit_specified_singleinput"
-              placeholder="{{
-                'OBJECTIVES.project_objectives_objectives_placeholder'
-                  | translate
-              }}"
-              (inputChange)="textAreaUpdate($event)"
-            ></app-textarea>
           </div>
         </ng-template>
       </div>

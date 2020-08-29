@@ -1,0 +1,44 @@
+@import 'helpers/_helpers-master';
+
+.modal-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  &__header {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+  }
+  &__title {
+    width: 100%;
+    font-family: $font-family-tertiary;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.2px;
+    line-height: 28px;
+    &_lighten {
+      color: $color-tertiary;
+      opacity: 0.5;
+    }
+  }
+  &__close {
+    display: flex;
+    background-color: transparent;
+    border: none;
+    color: rgba($color-tertiary, 0.6);
+    font-size: $font-size-s;
+    cursor: pointer;
+    z-index: 1;
+    margin-right: -5px;
+  }
+  &__footer {
+    display: flex;
+    flex-direction: row;
+  }
+  &__content {
+    flex: 1 1 100%;
+  }
+}
+:host {
+  height: 100%;
+}

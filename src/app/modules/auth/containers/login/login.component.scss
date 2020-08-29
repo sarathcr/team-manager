@@ -1,19 +1,11 @@
 @import 'helpers/_helpers-master';
+@import 'helpers/_bt-mixins';
 .login {
   min-height: 100vh;
-  &__left-layout {
-    max-width: 56.94%;
-  }
-  &__right-layout {
-    min-width: 43.06%;
-  }
   &__wrap {
-    width: 470px;
     max-width: 100%;
   }
   &__title {
-    line-height: 34px;
-    letter-spacing: 0.3px;
     margin-bottom: $margin * 3;
   }
   &__input-wrapper {
@@ -25,6 +17,7 @@
     cursor: pointer;
     font-weight: 900;
     border-bottom: 1px solid $color-tertiary;
+    color: inherit;
   }
   &__button-wrapper {
     margin-bottom: 28px;
@@ -40,6 +33,19 @@
       .checkbox-row {
         padding: 0 !important;
       }
+    }
+  }
+}
+@include media-breakpoint-up(md) {
+  .login {
+    &__left-layout {
+      max-width: 56.94%;
+    }
+    &__right-layout {
+      min-width: 43.06%;
+    }
+    &__wrap {
+      width: 470px;
     }
   }
 }

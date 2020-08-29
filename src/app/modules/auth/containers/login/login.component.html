@@ -9,53 +9,58 @@
           <h1 class="title_m login__title">
             {{ 'LOGIN.login_title_title' | translate }}
           </h1>
-          <form class="login__form-group">
+          <form
+            class="login__form-group"
+            [formGroup]="loginForm"
+            (ngSubmit)="login()"
+          >
             <div class="login__input-wrapper">
               <app-input
                 variant="email"
+                [isForm]="true"
                 [placeholder]="
                   'LOGIN.login_input_email_placeholder' | translate
                 "
+                formControlName="email"
                 label="LOGIN.login_label_email"
                 errorText="LOGIN.Error_login_email"
                 [error]="invalid"
                 [enableValidator]="enableValidator"
-                (inputChange)="validateLogin($event, 'email')"
+                (inputChange)="setValid()"
               ></app-input>
             </div>
             <div class="login__input-wrapper mb-7">
               <app-input
                 variant="password"
+                [isForm]="true"
                 [placeholder]="
                   'LOGIN.login_input_password_placeholder' | translate
                 "
+                formControlName="password"
                 [enableValidator]="enableValidator"
                 label="LOGIN.login_label_password"
                 errorText="LOGIN.Error_login_password"
                 [error]="invalid"
-                (inputChange)="validateLogin($event, 'password')"
+                (inputChange)="setValid()"
               ></app-input>
             </div>
             <div
               class="login__password d-flex align-items-center justify-content-between mb-9"
             >
-              <app-checkbox
-                [colOne]="{
-                  value: 'LOGIN.login_checkbox_rememberpassword' | translate
-                }"
-                [checkboxData]="checkboxData"
-                >test</app-checkbox
-              >
-              <div class="login__forgot-password">
+              <app-checkbox formControlName="rememberMe" [isForm]="true">{{
+                'LOGIN.login_checkbox_rememberpassword' | translate
+              }}</app-checkbox>
+              <div class="login__forgot-password" (click)="forgotPassword()">
                 {{ 'LOGIN.login_button-tertiary_forgotpassword' | translate }}
               </div>
             </div>
             <div class="login__button-wrapper mb-4">
               <app-button
-                [disabled]="loginDisabled"
+                buttonType="submit"
+                [disabled]="loginForm.invalid"
                 [theme]="'primary'"
                 [variant]="'block'"
-                (click)="login()"
+                [loading]="buttonLoading"
               >
                 {{ 'LOGIN.login_button-primary_login' | translate }}
               </app-button>
@@ -79,9 +84,9 @@
               <span>{{
                 'LOGIN.login_button-tertiary_signup.one' | translate
               }}</span>
-              <span class="login__link ml-1">{{
+              <a class="login__link ml-1" routerLink="/register">{{
                 'LOGIN.login_button-tertiary_signup.two' | translate
-              }}</span>
+              }}</a>
             </div>
           </form>
         </div>
@@ -95,3 +100,21 @@
   </div>
 </div>
 <app-loader *ngIf="loading"></app-loader>
+
+<ng-template #activationSuccessModal>
+  <app-modal-info
+    id="activation-success-modal"
+    variant="primary"
+    [appearance]="'medium'"
+    overTitle="ACTIVATION_SUCCESS.login_activation-success_headline"
+    modalTitle="ACTIVATION_SUCCESS.login_activation-success_title"
+    confirmLabel="ACTIVATION_SUCCESS.platform_button-tertiary_confirm"
+    (confirm)="confirmModalSuccess()"
+  >
+    <p>
+      {{
+        'ACTIVATION_SUCCESS.login_activation-success_description' | translate
+      }}
+    </p>
+  </app-modal-info>
+</ng-template>

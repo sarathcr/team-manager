@@ -8,7 +8,7 @@ describe('MainSidebarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainSidebarComponent ]
+      declarations: [MainSidebarComponent],
     })
 
     fixture = TestBed.createComponent(MainSidebarComponent)

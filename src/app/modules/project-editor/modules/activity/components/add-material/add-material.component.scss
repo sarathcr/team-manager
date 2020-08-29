@@ -1,0 +1,37 @@
+@import 'helpers/_helpers-master';
+
+.add-material {
+  &__tabset {
+    margin-top: 28px;
+    margin-bottom: 28px;
+  }
+  &__card {
+    display: flex;
+    flex-flow: row wrap;
+    margin-left: -10px;
+    margin-right: -10px;
+    &-wrapper {
+      padding-left: 10px;
+      padding-right: 10px;
+      width: 20%;
+      padding-bottom: 20px;
+    }
+  }
+  .presentation {
+    margin-top: 22px;
+    &__title {
+      color: $color-tertiary;
+      font-size: $font-size-body;
+      font-weight: bold;
+    }
+    &__content {
+      margin-top: 20px;
+      margin-bottom: 28px;
+    }
+  }
+}
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

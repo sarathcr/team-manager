@@ -1,0 +1,38 @@
+<div
+  class="presentation-card d-flex justify-content-between flex-column position-relative"
+>
+  <figure
+    class="presentation-card__figure mb-2 m-0 position-relative"
+    [ngClass]="{ 'presentation-card__figure_create': variant === 'create' }"
+  >
+    <img
+      src="{{
+        imageURL
+          ? imageURL
+          : variant === 'create'
+          ? './assets/images/presentation-cards/create-bg-shapes.png'
+          : './assets/images/presentation-cards/presentation-card-2.png'
+      }}"
+      alt="presentation image"
+      class="presentation-card__image h-100 w-100"
+    />
+    <span
+      class="icon icon-ic_folder_add presentation-card__icon presentation-card__icon_add"
+      *ngIf="variant === 'create'"
+      ><span class="path1"></span><span class="path2"></span
+      ><span class="path3"></span
+    ></span>
+  </figure>
+  <div class="presentation-card__title">
+    {{ title | translate }}
+  </div>
+  <div
+    class="presentation-card__premium d-flex align-items-center justify-content-center"
+    *ngIf="isPremium"
+  >
+    <span
+      class="icon icon-think_small presentation-card__icon presentation-card__icon_premium"
+    ></span
+    >PREMIUM
+  </div>
+</div>

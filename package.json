@@ -1,10 +1,11 @@
 {
   "name": "thinko-creator",
-  "version": "0.0.0",
+  "version": "0.7.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-dev": "ng build --configuration=dev && build-storybook -o dist/thinko-creator/browser/storybook",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -12,9 +13,9 @@
     "serve:ssr": "node dist/thinko-creator/server/main.js",
     "build:ssr": "ng build --prod && ng run thinko-creator:server:production",
     "prerender": "ng run thinko-creator:prerender",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -s ./src -p 6006",
     "build-storybook": "build-storybook",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "prettier-format": "prettier 'src/app/**/*' --write"
   },
   "private": true,
   "husky": {
@@ -60,7 +61,7 @@
     "ngx-scrollbar": "^7.2.3",
     "ngx-translate-messageformat-compiler": "^4.7.0",
     "ngx-translate-multi-http-loader": "^3.0.0",
-    "pdfmake": "^0.1.66",
+    "pdfmake": "^0.1.68",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "video.js": "^7.8.2",

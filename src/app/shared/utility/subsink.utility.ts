@@ -10,21 +10,25 @@ export interface SubscriptionLike {
 }
 
 export class SubSink {
-
   protected subs: SubscriptionLike[] = []
 
-  constructor() { }
+  constructor() {}
 
-  add(...subscriptions: SubscriptionLike[]): void {  // Add subscriptions to the tracked subscriptions
+  add(...subscriptions: SubscriptionLike[]): void {
+    // Add subscriptions to the tracked subscriptions
     this.subs = this.subs.concat(subscriptions)
   }
 
-  set sink(subscription: SubscriptionLike) {  // Assign subscription to this sink to add it to the tracked subscriptions
+  set sink(subscription: SubscriptionLike) {
+    // Assign subscription to this sink to add it to the tracked subscriptions
     this.subs.push(subscription)
   }
 
-  unsubscribe(): void {   // Unsubscribe to all subscriptions in ngOnDestroy()
-    this.subs.forEach(sub => sub && isFunction(sub.unsubscribe) && sub.unsubscribe())
+  unsubscribe(): void {
+    // Unsubscribe to all subscriptions in ngOnDestroy()
+    this.subs.forEach(
+      (sub) => sub && isFunction(sub.unsubscribe) && sub.unsubscribe()
+    )
     this.subs = []
   }
 }

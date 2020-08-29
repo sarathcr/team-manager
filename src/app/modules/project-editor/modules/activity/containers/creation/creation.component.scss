@@ -1,0 +1,69 @@
+@import 'helpers/_helpers-master';
+
+.creation {
+  &__title {
+    font-weight: 900;
+    font-size: $font-size-body;
+    letter-spacing: 0.2px;
+    line-height: 28px;
+  }
+  &__optional {
+    font-size: $font-size-default;
+    font-weight: normal;
+    letter-spacing: 0;
+    line-height: 24px;
+    opacity: 0.5;
+    margin-left: 3px;
+  }
+  &__section {
+    margin-bottom: 48px;
+  }
+  &__uploads {
+    position: relative;
+    z-index: 1;
+    .image-upload {
+      width: 442px;
+      min-height: 248px;
+    }
+  }
+  &__exercises {
+    background-color: $color-quaternary;
+    width: 100%;
+    border-radius: 3px;
+    @include card-box-shadow();
+    padding: 20px 32px 11px 32px;
+    position: relative;
+
+    &-drag {
+      position: absolute;
+      left: -37px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      opacity: 0.2;
+    }
+  }
+  &__icon {
+    opacity: 0.5;
+    &_star {
+      opacity: 0.4;
+      margin-right: 11px;
+    }
+  }
+
+  &__subtitle {
+    line-height: 14px;
+    letter-spacing: 0.16px;
+    font-weight: 900;
+    opacity: 0.5;
+    position: relative;
+    &:not(:last-child):after {
+      content: '';
+      position: absolute;
+      height: 20px;
+      width: 1px;
+      border-left: 1px dotted #bbbbbb;
+      right: -15px;
+    }
+  }
+}

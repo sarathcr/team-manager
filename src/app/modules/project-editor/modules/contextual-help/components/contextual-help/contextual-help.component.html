@@ -1,0 +1,47 @@
+<div
+  id="contextual-help"
+  class="contextual-help"
+  [ngClass]="{ 'contextual-help_open': closeContext }"
+>
+  <tabset class="contextual-help__tabset">
+    <tab
+      customClass="contextual-help__tabset-item contextual-help__tabset-item_multi-icon"
+      [active]="false"
+      (selectTab)="openTab($event)"
+    >
+      <ng-template tabHeading>
+        <span class="icon icon-ic_guia"></span>
+        <span class="icon icon-ic_guia_on"
+          ><span class="path1"></span><span class="path2"></span
+        ></span>
+      </ng-template>
+      <div class="contextual-help__content">
+        <div class="contextual-help__content-head">
+          <h4 class="contextual-help__content-title">
+            {{ 'PROJECTGUIDE.projectguide_pedagogical_guide' | translate }}
+          </h4>
+          <button
+            type="button"
+            class="contextual-help__content-close"
+            (click)="closeTab()"
+          >
+            <span class="icon icon-ic_share_close"></span>
+          </button>
+        </div>
+        <app-loader id="contextual-help-loader" *ngIf="!loaded"></app-loader>
+        <app-help-accordion
+          id="contextual-help-accordian"
+          *ngIf="loaded"
+          [content]="help"
+          [isOpen]="closeContext"
+        >
+        </app-help-accordion>
+      </div>
+    </tab>
+    <!-- <tab customClass="contextual-help__tabset-item" (selectTab)="openTab($event)">
+      <ng-template tabHeading>
+        <span class="icon icon-ic_message"></span>
+      </ng-template>
+    </tab> -->
+  </tabset>
+</div>

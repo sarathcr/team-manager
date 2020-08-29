@@ -2,8 +2,5 @@
   <div class="project-editor-sidebar__title">
     {{ title }}
   </div>
-  <app-step-menu
-    *ngFor="let step of steps"
-    [step]="step"
-  ></app-step-menu>
+  <app-step-menu *ngFor="let step of steps" [step]="step"></app-step-menu>
 </div>

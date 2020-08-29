@@ -1,0 +1,7 @@
+.container {
+  //Container for smaller width of max-width 676px
+  &_s {
+    @include custom-container(activity-editor-container);
+    @include transitions(all, 0.5s, ease-in-out);
+  }
+}

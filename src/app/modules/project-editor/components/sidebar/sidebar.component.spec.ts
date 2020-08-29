@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { RouterTestingModule } from '@angular/router/testing'
-import { By } from '@angular/platform-browser'
 import { DebugElement } from '@angular/core'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
+import { RouterTestingModule } from '@angular/router/testing'
 
-import { SidebarComponent } from './sidebar.component'
 import { StepMenuComponent } from '../step-menu/step-menu.component'
+import { SidebarComponent } from './sidebar.component'
 
 describe('SidebarComponent', (): void => {
   let component: SidebarComponent
@@ -12,11 +12,8 @@ describe('SidebarComponent', (): void => {
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [
-        SidebarComponent,
-        StepMenuComponent
-      ],
-      imports: [ RouterTestingModule ]
+      declarations: [SidebarComponent, StepMenuComponent],
+      imports: [RouterTestingModule],
     })
 
     fixture = TestBed.createComponent(SidebarComponent)
@@ -30,22 +27,22 @@ describe('SidebarComponent', (): void => {
   it('should render title', (): void => {
     const title = 'lorem ipsum'
     component.title = title
-    const debugSidebarTitleElement: DebugElement = fixture
-                                                    .debugElement
-                                                    .query(By.css('.project-editor-sidebar__title'))
-    const sidebarTitleElement: HTMLElement = debugSidebarTitleElement.nativeElement
+    const debugSidebarTitleElement: DebugElement = fixture.debugElement.query(
+      By.css('.project-editor-sidebar__title')
+    )
+    const sidebarTitleElement: HTMLElement =
+      debugSidebarTitleElement.nativeElement
 
     fixture.detectChanges()
-
 
     expect(sidebarTitleElement.innerText).toContain(title)
   })
 
   it('should render view', (): void => {
     const title = 'View'
-    const debugTitleElement: DebugElement = fixture
-                                            .debugElement
-                                            .query(By.css('.project-editor-sidebar__title'))
+    const debugTitleElement: DebugElement = fixture.debugElement.query(
+      By.css('.project-editor-sidebar__title')
+    )
     const titleElement: HTMLElement = debugTitleElement.nativeElement
     component.title = title
 
@@ -65,15 +62,15 @@ describe('SidebarComponent', (): void => {
       { stepid: 7, state: 'PENDING', name: '' },
       { stepid: 8, state: 'PENDING', name: '' },
       { stepid: 9, state: 'PENDING', name: '' },
-      { stepid: 10, state: 'PENDING', name: '' }
+      { stepid: 10, state: 'PENDING', name: '' },
     ]
     component.steps = steps
 
     fixture.detectChanges()
 
-    const debugStepMenuElement: DebugElement[] = fixture
-                                                  .debugElement
-                                                  .queryAll(By.directive(StepMenuComponent))
+    const debugStepMenuElement: DebugElement[] = fixture.debugElement.queryAll(
+      By.directive(StepMenuComponent)
+    )
     expect(debugStepMenuElement.length).toBe(steps.length)
   })
 })

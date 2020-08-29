@@ -26,4 +26,115 @@
       {{ errorText | translate }}
     </div>
   </div>
+  <div *ngIf="passwordValidator && complexityControl">
+    <div class="complexity-control counter">
+      <div class="complexity-control__helper-text counter__helper-text d-flex w-100">
+        <div class="counter__helper-text-title">
+          {{
+            'RESET_PASSWORD_PAGE.login_reset-password_helpertext_newpassword'
+              | translate
+              | TranslateCut: 0
+          }}
+        </div>
+        <div class="d-flex flex-column d-md-inline-block justify-content-around w-100">
+          <div class="d-flex d-md-inline-block">
+            <div
+              class="complexity-control__item d-inline-flex"
+              [ngClass]="{
+                'complexity-control__item_error':
+                  !complexityControl.hasMinLength && complexityControl.isTouched
+              }"
+            >
+              <span
+                class="complexity-control__icon"
+                [ngClass]="{
+                  'icon icon-ic_cross':
+                    complexityControl.isTouched && !complexityControl.hasMinLength,
+                  'icon icon-ic_check1 ':
+                    complexityControl.isTouched && complexityControl.hasMinLength,
+                  'icon icon-ic_bullet': !complexityControl.isTouched
+                }"
+              ></span>
+              {{
+                'RESET_PASSWORD_PAGE.login_reset-password_helpertext_newpassword'
+                  | translate
+                  | TranslateCut: 1
+              }}
+            </div>
+            <div
+              class="complexity-control__item d-inline-flex"
+              [ngClass]="{
+                'complexity-control__item_error':
+                  !complexityControl.hasNumber && complexityControl.isTouched
+              }"
+            >
+              <span
+                class="complexity-control__icon"
+                [ngClass]="{
+                  'icon icon-ic_cross':
+                    complexityControl.isTouched && !complexityControl.hasNumber,
+                  'icon icon-ic_check1 ':
+                    complexityControl.isTouched && complexityControl.hasNumber,
+                  'icon icon-ic_bullet': !complexityControl.isTouched
+                }"
+              ></span>
+              {{
+                'RESET_PASSWORD_PAGE.login_reset-password_helpertext_newpassword'
+                  | translate
+                  | TranslateCut: 2
+              }}
+            </div>
+          </div>
+          <div class="d-flex d-md-inline-block">
+            <div
+              class="complexity-control__item d-inline-flex"
+              [ngClass]="{
+                'complexity-control__item_error':
+                  !complexityControl.hasUpperCase && complexityControl.isTouched
+              }"
+            >
+              <span
+                class="complexity-control__icon"
+                [ngClass]="{
+                  'icon icon-ic_cross':
+                    complexityControl.isTouched && !complexityControl.hasUpperCase,
+                  'icon icon-ic_check1 ':
+                    complexityControl.isTouched && complexityControl.hasUpperCase,
+                  'icon icon-ic_bullet': !complexityControl.isTouched
+                }"
+              ></span>
+              {{
+                'RESET_PASSWORD_PAGE.login_reset-password_helpertext_newpassword'
+                  | translate
+                  | TranslateCut: 3
+              }}
+            </div>
+            <div
+              class="complexity-control__item d-inline-flex"
+              [ngClass]="{
+                'complexity-control__item_error':
+                  !complexityControl.hasLowerCase && complexityControl.isTouched
+              }"
+            >
+              <span
+                class="complexity-control__icon"
+                [ngClass]="{
+                  'icon icon-ic_cross':
+                    complexityControl.isTouched && !complexityControl.hasLowerCase,
+                  'icon icon-ic_check1 ':
+                    complexityControl.isTouched && complexityControl.hasLowerCase,
+                  'icon icon-ic_bullet': !complexityControl.isTouched
+                }"
+              ></span>
+              {{
+                'RESET_PASSWORD_PAGE.login_reset-password_helpertext_newpassword'
+                  | translate
+                  | TranslateCut: 4
+              }}
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-container>

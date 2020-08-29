@@ -1,9 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.scss']
+  styleUrls: ['./pagination.component.scss'],
 })
 export class PaginationComponent {
   @Input() totalItems: number
@@ -14,10 +14,9 @@ export class PaginationComponent {
   @Output() pageChanged: EventEmitter<any> = new EventEmitter()
   rotate = true
   status = 'ON'
-  constructor() { }
+  constructor() {}
 
   onPageChanged($event: any): void {
     this.pageChanged.emit($event)
   }
-
 }

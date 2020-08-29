@@ -1,0 +1,66 @@
+@import 'helpers/_helpers-master';
+.step-status-indicator {
+  $root: &;
+  position: absolute;
+  left: -3px;
+  width: 10px;
+  height: 100%;
+  padding: 1px;
+  top: 0;
+  z-index: 1;
+  &__ball {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: $color-primary;
+    position: absolute;
+    z-index: 2;
+    transition: all 0.2s ease;
+    &_top {
+      top: 38px;
+    }
+    &_bottom {
+      // bottom: 80px; // Below is a temp fix, so keeping the actual one commented
+      bottom: 77px;
+    }
+  }
+  &__bar {
+    position: absolute;
+    top: 42px;
+    bottom: 80px;
+    margin: 0 3px;
+    width: 1px;
+    background-image: linear-gradient(
+      $frenchgray 33%,
+      rgba(255, 255, 255, 0) 0%
+    );
+    background-position: right;
+    background-size: 1px 4px;
+    background-repeat: repeat-y;
+    z-index: 1;
+    &_bottom {
+      background-image: linear-gradient(
+        $color-tertiary 33%,
+        rgba(255, 255, 255, 0) 0%
+      );
+      bottom: 0px;
+      // height: 87px; // Below is a temp fix, so keeping the actual one commented
+      height: 77px;
+      top: auto;
+    }
+    &_top {
+      background-image: linear-gradient(
+        $color-tertiary 33%,
+        rgba(255, 255, 255, 0) 0%
+      );
+      top: -1px;
+      height: 45px;
+      bottom: auto;
+    }
+  }
+  &_done {
+    #{$root}__ball {
+      background-color: $color-secondary;
+    }
+  }
+}

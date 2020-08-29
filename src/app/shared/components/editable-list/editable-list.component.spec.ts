@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { EditableListComponent } from './editable-list.component'
-import { BsModalService } from 'ngx-bootstrap/modal'
-import { TranslateModule } from '@ngx-translate/core'
 import { FormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
+import { TranslateModule } from '@ngx-translate/core'
+import { BsModalService } from 'ngx-bootstrap/modal'
+import { ButtonComponent } from '../button/button.component'
+import { TextareaComponent } from '../textarea/textarea.component'
+import { EditableListComponent } from './editable-list.component'
 
 class BsModalServiceStub {}
 
@@ -14,9 +16,9 @@ describe('EditableListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EditableListComponent],
+      declarations: [EditableListComponent, TextareaComponent, ButtonComponent],
       providers: [{ provide: BsModalService, useClass: BsModalServiceStub }],
-      imports: [TranslateModule.forRoot(), FormsModule]
+      imports: [TranslateModule.forRoot(), FormsModule],
     })
 
     fixture = TestBed.createComponent(EditableListComponent)
@@ -24,12 +26,12 @@ describe('EditableListComponent', () => {
     component.list = [
       { id: 1, name: 'lorem ipsum' },
       { id: 2, name: 'lorem ipsum' },
-      { id: 3, name: 'lorem ipsum' }
+      { id: 3, name: 'lorem ipsum' },
     ]
     component.modalRef = {
       content: null,
       hide: () => {},
-      setClass: () => {}
+      setClass: () => {},
     }
     fixture.detectChanges()
   })
@@ -38,12 +40,29 @@ describe('EditableListComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should render all the items in the list', () => {
+  it('should render all the items in the list and a textarea', () => {
     fixture.detectChanges()
+
     const itemCount = fixture.debugElement.queryAll(
       By.css('.editable-list__item')
     ).length
+    const textareaComponent = fixture.debugElement.query(
+      By.directive(TextareaComponent)
+    )
+
     expect(itemCount).toBe(component.list.length)
+    expect(textareaComponent).toBeTruthy()
+  })
+
+  it('should not show textarea for optional variant initially', () => {
+    component.variant = 'optional'
+    fixture.detectChanges()
+
+    const textareaComponent = fixture.debugElement.query(
+      By.directive(TextareaComponent)
+    )
+
+    expect(textareaComponent).toBeFalsy()
   })
 
   it('should delete an item on delete confirmation and emit the list', () => {
@@ -90,5 +109,17 @@ describe('EditableListComponent', () => {
     fixture.detectChanges()
 
     expect(modalHide).toHaveBeenCalled()
+  })
+
+  it('should add the new item to the list on enter click', () => {
+    const prevListLength = component.list.length
+    spyOn(component.addItem, 'emit')
+    fixture.detectChanges()
+    component.onAddItem({ id: 4, name: 'lorem ipsum' })
+
+    fixture.detectChanges()
+
+    expect(component.list.length).toBeGreaterThan(prevListLength)
+    expect(component.addItem.emit).toHaveBeenCalledWith(component.list)
   })
 })

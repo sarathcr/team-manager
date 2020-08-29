@@ -1,16 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { EditorService } from '../../services/editor/editor.service'
 
-import { FormTwo } from '../../constants/model/step-forms.model'
 import {
-  Theme,
-  Step,
   Status,
+  Step,
+  Theme,
 } from 'src/app/modules/project-editor/constants/model/project.model'
+import { FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
+import { FormTwo } from '../../constants/model/step-forms.model'
 
 import { StepButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 
@@ -58,7 +59,7 @@ export class StepTwoComponent implements OnInit, OnDestroy {
         if (formStatus) {
           this.buttonConfig.submitted = formStatus.state === 'DONE'
           this.initialFormStatus = formStatus.state
-          if (formStatus.state === 'INPROCESS') {
+          if (formStatus.state === 'INPROCESS' && this.themes?.length) {
             this.buttonConfig.disabled = false
           }
         }
@@ -66,9 +67,8 @@ export class StepTwoComponent implements OnInit, OnDestroy {
     }
   }
 
-  textAreaUpdate(data: Theme): void {
+  addThemes(): void {
     // calls on every update
-    this.themes.push(data)
     this.checkStepStatus()
     this.handleSubmit()
   }

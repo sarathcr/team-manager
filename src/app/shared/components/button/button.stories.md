@@ -22,13 +22,14 @@ A convenience directive for applying styling to a button.
 
 ### Input
 
-| Name       | Type             | Required | Values                                                                      |   Default   | Description                                       |
-| ---------- | ---------------- | :------: | --------------------------------------------------------------------------- | :---------: | ------------------------------------------------- |
-| `theme`    | `Theme`          |    -     | `primary` `secondary` `success`                                             |  `primary`  | Based on button functionalities theme will varies |
-| `disabled` | `boolean`        |    -     | `true` `false`                                                              |   `false`   | To set the button as disabled                     |
-| `variant`  | `ButtonVariants` |    -     | `contained` `outlined` `text` `icon` `block`                                | `contained` | Set the button variants                           |
-| `icon`     | `ButtonIcon`     |    -     | `tick` `add` `locked` `view` `zoomIn` `zoomOut` `download` `print` `google` |      -      | To set the button icon                            |
-| `size`     | `ButtonSize`     |    -     | `small` `default` `medium`                                                  |  `default`  | to set button size                                |
+| Name       | Type             | Required | Values                                                                                    |   Default   | Description                                       |
+| ---------- | ---------------- | :------: | ----------------------------------------------------------------------------------------- | :---------: | ------------------------------------------------- |
+| `theme`    | `Theme`          |    -     | `primary` `secondary` `teritiary` `success`                                               |  `primary`  | Based on button functionalities theme will varies |
+| `disabled` | `boolean`        |    -     | `true` `false`                                                                            |   `false`   | To set the button as disabled                     |
+| `variant`  | `ButtonVariants` |    -     | `contained` `outlined` `text` `icon` `block` `back` `underlined`                          | `contained` | Set the button variants                           |
+| `icon`     | `ButtonIcon`     |    -     | `tick` `add` `locked` `view` `zoomIn` `zoomOut` `download` `print` `google`
+ `left` `back` `calender` `three-dots`                                                                                                 |      -      | To set the button icon                            |
+| `size`     | `ButtonSize`     |    -     | `small` `default` `medium`                                                                |  `default`  | to set button size                                |
 
 ## Note
 

@@ -101,7 +101,9 @@
     "use-pipe-transform-interface": true,
     "no-submodule-imports": false,
     "no-implicit-dependencies": false,
-    "prefer-conditional-expression": false
+    "prefer-conditional-expression": false,
+    "no-duplicate-imports": true,
+    "ordered-imports": true
   },
   "rulesDirectory": ["codelyzer"]
 }

@@ -1,38 +1,16 @@
-<div *ngIf="colOne" class="checkbox-row"
-  [ngClass]="{ 'checkbox-row__head' : isHead,
-  'selected' : checkboxData?.checked && changeBg}"
-  (click)="clickableLabel && onCheck()"
->
-  <div class="checkbox-row__cell" [ngClass]="{
-    'checkbox-row__cell_xs' : colOne.size === 'xs',
-    'checkbox-row__cell_m' : colOne.size === 'm',
-    'checkbox-row__cell_sm' : colOne.size === 'sm',
-    'checkbox-row__cell_s' : colOne.size === 's'}">
-    <div *ngIf="checkboxData" class="checkbox-row__box"  (click)="!clickableLabel && onCheck()">
-      <input class="checkbox-row__checkbox" type="checkbox" [(ngModel)]="checkboxData.checked">
-      <span class="icon-ic_check checkbox-row__checkmark"></span>
+<div class="checkbox">
+  <label class="d-flex">
+    <div class="checkbox__wrapper">
+      <input
+        type="checkbox"
+        class="checkbox__input"
+        [checked]="isChecked"
+        [disabled]="disabled"
+        (blur)="onBlur($event)"
+        (change)="onChanged($event)"
+      />
+      <span class="icon-ic_check checkbox__checkmark"></span>
     </div>
-    <span class="checkbox-row__desc">{{colOne.value | translate}}</span>
-  </div>
-  <div *ngIf="colTwo" class="checkbox-row__cell" [ngClass]="{
-    'checkbox-row__cell_xs' : colTwo.size === 'xs',
-    'checkbox-row__cell_m' : colTwo.size === 'm',
-    'checkbox-row__cell_sm' : colTwo.size === 'sm',
-    'checkbox-row__cell_s' : colTwo.size === 's'}">
-    <span class="checkbox-row__desc">{{colTwo.value | translate}}</span>
-  </div>
-  <div *ngIf="colThree" class="checkbox-row__cell" [ngClass]="{
-    'checkbox-row__cell_xs' : colThree.size === 'xs',
-    'checkbox-row__cell_m' : colThree.size === 'm',
-    'checkbox-row__cell_sm' : colThree.size === 'sm',
-    'checkbox-row__cell_s' : colThree.size === 's'}">
-    <span class="checkbox-row__desc">{{colThree.value | translate}}</span>
-  </div>
-  <div *ngIf="colFour" class="checkbox-row__cell" [ngClass]="{
-    'checkbox-row__cell_xs' : colFour.size === 'xs',
-    'checkbox-row__cell_m' : colFour.size === 'm',
-    'checkbox-row__cell_sm' : colFour.size === 'sm',
-    'checkbox-row__cell_s' : colFour.size === 's'}">
-    <span class="checkbox-row__desc">{{colFour.value | translate}}</span>
-  </div>
+    <span class="d-inline-block"><ng-content></ng-content></span>
+  </label>
 </div>

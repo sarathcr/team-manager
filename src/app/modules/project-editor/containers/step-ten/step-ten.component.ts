@@ -4,11 +4,10 @@ import { EditorService } from '../../services/editor/editor.service'
 @Component({
   selector: 'app-step-ten',
   templateUrl: './step-ten.component.html',
-  styleUrls: ['./step-ten.component.scss']
+  styleUrls: ['./step-ten.component.scss'],
 })
 export class StepTenComponent implements OnInit {
-
-  constructor(private editor: EditorService) { }
+  constructor(private editor: EditorService) {}
 
   ngOnInit(): void {
     this.stepInIt()
@@ -17,5 +16,4 @@ export class StepTenComponent implements OnInit {
   stepInIt(): void {
     this.editor.getDataByStep(10)
   }
-
 }

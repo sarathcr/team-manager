@@ -1,31 +1,26 @@
 import {
   Component,
-  OnInit,
-  ViewChild,
-  TemplateRef,
   OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core'
 
-import { Observable, BehaviorSubject } from 'rxjs'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
+import { Observable } from 'rxjs'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { StandardEntityService } from '../../store/entity/standard/standard-entity.service'
 
+import { Option } from 'src/app/shared/constants/model/form-elements.model'
 import {
-  FieldEvent,
-  Option,
-} from 'src/app/shared/constants/model/form-elements.model'
-import { FormFive } from '../../constants/model/step-forms.model'
-import {
-  Project,
-  Step,
-  EvaluationCriteria,
   CompetencyObjective,
+  EvaluationCriteria,
+  Project,
   Status,
+  Step,
   Subject,
-  Standard,
 } from '../../constants/model/project.model'
+import { FormFive } from '../../constants/model/step-forms.model'
 
 import { StepButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 import { SubSink } from '../../../../shared/utility/subsink.utility'
@@ -52,6 +47,8 @@ export class StepFiveComponent implements OnInit, OnDestroy {
   isFormUpdated = false
   deleteData: object
   subjectTextArea: any[] = []
+  activeEditableLists: number[] = []
+  activeTextarea: number
   dataPayload: CompetencyObjective
   competencyObjectiveSelected: number
   allSubjectshasCriterias = false
@@ -76,22 +73,6 @@ export class StepFiveComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe()
   }
 
-  getCustomStandards(competencyObjectives: CompetencyObjective[]): void {
-    this.subjectTextArea = []
-    competencyObjectives.forEach((competency) => {
-      const customStandard = competency?.customStandards || []
-      const customStandardCopy = customStandard.map(({ id, name }) => ({
-        id,
-        name,
-      }))
-      this.subjectTextArea.push({
-        data: [...customStandardCopy],
-        options$: new BehaviorSubject([...customStandardCopy]),
-        id: competency.id,
-      })
-    })
-  }
-
   stepInIt(): void {
     this.project$ = this.editor.getDataByStep(5)
     this.step$ = this.editor.getStepStatus()
@@ -103,9 +84,6 @@ export class StepFiveComponent implements OnInit, OnDestroy {
       this.subscriptions.sink = this.project$.subscribe((data) => {
         this.project = data
         this.allSubjectshasCriterias = this.allSubjectContainsCriteria()
-        if (this.project?.competencyObjectives?.length) {
-          this.getCustomStandards(data.competencyObjectives)
-        }
       })
     }
     if (this.step$) {
@@ -122,35 +100,35 @@ export class StepFiveComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkStepStatus(competencyObjectives?: CompetencyObjective[]): void {
-    const hasObjectives = competencyObjectives?.length > 0
-    let hasCriterias = true
-    for (const subject of this.project.subjects) {
-      if (subject.evaluationCriteria?.length === 0) {
-        hasCriterias = false
-      }
-    }
-    if (hasObjectives || hasCriterias) {
-      this.step.state = 'INPROCESS'
-    } else {
-      this.step.state = 'PENDING'
-    }
-    this.handleButtonType()
+  // Adds custom standard
+  textareaDataChange(values: any, index: number): void {
+    this.project.competencyObjectives[index].customStandards = [...values]
+    this.checkFormEmpty()
+    this.handleSubmit()
+  }
+  // Edit custom standard
+  textItemEdit(values: any, index: number): void {
+    this.project.competencyObjectives[index].customStandards = [...values]
+    this.checkFormEmpty()
+    this.handleSubmit()
   }
 
-  textareaDataChange(data: FieldEvent, index: number): void {
-    this.subjectTextArea[index].data = [...data.values]
-    this.project.competencyObjectives[
-      index
-    ].customStandards = this.subjectTextArea[index].data
-    this.isFormUpdated = data.updated
-    if (data.updated) {
-      this.checkStepStatus(this.project.competencyObjectives)
-    }
+  // Delete custom standard
+  textItemDelete(values: any, index: number): void {
+    this.project.competencyObjectives[index].customStandards = [...values]
+    this.isFormUpdated = true
     this.checkFormEmpty()
   }
 
+  updateEditableListStatus(id: number): void {
+    const tempList = new Set(this.activeEditableLists)
+    tempList.add(id)
+    this.activeEditableLists = Array.from(tempList)
+    this.activeTextarea = id
+  }
+
   openModalWithComponent(i: number, subject: Subject): void {
+    this.activeTextarea = null
     if (this.allSubjectshasCriterias) {
       this.openStandardsModal(i)
     } else {
@@ -182,17 +160,13 @@ export class StepFiveComponent implements OnInit, OnDestroy {
 
   // Checks whether the form is empty
   checkFormEmpty(): void {
-    const isStandardLength = []
+    let hasStandard = false
     for (const subject of this.project.competencyObjectives) {
       if (subject.standards?.length || subject.customStandards?.length) {
-        isStandardLength.push(true)
+        hasStandard = true
       }
     }
-    if (!isStandardLength.length && !this.competencyObjectives?.length) {
-      this.step.state = 'PENDING'
-    } else {
-      this.step.state = 'INPROCESS'
-    }
+    this.step.state = hasStandard ? 'INPROCESS' : 'PENDING'
     this.handleButtonType()
   }
 
@@ -224,7 +198,6 @@ export class StepFiveComponent implements OnInit, OnDestroy {
         updateType: 'removeStandard',
         competencyObjectiveId: standardData.subjectId,
         standardId: standardData.id,
-        // id: standardData.subjectId, standardId: standardData.id,
       },
       stepStatus: {
         steps: [
@@ -261,7 +234,7 @@ export class StepFiveComponent implements OnInit, OnDestroy {
     }
     return false
   }
-  
+
   // Changes the button according to form status
   handleButtonType(): void {
     if (this.step.state === 'DONE') {
@@ -288,18 +261,13 @@ export class StepFiveComponent implements OnInit, OnDestroy {
       }
     }
     this.dataPayload = null
-    for (const [index, customStandard] of this.subjectTextArea.entries()) {
-      const tempData = customStandard?.data?.map((item) =>
-        item.id == null ? { name: item.name } : item
-      )
-      competencyObjectivesPayload[index].customStandards = tempData
-    }
     return [...competencyObjectivesPayload]
   }
 
   // function to submit form data
   handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
+      this.activeTextarea = null
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'
     }

@@ -1,0 +1,17 @@
+<div [ngClass]="{ switch_disabled: disabled }">
+  <span class="switch">
+    <input
+      class="switch__input"
+      type="checkbox"
+      [checked]="switchOn == true"
+      id="switch_1"
+    />
+    <span
+      class="switch__slider switch__slider_round"
+      (click)="toggleSwitch($event)"
+    ></span>
+  </span>
+  <span class="switch__text">
+    {{ switchOn ? (textOn | translate) : (textOff | translate) }}
+  </span>
+</div>

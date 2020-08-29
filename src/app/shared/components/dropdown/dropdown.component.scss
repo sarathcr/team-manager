@@ -13,7 +13,7 @@
     border: none;
     outline: none;
     width: 100%;
-    border: 1px solid rgba($color-tertiary,0.1);
+    border: 1px solid rgba($color-tertiary, 0.1);
     border-radius: 3px;
     z-index: 1;
     box-shadow: 0 0 0 0 transparent;
@@ -39,8 +39,8 @@
     background-color: inherit;
     left: $padding;
     z-index: 2;
-    &_disabled{
-      color: rgba($color-tertiary,0.25);
+    &_disabled {
+      color: rgba($color-tertiary, 0.25);
     }
     &::first-letter {
       text-transform: uppercase;
@@ -50,18 +50,19 @@
   .multiselect-dropdown {
     .disabled {
       .dropdown-btn {
-        border: 1px solid rgba($color-tertiary,0.4) !important;
+        border: 1px solid rgba($color-tertiary, 0.4) !important;
         opacity: 0.25;
         background-color: inherit !important;
         box-shadow: 0 0 0 0 transparent;
         pointer-events: none;
       }
 
-      +.dropdown-list {
+      + .dropdown-list {
         display: none !important;
       }
 
-      .dropdown-up,.dropdown-down {
+      .dropdown-up,
+      .dropdown-down {
         transform: rotate(0deg) translateY(-50%) !important;
         transform-origin: center;
       }
@@ -69,18 +70,18 @@
       &:focus,
       &:focus-within {
         .dropdown-btn {
-          border: 1px solid rgba($color-tertiary,0.4) !important;
+          border: 1px solid rgba($color-tertiary, 0.4) !important;
           box-shadow: none !important;
         }
       }
-      .dropdown__control{
-        .dropdown-down{
+      .dropdown__control {
+        .dropdown-down {
           opacity: 0.25;
         }
       }
     }
 
-    .selected-list{
+    .selected-list {
       flex: 1 1 100%;
     }
 
@@ -99,34 +100,34 @@
       justify-content: space-between;
       border-radius: 3px !important;
       padding: 12px 18px 12px 18px !important;
-      border: 1px solid rgba($color-tertiary,0.4) !important;
-      &:focus{
+      border: 1px solid rgba($color-tertiary, 0.4) !important;
+      &:focus {
         border: 1px solid $color-primary !important;
         box-shadow: inset 0 0 0 1px $color-primary !important;
       }
 
-      >span:first-child {
+      > span:first-child {
         opacity: 0.6;
         line-height: 24px;
       }
 
-      >.dropdown__control {
-        padding: 0 50px 0 0!important;
+      > .dropdown__control {
+        padding: 0 50px 0 0 !important;
         display: block;
         position: relative;
-        span:not(.dropdown-up):not(.dropdown-down){
+        span:not(.dropdown-up):not(.dropdown-down) {
           padding-right: 0px !important;
-          &::before{
+          &::before {
             content: '(';
           }
-          &::after{
+          &::after {
             content: ')';
           }
         }
         span.dropdown-up,
-        span.dropdown-down{
+        span.dropdown-down {
           &::before {
-            content: "\e903";
+            content: '\e903';
             display: block;
             width: 14px;
             height: 14px;
@@ -140,7 +141,6 @@
             content: none;
           }
         }
-
       }
       .dropdown-up,
       .dropdown-down {
@@ -183,7 +183,7 @@
         &:hover {
           box-shadow: none !important;
         }
-        .separator{
+        .separator {
           margin-left: -4px;
         }
       }
@@ -202,10 +202,10 @@
         padding: 10px 15px;
 
         &:hover {
-          background-color: rgba($color-tertiary,0.1);
+          background-color: rgba($color-tertiary, 0.1);
         }
 
-        input[type=checkbox]+div {
+        input[type='checkbox'] + div {
           padding-left: 36px !important;
           letter-spacing: 0.16px !important;
 
@@ -213,7 +213,7 @@
             top: 12px !important;
             height: 18px !important;
             width: 18px !important;
-            border: 1px solid rgba($color-tertiary,0.1) !important;
+            border: 1px solid rgba($color-tertiary, 0.1) !important;
             border-radius: 2px !important;
             background: $color-quaternary !important;
             margin-top: -10px !important;
@@ -235,7 +235,7 @@
           }
         }
 
-        input[type=checkbox]:checked+div {
+        input[type='checkbox']:checked + div {
           &::after {
             content: '\e915' !important;
             color: $color-primary !important;
@@ -249,7 +249,8 @@
           }
         }
       }
-      .priority-title,.normal-title{
+      .priority-title,
+      .normal-title {
         font-family: $font-family-tertiary;
         font-size: 12px;
         font-weight: bold;
@@ -272,7 +273,6 @@
         margin-bottom: 0;
       }
     }
-
   }
 
   & &__wrap {
@@ -280,51 +280,48 @@
     font-family: $font-family-pt-sans;
     color: $color-tertiary;
     background-color: $color-background-primary;
-    &.dropdown_single-select{
-      .multiselect-item-checkbox{
-        input[type=checkbox] + div{
+    &.dropdown_single-select {
+      .multiselect-item-checkbox {
+        input[type='checkbox'] + div {
           padding-left: 4px !important;
-          &::before{
+          &::before {
             content: none !important;
           }
-          &::after{
+          &::after {
             left: 2px !important;
           }
         }
-        input[type=checkbox]:checked + div{
-          &::after{
+        input[type='checkbox']:checked + div {
+          &::after {
             position: relative !important;
             margin: 0 !important;
             margin-left: 5px;
           }
         }
       }
-
     }
-    &.selected{
-      .dropdown-btn{
+    &.selected {
+      .dropdown-btn {
         &:active,
         &:focus,
-        &:focus-within{
+        &:focus-within {
           border: 1px solid $color-primary !important;
           box-shadow: inset 0 0 0 1px $color-primary !important;
         }
-
       }
     }
   }
   .selected {
     .dropdown-btn {
-      border: 1px solid rgba($color-tertiary,0.1) !important;
+      border: 1px solid rgba($color-tertiary, 0.1) !important;
     }
-
   }
   &.active {
-    .dropdown-btn{
+    .dropdown-btn {
       border: 1px solid $color-primary !important;
       box-shadow: inset 0 0 0 1px $color-primary !important;
     }
-    .selected{
+    .selected {
       .dropdown-btn {
         border: 1px solid $color-primary !important;
         box-shadow: inset 0 0 0 1px $color-primary !important;
@@ -349,7 +346,7 @@
   }
 
   .empty-list {
-    .item2{
+    .item2 {
       min-height: 100px;
     }
   }
@@ -357,11 +354,10 @@
   &:not(.loading-active) {
     .multiselect-dropdown .dropdown-list h5 {
       font-size: 0;
-      &::before{
-        font-size: 20px ;
+      &::before {
+        font-size: 20px;
         content: 'No existen opciones disponibles de selección';
       }
     }
   }
-
 }

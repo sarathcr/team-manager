@@ -1,16 +1,17 @@
 import { TranslateModule } from '@ngx-translate/core'
-import { storiesOf, moduleMetadata } from '@storybook/angular'
-import { withKnobs, select, text } from '@storybook/addon-knobs/angular'
 import { action } from '@storybook/addon-actions'
+import { select, text, withKnobs } from '@storybook/addon-knobs/angular'
+import { moduleMetadata, storiesOf } from '@storybook/angular'
 import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
-import markDown from './modal-info.stories.md'
-import { ModalInfoComponent } from './modal-info.component'
 import { ButtonComponent } from '../button/button.component'
+import { LoaderComponent } from '../loader/loader.component'
+import { ModalInfoComponent } from './modal-info.component'
+import markDown from './modal-info.stories.md'
 
 storiesOf('Shared|Modal Info', module)
   .addDecorator(
     moduleMetadata({
-      declarations: [ModalInfoComponent, ButtonComponent],
+      declarations: [LoaderComponent, ModalInfoComponent, ButtonComponent],
       imports: [StorybookTranslateModule, TranslateModule.forRoot()],
     })
   )
@@ -61,8 +62,8 @@ storiesOf('Shared|Modal Info', module)
         'Description',
         'Si lo eliminas se eliminará de todas las actividades a las lo hayas asociado.'
       ),
-      confirmLabel: text('Confirm Button Label', 'Modal Info Confirm'),
-      cancelLabel: text('Cancel Button Label', 'Modal Info Cancel'),
+      confirmLabel: text('Confirm Button Label', 'Confirm'),
+      cancelLabel: text('Cancel Button Label', 'Cancel'),
       decline: action('You are closed the modal info'),
       confirm: action('You are clicked on the confirm button of modal info'),
     },
@@ -72,7 +73,7 @@ storiesOf('Shared|Modal Info', module)
     <app-modal-info class="modalform"
                [variant]="'confirmation'"
                [appearance]="appearance"
-               [title]="title"
+               [modalTitle]="title"
                [overTitle]="overTitle"
                [description]="description"
                [confirmLabel]="confirmLabel"
@@ -109,8 +110,8 @@ storiesOf('Shared|Modal Info', module)
         'Description',
         'Te hemos reenviado un e-mail a [e-mail] para que puedas activar tu cuenta. Si la dirección de e-mail no es correcta debes volver a unirte.'
       ),
-      confirmLabel: text('Confirm Button Label', 'Modal Info Confirm'),
-      cancelLabel: text('Cancel Button Label', 'Modal Info Cancel'),
+      confirmLabel: text('Confirm Button Label', 'Confirm'),
+      cancelLabel: text('Cancel Button Label', 'Cancel'),
       decline: action('You are closed the modal info'),
       confirm: action('You are clicked on the confirm button of modal info'),
     },
@@ -120,7 +121,7 @@ storiesOf('Shared|Modal Info', module)
     <app-modal-info class="modalform"
                [variant]="'Yet Not Implemented'"
                [appearance]="appearance"
-               [title]="title"
+               [modalTitle]="title"
                [overTitle]="overTitle"
                [description]="'Yet Not Implemented'"
                [confirmLabel]="confirmLabel"
@@ -157,7 +158,7 @@ storiesOf('Shared|Modal Info', module)
     <app-modal-info class="modalform"
                [variant]="'unlock'"
                [appearance]="appearance"
-               [title]="title"
+               [modalTitle]="title"
                [overTitle]="overTitle"
                [description]="description"
                [confirmLabel]="confirmLabel"
@@ -194,8 +195,8 @@ storiesOf('Shared|Modal Info', module)
         'Description',
         'Para seleccionar los contenidos, primero tienes que tienes que especificar los criterios de evaluación de esta asignatura en el paso Objetivos de aprendizaje.'
       ),
-      confirmLabel: text('Confirm Button Label', 'Modal Info Confirm'),
-      cancelLabel: text('Cancel Button Label', 'Modal Info Cancel'),
+      confirmLabel: text('Confirm Button Label', 'Confirm'),
+      cancelLabel: text('Cancel Button Label', 'Cancel'),
       decline: action('You are closed the modal info'),
       confirm: action('You are clicked on the confirm button of modal info'),
     },

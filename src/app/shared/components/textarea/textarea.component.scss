@@ -19,7 +19,6 @@
   position: relative;
   box-shadow: 0 0 0 0 transparent;
   box-sizing: border-box;
-  display: flex;
 
   &__description {
     background: none;
@@ -99,11 +98,20 @@
     padding: 2px 5px;
     left: 14px;
     z-index: 2;
-    background-color: $color-quaternary;
+    &_white {
+      background-color: $color-quaternary;
+    }
+    &_white-lilac {
+      background-color: $color-background-primary;
+    }
   }
 
   &_small {
     min-height: 100px;
     max-height: 100px;
+  }
+  &_medium {
+    min-height: 146px;
+    max-height: 146px;
   }
 }

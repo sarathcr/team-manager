@@ -1,7 +1,15 @@
 {
   "GENERAL": {
     "platform_button-primary_ok": "ACEPTAR",
-    "platform_button-tertiary_signupnow": "Unirme ahora"
+    "platform_button-tertiary_signupnow": "Unirme ahora",
+    "platform_button-primary_signupnow": "UNIRME AHORA",
+    "platform_button-primary_return": "VOLVER",
+    "platform_button-primary_restorepassword": "RESTABLECER CONTRASEÑA",
+    "platform_button-primary_login": "ACCEDER A THINKÖ",
+    "platform_popup-error_headline": "¡UPS!",
+    "platform_popup-onmyway_headline": "¡EN CAMINO!",
+    "platform_popup-done_headline": "¡LISTO!",
+    "platform_invalid-link_title": "Lo sentimos, el link ha caducado"
   },
   "LOGIN": {
     "login_title_title": "Accede a Thinkö",
@@ -19,6 +27,12 @@
     },
     "Error_login_email": "Nombre de usuario y/o contraseña incorrectos",
     "Error_login_password": "Nombre de usuario y/o contraseña incorrectos"
+  },
+  "ACTIVATION_SUCCESS": {
+    "login_activation-success_headline": "¡AHORA SÍ!",
+    "login_activation-success_title": "Cuenta activada",
+    "login_activation-success_description": "Gracias por unirte a Thinkö. ",
+    "platform_button-tertiary_confirm": "ACCEDE A THINKÖ"
   },
   "ACTIVATION-ERROR": {
     "login_activation-error_headline": "¡UPS!",
@@ -42,5 +56,43 @@
     "login_resent-activation_headline": "¡EN CAMINO!",
     "login_resent-activation_title": "E-mail reenviado",
     "login_resent-activation_description": "Te hemos reenviado un e-mail a |para que puedas activar tu cuenta. Si la dirección de e-mail no es correcta debes volver a unirte."
+  },
+  "RESET_PASSWORD_PAGE": {
+    "login_reset-password_title_newpassword": "Restablecer mi contraseña",
+    "login_reset-password_description_newpassword": "Por favor, introduce tu nueva contraseña.",
+    "login_reset-password_label_newpassword": "Nueva contraseña",
+    "login_reset-password_input_newpassword": "Introduce tu nueva contraseña",
+    "login_reset-password_helpertext_newpassword": "Al menos: |8 carácteres |1 número  |1 mayúscula |1 minúscula||||"
+  },
+  "RECOVERY_PASSWORD_ERROR_PAGE": {
+    "login_recovery-password_invalid-link_description": "Han pasado más de 24h para restablecer tu contraseña y por motivos de seguridad hemos deshabilitado el enlace. Si has olvidado tu contraseña y quieres restablecerla debes volver a realizar la solicitud.",
+    "login_recovery-password_button-primary_forgotpassword": "HE OLVIDADO MI CONTRASEÑA"
+  },
+  "PASSWORD_CHANGED_POP_UP": {
+    "login_password-changed_title": "Contraseña modificada",
+    "login_password-changed_description": "Tu contraseña se ha modificado correctamente. Ya puedes acceder a Thinkö."
+  },
+  "FORGOT_PASSWORD_PAGE": {
+    "login_forgot-password_title_forgot-password": "He olvidado mi contraseña",
+    "login_forgot-password_description_description": "Escribe la dirección de e-mail asociada a tu cuenta y te enviaremos las instrucciones para restablecer tu contraseña.",
+    "login_forgot-password_button-primary_send-instructions": "ENVIAR INSTRUCCIONES"
+  },
+  "FORGOT_PASSWORD_POP_UP": {
+    "login_forgot-password_sent-email_title": "E-mail enviado",
+    "login_forgot-password_sent-email_description": "Si la dirección coincide con alguna de nuestras cuentas registradas, te enviaremos un e-mail con las instrucciones para restablecer tu contraseña."
+  },
+  "SIGNUP_PAGE": {
+    "platform_title_title": "Únete a Thinkö",
+    "login_label_email": "E-mail",
+    "login_input_email_placeholder": "Introduce tu e-mail",
+    "login_label_password": "Contraseña",
+    "login_input_password_placeholder": "Introduce tu contraseña",
+    "login_reset-password_helpertext_newpassword": "Al menos: 8 carácteres 1 número  1 mayúscula 1 minúscula",
+    "platform_checkbox_newsletter": "Quiero que Thinkö me informe de sus iniciativas | (Opcional)",
+    "platform_checkbox_policies": "Acepto la  | Política de Uso|y reconozco haber leído la  | Política de Privacidad",
+    "platform_button-primary_createaccount": "CREAR CUENTA",
+    "platform_button-secondary_createaccountgoogle": "REGÍSTRATE CON GOOGLE",
+    "platform_description_haveaccount": "¿Ya tienes una cuenta? | Accede",
+    "login_input_email_error_existingmail": "Ya existe una cuenta vinculada a este e-mail."
   }
 }

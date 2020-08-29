@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { DebugElement } from '@angular/core'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 
-import { of } from 'rxjs'
 import { TranslateModule } from '@ngx-translate/core'
+import { of } from 'rxjs'
 
 import { TextareaComponent } from './textarea.component'
 

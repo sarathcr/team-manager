@@ -6,34 +6,50 @@
     input_error:
       (enableValidator
         ? validator.limitExceeds && !(value.length == 0)
-        : null) || error
+        : null) ||
+      error ||
+      (passwordValidator && value && (control?.touched || focus) && !validField)
   }"
 >
-  <label class="input__label" *ngIf="label">
+  <label
+    class="input__label"
+    [ngClass]="{
+      input__label_white: background === 'white',
+      'input__label_white-lilac': background === 'white-lilac'
+    }"
+    *ngIf="label"
+  >
     {{ label | translate }}
   </label>
-  <input
-    class="form-control input__field"
-    [ngClass]="{ input__field_password: variant === 'password' }"
-    [type]="
-      variant === 'password' || variant === 'email'
-        ? toggle && variant !== 'email'
-          ? 'password'
-          : 'text'
-        : variant
-    "
-    [placeholder]="!focus ? placeholder : ''"
-    autocomplete="off"
-    [attr.maxlength]="maxlength"
-    [ngModel]="value"
-    (ngModelChange)="onValueChange($event)"
-    (focus)="setFocus($event, validator)"
-    (blur)="onBlur($event)"
-    value="{{ value }}"
-    (keydown)="handleKeyPress($event, validator)"
-    (keyup)="handleKeyPress($event, validator)"
-    #titleInput
-  />
+  <div [ngClass]="innerLabel ? 'd-flex' : ''">
+    <input
+      class="form-control input__field"
+      [ngClass]="{ input__field_password: variant === 'password' }"
+      [type]="
+        variant === 'password' || variant === 'email'
+          ? toggle && variant !== 'email'
+            ? 'password'
+            : 'text'
+          : variant
+      "
+      [placeholder]="!focus ? placeholder : ''"
+      [autocomplete]="variant === 'password' ? 'new-password' : 'off'"
+      [attr.maxlength]="maxlength"
+      [ngModel]="value"
+      background="background"
+      (ngModelChange)="onChange($event)"
+      (focus)="setFocus()"
+      (blur)="onBlur($event)"
+      value="{{ value }}"
+      (keyup)="handleKeyPress($event, validator)"
+      (paste)="onPaste($event, validator)"
+      (drop)="onDrop($event, validator)"
+      #titleInput
+    />
+    <span class="input__innerLabel" *ngIf="innerLabel">
+      {{ innerLabel | translate }}
+    </span>
+  </div>
   <span
     *ngIf="variant === 'password'"
     class="input__icon icon"
@@ -48,11 +64,21 @@
       [value]="titleInput.value"
       [maxlength]="maxlength"
       [isEnabled]="enableValidator"
+      [complexityControl]="complexityControl"
       [variant]="
         variant === 'password' || variant === 'email' ? 'text' : 'counter'
       "
       [error]="error"
       #validator
     ></app-validator>
+  </div>
+  <div class="input__password-validator" *ngIf="passwordValidator">
+    <app-validator
+      [value]="titleInput.value"
+      [variant]="'password'"
+      [passwordValidator]="passwordValidator"
+      [complexityControl]="complexityControl"
+    >
+    </app-validator>
   </div>
 </div>

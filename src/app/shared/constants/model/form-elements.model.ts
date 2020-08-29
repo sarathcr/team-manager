@@ -1,3 +1,4 @@
+import { boolean } from '@storybook/addon-knobs/angular'
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
 import { Status } from 'src/app/modules/project-editor/constants/model/project.model'
 
@@ -19,6 +20,14 @@ export interface FieldConfig {
 export class Option {
   id: number
   name: string
+  type?: string
+}
+
+export class List {
+  id?: number
+  name?: string
+  description?: string
+  checked?: boolean
 }
 
 export interface DropDownConfig {
@@ -49,8 +58,10 @@ export type ButtonVariants =
   | 'text'
   | 'icon'
   | 'block'
+  | 'back'
+  | 'underlined'
 
-export type Theme = 'primary' | 'secondary' | 'success'
+export type Theme = 'primary' | 'secondary' | 'teritiary' | 'success'
 
 export type TextAreaVariants =
   | 'default'
@@ -59,7 +70,9 @@ export type TextAreaVariants =
   | 'toggle'
   | 'listItem'
 
-export type TextareaSize = 'small'
+export type TextareaSize = 'small' | 'medium'
+
+export type TextareaBackground = 'white' | 'white-lilac'
 
 export type ButtonIcon =
   | 'tick'
@@ -71,8 +84,17 @@ export type ButtonIcon =
   | 'download'
   | 'print'
   | 'google'
+  | 'left'
+  | 'back'
+  | 'calender'
+  | 'three-dots'
+  | 'three-shape'
+  | 'alumno'
 
 export type ButtonSize = 'small' | 'default' | 'medium'
+
+export type ButtonType = 'button' | 'submit'
+
 export interface CheckBoxColumn {
   value: string
   size?: 'xs' | 'm' | 's' | 'sm'
@@ -90,8 +112,20 @@ export interface FieldEvent {
   status?: 'INPROCESS' | 'PENDING'
 }
 
+export interface PasswordComlexity {
+  hasMinLength: boolean
+  hasNumber: boolean
+  hasUpperCase: boolean
+  hasLowerCase: boolean
+  isTouched?: boolean
+}
+
 export type ErrorType = 'danger' | 'info' | 'warning' | 'success'
 
-export type InputVariant = 'text' | 'email' | 'password'
+export type InputVariant = 'text' | 'email' | 'password' | 'number'
 
-export type ValidatorVariant = 'text' | 'counter'
+export type ValidatorVariant = 'text' | 'counter' | 'password'
+
+export type InputInnerLabel = 'hours'
+
+export type InputBackground = 'white' | 'white-lilac'

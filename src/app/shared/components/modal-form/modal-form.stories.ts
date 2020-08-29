@@ -1,28 +1,33 @@
+import { ReactiveFormsModule } from '@angular/forms'
 import { TranslateModule } from '@ngx-translate/core'
-import { storiesOf, moduleMetadata } from '@storybook/angular'
-import { withKnobs, text, number } from '@storybook/addon-knobs/angular'
 import { action } from '@storybook/addon-actions'
+import { number, text, withKnobs } from '@storybook/addon-knobs/angular'
+import { moduleMetadata, storiesOf } from '@storybook/angular'
 import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
-import markDown from './modal-form.stories.md'
-import { ValidatorComponent } from '../validator/validator.component'
-import { TextareaComponent } from '../textarea/textarea.component'
-import { TextareaListComponent } from '../textarea/textarea-list/textarea-list.component'
-import { ModalFormComponent } from './modal-form.component'
-import { InputComponent } from '../input/input.component'
 import { ButtonComponent } from '../button/button.component'
+import { InputComponent } from '../input/input.component'
+import { LoaderComponent } from '../loader/loader.component'
+import { TextareaComponent } from '../textarea/textarea.component'
+import { ValidatorComponent } from '../validator/validator.component'
+import { ModalFormComponent } from './modal-form.component'
+import markDown from './modal-form.stories.md'
 
 storiesOf('Shared|Modal Form', module)
   .addDecorator(
     moduleMetadata({
       declarations: [
+        LoaderComponent,
         ModalFormComponent,
         ValidatorComponent,
         InputComponent,
         TextareaComponent,
-        TextareaListComponent,
         ButtonComponent,
       ],
-      imports: [StorybookTranslateModule, TranslateModule.forRoot()],
+      imports: [
+        ReactiveFormsModule,
+        StorybookTranslateModule,
+        TranslateModule.forRoot(),
+      ],
     })
   )
   .addDecorator(withKnobs)

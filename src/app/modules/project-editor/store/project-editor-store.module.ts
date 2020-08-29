@@ -1,40 +1,44 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { EntityDataService, EntityDefinitionService } from '@ngrx/data'
-import { ProjectEntityService } from './entity/project/project-entity.service'
-import { ProjectsDataService } from './entity/project/projects-data.service'
-import { CountryEntityService } from './entity/country/country-entity.service'
-import { CountryDataService } from './entity/country/country-data.service'
-import { SubjectDataService } from './entity/subject/subject-data.service'
-import { SubjectEntityService } from './entity/subject/subject-entity.service'
-import { RegionEntityService } from './entity/region/region-entity.service'
-import { RegionDataService } from './entity/region/region-data.service'
-import { GradeDataService } from './entity/grade/grade-data.service'
-import { GradeEntityService } from './entity/grade/grade-entity.service'
+import { ProjectEditorToastService } from '../services/project-editor-toast/project-editor-toast.service'
 import { AcademicYearDataService } from './entity/academic-year/academic-year-data.service'
 import { AcademicYearEntityService } from './entity/academic-year/academic-year-entity.service'
-import { StepStatusEntityService } from './entity/step-status/step-status-entity.service'
-import { StepStatusDataService } from './entity/step-status/step-status-data.service'
-import { HelpEntityService } from './entity/help/help-entity.service'
-import { HelpDataService } from './entity/help/help-data.service'
-import { entityMetadata } from './entity/entity-metadata'
-import { BlockEntityService } from './entity/block/block-entity.service'
 import { BlockDataService } from './entity/block/block-data.service'
-import { EvaluationCriteriaDataService } from './entity/evaluation-criteria/evaluation-criteria-data.service'
-import { EvaluationCriteriaEntityService } from './entity/evaluation-criteria/evaluation-criteria-entity.service'
-import { ProjectListEntityService } from './entity/project-list/project-list-entity.service'
-import { ProjectListDataService } from './entity/project-list/project-list-data.service'
+import { BlockEntityService } from './entity/block/block-entity.service'
+import { CountryDataService } from './entity/country/country-data.service'
+import { CountryEntityService } from './entity/country/country-entity.service'
 import { CurriculumBasicSkillsDataService } from './entity/curriculum-basic-skills/curriculum-basic-skills-data.service'
 import { CurriculumBasicSkillsEntityService } from './entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
+import { CurriculumGradesDataService } from './entity/curriculum-grades/curriculum-grades-data.service'
+import { CurriculumGradesEntityService } from './entity/curriculum-grades/curriculum-grades-entity.service'
+import { CurriculumDataService } from './entity/curriculum/curriculum-data.service'
+import { CurriculumEntityService } from './entity/curriculum/curriculum-entity.service'
+import { entityMetadata } from './entity/entity-metadata'
+import { EvaluationCriteriaDataService } from './entity/evaluation-criteria/evaluation-criteria-data.service'
+import { EvaluationCriteriaEntityService } from './entity/evaluation-criteria/evaluation-criteria-entity.service'
+import { GradeDataService } from './entity/grade/grade-data.service'
+import { GradeEntityService } from './entity/grade/grade-entity.service'
+import { ProjectListDataService } from './entity/project-list/project-list-data.service'
+import { ProjectListEntityService } from './entity/project-list/project-list-entity.service'
+import { ProjectEntityService } from './entity/project/project-entity.service'
+import { ProjectsDataService } from './entity/project/projects-data.service'
+import { RegionDataService } from './entity/region/region-data.service'
+import { RegionEntityService } from './entity/region/region-entity.service'
+import { StageDataService } from './entity/stage/stage-data.service'
+import { StageEntityService } from './entity/stage/stage-entity.service'
 import { StandardDataService } from './entity/standard/standard-data.service'
 import { StandardEntityService } from './entity/standard/standard-entity.service'
-import { ProjectEditorToastService } from '../services/project-editor-toast/project-editor-toast.service'
+import { StepStatusDataService } from './entity/step-status/step-status-data.service'
+import { StepStatusEntityService } from './entity/step-status/step-status-entity.service'
+import { StudentGroupsDataService } from './entity/student-groups/student-groups-data.service'
+import { StudentGroupsEntityService } from './entity/student-groups/student-groups-entity.service'
+import { TeachingStrategyDataService } from './entity/teaching-strategy/teaching-strategy-data.service'
+import { TeachingStrategyEntityService } from './entity/teaching-strategy/teaching-strategy-entity.service'
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   providers: [
     ProjectEntityService,
     ProjectsDataService,
@@ -42,8 +46,6 @@ import { ProjectEditorToastService } from '../services/project-editor-toast/proj
     ProjectListDataService,
     CountryEntityService,
     CountryDataService,
-    SubjectDataService,
-    SubjectEntityService,
     RegionEntityService,
     RegionDataService,
     GradeDataService,
@@ -52,8 +54,6 @@ import { ProjectEditorToastService } from '../services/project-editor-toast/proj
     AcademicYearEntityService,
     StepStatusEntityService,
     StepStatusDataService,
-    HelpEntityService,
-    HelpDataService,
     BlockEntityService,
     BlockDataService,
     EvaluationCriteriaDataService,
@@ -61,11 +61,20 @@ import { ProjectEditorToastService } from '../services/project-editor-toast/proj
     CurriculumBasicSkillsDataService,
     CurriculumBasicSkillsEntityService,
     StandardDataService,
-    StandardEntityService
-  ]
+    StandardEntityService,
+    StageDataService,
+    StageEntityService,
+    CurriculumEntityService,
+    CurriculumDataService,
+    CurriculumGradesDataService,
+    CurriculumGradesEntityService,
+    StudentGroupsDataService,
+    StudentGroupsEntityService,
+    TeachingStrategyDataService,
+    TeachingStrategyEntityService,
+  ],
 })
 export class ProjectEditorStoreModule {
-
   constructor(
     private eds: EntityDefinitionService,
     private entityDataService: EntityDataService,
@@ -73,30 +82,38 @@ export class ProjectEditorStoreModule {
     private projectListDataService: ProjectListDataService,
     private countryDataService: CountryDataService,
     private regionDataService: RegionDataService,
-    private subjectDataService: SubjectDataService,
     private gradeDataService: GradeDataService,
     private academicYearDataService: AcademicYearDataService,
     private stepStatusDataService: StepStatusDataService,
-    private contextualHelpService: HelpDataService,
     private blockDataService: BlockDataService,
     private evaluatioCriteriaDataService: EvaluationCriteriaDataService,
     private basicSkillsDataService: CurriculumBasicSkillsDataService,
     private standardDataService: StandardDataService,
+    private stageService: StageDataService,
+    private curriculumDataService: CurriculumDataService,
+    private curriculumGradesDataService: CurriculumGradesDataService,
+    private studentGroupsDataService: StudentGroupsDataService,
+    private teachingStrategyDataService: TeachingStrategyDataService,
     projectEditorToastService: ProjectEditorToastService
   ) {
     eds.registerMetadataMap(entityMetadata)
-    entityDataService.registerService('Project', projectsDataService)
-    entityDataService.registerService('ProjectList', projectListDataService)
-    entityDataService.registerService('Country', countryDataService)
-    entityDataService.registerService('Subject', subjectDataService)
-    entityDataService.registerService('Region', regionDataService)
-    entityDataService.registerService('Grade', gradeDataService)
-    entityDataService.registerService('AcademicYear', academicYearDataService)
-    entityDataService.registerService('StepStatus', stepStatusDataService)
-    entityDataService.registerService('ContextualHelp', contextualHelpService)
-    entityDataService.registerService('Block', blockDataService)
-    entityDataService.registerService('EvaluationCriteria', evaluatioCriteriaDataService)
-    entityDataService.registerService('CurriculumBasicSkills', basicSkillsDataService)
-    entityDataService.registerService('Standard', standardDataService)
+    entityDataService.registerServices({
+      Project: projectsDataService,
+      ProjectList: projectListDataService,
+      Country: countryDataService,
+      Region: regionDataService,
+      Grade: gradeDataService,
+      AcademicYear: academicYearDataService,
+      StepStatus: stepStatusDataService,
+      Block: blockDataService,
+      EvaluationCriteria: evaluatioCriteriaDataService,
+      CurriculumBasicSkills: basicSkillsDataService,
+      Standard: standardDataService,
+      Stage: stageService,
+      Curriculum: curriculumDataService,
+      CurriculumGrades: curriculumGradesDataService,
+      StudentGroups: studentGroupsDataService,
+      TeachingStrategy: teachingStrategyDataService,
+    })
   }
 }

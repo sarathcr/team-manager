@@ -1,5 +1,8 @@
 <div class="project-editor__form step-seven" id="step-seven">
-  <app-status id="step-seven-status" [status]="step.state"></app-status>
+  <app-step-status
+    id="step-seven-status"
+    [status]="step.state"
+  ></app-step-status>
   <div class="project-form d-flex flex-column justify-content-between">
     <div>
       <h2 class="project-form__title title_s">
@@ -26,22 +29,14 @@
           deleteModalbuttonLabel="PROJECT.project_button_delete"
           helperText="PROJECT.project_input_singleitem_helpertext"
           errorText="PROJECT.Error_textlimit_specified_singleinput"
+          textareaHelperText="PROJECT.project_input_singleitem_helpertext"
+          textareaErrorText="PROJECT.Error_textlimit_specified_singleinput"
+          textareaPlaceholder="DRIVING_QUESTIONS.project_drivingquestions_placeholder"
           (editItem)="editQuestion($event)"
           (deleteItem)="deleteQuestion($event)"
+          (addItem)="addDrivingQuestions()"
         ></app-editable-list>
       </div>
-      <app-textarea
-        id="step-seven-textarea"
-        variant="listItem"
-        [maxLength]="150"
-        [enableValidator]="true"
-        helperText="PROJECT.project_input_singleitem_helpertext"
-        errorText="PROJECT.Error_textlimit_specified_singleinput"
-        placeholder="{{
-          'DRIVING_QUESTIONS.project_drivingquestions_placeholder' | translate
-        }}"
-        (inputChange)="textAreaUpdate($event)"
-      ></app-textarea>
     </div>
     <app-button
       id="step-seven-button"

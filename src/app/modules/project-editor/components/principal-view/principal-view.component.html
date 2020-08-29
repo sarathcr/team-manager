@@ -1,15 +1,22 @@
 <div class="principal-modal__content">
   <div class="principal-modal__header">
-    <h4 *ngIf="showPrimaryView else return" class="principal-modal__header-title">
+    <h4
+      *ngIf="showPrimaryView; else return"
+      class="principal-modal__header-title"
+    >
       {{ labels.subjectTitle | translate }}
       {{ subject.name }}
     </h4>
     <ng-template #return>
-      <div class="principal-modal__summary-title">
-        <h4 class="principal-modal__header-title" (click)="togglePrimaryView()">
-          <span class="icon icon-ic_back principal-modal__header-icon"></span>
+      <div class="mb-5">
+        <app-button
+          theme="primary"
+          variant="back"
+          icon="back"
+          (click)="togglePrimaryView()"
+        >
           {{ labels.summaryTitle | translate }}
-        </h4>
+        </app-button>
       </div>
     </ng-template>
     <button
@@ -23,33 +30,53 @@
     </button>
   </div>
   <app-loader *ngIf="serviceData?.loading$ | async"></app-loader>
-  <div *ngIf="showPrimaryView else summary" class="principal-modal__body">
+  <div *ngIf="showPrimaryView; else summary" class="principal-modal__body">
     <h6 class="principal-modal__body-title">
       {{ labels.bodyTitle | translate }}
     </h6>
     <div class="principal-modal__body-block">
       <div class="principal-modal__body-block-grade">
         <app-dropdown
-          [config]='gradeDropdownConfig'
-          [label]='gradeDropdownConfig.label | translate'
-          (dropdownSelect)='serviceData.getBlocks($event.val[0]);changeCurrentBlock(0)'
+          [config]="gradeDropdownConfig"
+          [label]="gradeDropdownConfig.label | translate"
+          (dropdownSelect)="
+            serviceData.getBlocks($event.val[0]); changeCurrentBlock(0)
+          "
           [canDeselect]="false"
         ></app-dropdown>
         <ng-scrollbar class="custom-scrollbar">
           <div class="principal-modal__body-scroll">
-            <div *ngIf="!(serviceData.blocks?.length === 1 && serviceData.blocks[0]?.virtual)" class="custom-tab">
+            <div
+              *ngIf="
+                !(
+                  serviceData.blocks?.length === 1 &&
+                  serviceData.blocks[0]?.virtual
+                )
+              "
+              class="custom-tab"
+            >
               <button
-                *ngFor="let block of serviceData.blocks; let index = index;"
+                *ngFor="let block of serviceData.blocks; let index = index"
                 class="custom-tab__links"
                 [ngClass]="{ active: this.currentBlockIndex === index }"
                 (click)="changeCurrentBlock(index)"
               >
-                <strong class="custom-tab__links-index">{{ index + 1 }}. </strong>
+                <strong class="custom-tab__links-index"
+                  >{{ index + 1 }}.
+                </strong>
                 <span class="custom-tab__links-label">{{ block.name }}</span>
-                  <span *ngIf="block[serviceData.modalColumns.colOneHead?.key] | checkCount" class="d-flex ml-auto" >
-                    <strong class="custom-tab__links-selected">
-                      {{ block[serviceData.modalColumns.colOneHead?.key] | checkCount }}
-                    </strong>
+                <span
+                  *ngIf="
+                    block[serviceData.modalColumns.colOneHead?.key] | checkCount
+                  "
+                  class="d-flex ml-auto"
+                >
+                  <strong class="custom-tab__links-selected">
+                    {{
+                      block[serviceData.modalColumns.colOneHead?.key]
+                        | checkCount
+                    }}
+                  </strong>
                   <span class="custom-tab__links-icon icon-ic_check"></span>
                 </span>
               </button>
@@ -59,32 +86,44 @@
       </div>
       <div class="principal-modal__body-criteria">
         <div
-          *ngFor="let block of serviceData.blocks; let index = index;"
+          *ngFor="let block of serviceData.blocks; let index = index"
           class="custom-tab__content"
           [ngClass]="{ active: currentBlockIndex === index }"
         >
           <div class="custom-tab__content-body">
-            <app-checkbox
+            <app-custom-checkbox
               [isHead]="true"
               [checkboxData]="false"
-              [colOne]="{value: serviceData.modalColumns.colOneHead?.value }"
-              [colTwo]="block.colTwoHead === serviceData.modalColumns.colTwoHead?.value ? {
-                value: block.colTwoHead,
-                size: 'sm'
-              } : null"
+              [colOne]="{ value: serviceData.modalColumns.colOneHead?.value }"
+              [colTwo]="
+                block.colTwoHead === serviceData.modalColumns.colTwoHead?.value
+                  ? {
+                      value: block.colTwoHead,
+                      size: 'sm'
+                    }
+                  : null
+              "
             >
-            </app-checkbox>
+            </app-custom-checkbox>
             <ng-scrollbar class="custom-scrollbar">
               <div class="custom-tab__content-body-scroll pb-5">
-                <app-checkbox
-                  *ngFor="let column of block[serviceData.modalColumns.colOneHead?.key]"
+                <app-custom-checkbox
+                  *ngFor="
+                    let column of block[
+                      serviceData.modalColumns.colOneHead?.key
+                    ]
+                  "
                   [checkboxData]="column"
                   [colOne]="{ value: column.colOneData }"
-                  [colTwo]="block.colTwoHead === serviceData.modalColumns.colTwoHead?.value ?
-                  { value: column.colTwoData, size: 'sm' } : null"
+                  [colTwo]="
+                    block.colTwoHead ===
+                    serviceData.modalColumns.colTwoHead?.value
+                      ? { value: column.colTwoData, size: 'sm' }
+                      : null
+                  "
                   [parentID]="block.id"
                   [changeBg]="true"
-                ></app-checkbox>
+                ></app-custom-checkbox>
               </div>
             </ng-scrollbar>
           </div>
@@ -105,14 +144,23 @@
   </ng-template>
   <div class="principal-modal__footer">
     <div class="principal-modal__footer-btn-group">
-      <div class="principal-modal__footer-btn-link" (click)="togglePrimaryView()" *ngIf="showPrimaryView">
+      <div
+        class="principal-modal__footer-btn-link"
+        (click)="togglePrimaryView()"
+        *ngIf="showPrimaryView"
+      >
         {{ labels.countText | translate }}
-        ({{ (serviceData.blockData | checkCount: serviceData.modalColumns?.colOneHead?.key) || 0 }})
+        ({{
+          (serviceData.blockData
+            | checkCount: serviceData.modalColumns?.colOneHead?.key) || 0
+        }})
       </div>
       <app-button
         class="ml-auto"
         icon="tick"
-        [disabled]="!(blockData | checkCount: serviceData.modalColumns?.colOneHead?.key)"
+        [disabled]="
+          !(blockData | checkCount: serviceData.modalColumns?.colOneHead?.key)
+        "
         (click)="handleButtonClick()"
       >
         {{ labels.addButtonText | translate }}

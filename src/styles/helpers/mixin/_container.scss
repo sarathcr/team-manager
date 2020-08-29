@@ -1,0 +1,7 @@
+@mixin custom-container($activity-editor-container) {
+  max-width: 877px;
+  flex-flow: row wrap;
+  width: 100%;
+  padding: 0 100px; // To include space acquired by back button for centering the container
+  margin: 0 auto;
+}

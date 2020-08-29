@@ -54,4 +54,22 @@
       }
     }
   }
+  &__border,
+  &__placeholder-wrap {
+    border-bottom: 1px solid $link-water;
+  }
+  &__placeholder-wrap {
+    padding: 12px 0 12px 18px;
+  }
+  &__placeholder {
+    color: rgba($color-tertiary, 0.6);
+  }
+  &__optional-header {
+    font-weight: 900;
+  }
+  &__numbered {
+    color: $color-tertiary;
+    font-weight: 900;
+    font-size: $font-size-button;
+  }
 }

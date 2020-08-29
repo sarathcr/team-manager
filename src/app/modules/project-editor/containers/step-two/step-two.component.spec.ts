@@ -1,45 +1,51 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
-import { Router } from '@angular/router'
-import { FormsModule } from '@angular/forms'
 import { DebugElement } from '@angular/core'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { FormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
+import { Router } from '@angular/router'
 
 import { TranslateModule } from '@ngx-translate/core'
+import { BsModalService } from 'ngx-bootstrap/modal'
 import { BehaviorSubject, Observable } from 'rxjs'
 
-import { StepTwoComponent } from './step-two.component'
-import { TextareaComponent } from 'src/app/shared/components/textarea/textarea.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
-import { StatusComponent } from '../../components/status/status.component'
+import { EditableListComponent } from 'src/app/shared/components/editable-list/editable-list.component'
 import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
-import { TextareaListComponent } from 'src/app/shared/components/textarea/textarea-list/textarea-list.component'
+import { TextareaComponent } from 'src/app/shared/components/textarea/textarea.component'
+import { StepStatusComponent } from '../../components/step-status/step-status.component'
+import { StepTwoComponent } from './step-two.component'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
+
 import { Status } from '../../constants/model/project.model'
 import { FormTwo } from '../../constants/model/step-forms.model'
 
 const getDataByStep = (): Observable<any> => {
   return new BehaviorSubject({
     ids: { 0: 1 },
-    entities: { 1:  {
-      id: 1,
-      name: null,
-      title: 'Lorem Ipsum'
-    }}
+    entities: {
+      1: {
+        id: 1,
+        name: null,
+        title: 'Lorem Ipsum',
+      },
+    },
   })
 }
 
 const getStepStatus = (state: Status): Observable<any> => {
   return new BehaviorSubject({
-    stepid: 1, state
+    stepid: 1,
+    state,
   })
 }
 
-class ProjectEntityServiceStub { }
-class StepStatusEntityServiceStub { }
-class RouterStub { }
+class ProjectEntityServiceStub {}
+class StepStatusEntityServiceStub {}
+class RouterStub {}
+class BsModalServiceStub {}
 
 describe('TematicaComponent', (): void => {
   let component: StepTwoComponent
@@ -47,7 +53,10 @@ describe('TematicaComponent', (): void => {
   let editor: EditorService
 
   const editorSpies = (state: Status): void => {
-    editor.steps = [{ stepid: 1, state: 'PENDING', name: '' }, { stepid: 2, state, name: '' }]
+    editor.steps = [
+      { stepid: 1, state: 'PENDING', name: '' },
+      { stepid: 2, state, name: '' },
+    ]
     spyOn(editor, 'getDataByStep').and.returnValue(getDataByStep())
     spyOn(editor, 'getStepStatus').and.returnValue(getStepStatus(state))
   }
@@ -62,16 +71,20 @@ describe('TematicaComponent', (): void => {
         StepTwoComponent,
         TextareaComponent,
         ButtonComponent,
-        StatusComponent,
+        StepStatusComponent,
         InfoToolTipComponent,
-        TextareaListComponent
+        EditableListComponent,
       ],
       providers: [
         { provide: ProjectEntityService, useClass: ProjectEntityServiceStub },
-        { provide: StepStatusEntityService, useClass: StepStatusEntityServiceStub },
-        { provide: Router, useClass: RouterStub }
+        {
+          provide: StepStatusEntityService,
+          useClass: StepStatusEntityServiceStub,
+        },
+        { provide: Router, useClass: RouterStub },
+        { provide: BsModalService, useClass: BsModalServiceStub },
       ],
-      imports: [ TranslateModule.forRoot(), FormsModule ]
+      imports: [TranslateModule.forRoot(), FormsModule],
     })
 
     editor = TestBed.inject(EditorService)
@@ -107,12 +120,14 @@ describe('TematicaComponent', (): void => {
 
     expect(component.buttonConfig.submitted).toBeFalsy()
     expect(component.buttonConfig.disabled).toBeTruthy()
-    expect(buttonElement.textContent).toContain('PROJECT.project_button_markdone')
+    expect(buttonElement.textContent).toContain(
+      'PROJECT.project_button_markdone'
+    )
   })
 
   it('should have correct properties for button when status is DONE', () => {
     const buttonElement: Element = getButtonElement().nativeElement
-    component.themes = [{ id: 1, name: 'lorem ipsum'}]
+    component.themes = [{ id: 1, name: 'lorem ipsum' }]
     editorSpies('DONE')
 
     fixture.detectChanges()
@@ -122,9 +137,9 @@ describe('TematicaComponent', (): void => {
     expect(buttonElement.textContent).toContain('PROJECT.project_button_done')
   })
 
-  it('should enable the button and the status when textarea is ubdated if status was DONE', () => {
+  it('should enable the button and the status when textarea is updated if status was DONE', () => {
     const buttonElement: Element = getButtonElement().nativeElement
-    component.themes = [{ id: 1, name: 'lorem ipsum'}]
+    component.themes = [{ id: 1, name: 'lorem ipsum' }]
     editorSpies('DONE')
     spyOn(editor, 'handleStepSubmit')
 
@@ -133,118 +148,174 @@ describe('TematicaComponent', (): void => {
     expect(component.buttonConfig.disabled).toBeTruthy()
     expect(buttonElement.textContent).toContain('PROJECT.project_button_done')
 
-    component.textAreaUpdate({ values: [{ id: 1, name: 'lorem ipsum'}], updated: true, status: 'INPROCESS' })
+    component.themes = [{ id: 1, name: 'lorem ipsum' }]
+    component.addThemes()
     fixture.detectChanges()
 
     expect(component.buttonConfig.submitted).toBeFalsy()
     expect(component.buttonConfig.disabled).toBeFalsy()
-    expect(buttonElement.textContent).toContain('PROJECT.project_button_markdone')
+    expect(buttonElement.textContent).toContain(
+      'PROJECT.project_button_markdone'
+    )
   })
 
-  it('should enable the button and the status when textarea is ubdated if status was PENDING', () => {
+  it('should enable the button and the status when list is updated if status was PENDING', () => {
     const buttonElement: Element = getButtonElement().nativeElement
-    component.themes = [{ id: 1, name: 'lorem ipsum'}]
+    component.themes = [{ id: 1, name: 'lorem ipsum' }]
     editorSpies('PENDING')
     spyOn(editor, 'handleStepSubmit')
 
     fixture.detectChanges()
+    component.addThemes()
+    component.themes = [{ id: 1, name: 'lorem ipsum' }]
+    fixture.detectChanges()
+
     expect(component.buttonConfig.submitted).toBeFalsy()
     expect(component.buttonConfig.disabled).toBeTruthy()
-    expect(buttonElement.textContent).toContain('PROJECT.project_button_markdone')
+    expect(buttonElement.textContent).toContain(
+      'PROJECT.project_button_markdone'
+    )
 
-    component.textAreaUpdate({ values: [{ id: 1, name: 'lorem ipsum'}], updated: true, status: 'INPROCESS' })
+    component.addThemes()
     fixture.detectChanges()
 
     expect(component.buttonConfig.submitted).toBeFalsy()
     expect(component.buttonConfig.disabled).toBeFalsy()
-    expect(buttonElement.textContent).toContain('PROJECT.project_button_markdone')
-  })
-
-  it('should not change the button and the status when textarea is ubdated if status was INPROCESS', () => {
-    const buttonElement: Element = getButtonElement().nativeElement
-    component.themes = [{ id: 1, name: 'lorem ipsum'}]
-    editorSpies('INPROCESS')
-    spyOn(editor, 'handleStepSubmit')
-
-    fixture.detectChanges()
-    expect(component.buttonConfig.submitted).toBeFalsy()
-    expect(component.buttonConfig.disabled).toBeFalsy()
-    expect(buttonElement.textContent).toContain('PROJECT.project_button_markdone')
-
-    component.textAreaUpdate({ values: [{ id: 1, name: 'lorem ipsum'}], updated: true, status: 'INPROCESS' })
-    fixture.detectChanges()
-
-    expect(component.buttonConfig.submitted).toBeFalsy()
-    expect(component.buttonConfig.disabled).toBeFalsy()
-    expect(buttonElement.textContent).toContain('PROJECT.project_button_markdone')
+    expect(buttonElement.textContent).toContain(
+      'PROJECT.project_button_markdone'
+    )
   })
 
   it('should call editorService handleStepSumbit function with valid data when handleButton is clicked', () => {
     const buttonElement: DebugElement = getButtonElement()
-    component.themes = [{ id: 1, name: 'lorem ipsum'}]
+    component.themes = [{ id: 1, name: 'lorem ipsum' }]
     editorSpies('INPROCESS')
-    const handleStaepSubmitMock = spyOn(editor, 'handleStepSubmit')
+    const handleStepSubmitMock = spyOn(editor, 'handleStepSubmit')
     fixture.detectChanges()
-    component.textAreaUpdate({ values: [{ id: 1, name: 'lorem ipsum'}], updated: true, status: 'INPROCESS' })
+    component.addThemes()
     fixture.detectChanges()
 
     const formData: FormTwo = {
       data: {
-        themes: component.themes
+        themes: component.themes,
       },
       stepStatus: {
         steps: [
           {
             state: 'DONE',
-            stepid: component.step.stepid
-          }
-        ]
-      }
+            stepid: component.step.stepid,
+          },
+        ],
+      },
     }
 
     buttonElement.triggerEventHandler('click', null)
     fixture.detectChanges()
 
-    expect(handleStaepSubmitMock).toHaveBeenCalledWith(formData, true)
+    expect(handleStepSubmitMock).toHaveBeenCalledWith(formData, true)
   })
 
-  it('should call editorService handleStepSumbit function with valid data on component destroy if form is not saved',
+  it(
+    'should call editorService handleStepSumbit function with valid data on component ' +
+      ' destroy if any delete operation perfomed and form is not saved',
     () => {
-    component.themes = [{ id: 1, name: 'lorem ipsum'}]
-    editorSpies('INPROCESS')
-    const handleStaepSubmitMock = spyOn(editor, 'handleStepSubmit')
-    fixture.detectChanges()
+      component.themes = [{ id: 1, name: 'lorem ipsum' }]
+      editorSpies('INPROCESS')
+      const handleStepSubmitMock = spyOn(editor, 'handleStepSubmit')
+      fixture.detectChanges()
 
-    component.textAreaUpdate({ values: [{ id: 1, name: 'lorem ipsum'}], updated: true, status: 'INPROCESS' })
-    fixture.detectChanges()
-    const formData: FormTwo = {
-      data: {
-        themes: component.themes
-      },
-      stepStatus: {
-        steps: [
-          {
-            state: 'INPROCESS',
-            stepid: component.step.stepid
-          }
-        ]
+      component.deleteTheme([{ name: 'lorem ipsum' }])
+      fixture.detectChanges()
+      const formData: FormTwo = {
+        data: {
+          themes: component.themes,
+        },
+        stepStatus: {
+          steps: [
+            {
+              state: 'INPROCESS',
+              stepid: component.step.stepid,
+            },
+          ],
+        },
       }
+
+      fixture.destroy()
+
+      expect(handleStepSubmitMock).toHaveBeenCalledWith(formData, false)
     }
-
-    fixture.destroy()
-
-    expect(handleStaepSubmitMock).toHaveBeenCalledWith(formData, false)
-  })
+  )
 
   it('should conatin status component', () => {
-    const statusComponent = fixture.debugElement.query(By.directive(StatusComponent))
+    const stepStatusComponent = fixture.debugElement.query(
+      By.directive(StepStatusComponent)
+    )
 
-    expect(statusComponent).toBeTruthy()
+    expect(stepStatusComponent).toBeTruthy()
   })
 
-  it('should conatin textarea component with required props', () => {
-    const textAreaComponent = fixture.debugElement.query(By.directive(TextareaComponent))
-    expect(textAreaComponent.nativeElement.getAttribute('variant')).toBe('bullet')
-    expect(textAreaComponent).toBeTruthy()
+  it('should contain an editable list', () => {
+    const editableListComponent = fixture.debugElement.query(
+      By.directive(EditableListComponent)
+    )
+    expect(editableListComponent).toBeTruthy()
+  })
+
+  it('should change the step status on editing the themes ', () => {
+    editorSpies('DONE')
+    spyOn(editor, 'handleStepSubmit')
+
+    fixture.detectChanges()
+    component.themes = [
+      { id: 1, name: 'lorem ipsum' },
+      { id: 2, name: 'lorem ipsum' },
+    ]
+    component.editTheme([
+      { id: 1, name: 'lorem ipsum' },
+      { id: 2, name: 'lorem ipsums' },
+    ])
+    const buttonElement: DebugElement = getButtonElement()
+
+    fixture.detectChanges()
+
+    expect(component.buttonConfig.submitted).toBeFalsy()
+    expect(component.buttonConfig.disabled).toBeFalsy()
+    expect(buttonElement.nativeElement.textContent).toContain(
+      'PROJECT.project_button_markdone'
+    )
+  })
+
+  it('should disable the done button if all the themes where deleted ', () => {
+    editorSpies('INPROCESS')
+    spyOn(editor, 'handleStepSubmit')
+
+    fixture.detectChanges()
+
+    component.themes = [
+      { id: 1, name: 'lorem ipsum' },
+      { id: 2, name: 'lorem ipsum' },
+    ]
+    component.deleteTheme([])
+
+    fixture.detectChanges()
+
+    expect(component.buttonConfig.disabled).toBeTruthy()
+  })
+
+  it('should enable the button if a theme is added to the list', () => {
+    editorSpies('INPROCESS')
+    spyOn(editor, 'handleStepSubmit')
+
+    fixture.detectChanges()
+    const buttonElement: Element = getButtonElement().nativeElement
+    component.themes = [{ id: 1, name: 'lorem ipsum' }]
+    component.addThemes()
+    fixture.detectChanges()
+
+    expect(component.buttonConfig.submitted).toBeFalsy()
+    expect(component.buttonConfig.disabled).toBeFalsy()
+    expect(buttonElement.textContent).toContain(
+      'PROJECT.project_button_markdone'
+    )
   })
 })

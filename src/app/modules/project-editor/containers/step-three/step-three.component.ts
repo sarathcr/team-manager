@@ -1,41 +1,41 @@
 import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  TemplateRef,
   AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core'
 
+import { TranslateService } from '@ngx-translate/core'
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { TranslateService } from '@ngx-translate/core'
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { ObjectiveService } from '../../services/objectives/objectives.service'
-import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
+import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 
-import {
-  Option,
-  DropdownCustom,
-} from 'src/app/shared/constants/model/form-elements.model'
 import {
   CompetencyObjective,
   EvaluationCriteria,
-  Subject as CurriculumSubject,
-  Step,
-  Status,
   Project,
+  Status,
+  Step,
+  Subject as CurriculumSubject,
 } from 'src/app/modules/project-editor/constants/model/project.model'
-import { FormThree } from '../../constants/model/step-forms.model'
+import {
+  DropdownCustom,
+  Option,
+} from 'src/app/shared/constants/model/form-elements.model'
+import { Block } from '../../constants/model/curriculum.model'
 import {
   PrincipalModalColData,
   PrincipalViewLabels,
   SecondaryViewLabels,
 } from '../../constants/model/principle-view.model'
-import { Block } from '../../constants/model/curriculum.model'
+import { FormThree } from '../../constants/model/step-forms.model'
 
 import { StepButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
@@ -283,9 +283,8 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.handleButtonType()
   }
 
-  textAreaUpdate(data: CompetencyObjective): void {
+  addObjectives(): void {
     // calls on every update
-    this.competencyObjectives.push(data)
     this.checkStepStatus()
     this.handleSubmit()
   }

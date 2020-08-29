@@ -32,15 +32,15 @@ A convenience directive for applying validations to other components.
 
 ### Input
 
-| Name           | Type     | Required |  Values           |  Default  | Description                                 |
-| -------------- | -------- | :------: | :---------------: | :-------: | ------------------------------------------- |
-| `variant`      | -        |    -     | `counter`, `text` | `counter` | Variants for validator component            |
-| `value`        | `string` |    -     |     -             |     -     | To set the value for the validator          |
-| `maxlength`    | -        |    -     |     -             |   `70`    | To set the maximum length for the validator |
-| `isEnabled`    | -        |    -     |     -             |  `true`   | To enable validation to a component         |
-| `helperText`   | `string` |    -     |     -             |     -     | To set helper text for the validator        |
-| `errorText`    | `string` |    -     |     -             |     -     | To set error text for the validator         |
-| `error`        | `boolean`|    -     |     -             |  `false`  | To set error trigger for the validator      |
+| Name         | Type      | Required |      Values       |  Default  | Description                                 |
+| ------------ | --------- | :------: | :---------------: | :-------: | ------------------------------------------- |
+| `variant`    | -         |    -     | `counter`, `text` | `counter` | Variants for validator component            |
+| `value`      | `string`  |    -     |         -         |     -     | To set the value for the validator          |
+| `maxlength`  | -         |    -     |         -         |   `70`    | To set the maximum length for the validator |
+| `isEnabled`  | -         |    -     |         -         |  `true`   | To enable validation to a component         |
+| `helperText` | `string`  |    -     |         -         |     -     | To set helper text for the validator        |
+| `errorText`  | `string`  |    -     |         -         |     -     | To set error text for the validator         |
+| `error`      | `boolean` |    -     |         -         |  `false`  | To set error trigger for the validator      |
 
 ## Note
 

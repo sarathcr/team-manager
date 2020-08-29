@@ -1,0 +1,47 @@
+@import 'helpers/_helpers-master';
+
+.help-link {
+  display: block;
+  width: 100%;
+  padding: 22px 18px 18px 18px;
+  margin-top: 22px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  background-color: $color-quaternary;
+  color: $color-tertiary;
+  @include card-box-shadow;
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    max-width: 380px;
+    max-height: 180px;
+  }
+
+  &__body {
+    padding-top: 18px;
+    display: flex;
+
+    &-title {
+      font-family: $font-family-tertiary;
+      font-size: $font-size-body-s;
+      line-height: 24px;
+      letter-spacing: normal;
+      font-weight: 700;
+      display: inline-flex;
+      margin-bottom: 0;
+      max-width: calc(100% - 60px);
+    }
+
+    &-icon {
+      display: inline-flex;
+      justify-self: end;
+      align-self: flex-end;
+      font-size: 22px;
+      margin-left: auto;
+      margin-bottom: 10px;
+    }
+  }
+}

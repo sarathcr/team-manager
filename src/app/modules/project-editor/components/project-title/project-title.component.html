@@ -1,12 +1,15 @@
 <div class="project-title d-flex align-items-center">
   <div class="project-title__input">
-    {{this.projectData?.title || tempTitle}}
+    {{ this.projectData?.title || tempTitle }}
   </div>
-  <div class="icon-ic_edit_small project-title__edit" (click)="openModal()" *ngIf="projectData">
-  </div>
+  <div
+    class="icon-ic_edit_small project-title__edit"
+    (click)="openModal()"
+    *ngIf="projectData"
+  ></div>
 </div>
 <ng-template #titleModal>
-  <app-modal-form 
+  <app-modal-form
     [variant]="'input'"
     [title]="modalTitle"
     [confirmLabel]="modalConfirmLabel"

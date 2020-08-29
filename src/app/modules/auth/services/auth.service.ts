@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { of, Observable } from 'rxjs'
+import { Injectable } from '@angular/core'
+import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login'
+import { Observable, of } from 'rxjs'
 import { catchError, mapTo, tap } from 'rxjs/operators'
-import { SocialAuthService, GoogleLoginProvider } from 'angularx-social-login'
-import { LoginInfo, LoginPayload } from '../constants/model/login'
 import { environment } from 'src/environments/environment'
+import { GoogleAuthPayload, LoginInfo, LoginPayload, RegisterPayload } from '../constants/model/login'
 
 @Injectable({
   providedIn: 'root',
@@ -13,14 +13,15 @@ export class AuthService {
   private readonly JWT_TOKEN = 'JWT_TOKEN'
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN'
   loggedUser: LoginInfo
+  rememberMe = false
+  linkExpired = false
+  userId: string
 
   constructor(
     private http: HttpClient,
     private authService: SocialAuthService
   ) {
-    this.authService.authState.subscribe((user) => {
-      console.log('user:', user)
-    })
+    this.setRememberMe(this.JWT_TOKEN)
   }
 
   login(user: LoginPayload): Observable<boolean> {
@@ -28,32 +29,130 @@ export class AuthService {
       .post<any>(`${environment.apiUrl.userService}/users/login`, user)
       .pipe(
         tap((login: LoginInfo) => {
+          this.rememberMe = user.rememberMe
           this.doLoginUser(login)
         }),
         mapTo(true),
-        catchError((error) => {
-          console.log(error.error)
+        catchError(() => {
           return of(false)
         })
       )
   }
 
-  activate(): Observable<boolean> {
-    const userId = this.loggedUser.id
-    return this.http.post<any>(`${environment.apiUrl.userService}/users/${userId}/activation`,
-    {
-      userId
-    }).pipe(
+  signUp(user: RegisterPayload): Observable<boolean> {
+    return this.http
+    .post<any>(`${environment.apiUrl.userService}/users`, user)
+    .pipe(
+      tap((login: LoginInfo) => {
+        this.doLoginUser(login)
+      }),
       mapTo(true),
-      catchError((error) => {
-        console.log(error.error)
+      catchError(() => {
         return of(false)
       })
     )
   }
 
-  googleLogin(): void {
+  sendActivation(): Observable<boolean> {
+    const userId = this.loggedUser.id
+    return this.http
+      .post<any>(
+        `${environment.apiUrl.userService}/users/${userId}/sendActivation`,
+        {
+          userId,
+        }
+      )
+      .pipe(
+        mapTo(true),
+        catchError(() => {
+          return of(false)
+        })
+      )
+  }
+
+  sendActivationLink(userId: string, link: string): Observable<boolean> {
+    this.userId = userId
+    return this.http
+      .post<any>(
+        `${environment.apiUrl.userService}/users/${userId}/activate/${link}`,
+        {
+          userId,
+          link
+        }
+      )
+      .pipe(
+        mapTo(true),
+        catchError((error) => {
+          if (error.error?.message?.includes('expired')) {
+            this.linkExpired = true
+          }
+          return of(false)
+        })
+      )
+  }
+
+  sendRecoveryLink(userId: string, link: string): Observable<boolean> {
+    this.userId = userId
+    return this.http
+      .post<any>(
+        `${environment.apiUrl.userService}/users/${userId}/recovery/${link}`,
+        {
+          userId,
+          link
+        }
+      )
+      .pipe(
+        mapTo(true),
+        catchError((error) => {
+          if (error.error?.message?.includes('expired')) {
+            this.linkExpired = true
+          }
+          return of(false)
+        })
+      )
+  }
+
+  sendRecovery(email: string): Observable<boolean> {
+    return this.http
+      .post<any>(`${environment.apiUrl.userService}/users/sendRecovery`, { email })
+      .pipe(
+        mapTo(true),
+        catchError(() => {
+          return of(false)
+        })
+      )
+  }
+
+  resetPassword(password: string, userId: string): Observable<boolean> {
+    return this.http.post<any>(
+      `${environment.apiUrl.userService}/users/${userId}/resetPassword`, { password }
+    ).pipe(
+      mapTo(true),
+      catchError(() => {
+        return of(false)
+      })
+    )
+  }
+
+  googleLogin(): any {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
+  }
+
+  googleAuth(
+    payload: GoogleAuthPayload,
+    rememberMe: boolean = false,
+  ): Observable<boolean> {
+    return this.http.post<any>(`${environment.apiUrl.userService}/users/login/google`, payload)
+    .pipe(
+      tap((login: LoginInfo) => {
+        this.rememberMe = rememberMe
+        this.doLoginUser(login)
+      }),
+      mapTo(true),
+      catchError(() => {
+        return of(false)
+      })
+    )
   }
 
   googleLogout(): void {
@@ -63,9 +162,7 @@ export class AuthService {
   // WIP
   // logout(): Observable<boolean> {
   //   return this.http
-  //     .post<any>(`${environment.apiUrl.userService}/users/logout`, {
-  //       refreshToken: this.getRefreshToken(),
-  //     })
+  //     .post<any>(`${environment.apiUrl.userService}/users/logout`)
   //     .pipe(
   //       tap(() => this.doLogoutUser()),
   //       mapTo(true),
@@ -84,37 +181,42 @@ export class AuthService {
     return !!this.getJwtToken()
   }
 
-  refreshToken(): Observable<LoginInfo> {
-    return this.http
-      .post<any>(`${environment.apiUrl.userService}/users/refresh`, {
-        refreshToken: this.getRefreshToken(),
-      })
-      .pipe(
-        tap((tokens: LoginInfo) => {
-          localStorage.setItem(this.JWT_TOKEN, tokens.token)
-        })
-      )
-  }
-
-  getJwtToken(): any {
-    return localStorage.getItem(this.JWT_TOKEN)
-  }
-
-  private getRefreshToken(): any {
-    return localStorage.getItem(this.REFRESH_TOKEN)
+  private getJwtToken(): any {
+    return localStorage.getItem(this.JWT_TOKEN) || sessionStorage.getItem(this.JWT_TOKEN) 
   }
 
   private doLoginUser(login: LoginInfo): void {
     this.loggedUser = { id: login.id, email: login.email, activa: login.activa }
     if (login.activa) {
-      localStorage.setItem(this.JWT_TOKEN, login.token)
+      this.setStorageItem(this.JWT_TOKEN, login.token)
     }
-    // localStorage.setItem(this.REFRESH_TOKEN, login.refreshToken)
   }
 
-  doLogoutUser(): void {
+  private doLogoutUser(): void {
     this.loggedUser = null
-    localStorage.removeItem(this.JWT_TOKEN)
-    localStorage.removeItem(this.REFRESH_TOKEN)
+    this.getOrRemoveStorageItem(this.JWT_TOKEN, 'removeItem')
+    this.getOrRemoveStorageItem(this.REFRESH_TOKEN, 'removeItem')
+  }
+
+  private setStorageItem(key: string, value: string): void {
+    if (this.rememberMe) {
+      localStorage.setItem(key, value)
+    }
+    else {
+      sessionStorage.setItem(key, value)
+    }
+  }
+
+  private getOrRemoveStorageItem(value: string, storageType: 'getItem' | 'removeItem'): void {
+    if (this.rememberMe) {
+      localStorage[storageType](value)
+    }
+    else {
+      sessionStorage[storageType](value)
+    }
+  }
+
+  private setRememberMe(token: string): void {
+    this.rememberMe = !!localStorage.getItem(token)
   }
 }

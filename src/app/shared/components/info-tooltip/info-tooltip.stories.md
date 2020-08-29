@@ -15,7 +15,7 @@ A convenience directive for applying styling to a tooltip.
 ### With properties
 
 ```js
-<app-info-tooltip id="step-eight-info-tool-tip"></app-info-tooltip>
+<app-info-tooltip ></app-info-tooltip>
 ```
 
 ## Note
