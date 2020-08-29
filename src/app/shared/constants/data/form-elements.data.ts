@@ -1,5 +1,8 @@
-import { FieldConfig, DropDownConfig } from 'src/app/shared/constants/model/form-elements.model'
 import { Status } from 'src/app/modules/project-editor/constants/model/project.model'
+import {
+  DropDownConfig,
+  FieldConfig,
+} from 'src/app/shared/constants/model/form-elements.model'
 
 export class StepButtonSubmitConfig implements FieldConfig {
   name = 'submit'
@@ -24,7 +27,7 @@ export class DropdownConfigInit implements DropDownConfig {
     textField: '',
     singleSelection: true,
     maxHeight: 250,
-    noDataAvailablePlaceholderText: 'PROJECT.Error_nodata_dropdown | translate'
+    noDataAvailablePlaceholderText: 'PROJECT.Error_nodata_dropdown | translate',
   }
   constructor(name: string, multiSelection?: string) {
     this.name = name

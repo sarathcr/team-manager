@@ -1,12 +1,34 @@
-@import "helpers/_helpers-master";
+@import 'helpers/_helpers-master';
 .btn {
   $root: &;
   border-radius: 4px;
   font-size: $font-size-button;
   line-height: 24px;
+  &_outline {
+    border: 1px solid $color-quinary;
+    &#{$root} #{$root}__icon {
+      margin-right: 0;
+    }
+  }
   &_primary {
     &#{$root}_text {
       color: $color-primary;
+    }
+    &#{$root}_underlined {
+      color: $color-quaternary;
+      #{$root}__content {
+        border-bottom: 1px solid $color-quaternary;
+      }
+    }
+    &#{$root}_outline {
+      border: 2px solid $color-primary;
+      background-color: inherit;
+      color: $color-primary;
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: transparent;
+      }
     }
     &:disabled {
       background-color: rgba($color-tertiary, 0.1);
@@ -20,9 +42,20 @@
     &#{$root}_medium {
       font-size: $font-size-body;
     }
-    &:active, &:disabled {
+    &:active,
+    &:disabled {
       background-color: unset !important;
       border-color: unset !important;
+    }
+  }
+  &_teritiary {
+    color: $color-quaternary;
+    &#{$root}_underlined {
+      border: none;
+      padding: 0;
+      border-radius: 0px;
+      min-height: auto;
+      background: inherit;
     }
   }
   &_success {
@@ -30,9 +63,6 @@
       background: $color-secondary;
       border-color: $color-secondary;
     }
-  }
-  &_outline {
-    border: 1px solid $color-quinary;
   }
   &_text {
     border: none;
@@ -49,6 +79,31 @@
     &:active {
       background: none !important;
     }
+    &#{$root}_teritiary {
+      color: $color-quaternary;
+      #{$root}__icon {
+        margin-right: 5px;
+      }
+    }
+  }
+  &_underlined {
+    color: $color-tertiary;
+    font-family: $font-family-tertiary;
+    &#{$root} {
+      line-height: 14px;
+      letter-spacing: 0.16px;
+    }
+    &#{$root}_small {
+      padding: 0;
+    }
+    #{$root}__content {
+      padding-bottom: 5px;
+      border-bottom: 1px solid $color-tertiary;
+    }
+    #{$root}__icon {
+      margin-top: -3px;
+      margin-bottom: 3px;
+    }
   }
   &_block {
     min-width: 100%;
@@ -60,7 +115,7 @@
     display: inline-block;
   }
   &_small {
-    text-transform: capitalize;
+    text-transform: unset;
     min-height: 36px;
     font-family: $font-family-tertiary;
     font-weight: 700;
@@ -76,6 +131,9 @@
     min-height: auto;
     margin: 0 7px;
     position: relative;
+    &#{$root}_teritiary {
+      color: $color-quaternary;
+    }
     #{$root}__icon {
       margin: 0;
       font-size: 24px;
@@ -95,13 +153,34 @@
     padding-left: 28px;
     min-height: 52px;
   }
-  ::ng-deep {
-    #{$root}__icon {
-      font-size: 24px;
-      line-height: 1;
-      margin-left: -5px;
-      margin-right: 5px;
+  &_back {
+    background: inherit;
+    color: rgba($color-tertiary, 0.5);
+    border: none;
+    padding: 0;
+    min-height: auto;
+    &:active {
+      background-color: unset !important;
+      border-color: unset !important;
     }
+    &#{$root}_teritiary {
+      color: $color-quaternary;
+    }
+    #{$root}__icon {
+      margin-right: 15px;
+    }
+  }
+  &_loading {
+    #{$root}__icon,
+    #{$root}__content {
+      opacity: 0;
+    }
+  }
+  #{$root}__icon {
+    font-size: 24px;
+    line-height: 1;
+    margin-left: -5px;
+    margin-right: 5px;
   }
 }
 :host {

@@ -1,5 +1,8 @@
 <div class="project-editor__form step-four" id="step-four">
-  <app-status id="step-four-status" [status]="step.state"></app-status>
+  <app-step-status
+    id="step-four-status"
+    [status]="step.state"
+  ></app-step-status>
   <div class="project-form d-flex flex-column justify-content-between">
     <div class="project-form__wrap">
       <h1 class="project-form__title title_s">
@@ -40,25 +43,33 @@
               [subject]="subject"
               [subjectItem]="subject.contents"
               [isLast]="last"
-              [project$]="editor.project$"
               [variant]="subject.evaluationCriteria.length ? 'add' : 'locked'"
               (add)="openPrincipalView($event)"
               (deleteById)="openModalDelete($event)"
             ></app-details-selector>
-            <div class="project-form__textarea-wrapper">
-              <app-textarea
-                id="step-four-textarea-{{ i }}"
-                variant="toggle"
-                toggleData="CONTENT.project_content_extracontent"
-                [initFocus]="true"
-                label="CONTENT.project_content_extracontent_input"
-                size="small"
-                [maxLength]="150"
-                (inputChange)="textareaDataChange($event, i)"
-                [value$]="subjectTextArea[i].options$"
-              >
-              </app-textarea>
-            </div>
+            <app-editable-list
+              id="step-four-editable-list"
+              [variant]="'optional'"
+              [list]="subject.customContents"
+              [maxLength]="150"
+              [isTextareaActive]="activeEditableLists.includes(subject.id)"
+              [initFocus]="subject.id == activeTextarea"
+              editModalTitle="CONTENT.project_content_extracontent_edit_title"
+              editModalLabel="CONTENT.project_content_extracontent_edit_label"
+              editModalbuttonLabel="PROJECT.project_button_save"
+              deleteModalTitle="CONTENT.project_content_extracontent_delete_confirmation_title"
+              deleteModalDescription="CONTENT.project_content_extracontent_delete_confirmation_message"
+              deleteModalbuttonLabel="PROJECT.project_button_delete"
+              helperText="PROJECT.project_input_singleitem_helpertext"
+              errorText="PROJECT.Error_textlimit_specified_singleinput"
+              optionalButtonLabel="PROJECT.project_button_add"
+              optionalTitle="CONTENT.project_content_extracontent_input"
+              optionalPlaceholder="CONTENT.project_content_extracontent_placeholder"
+              (addItem)="textareaDataChange($event, i)"
+              (editItem)="textItemEdit($event, i)"
+              (deleteItem)="textItemDelete($event, i)"
+              (textareaActive)="updateEditableListStatus(subject.id)"
+            ></app-editable-list>
           </div>
           <ng-container *ngIf="basicSkills.length">
             <div class="project-form__basic-skill">
@@ -66,14 +77,14 @@
                 {{ 'CONTENT.project_content_competencies' | translate }}
               </h3>
               <div class="project-form__basic-skill_row">
-                <app-checkbox
+                <app-custom-checkbox
                   id="step-four-checkbox-{{ i }}"
                   *ngFor="let basicSkill of basicSkills; let i = index"
                   [checkboxData]="basicSkill.checkData"
                   [colOne]="{ value: basicSkill.description }"
                   [parentID]="basicSkill.id"
                   (checked)="handleSkillSelect()"
-                ></app-checkbox>
+                ></app-custom-checkbox>
               </div>
             </div>
           </ng-container>

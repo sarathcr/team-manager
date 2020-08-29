@@ -11,3 +11,14 @@ export class LoginPayload {
   password: string
   rememberMe: boolean
 }
+
+export class RegisterPayload {
+  email: string
+  password: string
+  newsletterSubscription: boolean
+}
+
+export class GoogleAuthPayload {
+  tocken: string
+  newsletterSubscription?: boolean
+}

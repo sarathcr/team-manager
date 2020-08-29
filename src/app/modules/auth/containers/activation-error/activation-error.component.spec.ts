@@ -8,9 +8,8 @@ describe('ActivationErrorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ActivationErrorComponent ]
-    })
-    .compileComponents()
+      declarations: [ActivationErrorComponent],
+    }).compileComponents()
   }))
 
   beforeEach(() => {

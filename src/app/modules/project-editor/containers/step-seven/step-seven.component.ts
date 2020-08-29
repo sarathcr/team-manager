@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -9,8 +9,8 @@ import { FormSeven } from '../../constants/model/step-forms.model'
 
 import {
   DrivingQuestion,
-  Step,
   Status,
+  Step,
 } from 'src/app/modules/project-editor/constants/model/project.model'
 
 import { StepButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
@@ -73,9 +73,8 @@ export class StepSevenComponent implements OnInit, OnDestroy {
     }
   }
 
-  textAreaUpdate(data: DrivingQuestion): void {
+  addDrivingQuestions(): void {
     // calls on every update
-    this.drivingQuestions.push(data)
     this.checkStepStatus()
     this.handleSubmit()
   }

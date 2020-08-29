@@ -1,0 +1,80 @@
+@import 'helpers/_helpers-master';
+
+.project-editor-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 75px;
+  display: flex;
+  background: $color-quaternary;
+  border-bottom: 1px solid rgba($color-tertiary, 0.1);
+  z-index: 2;
+  padding: 0 $padding;
+
+  &__collapse,
+  &__nav,
+  &__menu-list,
+  &__menu-item,
+  &__menu-link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+  }
+  &__collapse,
+  &__nav,
+  &__menu-list {
+    flex: 1;
+    justify-content: flex-start;
+  }
+
+  &__menu {
+    &-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    &-item {
+      padding-left: 24px;
+      padding-right: 24px;
+      &:first-child {
+        padding-left: 4px;
+      }
+    }
+    &-link {
+      font-family: $font-family-tertiary;
+      font-size: $font-size-body-s;
+      line-height: 24px;
+      letter-spacing: normal;
+      font-weight: 700;
+      color: rgba($color-tertiary, 0.6);
+      position: relative;
+      cursor: pointer;
+    }
+    &-item.active &-link {
+      color: $color-tertiary;
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        border-bottom: 2px solid $color-tertiary;
+        width: 100%;
+      }
+    }
+  }
+  &__toolbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.app-logo {
+  height: 26px;
+  width: 88px;
+
+  &__link {
+    display: block;
+  }
+}

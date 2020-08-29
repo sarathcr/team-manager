@@ -1,24 +1,25 @@
 import {
   Component,
-  OnInit,
+  EventEmitter,
   Input,
   Output,
-  EventEmitter,
-  ViewChild,
   TemplateRef,
+  ViewChild,
 } from '@angular/core'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { Option } from 'src/app/shared/constants/model/form-elements.model'
+import { EditableListVariant } from '../../constants/model/editable-list.model'
 
 @Component({
   selector: 'app-editable-list',
   templateUrl: './editable-list.component.html',
   styleUrls: ['./editable-list.component.scss'],
 })
-export class EditableListComponent implements OnInit {
+export class EditableListComponent {
   @Input() list: Option[]
-  @Input() maxLength: number
-  @Input() variant = 'default'
+  @Input() maxLength = 150
+  @Input() variant: EditableListVariant = 'default'
+  @Input() isNumbered = false
   @Input() editModalTitle: string
   @Input() editModalLabel: string
   @Input() editModalbuttonLabel: string
@@ -26,9 +27,20 @@ export class EditableListComponent implements OnInit {
   @Input() deleteModalDescription: string
   @Input() deleteModalbuttonLabel: string
   @Input() helperText: string
+  @Input() textareaPlaceholder: string
   @Input() errorText: string
+  @Input() textareaVariant: string
+  @Input() lineLimit: number
+  @Input() optionalButtonLabel: string
+  @Input() isTextareaActive: boolean
+  @Input() initFocus: boolean
+  @Input() optionalPlaceholder: string
+  @Input() optionalTitle: string
+  @Input() customTextareaClass: string
+  @Output() textareaActive = new EventEmitter()
   @Output() editItem = new EventEmitter()
   @Output() deleteItem = new EventEmitter()
+  @Output() addItem = new EventEmitter()
   @ViewChild('deleteModal') deleteModal: TemplateRef<any>
   @ViewChild('editModal') editModal: TemplateRef<any>
   modalRef: BsModalRef
@@ -37,8 +49,6 @@ export class EditableListComponent implements OnInit {
   editString: string
 
   constructor(private modalService: BsModalService) {}
-
-  ngOnInit(): void {}
 
   openDeleteModal(index: number): void {
     this.deleteIndex = index
@@ -74,5 +84,15 @@ export class EditableListComponent implements OnInit {
     this.list[this.editIndex].name = data
     this.editItem.emit([...this.list])
     this.modalRef.hide()
+  }
+
+  onAddItem(data: Option): void {
+    this.list.push(data)
+    this.addItem.emit([...this.list])
+  }
+
+  toggleOptionalContent(): void {
+    this.initFocus = true
+    this.textareaActive.emit()
   }
 }

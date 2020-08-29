@@ -1,27 +1,26 @@
+import { DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { FormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { ActivatedRoute, RouterOutlet } from '@angular/router'
 import { RouterTestingModule } from '@angular/router/testing'
-import { FormsModule } from '@angular/forms'
-import { DebugElement } from '@angular/core'
 
+import { BsModalService } from 'ngx-bootstrap/modal'
 import { TabsModule } from 'ngx-bootstrap/tabs'
 import { BehaviorSubject } from 'rxjs'
-import { BsModalService } from 'ngx-bootstrap/modal'
-
-import { EditorComponent } from './editor.component'
-import { LoaderComponent } from '../../../../shared/components/loader/loader.component'
-import { ContextualHelpComponent } from '../contextual-help/contextual-help.component'
-import { HeaderComponent } from '../../components/header/header.component'
-import { SidebarComponent } from '../../components/sidebar/sidebar.component'
-import { ProjectTitleComponent } from '../../components/project-title/project-title.component'
-import { StepMenuComponent } from '../../components/step-menu/step-menu.component'
+import { HeaderComponent } from 'src/app/modules/project-output/components/header/header.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component'
+import { ProjectTitleComponent } from '../../components/project-title/project-title.component'
 
-import { EditorService } from '../../services/editor/editor.service'
+import { SidebarComponent } from '../../components/sidebar/sidebar.component'
+import { StepMenuComponent } from '../../components/step-menu/step-menu.component'
+import { EditorComponent } from './editor.component'
+
 import { TranslateModule } from '@ngx-translate/core'
-import { HelpEntityService } from '../../store/entity/help/help-entity.service'
 import { Step } from '../../constants/model/project.model'
+import { HelpEntityService } from '../../modules/contextual-help/store/entity/help/help-entity.service'
+import { EditorService } from '../../services/editor/editor.service'
 
 class ActivatedRouteStub {
   private id: number | 'create'
@@ -33,8 +32,8 @@ class ActivatedRouteStub {
   get snapshot(): object {
     return {
       paramMap: {
-        get: () => this.id
-      }
+        get: () => this.id,
+      },
     }
   }
 }
@@ -51,22 +50,22 @@ class EditorServiceStub {
     { stepid: 7, state: 'PENDING', name: '' },
     { stepid: 8, state: 'PENDING', name: '' },
     { stepid: 9, state: 'PENDING', name: '' },
-    { stepid: 10, state: 'PENDING', name: '' }
+    { stepid: 10, state: 'PENDING', name: '' },
   ]
-  getProject(): void { }
-  clearData(): void { }
+  getProject(): void {}
+  clearData(): void {}
   createSteps(): Step[] {
     return this.steps
   }
-  getStepData(): void { }
-  getStepStatus(): void { }
+  getStepData(): void {}
+  getStepStatus(): void {}
 }
 
 class BsModalServiceStub {
-  show(): void { }
+  show(): void {}
 }
 
-class HelpEntityServiceStub { }
+class HelpEntityServiceStub {}
 
 describe('EditorComponent', (): void => {
   let component: EditorComponent
@@ -78,25 +77,24 @@ describe('EditorComponent', (): void => {
       declarations: [
         EditorComponent,
         LoaderComponent,
-        ContextualHelpComponent,
         HeaderComponent,
         SidebarComponent,
         ProjectTitleComponent,
         StepMenuComponent,
-        ButtonComponent
+        ButtonComponent,
       ],
       imports: [
         RouterTestingModule,
         TranslateModule.forRoot(),
         TabsModule.forRoot(),
-        FormsModule
+        FormsModule,
       ],
       providers: [
         { provide: EditorService, useClass: EditorServiceStub },
         { provide: ActivatedRoute, useClass: ActivatedRouteStub },
         { provide: HelpEntityService, useClass: HelpEntityServiceStub },
-        { provide: BsModalService, useClass: BsModalServiceStub }
-      ]
+        { provide: BsModalService, useClass: BsModalServiceStub },
+      ],
     })
 
     fixture = TestBed.createComponent(EditorComponent)
@@ -113,7 +111,9 @@ describe('EditorComponent', (): void => {
 
   it('should have a router outlet', (): void => {
     fixture.detectChanges()
-    const debugElement: DebugElement = fixture.debugElement.query(By.directive(RouterOutlet))
+    const debugElement: DebugElement = fixture.debugElement.query(
+      By.directive(RouterOutlet)
+    )
 
     expect(debugElement).not.toBeNull()
   })
@@ -150,5 +150,4 @@ describe('EditorComponent', (): void => {
 
     expect(clearData).toHaveBeenCalled()
   })
-
 })

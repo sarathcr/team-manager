@@ -1,5 +1,5 @@
 <div class="project-editor__form step-two" id="step-two">
-  <app-status id="step-two-status" [status]="step.state"></app-status>
+  <app-step-status id="step-two-status" [status]="step.state"></app-step-status>
   <div class="project-form d-flex flex-column justify-content-between">
     <div>
       <h2 class="project-form__title title_s">
@@ -24,21 +24,15 @@
           deleteModalbuttonLabel="PROJECT.project_button_delete"
           helperText="PROJECT.project_input_singleitem_helpertext"
           errorText="PROJECT.Error_textlimit_specified_singleinput"
+          textareaHelperText="PROJECT.project_input_singleitem_helpertext"
+          textareaErrorText="PROJECT.Error_textlimit_specified_singleinput"
+          textareaPlaceholder="THEMATIC.project_thematic_placeholder"
+          [lineLimit]="5"
           (editItem)="editTheme($event)"
           (deleteItem)="deleteTheme($event)"
+          (addItem)="addThemes()"
         ></app-editable-list>
       </div>
-      <app-textarea
-        *ngIf="themes?.length < 5"
-        id="step-two-textarea"
-        variant="listItem"
-        [maxLength]="150"
-        [enableValidator]="true"
-        helperText="PROJECT.project_input_singleitem_helpertext"
-        errorText="PROJECT.Error_textlimit_specified_singleinput"
-        placeholder="{{ 'THEMATIC.project_thematic_placeholder' | translate }}"
-        (inputChange)="textAreaUpdate($event)"
-      ></app-textarea>
     </div>
     <app-button
       id="step-two-button"

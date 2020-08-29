@@ -1,10 +1,10 @@
+import { DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { RouterTestingModule } from '@angular/router/testing'
-import { DebugElement } from '@angular/core'
 
-import { StepMenuComponent } from './step-menu.component'
 import { Step } from '../../constants/model/project.model'
+import { StepMenuComponent } from './step-menu.component'
 
 describe('StepMenuComponent', (): void => {
   let component: StepMenuComponent
@@ -12,8 +12,8 @@ describe('StepMenuComponent', (): void => {
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ StepMenuComponent ],
-      imports: [ RouterTestingModule ]
+      declarations: [StepMenuComponent],
+      imports: [RouterTestingModule],
     })
 
     fixture = TestBed.createComponent(StepMenuComponent)
@@ -30,9 +30,12 @@ describe('StepMenuComponent', (): void => {
 
     fixture.detectChanges()
 
-    const menuElement: DebugElement = fixture.debugElement.query(By.css('.menu'))
-    const menuStepIcon: DebugElement = menuElement
-                                        .query(By.css('.menu__step .icon-ic_check'))
+    const menuElement: DebugElement = fixture.debugElement.query(
+      By.css('.menu')
+    )
+    const menuStepIcon: DebugElement = menuElement.query(
+      By.css('.menu__step .icon-ic_check')
+    )
 
     expect(menuElement.classes.menu_done).toBeTruthy()
     expect(menuStepIcon).toBeTruthy()
@@ -44,7 +47,9 @@ describe('StepMenuComponent', (): void => {
 
     fixture.detectChanges()
 
-    const menuDebugElement: DebugElement = fixture.debugElement.query(By.css('.menu'))
+    const menuDebugElement: DebugElement = fixture.debugElement.query(
+      By.css('.menu')
+    )
     const menuElement: HTMLElement = menuDebugElement.nativeElement
 
     expect(menuDebugElement.classes.menu_inprocess).toBeTruthy()

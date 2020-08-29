@@ -16,7 +16,6 @@ A convenience directive for applying styling to a Modal Info component.
 
 ```js
    <app-modal-info
-    id="step-four-modal-info"
     [variant]="'unlock'"
     [modalTitle]="'PROGRAMACION.output_dependancy_title'"
     [description]="'PROGRAMACION.output_dependancy_description'"

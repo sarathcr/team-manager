@@ -1,4 +1,8 @@
-export type ModalInfoVariant = 'information' | 'confirmation' | 'unlock' | 'delete'
+export type ModalInfoVariant =
+  | 'information'
+  | 'confirmation'
+  | 'unlock'
+  | 'delete'
 
 export type ModalInfoAppearance = 'default' | 'medium'
 

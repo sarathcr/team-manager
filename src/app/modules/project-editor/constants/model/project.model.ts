@@ -1,5 +1,9 @@
+import {
+  CheckBoxData,
+  Option,
+} from 'src/app/shared/constants/model/form-elements.model'
+import { Activity } from './activity.model'
 import { Dimensions, Indicator } from './curriculum.model'
-import { Option, CheckBoxData } from 'src/app/shared/constants/model/form-elements.model'
 
 export class Project {
   id?: number | null
@@ -22,7 +26,35 @@ export class Project {
   competencyObjectives?: CompetencyObjective[]
   evaluationCriteria?: EvaluationCriteria[]
   basicSkills?: BasicSkill[]
+  didacticSeqDuration?: number
+  stage?: string
+  state?: string
+  activities?: Activity[]
+  curriculumId?: number
 }
+
+export class ProjectUpdate extends Project {
+  updateType?: ProjectUpdateTypes
+  subjectId?: number
+  contentId?: number
+  competencyObjectiveId?: number
+  standardId?: number
+  criteriaId?: number
+  activityId?: number | string
+}
+export class ProjectStoreUpdate {
+  id?: number
+  changes: ProjectUpdate
+}
+
+export type ProjectUpdateTypes =
+  | 'removeStandard'
+  | 'removeCriteria'
+  | 'removeContent'
+  | 'updateActivity'
+  | 'cloneAvtivity'
+  | 'deleteActivity'
+  | 'createActivity'
 
 export class ProjectList {
   projects: Project[]
@@ -31,7 +63,7 @@ export class ProjectList {
   pageSize: number
 }
 
-export class Country extends Option { }
+export class Country extends Option {}
 
 export class Region extends Option {
   country?: Country
@@ -41,6 +73,7 @@ export class AcademicYear {
   id: number
   name?: string
   academicYear?: string
+  curriculumId?: number
 }
 
 export class Grade extends Option {
@@ -56,6 +89,7 @@ export class Subject extends Option {
   evaluationCriteria?: EvaluationCriteria[]
   contents?: Content[]
   customContents?: CustomContent[]
+  grade?: Grade
 }
 
 export interface DrivingQuestion {
@@ -73,6 +107,7 @@ export class CompetencyObjective {
   name?: string
   customStandards?: CustomStandard[]
   standards?: Standard[]
+  checked?: boolean
 }
 
 export class EvaluationCriteria extends Option {
@@ -129,6 +164,7 @@ export class Standard {
   description?: string
   numeration?: number
   evaluationCriteria?: EvaluationCriteria
+  checked?: boolean
 }
 
 export class Content extends Option {
@@ -136,24 +172,15 @@ export class Content extends Option {
   code?: string
   description?: string
   numeration?: number
-}
-
-export class Help {
-  id: number
-  body: string
-  icon: string
-  secondIcon: string
-  title: string
-}
-
-export class ContextualHelp {
-  helps: Help[]
-  stepid: number
+  checked?: boolean
+  subjectId?: number
 }
 
 export class CustomContent {
   id?: number
   name?: string
+  checked?: boolean
+  subjectId?: number
 }
 
 export class ProjectTitle {
@@ -164,7 +191,6 @@ export class ProjectTitle {
 export class Step {
   id?: ProjectId
   readonly stepid: statusId
-  readonly sectionid?: StepId
   state: Status
   name?: string
 }
@@ -197,7 +223,6 @@ export interface StandardsWithSkills extends Standard {
 export type ProjectId = number
 export type statusId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10
 export type Status = 'INPROCESS' | 'DONE' | 'PENDING'
-export type StepId = 'stepOne' | 'stepTwo' | 'stepThree' | 'stepFour' | 'stepFive' | 'stepSix' | 'stepSeven' | 'stepEight' | 'stepNine' | 'stepTen' | 'stepEleven'
 
 export function compareProjects(p1: Project, p2: Project): number {
   const firstTimestamp = new Date(p1?.createdAt).getTime()
@@ -205,9 +230,9 @@ export function compareProjects(p1: Project, p2: Project): number {
   const compare = firstTimestamp - secondTimestamp
   if (compare > 0) {
     return -1
-  }
-  else if (compare < 0) {
+  } else if (compare < 0) {
     return 1
+  } else {
+    return 0
   }
-  else { return 0 }
 }

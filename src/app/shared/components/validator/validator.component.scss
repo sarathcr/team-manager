@@ -1,4 +1,6 @@
 @import 'helpers/_helpers-master';
+@import 'helpers/_bt-mixins';
+
 .counter {
   $root: &;
   display: flex;
@@ -6,7 +8,7 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 3px;
-  padding-left: 20px;
+  padding-left: 15px;
   &__wrap {
     letter-spacing: normal;
     color: rgba($color-tertiary, 0.4);
@@ -14,11 +16,14 @@
     font-size: $font-size-body-s;
   }
   &__helper-text {
-    font-size: $font-size-body-label;
+    font-size: $font-size-default;
     letter-spacing: 0.2px;
     line-height: 12px;
     color: rgba($color-tertiary, 0.5);
-    display: inline-block;
+    display: flex;
+    &-title {
+      flex-basis: 28%;
+    }
   }
   &__error {
     #{$root}__helper-text,
@@ -38,5 +43,44 @@
     font-size: 12px;
     letter-spacing: 0.2px;
     color: $color-quinary;
+  }
+}
+.complexity-control {
+  $root: &;
+  &__helper-text {
+    color: rgba($color-tertiary, 0.6);
+    margin-top: 10px;
+  }
+  &__item {
+    flex-basis: 50%;
+    &_error {
+      color: $color-quinary;
+    }
+  }
+  &__icon {
+    font-size: $font-size-body;
+    margin: -3px 1px 0 10px;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .counter__helper-text-title {
+    flex-basis: 16%;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .counter {
+    margin-top: 0;
+    padding-left: 20px;
+    &__helper-text {
+      font-size: $font-size-body-label;
+      &-title {
+        flex-basis: 14%;
+      }
+    }
+  }
+  .complexity-control__item {
+    flex-basis: unset;
   }
 }

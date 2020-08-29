@@ -68,8 +68,8 @@
     modalTitle="RESEND-POPUP.login_resent-activation_title"
     confirmLabel="GENERAL.platform_button-primary_ok"
     cancelLabel="GENERAL.platform_button-tertiary_signupnow"
-    (confirm)="sendActivationLink()"
-    (decline)="declineModal()"
+    (confirm)="closeModal()"
+    (decline)="redirectToSignUp()"
   >
     <p>
       {{
@@ -80,7 +80,11 @@
       <a href="mailto:" class="activation__link">
         {{ email }}
       </a>
-      {{ "RESEND-POPUP.login_resent-activation_description" | translate | TranslateCut:1 }}
+      {{
+        'RESEND-POPUP.login_resent-activation_description'
+          | translate
+          | TranslateCut: 1
+      }}
     </p>
   </app-modal-info>
 </ng-template>

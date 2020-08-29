@@ -1,21 +1,25 @@
+import { PlatformLocation } from '@angular/common'
 import {
   Component,
-  OnInit,
+  EventEmitter,
   Input,
-  ViewEncapsulation,
+  OnInit,
   Output,
-  EventEmitter
+  ViewEncapsulation,
 } from '@angular/core'
-import { PlatformLocation } from '@angular/common'
-import { Status } from 'src/app/modules/project-editor/constants/model/project.model'
-import { FieldEvent } from '../../constants/model/form-elements.model'
+import { Status } from '../../../modules/project-editor/constants/model/project.model'
+import {
+  FieldEvent,
+  InputInnerLabel,
+  InputVariant,
+} from '../../constants/model/form-elements.model'
 import { ModalFormVariant } from '../../constants/model/modal-form.model'
 
 @Component({
   selector: 'app-modal-form',
   templateUrl: './modal-form.component.html',
   styleUrls: ['./modal-form.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class ModalFormComponent implements OnInit {
   @Input() variant: ModalFormVariant = 'input'
@@ -23,9 +27,12 @@ export class ModalFormComponent implements OnInit {
   @Input() confirmLabel = 'PROJECT.project_button_create'
   @Input() data: string
   @Input() label: string
+  @Input() innerLabel: InputInnerLabel
   @Input() helperText: string
   @Input() errorText: string
   @Input() maxLength: number
+  @Input() enableValidator = true
+  @Input() inputVariant: InputVariant = 'text'
   @Output() decline = new EventEmitter()
   @Output() confirm = new EventEmitter()
   status: Status

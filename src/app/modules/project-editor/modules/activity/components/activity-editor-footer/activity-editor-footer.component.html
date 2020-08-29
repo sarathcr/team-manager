@@ -1,0 +1,25 @@
+<footer class="activity-editor-footer d-flex align-items-center px-6 py-3">
+  <div class="container_s d-flex align-items-center justify-content-between">
+    <div>
+      <app-button
+        [theme]="isSubmitted ? 'success' : 'primary'"
+        icon="tick"
+        size="small"
+        [disabled]="!btnStatus"
+        (click)="submitButtonClick.emit($event)"
+      >
+        {{ doneButtonlabel | translate }}
+      </app-button>
+    </div>
+    <div>
+      <app-button
+        theme="teritiary"
+        variant="underlined"
+        [icon]="viewButtonIcon"
+        size="small"
+      >
+        {{ viewButtonLabel | translate }}
+      </app-button>
+    </div>
+  </div>
+</footer>

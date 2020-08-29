@@ -4,12 +4,10 @@ import { Project } from 'src/app/modules/project-editor/constants/model/project.
 @Component({
   selector: 'app-project-thumbnail',
   templateUrl: './project-thumbnail.component.html',
-  styleUrls: ['./project-thumbnail.component.scss']
+  styleUrls: ['./project-thumbnail.component.scss'],
 })
 export class ProjectThumbnailComponent {
-
-  constructor() { }
+  constructor() {}
 
   @Input() project: Project
-
 }

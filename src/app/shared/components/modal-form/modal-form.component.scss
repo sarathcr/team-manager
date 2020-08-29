@@ -1,49 +1,51 @@
 @import 'helpers/_helpers-master';
 
-.modal-form{
-    $root: &;
-    max-width: 460px;
+.modal-form {
+  $root: &;
+  max-width: 460px;
 
-    &__header{
-        padding: 30px 30px 0px;
-        display: flex;
-        margin-bottom: 34px;
+  &__header {
+    padding: 30px 30px 0px;
+    display: flex;
+    margin-bottom: 34px;
+  }
+  &__title {
+    font-size: $font-size-body-s;
+    line-height: 24px;
+    letter-spacing: 1px;
+    font-family: $font-family-secondary;
+    color: rgba($color-tertiary, 0.5);
+    text-transform: uppercase;
+    display: flex;
+    width: 100%;
+    margin-bottom: 0;
+  }
+  &__close {
+    display: flex;
+    background-color: transparent;
+    border: none;
+    color: rgba($color-tertiary, 0.6);
+    font-size: 20px;
+    margin-right: -8px;
+    cursor: pointer;
+  }
+  &__body {
+    padding: 0 30px;
+    margin-bottom: 50px;
+  }
+  &__footer {
+    padding: 0 30px 30px;
+    width: 100%;
+  }
+  &__button-wrapper {
+    margin-right: 12px;
+    display: inline-flex;
+    text-align: center;
+  }
+  &__textarea {
+    .textarea-wrapper {
+      margin-bottom: 0;
+      letter-spacing: 0;
     }
-    &__title{
-        font-size: $font-size-body-s;
-        line-height: 24px;
-        letter-spacing: 1px;
-        font-family: $font-family-secondary;
-        color: rgba($color-tertiary,0.5);
-        text-transform: uppercase;
-        display: flex;
-        width: 100%;
-        margin-bottom: 0;
-    }
-    &__close{
-        display: flex;
-        background-color: transparent;
-        border: none;
-        color: rgba($color-tertiary,0.6);
-        font-size: 20px;
-        margin-right: -8px;
-        cursor: pointer;
-    }
-    &__body{
-        padding: 0 30px;
-        margin-bottom: 50px;
-    }
-    &__footer{
-        padding: 0 30px 30px;
-        width: 100%;
-    }
-    &__button-wrapper{
-        margin-right: 12px;
-        display: inline-flex;
-    }
-    &__textarea{
-            .textarea-wrapper {
-                margin-bottom: 0;
-            }
-    }
+  }
 }

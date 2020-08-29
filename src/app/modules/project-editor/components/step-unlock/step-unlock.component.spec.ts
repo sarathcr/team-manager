@@ -3,8 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing'
 
 import { TranslateModule } from '@ngx-translate/core'
 
-import { StepUnlockComponent } from './step-unlock.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
+import { StepUnlockComponent } from './step-unlock.component'
 
 describe('StepUnlockComponent', (): void => {
   let component: StepUnlockComponent
@@ -12,8 +12,8 @@ describe('StepUnlockComponent', (): void => {
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ StepUnlockComponent, ButtonComponent ],
-      imports: [ TranslateModule.forRoot(), RouterTestingModule ]
+      declarations: [StepUnlockComponent, ButtonComponent],
+      imports: [TranslateModule.forRoot(), RouterTestingModule],
     })
 
     fixture = TestBed.createComponent(StepUnlockComponent)

@@ -3,16 +3,16 @@
   <div class="step-unlock__bg-right"></div>
   <h2 class="title_xs step-unlock__title">
     <span class="icon icon-ic_locked step-unlock__icon"></span>
-    {{'PROJECT.project_dependancy_title' | translate}}
+    {{ title | translate }}
   </h2>
   <div class="step-unlock__description">
-    {{description | translate}}
+    {{ description | translate }}
   </div>
   <app-button
     [routerLink]="buttonLink"
     [variant]="'contained'"
     [theme]="'primary'"
   >
-    {{buttonText | translate}}
+    {{ buttonText | translate }}
   </app-button>
 </div>

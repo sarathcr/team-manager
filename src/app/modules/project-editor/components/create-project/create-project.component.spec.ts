@@ -7,7 +7,7 @@ describe('CreateProjectComponent', (): void => {
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ CreateProjectComponent ]
+      declarations: [CreateProjectComponent],
     })
 
     fixture = TestBed.createComponent(CreateProjectComponent)

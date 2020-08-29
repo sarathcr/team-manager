@@ -1,75 +1,82 @@
-import { storiesOf, moduleMetadata } from '@storybook/angular'
-import {
-  withKnobs,
-  select,
-  boolean,
-  text,
-  number
-} from '@storybook/addon-knobs/angular'
-import { action } from '@storybook/addon-actions'
-import markDown from './textarea.stories.md'
-import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
 import { TranslateModule } from '@ngx-translate/core'
-import { TextareaComponent } from './textarea.component'
-import { TextareaListComponent } from './textarea-list/textarea-list.component'
+import { action } from '@storybook/addon-actions'
+import {
+  boolean,
+  number,
+  select,
+  text,
+  withKnobs,
+} from '@storybook/addon-knobs/angular'
+import { moduleMetadata, storiesOf } from '@storybook/angular'
+import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
 import { ValidatorComponent } from '../validator/validator.component'
+import { TextareaComponent } from './textarea.component'
+import markDown from './textarea.stories.md'
 
 storiesOf('Shared|Textarea', module)
   .addDecorator(
     moduleMetadata({
-      declarations: [
-        TextareaComponent,
-        TextareaListComponent,
-        ValidatorComponent
-      ],
-      imports: [StorybookTranslateModule, TranslateModule.forRoot()]
+      declarations: [TextareaComponent, ValidatorComponent],
+      imports: [StorybookTranslateModule, TranslateModule.forRoot()],
     })
   )
   .addDecorator(withKnobs)
   .addParameters({
-    notes: markDown
+    notes: markDown,
   })
   .add('Default', () => ({
-    template: `<div style="margin-top:100px; display:flex; justify-content:center; align-items: center">
+    template: `<div class="story_layout_style">
     <app-textarea class="textarea"
     [placeholder] ="placeholder"
     [label]="label"
     [variant]="variant"
     [size]="size"
     [enableValidator]="enableValidator"
+    [customClass]="customClass"
     [helperText]="helperText"
     [maxLength]="maxLength"
     [initFocus]="initfocus"
     [value]="value"
     [errorText]="errorText"
+    [background]="background"
     (inputChange)="inputChange($event)">
     </app-textarea>
    </div>`,
     styles: [
-      `
-   .textarea{
+      `.story_layout_style {
+        margin-top:100px;
+        margin-bottom:100px;
+        display:flex;
+        justify-content:center;
+        align-items: center;
+      }`,
+      `.textarea{
      width: 500px;
      max-width:100%;
    }
- `
+ `,
     ],
     props: {
-      placeholder: text('Textarea placeholder', ''),
-      label: text('Textarea label', 'Label'),
       variant: select(
-        'Textarea variant',
+        'Variant',
         ['-- select any variant --', 'default', 'listItem'],
         'default'
       ),
-      size: select('Textarea size', 
-      ['-- select any variant --', 'small'],
+      background: select(
+        'Label Background',
+        ['-- select any label background --', 'white', 'white-lilac'],
+        'white'
       ),
-      enableValidator: boolean('enableValidator', false),
-      helperText: text('helperText of textarea', 'Enter your input here'),
-      maxLength: number('Set your maximum length of textarea', 20),
-      initfocus: boolean('initfocus', true),
-      value: text('Sample value of textarea', ' This is a sample value of textarea'),
-      errorText: text('Validation message', 'Validation message here'),
-      inputChange: action('Textarae value')
-    }
+      size: select('Size', ['-- select any variant --', 'small']),
+      placeholder: text('Placeholder', ''),
+      label: text('Label', 'Label'),
+      value: text(' Value'),
+      maxLength: number('Maximum Length', 20),
+      customClass: text('Custom class', 'Add custom class to textarea'),
+      enableValidator: boolean('Enable Validator', false),
+      helperText: text('Validator Helper Message', 'Enter your inputs'),
+      initfocus: boolean('Initail Focus', true),
+      errorText: text('Validation Message', 'Validation message here'),
+      inputChange: action('Your are enter this message'),
+    },
   }))

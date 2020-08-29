@@ -1,0 +1,161 @@
+<div
+  class="register d-md-flex align-items-center justify-content-between"
+  *ngIf="!loading"
+>
+  <div class="register__left-layout m-auto">
+    <div class="container-fluid">
+      <div class="col d-flex align-items-center justify-content-center">
+        <form
+          class="register__form-group w-100"
+          [formGroup]="signUpForm"
+          (ngSubmit)="signUp()"
+        >
+          <img
+            class="d-md-none register__logo"
+            src="../../../../../assets/images/thinko_logo.png"
+            alt="logo"
+          />
+          <div class="register__wrap">
+            <h1 class="title_m register__title">
+              {{ 'SIGNUP_PAGE.platform_title_title' | translate }}
+            </h1>
+            <div class="register__input-wrapper">
+              <app-input
+                variant="email"
+                [isForm]="true"
+                [placeholder]="
+                  'SIGNUP_PAGE.login_input_email_placeholder' | translate
+                "
+                formControlName="email"
+                label="SIGNUP_PAGE.login_label_email"
+                errorText="SIGNUP_PAGE.login_input_email_error_existingmail"
+                [error]="invalid"
+                [enableValidator]="enableValidator"
+                (inputChange)="setValid()"
+              ></app-input>
+            </div>
+            <div class="register__input-wrapper mb-7">
+              <app-input
+                variant="password"
+                [isForm]="true"
+                [placeholder]="
+                  'SIGNUP_PAGE.login_input_password_placeholder' | translate
+                "
+                formControlName="password"
+                [enableValidator]="enableValidator"
+                label="SIGNUP_PAGE.login_label_password"
+                (inputChange)="setValid()"
+                [passwordValidator]="true"
+                [control]="signUpForm"
+              ></app-input>
+            </div>
+          </div>
+          <div
+            class="register__checkbox-wrapper d-flex align-items-center justify-content-between mb-9"
+          >
+            <div>
+              <div class="register__checkbox">
+                <app-checkbox formControlName="newsLetter" [isForm]="true">
+                  {{
+                    'SIGNUP_PAGE.platform_checkbox_newsletter'
+                      | translate
+                      | TranslateCut: 0
+                  }}
+                  <span class="register__text-lighter mx-1">
+                    {{
+                      'SIGNUP_PAGE.platform_checkbox_newsletter'
+                        | translate
+                        | TranslateCut: 1
+                    }}
+                  </span>
+                </app-checkbox>
+              </div>
+              <div class="register__checkbox">
+                <app-checkbox formControlName="privacyPolicy" [isForm]="true">
+                  {{
+                    'SIGNUP_PAGE.platform_checkbox_policies'
+                      | translate
+                      | TranslateCut: 0
+                  }}
+                  <span class="register__link mx-1">{{ policyTextLink }}</span>
+                  {{
+                    'SIGNUP_PAGE.platform_checkbox_policies'
+                      | translate
+                      | TranslateCut: 2
+                  }}
+                  <span class="register__link ml-1">
+                    {{
+                      'SIGNUP_PAGE.platform_checkbox_policies'
+                        | translate
+                        | TranslateCut: 3
+                    }}
+                  </span>
+                </app-checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="register__wrap">
+            <div class="register__button-wrapper mb-4">
+              <app-button
+                buttonType="submit"
+                [disabled]="signUpForm.invalid"
+                [theme]="'primary'"
+                [variant]="'block'"
+                [loading]="buttonLoading"
+              >
+                <div class="register__button">
+                  {{
+                    'SIGNUP_PAGE.platform_button-primary_createaccount'
+                      | translate
+                  }}
+                </div>
+              </app-button>
+            </div>
+            <div class="register__button-wrapper">
+              <app-button
+                [theme]="'secondary'"
+                [variant]="'block'"
+                (click)="googleSignUp()"
+              >
+                <div class="register__button">
+                  <span class="icon icon-ic_google">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                    <span class="path3"></span>
+                    <span class="path4"></span>
+                  </span>
+                  {{
+                    'SIGNUP_PAGE.platform_button-secondary_createaccountgoogle'
+                      | translate
+                  }}
+                </div>
+              </app-button>
+            </div>
+            <div class="register__login-link">
+              <span>
+                {{
+                  'SIGNUP_PAGE.platform_description_haveaccount'
+                    | translate
+                    | TranslateCut: 0
+                }}
+              </span>
+              <a class="register__link ml-1" routerLink="/login">
+                {{
+                  'SIGNUP_PAGE.platform_description_haveaccount'
+                    | translate
+                    | TranslateCut: 1
+                }}
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="register__right-layout">
+    <app-layout-cover
+      [img]="'../assets/images/img_teacher.png'"
+    ></app-layout-cover>
+  </div>
+</div>
+<app-loader *ngIf="loading"></app-loader>

@@ -6,14 +6,17 @@ import { Observable } from 'rxjs'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   loading = true
   isLoggedIn$: Observable<boolean>
   isLoggedOut$: Observable<boolean>
 
-  constructor(private translateService: TranslateService, private titleService: Title) {
+  constructor(
+    private translateService: TranslateService,
+    private titleService: Title
+  ) {
     // ngx-translate
     translateService.addLangs(['en', 'es'])
     translateService.setDefaultLang('en')
@@ -26,8 +29,10 @@ export class AppComponent implements OnInit {
   }
 
   setTitle(): void {
-    this.translateService.get('GENERAL.platform_title_tab').subscribe(name => {
-      this.titleService.setTitle(name)
-    })
+    this.translateService
+      .get('GENERAL.platform_title_tab')
+      .subscribe((name) => {
+        this.titleService.setTitle(name)
+      })
   }
 }

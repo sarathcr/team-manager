@@ -4,10 +4,8 @@ import { TranslateService } from '@ngx-translate/core'
 @Component({
   selector: 'app-language-selector',
   templateUrl: './language-selector.component.html',
-  styleUrls: ['./language-selector.component.css']
+  styleUrls: ['./language-selector.component.css'],
 })
 export class LanguageSelectorComponent {
-
-  constructor(public translateService: TranslateService) { }
-
+  constructor(public translateService: TranslateService) {}
 }

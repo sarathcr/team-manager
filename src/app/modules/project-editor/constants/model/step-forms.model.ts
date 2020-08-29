@@ -1,36 +1,38 @@
 import {
-  DrivingQuestion,
-  Theme,
-  Subject,
-  Grade,
   AcademicYear,
-  Region,
-  Country,
   CompetencyObjective,
+  Content,
+  Country,
+  DrivingQuestion,
+  Grade,
+  ProjectUpdate,
+  Region,
   Status,
   StepState,
-  Project,
-  Content,
+  Subject,
+  Theme,
 } from 'src/app/modules/project-editor/constants/model/project.model'
 import { Option } from 'src/app/shared/constants/model/form-elements.model'
 
 export interface FormOne {
   data: {
-    country: Country,
-    region: Region,
-    academicYear: AcademicYear,
-    grades: Grade[],
+    country: Country
+    region: Region
+    academicYear: AcademicYear
+    grades: Grade[]
     subjects: Subject[]
     status?: Status
+    stage?: string
+    curriculumId?: number
   }
   stepStatus: StepState
 }
 
 export interface FormOneInit {
-  country: Country[],
-  region: Region[],
-  academicYear: AcademicYear[],
-  grades: Grade[],
+  country: Country[]
+  region: Region[]
+  academicYear: AcademicYear[]
+  grades: Grade[]
   subjects: Subject[]
 }
 export interface FormSeven {
@@ -52,36 +54,26 @@ export interface FormTwoData {
   themes: Theme[]
 }
 export interface FormTwoInit {
-  themes?: Theme[],
+  themes?: Theme[]
   placeholder?: string
 }
 
 export interface FormThree {
-  data: FormThreeData
+  data: ProjectUpdate
   stepStatus: StepState
 }
 
 export interface FormFour {
-  data: FormfourData
+  data: ProjectUpdate
   stepStatus: StepState
 }
-export interface FormfourData extends Project {
-  updateType?: string
-  contentId?: number
-  subjectId?: number
-}
-export interface FormThreeData extends Project {
-  updateType?: string
-  criteriaId?: number
-  subjectId?: number
-}
 export interface FormThreeInit {
-  competencyObjectives?: CompetencyObjective[],
+  competencyObjectives?: CompetencyObjective[]
   placeholder?: string
 }
 
 export interface FormFiveInit {
-  competencyObjectives?: CompetencyObjective[],
+  competencyObjectives?: CompetencyObjective[]
   placeholder?: string
 }
 
@@ -91,16 +83,8 @@ export interface FormFourInit {
 }
 
 export interface FormFive {
-  data: FormFiveData
+  data: ProjectUpdate
   stepStatus: StepState
-}
-
-export interface FormFiveData extends Project {
-  updateType?: string
-  contentId?: number
-  subjectId?: number
-  competencyObjectiveId?: number
-  standardId?: number
 }
 
 export interface FormSix {
@@ -111,7 +95,6 @@ export interface FormSix {
   }
   stepStatus: StepState
 }
-
 
 export interface FormSixInit {
   creativeTitle?: string
@@ -141,6 +124,12 @@ export interface DefineUnlockStep {
 }
 
 export type FormNineInit = string
-export type FormsData = FormOne | FormTwo | FormThree | FormSix | FormSeven | FormEight | FormNine | FormFive
-
-
+export type FormsData =
+  | FormOne
+  | FormTwo
+  | FormThree
+  | FormSix
+  | FormSeven
+  | FormEight
+  | FormNine
+  | FormFive

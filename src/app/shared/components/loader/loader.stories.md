@@ -15,7 +15,7 @@ A convenience directive for applying loaders.
 ### With properties
 
 ```js
-    <app-loader *ngIf="loading; else loaded" variant="block"></app-loader>
+    <app-loader variant="default" theme="primary" size="large"></app-loader>
 
 ```
 
@@ -23,9 +23,12 @@ A convenience directive for applying loaders.
 
 ### Input
 
-| Name      | Type             | Required | Values            |  Default  | Description                             |
-| --------- | ---------------- | :------: | ----------------- | :-------: | --------------------------------------- |
-| `variant` | `LoaderVariants` |    -     | `block` `default` | `default` | To set variants to the loader component |
+| Name      | Type             | Required | Values                              |  Default  | Description                             |
+| --------- | ---------------- | :------: | ----------------------------------  | :-------: | --------------------------------------- |
+| `variant` | `LoaderVariants` |    -     | `block` `default`                   | `default` | To set variants to the loader component |
+| `theme`   | `LoaderTheme`    |    -     | `primary` `secondary` `teritiary`   | `primary` | To set theme to the loader component |
+| `size`    | `LoaderSize`     |    -     | `small` `medium` `large`            | `large`   | To set size to the loader component |
+
 
 ## Note
 

@@ -1,28 +1,31 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { EditorService } from '../../services/editor/editor.service'
-import { CountryEntityService } from '../../store/entity/country/country-entity.service'
-import { RegionEntityService } from '../../store/entity/region/region-entity.service'
 import { AcademicYearEntityService } from '../../store/entity/academic-year/academic-year-entity.service'
-import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
+import { CountryEntityService } from '../../store/entity/country/country-entity.service'
+import { CurriculumGradesEntityService } from '../../store/entity/curriculum-grades/curriculum-grades-entity.service'
+import { CurriculumEntityService } from '../../store/entity/curriculum/curriculum-entity.service'
+import { RegionEntityService } from '../../store/entity/region/region-entity.service'
+import { StageEntityService } from '../../store/entity/stage/stage-entity.service'
 
-import { FormOne } from '../../constants/model/step-forms.model'
+import { Curriculum } from '../../constants/model/curriculum.model'
 import {
-  Country,
-  Region,
   AcademicYear,
+  Country,
   Grade,
-  Subject,
-  Step,
+  Region,
   Status,
+  Step,
+  Subject,
 } from '../../constants/model/project.model'
+import { FormOne } from '../../constants/model/step-forms.model'
 
 import {
-  StepButtonSubmitConfig,
   DropdownConfigInit,
+  StepButtonSubmitConfig,
 } from '../../../../shared/constants/data/form-elements.data'
 
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
@@ -40,19 +43,24 @@ export class StepOneComponent implements OnInit, OnDestroy {
   countryDropdown = new DropdownConfigInit('country')
   regionDropdown = new DropdownConfigInit('region')
   academicYearDropdown = new DropdownConfigInit('academicYear')
+  stagesDropdown = new DropdownConfigInit('stages')
   gradesDropdown = new DropdownConfigInit('grades', 'multiselect')
   subjectsDropdown = new DropdownConfigInit('subjects', 'multiselect')
   initialFormStatus: Status = 'PENDING'
   subscriptions = new SubSink()
+  curriculumSubscription = new SubSink()
   country$: Observable<Country>
   region$: Observable<Region>
   academicYear$: Observable<AcademicYear>
+  stages$: Observable<Subject[]>
   grades$: Observable<Grade[]>
   subjects$: Observable<Subject[]>
+  curriculum: Curriculum
   isFormUpdated = false
   fieldNames = [
     'countryDropdown',
     'regionDropdown',
+    'stagesDropdown',
     'academicYearDropdown',
     'gradesDropdown',
     'subjectsDropdown',
@@ -62,7 +70,9 @@ export class StepOneComponent implements OnInit, OnDestroy {
     private countryService: CountryEntityService,
     private regionService: RegionEntityService,
     private academicYearService: AcademicYearEntityService,
-    private gradeService: GradeEntityService,
+    private stageService: StageEntityService,
+    private curriculumService: CurriculumEntityService,
+    private curriculumGradeService: CurriculumGradesEntityService,
     private editor: EditorService
   ) {}
 
@@ -85,6 +95,14 @@ export class StepOneComponent implements OnInit, OnDestroy {
     if (this.project$) {
       this.country$ = this.project$.pipe(map((project) => project?.country))
       this.region$ = this.project$.pipe(map((project) => project?.region))
+      this.stages$ = this.project$.pipe(
+        map((project) => {
+          if (project?.stage && project.stage !== 'EMPTY') {
+            return [{ id: project.stage, name: project.stage }]
+          }
+          return null
+        })
+      )
       this.academicYear$ = this.project$.pipe(
         map((project) => project?.academicYear)
       )
@@ -137,46 +155,90 @@ export class StepOneComponent implements OnInit, OnDestroy {
       })
   }
 
-  getAcademicYears(): void {
-    this.subscriptions.sink = this.academicYearService.loading$.subscribe(
-      (loading) => (this.academicYearDropdown.loading = loading)
+  getAllStages(): void {
+    this.subscriptions.sink = this.stageService.loading$.subscribe(
+      (loading) => (this.stagesDropdown.loading = loading)
     )
-    this.subscriptions.sink = this.academicYearService.entities$.subscribe(
+    this.subscriptions.sink = this.stageService.entities$.subscribe(
       (newData) => {
-        if (!newData.length) {
-          this.academicYearService.getAll()
+        if (!newData?.length) {
+          this.stageService.getAll()
         }
-        this.academicYearDropdown.data = newData
+        this.stagesDropdown.data = newData
       }
     )
   }
 
-  getGrades(academicyearId: number, regionId?: number): void {
-    this.subscriptions.sink = this.gradeService.loading$.subscribe(
-      (loading) => (this.gradesDropdown.loading = loading)
+  getCurriculum(): void {
+    this.subscriptions.sink = this.curriculumService.loading$.subscribe(
+      (loading) => (this.academicYearDropdown.loading = loading)
     )
-    const selectedRegionId = regionId
-      ? regionId
-      : this.regionDropdown.selectedItems[0].id
-    this.subscriptions.sink = this.gradeService.entities$
+    if (this.stagesDropdown.selectedItems?.length) {
+      const selectedRegionId = this.regionDropdown.selectedItems[0]?.id
+      this.curriculumSubscription.sink = this.curriculumService.entities$
+        .pipe(
+          map((curriculums) =>
+            curriculums.find(
+              (curriculum) =>
+                curriculum.region.id === selectedRegionId &&
+                curriculum.stage === this.stagesDropdown.selectedItems[0]?.name
+            )
+          )
+        )
+        .subscribe((data) => {
+          if (!data) {
+            const parms = {
+              regionId: selectedRegionId.toString(),
+              stage: this.stagesDropdown.selectedItems[0]?.name,
+            }
+            this.curriculumService.getWithQuery(parms)
+            this.academicYearDropdown.data = []
+            this.gradesDropdown.data = []
+          } else {
+            this.curriculum = data
+            this.getAcademicYears(data.id)
+            this.getGrades(data.id)
+            this.curriculumSubscription.unsubscribe()
+          }
+        })
+    }
+  }
+
+  getAcademicYears(curriculumId: number): void {
+    this.subscriptions.sink = this.academicYearService.loading$.subscribe(
+      (loading) => (this.academicYearDropdown.loading = loading)
+    )
+    this.subscriptions.sink = this.academicYearService.entities$
       .pipe(
-        map((grades) =>
-          grades.filter(
-            (grade) =>
-              grade.academicYear?.id === academicyearId &&
-              grade.region?.id === selectedRegionId
+        map((academicYears) =>
+          academicYears.filter(
+            (academicYear) => academicYear.curriculumId === curriculumId
           )
         )
       )
       .subscribe((newData) => {
         if (!newData.length) {
-          const parms = {
-            regionId: selectedRegionId.toString(),
-            academicyearId: academicyearId.toString(),
-          }
-          this.gradeService.getWithQuery(parms)
+          this.academicYearService.getWithQuery(curriculumId?.toString())
         }
-        this.gradesDropdown.data = newData
+        this.academicYearDropdown.data = newData
+      })
+  }
+
+  getGrades(curriculumId: number): void {
+    this.subscriptions.sink = this.curriculumGradeService.loading$.subscribe(
+      (loading) => (this.gradesDropdown.loading = loading)
+    )
+    this.subscriptions.sink = this.curriculumGradeService.entities$
+      .pipe(
+        map((grades) => {
+          return grades.find((gradeslist) => gradeslist?.id === curriculumId)
+        })
+      )
+      .subscribe((data) => {
+        if (!data) {
+          this.curriculumGradeService.getWithQuery(curriculumId?.toString())
+        }
+        this.gradesDropdown.data = data?.gradeList
       })
   }
 
@@ -185,17 +247,17 @@ export class StepOneComponent implements OnInit, OnDestroy {
     this.gradesDropdown.selectedItems.forEach((grade) => {
       gradeIds.push(grade.id)
     })
-    this.subscriptions.sink = this.gradeService.entities$
+    this.subscriptions.sink = this.curriculumGradeService.entities$
       .pipe(
-        map((gradeData) => {
-          const subjectData = new Set([])
-          gradeData.forEach((grade) => {
-            gradeIds.forEach((gradeId) => {
-              if (grade.id === gradeId) {
-                grade.subjectList.forEach((subject) => subjectData.add(subject))
+        map((gradeDatas) => {
+          let subjectData = []
+          for (const gradesData of gradeDatas) {
+            for (const gradeList of gradesData.gradeList) {
+              if (gradeIds.includes(gradeList.id)) {
+                subjectData = [...subjectData, ...gradeList.subjectList]
               }
-            })
-          })
+            }
+          }
           return [...subjectData]
         })
       )
@@ -258,16 +320,21 @@ export class StepOneComponent implements OnInit, OnDestroy {
           this.resetForm(selectedData.controller)
           this.handleDropdownDisable(selectedData.controller)
           if (selectedId) {
-            this.getAcademicYears()
+            this.getAllStages()
+          }
+          break
+        }
+        case 'stages': {
+          this.resetForm(selectedData.controller)
+          this.handleDropdownDisable(selectedData.controller)
+          if (selectedId) {
+            this.getCurriculum()
           }
           break
         }
         case 'academicYear': {
           this.resetForm(selectedData.controller)
           this.handleDropdownDisable(selectedData.controller)
-          if (selectedId) {
-            this.getGrades(selectedId)
-          }
           break
         }
         case 'grades': {
@@ -317,19 +384,27 @@ export class StepOneComponent implements OnInit, OnDestroy {
       this.gradesDropdown.selectedItems = []
       this.subjectsDropdown.selectedItems = []
       this.academicYearDropdown.selectedItems = []
+      this.stagesDropdown.selectedItems = []
       this.gradesDropdown.status = 'PENDING'
       this.subjectsDropdown.status = 'PENDING'
       this.academicYearDropdown.status = 'PENDING'
+      this.stagesDropdown.status = 'PENDING'
+      this.curriculum = null
       if (field === 'country') {
         this.regionDropdown.selectedItems = []
         this.regionDropdown.status = 'PENDING'
       }
     }
-    if (field === 'academicYear') {
+    if (field === 'academicYear' || field === 'stages') {
       this.gradesDropdown.selectedItems = []
       this.subjectsDropdown.selectedItems = []
       this.gradesDropdown.status = 'PENDING'
       this.subjectsDropdown.status = 'PENDING'
+    }
+    if (field === 'stages') {
+      this.academicYearDropdown.selectedItems = []
+      this.academicYearDropdown.status = 'PENDING'
+      this.curriculum = null
     }
     if (
       (field === 'grades' && !this.gradesDropdown.selectedItems.length) ||
@@ -350,16 +425,29 @@ export class StepOneComponent implements OnInit, OnDestroy {
           0,
           'gradesDropdown',
           'subjectsDropdown',
-          'academicYearDropdown'
+          'academicYearDropdown',
+          'stagesDropdown'
         )
         this.regionDropdown.disabled =
           this.countryDropdown.selectedItems.length === 0
         break
       }
       case 'region': {
+        fields.splice(
+          0,
+          0,
+          'academicYearDropdown',
+          'gradesDropdown',
+          'subjectsDropdown'
+        )
+        this.stagesDropdown.disabled =
+          this.regionDropdown.selectedItems.length === 0
+        break
+      }
+      case 'stages': {
         fields.splice(0, 0, 'gradesDropdown', 'subjectsDropdown')
         this.academicYearDropdown.disabled =
-          this.regionDropdown.selectedItems.length === 0
+          this.stagesDropdown.selectedItems.length === 0
         break
       }
       case 'academicYear': {
@@ -398,6 +486,10 @@ export class StepOneComponent implements OnInit, OnDestroy {
           : null,
         grades: this.gradesDropdown.selectedItems,
         subjects: this.subjectsDropdown.selectedItems,
+        stage: this.stagesDropdown.selectedItems[0]
+          ? this.stagesDropdown.selectedItems[0].name
+          : 'EMPTY',
+        curriculumId: this.curriculum?.id ? this.curriculum.id : null,
         status: 'INPROCESS', // WIP
       },
       stepStatus: {

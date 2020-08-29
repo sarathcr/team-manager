@@ -8,7 +8,7 @@ describe('ButtonComponent', (): void => {
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ButtonComponent]
+      declarations: [ButtonComponent],
     })
 
     fixture = TestBed.createComponent(ButtonComponent)

@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { TranslateModule } from '@ngx-translate/core'
 
-import { ModalFormComponent } from './modal-form.component'
-import { InputComponent } from 'src/app/shared/components/input/input.component'
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
+import { InputComponent } from 'src/app/shared/components/input/input.component'
 import { ValidatorComponent } from 'src/app/shared/components/validator/validator.component'
+import { ModalFormComponent } from './modal-form.component'
 
 describe('ModalFormComponent', () => {
   let component: ModalFormComponent
@@ -13,10 +13,14 @@ describe('ModalFormComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModalFormComponent, InputComponent, ButtonComponent, ValidatorComponent ],
-      imports: [ TranslateModule.forRoot() ]
-    })
-    .compileComponents()
+      declarations: [
+        ModalFormComponent,
+        InputComponent,
+        ButtonComponent,
+        ValidatorComponent,
+      ],
+      imports: [TranslateModule.forRoot()],
+    }).compileComponents()
     fixture = TestBed.createComponent(ModalFormComponent)
     component = fixture.componentInstance
   })

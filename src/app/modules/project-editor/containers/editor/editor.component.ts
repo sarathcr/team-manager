@@ -1,44 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-
 import { Observable } from 'rxjs'
-
-import { EditorService } from '../../services/editor/editor.service'
-
 import { Step } from '../../constants/model/project.model'
+import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.scss']
+  styleUrls: ['./editor.component.scss'],
 })
 export class EditorComponent implements OnInit, OnDestroy {
-
-  loaded$: Observable<boolean>
   projectUrl: string | number
-  steps: Step[]
-  contextualStatus = false
-  loaded: boolean
-  stepOne
-  constructor(
-    private route: ActivatedRoute,
-    public editor: EditorService
-  ) { }
+  stepOne: Observable<Step>
+
+  constructor(private route: ActivatedRoute, public editor: EditorService) {}
 
   ngOnInit(): void {
-    this.steps = this.editor.createSteps()
+    this.stepOne = this.editor.getStepStatus(1)
     this.projectUrl = this.route.snapshot.paramMap.get('id')
+    this.editor.createSteps()
     this.editor.getProject(this.projectUrl)
-    this.loaded$ = this.editor.loaded$
-    this.stepOne = this.editor.steps[0]
   }
 
   ngOnDestroy(): void {
     this.editor.clearData()
   }
-
-  getContextualStatus($event: boolean): void {
-    this.contextualStatus = $event
-  }
 }
-

@@ -1,6 +1,23 @@
-<div class="cover position-fixed">
-  <img src="{{img}}" alt="" class="cover__image">
-  <img src="../assets/images/merged-shapes_upper-side@2x.png" class="cover__mask cover__mask_upper">
-  <img src="../assets/images/merged-shapes_lower-side@2x.png" class="cover__mask cover__mask_lower">
-  <img src="../assets/images/mask-logo.png" class="cover__mask cover__mask_logo">
-</div>
+<picture class="cover">
+  <img src="{{ img }}" alt="" class="d-none d-md-block cover__image" />
+  <img
+    src="../assets/images/merged-shapes_upper-side@2x.png"
+    alt="upper-shape"
+    class="cover__mask cover__mask_upper d-none d-md-block"
+  />
+  <img
+    src="../assets/images/merged-shapes_upper-side_mobile.png"
+    alt="upper-shape"
+    class="cover__mask cover__mask_upper d-md-none"
+  />
+  <img
+    src="../assets/images/merged-shapes_lower-side@2x.png"
+    alt="lower-shape"
+    class="cover__mask cover__mask_lower d-none d-md-block"
+  />
+  <img
+    src="../assets/images/mask-logo.png"
+    alt="mask-logo"
+    class="cover__mask cover__mask_logo d-none d-md-block"
+  />
+</picture>

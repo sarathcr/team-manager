@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal'
 import { TranslateModule } from '@ngx-translate/core'
+import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal'
 
-import { ModalInfoComponent } from './modal-info.component'
 import { ButtonComponent } from '../button/button.component'
-
+import { ModalInfoComponent } from './modal-info.component'
 
 describe('ModalInfoComponent', (): void => {
   let component: ModalInfoComponent
@@ -13,9 +12,9 @@ describe('ModalInfoComponent', (): void => {
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ ModalInfoComponent, ButtonComponent ],
-      providers: [ BsModalRef ],
-      imports: [ ModalModule.forRoot(), TranslateModule.forRoot() ]
+      declarations: [ModalInfoComponent, ButtonComponent],
+      providers: [BsModalRef],
+      imports: [ModalModule.forRoot(), TranslateModule.forRoot()],
     })
 
     fixture = TestBed.createComponent(ModalInfoComponent)

@@ -1,29 +1,42 @@
-import { Component, OnInit, OnDestroy, TemplateRef, ViewChild, AfterViewInit } from '@angular/core'
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core'
 
-import { Observable, BehaviorSubject } from 'rxjs'
-import { map } from 'rxjs/operators'
 import { TranslateService } from '@ngx-translate/core'
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal'
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
+import { Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 
-import { EditorService } from '../../services/editor/editor.service'
 import { ContentService } from '../../services/contents/contents.service'
-import {
-  CurriculumBasicSkillsEntityService
-} from '../../store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
+import { EditorService } from '../../services/editor/editor.service'
+import { CurriculumBasicSkillsEntityService } from '../../store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 
 import {
-  Project,
-  Step,
-  Subject  as CurriculumSubject,
-  Status,
-  BasicSkill,
-  ProjectContent,
-  Content
-} from '../../constants/model/project.model'
-import { Option, CheckBoxData, FieldEvent, DropdownCustom } from 'src/app/shared/constants/model/form-elements.model'
-import { FormFour } from '../../constants/model/step-forms.model'
-import { PrincipalModalColData, PrincipalViewLabels, SecondaryViewLabels } from '../../constants/model/principle-view.model'
+  CheckBoxData,
+  DropdownCustom,
+  Option,
+} from 'src/app/shared/constants/model/form-elements.model'
 import { Block } from '../../constants/model/curriculum.model'
+import {
+  PrincipalModalColData,
+  PrincipalViewLabels,
+  SecondaryViewLabels,
+} from '../../constants/model/principle-view.model'
+import {
+  BasicSkill,
+  Content,
+  Project,
+  ProjectContent,
+  Status,
+  Step,
+  Subject as CurriculumSubject,
+} from '../../constants/model/project.model'
+import { FormFour } from '../../constants/model/step-forms.model'
 
 import { StepButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
@@ -31,7 +44,7 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 @Component({
   selector: 'app-step-four',
   templateUrl: './step-four.component.html',
-  styleUrls: ['./step-four.component.scss']
+  styleUrls: ['./step-four.component.scss'],
 })
 export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('modalUnlock') modalUnlock: TemplateRef<any>
@@ -52,7 +65,8 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedBasicSkills: BasicSkill[] = []
   modalRef: BsModalRef
   dataPayload: CurriculumSubject
-  subjectTextArea: any[] = []
+  activeEditableLists: number[] = []
+  activeTextarea: number
   hasNoBasicSkill = false
   isFormUpdated = false
   dropDownConfig: DropdownCustom
@@ -70,7 +84,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
     private contentService: ContentService,
     private basicSkillsService: CurriculumBasicSkillsEntityService,
     private translateService: TranslateService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.stepInit()
@@ -92,49 +106,42 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
     this.project$ = this.editor.getDataByStep(4)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[3]
-    this.subscriptions.sink = this.editor.loading$.subscribe(value => !value ? this.loading = value : null)
+    this.subscriptions.sink = this.editor.loading$.subscribe((value) =>
+      !value ? (this.loading = value) : null
+    )
     const secondarViewLabels: SecondaryViewLabels = {
-      selectedItemText: 'CONTENT.project_objectives_contentwindow_content_selected',
+      selectedItemText:
+        'CONTENT.project_objectives_contentwindow_content_selected',
       emptyTitle: 'CONTENT.project_content_contentwindow_empty_title',
-      emptyDescription: 'CONTENT.project_content_contentwindow_empty_description',
-      emptyButtonText: 'CONTENT.project_content_contentwindow_empty_button'
+      emptyDescription:
+        'CONTENT.project_content_contentwindow_empty_description',
+      emptyButtonText: 'CONTENT.project_content_contentwindow_empty_button',
     }
     this.labels = {
       subjectTitle: 'CONTENT.project_content_contentwindow_curriculum',
-      summaryTitle: 'CONTENT.project_objectives_contentwindow_content_selected_back',
+      summaryTitle:
+        'CONTENT.project_objectives_contentwindow_content_selected_back',
       bodyTitle: 'CONTENT.project_content_contentwindow_title',
       countText: 'CONTENT.project_objectives_contentwindow_showall',
       addButtonText: 'CONTENT.project_objectives_contentwindow_add',
-      secondaryViewLabels: secondarViewLabels
+      secondaryViewLabels: secondarViewLabels,
     }
     if (this.project$) {
-      this.subscriptions.sink = this.project$.subscribe(data => {
+      this.subscriptions.sink = this.project$.subscribe((data) => {
         this.project = data
-        this.subjectTextArea = []
-        if (this.project?.subjects?.length) {
-          this.project.subjects.forEach(subject => {
-            const customContents = subject?.customContents || []
-            this.subjectTextArea.push({
-              data: [...customContents],
-              options$: new BehaviorSubject([...customContents]),
-              id: subject.id
-            })
-          })
-        }
       })
     }
     if (this.step$) {
-      this.subscriptions.sink = this.step$.subscribe(
-        formStatus => {
-          if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state === 'DONE' && !!this.project.subjects?.length
-            this.initialFormStatus = formStatus.state
-            if (formStatus.state !== 'DONE' && !this.hasAnyEmptyFields()) {
-              this.buttonConfig.disabled = false
-            }
+      this.subscriptions.sink = this.step$.subscribe((formStatus) => {
+        if (formStatus) {
+          this.buttonConfig.submitted =
+            formStatus.state === 'DONE' && !!this.project.subjects?.length
+          this.initialFormStatus = formStatus.state
+          if (formStatus.state !== 'DONE' && !this.hasAnyEmptyFields()) {
+            this.buttonConfig.disabled = false
           }
         }
-      )
+      })
     }
   }
 
@@ -142,61 +149,84 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   getGrades(project: Project): void {
     if (project.subjects?.length) {
       const criteriaIds = []
-      for ( const subject of this.project.subjects) {
-        criteriaIds.push(...subject.evaluationCriteria?.map(evaluationCriteria =>  evaluationCriteria.id))
+      for (const subject of this.project.subjects) {
+        subject.evaluationCriteria = subject.evaluationCriteria
+          ? subject.evaluationCriteria
+          : []
+        criteriaIds.push(
+          ...subject.evaluationCriteria?.map(
+            (evaluationCriteria) => evaluationCriteria.id
+          )
+        )
       }
       if (criteriaIds.length) {
         const params = {
-          evaluationcriteriaIds: criteriaIds
+          evaluationcriteriaIds: criteriaIds,
         }
-        this.subscriptions.sink = this.contentService.getGrades(params).subscribe( data => {
-          this.grades = data
-          this.filterGrades()
-         })
+        this.subscriptions.sink = this.contentService
+          .getGrades(params)
+          .subscribe((data) => {
+            this.grades = data
+            this.filterGrades()
+          })
       }
     }
   }
 
   filterGrades(): void {
-    this.selectedGrades = this.grades.filter( grade => this.project.grades.some( item => grade.id === item.id))
+    this.selectedGrades = this.grades.filter((grade) =>
+      this.project.grades.some((item) => grade.id === item.id)
+    )
   }
 
   // Open modal and render data
   openPrincipalView(subject: CurriculumSubject): void {
+    this.activeTextarea = null
     this.contentService.resetData()
     if (subject.evaluationCriteria.length) {
       this.getModalData(subject)
-      this.modalRef = this.modalService.show( this.principalViewModal,
-        { class: 'principal-modal-dialog  modal-dialog-centered' })
-    }
-    else {
+      this.modalRef = this.modalService.show(this.principalViewModal, {
+        class: 'principal-modal-dialog  modal-dialog-centered',
+      })
+    } else {
       this.openModalUnlock()
     }
   }
 
   // Dropdown titles translation
   getDropDownData(): void {
-    this.subscriptions.sink = this.translateService.stream([
-      'CONTENT.project_objectives_contentwindow_combo_title',
-      'CONTENT.project_objectives_contentwindow_combo_section_1',
-      'CONTENT.project_objectives_contentwindow_combo_section_2',
-    ]).subscribe(translations => {
-      this.dropDownConfig = {
-        label: translations['CONTENT.project_objectives_contentwindow_combo_title'],
-        priorityTitle: translations['CONTENT.project_objectives_contentwindow_combo_section_1'],
-        normalTitle: translations['CONTENT.project_objectives_contentwindow_combo_section_2']
-      }
-    })
+    this.subscriptions.sink = this.translateService
+      .stream([
+        'CONTENT.project_objectives_contentwindow_combo_title',
+        'CONTENT.project_objectives_contentwindow_combo_section_1',
+        'CONTENT.project_objectives_contentwindow_combo_section_2',
+      ])
+      .subscribe((translations) => {
+        this.dropDownConfig = {
+          label:
+            translations[
+              'CONTENT.project_objectives_contentwindow_combo_title'
+            ],
+          priorityTitle:
+            translations[
+              'CONTENT.project_objectives_contentwindow_combo_section_1'
+            ],
+          normalTitle:
+            translations[
+              'CONTENT.project_objectives_contentwindow_combo_section_2'
+            ],
+        }
+      })
   }
 
   // Modal submit click
-  handleModalSubmit(event: any): void{
+  handleModalSubmit(event: any): void {
     const subject = event.subject
     const selectedItems = event.selectedItem
     this.dataPayload = {
       contents: selectedItems,
       id: subject.id,
-      name: subject.name
+      name: subject.name,
     }
     this.checkStepStatus(selectedItems)
     this.handleSubmit()
@@ -205,7 +235,9 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Get related blocks
   getBlocksFromGrades(): void {
-    const selectedGrade = this.selectedGrades.length ? this.selectedGrades[0] : this.grades[0]
+    const selectedGrade = this.selectedGrades.length
+      ? this.selectedGrades[0]
+      : this.grades[0]
     this.contentService.selectedGrades = this.selectedGrades
     this.contentService.getBlocks(selectedGrade)
   }
@@ -221,7 +253,9 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
       block: 'CONTENT.project_objectives_contentwindow_block',
     }
     this.contentService.subject = { id: subject.id, name: subject.name }
-    this.contentService.contentIds = subject.contents.map(content => content.id)
+    this.contentService.contentIds = subject.contents.map(
+      (content) => content.id
+    )
     this.contentService.getHeading()
     this.getBlocksFromGrades()
     this.getDropDownData()
@@ -240,10 +274,6 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
-    for (const [index, manualContent] of this.subjectTextArea.entries()) {
-      const tempData = manualContent?.data?.map(item => item.id == null ? { name: item.name } : item)
-      this.project.subjects[index].customContents = tempData
-    }
     this.project.basicSkills = this.selectedBasicSkills
     this.checkFormEmpty()
     const formData: FormFour = {
@@ -251,16 +281,16 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
         ...this.project,
         updateType: 'removeContent',
         contentId: contentData.id,
-        subjectId: contentData.subjectId
+        subjectId: contentData.subjectId,
       },
       stepStatus: {
         steps: [
           {
             state: this.step.state,
-            stepid: this.step.stepid
-          }
-        ]
-      }
+            stepid: this.step.stepid,
+          },
+        ],
+      },
     }
     this.editor.handleStepSubmit(formData)
   }
@@ -273,8 +303,8 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
         contentLength.push(true)
       }
     }
-    for (const customContent of this.subjectTextArea) {
-      if (customContent.data.length) {
+    for (const subject of this.project.subjects) {
+      if (subject.customContents.length) {
         contentLength.push(true)
       }
     }
@@ -292,15 +322,15 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   // Open Modal for unlock
   openModalUnlock(): void {
     this.modalRef = this.modalService.show(this.modalUnlock, {
-      class: 'common-modal modal-dialog-centered'
+      class: 'common-modal modal-dialog-centered',
     })
   }
 
   // Open Modal for delete
-  openModalDelete(data: { subjectId: number, id: number }): void {
+  openModalDelete(data: { subjectId: number; id: number }): void {
     this.delData = data
     this.modalRef = this.modalService.show(this.modalDelete, {
-      class: 'common-modal  modal-dialog-centered'
+      class: 'common-modal  modal-dialog-centered',
     })
   }
 
@@ -321,52 +351,80 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
     this.modalRef.hide()
   }
 
-  textareaDataChange(data: FieldEvent, index: number): void {
-    this.subjectTextArea[index].data = [...data.values]
-    this.isFormUpdated = data.updated
-    if (data.updated) {
-      this.checkStepStatus()
-    }
+  textareaDataChange(values: any, index: number): void {
+    this.project.subjects[index].customContents = [...values]
+    this.checkFormEmpty()
+    this.handleSubmit()
+  }
+
+  // Edit List Item
+  textItemEdit(values: any, index: number): void {
+    this.project.subjects[index].customContents = [...values]
+    this.checkFormEmpty()
+    this.handleSubmit()
+  }
+
+  // Delete list Item
+  textItemDelete(values: any, index: number): void {
+    this.project.subjects[index].customContents = [...values]
+    this.isFormUpdated = true
+    this.checkFormEmpty()
+  }
+
+  updateEditableListStatus(id: number): void {
+    const tempList = new Set(this.activeEditableLists)
+    tempList.add(id)
+    this.activeEditableLists = Array.from(tempList)
+    this.activeTextarea = id
   }
 
   // Basic skills area
   getBasicSkills(): void {
     if (this.project.subjects?.length) {
       const checkData: CheckBoxData = { checked: false }
+      const curriculumId = this.project.curriculumId
       if (this.project?.basicSkills?.length) {
         this.selectedBasicSkills = [...this.project.basicSkills]
-      }
-      else {
+      } else {
         this.selectedBasicSkills = []
       }
       this.subscriptions.sink = this.basicSkillsService.entities$
         .pipe(
-          map(data => {
-            const basicSkills = []
-            for (const curriculum of data) {
-              for (const { id, code, description, name } of curriculum.basicSkills) {
-                basicSkills.push({ id, code, description, name })
+          map((data) => {
+            let curriculumData = data.find(
+              (basicSkills) => basicSkills.id === curriculumId
+            )
+            if (curriculumData) {
+              curriculumData = {
+                id: curriculumData.id,
+                name: curriculumData.name,
+                basicSkills: curriculumData.basicSkills.map(
+                  ({ id, code, description, name }) => ({
+                    id,
+                    code,
+                    description,
+                    name,
+                  })
+                ),
               }
             }
-            return basicSkills
-          }))
-        .subscribe(basicSkills => {
-          if (!basicSkills.length && this.project) {
-            const parms = {
-              regionId: this.project.region.id.toString(),
-              academicyearId: this.project.academicYear.id.toString()
-            }
-            this.basicSkillsService.getWithQuery(parms)
-          }
-          basicSkills.forEach(basicSkill => {
-            basicSkill.checkData = { ...checkData }
-            this.selectedBasicSkills.forEach(selectedSkill => {
-              if (basicSkill.id === selectedSkill.id) {
-                basicSkill.checkData.checked = true
-              }
-            })
+            return curriculumData
           })
-          this.basicSkills = [...basicSkills]
+        )
+        .subscribe((data) => {
+          if (!data && this.project) {
+            this.basicSkillsService.getWithQuery(curriculumId.toString())
+          } else {
+            for (const basicSkill of data.basicSkills) {
+              basicSkill.checkData = { ...checkData }
+              for (const selectedSkill of this.selectedBasicSkills) {
+                if (basicSkill.id === selectedSkill.id) {
+                  basicSkill.checkData.checked = true
+                }
+              }
+            }
+            this.basicSkills = [...data.basicSkills]
+          }
         })
     }
   }
@@ -402,11 +460,11 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   // Check step status
   checkStepStatus(contents?: Content[]): void {
     const hasContents = !!contents?.length
-    let hasManualContents = false
+    let hasCustomContents = false
     let hasSelectedSkills = false
-    for (const manualContents of this.subjectTextArea) {
-      if (manualContents?.data?.length) {
-        hasManualContents = true
+    for (const subjects of this.project.subjects) {
+      if (subjects?.customContents?.length) {
+        hasCustomContents = true
       }
     }
     if (this.basicSkills.length) {
@@ -416,7 +474,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
-    if (hasContents || hasManualContents || hasSelectedSkills) {
+    if (hasContents || hasCustomContents || hasSelectedSkills) {
       this.step.state = 'INPROCESS'
     } else {
       this.step.state = 'PENDING'
@@ -427,8 +485,8 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   // Check for empty fields
   hasAnyEmptyFields(): boolean {
     let hasEmptyField = false
-    for (const [index, subject] of this.project.subjects.entries()) {
-      if (!subject.contents?.length && !this.subjectTextArea[index].data?.length) {
+    for (const subject of this.project.subjects) {
+      if (!subject.contents?.length && !subject.customContents?.length) {
         hasEmptyField = true
       }
     }
@@ -455,32 +513,29 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.dataPayload = null
     }
-    for (const [index, manualContent] of this.subjectTextArea.entries()) {
-      const tempData = manualContent?.data?.map(item => item.id == null ? { name: item.name } : item)
-      subjectPayload[index].customContents = tempData
-    }
     return [...subjectPayload]
   }
 
   // function to submit form data
   handleSubmit(formStatus?: Status): void {
     if (formStatus === 'DONE') {
+      this.activeTextarea = null
       this.step.state = 'DONE'
       this.initialFormStatus = 'DONE'
     }
     const formData: FormFour = {
       data: {
         subjects: this.createSubjectPayload(),
-        basicSkills: this.selectedBasicSkills
+        basicSkills: this.selectedBasicSkills,
       },
       stepStatus: {
         steps: [
           {
             state: this.step.state,
-            stepid: this.step.stepid
-          }
-        ]
-      }
+            stepid: this.step.stepid,
+          },
+        ],
+      },
     }
     this.isFormUpdated = false
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')

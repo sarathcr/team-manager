@@ -1,9 +1,13 @@
 <div>
-    <label>
-        {{ 'HOME.SELECT' | translate }}
-        <select #langSelect (change)="translateService.use(langSelect.value)">
-            <option *ngFor="let lang of translateService.getLangs()" [value]="lang"
-                [selected]="lang === translateService.currentLang">{{ lang }}</option>
-        </select>
-    </label>
+  <label>
+    {{ 'HOME.SELECT' | translate }}
+    <select #langSelect (change)="translateService.use(langSelect.value)">
+      <option
+        *ngFor="let lang of translateService.getLangs()"
+        [value]="lang"
+        [selected]="lang === translateService.currentLang"
+        >{{ lang }}</option
+      >
+    </select>
+  </label>
 </div>

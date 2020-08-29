@@ -18,10 +18,12 @@
       (inputChange)="onValueChange($event)"
       [initFocus]="true"
       [maxlength]="maxLength"
-      [enableValidator]="true"
+      [enableValidator]="enableValidator"
       [label]="label"
+      [innerLabel]="innerLabel"
       [helperText]="helperText"
       [errorText]="errorText"
+      [variant]="inputVariant"
     ></app-input>
   </div>
   <div class="modal-form__textarea" *ngIf="variant == 'textarea'">
@@ -30,7 +32,7 @@
       size="small"
       [initFocus]="true"
       [maxLength]="maxLength"
-      [enableValidator]="true"
+      [enableValidator]="enableValidator"
       [label]="label"
       [helperText]="helperText"
       [errorText]="errorText"

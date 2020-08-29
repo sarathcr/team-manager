@@ -1,23 +1,24 @@
 import {
   Component,
-  OnInit,
-  Output,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
+  OnInit,
+  Output,
   ViewChild,
-  ElementRef,
 } from '@angular/core'
 
 import { Observable } from 'rxjs'
 
 import {
-  TextAreaVariants,
+  TextareaBackground,
   TextareaSize,
+  TextAreaVariants,
 } from 'src/app/shared/constants/model/form-elements.model'
 
-import { SubSink } from '../../utility/subsink.utility'
 import { isNonFunctionalKey } from '../../utility/keyboard.utility'
+import { SubSink } from '../../utility/subsink.utility'
 @Component({
   selector: 'app-textarea',
   templateUrl: './textarea.component.html',
@@ -31,13 +32,16 @@ export class TextareaComponent implements OnInit, OnDestroy {
   @Input() maxLength: number
   @Input() size: TextareaSize
   @Input() variant: TextAreaVariants = 'default'
+  @Input() background: TextareaBackground = 'white'
   @Input() toggleData = ''
   @Input() initFocus = false
   @Input() lineLimit = 0
   @Input() value$: Observable<any>
   @Input() value: string
   @Input() enableValidator = false
+  @Input() customClass: string
   @Output() inputChange = new EventEmitter()
+  @Output() textareaFocus = new EventEmitter()
   @ViewChild('textarea') textArea: ElementRef
   focus = false
   initialValue: string
@@ -120,13 +124,45 @@ export class TextareaComponent implements OnInit, OnDestroy {
   onKeyUp($event: any, validator: any): void {
     const keyCode = $event.keyCode
     const value = $event.target.value
-    if (this.enableValidator && isNonFunctionalKey(keyCode)) {
-      validator.valueChange(value)
+    const textComponent = this.textArea.nativeElement
+    const startPos = textComponent.selectionStart
+    const endPos = textComponent.selectionEnd
+    if (startPos === 0 && endPos === 0) {
+      if ($event.keyCode === 8) {
+        $event.preventDefault()
+      }
+    } else if (this.enableValidator && isNonFunctionalKey(keyCode)) {
+      validator.valueChange(value, 'keyUp')
     }
+  }
+
+  onPaste($event: any, validator: any): void {
+    const value = $event.clipboardData.getData('text/plain')
+    let tempValue: string
+    if (this.value?.length) {
+      const textComponent = this.textArea.nativeElement
+      const startPos = textComponent.selectionStart
+      const endPos = textComponent.selectionEnd
+      if (startPos !== endPos) {
+        tempValue =
+          this.value.slice(0, startPos) +
+          value +
+          this.value.slice(endPos, this.value.length)
+      } else {
+        tempValue =
+          this.value.slice(0, startPos) +
+          value +
+          this.value.slice(startPos + 1, this.value.length)
+      }
+    } else {
+      tempValue = value
+    }
+    validator.valueChange(tempValue, 'paste')
   }
 
   setFocus(): void {
     this.focus = true
+    this.textareaFocus.emit()
   }
 
   onBlur($event: any): void {

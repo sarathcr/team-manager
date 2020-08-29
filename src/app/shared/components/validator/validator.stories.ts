@@ -1,22 +1,27 @@
+import { ReactiveFormsModule } from '@angular/forms'
 import { TranslateModule } from '@ngx-translate/core'
-import { storiesOf, moduleMetadata } from '@storybook/angular'
 import {
-  withKnobs,
-  number,
   boolean,
-  text,
+  number,
   select,
+  text,
+  withKnobs,
 } from '@storybook/addon-knobs/angular'
+import { moduleMetadata, storiesOf } from '@storybook/angular'
 import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
-import markDown from './validator.stories.md'
-import { ValidatorComponent } from './validator.component'
 import { InputComponent } from '../input/input.component'
+import { ValidatorComponent } from './validator.component'
+import markDown from './validator.stories.md'
 
 storiesOf('Shared|Validator', module)
   .addDecorator(
     moduleMetadata({
       declarations: [ValidatorComponent, InputComponent],
-      imports: [StorybookTranslateModule, TranslateModule.forRoot()],
+      imports: [
+        ReactiveFormsModule,
+        StorybookTranslateModule,
+        TranslateModule.forRoot(),
+      ],
     })
   )
   .addDecorator(withKnobs)

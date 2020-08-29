@@ -1,23 +1,36 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core'
 import { PlatformLocation } from '@angular/common'
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core'
 
 import { BsModalRef } from 'ngx-bootstrap/modal'
 
 import { StandardEntityService } from '../../store/entity/standard/standard-entity.service'
 
-import { DropDownConfig} from 'src/app/shared/constants/model/form-elements.model'
-import { Project, Subject, StandardsWithSkills } from '../../constants/model/project.model'
+import { DropDownConfig } from 'src/app/shared/constants/model/form-elements.model'
+import {
+  Project,
+  StandardsWithSkills,
+  Subject,
+} from '../../constants/model/project.model'
 
-import { SecondaryViewLabels,
-   CompetencyModal,
-   PrincipalModalColData } from '../../constants/model/principle-view.model'
 import { SubSink } from '../../../../shared/utility/subsink.utility'
 import { Block } from '../../constants/model/curriculum.model'
+import {
+  CompetencyModal,
+  PrincipalModalColData,
+  SecondaryViewLabels,
+} from '../../constants/model/principle-view.model'
 
 @Component({
   selector: 'app-modal-standards',
   templateUrl: './modal-standards.component.html',
-  styleUrls: ['./modal-standards.component.scss']
+  styleUrls: ['./modal-standards.component.scss'],
 })
 export class ModalStandardsComponent implements OnInit, OnDestroy {
   @Input() project: Project
@@ -50,13 +63,20 @@ export class ModalStandardsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subjects = {...this.project.subjects}
-    this.returnStandards = this.project.competencyObjectives[this.competencyObjectiveSelected]
-    this.returnStandards = {...this.returnStandards,
-      standards: this.returnStandards.standards.map(
-        ({id, name}) => ({id, name}))
+    this.subjects = { ...this.project.subjects }
+    this.returnStandards = this.project.competencyObjectives[
+      this.competencyObjectiveSelected
+    ]
+    this.returnStandards = {
+      ...this.returnStandards,
+      standards: this.returnStandards.standards.map(({ id, name }) => ({
+        id,
+        name,
+      })),
     }
-    this.returnStandardIds = this.returnStandards.standards.map(standard => standard.id)
+    this.returnStandardIds = this.returnStandards.standards.map(
+      (standard) => standard.id
+    )
     this.createFormConfig()
     this.initViewsData()
   }
@@ -79,9 +99,9 @@ export class ModalStandardsComponent implements OnInit, OnDestroy {
       settings: {
         textField: 'name',
         singleSelection: true,
-        maxHeight: 100
-      }
-   }
+        maxHeight: 100,
+      },
+    }
   }
 
   onDecline(): void {
@@ -103,76 +123,111 @@ export class ModalStandardsComponent implements OnInit, OnDestroy {
   handleButtonClick(): void {
     let standardsSelected = []
     for (const competency of this.blockData) {
-      standardsSelected = [...standardsSelected, ...competency.standard.filter(standard => standard.checked)]
+      standardsSelected = [
+        ...standardsSelected,
+        ...competency.standard.filter((standard) => standard.checked),
+      ]
     }
-    this.modalSubmit.emit(standardsSelected.map(({id, name}) => ({id, name})))
+    this.modalSubmit.emit(
+      standardsSelected.map(({ id, name }) => ({ id, name }))
+    )
   }
 
   initViewsData(): void {
     this.secondaryViewLabels = {
       selectedItemText: 'STANDARDS.project_standards_standardswindow_selected',
       emptyTitle: 'STANDARDS.project_standards_standardswindow_empty_title',
-      emptyDescription: 'STANDARDS.project_standards_contentwindow_empty_description',
-      emptyButtonText: 'STANDARDS.project_standards_contentwindow_empty_button'
+      emptyDescription:
+        'STANDARDS.project_standards_contentwindow_empty_description',
+      emptyButtonText: 'STANDARDS.project_standards_contentwindow_empty_button',
     }
 
     this.heading = {
-     evaluationCriteria: 'STANDARDS.project_standards_standardswindow_criteria',
-     standard: 'STANDARDS.project_standards_standardswindow_standar',
-     subject: 'STANDARDS.project_standards_standardswindow_subject',
+      evaluationCriteria:
+        'STANDARDS.project_standards_standardswindow_criteria',
+      standard: 'STANDARDS.project_standards_standardswindow_standar',
+      subject: 'STANDARDS.project_standards_standardswindow_subject',
     }
 
     this.modalColumns = {
-      colOneHead: {key: 'standard', value: 'STANDARDS.project_standards_standardswindow_standar', size: 'm'},
-      colThreeHead: {key: 'evaluationCriteria', value: 'STANDARDS.project_standards_standardswindow_criteria',
-       size: 'm'},
-      colFourHead: {key: 'subject', value: 'STANDARDS.project_standards_standardswindow_combo_title', size: 's'}
+      colOneHead: {
+        key: 'standard',
+        value: 'STANDARDS.project_standards_standardswindow_standar',
+        size: 'm',
+      },
+      colThreeHead: {
+        key: 'evaluationCriteria',
+        value: 'STANDARDS.project_standards_standardswindow_criteria',
+        size: 'm',
+      },
+      colFourHead: {
+        key: 'subject',
+        value: 'STANDARDS.project_standards_standardswindow_combo_title',
+        size: 's',
+      },
     }
 
     const evaluationCriteriaIds = []
     for (const subject of this.project?.subjects) {
-      evaluationCriteriaIds.push(...subject.evaluationCriteria.map(evaluationCriteria => evaluationCriteria.id))
+      evaluationCriteriaIds.push(
+        ...subject.evaluationCriteria.map(
+          (evaluationCriteria) => evaluationCriteria.id
+        )
+      )
     }
-    this.subscriptions.sink = this.standardEntityService.getWithQuery(evaluationCriteriaIds.toString())
-    .subscribe( standards => {
-      const standardByCriteria = {}
-      for (const standard of standards) {
-        const isChecked = this.returnStandardIds.indexOf(standard.id) > -1
-        const sub = this.getSubjectByEvaluationCriteria(standard.evaluationCriteria.id)
-        if (standardByCriteria[standard.evaluationCriteria.id] === undefined){
-
-          standardByCriteria[standard.evaluationCriteria.id] = {
-            id: standard.evaluationCriteria.id,
-            name: standard.evaluationCriteria.name,
-            contents: [],
-            evaluationCriteria: [standard.evaluationCriteria],
-            subjectId: sub.id,
-            standard: [{id: standard.id, name: standard.name,
-               checked: isChecked, colOneData: standard.name,
-                colThreeData: standard.evaluationCriteria.name, colFourData: sub.name}],
-            numeration: standard.numeration,
-            virtual: true
+    this.subscriptions.sink = this.standardEntityService
+      .getWithQuery(evaluationCriteriaIds.toString())
+      .subscribe((standards) => {
+        const standardByCriteria = {}
+        for (const standard of standards) {
+          const isChecked = this.returnStandardIds.indexOf(standard.id) > -1
+          const sub = this.getSubjectByEvaluationCriteria(
+            standard.evaluationCriteria.id
+          )
+          if (
+            standardByCriteria[standard.evaluationCriteria.id] === undefined
+          ) {
+            standardByCriteria[standard.evaluationCriteria.id] = {
+              id: standard.evaluationCriteria.id,
+              name: standard.evaluationCriteria.name,
+              contents: [],
+              evaluationCriteria: [standard.evaluationCriteria],
+              subjectId: sub.id,
+              standard: [
+                {
+                  id: standard.id,
+                  name: standard.name,
+                  checked: isChecked,
+                  colOneData: standard.name,
+                  colThreeData: standard.evaluationCriteria.name,
+                  colFourData: sub.name,
+                },
+              ],
+              numeration: standard.numeration,
+              virtual: true,
+            }
+          } else {
+            standardByCriteria[standard.evaluationCriteria.id].standard.push({
+              id: standard.id,
+              name: standard.name,
+              checked: isChecked,
+              colOneData: standard.name,
+              colThreeData: standard.evaluationCriteria.name,
+              colFourData: sub.name,
+            })
           }
         }
-        else {
-          standardByCriteria[standard.evaluationCriteria.id].standard.push(
-            {id: standard.id, name: standard.name,
-              checked: isChecked, colOneData: standard.name,
-              colThreeData: standard.evaluationCriteria.name, colFourData: sub.name}
-          )
+        for (const id of Object.keys(standardByCriteria)) {
+          this.blockData.push(standardByCriteria[id])
         }
-      }
-      for (const id of Object.keys(standardByCriteria)) {
-        this.blockData.push(standardByCriteria[id])
-      }
-    })
-
+      })
   }
 
   getSubjectByEvaluationCriteria(criteriaId: number): Subject {
-    return this.project.subjects.find(subject => {
-      return subject.evaluationCriteria.find(evaluation => evaluation.id === criteriaId)
+    return this.project.subjects.find((subject) => {
+      return subject.evaluationCriteria.find(
+        (evaluation) => evaluation.id === criteriaId
+      )
     })
   }
-
 }

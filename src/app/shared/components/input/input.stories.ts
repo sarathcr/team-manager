@@ -1,23 +1,28 @@
+import { ReactiveFormsModule } from '@angular/forms'
 import { TranslateModule } from '@ngx-translate/core'
-import { storiesOf, moduleMetadata } from '@storybook/angular'
-import {
-  withKnobs,
-  select,
-  boolean,
-  text,
-  number,
-} from '@storybook/addon-knobs/angular'
 import { action } from '@storybook/addon-actions'
+import {
+  boolean,
+  number,
+  select,
+  text,
+  withKnobs,
+} from '@storybook/addon-knobs/angular'
+import { moduleMetadata, storiesOf } from '@storybook/angular'
 import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
-import markDown from './input.stories.md'
 import { ValidatorComponent } from '../validator/validator.component'
 import { InputComponent } from './input.component'
+import markDown from './input.stories.md'
 
 storiesOf('Shared|Input', module)
   .addDecorator(
     moduleMetadata({
       declarations: [InputComponent, ValidatorComponent],
-      imports: [StorybookTranslateModule, TranslateModule.forRoot()],
+      imports: [
+        ReactiveFormsModule,
+        StorybookTranslateModule,
+        TranslateModule.forRoot(),
+      ],
     })
   )
   .addDecorator(withKnobs)
@@ -36,6 +41,7 @@ storiesOf('Shared|Input', module)
                [enableValidator]="enableValidator"
                [errorText]="errorText"
                [error]="error"
+               [background]="background"
                (inputChange)="inputChange($event)" >
               </app-input>
    </div>`,
@@ -59,6 +65,11 @@ storiesOf('Shared|Input', module)
         'email',
         'password',
       ]),
+      background: select(
+        'Label Background',
+        ['-- select any label background --', 'white', 'white-lilac'],
+        'white'
+      ),
       placeholder: text('Placeholder', ''),
       label: text('Label', 'Input label'),
       value: text('Value'),

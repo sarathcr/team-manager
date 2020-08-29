@@ -1,5 +1,5 @@
-import { ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store'
 import { routerReducer } from '@ngrx/router-store'
+import { ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store'
 import { environment } from 'src/environments/environment'
 
 export interface AppState {
@@ -7,7 +7,7 @@ export interface AppState {
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
-  router: routerReducer
+  router: routerReducer,
 }
 
 // it triggers befor mail reducer

@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing'
 
-import { ProjectEditorToastService } from './project-editor-toast.service'
+import { Provider } from '@angular/core'
 import { Actions, EffectsModule } from '@ngrx/effects'
 import { StoreModule } from '@ngrx/store'
+import { defer, Observable, of } from 'rxjs'
 import { reducers } from 'src/app/modules/auth/reducers'
-import { Observable, defer, of } from 'rxjs'
-import { Provider } from '@angular/core'
+import { ProjectEditorToastService } from './project-editor-toast.service'
 
 function provideMockActions(source: Observable<any>): Provider
 function provideMockActions(factory: Observable<any>): Provider
@@ -29,10 +29,8 @@ describe('ProjectEditorToastService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        provideMockActions(actions)
-      ],
-      imports: [StoreModule.forRoot(reducers, {}), EffectsModule.forRoot([])]
+      providers: [provideMockActions(actions)],
+      imports: [StoreModule.forRoot(reducers, {}), EffectsModule.forRoot([])],
     })
     service = TestBed.inject(ProjectEditorToastService)
   })

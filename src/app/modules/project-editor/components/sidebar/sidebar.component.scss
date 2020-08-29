@@ -1,7 +1,7 @@
 @import 'helpers/_helpers-master';
 @import 'helpers/_bt-mixins';
 
-.project-editor-sidebar{
+.project-editor-sidebar {
   background: $color-quaternary;
   top: 75px;
   width: 236px;
@@ -11,20 +11,21 @@
   height: 100%;
   padding: 28px $padding * 2;
   overflow: hidden;
-  &__title, &__view{
+  &__title,
+  &__view {
     font-family: $font-family-tertiary;
     font-size: $font-size-body-s;
-    color: rgba($color-tertiary,0.5);
+    color: rgba($color-tertiary, 0.5);
     font-weight: bold;
     letter-spacing: 0.16px;
     line-height: 32px;
     margin-bottom: 15px;
   }
-  &__view{
+  &__view {
     color: $color-tertiary;
     position: relative;
-    padding-left:24px;
-    &::after{
+    padding-left: 24px;
+    &::after {
       content: '';
       position: absolute;
       width: 120px;
@@ -34,7 +35,7 @@
       background: $color-tertiary;
     }
   }
-  &__icon{
+  &__icon {
     font-size: 24px;
     position: absolute;
     left: -3px;
@@ -47,5 +48,3 @@
     max-width: 280px;
   }
 }
-
-

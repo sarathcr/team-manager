@@ -1,5 +1,12 @@
-import { EvaluationCriteria, BasicSkill, ContentsWithSkills, Standard, StandardsWithSkills } from './project.model'
 import { Option } from 'src/app/shared/constants/model/form-elements.model'
+import {
+  BasicSkill,
+  ContentsWithSkills,
+  EvaluationCriteria,
+  Grade,
+  Region,
+  StandardsWithSkills,
+} from './project.model'
 
 export class Block {
   id: number
@@ -32,10 +39,38 @@ export class SpecificSkills extends Option {
   description?: string
 }
 
-export interface Curriculum extends Option {
+export interface Curriculum {
   basicSkills?: BasicSkill[]
+  decree?: string
+  description?: string
+  mandatoryDate?: string
+  region?: Region
+  stage?: string
+  startDate?: string
+  valid?: boolean
+  id: number
+  name?: string
 }
 
 interface Content extends Option {
   basicSkills: BasicSkill[]
+}
+
+export class Stage {
+  cycles?: Cycle[]
+  description?: string
+  id?: number
+  name?: string
+}
+
+export class Cycle {
+  description?: string
+  id?: number
+  name?: string
+}
+
+export class CurriculumGrade {
+  gradeList: Grade[]
+  id: number
+  name: string
 }

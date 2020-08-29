@@ -8,7 +8,7 @@ describe('InfoToolTipComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ InfoToolTipComponent ]
+      declarations: [InfoToolTipComponent],
     })
 
     fixture = TestBed.createComponent(InfoToolTipComponent)

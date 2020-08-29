@@ -24,6 +24,7 @@ A convenience directive for applying styling to an Input component.
             [enableValidator]="false">
             [errorText]="'validation message here'"
             [error]="invalid"
+            [background]="background"
             (inputChange)="validateLogin($event, 'password')">
 </app-input>
 ```
@@ -41,7 +42,8 @@ A convenience directive for applying styling to an Input component.
 | `maxlength`       |    `number`    |    -     |             -             |    -    | To set the maximum length for the text to be written in input component |
 | `initFocus`       |       -        |    -     |             -             | `false` | Adjust focus on input component(It enable at the time of loading)       |
 | `enableValidator` |       -        |    -     |             -             | `false` | To enable validation for Input component                                |
-| `error`           |       -        |    -     |             -             |    -    | To trigger the error text validator for input
+| `error`           |       -        |    -     |             -             |    -    | To trigger the error text validator for input                           |
+| `background`      |    `string`    |    -     |   `white` `white-lilac`   | `white` | To set the background color of input label                              |
 
 ### Output
 

@@ -1,14 +1,19 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core'
-import { LoaderVariants } from '../../constants/model/loader.model'
+import {
+  LoaderSize,
+  LoaderTheme,
+  LoaderVariants,
+} from '../../constants/model/loader.model'
 
 @Component({
   selector: 'app-loader',
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class LoaderComponent {
   @Input() variant: LoaderVariants = 'default'
-
+  @Input() theme: LoaderTheme = 'primary'
+  @Input() size: LoaderSize = 'large'
   constructor() {}
 }

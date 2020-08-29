@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   apiUrl: {
-    userService: 'https://api.dev.abp.thinkoeducation.com/user-service',
+    userService: 'https://api.qa.abp.thinkoeducation.com/user-service',
     projectService: 'https://api.qa.abp.thinkoeducation.com/project-service',
     curriculumService:
       'https://api.qa.abp.thinkoeducation.com/curriculum-service',

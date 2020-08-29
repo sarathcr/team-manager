@@ -1,26 +1,26 @@
 @import 'helpers/_helpers-master';
 
-.modal-info{
+.modal-info {
   $root: &;
   max-width: 460px;
-  &__header{
+  &__header {
     padding: 27px 30px 0px;
     display: flex;
     margin-bottom: 14px;
   }
-  &__overtitle{
+  &__overtitle {
     letter-spacing: 1px;
-    opacity: .5;
+    opacity: 0.5;
   }
-  &__title{
+  &__title {
     display: flex;
     margin-bottom: 0;
-    &_primary{
+    &_primary {
       font-size: $font-size-sub-s;
       line-height: 28px;
-      letter-spacing: .2px;
+      letter-spacing: 0.2px;
     }
-    &_secondary{
+    &_secondary {
       font-family: $font-family-primary;
       font-size: $font-size-xs;
       line-height: 32px;
@@ -28,45 +28,44 @@
       font-weight: 900;
     }
   }
-  &__icon{
+  &__icon {
     font-size: 24px;
     display: flex;
     align-self: center;
   }
 
-  &__close{
+  &__close {
     display: flex;
     background-color: transparent;
     border: none;
-    color: rgba($color-tertiary,0.6);
+    color: rgba($color-tertiary, 0.6);
     font-size: 20px;
     margin-right: -8px;
     cursor: pointer;
   }
-  &__body{
+  &__body {
     padding: 0 30px;
     margin-bottom: 25px;
   }
-  &__content{
+  &__content {
     line-height: 24px;
-    &_medium{
+    &_medium {
       margin-bottom: $margin * 2;
-      p{
+      p {
         font-size: $font-size-body;
         line-height: 32px;
         letter-spacing: 0.2px;
       }
     }
   }
-  &__footer{
+  &__footer {
     padding: 0 30px 30px;
     width: 100%;
     display: flex;
     align-items: center;
   }
-  &__button-wrapper{
+  &__button-wrapper {
     margin-right: 12px;
     display: inline-flex;
   }
 }
-

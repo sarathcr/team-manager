@@ -1,16 +1,41 @@
 @import 'helpers/_helpers-master';
 
 .spinner {
+  $root: &;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
+  font-size: $font-size-body-s;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
+  &_secondary {
+    &#{$root} {
+      &::before {
+        border: 0.2em solid $color-quaternary;
+      }
+      &::after {
+        border: 0.2em solid $color-quaternary;
+        border-top-color: $medium-turquoise;
+      }
+    }
+  }
 
-  &.block {
+  &_teritiary {
+    &#{$root} {
+      &::before {
+        border: 0.2em solid $color-quaternary;
+      }
+      &::after {
+        border: 0.2em solid $color-quaternary;
+        border-top-color: $electric-indigo;
+      }
+    }
+  }
+
+  &_block {
     position: relative;
     padding: 50px;
   }
@@ -22,9 +47,9 @@
     height: inherit;
     position: absolute;
     margin: auto;
-    border: .2em solid $medium-turquoise;
+    border: 0.2em solid $medium-turquoise;
     border-radius: 50%;
-    opacity: .8;
+    opacity: 0.8;
   }
 
   &::after {
@@ -32,7 +57,7 @@
     display: block;
     width: inherit;
     height: inherit;
-    border: .2em solid transparent;
+    border: 0.2em solid transparent;
     border-top-color: $electric-indigo;
     border-radius: 50%;
     animation: 1s spinner linear infinite;
@@ -41,7 +66,6 @@
   }
 
   &_small {
-
     &::before,
     &::after {
       width: 12px;
@@ -50,7 +74,6 @@
   }
 
   &_medium {
-
     &::before,
     &::after {
       width: 24px;
@@ -59,7 +82,6 @@
   }
 
   &_large {
-
     &::before,
     &::after {
       width: 36px;

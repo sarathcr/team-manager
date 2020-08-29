@@ -5,6 +5,7 @@
   "PROJECT": {
     "project_button_markdone": "MARCAR COMO HECHO",
     "project_button_done": "HECHO",
+    "project_button_add": "Añadir",
     "project_notitle": "Experiencia sin título",
     "project_upload_file": "Cargar archivo",
     "project_button_delete": "Eliminar",
@@ -32,7 +33,8 @@
     "project_structure_stepsmenu_finalproduct": "Producto final",
     "project_structure_stepsmenu_sinopsis": "Sinopsis",
     "project_structure_stepsmenu_output": "Ver ficha estructura",
-    "project_structure_stepsmenu_objectives": "Objetivos"
+    "project_structure_stepsmenu_objectives": "Objetivos",
+    "project_structure_stepsmenu_standards": "Estándares/Indicadores"
   },
   "STARTING_POINT": {
     "project_startingpoint_title": "Punto de partida",
@@ -50,7 +52,9 @@
     "project_startingpoint_subjects": "Asignatura/s",
     "project_startingpoint_subjects_placeholder": "Selecciona una o más asignaturas",
     "project_startingpoint_term": "Trimestre/s",
-    "project_startingpoint_term_placeholder": "Selecciona uno o más trimestres"
+    "project_startingpoint_term_placeholder": "Selecciona uno o más trimestres",
+    "project_startingpoint_stage": "Etapa",
+    "project_startingpoint_stage_placeholder": "Selecciona una etapa educativa"
   },
   "THEMATIC": {
     "project_thematic_title": "Temática",
@@ -132,14 +136,21 @@
     "project_content_contentwindow_empty_description": "Selecciona contenidos del currículum y visualiza el listado de seleccionados aquí para añadirlos.",
     "project_content_contentwindow_empty_button": "Ver contenidos",
     "project_content_competencies": "Selecciona las competencias a trabajar:",
-    "project_content_delete_confirmation_title": "¿Seguro que quieres eliminar este contenido?"
+    "project_content_delete_confirmation_title": "¿Seguro que quieres eliminar este contenido?",
+    "project_content_content_placeholder": "Agrega contenidos del currículum.",
+    "project_content_extracontent_placeholder": "Agrega contenidos personalizados. (opcional)",
+    "project_content_add": " + Añadir",
+    "project_content_extracontent_edit_title": "Edita el contenido",
+    "project_content_extracontent_edit_label": "Contenido",
+    "project_content_extracontent_delete_confirmation_title": "¿Seguro que quieres eliminar este contenido?",
+    "project_content_extracontent_delete_confirmation_message": "Si lo eliminas se eliminará de todas las actividades a las lo hayas asociado."
   },
   "STANDARDS": {
     "project_standards_dependancy_description": "Para poder especificar los estándares o indicadores de aprendizaje, primero completa el paso objetivos de aprendizaje.",
     "project_standards_dependancy_button": "Especifica los objetivos",
     "project_standards_dependancy_filterbycriteria_description": "Para seleccionar los estándares de aprendizaje, primero tienes que tienes que especificar los criterios de evaluación de esta asignatura en el paso Objetivos de aprendizaje.",
     "project_standards_dependancy_filterbycriteria_button": "Especifica los criterios",
-    "project_standards_title": "Estándares",
+    "project_standards_title": "Estándares/Indicadores",
     "project_standards_initial_label": "Especifica los estándares o indicadores de aprendizaje para cada uno de los objetivos competenciales.",
     "project_standards_description": "Los estándares o indicadores permiten definir los resultados de aprendizaje y graduar el rendimiento o logros que alcance el alumnado. Asocia estándares a cada objetivo de aprendizaje.",
     "project_standards_standards_placeholder": "Asocia estándares del currículum.",
@@ -160,7 +171,11 @@
     "project_standards_standardswindow_empty_title": "No tienes estándares seleccionados",
     "project_standards_contentwindow_empty_description": "Selecciona estándares de aprendizaje del currículum y visualiza el listado de seleccionados aquí para añadirlos.",
     "project_standards_contentwindow_empty_button": "Ver estándares",
-    "project_standards_delete_confirmation_title": "¿Seguro que quieres eliminar este estándar?"
+    "project_standards_delete_confirmation_title": "¿Seguro que quieres eliminar este estándar?",
+    "project_standards_extrastandards_edit_title": "Edita el estándar/indicador",
+    "project_standards_extrastandards_edit_label": "Estándar/indicador",
+    "project_standards_extrastandards_delete_confirmation_title": "¿Seguro que quieres eliminar este estándar/indicador?",
+    "project_standards_extrastandards_delete_confirmation_message": "Si lo eliminas se eliminará de todas las actividades a las lo hayas asociado."
   },
   "RETHINK_TITLE": {
     "project_rethinktitle_title": "Título creativo",
@@ -190,19 +205,12 @@
   "PROJECTGUIDE": {
     "projectguide_pedagogical_guide": "GUÍA PEDAGÓGICA"
   },
-  "PROGRAMACION": {
-    "output_dependancy_title": "Desbloquea la programación didáctica",
-    "output_dependancy_description": "En la programación didáctica se muestra toda la información recopilada que vas completando en las secciones de Estructura y Actividades. Para poder acceder a la programación tienes que completar, como mínimo, el paso Punto de partida en Estructura.",
-    "output_dependancy_button": "Empieza a programar",
-    "output_footer": "Sigue creando en www.thinkoeducation.com",
-    "output_button_download": "Descargar",
-    "output_button_print": "Imprimir",
-    "output_index_title": "Programación didáctica",
-    "output_index_cover": "Portada",
-    "output_index_overview": "Visión general",
-    "output_index_curriculum": "Conexión con el currículum",
-    "output_index_objectives": "Objetivos de aprendiaje",
-    "output_index_standards": "Estándares/indicadores",
-    "output_index_drivingquestions": "Preguntas guía"
+  "EXPERIENCE": {
+    "experience_header_menu_structure": "Estructura",
+    "experience_header_menu_activities": "Actividades",
+    "experience_header_menu_evaluation": "Evaluación",
+    "experience_header_menu_calendar": "Calendario",
+    "experience_header_menu_people": "Personas",
+    "experience_header_menu_programacion": "Programación"
   }
 }

@@ -1,21 +1,24 @@
 import {
+  AfterViewInit,
   Component,
-  OnInit,
-  ViewEncapsulation,
-  Output,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
+  OnInit,
+  Output,
   ViewChild,
-  ElementRef,
-  AfterViewInit
+  ViewEncapsulation,
 } from '@angular/core'
 
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
 import { Observable } from 'rxjs'
 
 // Interfaces
-import { DropDownConfig, Option } from '../../constants/model/form-elements.model'
+import {
+  DropDownConfig,
+  Option,
+} from '../../constants/model/form-elements.model'
 
 import { SubSink } from '../../utility/subsink.utility'
 
@@ -23,10 +26,9 @@ import { SubSink } from '../../utility/subsink.utility'
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class DropdownComponent implements OnInit, OnDestroy, AfterViewInit {
-
   @Input() config: DropDownConfig
   @Input() data$: Observable<any>
   @Input() placeholder: string
@@ -40,7 +42,7 @@ export class DropdownComponent implements OnInit, OnDestroy, AfterViewInit {
   subscriptions = new SubSink()
   @ViewChild('dropdown') dropdownRef: ElementRef
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.dropdownSettings = {
@@ -62,8 +64,8 @@ export class DropdownComponent implements OnInit, OnDestroy, AfterViewInit {
   adjustMaxheight(): void {
     const scrollHeight = document.documentElement.scrollHeight
     const bottom = this.dropdownRef.nativeElement.getBoundingClientRect().bottom
-    if ((bottom + this.config.settings.maxHeight) > scrollHeight) {
-      const diff = ((bottom + this.config.settings.maxHeight) - scrollHeight) + 15
+    if (bottom + this.config.settings.maxHeight > scrollHeight) {
+      const diff = bottom + this.config.settings.maxHeight - scrollHeight + 15
       this.dropdownSettings.maxHeight = this.dropdownSettings.maxHeight - diff
       this.dropdownSettings = { ...this.dropdownSettings }
     }
@@ -71,7 +73,7 @@ export class DropdownComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dropdownInit(): void {
     if (this.data$) {
-      this.subscriptions.sink = this.data$.subscribe(data => {
+      this.subscriptions.sink = this.data$.subscribe((data) => {
         if (data) {
           if (Array.isArray(data)) {
             if (data.length) {
@@ -91,8 +93,12 @@ export class DropdownComponent implements OnInit, OnDestroy, AfterViewInit {
 
   selectedValue(): any {
     if (this.getInitialData && this.initialSelectedItems?.length) {
-      return this.config.selectedItems.map(item => {
-        return this.initialSelectedItems.find(selected => selected.id === item.id) || { ...item }
+      return this.config.selectedItems.map((item) => {
+        return (
+          this.initialSelectedItems.find(
+            (selected) => selected.id === item.id
+          ) || { ...item }
+        )
       })
     }
     return [...this.config.selectedItems]
@@ -107,8 +113,7 @@ export class DropdownComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.canDeselect) {
       this.active = true
       this.handleDataChange(true)
-    }
-    else {
+    } else {
       this.config.selectedItems = [{ ...item }]
     }
   }
@@ -119,7 +124,9 @@ export class DropdownComponent implements OnInit, OnDestroy, AfterViewInit {
 
   handleDataChange(updated: boolean = false): void {
     const val = this.selectedValue()
-    this.config.status = this.config.selectedItems.length ? 'INPROCESS' : 'PENDING'
+    this.config.status = this.config.selectedItems.length
+      ? 'INPROCESS'
+      : 'PENDING'
     this.dropdownSelect.emit({ controller: this.config.name, val, updated })
   }
 }

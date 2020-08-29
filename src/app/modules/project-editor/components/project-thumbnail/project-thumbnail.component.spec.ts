@@ -10,8 +10,8 @@ describe('ProjectThumbnailComponent', (): void => {
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectThumbnailComponent ],
-      imports: [ TranslateModule.forRoot() ]
+      declarations: [ProjectThumbnailComponent],
+      imports: [TranslateModule.forRoot()],
     })
 
     fixture = TestBed.createComponent(ProjectThumbnailComponent)

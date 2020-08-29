@@ -1,17 +1,17 @@
+import { PlatformLocation } from '@angular/common'
 import {
   Component,
-  ViewEncapsulation,
-  OnInit,
-  Input,
-  Output,
   EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
 } from '@angular/core'
-import { PlatformLocation } from '@angular/common'
 
 import {
-  ModalInfoVariant,
   ModalInfoAppearance,
   ModalInfoTheme,
+  ModalInfoVariant,
 } from '../../constants/model/modal-info.model'
 @Component({
   selector: 'app-modal-info',

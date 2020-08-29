@@ -1,13 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { EditorService } from '../../services/editor/editor.service'
 
-import { Step, Status } from '../../constants/model/project.model'
-import { FormNine } from '../../constants/model/step-forms.model'
 import { FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
+import { Status, Step } from '../../constants/model/project.model'
+import { FormNine } from '../../constants/model/step-forms.model'
 
 import { StepButtonSubmitConfig } from '../../../../shared/constants/data/form-elements.data'
 
@@ -16,10 +16,9 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 @Component({
   selector: 'app-step-nine',
   templateUrl: './step-nine.component.html',
-  styleUrls: ['./step-nine.component.scss']
+  styleUrls: ['./step-nine.component.scss'],
 })
 export class StepNineComponent implements OnInit, OnDestroy {
-
   project$: Observable<any>
   step$: Observable<Step>
   synopsis$: Observable<any>
@@ -30,7 +29,7 @@ export class StepNineComponent implements OnInit, OnDestroy {
   subscriptions = new SubSink()
   isFormUpdated = false
 
-  constructor(public editor: EditorService) { }
+  constructor(public editor: EditorService) {}
 
   ngOnInit(): void {
     this.stepInIt()
@@ -48,17 +47,15 @@ export class StepNineComponent implements OnInit, OnDestroy {
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[8]
     if (this.project$) {
-      this.synopsis$ = this.project$.pipe(map(data => data.synopsis))
+      this.synopsis$ = this.project$.pipe(map((data) => data.synopsis))
     }
     if (this.step$) {
-      this.subscriptions.sink = this.step$.subscribe(
-        formStatus => {
-          if (formStatus) {
-            this.buttonConfig.submitted = formStatus.state === 'DONE'
-            this.initialFormStatus = formStatus.state
-          }
+      this.subscriptions.sink = this.step$.subscribe((formStatus) => {
+        if (formStatus) {
+          this.buttonConfig.submitted = formStatus.state === 'DONE'
+          this.initialFormStatus = formStatus.state
         }
-      )
+      })
     }
   }
 
@@ -69,7 +66,10 @@ export class StepNineComponent implements OnInit, OnDestroy {
     if (value.updated) {
       this.step.state = value.status
       this.handleButtonType()
-    } else if (this.initialFormStatus !== 'DONE' && this.initialFormStatus === 'INPROCESS') {
+    } else if (
+      this.initialFormStatus !== 'DONE' &&
+      this.initialFormStatus === 'INPROCESS'
+    ) {
       this.buttonConfig.disabled = false
     }
   }
@@ -98,16 +98,16 @@ export class StepNineComponent implements OnInit, OnDestroy {
     this.handleButtonType()
     const formData: FormNine = {
       data: {
-        synopsis: this.synopsis
+        synopsis: this.synopsis,
       },
       stepStatus: {
         steps: [
           {
             state: this.step.state,
-            stepid: this.step.stepid
-          }
-        ]
-      }
+            stepid: this.step.stepid,
+          },
+        ],
+      },
     }
     this.isFormUpdated = false
     this.editor.handleStepSubmit(formData, this.step.state === 'DONE')

@@ -1,16 +1,32 @@
 import { NgModule } from '@angular/core'
-import { Routes, RouterModule } from '@angular/router'
+import { RouterModule, Routes } from '@angular/router'
 
-import { NotFoundComponent } from './shared/components/not-found/not-found.component'
-import { LoginComponent } from './modules/auth/containers/login/login.component'
-import { LogoutComponent } from './modules/auth/containers/logout/logout.component'
 import { ActivationErrorComponent } from './modules/auth/containers/activation-error/activation-error.component'
 import { ActivationComponent } from './modules/auth/containers/activation/activation.component'
+import { ForgotPasswordComponent } from './modules/auth/containers/forgot-password/forgot-password.component'
+import { LoginComponent } from './modules/auth/containers/login/login.component'
+import { LogoutComponent } from './modules/auth/containers/logout/logout.component'
+import { RegisterComponent } from './modules/auth/containers/register/register.component'
+import { ResetPasswordComponent } from './modules/auth/containers/reset-password/reset-password.component'
+import { NotFoundComponent } from './shared/components/not-found/not-found.component'
 
 import { AuthGuard } from './modules/auth/guards/auth.guard'
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+    children: [
+      {
+        path: ':userId/:token',
+        component: LoginComponent,
+      },
+    ],
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
   {
     path: 'editor',
     loadChildren: () =>
@@ -22,9 +38,9 @@ const routes: Routes = [
   {
     path: 'output',
     loadChildren: () =>
-      import(
-        './modules/project-editor/modules/project-output/project-output.module'
-      ).then((m) => m.ProjectOuputModule),
+      import('./modules/project-output/project-output.module').then(
+        (m) => m.ProjectOuputModule
+      ),
     canActivate: [AuthGuard],
   },
   {
@@ -39,8 +55,25 @@ const routes: Routes = [
     path: 'activation-error',
     component: ActivationErrorComponent,
   },
+  {
+    path: 'reset-password/:userId/:token',
+    component: ResetPasswordComponent,
+  },
+  {
+    path: 'recovery-password-error',
+    component: ActivationErrorComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+  },
   { path: 'not-found', component: NotFoundComponent },
-  { path: '**', redirectTo: 'login' },
+  {
+    path: '',
+    redirectTo: 'editor',
+    pathMatch: 'full',
+  },
+  { path: '**', redirectTo: 'not-found' },
 ]
 
 @NgModule({

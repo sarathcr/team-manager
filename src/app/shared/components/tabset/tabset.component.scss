@@ -1,0 +1,20 @@
+@import 'helpers/_helpers-master';
+
+.tabset {
+  display: flex;
+  border-bottom: 1px solid rgba($color-tertiary, 0.1);
+  &__tab {
+    font-weight: bold;
+    padding-bottom: 10px;
+    margin-right: 42px;
+    color: rgba($color-tertiary, 0.5);
+    cursor: pointer;
+    &_active {
+      border-bottom: 2px solid $color-tertiary;
+      color: $color-tertiary;
+    }
+    &_disabled {
+      cursor: not-allowed;
+    }
+  }
+}

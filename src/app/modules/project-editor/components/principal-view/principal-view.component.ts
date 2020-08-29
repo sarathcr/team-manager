@@ -1,20 +1,27 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { PlatformLocation } from '@angular/common'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 
 import { BsModalRef } from 'ngx-bootstrap/modal'
 
 import { ObjectiveService } from '../../services/objectives/objectives.service'
 
+import {
+  DropDownConfig,
+  DropdownCustom,
+  Option,
+} from 'src/app/shared/constants/model/form-elements.model'
 import { Block } from '../../constants/model/curriculum.model'
-import { PrincipalModalColData, PrincipalViewLabels } from '../../constants/model/principle-view.model'
-import { DropDownConfig, Option, DropdownCustom } from 'src/app/shared/constants/model/form-elements.model'
-import { ContentService } from '../../services/contents/contents.service'
+import {
+  PrincipalModalColData,
+  PrincipalViewLabels,
+} from '../../constants/model/principle-view.model'
 import { Subject } from '../../constants/model/project.model'
+import { ContentService } from '../../services/contents/contents.service'
 
 @Component({
   selector: 'app-principal-view-modal',
   templateUrl: './principal-view.component.html',
-  styleUrls: ['./principal-view.component.scss']
+  styleUrls: ['./principal-view.component.scss'],
 })
 export class PrincipalViewComponent implements OnInit {
   @Input() modalColumns: PrincipalModalColData
@@ -36,13 +43,13 @@ export class PrincipalViewComponent implements OnInit {
     public bsModalRef: BsModalRef,
     private location: PlatformLocation,
     private objectiveService: ObjectiveService,
-    private contentService: ContentService,
+    private contentService: ContentService
   ) {
     this.location.onPopState(() => this.bsModalRef.hide())
   }
 
   ngOnInit(): void {
-    switch (this.stepId){
+    switch (this.stepId) {
       case 3:
         this.serviceData = this.objectiveService
         break
@@ -57,12 +64,16 @@ export class PrincipalViewComponent implements OnInit {
   }
 
   createFormConfig(): void {
-    if (this.serviceData?.subject){
+    if (this.serviceData?.subject) {
       this.subject = this.serviceData?.subject
     }
-    const otherGrades = this.grades.filter(grade =>
-      !this.selectedGrades.map(selected => selected.id).includes(grade.id))
-    const selectedGrade = this.selectedGrades.length ? this.selectedGrades[0] : otherGrades[0]
+    const otherGrades = this.grades.filter(
+      (grade) =>
+        !this.selectedGrades.map((selected) => selected.id).includes(grade.id)
+    )
+    const selectedGrade = this.selectedGrades.length
+      ? this.selectedGrades[0]
+      : otherGrades[0]
     this.gradeDropdownConfig = {
       name: '',
       data: otherGrades,
@@ -78,9 +89,9 @@ export class PrincipalViewComponent implements OnInit {
         priorityTitle: this.dropdownTitles.priorityTitle,
         normalTitle: this.dropdownTitles.normalTitle,
         allowRemoteDataSearch: false,
-        maxHeight: 225
+        maxHeight: 225,
       },
-      canDeselect: false
+      canDeselect: false,
     }
   }
 
@@ -106,7 +117,7 @@ export class PrincipalViewComponent implements OnInit {
           }
         }
       }
-      this.modalSubmit.emit({subject: this.subject, selectedItem})
+      this.modalSubmit.emit({ subject: this.subject, selectedItem })
     }
   }
 }

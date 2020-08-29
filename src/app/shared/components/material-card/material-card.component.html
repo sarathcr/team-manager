@@ -1,0 +1,120 @@
+<div
+  *ngIf="validPreviewLink && !loading"
+  class="material-card"
+  [ngClass]="{
+    'material-card_medium': size === 'medium',
+    'material-card_small': size === 'small' || variant === 'preview',
+    'material-card_video': variant === 'video',
+    'material-card_image': variant === 'image',
+    'material-card_form': variant === 'form',
+    'material-card_evaluation': variant === 'evaluation',
+    'material-card_preview': variant === 'preview'
+  }"
+>
+  <div
+    class="material-card__icon material-card__icon_draggable"
+    *ngIf="draggable && variant !== 'preview'"
+    (click)="onDragg($event)"
+  >
+    <span class="icon icon-ic_drag"></span>
+  </div>
+  <div class="material-card__icon material-card__close" *ngIf="canDelete">
+    <button
+      type="button"
+      class="close material-card__close-button"
+      aria-label="Close"
+      (click)="onDelete()"
+    >
+      <span class="icon icon-ic_share_close"></span>
+    </button>
+  </div>
+  <div class="material-card__content material-card__content_left">
+    <a
+      [href]="link"
+      target="_blank"
+      [ngClass]="{
+        'material-card__link_disable': !link && variant !== 'preview'
+      }"
+    >
+      <img
+        class="material-card__image"
+        alt=""
+        src="{{
+          variant === 'form'
+            ? './assets/images/bitmap3.png'
+            : variant === 'evaluation'
+            ? './assets/images/bitmap4.png'
+            : variant === 'slide'
+            ? './assets/images/bitmap7.png'
+            : variant === 'site'
+            ? './assets/images/bitmap1.png'
+            : variant === 'doc'
+            ? './assets/images/bitmap10.png'
+            : variant === 'sheet'
+            ? './assets/images/bitmap9.png'
+            : thumbnail
+        }}"
+      />
+      <span class="icon__circle" *ngIf="variant === 'video'">
+        <span class="icon__circle_triangle-right"></span>
+      </span>
+      <span
+        class="icon material-card__icon"
+        [ngClass]="{
+          'icon-ic_list_w material-card__icon_list': variant === 'form',
+          'icon-ic_doc2 material-card__icon_star': variant === 'evaluation'
+        }"
+        *ngIf="variant === 'form' || variant === 'evaluation'"
+      ></span>
+    </a>
+  </div>
+
+  <div class="material-card__content material-card__content_right">
+    <div class="material-card__typename" *ngIf="variant !== 'preview'">
+      <span class="icon__triangle-right"></span>
+      <span class="material-card__typename_text">
+        {{ label }}
+      </span>
+    </div>
+    <div
+      class="material-card__title"
+      [ngClass]="{ 'mb-4': variant !== 'preview' }"
+    >
+      {{ title }}
+    </div>
+    <div class="material-card__typename" *ngIf="variant === 'preview'">
+      <span class="icon__triangle-right"></span>
+      <span class="material-card__typename_text">
+        <a [href]="link" target="_blank">
+          {{ link }}
+        </a>
+      </span>
+    </div>
+    <div
+      class="material-card__switchbox"
+      *ngIf="showSwitch && variant !== 'preview'"
+    >
+      <app-switch
+        [switchOn]="switchOn"
+        textOn="MATERIAL.activity_material_switch_forstudent"
+        textOff="MATERIAL.activity_material_switch_forteacher"
+        [disabled]="false"
+        (changeSwitch)="onSwitch($event)"
+      >
+      </app-switch>
+    </div>
+  </div>
+</div>
+<div
+  class="material-card material-card_preview material-card_error"
+  *ngIf="!validPreviewLink"
+>
+  <div class="material-card__title">
+    {{ 'ADD_MATERIAL.material_add_link_error_title' | translate }}
+  </div>
+  <div class="material-card__typename">
+    <span class="material-card__typename_text">
+      {{ 'ADD_MATERIAL.material_add_link_error_description' | translate }}
+    </span>
+  </div>
+</div>

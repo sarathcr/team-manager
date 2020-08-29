@@ -1,0 +1,13 @@
+<div class="tabset">
+  <div
+    *ngFor="let tab of tabs; let index=index"
+    class="tabset__tab"
+    [ngClass]="{
+      'tabset__tab_active': index === active,
+      'tabset__tab_disabled': disabledTabs.includes(index)
+    }"
+    (click)="changeActiveTab(index)"
+  >
+    {{ tab | translate }}
+  </div>
+</div>

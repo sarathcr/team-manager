@@ -1,0 +1,26 @@
+{
+  "PROGRAMACION": {
+    "output_dependancy_title": "Desbloquea la programación didáctica",
+    "output_dependancy_description": "En la programación didáctica se muestra toda la información recopilada que vas completando en las secciones de Estructura y Actividades. Para poder acceder a la programación tienes que completar, como mínimo, el paso Punto de partida en Estructura.",
+    "output_dependancy_button": "Empieza a programar",
+    "output_footer": "Sigue creando en www.thinkoeducation.com",
+    "output_button_download": "Descargar",
+    "output_button_print": "Imprimir",
+    "output_index_title": "Programación didáctica",
+    "output_index_cover": "Portada",
+    "output_index_overview": "Visión general",
+    "output_index_curriculum": "Conexión con el currículum",
+    "output_index_objectives": "Objetivos de aprendiaje",
+    "output_index_standards": "Estándares/indicadores",
+    "output_index_drivingquestions": "Preguntas guía",
+    "output_objectives_subtitle": "Al final del proyecto queremos que los alumnos sepan...",
+    "project_startingpoint_year": "Año académico",
+    "project_startingpoint_grades": "Curso/s",
+    "project_startingpoint_subjects": "Asignatura/s",
+    "project_structure_stepsmenu_topic": "Temática",
+    "project_structure_stepsmenu_finalproduct": "Producto final",
+    "project_stepsmenu_drivingquestion": "Preguntas guía",
+    "project_structure_stepsmenu_objectives": "Objetivos de aprendizaje",
+    "project_structure_stepsmenu_standards": "Estándares/indicadores"
+  }
+}

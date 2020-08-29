@@ -1,0 +1,67 @@
+@import 'helpers/_helpers-master';
+@import 'helpers/bt-mixins';
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 17px;
+  margin: 0 12px 0 0;
+
+  &_disabled {
+    opacity: 0.4;
+  }
+  &__input {
+    display: none;
+  }
+  &__slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 20px;
+    width: 44px;
+    background-color: $very-light-grey;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+
+    &_round {
+      border-radius: 10px;
+    }
+    &_round:before {
+      border-radius: 10px;
+    }
+    &_round:after {
+      border-radius: 10px;
+    }
+  }
+
+  &__slider:before {
+    position: absolute;
+    content: '';
+    height: 20px;
+    width: 24px;
+    left: 0px;
+    bottom: 0px;
+    background-color: $mischika;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  &__input:checked {
+    + .switch__slider {
+      background-color: $magnolia;
+    }
+    + .switch__slider:before {
+      -webkit-transform: translateX(20px);
+      -ms-transform: translateX(20px);
+      transform: translateX(20px);
+      background-color: $medium-turquoise;
+    }
+  }
+  &__text {
+    vertical-align: text-bottom;
+    font-size: $font-size-body-s;
+  }
+}

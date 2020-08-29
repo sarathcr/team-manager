@@ -1,18 +1,19 @@
 // Color system
 // color names are auto generated in http://www.color-blindness.com/color-name-hue/
-$electric-indigo: #6400E4 !default;
-$medium-turquoise: #37D4C8 !default;
-$deep-cerise: #E61F7F !default;
-$blue-whale: #141C3A !default;
+$electric-indigo: #6400e4 !default;
+$medium-turquoise: #37d4c8 !default;
+$deep-cerise: #e61f7f !default;
+$blue-whale: #141c3a !default;
 $black: #000000 !default;
-$mischika: #B0AFBB !default;
-$very-light-grey:#CCCCCC !default;
-$link-water: #CBCDD4 !default;
-$frenchgray:#C2C3C7 !default;
-$magnolia: #EFE8FD !default;
-$white-lilac:#F8F8F9 !default;
-$white-smoke: #F1F1F1 !default;
-$white: #FFFFFF !default;
+$mischika: #b0afbb !default;
+$very-light-grey: #cccccc !default;
+$link-water: #cbcdd4 !default;
+$frenchgray: #c2c3c7 !default;
+$magnolia: #efe8fd !default;
+$white-lilac: #f8f8f9 !default;
+$white-smoke: #f1f1f1 !default;
+$white: #ffffff !default;
+$midnight-blue: #1b1048 !default;
 
 // Theme colors
 $color-primary: $electric-indigo !default;
@@ -53,7 +54,7 @@ $font-size-m-mob: 30px !default;
 //Font Size for Desktop
 $font-size-xxl: 90px !default;
 $font-size-xl: 76px !default;
-$font-size-l: 54px !default;
+$font-size-l: 44px !default;
 $font-size-m: 34px !default;
 
 //Font Size common for Mobile and Desktop
@@ -64,6 +65,7 @@ $font-size-sub-m: 20px !default;
 $font-size-sub-s: 18px !default;
 $font-size-body: 18px !default;
 $font-size-icon: 16px !default;
+$font-size-link-m: 16px !default;
 $font-size-body-s: 14px !default;
 $font-size-button: 14px !default;
 $font-size-body-overtitle: 14px !default;
@@ -75,7 +77,7 @@ $font-size-body-label: 12px !default;
 // Bootstrap variables alterations
 $primary: $color-primary !default;
 $secondary: $color-tertiary !default;
-$success:$color-secondary !default;
+$success: $color-secondary !default;
 
 $font-weight-default: 400 !default;
 

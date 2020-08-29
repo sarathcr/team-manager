@@ -1,0 +1,17 @@
+.modal .modal-dialog.modal-layout {
+  &_small {
+    width: 700px;
+    max-width: 100%;
+    .modal-content {
+      padding: 30px 40px;
+    }
+  }
+  &_large {
+    max-width: 1260px;
+    width: 87.5%;
+    .modal-content {
+      padding: 30px 60px;
+      height: 750px;
+    }
+  }
+}

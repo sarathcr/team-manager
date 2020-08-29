@@ -1,0 +1,96 @@
+<div class="details-selector" [ngClass]="{ 'details-selector_last': isLast }">
+  <div
+    class="details-selector__header"
+    [ngClass]="{
+      'details-selector__header_definition': simpleSelector
+    }"
+  >
+    <ng-container *ngIf="!simpleSelector">
+      <h2 class="title_xs m-0" class="details-selector__title">
+        {{ subject.name }}
+      </h2>
+    </ng-container>
+    <ng-container *ngIf="simpleSelector">
+      <h2 class="title_xs m-0" class="details-selector__title w-100">
+        {{ label | translate | TranslateOptions: 0 }}
+        <span *ngIf="optional" class="details-selector__title_optional"
+          >({{ label | translate | TranslateOptions: 1 }})
+        </span>
+      </h2>
+      <app-button
+        class="details-selector__add-btn"
+        [theme]="'primary'"
+        [variant]="'text'"
+        [icon]="variant"
+        (click)="addItem()"
+      >
+        {{ buttonLabel | translate }}
+      </app-button>
+    </ng-container>
+  </div>
+  <ul class="details-selector__list">
+    <li class="details-selector__item" *ngIf="!simpleSelector">
+      <span *ngIf="subjectItem?.length === 0" class="details-selector__text">
+        {{ unselectedLabel | translate }}
+      </span>
+      <span
+        *ngIf="subjectItem?.length > 0 && !simpleSelector"
+        class="details-selector__text_evaluation"
+      >
+        {{ selectedLabel | translate }}
+      </span>
+      <app-button
+        class="details-selector__add-btn"
+        [theme]="'primary'"
+        [variant]="'text'"
+        [icon]="variant"
+        (click)="addItem()"
+        *ngIf="!simpleSelector"
+      >
+        {{ buttonLabel | translate }}
+      </app-button>
+    </li>
+    <li
+      class="details-selector__item"
+      *ngIf="simpleSelector && subjectItem?.length === 0"
+    >
+      <span class="details-selector__text">
+        {{ unselectedLabel | translate }}
+      </span>
+    </li>
+    <ng-template #loaded>
+      <ng-container *ngFor="let item of subjectItem; let index = index">
+        <li class="details-selector__item">
+          <div class="details-selector__text_normal">{{ item.name }}</div>
+          <div
+            *ngIf="item.dimensions?.length"
+            class="details-selector__text_normal"
+          >
+            <ng-container *ngFor="let dimension of item.dimensions">
+              <span class="details-selector__item-details">{{
+                dimension.name
+              }}</span>
+            </ng-container>
+          </div>
+          <div
+            *ngIf="item.basicSkills?.length && !item.dimensions?.length"
+            class="details-selector__text_normal"
+          >
+            <ng-container *ngFor="let skill of item.basicSkills">
+              <span class="details-selector__item-details">{{
+                skill.name
+              }}</span>
+            </ng-container>
+          </div>
+          <div
+            class="details-selector__close"
+            (click)="onDeleteById(item.id, index)"
+          >
+            <span class="icon icon-ic_share_close"></span>
+          </div>
+        </li>
+      </ng-container>
+    </ng-template>
+    <app-loader *ngIf="loading; else loaded" variant="block"></app-loader>
+  </ul>
+</div>

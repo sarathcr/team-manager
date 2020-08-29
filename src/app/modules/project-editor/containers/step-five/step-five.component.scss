@@ -1,0 +1,12 @@
+@import 'helpers/_helpers-master';
+.project-form {
+  $root: &;
+  &__detail-selector-wrapper {
+    margin-bottom: $margin * 3;
+    ::ng-deep {
+      .details-selector {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
