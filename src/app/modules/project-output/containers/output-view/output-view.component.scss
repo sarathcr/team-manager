@@ -1,4 +1,4 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 
 .output-view {
   display: flex;
@@ -16,13 +16,13 @@
     height: calc(100vh - 75px);
     width: 100%;
     max-width: calc(100% - 235px);
-    background-color: $color-background-primary;
+    background-color: color(background-primary);
     overflow: auto;
     position: relative;
 
     ::ng-deep {
       .pdfViewer {
-        padding: $grid-gutter-width-primary;
+        padding: grid-gutter(primary);
         position: absolute;
         min-width: 100%;
         padding-right: 23px;
@@ -30,8 +30,8 @@
           border: none;
           border-image: none;
           -webkit-border-image: none;
-          box-shadow: 1px 0 5px -3px rgba($color-tertiary, 0.2);
-          margin-bottom: $grid-gutter-width-secondary/2;
+          box-shadow: 1px 0 5px -3px rgba(color(tertiary), 0.2);
+          margin-bottom: spacing(secondary);
         }
       }
     }

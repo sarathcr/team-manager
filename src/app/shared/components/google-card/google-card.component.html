@@ -1,30 +1,27 @@
 <div class="card">
-  <div class="card-header">
+  <div
+    class="card-header"
+    [ngClass]="{
+      'card-header_slide': variant === 'SLIDE',
+      'card-header_site': variant === 'WEB',
+      'card-header_form': variant === 'FORM',
+      'card-header_doc': variant === 'DOC',
+      'card-header_sheet': variant === 'SHEET'
+    }"
+  >
     <img
       class="card-header__image"
-      src="{{
-        variant === 'slide'
-          ? './assets/images/bitmap7.png'
-          : variant === 'site'
-          ? './assets/images/bitmap1.png'
-          : variant === 'form'
-          ? './assets/images/bitmap8.png'
-          : variant === 'doc'
-          ? './assets/images/bitmap10.png'
-          : variant === 'sheet'
-          ? './assets/images/bitmap9.png'
-          : ''
-      }}"
+      src="./assets/images/background-bg.svg"
       alt=""
     />
     <span
       class="icon card-header__icon"
       [ngClass]="{
-        'icon-ic_presentacion': variant === 'slide',
-        'icon-ic2': variant === 'site',
-        'icon-ic_list_w': variant === 'form',
-        'icon-ic_doc2_w': variant === 'doc',
-        'icon-group': variant === 'sheet'
+        'icon-ic_presentacion': variant === 'SLIDE',
+        'icon-ic2': variant === 'WEB',
+        'icon-ic_list_w': variant === 'FORM',
+        'icon-ic_doc2_w': variant === 'DOC',
+        'icon-group': variant === 'SHEET'
       }"
     ></span>
   </div>

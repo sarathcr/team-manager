@@ -5,8 +5,8 @@ import {
   RouterStateSnapshot,
 } from '@angular/router'
 import { Observable } from 'rxjs'
+import { filter, first, tap } from 'rxjs/operators'
 import { ProjectEntityService } from './project-entity.service'
-import { filter, first, map, tap } from 'rxjs/operators'
 
 @Injectable()
 export class ProjectsResolver implements Resolve<boolean> {

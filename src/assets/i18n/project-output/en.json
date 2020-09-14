@@ -21,6 +21,12 @@
     "project_structure_stepsmenu_finalproduct": "Producto final",
     "project_stepsmenu_drivingquestion": "Preguntas guía",
     "project_structure_stepsmenu_objectives": "Objetivos de aprendizaje",
-    "project_structure_stepsmenu_standards": "Estándares/indicadores"
+    "project_structure_stepsmenu_standards": "Estándares/indicadores",
+    "project_objectives_criterion": "Criterios de evaluación",
+    "project_structure_stepsmenu_content": "Contenidos",
+    "project_objectives_criteriawindow_basic_skills": "Competencias",
+    "project_content_extracontent": "Agrega contenidos personalizados. (opcional)",
+    "output_footer_dimensions": "Dimensions",
+    "output_footer_competences": "Competencias"
   }
 }

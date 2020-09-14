@@ -27,16 +27,17 @@ A convenience directive for applying styling to a Modal Layout component.
 
 ### Input
 
-| Name           |         Type          | Required |                     Values                     |    Default     | Description                                        |
-| -------------- | :-------------------: | :------: | :--------------------------------------------: | :------------: | -------------------------------------------------- |
-| `title`        |       `string`        |    -     |                       -                        |       -        | To set title for modal layout                   |
-| `confirmLabel` |       `string`        |    -     |                       -                        |       -        | To set confirm button label for modal layout    |
-| `cancelLabel`  |           -           |    -     |                       -                        |   `Cancelar`   | To set cancel button label for modal layout     |
+| Name           |     Type     | Required |           Values           |  Default   | Description                                  |
+| -------------- | :----------: | :------: | :------------------------: | :--------: | -------------------------------------------- |
+| `title`        |   `string`   |    -     |             -              |     -      | To set title for modal layout                |
+| `confirmLabel` |   `string`   |    -     |             -              |     -      | To set confirm button label for modal layout |
+| `cancelLabel`  |      -       |    -     |             -              | `Cancelar` | To set cancel button label for modal layout  |
+| `buttonSize`   | `ButtonSize` |    -     | `small` `default` `medium` | `default`  | To set button size                           |
 
 ### Output
 
-| Name      | Description                                            |
-| --------- | ------------------------------------------------------ |
+| Name      | Description                                              |
+| --------- | -------------------------------------------------------- |
 | `decline` | Event emited from the modal layout component for decline |
 | `confirm` | Event emited from the modal layout component for confirm |
 

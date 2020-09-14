@@ -1,10 +1,34 @@
-@import 'helpers/_helpers-master';
-.sidebar {
-  width: 187px;
-  height: 100%;
+@import 'variables/_variables-master';
+
+.main-sidebar {
+  $root: &;
+  width: 237px;
+  min-height: calc(100vh - 73px);
   position: fixed;
   left: 0;
-  top: 0;
-  background: $color-quaternary;
-  border-right: 1px solid $color-border-primary;
+  top: 73px;
+  background: color(quaternary);
+  border-right: 1px solid rgba(color(tertiary), 0.1);
+  &__item {
+    #{$root}__icon {
+      opacity: 0.4;
+    }
+    &_active {
+      font-weight: bold;
+      #{$root}__icon {
+        opacity: 1;
+      }
+    }
+  }
+  &__item,
+  &__help {
+    line-height: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  &__icon {
+    font-size: font-size(s);
+    margin-right: spacing(secondary) / 2;
+  }
 }

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms'
 import { TranslateModule } from '@ngx-translate/core'
 import { BsModalRef } from 'ngx-bootstrap/modal'
 
-import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.component'
+import { SelectComponent } from 'src/app/shared/components/select/select.component'
 import { PrincipalViewComponent } from './principal-view.component'
 
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
@@ -25,7 +25,7 @@ describe('PrincipalViewComponent', () => {
       declarations: [
         PrincipalViewComponent,
         CheckboxComponent,
-        DropdownComponent,
+        SelectComponent,
         CheckCount,
         ButtonComponent,
       ],

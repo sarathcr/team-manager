@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { BsModalRef } from 'ngx-bootstrap/modal'
 import { BehaviorSubject, Observable } from 'rxjs'
 
-import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.component'
+import { SelectComponent } from 'src/app/shared/components/select/select.component'
 import { ModalStandardsComponent } from './modal-standards.component'
 
 import { EditorService } from '../../services/editor/editor.service'
@@ -57,7 +57,7 @@ describe('CompetencyModalContentComponent', () => {
       declarations: [
         ModalStandardsComponent,
         CheckboxComponent,
-        DropdownComponent,
+        SelectComponent,
         CheckCount,
         ButtonComponent,
       ],

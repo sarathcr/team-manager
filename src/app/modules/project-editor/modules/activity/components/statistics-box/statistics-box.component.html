@@ -1,4 +1,4 @@
-<div class="statistics-box p-6">
+<div class="statistics-box px-7 py-6">
   <div class="statistics-box__upper-icon" *ngIf="variant == 'chart'">
     <span class="icon icon-ic" [ngClass]="getIconClass(data.icon)"></span>
   </div>
@@ -11,10 +11,13 @@
           : 'statistics-box__title_resume'
       "
     >
-      <div class="statistics-box__title_supertitle" *ngIf="variant == 'resume'">
+      <div
+        class="statistics-box__title_supertitle mb-1"
+        *ngIf="variant == 'resume'"
+      >
         {{ data.supertitle }}
       </div>
-      <div class="statistics-box__title_main title_s">
+      <div class="statistics-box__title_main title_s mb-5">
         {{ data.title }}
       </div>
     </div>

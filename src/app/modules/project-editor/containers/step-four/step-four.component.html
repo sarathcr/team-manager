@@ -81,7 +81,7 @@
                   id="step-four-checkbox-{{ i }}"
                   *ngFor="let basicSkill of basicSkills; let i = index"
                   [checkboxData]="basicSkill.checkData"
-                  [colOne]="{ value: basicSkill.description }"
+                  [colOne]="{ value: basicSkill.name }"
                   [parentID]="basicSkill.id"
                   (checked)="handleSkillSelect()"
                 ></app-custom-checkbox>

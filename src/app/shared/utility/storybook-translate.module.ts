@@ -15,6 +15,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
     { prefix: 'assets/i18n/project-editor/', suffix: '.json' },
     { prefix: 'assets/i18n/activities/', suffix: '.json' },
     { prefix: 'assets/i18n/auth/', suffix: '.json' },
+    { prefix: 'assets/i18n/evaluation/', suffix: '.json' },
     { prefix: 'assets/i18n/shared/', suffix: '.json' },
   ])
 }

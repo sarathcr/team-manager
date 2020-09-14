@@ -1,4 +1,5 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
 .video-player {
   .video-js {
     .vjs-big-play-button {
@@ -12,9 +13,9 @@
       width: 74px;
       height: 74px;
       border-radius: 50%;
-      color: $color-quaternary;
-      background: $color-secondary;
-      border: 2px solid $color-secondary;
+      color: color(quaternary);
+      background: color(secondary);
+      border: 2px solid color(secondary);
       .vjs-icon-placeholder {
         position: relative;
         display: block;
@@ -23,15 +24,15 @@
         line-height: 1;
       }
       &:focus {
-        border-color: rgba($color-secondary, 0.7);
-        background-color: rgba($color-secondary, 0.6);
+        border-color: rgba(color(secondary), 0.7);
+        background-color: rgba(color(secondary), 0.6);
         transition: all 0s;
       }
     }
     &:hover {
       .vjs-big-play-button {
-        border-color: rgba($color-secondary, 0.7);
-        background-color: rgba($color-secondary, 0.6);
+        border-color: rgba(color(secondary), 0.7);
+        background-color: rgba(color(secondary), 0.6);
         transition: all 0s;
       }
     }

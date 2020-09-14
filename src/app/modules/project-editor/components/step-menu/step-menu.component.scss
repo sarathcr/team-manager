@@ -1,8 +1,9 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
 .menu {
-  font-family: $font-family-tertiary;
-  font-size: $font-size-body-s;
-  color: rgba($color-tertiary, 0.5);
+  font-family: font-family(tertiary);
+  font-size: font-size(body-s);
+  color: rgba(color(tertiary), 0.5);
   font-weight: normal;
   letter-spacing: 0.16px;
   line-height: 34px;
@@ -17,17 +18,17 @@
   }
   &_inprocess,
   &_done {
-    color: $color-tertiary;
+    color: color(tertiary);
     font-weight: normal;
   }
   &_active {
-    color: $color-tertiary;
+    color: color(tertiary);
     font-weight: bold;
   }
   .icon-ic_check {
     position: absolute;
-    color: $color-secondary;
-    font-size: $font-size-xs;
+    color: color(secondary);
+    font-size: font-size(xs);
     left: -10px;
     top: 4px;
   }

@@ -49,6 +49,8 @@ export class StepOneComponent implements OnInit, OnDestroy {
   initialFormStatus: Status = 'PENDING'
   subscriptions = new SubSink()
   curriculumSubscription = new SubSink()
+  academicYearSubcription = new SubSink()
+  gradesSubcription = new SubSink()
   country$: Observable<Country>
   region$: Observable<Region>
   academicYear$: Observable<AcademicYear>
@@ -208,19 +210,23 @@ export class StepOneComponent implements OnInit, OnDestroy {
     this.subscriptions.sink = this.academicYearService.loading$.subscribe(
       (loading) => (this.academicYearDropdown.loading = loading)
     )
-    this.subscriptions.sink = this.academicYearService.entities$
+    const selectedCurriculum = curriculumId ? curriculumId : this.curriculum.id
+    this.academicYearSubcription.sink = this.academicYearService.entities$
       .pipe(
         map((academicYears) =>
-          academicYears.filter(
-            (academicYear) => academicYear.curriculumId === curriculumId
+          academicYears.find(
+            (curriculumAcademicYear) =>
+              curriculumAcademicYear.curriculumId === selectedCurriculum
           )
         )
       )
       .subscribe((newData) => {
-        if (!newData.length) {
-          this.academicYearService.getWithQuery(curriculumId?.toString())
+        if (!newData) {
+          this.academicYearService.getWithQuery(selectedCurriculum?.toString())
+        } else {
+          this.academicYearDropdown.data = newData.academicYears
+          this.academicYearSubcription.unsubscribe()
         }
-        this.academicYearDropdown.data = newData
       })
   }
 
@@ -228,7 +234,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     this.subscriptions.sink = this.curriculumGradeService.loading$.subscribe(
       (loading) => (this.gradesDropdown.loading = loading)
     )
-    this.subscriptions.sink = this.curriculumGradeService.entities$
+    this.gradesSubcription.sink = this.curriculumGradeService.entities$
       .pipe(
         map((grades) => {
           return grades.find((gradeslist) => gradeslist?.id === curriculumId)
@@ -237,8 +243,10 @@ export class StepOneComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         if (!data) {
           this.curriculumGradeService.getWithQuery(curriculumId?.toString())
+        } else {
+          this.gradesDropdown.data = data?.gradeList
+          this.gradesSubcription.unsubscribe()
         }
-        this.gradesDropdown.data = data?.gradeList
       })
   }
 
@@ -255,6 +263,12 @@ export class StepOneComponent implements OnInit, OnDestroy {
             for (const gradeList of gradesData.gradeList) {
               if (gradeIds.includes(gradeList.id)) {
                 subjectData = [...subjectData, ...gradeList.subjectList]
+                subjectData = subjectData.filter(
+                  (subject, index, array) =>
+                    array.findIndex(
+                      (s) => JSON.stringify(s) === JSON.stringify(subject)
+                    ) === index
+                )
               }
             }
           }

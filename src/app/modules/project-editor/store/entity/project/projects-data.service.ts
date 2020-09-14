@@ -10,7 +10,7 @@ import {
   ProjectStoreUpdate,
 } from 'src/app/modules/project-editor/constants/model/project.model'
 import { environment } from 'src/environments/environment'
-import { Activity } from '../../../constants/model/activity.model'
+import { Activity, Exercise } from '../../../constants/model/activity.model'
 @Injectable()
 export class ProjectsDataService extends DefaultDataService<Project> {
   constructor(
@@ -204,6 +204,53 @@ export class ProjectsDataService extends DefaultDataService<Project> {
           )
         )
     }
+    if (data.changes?.updateType === 'createExercise') {
+      const { id, activityId } = data.changes
+      return this.http
+        .post<any>(
+          `${environment.apiUrl.projectService}/projects/${id}/activities/${activityId}/excercise/`,
+          data.changes.exercise
+        )
+        .pipe(
+          map((res) => {
+            const dataChanges = { ...data.changes }
+            const updateProject = {
+              ...dataChanges,
+              activities: this.updateDataObj(
+                dataChanges.activities,
+                activityId,
+                res
+              ),
+            }
+            return updateProject
+          }),
+          catchError((err) =>
+            of(
+              this.store.dispatch({
+                type: '[Exercise] @ngrx/data/query-many/failure',
+                payload: err.message,
+                error: { status: err.error.status, error: err.error.error },
+              })
+            )
+          )
+        )
+    }
+  }
+
+  private updateDataObj(
+    activityList1: Activity[],
+    activityId: number,
+    res: Exercise
+  ): Activity[] {
+    let activityList = JSON.parse(JSON.stringify(activityList1))
+    activityList = activityList.map((activity: Activity) => {
+      if (activity.id === activityId) {
+        const index = activity.exercises.findIndex((exe) => !exe.id)
+        activity.exercises[index] = res
+      }
+      return activity
+    })
+    return activityList
   }
 
   // Replaces the null value with {id:-1} or -1

@@ -1,4 +1,4 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 
 .modal-info {
   $root: &;
@@ -16,13 +16,13 @@
     display: flex;
     margin-bottom: 0;
     &_primary {
-      font-size: $font-size-sub-s;
+      font-size: font-size(sub-s);
       line-height: 28px;
       letter-spacing: 0.2px;
     }
     &_secondary {
-      font-family: $font-family-primary;
-      font-size: $font-size-xs;
+      font-family: font-family(primary);
+      font-size: font-size(xs);
       line-height: 32px;
       letter-spacing: 0.3px;
       font-weight: 900;
@@ -38,7 +38,7 @@
     display: flex;
     background-color: transparent;
     border: none;
-    color: rgba($color-tertiary, 0.6);
+    color: rgba(color(tertiary), 0.6);
     font-size: 20px;
     margin-right: -8px;
     cursor: pointer;
@@ -50,9 +50,9 @@
   &__content {
     line-height: 24px;
     &_medium {
-      margin-bottom: $margin * 2;
+      margin-bottom: spacing(primary) * 2;
       p {
-        font-size: $font-size-body;
+        font-size: font-size(body);
         line-height: 32px;
         letter-spacing: 0.2px;
       }

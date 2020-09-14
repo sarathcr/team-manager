@@ -39,7 +39,13 @@
               {{ labels.activities | translate }}
             </span>
           </li>
-          <li class="project-editor-header__menu-item">
+          <li
+            class="project-editor-header__menu-item"
+            [routerLink]="[
+              '/editor/project/' + projectData?.id + '/evaluation'
+            ]"
+            [ngClass]="getActiveRoute() === 'evaluation' ? 'active' : ''"
+          >
             <span class="project-editor-header__menu-link"
               >{{ labels.evaluation | translate }}
             </span>

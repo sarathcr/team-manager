@@ -1,4 +1,4 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 
 .project-editor-header {
   position: fixed;
@@ -7,10 +7,10 @@
   width: 100%;
   min-height: 75px;
   display: flex;
-  background: $color-quaternary;
-  border-bottom: 1px solid rgba($color-tertiary, 0.1);
+  background: color(quaternary);
+  border-bottom: 1px solid rgba(color(tertiary), 0.1);
   z-index: 2;
-  padding: 0 $padding;
+  padding: 0 spacing(primary);
 
   &__collapse,
   &__nav,
@@ -42,23 +42,23 @@
       }
     }
     &-link {
-      font-family: $font-family-tertiary;
-      font-size: $font-size-body-s;
+      font-family: font-family(tertiary);
+      font-size: font-size(body-s);
       line-height: 24px;
       letter-spacing: normal;
       font-weight: 700;
-      color: rgba($color-tertiary, 0.6);
+      color: rgba(color(tertiary), 0.6);
       position: relative;
       cursor: pointer;
     }
     &-item.active &-link {
-      color: $color-tertiary;
+      color: color(tertiary);
       &::after {
         content: '';
         display: block;
         position: absolute;
         bottom: 0;
-        border-bottom: 2px solid $color-tertiary;
+        border-bottom: 2px solid color(tertiary);
         width: 100%;
       }
     }

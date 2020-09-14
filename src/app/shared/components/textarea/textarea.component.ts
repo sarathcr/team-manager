@@ -42,6 +42,7 @@ export class TextareaComponent implements OnInit, OnDestroy {
   @Input() customClass: string
   @Output() inputChange = new EventEmitter()
   @Output() textareaFocus = new EventEmitter()
+  @Output() textareaFocusOut = new EventEmitter()
   @ViewChild('textarea') textArea: ElementRef
   focus = false
   initialValue: string
@@ -160,6 +161,17 @@ export class TextareaComponent implements OnInit, OnDestroy {
     validator.valueChange(tempValue, 'paste')
   }
 
+  onDrop($event: any, validator: any): void {
+    const value = $event.dataTransfer.getData('text/plain')
+    let tempValue: string
+    if (this.value?.length) {
+      tempValue = this.value + value
+    } else {
+      tempValue = value
+    }
+    validator.valueChange(tempValue, 'drop')
+  }
+
   setFocus(): void {
     this.focus = true
     this.textareaFocus.emit()
@@ -171,7 +183,7 @@ export class TextareaComponent implements OnInit, OnDestroy {
     } else {
       $event.target.focus()
     }
-    if (!this.updated) {
+    if (!this.updated && this.value$) {
       this.updated = this.initialValue !== this.value
     }
     if (!this.value?.trim()) {
@@ -208,6 +220,13 @@ export class TextareaComponent implements OnInit, OnDestroy {
     if (this.focus && this.value.trim()) {
       this.inputChange.emit({ name: this.value.trim() })
       this.value = ''
+    }
+  }
+
+  setFocusOut($event: any): void {
+    if (this.updated) {
+      this.textareaFocusOut.emit($event)
+      this.updated = false
     }
   }
 }

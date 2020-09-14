@@ -1,5 +1,3 @@
-import { boolean } from '@storybook/addon-knobs/angular'
-
 import {
   AfterViewInit,
   Component,
@@ -43,7 +41,7 @@ export class ActivityEditorComponent
   }
 
   ngOnDestroy(): void {
-    this.editor.subscriptions.unsubscribe()
+    this.editor.clearActivityData()
   }
 
   getContextualStatus($event: boolean): void {

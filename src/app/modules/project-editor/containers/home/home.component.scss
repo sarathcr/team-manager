@@ -1,19 +1,13 @@
-@import 'helpers/_helpers-master';
-
-.project {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
+@import 'variables/_variables-master';
 
 .creator-home {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 187px);
+  width: calc(100% - 237px);
   min-height: 100vh;
-  background-color: $color-background-primary;
+  background-color: color(background-primary);
   margin-left: auto;
-  padding: 75px 15px 0 38px;
+  padding: 115px 30px 0 30px;
   position: relative;
 
   &__body {
@@ -21,11 +15,15 @@
   }
 
   &__head-text {
-    font-family: $font-family-tertiary;
-    font-size: $font-size-xs;
+    font-family: font-family(tertiary);
+    font-size: font-size(xs);
     line-height: 36px;
     letter-spacing: 0.3px;
     font-weight: 700;
-    margin-bottom: 35px;
+    margin-bottom: 22px;
+  }
+
+  &__filters {
+    width: 100%;
   }
 }

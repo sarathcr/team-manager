@@ -11,8 +11,6 @@ A convenience directive for applying styling to a Typography.
 
 ```js
 <p class="title">sample1</p>
-<p class="title_xxl">sample of xxl</p>
-<p class="title_xl">sample of xl</p> 
 <p class="title_l">sample of large</p> 
 <p class="title_m">sample of medium</p>
 <p class="title_s">sample of small</p>  

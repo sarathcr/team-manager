@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { throwError } from 'rxjs'
+import { combineLatest, forkJoin, throwError } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 
 import pdfMake from 'pdfmake/build/pdfmake'
@@ -14,28 +14,18 @@ import { PDFDocumentProxy } from 'ng2-pdf-viewer'
 import { ProjectOutputService } from './../../services/output/project-output.service'
 
 import { Step } from 'src/app/modules/project-editor/constants/model/project.model.js'
-import { TableLayouts } from './../../config/tableLayouts'
+
+import { defaultStyle, styles } from './../../config/pdfCustomStyles'
+import { fonts } from './../../config/pdfFonts'
+
+import { TableLayouts } from '../../config/pdfTableLayouts'
 
 import { SubSink } from './../../../../shared/utility/subsink.utility'
 import { trimWhitespace } from './../../../../shared/utility/trim-whitespace.utility'
 
 // PDFMAKE Fonts
 pdfMake.vfs = pdfFonts.pdfMake.vfs
-pdfMake.fonts = {
-  Museo: {
-    normal: 'MuseoSansRounded700.otf',
-    bold: 'MuseoSansRounded900.otf',
-  },
-  PTSans: {
-    normal: 'PTSans-Regular.ttf',
-    bold: 'PTSans-Bold.ttf',
-    italics: 'PTSans-Italic.ttf',
-    bolditalics: 'PTSans-BoldItalic.ttf',
-  },
-  Icomoon: {
-    normal: 'icomoon.ttf',
-  },
-}
+pdfMake.fonts = fonts
 
 // PDFMAKE setting table layout
 pdfMake.tableLayouts = TableLayouts
@@ -45,6 +35,7 @@ pdfMake.tableLayouts = TableLayouts
   styleUrls: ['./output-view.component.scss'],
 })
 export class OutputViewComponent implements OnInit, OnDestroy {
+  // PDF Options Variables
   pdfSrc
   pdf: PDFDocumentProxy
   fileName = ''
@@ -57,14 +48,36 @@ export class OutputViewComponent implements OnInit, OnDestroy {
   pageVariable = 1
   generatedPDF: any
   outline: any[]
+  pageWidth = 842
+  pageHeight = 595
+
+  // Project Variables
   projectId: string
   projectData: any
   title: string
   subscription = new SubSink()
-  documentDefinition
-  pageWidth = 842
-  pageHeight = 595
+  documentDefinition: object
+  curriculumId: string
+  shortCodes: any
+  steps: Step[]
   loading = true
+  subjectEvaluation: any[] = []
+  subjectsInline: string
+  curriculumRelation: string
+  rowIndex = 0
+  subjectWiseDimension = []
+  allCriterias: any[] = []
+  projectImage: any
+  projectBackground: object
+  projectCoverText: object
+  projectOverview: object
+  projectObjectiveStandards: object
+  projectDrivingQns: object
+  projectEvaluationCriteria: object
+  projectCompetencyRelation: object
+  projectShortCodeDesc: object
+
+  // Localisation title Variables
   academicYearTitle: string
   gradesTitle: string
   subjectsTitle: string
@@ -74,9 +87,17 @@ export class OutputViewComponent implements OnInit, OnDestroy {
   objectivesTitle: string
   standardsTitle: string
   objectivesSubTitle: string
-  steps: Step[]
-  subjectsInline: string
+  evaluationSubtitle: string
+  contentSubtitle: string
+  customContentSubtitle: string
+  competenciasSubtitle: string
+  footerCompetencias: string
+  footerDimension: string
+
+  // Other Variables
   errors = []
+  criteriaPageNumber: number
+
   @ViewChild('pdfViewer') pdfViewerContainer
 
   constructor(
@@ -88,26 +109,21 @@ export class OutputViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getLocalizations()
     this.projectId = this.route.snapshot.paramMap.get('id')
-    this.getStepStatus()
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
-  }
-
-  // project data
-  getProjectData(): void {
-    this.subscription.sink = this.outputService
-      .getProjectData(this.projectId)
+    combineLatest([
+      this.outputService.getProjectData(this.projectId),
+      this.outputService.getStepStatus(this.projectId),
+    ])
       .pipe(
         catchError((err) => {
           this.errors.push(err.error)
           return throwError(err)
         })
       )
-      .subscribe((data) => {
-        if (data) {
-          this.projectData = data
+      .subscribe(([project, step]) => {
+        if (project && step) {
+          this.projectData = project
+          this.steps = step.steps
+          this.curriculumId = this.projectData.curriculumId
           this.fileName =
             this.isStepDone(6) && this.projectData.creativeTitle
               ? this.projectData.creativeTitle
@@ -115,26 +131,151 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           this.title = this.fileName
           this.fileName = this.fileName + '.pdf'
           if (this.title) {
-            this.generatePDF()
+            this.getCodesAndEvaluationCriterias()
           }
         }
       })
   }
 
-  // step status
-  getStepStatus(): void {
-    this.outputService
-      .getStepStatus(this.projectId)
-      .pipe(
-        catchError((err) => {
-          this.errors.push(err.error)
-          return throwError(err)
-        })
-      )
-      .subscribe((data) => {
-        this.steps = data?.steps
-        this.getProjectData()
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
+  }
+
+  // Get short codes of the Dimensions or basic skills based on the Curriculum ID
+  getCodesAndEvaluationCriterias(): void {
+    console.log('getCodesAndEvaluationCriterias()')
+    if (this.projectData.subjects.length) {
+      const evalIds = []
+      this.projectData.subjects.map((item) => {
+        const ids = item.evaluationCriteria.map(({ id }) => id)
+        evalIds.push(...ids)
       })
+      if (evalIds.length) {
+        this.callAPICodesAndEvaluation(evalIds)
+          .then(() => this.arrayCreation())
+          .then(() => this.extractSubjectWiseDimension())
+      } else {
+        this.arrayCreation().then(() => this.contents())
+      }
+    }
+  }
+
+  callAPICodesAndEvaluation(evalIds: Array<number>): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      combineLatest([
+        this.outputService.getCodes(this.curriculumId),
+        this.outputService.getCrtieriasDetails(evalIds),
+      ])
+        .pipe(
+          catchError((err) => {
+            this.errors.push(err.error)
+            return throwError(err)
+          })
+        )
+        .subscribe(([codes, criterias]) => {
+          if (codes) {
+            this.shortCodes = codes
+          }
+          if (criterias) {
+            this.allCriterias = criterias
+          }
+          resolve()
+        })
+    })
+  }
+
+  arrayCreation(): Promise<any> {
+    console.log('arrayCreation()')
+    return new Promise(async (resolve, reject) => {
+      if (this.projectData.subjects.length) {
+        await Promise.all(
+          this.projectData.subjects.map(
+            async ({
+              id: subjectID,
+              name,
+              evaluationCriteria,
+              customContents,
+              contents,
+            }) => {
+              const subjectWiseIds = evaluationCriteria.map(({ id }) => id)
+              const evaluation = this.allCriterias.filter((item) =>
+                subjectWiseIds.includes(item.id)
+              )
+              let relation = ''
+              this.subjectWiseDimension = []
+              evaluation.forEach(({ basicSkills, dimensions }) => {
+                if (basicSkills.length) {
+                  relation = 'basic-skill'
+                } else if (dimensions.length) {
+                  relation = 'dimension'
+                } else {
+                  relation = 'no-relation'
+                }
+              })
+              if (relation === 'dimension') {
+                this.subjectWiseDimension.push(
+                  this.outputService.getSubjectWiseDimension(subjectID)
+                )
+              }
+              this.curriculumRelation = relation
+              const groupedData = []
+              const groupedContent = this.groupBy(contents, 'blockid')
+              const groupedEvaluation = this.groupBy(evaluation, 'blockId')
+              for (const key of Object.keys(groupedEvaluation)) {
+                groupedData.push({
+                  blockID: key,
+                  evaluationData: groupedEvaluation[key],
+                  contentData: groupedContent[key] ? groupedContent[key] : [],
+                })
+              }
+              this.subjectEvaluation.push({
+                subjectID,
+                subjectName: name,
+                customContents,
+                evaluationCriteria: groupedData,
+                subjectRelation: relation,
+                subjectDimensions: this.subjectWiseDimension,
+              })
+            }
+          )
+        )
+        resolve()
+      } else {
+        resolve()
+      }
+    })
+  }
+
+  extractSubjectWiseDimension(): void {
+    Promise.all(
+      this.subjectEvaluation.map(
+        ({ subjectID, subjectRelation, subjectDimensions }) => {
+          this.subjectWiseDimension = []
+          return new Promise((resolve, reject) => {
+            if (subjectRelation === 'dimension' && subjectDimensions.length) {
+              forkJoin(subjectDimensions)
+                .pipe(
+                  catchError((err) => {
+                    this.errors.push(err.error)
+                    return throwError(err)
+                  })
+                )
+                .subscribe((data) => {
+                  if (data) {
+                    this.subjectWiseDimension.push({
+                      id: subjectID,
+                      dimensions: data[0],
+                    })
+                    resolve(this.subjectWiseDimension)
+                  }
+                })
+            } else {
+              resolve()
+            }
+          })
+        }
+      )
+    ).then(() => this.contents())
   }
 
   isStepDone(stepId: number): boolean {
@@ -147,11 +288,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // PDF Generation
   async generatePDF(): Promise<any> {
-    this.subjects()
-    const creativeImage =
-      this.isStepDone(6) && this.projectData.creativeImage
-        ? await this.getBase64ImageFromURL(this.projectData.creativeImage)
-        : null
+    console.log('Started generating PDF')
     const thisRef = this
     this.documentDefinition = {
       info: {
@@ -249,17 +386,19 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         }
       },
       content: [
-        creativeImage && {
-          image: creativeImage,
-          width: 435,
-          height: 435,
-          absolutePosition: { x: 385, y: 105 },
+        this.projectImage,
+        this.projectBackground,
+        this.projectCoverText,
+        this.projectOverview,
+        this.projectEvaluationCriteria && {
+          id: 'evaluationCriteria',
+          pageBreak: 'before',
+          tocItem: true,
+          stack: [this.projectEvaluationCriteria],
         },
-        this.coverBackgroundLayer(),
-        this.coverTextLayer(),
-        this.overview(),
-        this.objectives(),
-        this.driving(),
+        this.projectCompetencyRelation,
+        this.projectObjectiveStandards,
+        this.projectDrivingQns,
       ],
       pageBreakBefore(currentNode: any): boolean {
         if (
@@ -283,123 +422,13 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         ) {
           return true
         }
+        console.log(currentNode)
+        if (currentNode.id === 'evaluationCriteria') {
+          console.log(currentNode)
+        }
       },
-      styles: {
-        cover__title: {
-          font: 'Museo',
-          fontSize: 38,
-          color: '#FFFFFF',
-          bold: true,
-        },
-        cover__subtitle: {
-          fontSize: 18,
-          characterSpacing: 0.26,
-          font: 'PTSans',
-          color: '#FFFFFF',
-        },
-        header: {
-          font: 'Museo',
-          fontSize: 10,
-          color: '#141C3A',
-          opacity: 0.3,
-          characterSpacing: 0.3,
-          alignment: 'right',
-          margin: [0, 30, 40, 0],
-        },
-        footer: {
-          font: 'Museo',
-          fontSize: 10,
-          color: '#141C3A',
-          opacity: 0.3,
-          characterSpacing: 0.3,
-        },
-        footer__cover: {
-          fontSize: 10,
-          color: '#FFFFFF',
-          font: 'Museo',
-          characterSpacing: 1.7,
-          bold: true,
-          alignment: 'left',
-          margin: [40, 0, 0, 0],
-        },
-        footer_link: {
-          decoration: 'underline',
-          decorationColor: '#141C3A',
-        },
-        overview__title: {
-          font: 'Museo',
-          fontSize: 24,
-          characterSpacing: 0.19,
-          margin: [0, 0, 0, 10],
-          bold: true,
-        },
-        overview__description: {
-          font: 'PTSans',
-          fontSize: 12,
-          characterSpacing: 0.2,
-          margin: [0, 0, 0, 20],
-          lineHeight: 1.25,
-        },
-        overview__subTitle: {
-          font: 'Museo',
-          fontSize: 12,
-          lineHeight: 0.5,
-          characterSpacing: 0,
-          margin: [0, 0, 0, 15],
-        },
-        overview__data: {
-          fillColor: '#FAFBFB',
-          margin: [15, 10, 15, 10],
-          fontSize: 12,
-          font: 'PTSans',
-          characterSpacing: 0.3,
-        },
-        overview__tableContent: {
-          margin: [0, 10, 0, 10],
-          lineHeight: 1.25,
-        },
-        tableHeader: {
-          alignment: 'center',
-          color: '#FFFFFF',
-          fontSize: 12,
-          font: 'Museo',
-          bold: true,
-          characterSpacing: 0.36,
-        },
-        tableHeaderSmall: {
-          fontSize: 10,
-          font: 'PTSans',
-          bold: false,
-          margin: [0, 15],
-          characterSpacing: 0.5,
-        },
-        icon: {
-          font: 'Icomoon',
-          fontSize: 12,
-          color: '#141C3A',
-          margin: [0, 0, 5, 0],
-        },
-        tableIcon: {
-          margin: [0, 0, 0, 15],
-        },
-        orderedList: {
-          bold: true,
-          margin: [0, 0, 5, 0],
-          lineHeight: 1.4,
-        },
-        bulletList: {
-          bold: false,
-          margin: [0, 0, 0, 5],
-          lineHeight: 1.4,
-          font: 'PTSans',
-        },
-      },
-      defaultStyle: {
-        font: 'PTSans',
-        alignment: 'left',
-        color: '#141C3A',
-        fontSize: 10,
-      },
+      styles,
+      defaultStyle,
     }
     this.generatedPDF = pdfMake.createPdf(this.documentDefinition)
     this.generatedPDF.getBuffer((buffer) => {
@@ -407,31 +436,149 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     })
   }
 
+  // Contents for the PDF
+  contents(): void {
+    console.log('contents()')
+    this.coverPage()
+      .then(() => this.overview())
+      .then(() => this.evaluationCriteria())
+      .then(() => this.competencyRelation())
+      .then(() => this.objectives())
+      .then(() => this.driving())
+      .then(() => {
+        console.log('completed data preparation')
+        this.generatePDF()
+      })
+  }
+
+  // Build Cover page
+  coverPage(): Promise<any> {
+    console.log('Build Cover Page : coverPage()')
+    return new Promise(async (resolve, reject) => {
+      this.subjectsInline = this.projectData.subjects
+        ?.map((item) => item.name)
+        .join(', ')
+      if (this.isStepDone(6)) {
+        await this.getBase64ImageFromURL(this.projectData.creativeImage).then(
+          (data) => {
+            this.projectImage = {
+              image: data,
+              width: 435,
+              height: 435,
+              absolutePosition: { x: 385, y: 105 },
+            }
+          }
+        )
+      } else {
+        this.projectImage = null
+      }
+      this.projectBackground = {
+        image: backgrounds.background,
+        width: this.pageWidth,
+        height: this.pageHeight,
+        absolutePosition: { x: 0, y: 0 },
+      }
+      this.projectCoverText = {
+        id: 'cover',
+        tocItem: true,
+        stack: [
+          {
+            columns: [
+              {
+                style: 'cover__title',
+                text: this.title,
+                width: '45%',
+              },
+              {
+                width: '*',
+                text: '',
+              },
+            ],
+          },
+          {
+            margin: [0, 10, 0, 0],
+            columns: [
+              {
+                style: 'cover__subtitle',
+                text: this.subjectsInline,
+                width: '45%',
+              },
+              {
+                width: '*',
+                text: '',
+              },
+            ],
+          },
+        ],
+        absolutePosition: { x: 40, y: 210 },
+        pageBreak: 'after',
+      }
+      resolve()
+    })
+  }
   // PDF Viewer after event
   afterLoadComplete(pdf: PDFDocumentProxy): void {
     this.pdf = pdf
     this.loading = false
     this.totalPages = pdf.numPages
-    const toc = this.generatedPDF.docDefinition.content.filter(
-      (content) => content.toc
-    )
+    const toc = this.generatedPDF.docDefinition.content.filter((content) => {
+      return content.tocItem
+    })
     this.loadOutline(toc)
   }
 
   // Get Outlines from the PDF Viewer
   loadOutline(toc: any): void {
-    const outlineTitles = [
-      'PROGRAMACION.output_index_cover',
-      'PROGRAMACION.output_index_overview',
-      'PROGRAMACION.output_index_curriculum',
-      'PROGRAMACION.output_index_objectives',
-      'PROGRAMACION.output_index_standards',
-      'PROGRAMACION.output_index_drivingquestions',
-    ]
-    this.pdf.getDestinations().then((outline: any[]) => {
-      this.outline = Object.entries(outline).map((item, index) =>
-        Object.assign(item, { title: outlineTitles[index] })
-      )
+    this.outline = []
+    toc.map((item) => {
+      this.outline.push({
+        id: item.id,
+        title: this.chooseOutlineTitle(item.id),
+        pageNumber: item.positions[0].pageNumber,
+        lastPageNumber:
+          item.nodeInfo.pageNumbers[item.nodeInfo.pageNumbers.length - 1],
+      })
+      if (item.id === 'objectives') {
+        this.outline.push({
+          id: 'standards',
+          title: this.chooseOutlineTitle('standards'),
+          pageNumber: item.positions[0].pageNumber,
+          lastPageNumber:
+            item.nodeInfo.pageNumbers[item.nodeInfo.pageNumbers.length - 1],
+        })
+      }
+    })
+  }
+
+  chooseOutlineTitle(id: string): string {
+    let title = ''
+    switch (id) {
+      case 'cover':
+        title = 'PROGRAMACION.output_index_cover'
+        break
+      case 'overview':
+        title = 'PROGRAMACION.output_index_overview'
+        break
+      case 'evaluationCriteria':
+        title = 'PROGRAMACION.output_index_curriculum'
+        break
+      case 'objectives':
+        title = 'PROGRAMACION.output_index_objectives'
+        break
+      case 'standards':
+        title = 'PROGRAMACION.output_index_standards'
+        break
+      case 'driving':
+        title = 'PROGRAMACION.output_index_drivingquestions'
+        break
+    }
+    return title
+  }
+
+  // Scroll to the page
+  scrollToPage(page: number): void {
+    this.pdfViewerContainer.pdfViewer.scrollPageIntoView({
+      pageNumber: page,
     })
   }
 
@@ -530,55 +677,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     return !this.isIE() && !!window.StyleMedia
   }
 
-  // PDF Document render cover background layer
-  coverBackgroundLayer(): object {
-    return {
-      image: backgrounds.background,
-      width: this.pageWidth,
-      height: this.pageHeight,
-      absolutePosition: { x: 0, y: 0 },
-    }
-  }
-
-  // PDF Document render cover Text layer
-  coverTextLayer(): object {
-    return {
-      id: 'cover',
-      tocItem: true,
-      stack: [
-        {
-          columns: [
-            {
-              style: 'cover__title',
-              text: this.title,
-              width: '45%',
-            },
-            {
-              width: '*',
-              text: '',
-            },
-          ],
-        },
-        {
-          margin: [0, 10, 0, 0],
-          columns: [
-            {
-              style: 'cover__subtitle',
-              text: this.subjectsInline,
-              width: '45%',
-            },
-            {
-              width: '*',
-              text: '',
-            },
-          ],
-        },
-      ],
-      absolutePosition: { x: 40, y: 210 },
-      pageBreak: 'after',
-    }
-  }
-
   // PDF Document get subjects data inline
   subjects(): void {
     this.subjectsInline = this.projectData.subjects
@@ -586,132 +684,682 @@ export class OutputViewComponent implements OnInit, OnDestroy {
       .join(', ')
   }
 
-  // PDF Document render overview data
-  overview(): object {
-    return {
-      id: 'overview',
-      tocItem: true,
-      columns: [
-        {
-          width: '50%',
-          margin: [0, 0, 20, 0],
-          stack: [
-            {
-              style: 'overview__title',
-              text: this.title,
-            },
-            {
-              style: 'overview__description',
-              text:
-                this.isStepDone(9) && this.projectData.synopsis
-                  ? this.projectData.synopsis
-                  : '',
-            },
-            {
-              style: 'overview__subTitle',
-              text: this.academicYearTitle,
-            },
-            {
-              layout: 'noBorders',
-              margin: [0, 0, 0, 20],
-              table: {
-                widths: ['*'],
-                body: [
-                  [
-                    {
-                      style: 'overview__data',
-                      text: this.projectData.academicYear.academicYear,
-                    },
-                  ],
-                ],
+  // Build Overview
+  overview(): Promise<any> {
+    console.log('Build Overview : overview()')
+    return new Promise(async (resolve, reject) => {
+      this.projectOverview = {
+        id: 'overview',
+        tocItem: true,
+        // pageBreak: 'after',
+        columns: [
+          {
+            width: '50%',
+            margin: [0, 0, 20, 0],
+            stack: [
+              {
+                style: 'overview__title',
+                text: this.title,
               },
-            },
-            { style: 'overview__subTitle', text: this.gradesTitle },
-            {
-              layout: 'noBorders',
-              margin: [0, 0, 0, 20],
-              table: {
-                widths: ['*'],
-                body: [
-                  [
-                    {
-                      style: 'overview__data',
-                      text: this.projectData.grades
-                        .map((grade) => grade.name)
-                        .join(', '),
-                    },
-                  ],
-                ],
+              {
+                style: 'overview__description',
+                text:
+                  this.isStepDone(9) && this.projectData.synopsis
+                    ? this.projectData.synopsis
+                    : '',
               },
-            },
-            {
-              stack: [
-                {
-                  id: 'subjects',
-                  style: 'overview__subTitle',
-                  text: this.subjectsTitle,
-                },
-                {
-                  layout: 'noBorders',
-                  margin: [0, 0, 0, 20],
-                  table: {
-                    widths: ['*'],
-                    body: [
-                      [
-                        {
-                          style: 'overview__data',
-                          text: this.subjectsInline,
-                        },
-                      ],
+              {
+                style: 'overview__subTitle',
+                text: this.academicYearTitle,
+              },
+              {
+                layout: 'noBorders',
+                margin: [0, 0, 0, 20],
+                table: {
+                  widths: ['*'],
+                  body: [
+                    [
+                      {
+                        style: 'overview__data',
+                        text: this.projectData.academicYear.academicYear,
+                      },
                     ],
-                  },
+                  ],
                 },
-              ],
-            },
-          ],
+              },
+              { style: 'overview__subTitle', text: this.gradesTitle },
+              {
+                layout: 'noBorders',
+                margin: [0, 0, 0, 20],
+                table: {
+                  widths: ['*'],
+                  body: [
+                    [
+                      {
+                        style: 'overview__data',
+                        text: this.projectData.grades
+                          .map((grade) => grade.name)
+                          .join(', '),
+                      },
+                    ],
+                  ],
+                },
+              },
+              {
+                stack: [
+                  {
+                    id: 'subjects',
+                    style: 'overview__subTitle',
+                    text: this.subjectsTitle,
+                  },
+                  {
+                    layout: 'noBorders',
+                    margin: [0, 0, 0, 20],
+                    table: {
+                      widths: ['*'],
+                      body: [
+                        [
+                          {
+                            style: 'overview__data',
+                            text: this.subjectsInline,
+                          },
+                        ],
+                      ],
+                    },
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            margin: [20, 8, 0, 0],
+            stack: [this.themes(), this.finalProduct()],
+          },
+        ],
+      }
+      console.log('finsihed overview')
+      resolve()
+    })
+  }
+
+  // Build Evaluation Criteria and Contents
+  evaluationCriteria(): Promise<any> {
+    console.log('Build Evaluation criteria: evaluationCriteria()')
+    return new Promise(async (resolve, reject) => {
+      if (this.isStepDone(3) && this.isStepDone(4)) {
+        this.projectEvaluationCriteria = await Promise.all(
+          this.subjectEvaluation.map(
+            (
+              {
+                subjectID,
+                subjectName,
+                subjectRelation,
+                evaluationCriteria,
+                customContents,
+              },
+              index
+            ) => {
+              if (subjectRelation === 'basic-skill') {
+                return this.evaluationBasicSkill(
+                  subjectName,
+                  evaluationCriteria,
+                  customContents,
+                  index
+                )
+              } else if (subjectRelation === 'dimension') {
+                return this.evaluationDimension(
+                  subjectID,
+                  subjectName,
+                  evaluationCriteria,
+                  customContents,
+                  index
+                )
+              } else if (subjectRelation === 'no-relation') {
+                return this.evaluationNoRelation(
+                  subjectName,
+                  evaluationCriteria,
+                  customContents,
+                  index
+                )
+              }
+            }
+          )
+        )
+        resolve(this.projectEvaluationCriteria)
+      } else {
+        resolve()
+      }
+    })
+  }
+
+  evaluationBasicSkill(
+    subjectName: string,
+    evaluationCriteria: any,
+    customContents: any,
+    index: number
+  ): object {
+    const basicSkillCodes = this.shortCodes.basicSkillCodes.sort((a, b) => {
+      return a.id - b.id
+    })
+    this.curriculumRelation = 'basic-skill'
+    const tableHeader = [
+      {
+        text: this.evaluationSubtitle,
+        style: 'subjectSubHeader',
+      },
+      {
+        text: this.contentSubtitle,
+        style: 'subjectSubHeader',
+      },
+    ]
+    const widths = []
+    for (const item of basicSkillCodes) {
+      tableHeader.push({
+        text: item.code,
+        style: 'subjectSubHeaderCenter',
+      })
+      widths.push(30)
+    }
+    const tableBody = []
+    tableBody.push(tableHeader)
+    if (evaluationCriteria.length) {
+      evaluationCriteria.forEach((group) => {
+        const evalNames = []
+        const contentsData = []
+        let basicSkillData = []
+        group.evaluationData.forEach((item) => {
+          this.rowIndex++
+          basicSkillData.push(...item.basicSkills)
+          evalNames.push({
+            columns: [
+              {
+                width: 'auto',
+                text: this.rowIndex + '.',
+                style: ['orderedList', 'contentText'],
+              },
+              {
+                width: '*',
+                text: trimWhitespace(item.name),
+                style: ['contentText'],
+              },
+            ],
+            margin: [-10, 0, 0, 0],
+          })
+        })
+        if (group.contentData?.length) {
+          group.contentData.forEach((entity) => {
+            contentsData.push({ text: entity.name })
+          })
+        }
+        // Get distinct basic skills
+        basicSkillData = [...new Set(basicSkillData.map((items) => items.code))]
+        const markedBasicSkill = []
+        basicSkillCodes.forEach((item) => {
+          if (basicSkillData.includes(item.code)) {
+            markedBasicSkill.push({
+              text: '.',
+              style: ['icon', 'mark'],
+            })
+          } else {
+            markedBasicSkill.push({
+              text: '',
+            })
+          }
+        })
+        tableBody.push([
+          {
+            type: 'none',
+            ul: evalNames,
+            style: ['contentText'],
+          },
+          {
+            ul: contentsData,
+            style: ['contentText'],
+          },
+          ...markedBasicSkill,
+        ])
+      })
+    }
+    if (customContents?.length) {
+      tableBody.push([
+        {
+          text: this.customContentSubtitle,
+          fillColor: '#fff',
+          style: 'subjectSubHeader',
+          colSpan: tableHeader.length,
+        },
+      ])
+      customContents.map((item) => {
+        tableBody.push([
+          {
+            ul: [
+              {
+                text: item.name,
+                style: ['contentText'],
+              },
+            ],
+            colSpan: tableHeader.length,
+          },
+        ])
+      })
+    }
+    const basicSkillDesc = []
+    basicSkillDesc.push({
+      text: this.footerCompetencias + '.',
+      style: 'shortCode',
+    })
+    basicSkillCodes.forEach((item, i, array) => {
+      basicSkillDesc.push(
+        { text: ' ' + item.code + ': ', style: 'shortCode' },
+        {
+          text: item.name + (i === array.length - 1 ? ' ' : ','),
+          style: 'shortCodeDesc',
+        }
+      )
+    })
+    return {
+      id: 'subjectTableStart' + index,
+      tocItem: true,
+      // unbreakable: true,
+      stack: [
+        {
+          table: {
+            widths: ['*'],
+            body: [
+              [{ text: subjectName.toUpperCase(), style: ['subjectHeader'] }],
+            ],
+          },
+          layout: 'headerLayout',
         },
         {
-          margin: [20, 8, 0, 0],
-          stack: [this.themes(), this.finalProduct()],
+          id: subjectName + '-criteriaStart',
+          table: {
+            widths: ['*', '*', ...widths],
+            headerRows: 1,
+            // keepWithHeaderRows: 1,
+            // dontBreakRows: true,
+            body: tableBody,
+          },
+          layout: 'tertiaryLayout',
+        },
+        {
+          text: basicSkillDesc,
+          margin: [0, 10, 0, 15],
         },
       ],
     }
   }
 
-  // PDF Document render Driving Questions
-  driving(): object {
-    const questionList = this.projectData?.drivingQuestions
-    if (this.isStepDone(7) && questionList?.length) {
-      const tableHeader = [
-        {
-          text: this.drivingQuestionsTitle.toUpperCase(),
-          style: 'tableHeader',
-        },
-      ]
-      const tableBody = []
-      tableBody.push(tableHeader)
-      questionList.forEach((item) => {
-        const dataRow = []
-        tableHeader.forEach(() => {
-          dataRow.push([this.getList(item.name)])
-        })
-        tableBody.push(dataRow)
+  evaluationDimension(
+    subjectID: number,
+    subjectName: string,
+    evaluationCriteria: any,
+    customContents: any,
+    index: number
+  ): object {
+    const dim = this.subjectWiseDimension.filter(
+      (item) => item.id === subjectID
+    )[0].dimensions
+    this.curriculumRelation = 'dimension'
+    const tableHeader = [
+      { text: this.evaluationSubtitle, style: 'subjectSubHeader' },
+      { text: this.contentSubtitle, style: 'subjectSubHeader' },
+    ]
+    const widths = []
+    dim.forEach((item, i) => {
+      tableHeader.push({
+        text: 'D' + (i + 1),
+        style: 'subjectSubHeaderCenter',
       })
-      return {
-        id: 'driving',
-        tocItem: true,
-        margin: [0, 20, 0, 0],
-        table: {
-          widths: ['*'],
-          body: tableBody,
+      widths.push('*')
+    })
+    const tableBody = []
+    tableBody.push(tableHeader)
+    if (evaluationCriteria.length) {
+      evaluationCriteria.forEach((group) => {
+        const evalNames = []
+        const contentsData = []
+        let dimensionData = []
+        group.evaluationData.forEach((item) => {
+          this.rowIndex++
+          dimensionData.push(...item.dimensions)
+          evalNames.push({
+            columns: [
+              {
+                width: 'auto',
+                text: this.rowIndex + '.',
+                style: 'orderedList',
+              },
+              {
+                width: '*',
+                text: trimWhitespace(item.name),
+              },
+            ],
+            margin: [-10, 0, 0, 0],
+          })
+        })
+        if (group.contentData?.length) {
+          group.contentData.forEach((entity) => {
+            contentsData.push({ text: entity.name })
+          })
+        }
+        // Get distinct basic skills
+        dimensionData = [...new Set(dimensionData.map((items) => items.id))]
+        const markedDimension = []
+        dim.forEach((item) => {
+          if (dimensionData.includes(item.id)) {
+            markedDimension.push({
+              text: '.',
+              style: ['icon', 'mark'],
+            })
+          } else {
+            markedDimension.push('')
+          }
+        })
+        tableBody.push([
+          {
+            type: 'none',
+            ul: evalNames,
+          },
+          {
+            ul: contentsData,
+          },
+          ...markedDimension,
+        ])
+      })
+    }
+    if (customContents?.length) {
+      tableBody.push([
+        {
+          text: this.customContentSubtitle,
+          fillColor: '#fff',
+          style: 'subjectSubHeader',
+          colSpan: tableHeader.length,
         },
-        layout: 'defaultLayout',
-      }
+      ])
+      customContents.map((item) => {
+        tableBody.push([
+          {
+            ul: [
+              {
+                text: item.name,
+              },
+            ],
+            colSpan: tableHeader.length,
+          },
+        ])
+      })
+    }
+    const dimensionDesc = []
+    dimensionDesc.push({
+      text: this.footerDimension + ' ' + subjectName + '.',
+      style: 'shortCode',
+    })
+    dim.forEach((item, i, array) => {
+      dimensionDesc.push(
+        { text: ' D' + (i + 1) + ': ', style: 'shortCode' },
+        {
+          text: item.name + (i === array.length - 1 ? ' ' : ','),
+          style: 'shortCodeDesc',
+        }
+      )
+    })
+    return {
+      id: 'subjectTableStart' + index,
+      // unbreakable: true,
+      tocItem: true,
+      stack: [
+        {
+          table: {
+            widths: ['*'],
+            body: [
+              [{ text: subjectName.toUpperCase(), style: ['subjectHeader'] }],
+            ],
+          },
+          layout: 'headerLayout',
+        },
+        {
+          id: subjectName + '-criteriaStart',
+          table: {
+            widths: [180, 140, ...widths],
+            headerRows: 1,
+            // keepWithHeaderRows: 1,
+            // dontBreakRows: true,
+            body: tableBody,
+          },
+          layout: 'tertiaryLayout',
+        },
+        {
+          text: dimensionDesc,
+          margin: [0, 10, 0, 15],
+        },
+      ],
     }
   }
 
-  // PDF Document render Themes
+  evaluationNoRelation(
+    subjectName: string,
+    evaluationCriteria: any,
+    customContents: any,
+    index: number
+  ): object {
+    this.curriculumRelation = 'no-relation'
+    console.log('no relation')
+    const tableHeader = [
+      {
+        text: this.evaluationSubtitle,
+        style: 'subjectSubHeader',
+      },
+      {
+        text: this.contentSubtitle,
+        style: 'subjectSubHeader',
+      },
+    ]
+    const tableBody = []
+    tableBody.push(tableHeader)
+    if (evaluationCriteria.length) {
+      evaluationCriteria.forEach((group) => {
+        const evalNames = []
+        const contentsData = []
+        group.evaluationData.forEach((item) => {
+          this.rowIndex++
+          evalNames.push({
+            columns: [
+              {
+                width: 'auto',
+                text: this.rowIndex + '.',
+                style: 'orderedList',
+              },
+              {
+                width: '*',
+                text: trimWhitespace(item.name),
+              },
+            ],
+            margin: [-10, 0, 0, 0],
+          })
+        })
+        if (group.contentData?.length) {
+          group.contentData.forEach((entity) => {
+            contentsData.push({
+              text: entity.name,
+            })
+          })
+        }
+        tableBody.push([
+          {
+            type: 'none',
+            ul: evalNames,
+          },
+          {
+            ul: contentsData,
+          },
+        ])
+      })
+    }
+    if (customContents?.length) {
+      tableBody.push([
+        {
+          text: this.customContentSubtitle,
+          fillColor: '#fff',
+          style: 'subjectSubHeader',
+          margin: [10, 0, 10, 0],
+          colSpan: tableHeader.length,
+        },
+      ])
+      customContents.map((item) => {
+        tableBody.push([
+          {
+            text: item.name,
+            margin: [10, 0, 10, 0],
+            colSpan: tableHeader.length,
+          },
+        ])
+      })
+    }
+    return {
+      id: 'subjectTableStart' + index,
+      unbreakable: true,
+      // tocItem: true,
+      stack: [
+        {
+          table: {
+            widths: ['*'],
+            body: [[{ text: subjectName, style: ['subjectHeader'] }]],
+          },
+          layout: 'headerLayout',
+        },
+        {
+          id: subjectName + '-criteriaStart',
+          table: {
+            widths: ['*', '*'],
+            headerRows: 1,
+            keepWithHeaderRows: 1,
+            dontBreakRows: true,
+            body: tableBody,
+          },
+          layout: 'tertiaryLayout',
+        },
+      ],
+    }
+  }
+
+  competencyRelation(): Promise<any> {
+    console.log('Build Competency Relation Table: competencyRelation()')
+    return new Promise((resolve, reject) => {
+      const basicSkillTable = []
+      const tableSubHeader = []
+      const widths = []
+      if (
+        this.projectData.basicSkills.length &&
+        this.curriculumRelation === 'no-relation'
+      ) {
+        for (const item of this.shortCodes.basicSkillCodes.slice(0, 7)) {
+          tableSubHeader.push({
+            text: item.code,
+            style: 'subjectSubHeaderCenter',
+          })
+          widths.push('*')
+        }
+        basicSkillTable.push(tableSubHeader)
+
+        const basicSkillData = this.projectData.basicSkills.map(
+          (item) => item.code
+        )
+        const markedBasicSkill = []
+        const basicSkillRelative = this.shortCodes.basicSkillCodes.slice(0, 7)
+        console.log(this.projectData.basicSkills, basicSkillRelative)
+        basicSkillRelative.forEach((item) => {
+          console.log(basicSkillData, item)
+          if (basicSkillData.includes(item.code)) {
+            markedBasicSkill.push({
+              text: '.',
+              style: ['icon', 'mark'],
+            })
+          } else {
+            markedBasicSkill.push(' ')
+          }
+        })
+        console.log(markedBasicSkill)
+        basicSkillTable.push([...markedBasicSkill])
+        this.projectCompetencyRelation = {
+          id: this.competenciasSubtitle,
+          margin: [0, 10, 0, 10],
+          stack: [
+            {
+              table: {
+                widths: ['*'],
+                body: [
+                  [
+                    {
+                      text: this.competenciasSubtitle,
+                      style: ['subjectHeader'],
+                    },
+                  ],
+                ],
+              },
+              layout: 'headerLayout',
+            },
+            {
+              id: this.competenciasSubtitle + '-table',
+              table: {
+                widths: [...widths],
+                headerRows: 1,
+                keepWithHeaderRows: 1,
+                dontBreakRows: true,
+                body: basicSkillTable,
+              },
+              layout: 'competencyLayout',
+            },
+          ],
+        }
+        resolve(this.projectCompetencyRelation)
+      } else {
+        resolve()
+      }
+    })
+  }
+
+  // Build Driving Questions
+  driving(): Promise<any> {
+    console.log('Build Driving Question: driving()')
+    return new Promise((resolve, reject) => {
+      const questionList = this.projectData?.drivingQuestions
+      if (this.isStepDone(7) && questionList?.length) {
+        const tableHeader = [
+          {
+            text: this.drivingQuestionsTitle.toUpperCase(),
+            style: 'tableHeader',
+          },
+        ]
+        const tableBody = []
+        tableBody.push(tableHeader)
+        questionList.forEach((item) => {
+          const dataRow = []
+          tableHeader.forEach(() => {
+            dataRow.push([this.getList(item.name)])
+          })
+          tableBody.push(dataRow)
+        })
+        this.projectDrivingQns = {
+          id: 'driving',
+          tocItem: true,
+          margin: [0, 20, 0, 0],
+          table: {
+            widths: ['*'],
+            body: tableBody,
+          },
+          layout: 'defaultLayout',
+        }
+        resolve()
+      } else {
+        resolve()
+      }
+    })
+  }
+
+  // Build Themes
   themes(): object {
+    console.log('Build Themes: themes()')
     const themesList = this.projectData?.themes
     const tableHeader = [
       {
@@ -747,8 +1395,9 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  // PDF Document render Final product
+  // Build Final product
   finalProduct(): object {
+    console.log('Build Final Product: finalProduct()')
     return {
       margin: [0, 0, 0, 20],
       table: {
@@ -775,86 +1424,88 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Objectives and standards
-  objectives(): object {
-    const objectives = this.projectData.competencyObjectives
-    const tableBody = []
-    if (this.isStepDone(5) && objectives?.length) {
-      const tableHeader = [
-        {
-          text: [
-            {
-              text: this.objectivesTitle.toUpperCase() + '\n',
-            },
-            {
-              text: this.objectivesSubTitle,
-              style: 'tableHeaderSmall',
-            },
-          ],
-          style: 'tableHeader',
-        },
-        {
-          text: [
-            {
-              text: this.standardsTitle.toUpperCase(),
-            },
-          ],
-          margin: [0, 6],
-          style: 'tableHeader',
-        },
-      ]
-      tableBody.push(tableHeader)
-      objectives.forEach((item, row) => {
-        const allStandards = item.standards.concat(item.customStandards)
-        const standards = allStandards.map((standard) => {
-          return this.getList(standard.name, 'bulletList')
-        })
-        const dataRow = []
-        tableHeader.forEach((heading, column) => {
-          if (column === 0) {
-            dataRow.push([
+  // Build Objectives and standards
+  objectives(): Promise<any> {
+    console.log('Build Objectives: objectives()')
+    return new Promise((resolve, reject) => {
+      const objectives = this.projectData.competencyObjectives
+      const tableBody = []
+      if (this.isStepDone(5) && objectives?.length) {
+        const tableHeader = [
+          {
+            text: [
               {
-                columns: [
-                  {
-                    width: 'auto',
-                    text: row + 1 + '.',
-                    style: 'orderedList',
-                  },
-                  {
-                    width: '*',
-                    text: trimWhitespace(item.name),
-                  },
-                ],
+                text: this.objectivesTitle.toUpperCase() + '\n',
               },
-            ])
-          }
-          if (column === 1) {
-            standards.forEach(() => {})
-            dataRow.push([standards])
-          }
+              {
+                text: this.objectivesSubTitle,
+                style: 'tableHeaderSmall',
+              },
+            ],
+            style: 'tableHeader',
+          },
+          {
+            text: [
+              {
+                text: this.standardsTitle.toUpperCase(),
+              },
+            ],
+            style: 'tableHeader',
+          },
+        ]
+        tableBody.push(tableHeader)
+        objectives.forEach((item, row) => {
+          const allStandards = item.standards.concat(item.customStandards)
+          const standards = allStandards.map((standard) => {
+            return this.getList(standard.name, 'bulletList')
+          })
+          const dataRow = []
+          tableHeader.forEach((heading, column) => {
+            if (column === 0) {
+              dataRow.push([
+                {
+                  columns: [
+                    {
+                      width: 'auto',
+                      text: row + 1 + '.',
+                      style: 'orderedList',
+                    },
+                    {
+                      width: '*',
+                      text: trimWhitespace(item.name),
+                    },
+                  ],
+                },
+              ])
+            }
+            if (column === 1) {
+              standards.forEach(() => {})
+              dataRow.push([standards])
+            }
+          })
+          tableBody.push(dataRow)
         })
-        tableBody.push(dataRow)
-      })
-    }
-    if (tableBody.length) {
-      return {
-        id: 'objectives',
-        margin: [0, 10, 0, 10],
-        table: {
-          dontBreakRows: true,
-          widths: ['50%', '50%'],
-          body: tableBody,
-        },
-        layout: 'defaultLayout',
       }
-    } else {
-      return {
-        text: '',
-      }
-    }
+      this.projectObjectiveStandards = tableBody.length
+        ? {
+            id: 'objectives',
+            tocItem: true,
+            margin: [0, 10, 0, 10],
+            table: {
+              // headerRows: 1,
+              // keepWithHeaderRows: 1,
+              // dontBreakRows: true,
+              widths: ['50%', '50%'],
+              body: tableBody,
+            },
+            layout: 'defaultLayout',
+          }
+        : null
+      resolve()
+    })
   }
 
-  // Funtion for getting localizations
+  // Get localizations for the content
   getLocalizations(): void {
     this.translateService
       .stream([
@@ -867,6 +1518,12 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         'PROGRAMACION.project_structure_stepsmenu_objectives',
         'PROGRAMACION.project_structure_stepsmenu_standards',
         'PROGRAMACION.output_objectives_subtitle',
+        'PROGRAMACION.project_objectives_criterion',
+        'PROGRAMACION.project_structure_stepsmenu_content',
+        'PROGRAMACION.project_objectives_criteriawindow_basic_skills',
+        'PROGRAMACION.project_content_extracontent',
+        'PROGRAMACION.output_footer_dimensions',
+        'PROGRAMACION.output_footer_competences',
       ])
       .subscribe((translations) => {
         this.academicYearTitle =
@@ -887,6 +1544,20 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           translations['PROGRAMACION.project_structure_stepsmenu_standards']
         this.objectivesSubTitle =
           translations['PROGRAMACION.output_objectives_subtitle']
+        this.evaluationSubtitle =
+          translations['PROGRAMACION.project_objectives_criterion']
+        this.contentSubtitle =
+          translations['PROGRAMACION.project_structure_stepsmenu_content']
+        this.customContentSubtitle =
+          translations['PROGRAMACION.project_content_extracontent']
+        this.competenciasSubtitle =
+          translations[
+            'PROGRAMACION.project_objectives_criteriawindow_basic_skills'
+          ]
+        this.footerCompetencias =
+          translations['PROGRAMACION.output_footer_competences']
+        this.footerDimension =
+          translations['PROGRAMACION.output_footer_dimensions']
       })
   }
 
@@ -899,5 +1570,28 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         },
       ],
     }
+  }
+
+  customOrderedList(item: string, styleName: string = ''): object {
+    return {
+      // markerColor: 'red',
+      ol: [
+        {
+          text: trimWhitespace(item),
+          style: styleName,
+        },
+      ],
+    }
+  }
+
+  groupBy(objectArray: any, property: string): object {
+    return objectArray.reduce((acc, obj) => {
+      const key = obj[property]
+      if (!acc[key]) {
+        acc[key] = []
+      }
+      acc[key].push(obj)
+      return acc
+    }, {})
   }
 }

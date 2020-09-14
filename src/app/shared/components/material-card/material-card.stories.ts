@@ -48,7 +48,7 @@ storiesOf('Shared|Material Card', module)
     ],
     props: {
       link: text('link', 'https://youtu.be/hGIW2fDb0jg'),
-      validPreviewLink: boolean('falied to find page?', false),
+      validPreviewLink: boolean('falied to find page?', true),
       thumbnail: text(
         'thumbnail',
         'https://helpx.adobe.com/content/dam/help/en/stock/how-to/visual-reverse-image-search-v2_297x176.jpg'
@@ -60,8 +60,8 @@ storiesOf('Shared|Material Card', module)
       ),
       variant: select(
         'Variant',
-        ['video', 'image', 'form', 'evaluation', 'preview'],
-        'image'
+        ['VIDEO', 'IMAGE', 'FORM', 'EVALUATION', 'PREVIEW', 'WEB'],
+        'IMAGE'
       ),
       size: select('Size', ['medium', 'small'], 'medium'),
       showSwitch: boolean('Show Switch', true),

@@ -25,4 +25,22 @@ export class ProjectOutputService {
       `${environment.apiUrl.projectService}/projects/${id}/steps`
     )
   }
+
+  getCodes(id: string): Observable<any> {
+    return this.http.get<any>(
+      `${environment.apiUrl.curriculumService}/curriculums/${id}/basicskills/dimensions`
+    )
+  }
+
+  getCrtieriasDetails(ids: any): Observable<any> {
+    return this.http.get<any>(
+      `${environment.apiUrl.curriculumService}/evaluationcriteria/${ids}`
+    )
+  }
+
+  getSubjectWiseDimension(id: any): Observable<any> {
+    return this.http.get<any>(
+      `${environment.apiUrl.curriculumService}/curriculums/${id}/dimensions`
+    )
+  }
 }

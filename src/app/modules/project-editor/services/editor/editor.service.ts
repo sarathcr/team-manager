@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
-
 import { BehaviorSubject, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
@@ -12,9 +11,15 @@ import {
   Step,
   StepState,
 } from 'src/app/modules/project-editor/constants/model/project.model'
+import { unfreeze } from 'src/app/shared/utility/object.utility'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { Activity, ActivityState } from '../../constants/model/activity.model'
+import {
+  Activity,
+  ActivityState,
+  Exercise,
+} from '../../constants/model/activity.model'
 import { FormsData } from '../../constants/model/step-forms.model'
+import { ProjectListEntityService } from '../../store/entity/project-list/project-list-entity.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 
@@ -29,7 +34,7 @@ export class EditorService {
   activityState$: ActivityState
   activity: Activity
   activityId: number
-  project: Project
+  private project: Project
   step$: Observable<Step>
   notFound: boolean
   titleData: ProjectTitle
@@ -37,23 +42,26 @@ export class EditorService {
   stepStatus$: Observable<StepState>
   tempStatus: any
   currentStepId: statusId
+  currentUrl: string
   nextStepId: statusId
   isStepDone: boolean
   currentStep$: BehaviorSubject<number> = new BehaviorSubject(1)
   loading$: Observable<boolean>
   loaded$: BehaviorSubject<boolean> = new BehaviorSubject(false)
   subscriptions = new SubSink()
+  activitySubscription = new SubSink()
 
   constructor(
     private projectsService: ProjectEntityService,
     private stepStatusService: StepStatusEntityService,
+    private projectListService: ProjectListEntityService,
     private router: Router
   ) {}
 
   getProject(projectId: string | number): void {
     if (projectId !== 'create') {
       if (!/^\d+$/.test(projectId?.toString())) {
-        // this.router.navigate(['not-found']) WIP Abijith
+        this.router.navigate(['not-found'])
       } else {
         this.project$ = this.projectsService.entities$.pipe(
           map((projects) =>
@@ -91,12 +99,12 @@ export class EditorService {
     this.activityId = activityId
     this.activity$ = this.activities$.pipe(
       map((activities) =>
-        activities.find((activity) => {
+        activities?.find((activity) => {
           return activity.id === activityId
         })
       )
     )
-    this.subscriptions.sink = this.activity$.subscribe(
+    this.activitySubscription.sink = this.activity$.subscribe(
       (activity) => (this.activity = activity)
     )
   }
@@ -125,10 +133,18 @@ export class EditorService {
                   : null,
                 grades: data?.grades?.map(({ id, name }) => ({ id, name })),
                 subjects: data?.subjects?.map(
-                  ({ id, name, evaluationCriteria }) => ({
+                  ({
                     id,
                     name,
                     evaluationCriteria,
+                    contents,
+                    customContents,
+                  }) => ({
+                    id,
+                    name,
+                    evaluationCriteria,
+                    contents,
+                    customContents,
                   })
                 ),
                 stage: data.stage,
@@ -292,6 +308,7 @@ export class EditorService {
       this.subscriptions.sink = this.projectsService
         .add(newProject)
         .subscribe((newResProject) => {
+          this.projectListService.clearCache()
           if (browserUrl.includes('create')) {
             this.router.navigate([
               `editor/project/${newResProject.id}/${this.currentStepId}`,
@@ -349,6 +366,36 @@ export class EditorService {
     }
   }
 
+  handleExerciseSubmit(exercise: Exercise): void {
+    const project: ProjectUpdate = unfreeze({
+      ...this.project,
+      activityId: this.activityId,
+    })
+    switch (exercise.updateType) {
+      case 'create':
+        delete exercise.updateType
+        project.updateType = 'createExercise'
+        for (const activity of project.activities) {
+          if (activity.id === this.activityId) {
+            if (activity.exercises) {
+              activity.exercises.push({ ...exercise, id: null })
+            } else {
+              activity.exercises = [{ ...exercise, id: null }]
+            }
+          }
+        }
+        project.exercise = exercise
+        this.projectsService.update(project)
+        break
+      case 'delete':
+        break
+      case 'update':
+        break
+      default:
+        break
+    }
+  }
+
   handleStepSubmit(data: FormsData, isDone: boolean = false): void {
     this.handleSubmit(data.data)
     this.submitStepStatus(data.stepStatus)
@@ -373,8 +420,9 @@ export class EditorService {
     this.getNextSectionId()
     if (this.isStepDone) {
       if (this.projectId && this.currentStepId !== this.nextStepId) {
+        this.currentUrl = this.router.url
         setTimeout(() => {
-          this.redirectToStep(this.nextStepId)
+          this.redirectToStep(this.nextStepId, 'formSubmission')
         }, 1000)
       }
     }
@@ -384,7 +432,7 @@ export class EditorService {
   private getNextSectionId(): void {
     for (const [index, step] of this.steps.entries()) {
       if (step.stepid === this.currentStepId) {
-        if (step.stepid < 10) {
+        if (step.stepid < this.steps?.length) {
           this.nextStepId = this.steps[index + 1].stepid
         } else {
           this.nextStepId = step.stepid
@@ -396,6 +444,10 @@ export class EditorService {
   clearData(): void {
     this.subscriptions.unsubscribe()
     this.project$ = null
+    this.activities$ = null
+    this.activity$ = null
+    this.project = null
+    this.activity = null
     this.stepStatus$ = null
     this.titleData = null
     this.projectId = null
@@ -404,6 +456,11 @@ export class EditorService {
     this.isStepDone = false
     this.loaded$.next(false)
     this.steps = []
+    this.clearActivityData()
+  }
+
+  clearActivityData(): void {
+    this.activitySubscription.unsubscribe()
   }
 
   createSteps(): Step[] {
@@ -450,15 +507,23 @@ export class EditorService {
           state: 'PENDING',
           name: 'STEPS_MENU.project_structure_stepsmenu_sinopsis',
         },
-        { stepid: 10, state: 'PENDING', name: 'Interacción' },
       ]
     }
     return this.steps
   }
 
-  redirectToStep(id: number): void {
-    if (id && id - this.currentStepId === 1) {
-      this.router.navigate([`editor/project/${this.projectId}/${id}`])
+  redirectToStep(nextStepId: number, redirectType?: 'formSubmission'): void {
+    if (nextStepId) {
+      if (redirectType && redirectType === 'formSubmission') {
+        const intermediateUrl = this.router.url // if user switches to another route inbetween
+        if (this.currentUrl === intermediateUrl) {
+          this.router.navigate([
+            `editor/project/${this.projectId}/${nextStepId}`,
+          ])
+        }
+      } else {
+        this.router.navigate([`editor/project/${this.projectId}/${nextStepId}`])
+      }
     }
   }
 }

@@ -1,8 +1,9 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
 .project-form {
   $root: &;
   &__detail-selector-wrapper {
-    margin-bottom: $margin * 3;
+    margin-bottom: spacing(primary) * 3;
     ::ng-deep {
       .details-selector {
         margin-bottom: 0;

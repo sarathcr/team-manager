@@ -1,0 +1,9 @@
+.picker-container {
+  display: flex;
+  flex-flow: row wrap;
+  height: 580px;
+}
+
+.picker-dialog-bg {
+  display: none !important;
+}

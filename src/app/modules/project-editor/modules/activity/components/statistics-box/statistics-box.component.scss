@@ -1,44 +1,33 @@
+@import 'variables/_variables-master';
 @import 'helpers/_helpers-master';
-@import 'helpers/bt-mixins';
-
 .statistics-box {
   border-radius: 4px;
-  background-color: $white;
+  background-color: color(quaternary);
   min-width: 226px;
   position: relative;
   height: 100%;
-
+  margin-bottom: 20px;
+  @include common-card-box-shadow();
   &__upper-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 24px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
     position: absolute;
     right: 24px;
     top: -22px;
-    background-color: $white;
+    background-color: color(quaternary);
     background-position: left center;
     background-size: cover;
     background-repeat: no-repeat;
-    -webkit-box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.05);
-    -moz-box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.05);
-    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include card-box-shadow();
 
     .icon-ic {
-      height: 20px;
-      width: 20px;
-      font-size: 24px;
-      margin-top: 12px;
-      margin-left: 12px;
-
-      &_objetivos {
-        margin-top: 14px;
-        margin-left: 14px;
-        font-size: 24px;
-      }
+      font-size: font-size(s);
       &_actividades {
-        margin-top: 14px;
-        margin-left: 17px;
-        font-size: 18px;
+        font-size: font-size(body);
       }
     }
   }
@@ -74,20 +63,25 @@
     &_supertitle {
       font-weight: 900;
       text-transform: uppercase;
+      font-family: font-family(secondary);
+      letter-spacing: 1px;
     }
     &_main {
       text-transform: none;
-      width: 65%;
+      width: 70%;
     }
   }
 
   &__content {
-    font-size: $font-size-default;
+    font-size: font-size(default);
     &-firstRow {
       text-transform: uppercase;
       &-separator {
         width: 1px;
-        background-image: linear-gradient(#141c3a 33%, hsla(0, 0%, 60%, 0) 0);
+        background-image: linear-gradient(
+          color(tertiary) 33%,
+          rgba(pantone(nobel), 0) 0
+        );
         background-position: 100%;
         background-size: 1px 4px;
         background-repeat: repeat-y;
@@ -98,7 +92,7 @@
     &-row {
       width: 45%;
       &-link {
-        color: $electric-indigo;
+        color: color(primary);
         font-weight: 600;
         cursor: pointer;
         text-decoration: underline;
@@ -112,23 +106,25 @@
       width: 20px;
       height: 20px;
       border-radius: 10px;
-      background-color: $link-water;
+      background: rgba(color(tertiary), 0.1);
       text-align: center;
       line-height: 20px;
     }
     &-completed {
-      background-color: $medium-turquoise;
+      background-color: color(secondary);
     }
     &-text {
       line-height: 28px;
       font-weight: 900;
       margin-left: 18px;
+      font-family: font-family(secondary);
+      letter-spacing: 1px;
     }
   }
   &__status {
     cursor: default;
     &-link {
-      color: $electric-indigo;
+      color: color(primary);
       font-weight: 600;
       cursor: pointer;
       text-decoration: underline;
@@ -145,15 +141,15 @@
     }
   }
   &__chart {
-    border: 1px solid $white-lilac;
-    background-color: $white-lilac;
+    border: 1px solid pantone(white-lilac);
+    background-color: color(background-primary);
     position: absolute;
     width: 144px;
     height: 144px;
     border-top-right-radius: 100%;
     transform: rotate(-90deg);
     bottom: -31px;
-    right: -31px;
+    right: -35px;
     overflow: hidden;
 
     &-filled-box {
@@ -166,7 +162,7 @@
       transform: rotate(-180deg);
     }
     &-quarter {
-      background-color: $medium-turquoise;
+      background-color: color(secondary);
       width: 144px;
       height: 144px;
       top: 0;
@@ -175,7 +171,7 @@
       transform: rotate(-91deg);
     }
     &-ball {
-      background-color: $medium-turquoise;
+      background-color: color(secondary);
       width: 31px;
       height: 31px;
       border-radius: 16px;
@@ -185,14 +181,14 @@
     }
 
     &-cover {
-      background-color: $white;
+      background-color: color(quaternary);
       position: absolute;
       width: 116px;
       height: 116px;
       border-top-right-radius: 100%;
       transform: rotate(-90deg);
       bottom: -31px;
-      right: -31px;
+      right: -35px;
       overflow: hidden;
     }
 
@@ -210,9 +206,9 @@
     }
 
     &-total {
-      font-family: $font-family-tertiary;
-      color: $mischika;
-      font-size: $font-size-body-s;
+      font-family: font-family(tertiary);
+      color: pantone(mischika);
+      font-size: font-size(body-s);
       font-weight: 600;
       line-height: 24px;
     }
@@ -223,8 +219,8 @@
       right: -25px;
       width: 100px;
       text-align: center;
-      font-family: $font-family-primary;
-      font-size: $font-size-s;
+      font-family: font-family(primary);
+      font-size: font-size(s);
       font-weight: 900;
       line-height: 32px;
     }

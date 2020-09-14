@@ -15,7 +15,8 @@
 <div class="output-view__section">
   <app-sidebar
     [outline]="outline"
-    (navigateTo)="navigateTo($event)"
+    [currentPage]="pageVariable"
+    (navigateTo)="scrollToPage($event)"
   ></app-sidebar>
   <div class="output-view__content">
     <pdf-viewer

@@ -1,26 +1,27 @@
+import { ReactiveFormsModule } from '@angular/forms'
 import { TranslateModule } from '@ngx-translate/core'
 import { action } from '@storybook/addon-actions'
 import {
+  boolean,
   number,
+  object,
   select,
   text,
-  boolean,
-  object,
   withKnobs,
 } from '@storybook/addon-knobs/angular'
 import { moduleMetadata, storiesOf } from '@storybook/angular'
-import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
 import { ModalModule } from 'ngx-bootstrap/modal'
-import { EditableListComponent } from './editable-list.component'
-import { ModalInfoComponent } from '../modal-info/modal-info.component'
-import { ModalFormComponent } from '../modal-form/modal-form.component'
+import { TranslateOptions } from '../../pipe/translate-cut.pipe'
+import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
 import { ButtonComponent } from '../button/button.component'
 import { InputComponent } from '../input/input.component'
+import { LoaderComponent } from '../loader/loader.component'
+import { ModalFormComponent } from '../modal-form/modal-form.component'
+import { ModalInfoComponent } from '../modal-info/modal-info.component'
 import { TextareaComponent } from '../textarea/textarea.component'
 import { ValidatorComponent } from '../validator/validator.component'
+import { EditableListComponent } from './editable-list.component'
 import markDown from './editable-list.stories.md'
-import { ReactiveFormsModule } from '@angular/forms'
-import { LoaderComponent } from '../loader/loader.component'
 
 storiesOf('Shared|EditableList', module)
   .addDecorator(
@@ -34,6 +35,7 @@ storiesOf('Shared|EditableList', module)
         TextareaComponent,
         ValidatorComponent,
         LoaderComponent,
+        TranslateOptions
       ],
       imports: [
         StorybookTranslateModule,

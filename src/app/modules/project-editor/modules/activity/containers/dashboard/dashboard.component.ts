@@ -20,6 +20,7 @@ import { DraggableRow } from '../../constants/model/draggable-row.model'
 import { Box } from '../../constants/model/statistics-box.model'
 import { ActivityEditorService } from '../../services/activity-editor.service'
 import { DashboardService } from '../../services/dashboard.service/dashboard.service'
+import { PickerService } from '../../services/picker.service/picker.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -44,6 +45,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   modalFormData: any
   action: string
   step$: Observable<Step>
+  dropdownData: any
 
   @ViewChild('modalDelete') deleteModal: TemplateRef<any>
   @ViewChild('modalUpdate') updateModal: TemplateRef<any>
@@ -53,7 +55,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     public editor: EditorService,
     private modalService: BsModalService,
     private dashboardService: DashboardService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private pickerService: PickerService
   ) {}
 
   ngOnInit(): void {
@@ -68,43 +71,41 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   initActivitiesData(): void {
-    this.subscriptions.sink = this.activityEditorService.activities$.subscribe(
-      (result) => {
-        this.activitiesData = result
-        this.subscriptions.sink = this.editor.project$.subscribe((project) => {
-          if (project) {
-            this.project = project
-            this.projectId = project.id
-            this.boxes = this.dashboardService.initBoxesData(
-              this.activitiesData,
-              project
-            )
-          }
-        })
-        const initialActivities = this.activitiesData?.filter(
-          (data) => data.phase === 'INITIAL'
-        )
-        const activitiesDevelop = this.activitiesData?.filter(
-          (data) => data.phase === 'DEVELOP'
-        )
-        const activitiesSynthesis = this.activitiesData?.filter(
-          (data) => data.phase === 'SYNTHESIS'
-        )
+    this.subscriptions.sink = this.editor.activities$.subscribe((result) => {
+      this.activitiesData = result
+      this.subscriptions.sink = this.editor.project$.subscribe((project) => {
+        if (project) {
+          this.project = project
+          this.projectId = project.id
+          this.boxes = this.dashboardService.initBoxesData(
+            this.activitiesData,
+            project
+          )
+        }
+      })
+      const initialActivities = this.activitiesData?.filter(
+        (data) => data.phase === 'INITIAL'
+      )
+      const activitiesDevelop = this.activitiesData?.filter(
+        (data) => data.phase === 'DEVELOP'
+      )
+      const activitiesSynthesis = this.activitiesData?.filter(
+        (data) => data.phase === 'SYNTHESIS'
+      )
 
-        this.activitiesDataInitial = this.dashboardService.initDraggableRows(
-          initialActivities,
-          this.projectId
-        )
-        this.activitiesDataDevelop = this.dashboardService.initDraggableRows(
-          activitiesDevelop,
-          this.projectId
-        )
-        this.activitiesDataSynthesis = this.dashboardService.initDraggableRows(
-          activitiesSynthesis,
-          this.projectId
-        )
-      }
-    )
+      this.activitiesDataInitial = this.dashboardService.initDraggableRows(
+        initialActivities,
+        this.projectId
+      )
+      this.activitiesDataDevelop = this.dashboardService.initDraggableRows(
+        activitiesDevelop,
+        this.projectId
+      )
+      this.activitiesDataSynthesis = this.dashboardService.initDraggableRows(
+        activitiesSynthesis,
+        this.projectId
+      )
+    })
   }
 
   cloneActivity(activity: Activity): void {
@@ -182,7 +183,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.declineModal()
   }
 
-  ExecuteDropdownActions(row: DraggableRow): void {
+  executeDropdownActions(row: DraggableRow): void {
     let act: Activity = this.activitiesData.filter(
       (activity) => activity.id === row.id
     )[0]
@@ -203,5 +204,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.bsModalRef = this.modalService.show(this.updateModal, {
       class: 'modal-form  modal-dialog-centered',
     })
+  }
+
+  openPicker(): void {
+    this.pickerService.onApiLoad()
   }
 }

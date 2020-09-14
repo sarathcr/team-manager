@@ -2,7 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core'
 
 import { ProjectEditorToastService } from './services/project-editor-toast/project-editor-toast.service'
 
+import { ActivatedRoute } from '@angular/router'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { EditorService } from './services/editor/editor.service'
 
 @Component({
   selector: 'app-project-editor',
@@ -12,10 +14,23 @@ import { SubSink } from 'src/app/shared/utility/subsink.utility'
 export class ProjectEditorComponent implements OnInit, OnDestroy {
   subscription = new SubSink()
   errors = []
-  constructor(public projectEditorToastService: ProjectEditorToastService) {}
+  projectId: string | number
+  constructor(
+    public projectEditorToastService: ProjectEditorToastService,
+    public editor: EditorService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.errorToast()
+    this.projectId = this.route.firstChild.snapshot.paramMap.get('id')
+    this.editor.createSteps()
+    this.editor.getProject(this.projectId)
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
+    this.editor.clearData()
   }
 
   errorToast(): void {
@@ -24,9 +39,5 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
         this.errors.push(error)
       }
     )
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
   }
 }

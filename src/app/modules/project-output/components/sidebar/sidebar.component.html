@@ -7,9 +7,15 @@
       <li
         *ngFor="let item of outline; let index = index"
         class="sidebar__item"
-        [ngClass]="{ active: index === linkId }"
+        [ngClass]="{
+          active:
+            (currentPage > item.pageNumber || currentPage == item.pageNumber) &&
+            (currentPage == item.lastPageNumber ||
+              currentPage < item.lastPageNumber)
+        }"
       >
-        <a class="sidebar__link" (click)="anchorClick(index, item[1])">
+        <!-- index === linkId || -->
+        <a class="sidebar__link" (click)="anchorClick(index, item.pageNumber)">
           {{ item.title | translate }}
         </a>
         <!-- Keep below lines only if needed after finishing the whole pdf-->

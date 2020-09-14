@@ -29,6 +29,7 @@ export class HelpAccordionComponent implements OnInit, OnDestroy {
     return this.privateContent
   }
   @Input() isOpen: boolean
+  @Input() isSetOne = false
   arrayHeight = ''
   oneAtATime = true
   isFirstOpen = true

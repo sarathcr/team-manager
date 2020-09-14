@@ -1,21 +1,28 @@
 @import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
 .draggable-row {
   width: 100%;
   background-color: #ffffff;
-  font-family: $font-family-default;
+  font-family: font-family(default);
   font-weight: bold;
   padding: 24px 12px;
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
   @include common-card-box-shadow();
   &__col {
     display: inline-block;
     vertical-align: middle;
-    border-left: 1px dotted $mischika;
+    border-left: 1px dotted pantone(mischika);
     text-align: center;
     text-transform: uppercase;
-
+    font-family: font-family(secondary);
+    &:first-child {
+      font-family: font-family(default);
+    }
     &_disabled {
-      color: $link-water;
+      color: pantone(link-water);
     }
 
     &-one {
@@ -23,7 +30,7 @@
       align-items: center;
       text-transform: none;
       width: 40%;
-      font-size: $font-size-body;
+      font-size: font-size(body);
       border-left: 0;
       text-align: left;
       line-height: 32px;
@@ -35,7 +42,7 @@
         margin-bottom: 3px;
       }
       &-text {
-        font-size: $font-size-body;
+        font-size: font-size(body);
         margin-left: 16px;
       }
     }
@@ -60,8 +67,9 @@
     &-five {
       width: 20%;
       position: relative;
+      display: flex;
+      justify-content: space-between;
       &-text {
-        padding-right: 53px;
         line-height: 20px;
         letter-spacing: 0.39px;
       }
@@ -75,15 +83,15 @@
 }
 
 .icon {
-  color: $link-water;
-  font-size: $font-size-sub-m;
+  color: pantone(link-water);
+  font-size: font-size(sub-m);
   vertical-align: sub;
   margin-right: 4px;
 
   &-ic {
     &_actividades {
       vertical-align: text-top;
-      font-size: $font-size-icon;
+      font-size: font-size(icon);
 
       &-draggable {
         vertical-align: text-top;
@@ -93,7 +101,7 @@
     }
   }
   &-tooltip {
-    color: $black;
+    color: pantone(black);
     margin-right: 15px;
   }
 }
@@ -104,7 +112,7 @@
     width: 12px;
     height: 6px;
     margin: 1px 2px;
-    background-color: $magnolia;
+    background-color: pantone(magnolia);
 
     &-container {
       vertical-align: top;
@@ -119,60 +127,18 @@
       border-radius: 0 4px 4px 0;
     }
     &-active {
-      background-color: $medium-turquoise;
+      background-color: color(secondary);
       width: 13px;
       height: 8px;
       margin: 0 1px;
     }
   }
-  &-dropdown {
-    position: absolute;
-    right: 0;
-    top: -4px;
-    width: 32px;
-    height: 32px;
-    border-radius: 16px;
-    padding: 0px 10px;
-    display: block;
-    cursor: pointer;
+}
 
-    &-menu {
-      &__text {
-        line-height: 32px;
-      }
-      &_hide {
-        display: none;
-      }
-    }
-
-    &:hover {
-      background-color: $white-smoke;
-    }
-
-    div {
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      font-size: 26px;
-      letter-spacing: 1px;
-      margin-top: 4px;
-      margin-left: 1px;
-    }
-    ul {
-      z-index: 10;
-      position: absolute;
-      text-align: left;
-      text-transform: none;
-      margin-top: 0;
-      margin-left: -100px;
-      padding: 12px 16px;
-      list-style-type: none;
-      font-size: $font-size-default;
-      background-color: $white;
-      min-width: 144px;
-      font-weight: 300;
-      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
-  }
+.content-icon {
+  font-size: 26px;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  margin-left: -7px;
+  color: $black;
 }

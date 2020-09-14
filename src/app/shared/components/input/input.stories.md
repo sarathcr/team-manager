@@ -24,6 +24,8 @@ A convenience directive for applying styling to an Input component.
             [enableValidator]="false">
             [errorText]="'validation message here'"
             [error]="invalid"
+            [maxDate]="''"
+            [minDate]="''"
             [background]="background"
             (inputChange)="validateLogin($event, 'password')">
 </app-input>
@@ -35,7 +37,7 @@ A convenience directive for applying styling to an Input component.
 
 | Name              |      Type      | Required |          Values           | Default | Description                                                             |
 | ----------------- | :------------: | :------: | :-----------------------: | :-----: | ----------------------------------------------------------------------- |
-| `variant`         | `InputVariant` |    -     | `text` `email` `password` |    -    | Variants for input component                                            |
+| `variant`         | `InputVariant` |    -     | `text` `email` `password` `number` `date`  |    -    | Variants for input component                                            |
 | `placeholder`     |       -        |    -     |             -             |    -    | Placeholder for input component                                         |
 | `label`           |    `string`    |    -     |             -             |    -    | To set the label for input component                                    |
 | `value`           |    `string`    |    -     |             -             |    -    | To set the value for input component                                    |
@@ -44,6 +46,8 @@ A convenience directive for applying styling to an Input component.
 | `enableValidator` |       -        |    -     |             -             | `false` | To enable validation for Input component                                |
 | `error`           |       -        |    -     |             -             |    -    | To trigger the error text validator for input                           |
 | `background`      |    `string`    |    -     |   `white` `white-lilac`   | `white` | To set the background color of input label                              |
+minDate             |    `Date`      |    -     |             -             |     -   | To set min Date and validate it on date variant                                  |
+maxDate             |    `Date`      |    -     |             -             |     -   | To set max Date and validate it on date variant                                  |
 
 ### Output
 

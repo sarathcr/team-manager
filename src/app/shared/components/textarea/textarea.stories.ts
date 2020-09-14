@@ -8,6 +8,7 @@ import {
   withKnobs,
 } from '@storybook/addon-knobs/angular'
 import { moduleMetadata, storiesOf } from '@storybook/angular'
+import { TranslateOptions } from '../../pipe/translate-cut.pipe'
 import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
 import { ValidatorComponent } from '../validator/validator.component'
 import { TextareaComponent } from './textarea.component'
@@ -16,7 +17,7 @@ import markDown from './textarea.stories.md'
 storiesOf('Shared|Textarea', module)
   .addDecorator(
     moduleMetadata({
-      declarations: [TextareaComponent, ValidatorComponent],
+      declarations: [TextareaComponent, ValidatorComponent, TranslateOptions],
       imports: [StorybookTranslateModule, TranslateModule.forRoot()],
     })
   )

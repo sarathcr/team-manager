@@ -1,0 +1,12 @@
+@import 'variables/_variables-master';
+.filter-wrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  &__icon {
+    font-size: font-size(s);
+  }
+  &__content {
+    font-weight: bold;
+  }
+}

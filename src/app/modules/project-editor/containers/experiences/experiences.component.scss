@@ -1,0 +1,83 @@
+@import 'variables/_variables-master';
+
+:host{
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.experiences {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 237px);
+  min-height: 100vh;
+  background-color: color(background-primary);
+  margin-left: auto;
+  padding: 115px 30px 0 30px;
+  position: relative;
+
+  &__body {
+    flex: 1 1 auto;
+  }
+
+  &__head-text {
+    font-family: font-family(tertiary);
+    font-size: font-size(xs);
+    line-height: 36px;
+    letter-spacing: 0.3px;
+    font-weight: 700;
+    margin-bottom: 22px;
+  }
+
+  &__filters {
+    width: 100%;
+  }
+
+  &__loader{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 42px;
+  }
+  
+  &__content {
+    background-color: color(background-primary);
+    min-height: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    margin-bottom: 42px;
+    &_empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+  
+      &-image {
+        padding-bottom: spacing(secondary);
+      }
+
+      &-title{
+        margin-bottom: 10px;
+      }
+  
+      &-description {
+        font-size: font-size(default);
+        text-align: center;
+        margin-bottom: 31px;
+      }
+  
+      &-button{
+        display: flex;
+        
+        &_primary{
+          margin-right: 20px;
+        }
+      }
+    }
+  }
+}
+

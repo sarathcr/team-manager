@@ -1,21 +1,21 @@
-@import 'helpers/_helpers-master';
 @import 'helpers/_bt-mixins';
+@import 'variables/_variables-master';
 
 .sidebar {
   $root: &;
   width: 235px;
   min-width: 235px;
-  background-color: $color-quaternary;
+  background-color: color(quaternary);
   height: 100%;
-  padding: $grid-gutter-width-primary;
-  padding-right: $grid-gutter-width-primary/2;
+  padding: grid-gutter(primary);
+  padding-right: spacing(primary);
   max-height: calc(100vh - 74px);
   overflow: hidden;
   &__title {
     opacity: 0.5;
-    color: $color-tertiary;
-    font-family: $font-family-default;
-    font-size: $font-size-default;
+    color: color(tertiary);
+    font-family: font-family(default);
+    font-size: font-size(default);
     font-weight: bold;
     letter-spacing: 0.16px;
     line-height: 32px;
@@ -26,10 +26,10 @@
     list-style: none;
   }
   &__item {
-    margin: $grid-gutter-width-primary/2 0;
+    margin: spacing(primary) 0;
     white-space: nowrap;
     &:first-child {
-      margin-top: $grid-gutter-width-primary/4;
+      margin-top: spacing(primary)/2;
     }
     &:before {
       content: '';
@@ -38,26 +38,26 @@
       height: 0;
       border-top: 6px solid transparent;
       border-bottom: 6px solid transparent;
-      border-left: 7px solid rgba($color-tertiary, 0.5);
-      margin-right: $grid-gutter-width-primary/2;
+      border-left: 7px solid rgba(color(tertiary), 0.5);
+      margin-right: spacing(primary);
       vertical-align: top;
       margin-top: 7px;
     }
     &.active {
       > #{$root}__link {
         font-weight: bold;
-        color: rgba($color-tertiary, 1);
+        color: rgba(color(tertiary), 1);
       }
       &:before {
-        border-left: 7px solid $color-tertiary;
+        border-left: 7px solid color(tertiary);
       }
     }
   }
   &__link,
   &__link:not([href]) {
-    color: rgba($color-tertiary, 0.5);
-    font-family: $font-family-default;
-    font-size: $font-size-default;
+    color: rgba(color(tertiary), 0.5);
+    font-family: font-family(default);
+    font-size: font-size(default);
     letter-spacing: 0.16px;
     line-height: 28px;
     display: inline-block;
@@ -74,14 +74,14 @@
     margin: 0;
     list-style: none;
     #{$root}__item {
-      margin: $grid-gutter-width-primary/3 0;
+      margin: grid-gutter(primary)/3 0;
       display: flex;
       &:before {
         width: 5px;
         height: 5px;
         border: none;
         border-radius: 50%;
-        background-color: rgba($color-tertiary, 0.5);
+        background-color: rgba(color(tertiary), 0.5);
         margin-top: 11px;
         flex: 0 0 auto;
       }

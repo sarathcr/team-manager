@@ -1,21 +1,21 @@
 @import 'helpers/_helpers-master';
 .definition {
   &__description {
-    color: $color-tertiary;
-    font-family: $font-family-tertiary;
-    font-size: $font-size-default;
+    color: color(tertiary);
+    font-family: font-family(tertiary);
+    font-size: font-size(default);
     letter-spacing: 0;
     line-height: 24px;
     margin-bottom: 30px;
   }
   &__title {
-    color: $color-tertiary;
-    font-family: $font-family-tertiary;
-    font-size: $font-size-sub-s;
+    color: color(tertiary);
+    font-family: font-family(tertiary);
+    font-size: font-size(sub-s);
     font-weight: bold;
     letter-spacing: 0.2px;
     line-height: 28px;
-    margin: 20px 0 27px;
+    margin: spacing(primary) 0 25px;
     &_optional {
       line-height: 24px;
       font-size: 14px;
@@ -36,12 +36,12 @@
       flex-direction: column;
       margin-top: 25px;
       margin-bottom: 28px;
-      border: 1px solid rgba($color-tertiary, 0.1);
+      border: 1px solid rgba(color(tertiary), 0.1);
       border-radius: 3px 3px 0 0;
     }
 
     &__header {
-      border-bottom: 1px solid rgba($color-tertiary, 0.1);
+      border-bottom: 1px solid rgba(color(tertiary), 0.1);
     }
 
     &__body {
@@ -58,12 +58,15 @@
 
     &__title,
     &__item {
-      font-family: $font-family-tertiary;
+      font-family: font-family(tertiary);
       font-weight: 700;
       font-size: 14px;
       letter-spacing: 0;
       line-height: 24px;
       padding: 12px 20px;
+      &_pr_scrollbar {
+        padding-right: 33px !important;
+      }
     }
 
     &__item {
@@ -75,7 +78,6 @@
       flex-direction: row;
       word-break: break-all;
       &:not(:strong) {
-        word-break: break-all;
         word-wrap: break-word;
       }
     }
@@ -89,7 +91,7 @@
       $root-item: &;
       &:not(:first-child) {
         &#{$root-item}-head {
-          border-top: 1px solid rgba($color-tertiary, 0.1);
+          border-top: 1px solid rgba(color(tertiary), 0.1);
         }
       }
       &:last-child {
@@ -99,14 +101,14 @@
 
     &__subject-head,
     &__standard-head {
-      background: rgba($color-tertiary, 0.05);
+      background: rgba(color(tertiary), 0.05);
       padding: 12px 20px;
-      border-bottom: 1px solid rgba($color-tertiary, 0.1);
+      border-bottom: 1px solid rgba(color(tertiary), 0.1);
     }
 
     &__subject-title,
     &__standard-title {
-      font-family: $font-family-tertiary;
+      font-family: font-family(tertiary);
       font-weight: 700;
       font-size: 14px;
       letter-spacing: 0;
@@ -116,6 +118,7 @@
     &__standard-title {
       font-weight: 400;
       display: flex;
+      word-break: break-word;
     }
 
     &__label {
@@ -123,6 +126,9 @@
       &:last-child {
         padding-bottom: 10px;
       }
+    }
+    &__item-index {
+      white-space: nowrap;
     }
   }
 }

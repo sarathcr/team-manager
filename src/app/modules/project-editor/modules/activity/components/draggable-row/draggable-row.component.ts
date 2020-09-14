@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { DraggableRow } from '../../constants/model/draggable-row.model'
+import { DropdownElement } from 'src/app/shared/constants/model/form-elements.model'
+import {
+  DraggableRow,
+  DropdownItem,
+} from '../../constants/model/draggable-row.model'
 
 @Component({
   selector: 'app-draggable-row',
@@ -8,18 +12,15 @@ import { DraggableRow } from '../../constants/model/draggable-row.model'
 })
 export class DraggableRowComponent {
   @Input() element: DraggableRow
-  @Output() action: EventEmitter<any> = new EventEmitter()
+  @Input() dropdownData: DropdownElement
 
-  showDropdown = false
+  @Output() actionEmited: EventEmitter<any> = new EventEmitter()
 
   constructor() {}
 
-  executeAction(element: DraggableRow, action: string): void {
-    const elem = { ...element, action }
-    this.action.emit(elem)
-  }
-
-  isOpenChange(): void {
-    this.showDropdown = !this.showDropdown
+  actionEmit(elementSelected: DropdownItem): void {
+    const action = elementSelected.action
+    const elem = { ...this.element, action }
+    this.actionEmited.emit(elem)
   }
 }

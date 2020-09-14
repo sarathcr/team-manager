@@ -33,8 +33,14 @@ export class ModalFormComponent implements OnInit {
   @Input() maxLength: number
   @Input() enableValidator = true
   @Input() inputVariant: InputVariant = 'text'
+  @Input() placeholder = ''
+  @Input() description = ''
+  @Input() titleVariant: 'primary' | 'secondary' = 'primary'
+  @Input() buttonDisabled = true
+  @Input() error = false
   @Output() decline = new EventEmitter()
   @Output() confirm = new EventEmitter()
+  @Output() getInputValue = new EventEmitter()
   status: Status
 
   constructor(private location: PlatformLocation) {
@@ -47,8 +53,8 @@ export class ModalFormComponent implements OnInit {
   }
 
   checkStatus(value: string): void {
-    if (this.variant === 'input') {
-      this.status = value?.length ? 'INPROCESS' : 'PENDING'
+    if (this.variant === 'input' && this.inputVariant !== 'number') {
+      this.buttonDisabled = !value?.length
       this.data = value
     }
   }
@@ -63,10 +69,11 @@ export class ModalFormComponent implements OnInit {
 
   onValueChange($event: any): void {
     this.checkStatus($event)
+    this.getInputValue.emit($event)
   }
 
   onTextareaValueChange($event: FieldEvent): void {
-    this.status = $event.status
+    this.buttonDisabled = $event.status === 'PENDING'
     this.data = $event.value
   }
 }

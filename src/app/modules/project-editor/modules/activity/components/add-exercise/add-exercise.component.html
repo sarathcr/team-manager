@@ -1,0 +1,295 @@
+<app-modal-layout
+  modalTitle="EXCERCISE.exercise_definition_popup_title"
+  confirmLabel="EXCERCISE.exercise_definition_popup_button"
+  [titleLighten]="true"
+  [titleSecondary]="true"
+  [loading]="buttonLoading"
+  (decline)="onDecline($event)"
+  (confirm)="onConfirm()"
+  *ngIf="!showMaterial"
+>
+  <div class="excercise-modal">
+    <div class="row">
+      <div class="col-6 border-right excercise-modal__column">
+        <div class="excercise-modal__field">
+          <app-input
+            variant="text"
+            [value]="exercise.name"
+            formControlName="title"
+            placeholder="{{
+              'EXCERCISE.exercise_definition_popup_input_title_placehoder'
+                | translate
+            }}"
+            [maxlength]="70"
+            enableValidator="true"
+            errorText="PROJECT.Error_textlimit_specified_singleinput"
+            label="{{
+              'EXCERCISE.exercise_definition_popup_input_title_label'
+            }}"
+            (inputChange)="onValueChange($event, 'name')"
+          ></app-input>
+        </div>
+        <div class="excercise-modal__field">
+          <app-textarea
+            id="activity-definition-description"
+            [value]="exercise.statement"
+            placeholder="{{
+              'EXCERCISE.exercise_definition_popup_input_instructions_placehoder'
+                | translate
+            }}"
+            [maxLength]="500"
+            [enableValidator]="true"
+            errorText="PROJECT.Error_textlimit_specified_singleinput"
+            label="{{
+              'EXCERCISE.exercise_definition_popup_input_instructions_label'
+                | translate
+            }}"
+            customClass="mb-0"
+            size="medium"
+            (inputChange)="onValueChange($event, 'statement')"
+          ></app-textarea>
+        </div>
+        <div class="excercise-modal__field">
+          <h3 class="creation__title mb-2">
+            {{
+              'EXCERCISE.exercise_definition_popup_section1_title'
+                | translate
+                | TranslateCut: 0
+            }}
+            <span class="creation__optional">{{
+              'EXCERCISE.exercise_definition_popup_section1_title'
+                | translate
+                | TranslateCut: 1
+            }}</span>
+          </h3>
+          <div class="mb-4 d-flex justify-content-between">
+            <span>{{
+              'EXCERCISE.exercise_definition_popup_materials_description'
+                | translate
+            }}</span>
+            <!-- Show below button only if it has added content -->
+            <app-button
+              *ngIf="exercise?.referenceMaterials?.length"
+              class="details-selector__add-btn"
+              [theme]="'primary'"
+              [variant]="'text'"
+              (click)="toggleModal()"
+            >
+              {{
+                'EXCERCISE.exercise_definition_popup_strategy_button_add'
+                  | translate
+              }}
+            </app-button>
+          </div>
+          <app-button
+            *ngIf="!exercise?.referenceMaterials?.length"
+            theme="primary"
+            variant="outlined"
+            icon="add"
+            size="small"
+            (click)="toggleModal()"
+          >
+            {{
+              'EXCERCISE.exercise_definition_popup_materials_button_add'
+                | translate
+                | TranslateCut: 1
+            }}
+          </app-button>
+          <div class="mb-5" *ngIf="exercise?.referenceMaterials?.length">
+            <ng-container
+              *ngFor="
+                let material of exercise?.referenceMaterials;
+                let index = index
+              "
+            >
+              <app-material-card
+                [label]="material.fileType"
+                [title]="material.title"
+                [variant]="material.fileType"
+                size="small"
+                [canDelete]="true"
+                [showSwitch]="false"
+                [thumbnail]="material.previewImageUrl"
+                (delete)="deleteMaterial(index)"
+              ></app-material-card>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 excercise-modal__column">
+        <div class="excercise-modal__field">
+          <h3 class="creation__title mb-4">
+            {{
+              'EXCERCISE.exercise_definition_popup_section2_title'
+                | translate
+                | TranslateOptions: 0
+            }}
+            <span class="creation__optional"
+              >({{
+                'EXCERCISE.exercise_definition_popup_section2_title'
+                  | translate
+                  | TranslateOptions: 1
+              }})</span
+            >
+          </h3>
+          <div class="row">
+            <div class="col-6">
+              <app-select
+                id="activity-creation-modality"
+                customClass="dropdown_bg-white mb-0"
+                [config]="creationModalityDropdown"
+                label="EXCERCISE.exercise_definition_popup_dropdown_modality_label"
+                placeholder="EXCERCISE.exercise_definition_popup_dropdown_modality_placeholder"
+                (dropdownSelect)="onDropdownSelect($event)"
+              ></app-select>
+            </div>
+            <div class="col-6">
+              <app-input
+                variant="date"
+                formControlName="date"
+                (inputChange)="onValueChange($event, 'deliveryDate')"
+                [placeholder]="
+                  'EXCERCISE.exercise_definition_popup_input_date_placeholder'
+                    | translate
+                "
+                [minDate]="minDate"
+                [enableValidator]="true"
+                errorText="Please select a date greater than today"
+                label="EXCERCISE.exercise_definition_popup_input_date_label"
+              ></app-input>
+            </div>
+          </div>
+        </div>
+        <div class="excercise-modal__field">
+          <h3 class="creation__title mb-2">
+            {{
+              'EXCERCISE.exercise_definition_popup_section3_title' | translate
+            }}
+          </h3>
+          <div class="d-flex justify-content-between">
+            <p>
+              {{
+                'EXCERCISE.exercise_definition_popup_evaluation_description'
+                  | translate
+              }}
+            </p>
+            <!-- switch needs to be here -->
+            <app-switch
+              (changeSwitch)="onValueChange($event, 'evaluation')"
+              type="button"
+              iconOne="icon-ic_star-grey"
+              iconTwo="icon-ic_star-no"
+              buttonTextOne="EXCERCISE.exercise_definition_popup_input_calification_yes"
+              buttonTextTwo="EXCERCISE.exercise_definition_popup_input_calification_no"
+            >
+            </app-switch>
+          </div>
+        </div>
+        <div
+          class="excercise-modal__field mb-6 pb-6"
+          *ngIf="exercise.evaluation"
+        >
+          <app-input
+            variant="number"
+            [value]="exercise.percentage"
+            [maxNumber]="100 - exercisePercent"
+            formControlName="calification"
+            [enableValidator]="true"
+            (inputChange)="onValueChange($event, 'percentage')"
+            [placeholder]="
+              'EXCERCISE.exercise_definition_popup_input_calification_placehoder'
+                | translate
+            "
+            label="EXCERCISE.exercise_definition_popup_input_calification_label"
+            innerLabel="%"
+            [errorText]="
+              'EXCERCISE.exercise_definition_popup_input_calification_info_error'
+                | translate
+            "
+          ></app-input>
+          <span class="helper-text">{{ exercisePercentHelperText }}</span>
+        </div>
+        <div class="excercise-modal__field mb-6">
+          <app-details-selector
+            id="evaluation-strategy"
+            [label]="'EXCERCISE.exercise_definition_popup_strategy_title'"
+            [subjectItem]=""
+            [optional]="false"
+            [isLast]="true"
+            [simpleSelector]="true"
+            [variant]="'add'"
+            [loading]="loading"
+          ></app-details-selector>
+        </div>
+        <div class="excercise-modal__field mb-4">
+          <app-select
+            id="activity-creation-modality"
+            customClass="dropdown_bg-white mb-0"
+            [config]="calificationDropdown"
+            label="EXCERCISE.exercise_definition_popup_input_agent_label"
+            placeholder="EXCERCISE.exercise_definition_popup_input_agent_placeholder"
+            (dropdownSelect)="onDropdownSelect($event)"
+          ></app-select>
+        </div>
+        <div class="excercise-modal__field mb-0">
+          <app-button
+            theme="primary"
+            variant="outlined"
+            icon="add"
+            size="small"
+          >
+            {{
+              'EXCERCISE.exercise_definition_popup_tool_button_add'
+                | translate
+                | TranslateCut: 1
+            }}
+          </app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-modal-layout>
+<app-modal-layout
+  *ngIf="showMaterial"
+  class="add-material"
+  [modalTitle]="
+    currentMaterialView === 1 ? 'ADD_MATERIAL.material_add_title' : ''
+  "
+  [titleLighten]="true"
+  [hasClose]="currentMaterialView != 3"
+  [buttonSize]="currentMaterialView === 3 ? 'small' : 'default'"
+  [confirmLabel]="
+    currentMaterialView == 3
+      ? 'ADD_MATERIAL.material_add_checktemplates_button_create'
+      : activeMaterialTab == 1
+      ? 'ADD_MATERIAL.material_add_button_add'
+      : ''
+  "
+  [backLabel]="
+    currentMaterialView == 2
+      ? 'ACTIVITY_HEADER.activity_header_button_back'
+      : ''
+  "
+  [isDisabled]="
+    currentMaterialView === 1 &&
+    activeMaterialTab === 1 &&
+    referenceMaterial.status !== 'success'
+  "
+  (decline)="toggleModal()"
+  (confirm)="onConfirmMaterial()"
+  (backClick)="previousMaterialView()"
+>
+  <app-add-material
+    (confirmModal)="onConfirmMaterial()"
+    (declineModal)="toggleModal()"
+    [referenceMaterial]="referenceMaterial"
+    [activeMaterialTab]="activeMaterialTab"
+    [currentMaterialView]="currentMaterialView"
+    (setActiveTab)="getActiveMaterialTab($event)"
+    (setModalDetails)="getMaterialDetails($event)"
+    (previousMaterialView)="previousMaterialView()"
+    (nextMaterialView)="nextMaterialView()"
+    (resetTabs)="resetTabs()"
+  ></app-add-material>
+</app-modal-layout>

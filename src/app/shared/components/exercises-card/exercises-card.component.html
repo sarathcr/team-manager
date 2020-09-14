@@ -7,9 +7,10 @@
   </div>
   <div class="d-flex align-items-center mb-4">
     <span class="icon icon-ic_doc2 creation__icon_star"></span>
-    <span class="creation__subtitle mr-6">
+    <span class="creation__subtitle mr-2">
       {{ subtitle | translate }}
     </span>
+    <span class="icon icon-ic_separador mr-2"></span>
     <span class="creation__subtitle">
       {{ subtitleKey | translate }}
       <em> {{ subtitleValue | translate }}</em></span
@@ -18,13 +19,15 @@
   <p class="mb-5">
     {{ description | translate }}
   </p>
-  <div class="mb-5">
-    <app-material-card
-      [label]="texts.label | translate"
-      [title]="texts.title | translate"
-      variant="form"
-      size="medium"
-      [canDelete]="false"
-    ></app-material-card>
+  <div class="mb-5" *ngIf="materials?.length">
+    <ng-container *ngFor="let material of materials">
+      <app-material-card
+        [label]="material.fileType"
+        [title]="material.title"
+        variant="FORM"
+        size="medium"
+        [canDelete]="false"
+      ></app-material-card>
+    </ng-container>
   </div>
 </div>

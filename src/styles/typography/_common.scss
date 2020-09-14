@@ -2,14 +2,14 @@
 p,
 p em,
 a {
-  font-family: $font-family-tertiary;
-  font-size: $font-size-default;
+  font-family: font-family(tertiary);
+  font-size: font-size(default);
   letter-spacing: 0;
   line-height: 24px;
 }
 
 p {
-  margin-bottom: $grid-gutter-width/2;
+  margin-bottom: grid-gutter(primary)/2;
 }
 
 //Highlight content
@@ -26,10 +26,10 @@ blockquote {
     top: 0;
     width: 4px;
     height: 100%;
-    background-color: $color-primary;
+    background-color: $primary;
   }
 
-  @include media-breakpoint-down (md) {
+  @include media-breakpoint-down(md) {
     margin: 28px 0;
   }
 }

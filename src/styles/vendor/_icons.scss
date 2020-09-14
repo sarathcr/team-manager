@@ -19,7 +19,7 @@
     float: left;
     width: 12.5%;
     padding: 10px;
-    font-size: $font-size-default;
+    font-size: font-size(default);
     line-height: 1.4;
     text-align: center;
     background-color: #f9f9f9;
@@ -41,6 +41,163 @@
 }
 
 //icons from icomoon
+.icon-ic_star-grey:before {
+  content: '\e909';
+}
+
+.icon-ic_star-no:before {
+  content: '\e992';
+}
+
+.icon-ic_log_out:before {
+  content: '\e991';
+}
+
+.icon-ic_user:before {
+  content: '\e993';
+}
+
+.icon-ic_attach:before {
+  content: '\e990';
+  color: #fff;
+}
+
+.icon-ic_ayuda:before {
+  content: '\e975';
+}
+
+.icon-ic_chatbot .path1:before {
+  content: '\e976';
+  color: #000;
+}
+
+.icon-ic_chatbot .path2:before {
+  content: '\e977';
+  color: #6400e4;
+  margin-left: -1em;
+}
+
+.icon-ic_chatbot .path3:before {
+  content: '\e978';
+  color: #fff;
+  margin-left: -1em;
+}
+
+.icon-ic_copy:before {
+  content: '\e979';
+}
+
+.icon-ic_experiencias:before {
+  content: '\e97a';
+}
+
+.icon-ic_experiencias-creadas:before {
+  content: '\e97b';
+}
+
+.icon-ic_experiencias-creadas-notification .path1:before {
+  content: '\e97c';
+  color: #141c3a;
+}
+
+.icon-ic_experiencias-creadas-notification .path2:before {
+  content: '\e97d';
+  color: #37d4c8;
+  margin-left: -1em;
+}
+
+.icon-ic_experiencias-notification .path1:before {
+  content: '\e97e';
+  color: #141c3a;
+}
+
+.icon-ic_experiencias-notification .path2:before {
+  content: '\e97f';
+  color: #37d4c8;
+  margin-left: -1em;
+}
+
+.icon-ic_matemticas:before {
+  content: '\e980';
+}
+
+.icon-ic_musica:before {
+  content: '\e981';
+}
+
+.icon-ic_naturales:before {
+  content: '\e982';
+}
+
+.icon-ic_notification .path1:before {
+  content: '\e983';
+  color: #37d4c8;
+}
+
+.icon-ic_notification .path2:before {
+  content: '\e98f';
+  color: #fff;
+  margin-left: -1em;
+}
+
+.icon-ic_paginator_back .path1:before {
+  content: '\e984';
+  color: #141c3a;
+  opacity: 0.03;
+}
+
+.icon-ic_paginator_back .path2:before {
+  content: '\e985';
+  color: #141c3a;
+  opacity: 0.4;
+  margin-left: -1em;
+}
+
+.icon-ic_paginator_forward .path1:before {
+  content: '\e986';
+  color: #6400e4;
+}
+
+.icon-ic_paginator_forward .path2:before {
+  content: '\e987';
+  color: #fff;
+  margin-left: -1em;
+}
+
+.icon-ic_plstica:before {
+  content: '\e988';
+}
+
+.icon-ic_preferences:before {
+  content: '\e989';
+}
+
+.icon-ic_search:before {
+  content: '\e98a';
+}
+
+.icon-ic_separador:before {
+  content: '\e98b';
+  color: #bbb;
+}
+
+.icon-ic_tecnologa:before {
+  content: '\e98c';
+}
+
+.icon-ic_user_small_cercle .path1:before {
+  content: '\e98d';
+  color: #141c3a;
+  opacity: 0.05;
+}
+
+.icon-ic_user_small_cercle .path2:before {
+  content: '\e98e';
+  color: #141c3a;
+  opacity: 0.2;
+  margin-left: -1em;
+}
+
 .icon-ic_folder_add .path1:before {
   content: '\e971';
   color: #37d4c8;
@@ -132,11 +289,6 @@
   color: #37d4c8;
 }
 
-.icon-ic_cross:before {
-  content: '\e964';
-  color: #e61f7f;
-}
-
 .icon-ic_more:before {
   content: '\e965';
 }
@@ -203,6 +355,11 @@
 .icon-ic_enter:before {
   content: '\e951';
   color: #6400e4;
+}
+
+.icon-ic_cross:before {
+  content: '\e964';
+  color: #e61f7f;
 }
 
 .icon-ic_hide_small:before {
@@ -558,10 +715,6 @@
 
 .icon-ic_share:before {
   content: '\e908';
-}
-
-.icon-ic_user:before {
-  content: '\e909';
 }
 
 .icon-ic_user_small:before {

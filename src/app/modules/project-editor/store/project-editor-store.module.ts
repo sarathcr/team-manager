@@ -4,6 +4,8 @@ import { EntityDataService, EntityDefinitionService } from '@ngrx/data'
 import { ProjectEditorToastService } from '../services/project-editor-toast/project-editor-toast.service'
 import { AcademicYearDataService } from './entity/academic-year/academic-year-data.service'
 import { AcademicYearEntityService } from './entity/academic-year/academic-year-entity.service'
+import { BlockContentDataService } from './entity/block-content/block-content-data.service'
+import { BlockContentEntityService } from './entity/block-content/block-content-entity.service'
 import { BlockDataService } from './entity/block/block-data.service'
 import { BlockEntityService } from './entity/block/block-entity.service'
 import { CountryDataService } from './entity/country/country-data.service'
@@ -17,8 +19,6 @@ import { CurriculumEntityService } from './entity/curriculum/curriculum-entity.s
 import { entityMetadata } from './entity/entity-metadata'
 import { EvaluationCriteriaDataService } from './entity/evaluation-criteria/evaluation-criteria-data.service'
 import { EvaluationCriteriaEntityService } from './entity/evaluation-criteria/evaluation-criteria-entity.service'
-import { GradeDataService } from './entity/grade/grade-data.service'
-import { GradeEntityService } from './entity/grade/grade-entity.service'
 import { ProjectListDataService } from './entity/project-list/project-list-data.service'
 import { ProjectListEntityService } from './entity/project-list/project-list-entity.service'
 import { ProjectEntityService } from './entity/project/project-entity.service'
@@ -48,8 +48,6 @@ import { TeachingStrategyEntityService } from './entity/teaching-strategy/teachi
     CountryDataService,
     RegionEntityService,
     RegionDataService,
-    GradeDataService,
-    GradeEntityService,
     AcademicYearDataService,
     AcademicYearEntityService,
     StepStatusEntityService,
@@ -72,6 +70,8 @@ import { TeachingStrategyEntityService } from './entity/teaching-strategy/teachi
     StudentGroupsEntityService,
     TeachingStrategyDataService,
     TeachingStrategyEntityService,
+    BlockContentDataService,
+    BlockContentEntityService,
   ],
 })
 export class ProjectEditorStoreModule {
@@ -82,7 +82,6 @@ export class ProjectEditorStoreModule {
     private projectListDataService: ProjectListDataService,
     private countryDataService: CountryDataService,
     private regionDataService: RegionDataService,
-    private gradeDataService: GradeDataService,
     private academicYearDataService: AcademicYearDataService,
     private stepStatusDataService: StepStatusDataService,
     private blockDataService: BlockDataService,
@@ -94,6 +93,7 @@ export class ProjectEditorStoreModule {
     private curriculumGradesDataService: CurriculumGradesDataService,
     private studentGroupsDataService: StudentGroupsDataService,
     private teachingStrategyDataService: TeachingStrategyDataService,
+    private blockContentDataService: BlockContentDataService,
     projectEditorToastService: ProjectEditorToastService
   ) {
     eds.registerMetadataMap(entityMetadata)
@@ -102,7 +102,6 @@ export class ProjectEditorStoreModule {
       ProjectList: projectListDataService,
       Country: countryDataService,
       Region: regionDataService,
-      Grade: gradeDataService,
       AcademicYear: academicYearDataService,
       StepStatus: stepStatusDataService,
       Block: blockDataService,
@@ -114,6 +113,7 @@ export class ProjectEditorStoreModule {
       CurriculumGrades: curriculumGradesDataService,
       StudentGroups: studentGroupsDataService,
       TeachingStrategy: teachingStrategyDataService,
+      BlockContent: blockContentDataService,
     })
   }
 }

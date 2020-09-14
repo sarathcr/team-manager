@@ -12,6 +12,7 @@ import { SocialAuthService } from 'angularx-social-login'
 import { BsModalRef } from 'ngx-bootstrap/modal'
 
 import { CheckBoxData } from 'src/app/shared/constants/model/form-elements.model'
+import { GoogleAuthService } from 'src/app/shared/services/google/google-auth.service'
 import { validateEmail, validatePassword } from 'src/app/shared/utility/form.utility'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { AuthService } from '../../services/auth.service'
@@ -36,7 +37,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private googleAuthService: SocialAuthService,
+    private socialAuthService: SocialAuthService,
+    private googleAuthService: GoogleAuthService,
     private translateService: TranslateService
   ) {}
 
@@ -76,7 +78,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       newsLetter: false,
       privacyPolicy: [false, [Validators.requiredTrue]]
     })
-    this.googleAuthService.authState.subscribe((user) => {
+    this.socialAuthService.authState.subscribe((user) => {
       if (user) {
         this.authService
           .googleAuth({
@@ -139,6 +141,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   googleSignUp(): void {
-    this.authService.googleLogin()
+    this.googleAuthService.googleLogin()
   }
 }

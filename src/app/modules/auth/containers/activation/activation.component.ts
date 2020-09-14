@@ -33,7 +33,6 @@ export class ActivationComponent implements OnInit {
 
   logoutUser(): void {
     this.authService.logout()
-    this.router.navigate(['/login'])
   }
 
   openModal(): void {
@@ -47,7 +46,7 @@ export class ActivationComponent implements OnInit {
     this.hideModal()
     this.logoutUser()
   }
-  
+
   redirectToSignUp(): void {
     this.logoutUser()
     this.hideModal()

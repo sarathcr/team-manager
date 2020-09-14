@@ -5,8 +5,8 @@ import { TranslateModule } from '@ngx-translate/core'
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown'
 
 import { ButtonComponent } from 'src/app/shared/components/button/button.component'
-import { DropdownComponent } from 'src/app/shared/components/dropdown/dropdown.component'
 import { InfoToolTipComponent } from 'src/app/shared/components/info-tooltip/info-tooltip.component'
+import { SelectComponent } from 'src/app/shared/components/select/select.component'
 import { StepStatusComponent } from '../../components/step-status/step-status.component'
 import { StepOneComponent } from './step-one.component'
 
@@ -17,8 +17,6 @@ import { CurriculumGradesDataService } from '../../store/entity/curriculum-grade
 import { CurriculumGradesEntityService } from '../../store/entity/curriculum-grades/curriculum-grades-entity.service'
 import { CurriculumDataService } from '../../store/entity/curriculum/curriculum-data.service'
 import { CurriculumEntityService } from '../../store/entity/curriculum/curriculum-entity.service'
-import { GradeDataService } from '../../store/entity/grade/grade-data.service'
-import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { RegionEntityService } from '../../store/entity/region/region-entity.service'
 import { StageDataService } from '../../store/entity/stage/stage-data.service'
@@ -31,8 +29,6 @@ class StepStatusEntityServiceStub {}
 class CountryEntityServiceStub {}
 class RegionEntityServiceStub {}
 class AcademicYearEntityServiceStub {}
-class GradeEntityServiceStub {}
-class GradeDataServiceStub {}
 class StageEntityServiceStub {}
 class StageDataServiceStub {}
 class CurriculumEntityServiceStub {}
@@ -49,7 +45,7 @@ describe('StartPointComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         StepOneComponent,
-        DropdownComponent,
+        SelectComponent,
         ButtonComponent,
         StepStatusComponent,
         InfoToolTipComponent,
@@ -67,8 +63,6 @@ describe('StartPointComponent', () => {
           provide: AcademicYearEntityService,
           useClass: AcademicYearEntityServiceStub,
         },
-        { provide: GradeEntityService, useClass: GradeEntityServiceStub },
-        { provide: GradeDataService, useClass: GradeDataServiceStub },
         { provide: StageEntityService, useClass: StageEntityServiceStub },
         { provide: StageDataService, useClass: StageDataServiceStub },
         {

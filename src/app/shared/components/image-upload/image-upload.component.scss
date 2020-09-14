@@ -1,9 +1,9 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 
 .image-upload {
   width: 424px;
   min-height: 238px;
-  border: 1px dashed rgba($color-tertiary, 0.2) !important;
+  border: 1px dashed rgba(color(tertiary), 0.2) !important;
   box-sizing: border-box !important;
   border-radius: 4px !important;
   background: none !important;
@@ -14,7 +14,7 @@
   &__close {
     width: 34px;
     height: 34px;
-    background: $color-quaternary;
+    background: color(quaternary);
     border-radius: 50%;
     position: absolute;
     top: 18px;
@@ -23,8 +23,8 @@
   }
 
   &__icon {
-    font-size: $font-size-sub-m;
-    color: rgba($color-tertiary, 0.6);
+    font-size: font-size(sub-m);
+    color: rgba(color(tertiary), 0.6);
   }
 
   &__preview {
@@ -61,13 +61,13 @@
 
   &__label-icon {
     display: block;
-    font-size: $font-size-s;
-    color: $blue-whale;
+    font-size: font-size(s);
+    color: color(tertiary);
     margin-bottom: 5px;
   }
 
   &__label-text {
-    color: $blue-whale;
+    color: color(tertiary);
     line-height: 24px;
   }
 }

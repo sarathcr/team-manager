@@ -1,4 +1,4 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 
 .spinner {
   $root: &;
@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  font-size: $font-size-body-s;
+  font-size: font-size(body-s);
   left: 0;
   right: 0;
   top: 0;
@@ -14,11 +14,11 @@
   &_secondary {
     &#{$root} {
       &::before {
-        border: 0.2em solid $color-quaternary;
+        border: 0.2em solid color(quaternary);
       }
       &::after {
-        border: 0.2em solid $color-quaternary;
-        border-top-color: $medium-turquoise;
+        border: 0.2em solid color(quaternary);
+        border-top-color: color(secondary);
       }
     }
   }
@@ -26,11 +26,11 @@
   &_teritiary {
     &#{$root} {
       &::before {
-        border: 0.2em solid $color-quaternary;
+        border: 0.2em solid color(quaternary);
       }
       &::after {
-        border: 0.2em solid $color-quaternary;
-        border-top-color: $electric-indigo;
+        border: 0.2em solid color(quaternary);
+        border-top-color: color(primary);
       }
     }
   }
@@ -47,7 +47,7 @@
     height: inherit;
     position: absolute;
     margin: auto;
-    border: 0.2em solid $medium-turquoise;
+    border: 0.2em solid color(secondary);
     border-radius: 50%;
     opacity: 0.8;
   }
@@ -58,7 +58,7 @@
     width: inherit;
     height: inherit;
     border: 0.2em solid transparent;
-    border-top-color: $electric-indigo;
+    border-top-color: color(primary);
     border-radius: 50%;
     animation: 1s spinner linear infinite;
     position: absolute;

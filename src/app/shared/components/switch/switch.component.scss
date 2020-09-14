@@ -1,11 +1,7 @@
-@import 'helpers/_helpers-master';
 @import 'helpers/bt-mixins';
+@import 'variables/_variables-master';
 .switch {
   position: relative;
-  display: inline-block;
-  width: 45px;
-  height: 17px;
-  margin: 0 12px 0 0;
 
   &_disabled {
     opacity: 0.4;
@@ -22,7 +18,7 @@
     bottom: 0;
     height: 20px;
     width: 44px;
-    background-color: $very-light-grey;
+    background-color: rgba(color(tertiary), 0.05);
     -webkit-transition: 0.4s;
     transition: 0.4s;
 
@@ -44,24 +40,64 @@
     width: 24px;
     left: 0px;
     bottom: 0px;
-    background-color: $mischika;
+    background-color: rgba(color(tertiary), 0.2);
     -webkit-transition: 0.4s;
     transition: 0.4s;
   }
 
   &__input:checked {
     + .switch__slider {
-      background-color: $magnolia;
+      background-color: rgba(color(secondary), 0.2);
     }
     + .switch__slider:before {
       -webkit-transform: translateX(20px);
       -ms-transform: translateX(20px);
       transform: translateX(20px);
-      background-color: $medium-turquoise;
+      background-color: color(secondary);
     }
   }
   &__text {
     vertical-align: text-bottom;
-    font-size: $font-size-body-s;
+    font-size: font-size(body-s);
+  }
+  &-slider {
+    display: inline-block;
+    width: 45px;
+    height: 17px;
+    margin: 0 12px 0 0;
+  }
+  &-button {
+    width: 100%;
+    margin: 0;
+    &__wrapper {
+      box-shadow: inset 0 0 0 1px rgba(color(tertiary), 0.4);
+      border-radius: 4px;
+    }
+    &__item {
+      padding: 5px grid-gutter(secondary);
+      opacity: 0.6;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      &_active {
+        opacity: 1;
+        box-shadow: inset 0 0 0 2px color(tertiary);
+      }
+      &:first-child {
+        border-radius: 4px 0 0 4px;
+      }
+      &:last-child {
+        border-left: none;
+        border-radius: 0 4px 4px 0;
+      }
+    }
+    &__text {
+      font-weight: bold;
+      letter-spacing: 0.16px;
+    }
+    &__icon {
+      font-size: font-size(s);
+      margin-right: 5px;
+    }
   }
 }

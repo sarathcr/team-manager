@@ -1,38 +1,44 @@
 @mixin card-box-shadow() {
-  -webkit-box-shadow: 0 20px 50px -10px rgba($shadow-color, 0.1);
-  -moz-box-shadow: 0 20px 50px -10px rgba($shadow-color, 0.1);
-  box-shadow: 0 20px 50px -10px rgba($shadow-color, 0.1);
+  -webkit-box-shadow: 0 20px 50px -10px rgba(color(shadow-color), 0.1);
+  -moz-box-shadow: 0 20px 50px -10px rgba(color(shadow-color), 0.1);
+  box-shadow: 0 20px 50px -10px rgba(color(shadow-color), 0.1);
 }
 
 @mixin common-card-box-shadow() {
-  -webkit-box-shadow: 0 20px 50px -25px rgba($shadow-color, 0.1);
-  -moz-box-shadow: 0 20px 50px -25px rgba($shadow-color, 0.1);
-  box-shadow: 0 20px 50px -25px rgba($shadow-color, 0.1);
+  -webkit-box-shadow: 0 20px 50px -25px rgba(color(shadow-color), 0.1);
+  -moz-box-shadow: 0 20px 50px -25px rgba(color(shadow-color), 0.1);
+  box-shadow: 0 20px 50px -25px rgba(color(shadow-color), 0.1);
 }
 
 @mixin floating-btn-shadow() {
-  -webkit-box-shadow: 0 10px 40px 0 rgba($shadow-color, 0.2);
-  -moz-box-shadow: 0 10px 40px 0 rgba($shadow-color, 0.2);
-  box-shadow: 0 10px 40px 0 rgba($shadow-color, 0.2);
+  -webkit-box-shadow: 0 10px 40px 0 rgba(color(shadow-color), 0.2);
+  -moz-box-shadow: 0 10px 40px 0 rgba(color(shadow-color), 0.2);
+  box-shadow: 0 10px 40px 0 rgba(color(shadow-color), 0.2);
 }
 
 @mixin upper-card-box-shadow() {
-  -webkit-box-shadow: 0 0 50px -10px rgba($shadow-color, 0.1);
-  -moz-box-shadow: 0 0 50px -10px rgba($shadow-color, 0.1);
-  box-shadow: 0 0 50px -10px rgba($shadow-color, 0.1);
+  -webkit-box-shadow: 0 0 50px -10px rgba(color(shadow-color), 0.1);
+  -moz-box-shadow: 0 0 50px -10px rgba(color(shadow-color), 0.1);
+  box-shadow: 0 0 50px -10px rgba(color(shadow-color), 0.1);
 }
 
 @mixin contextual-list-shadow() {
-  box-shadow: -44px 0 50px -10px rgba($shadow-color, 0.1),
-    inset -16px 20px 16px -17px rgba($shadow-color, 0.1);
-  box-shadow: -44px 0 50px -10px rgba($shadow-color, 0.1),
-    inset -16px 20px 16px -17px rgba($shadow-color, 0.1);
-  box-shadow: -44px 0 50px -10px rgba($shadow-color, 0.1),
-    inset -16px 20px 16px -17px rgba($shadow-color, 0.1);
+  box-shadow: -44px 0 50px -10px rgba(color(shadow-color), 0.1),
+    inset -16px 20px 16px -17px rgba(color(shadow-color), 0.1);
+  box-shadow: -44px 0 50px -10px rgba(color(shadow-color), 0.1),
+    inset -16px 20px 16px -17px rgba(color(shadow-color), 0.1);
+  box-shadow: -44px 0 50px -10px rgba(color(shadow-color), 0.1),
+    inset -16px 20px 16px -17px rgba(color(shadow-color), 0.1);
 }
 
 @mixin presentation-card-box-shadow() {
-  -webkit-box-shadow: 0 14px 43px -14px rgba($shadow-color, 0.15);
-  -moz-box-shadow: 0 14px 43px -14px rgba($shadow-color, 0.15);
-  box-shadow: 0 14px 43px -14px rgba($shadow-color, 0.15);
+  -webkit-box-shadow: 0 14px 43px -14px rgba(color(shadow-color), 0.15);
+  -moz-box-shadow: 0 14px 43px -14px rgba(color(shadow-color), 0.15);
+  box-shadow: 0 14px 43px -14px rgba(color(shadow-color), 0.15);
+}
+
+@mixin dropdown-box-shadow() {
+  -webkit-box-shadow: 0 5px 50px -5px rgba(color(shadow-color), 0.1);
+  -moz-box-shadow: 0 5px 50px -5px rgba(color(shadow-color), 0.1);
+  box-shadow: 0 5px 50px -5px rgba(color(shadow-color), 0.1);
 }

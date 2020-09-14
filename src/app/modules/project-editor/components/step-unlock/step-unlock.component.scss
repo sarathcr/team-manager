@@ -1,15 +1,17 @@
 @import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
 .step-unlock {
   width: 100%;
   min-height: 236px;
   border-radius: 4px;
-  background: $color-quaternary;
+  background: color(quaternary);
   padding: 37px 41px;
   margin-bottom: 36px;
   position: relative;
   @include common-card-box-shadow();
   &__title {
-    font-size: $font-size-body;
+    font-size: font-size(body);
     line-height: 28px;
     letter-spacing: 0.2px;
     margin-bottom: 11px;
@@ -25,11 +27,11 @@
   }
   &__description {
     line-height: 24px;
-    font-size: $font-size-body-s;
+    font-size: font-size(body-s);
     margin-bottom: 29px;
   }
   &__bg-left {
-    background-image: url('../../../../../../images/bg-left.png');
+    background-image: url('../../../../../assets/images/shapes/bg-left.png');
     background-position: left center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -41,7 +43,7 @@
     pointer-events: none;
   }
   &__bg-right {
-    background-image: url('../../../../../../images/bg-right.png');
+    background-image: url('../../../../../assets/images/shapes/bg-right.png');
     background-position: left center;
     background-size: cover;
     background-repeat: no-repeat;

@@ -1,7 +1,18 @@
 <div class="modal-form__header">
-  <h4 class="modal-form__title title_xs">
-    {{ title | translate }}
-  </h4>
+  <div class="w-100">
+    <h4
+      class="modal-form__title title_xs"
+      [ngClass]="{
+        'modal-form__title_primary': titleVariant === 'primary',
+        'modal-form__title_secondary': titleVariant === 'secondary'
+      }"
+    >
+      {{ title | translate }}
+    </h4>
+    <div class="modal-form__description" *ngIf="description">
+      {{ description | translate }}
+    </div>
+  </div>
   <button
     class="close modal-form__close"
     type="button"
@@ -24,6 +35,8 @@
       [helperText]="helperText"
       [errorText]="errorText"
       [variant]="inputVariant"
+      [placeholder]="placeholder"
+      [error]="error"
     ></app-input>
   </div>
   <div class="modal-form__textarea" *ngIf="variant == 'textarea'">
@@ -45,7 +58,7 @@
     <div class="modal-form__button-wrapper">
       <app-button
         id="project-title-submit-button"
-        [disabled]="status === 'PENDING'"
+        [disabled]="buttonDisabled"
         (click)="onConfirm()"
         #inputButton
       >

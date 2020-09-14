@@ -1,0 +1,29 @@
+@import 'variables/_variables-master';
+:host {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.helper-text {
+  font-size: font-size(body-s);
+  letter-spacing: normal;
+  line-height: 28px;
+  padding-left: 17px;
+  color: rgba(color(tertiary), 0.5);
+  display: flex;
+}
+.excercise-modal {
+  padding-top: 35px;
+  padding-bottom: spacing(primary) * 2;
+  &__column {
+    &:first-child {
+      padding-right: spacing(primary) * 4;
+    }
+    &:last-child {
+      padding-left: spacing(primary) * 4;
+    }
+  }
+  &__field {
+    margin-bottom: spacing(secondary) * 2;
+  }
+}

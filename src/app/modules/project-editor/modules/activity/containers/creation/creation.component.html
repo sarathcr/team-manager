@@ -29,6 +29,7 @@
       "
       errorText="PROJECT.Error_textlimit_specified_singleinput"
       (inputChange)="handleTextareaChange($event)"
+      (textareaFocusOut)="submitDatachange()"
     ></app-textarea>
   </div>
   <div class="creation__section">
@@ -40,8 +41,7 @@
         'ACTIVITY_CREATION.activity_creation_materials_description' | translate
       }}
     </p>
-    <ng-container *ngIf="activity?.referenceMaterials?.length"
-      >.
+    <ng-container *ngIf="activity?.referenceMaterials?.length">
       <div *ngFor="let material of activity.referenceMaterials" class="mb-7">
         <app-material-card
           [link]="material.url"
@@ -49,6 +49,10 @@
           [label]="material.fileType"
           [title]="material.title"
           [draggable]="true"
+          [showSwitch]="true"
+          [switchOn]="material.visible"
+          (switch)="changeVisibility(material.id, $event)"
+          (delete)="deleteMaterial(material.id)"
         ></app-material-card>
       </div>
     </ng-container>
@@ -75,34 +79,21 @@
         'ACTIVITY_CREATION.activity_creation_exercises_description' | translate
       }}
     </p>
-    <div class="creation__exercises mb-7" *ngIf="activity?.exercises?.length">
-      <div class="d-flex justify-content-between align-items-center mb-2">
-        <h2 class="creation__title">
-          ¿Cuánto sabes de la Edad Media?
-        </h2>
-        <span class="icon icon-ic_more creation__icon"></span>
-      </div>
-      <div class="d-flex align-items-center mb-4">
-        <span class="icon icon-ic_doc2 creation__icon_star"></span>
-        <span class="creation__subtitle mr-6">Calificable</span>
-        <span class="creation__subtitle"
-          >Entrega online: <em>fecha pendiente</em></span
-        >
-      </div>
-      <p class="mb-5">
-        Una vez visto el documental sobre la Edad media y habiendo realizado el
-        paseo virtual, contesta al siguiente formulario:
-      </p>
-      <div class="mb-5">
-        <app-material-card
-          variant="form"
-          size="medium"
-          [canDelete]="false"
-        ></app-material-card>
-      </div>
-      <span class="icon icon-ic_drag creation__exercises-drag"></span>
-    </div>
-    <app-button theme="primary" variant="outlined" icon="add" size="small">
+    <ng-container *ngFor="let excercise of activity.exercises">
+      <app-exercises-card
+        [title]="excercise.name"
+        [description]="excercise.statement"
+        [materials]="excercise.referenceMaterials"
+        (editExercise)="handleExerciseEdit(excercise)"
+      ></app-exercises-card>
+    </ng-container>
+    <app-button
+      theme="primary"
+      variant="outlined"
+      icon="add"
+      size="small"
+      (click)="openModal(excerciseModal)"
+    >
       {{
         'ACTIVITY_CREATION.activity_creation_exercises_button_add'
           | translate
@@ -144,7 +135,8 @@
     <app-activity-editor-footer
       [btnStatus]="!buttonDisabled"
       [isSubmitted]="buttonSubmitted"
-      doneButtonlabel="ACTIVITY_FOOTER.activity_footer_button_markdone"
+      doneButtonlabel="ACTIVITY_FOOTER.activity_footer_button_done"
+      submitButtonlabel="ACTIVITY_FOOTER.activity_footer_button_markdone"
       viewButtonLabel="ACTIVITY_FOOTER.activity_footer_button_studentview"
       viewButtonIcon="alumno"
       (submitButtonClick)="handleSubmit('CREATED')"
@@ -152,10 +144,50 @@
   </div>
 </div>
 <ng-template #addMaterial>
-  <app-add-material
-    [linkContent]="linkContent"
-    [linkStatus]="linkStatus"
+  <app-modal-layout
+    class="add-material"
+    [modalTitle]="currentMaterialView === 1 ? 'ADD_MATERIAL.material_add_title' : ''"
+    [titleLighten]="true"
+    [hasClose]="currentMaterialView != 3"
+    [buttonSize]="currentMaterialView === 3 ? 'small' : 'default'"
+    [confirmLabel]="
+      currentMaterialView == 3
+        ? 'ADD_MATERIAL.material_add_checktemplates_button_create'
+        : activeMaterialTab == 1
+        ? 'ADD_MATERIAL.material_add_button_add'
+        : ''
+    "
+    [backLabel]="
+      currentMaterialView == 2 ? 'ACTIVITY_HEADER.activity_header_button_back' : ''
+    "
+    [isDisabled]="
+      currentMaterialView === 1 && activeMaterialTab === 1 && referenceMaterial.status !== 'success'
+    "
+    (decline)="closeModal()"
+    (confirm)="onMaterialConfirm()"
+    (backClick)="previousMaterialView()"
+  >
+    <app-add-material
+      (confirmModal)="addMaterials($event)"
+      (declineModal)="closeModal()"
+
+      [referenceMaterial]="referenceMaterial"
+      [activeMaterialTab]="activeMaterialTab"
+      [currentMaterialView]="currentMaterialView"
+      (setActiveTab)="getActiveMaterialTab($event)"
+      (setModalDetails)="getReferenceMaterials($event)"
+      (previousMaterialView)="previousMaterialView()"
+      (nextMaterialView)="nextMaterialView()"
+      (resetTabs)="resetTabs()"
+    ></app-add-material>
+  </app-modal-layout>
+</ng-template>
+<ng-template #excerciseModal>
+  <app-add-exercise
     (declineModal)="closeModal()"
-    (link)="fetchLinkDetails($event)"
-  ></app-add-material>
+    (confirmModal)="addExcercise($event)"
+    [buttonLoading]="exerciseLoading"
+    [exercise]="exercise"
+    [exercisePercent]="exercisePercent"
+  ></app-add-exercise>
 </ng-template>

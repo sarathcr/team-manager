@@ -3,12 +3,12 @@
 .creation {
   &__title {
     font-weight: 900;
-    font-size: $font-size-body;
+    font-size: font-size(body);
     letter-spacing: 0.2px;
     line-height: 28px;
   }
   &__exercises {
-    background-color: $color-quaternary;
+    background-color: color(quaternary);
     width: 100%;
     border-radius: 3px;
     @include card-box-shadow();
@@ -27,14 +27,5 @@
     letter-spacing: 0.16px;
     font-weight: 900;
     opacity: 0.5;
-    position: relative;
-    &:not(:last-child):after {
-      content: '';
-      position: absolute;
-      height: 20px;
-      width: 1px;
-      border-left: 1px dotted #bbbbbb;
-      right: -15px;
-    }
   }
 }

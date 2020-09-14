@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   OnInit,
   Output,
@@ -31,6 +32,14 @@ export class ProjectTitleComponent implements OnInit, AfterViewInit {
   projectUrl: string
   modalTitle: string
   modalConfirmLabel: string
+  @HostListener('document:keydown.escape', ['$event']) handleKeyDown(
+    event: KeyboardEvent
+  ): void {
+    if (!this.projectData?.id) {
+      this.router.navigate([`editor/projects`])
+    }
+    this.modalRef.hide()
+  }
 
   constructor(
     private modalService: BsModalService,

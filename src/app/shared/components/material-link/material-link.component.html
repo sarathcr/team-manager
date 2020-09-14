@@ -9,19 +9,26 @@
         class="material-link__input w-100"
         [ngClass]="{
           'material-link__input_focus': focus,
-          'material-link__input_error': status === 'failed'
+          'material-link__input_error': !inputTextChange && status === 'failed'
         }"
         (focus)="setFocus()"
+        (blur)="unsetFocus()"
         [(ngModel)]="link"
         (keyup)="handleKeyPress($event)"
         (ngModelChange)="changeStatus()"
+        [disabled]="this.status === 'success'"
+        #input
       />
       <span
         class="icon icon-ic_enter material-link__icon position-absolute"
         [ngClass]="{
-          'icon-ic_enter material-link__icon_enter': status == 'default',
-          ' icon-ic_check material-link__icon_tick': status == 'success',
-          'icon-ic_cross material-link__icon_cross': status == 'failed'
+          'material-link__icon_enter': validLink() && inputTextChange && focus,
+          'material-link__icon_enter_disabled':
+            !validLink() || (validLink() && inputTextChange && !focus),
+          ' icon-ic_check material-link__icon_tick':
+            !inputTextChange && status === 'success',
+          'icon-ic_cross material-link__icon_cross':
+            !inputTextChange && status === 'failed'
         }"
         (click)="handleSubmit()"
       ></span>
@@ -32,15 +39,20 @@
     [ngClass]="{
       'material-link__preview-content_border': status === 'loading'
     }"
-    *ngIf="linkContent?.image || status === 'loading' || status === 'failed'"
+    *ngIf="
+      linkContent?.imageUrl ||
+      status === 'loading' ||
+      (!inputTextChange && status === 'failed')
+    "
   >
     <app-material-card
-      variant="preview"
+      variant="PREVIEW"
       [validPreviewLink]="status !== 'failed'"
       [loading]="status === 'loading'"
-      [thumbnail]="linkContent?.image"
+      [thumbnail]="linkContent?.imageUrl"
       [title]="linkContent?.title"
       [link]="linkContent?.url"
+      (delete)="resetAll()"
     ></app-material-card>
     <app-loader *ngIf="status === 'loading'"></app-loader>
   </div>

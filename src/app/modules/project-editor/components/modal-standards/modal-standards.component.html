@@ -9,7 +9,7 @@
           : 'modal-standards__header_secondary'
       "
     >
-      <app-dropdown
+      <app-select
         [config]="subjectDropdownConfig"
         [label]="
           'STANDARDS.project_standards_standardswindow_combo_title' | translate
@@ -17,7 +17,7 @@
         [canDeselect]="false"
         (dropdownSelect)="onDropdownSelect($event)"
       >
-      </app-dropdown>
+      </app-select>
       <h6 class="modal-standards__header-title-standards">
         {{ 'STANDARDS.project_standards_standardswindow_title' | translate }}
       </h6>

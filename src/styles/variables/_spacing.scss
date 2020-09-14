@@ -1,0 +1,14 @@
+// Offset margins
+$page-max-width: 1320px;
+
+// Gutter margins
+$grid-gutter: (
+  primary: 30px,
+  secondary: 40px
+);
+
+// Component Paddings
+$spacing: (
+  primary: map-get($grid-gutter, primary)/2,
+  secondary: map-get($grid-gutter, secondary)/2
+);

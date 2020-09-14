@@ -2,7 +2,10 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [
+      "@types/google.picker",
+      "@types/gapi"
+    ]
   },
   "files": [
     "src/main.ts",

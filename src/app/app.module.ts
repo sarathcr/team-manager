@@ -45,17 +45,6 @@ import { appReducers, metaReducers } from './store'
       },
     }),
     AuthModule.forRoot(),
-    HttpClientModule,
-    StoreModule.forRoot(appReducers, {
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
-        strictActionSerializability: true,
-        strictStateSerializability: true,
-      },
-    }),
-    HttpClientModule,
     StoreModule.forRoot(appReducers, {
       metaReducers,
       runtimeChecks: {
@@ -86,6 +75,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
   return new MultiTranslateHttpLoader(http, [
     { prefix: 'assets/i18n/project-editor/', suffix: '.json' },
     { prefix: 'assets/i18n/activities/', suffix: '.json' },
+    { prefix: 'assets/i18n/evaluation/', suffix: '.json' },
     { prefix: 'assets/i18n/auth/', suffix: '.json' },
     { prefix: 'assets/i18n/project-output/', suffix: '.json' },
     { prefix: 'assets/i18n/shared/', suffix: '.json' },

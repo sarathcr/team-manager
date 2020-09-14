@@ -1,0 +1,135 @@
+@import 'variables/_variables-master';
+::ng-deep {
+  .page-link {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-family: 'Brandon Grotesque';
+    background-color: unset;
+    border: unset;
+    border-color: unset;
+    padding: 0 7px;
+    &:hover {
+      color: unset;
+      text-decoration: none;
+      background-color: unset;
+    }
+    &:focus {
+      box-shadow: unset;
+    }
+  }
+
+  .page-item {
+    &.active {
+      opacity: unset;
+      .page-link {
+        color: color(tertiary);
+        background-color: unset;
+        border-color: unset;
+      }
+    }
+    &:first-child .page-link {
+      opacity: unset;
+    }
+    &:last-child .page-link {
+      opacity: unset;
+    }
+    &.disabled .page-link {
+      background-color: unset;
+    }
+  }
+
+  .back_color {
+    &.icon-ic_paginator_back .path1:before {
+      opacity: unset;
+      color: color(primary);
+    }
+    &.icon-ic_paginator_back .path2:before {
+      opacity: unset;
+      color: color(quaternary);
+    }
+  }
+
+  .forward_end {
+    &.icon-ic_paginator_forward .path1:before {
+      opacity: 0.03;
+    }
+    &.icon-ic_paginator_forward .path2:before {
+      opacity: 0.3;
+      color: color(tertiary);
+    }
+  }
+
+  .pagination {
+    $root: &;
+    &-page {
+      display: flex;
+      order: 2;
+      align-items: center;
+      opacity: 0.5;
+    }
+    &-prev {
+      &.disabled {
+        margin-right: 5px;
+        #{$root}__first-last {
+          display: none;
+        }
+      }
+      span.icon {
+        font-size: font-size(mob-l);
+      }
+    }
+    &-next {
+      order: 3;
+      &.disabled {
+        margin-left: 5px;
+        #{$root}__first-last {
+          display: none;
+        }
+      }
+      span.icon {
+        font-size: font-size(mob-l);
+      }
+    }
+    &__first-last {
+      min-width: 19px;
+      text-align: center;
+    }
+    &-first {
+      display: flex;
+      order: 2;
+      align-items: center;
+      opacity: 0.5;
+      &.disabled {
+        display: none;
+      }
+      &:after {
+        margin-right: 7px;
+        font-weight: bold;
+        content: '...';
+        line-height: 1.25;
+      }
+    }
+    &-last {
+      display: flex;
+      order: 2;
+      align-items: center;
+      opacity: 0.5;
+      &.disabled {
+        display: none;
+      }
+      &:before {
+        margin-left: 7px;
+        font-weight: bold;
+        content: '...';
+        line-height: 1.25;
+      }
+    }
+    &_bounder-value {
+      #{$root}-first,
+      #{$root}-last {
+        display: none;
+      }
+    }
+  }
+}

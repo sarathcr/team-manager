@@ -1,52 +1,54 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
 .dashboard {
   width: 100%;
   padding-left: 10px;
   margin-right: 5%;
   padding: 75px 0 0 0;
   display: flex;
-  background-color: $color-background-primary;
+  background-color: color(background-primary);
   &__header {
     width: 100%;
     padding-top: 30px;
     padding-bottom: 20px;
-    font-family: $font-family-primary;
+    font-family: font-family(secondary);
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 15px;
+    font-size: font-size(body-s);
     letter-spacing: 1px;
   }
   &__boxes {
-    padding: 0 $padding;
+    padding: 0 spacing(primary);
     &-container {
-      margin-bottom: 28px;
+      margin-bottom: grid-gutter(primary);
       background-color: transparent;
       min-height: 250px;
       z-index: 1;
     }
   }
   &__activities {
+    margin-bottom: grid-gutter(secondary) * 2;
     clear: both;
     &-fase {
-      margin: 16px 0px 32px;
+      &:not(:first-child) {
+        margin: 16px 0px 0px;
+      }
       &-title {
         letter-spacing: 1px;
       }
-
       &-header {
         width: 100%;
-        padding: 20px 0;
-        font-family: $font-family-primary;
+        padding: 30px 0;
+        font-family: font-family(secondary);
         text-transform: uppercase;
         font-weight: bold;
-        font-size: $font-size-default;
-
+        font-size: font-size(default);
         &-total {
           text-transform: lowercase;
-          color: $color-tertiary;
-          font-size: $font-size-body-s;
+          color: color(tertiary);
+          font-size: font-size(body-s);
           font-weight: 900;
-          font-family: $font-family-tertiary;
+          font-family: font-family(tertiary);
           margin-left: 8px;
           opacity: 0.6;
           letter-spacing: 0;
@@ -64,10 +66,10 @@
           width: 100%;
           padding: 24px;
           border-radius: 3px;
-          border: 1px solid rgba($color-tertiary, 0.1);
+          border: 1px solid rgba(color(tertiary), 0.1);
           border-style: dashed;
-          font-family: $font-family-default;
-          background-color: $white-lilac;
+          font-family: font-family(default);
+          background-color: color(background-primary);
           position: relative;
           z-index: 1;
           &_button {
@@ -76,7 +78,7 @@
           }
         }
         &-textcontainer {
-          font-size: $font-size-sub-s;
+          font-size: font-size(sub-s);
         }
         &-strongtext {
           font-weight: 600;
@@ -90,7 +92,6 @@
   &__activities-components-fase {
     &_table {
       position: relative;
-      z-index: 2;
     }
   }
   &__fig {
@@ -110,5 +111,5 @@
   }
 }
 .page-background {
-  background-color: #f8f8f9;
+  background-color: color(background-primary);
 }

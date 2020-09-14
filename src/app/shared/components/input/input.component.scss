@@ -1,7 +1,8 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
 .input {
   $root: &;
-  border: 1px solid rgba($color-tertiary, 0.4);
+  border: 1px solid rgba(color(tertiary), 0.4);
   box-shadow: inset 0 0 0 0 transparent;
   box-sizing: border-box;
   border-radius: 3px;
@@ -11,15 +12,15 @@
   &__field {
     // min-height: 48px;
     padding: 12px 20px;
-    font-size: $font-size-body-s;
+    font-size: font-size(body-s);
     line-height: 24px;
     width: 100%;
     border: none;
     background: transparent;
-    caret-color: $color-primary;
+    caret-color: color(primary);
     &::placeholder {
-      color: rgba($color-tertiary, 0.6);
-      font-size: $font-size-body-s;
+      color: rgba(color(tertiary), 0.6);
+      font-size: font-size(body-s);
       line-height: 24px;
     }
     &::-ms-reveal,
@@ -27,7 +28,10 @@
       display: none;
     }
     &_password {
-      padding-right: $padding * 3;
+      padding-right: spacing(primary) * 3;
+    }
+    &_date {
+      color: rgba(color(tertiary), 0.5);
     }
   }
   &__innerLabel {
@@ -38,26 +42,37 @@
     color: $black;
   }
   &_border {
-    border: 1px solid rgba($color-tertiary, 0.1);
+    border: 1px solid rgba(color(tertiary), 0.1);
   }
   &__label {
     position: absolute;
-    font-size: $font-size-body-label;
+    font-size: font-size(label);
     font-weight: 900;
     letter-spacing: 0.2px;
     line-height: 12px;
     top: 0;
     transform: translateY(-50%);
     padding: 2px 5px;
+    background-color: color(quaternary);
     left: 14px;
     z-index: 2;
-    color: $color-tertiary;
+    color: color(tertiary);
     &_white {
-      background-color: $color-quaternary;
+      background-color: color(quaternary);
     }
     &_white-lilac {
-      background-color: $color-background-primary;
+      background-color: color(background-primary);
     }
+  }
+  &__innerLabel {
+    font-weight: 600;
+    text-align: right;
+    padding: 12px 20px 12px 0;
+    line-height: 24px;
+    color: pantone(black);
+    left: 14px;
+    z-index: 2;
+    color: color(tertiary);
   }
   &__counter-wrapper,
   &__password-validator {
@@ -65,14 +80,14 @@
     position: absolute;
   }
   &_focus {
-    border: 1px solid $color-primary !important;
-    box-shadow: inset 0 0 0 1px $color-primary !important;
+    border: 1px solid color(primary) !important;
+    box-shadow: inset 0 0 0 1px color(primary) !important;
   }
   &_error {
-    border: 1px solid $color-quinary !important;
-    box-shadow: inset 0 0 0 1px $color-quinary !important;
+    border: 1px solid color(quinary) !important;
+    box-shadow: inset 0 0 0 1px color(quinary) !important;
     #{$root}__field {
-      caret-color: $color-quinary;
+      caret-color: color(quinary);
     }
   }
   &__icon {
@@ -81,8 +96,16 @@
     transform: translateY(-50%);
     right: 15px;
     font-size: 24px;
-    color: $color-tertiary;
+    color: color(tertiary);
     cursor: pointer;
+  }
+
+  &__helperText {
+    margin-top: 7px;
+    padding-left: 20px;
+    &_error {
+      color: color(quinary);
+    }
   }
 }
 
@@ -96,4 +119,12 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+input[type='date']::-webkit-input-placeholder {
+  visibility: hidden !important;
 }

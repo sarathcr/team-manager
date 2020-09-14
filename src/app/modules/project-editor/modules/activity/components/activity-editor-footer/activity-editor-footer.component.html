@@ -8,7 +8,11 @@
         [disabled]="!btnStatus"
         (click)="submitButtonClick.emit($event)"
       >
-        {{ doneButtonlabel | translate }}
+        {{
+          isSubmitted
+            ? (doneButtonlabel | translate)
+            : (subitButtonlabel | translate)
+        }}
       </app-button>
     </div>
     <div>

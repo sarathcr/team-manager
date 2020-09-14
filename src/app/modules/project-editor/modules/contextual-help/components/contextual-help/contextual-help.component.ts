@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   Output,
   ViewEncapsulation,
@@ -27,6 +28,7 @@ export class ContextualHelpComponent implements OnDestroy {
   closeContext = false
   activeTab: any
   loaded = false
+  isSetOne = false // WIP contextual help testing
 
   constructor(
     public editorService: EditorService,
@@ -71,6 +73,7 @@ export class ContextualHelpComponent implements OnDestroy {
     this.contextualHelp$ = this.helpService.entities$.pipe(
       map((help) =>
         help.find((step) => {
+          this.isSetOne = stepid % 2 ? true : false
           return step.stepid === Number(stepid)
         })
       )

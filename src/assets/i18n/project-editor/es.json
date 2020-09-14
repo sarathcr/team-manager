@@ -21,6 +21,7 @@
     "project_dependancy_title_cv": "Desbloquea el currículum",
     "Error_textlimit_specified_singleinput": "Has excedido los caracteres permitidos.",
     "Error_nodata_dropdown": "No existen opciones disponibles de selección.",
+    "Error_input_number": "Sólo puedes introducir números.",
     "Error_API_query_dropdown": "Lo sentimos, no se han encontrado opciones de selección. Vuelve a intentarlo.",
     "project_input_singleitem_helpertext": "Pulsa la tecla intro para agregar un nuevo elemento a la lista."
   },
@@ -208,5 +209,48 @@
     "experience_header_menu_calendar": "Calendario",
     "experience_header_menu_people": "Personas",
     "experience_header_menu_programacion": "Programación"
+  },
+  "PRIVATEHOME_CARD": {
+    "home_card_experience_type_project": "Proyecto",
+    "home_card_experience_type_didacticunit": "Unidad didáctica",
+    "home_card_experience_type_activity": "Actividad",
+    "home_card_experience_state_draft": "Borrador",
+    "home_card_experience_state_inprogress": "En curso",
+    "home_card_experience_state_done": "Finalizado",
+    "home_card_experience_state_readonly": "Sólo lectura"
+  },
+  "PRIVATEHOME_GENERAL": {
+    "home_header_invite": "+ Invitar",
+    "home_header_button_upgrade": "Mejorar mi plan",
+    "home_menu_section_getinspired": "Inspírate",
+    "home_menu_section_yourexperiences": "Tus experiencias",
+    "home_menu_section_help": "Ayuda"
+  },
+  "PRIVATEHOME_HEADER": {
+    "home_section_getinspired_title": "Experiencias creadas",
+    "home_filter": "Filtrar",
+    "home_sort": "Ordenar por:",
+    "home_sort_option_openedrecently": "Abierto recientemente",
+    "home_sort_option_lastchange": "Última modificación",
+    "home_sort_option_name": "Nombre",
+    "home_sort_option_creation": "Fecha de creación",
+    "home_button_create": "+ |Crear|",
+    "home_search_experience": "Busca una experiencia"
+  },
+  "PRIVATEHOME_PROFILE": {
+    "profile_dropdown_option_profile": "Perfil",
+    "profile_dropdown_option_logout": "Salir"
+  },
+  "PRIVATEHOME_EMPTYSTATE": {
+    "home_section_yourexperiences_empty_title": "Empieza a crear tus propias experiencias",
+    "home_section_yourexperiences_empty_description": "Puedes consultar ejemplos de experencias creadas y personalizarlas para tu aula o bien crear una experiencia desde cero.",
+    "home_section_yourexperiences_empty_button_examples": "Ver ejemplos",
+    "home_section_yourexperiences_empty_button_create": "Crear experiencia",
+    "home_inspire_popup_cp_title": "¿Dónde se encuentra tu centro educativo?",
+    "home_inspire_popup_cp_description": "Escribe el código postal del centro educativo donde impartes clases para personalizar Thinkö según el currículum educativo.",
+    "home_inspire_popup_cp_input_cp": "Código postal",
+    "home_inspire_popup_cp_button_start": "Empezar",
+    "home_inspire_popup_cp_error": "Este código postal no existe. Revísalo.",
+    "home_inspire_popup_cp_placeholder": "Introduce el código postal"
   }
 }

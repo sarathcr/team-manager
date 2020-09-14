@@ -12,47 +12,47 @@
           'STARTING_POINT.project_startingpoint_description' | translate
         "
       ></p>
-      <app-dropdown
+      <app-select
         id="step-one-dropdown-country"
         [config]="countryDropdown"
         [data$]="country$"
         label="STARTING_POINT.project_startingpoint_country"
         placeholder="STARTING_POINT.project_startingpoint_country_placeholder"
         (dropdownSelect)="onDropdownSelect($event)"
-      ></app-dropdown>
-      <app-dropdown
+      ></app-select>
+      <app-select
         id="step-one-dropdown-region"
         [config]="regionDropdown"
         [data$]="region$"
         label="STARTING_POINT.project_startingpoint_region"
         placeholder="STARTING_POINT.project_startingpoint_region_placeholder"
         (dropdownSelect)="onDropdownSelect($event)"
-      ></app-dropdown>
-      <app-dropdown
+      ></app-select>
+      <app-select
         id="step-one-dropdown-stages"
         [config]="stagesDropdown"
         [data$]="stages$"
         label="STARTING_POINT.project_startingpoint_stage"
         placeholder="STARTING_POINT.project_startingpoint_stage_placeholder"
         (dropdownSelect)="onDropdownSelect($event)"
-      ></app-dropdown>
-      <app-dropdown
+      ></app-select>
+      <app-select
         id="step-one-dropdown-academic-year"
         [config]="academicYearDropdown"
         [data$]="academicYear$"
         label="STARTING_POINT.project_startingpoint_year"
         placeholder="STARTING_POINT.project_startingpoint_year_placeholder"
         (dropdownSelect)="onDropdownSelect($event)"
-      ></app-dropdown>
-      <app-dropdown
+      ></app-select>
+      <app-select
         id="step-one-dropdown-grades"
         [config]="gradesDropdown"
         [data$]="grades$"
         label="STARTING_POINT.project_startingpoint_grades"
         placeholder="STARTING_POINT.project_startingpoint_grades_placeholder"
         (dropdownSelect)="onDropdownSelect($event)"
-      ></app-dropdown>
-      <app-dropdown
+      ></app-select>
+      <app-select
         id="step-one-dropdown-subjects"
         [config]="subjectsDropdown"
         [data$]="subjects$"
@@ -60,7 +60,7 @@
         label="STARTING_POINT.project_startingpoint_subjects"
         placeholder="STARTING_POINT.project_startingpoint_subjects_placeholder"
         (dropdownSelect)="onDropdownSelect($event)"
-      ></app-dropdown>
+      ></app-select>
     </div>
     <app-button
       id="step-one-button"

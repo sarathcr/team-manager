@@ -1,4 +1,4 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 
 .help-modal {
   max-width: 70.15%; // 1010px;
@@ -12,13 +12,13 @@
     &-title {
       width: 100%;
       display: inline-flex;
-      font-family: $font-family-secondary;
-      font-size: $font-size-body-overtitle;
+      font-family: font-family(secondary);
+      font-size: font-size(body-overtitle);
       line-height: 24px;
       letter-spacing: 1px;
       font-weight: 900;
       text-transform: uppercase;
-      color: rgba($color-tertiary, 0.5);
+      color: rgba(color(tertiary), 0.5);
       margin: 0;
       align-items: center;
       justify-content: center;
@@ -29,7 +29,7 @@
       justify-self: flex-end;
       background-color: transparent;
       border: none;
-      color: rgba($color-tertiary, 0.6);
+      color: rgba(color(tertiary), 0.6);
       font-size: 20px;
       margin-right: -8px;
       cursor: pointer;

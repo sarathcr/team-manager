@@ -1,7 +1,7 @@
 <app-editor-header
   id="editor-header"
   [projectData]="editor.titleData"
-  [stepOneStatus]="(stepOne | async)?.state"
+  [stepOneStatus]="(stepOne$ | async)?.state"
   (titleSubmit)="editor.handleSubmit($event)"
 ></app-editor-header>
 <router-outlet class="text-center"></router-outlet>

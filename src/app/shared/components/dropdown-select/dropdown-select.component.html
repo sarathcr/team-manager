@@ -1,0 +1,22 @@
+<div
+  class="dropdown-select d-flex align-items-center {{
+    !multiSelection ? 'dropdown-select_radio' : 'dropdown-select_check-box'
+  }}"
+  [ngClass]="{
+    'dropdown-select__position_right': position === 'right'
+  }"
+>
+  <div *ngIf="label" class="dropdown-select__label">
+    {{ label | translate }}
+  </div>
+  <ng-multiselect-dropdown
+    [placeholder]="placeholder | translate"
+    [disabled]="disabled"
+    [settings]="dropdownSettings"
+    [data]="data"
+    (onSelect)="onItemSelect()"
+    (onDeSelect)="onItemDeSelect($event)"
+    [(ngModel)]="selectedItems"
+  >
+  </ng-multiselect-dropdown>
+</div>

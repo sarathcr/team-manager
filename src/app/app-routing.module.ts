@@ -70,7 +70,7 @@ const routes: Routes = [
   { path: 'not-found', component: NotFoundComponent },
   {
     path: '',
-    redirectTo: 'editor',
+    redirectTo: 'editor/projects',
     pathMatch: 'full',
   },
   { path: '**', redirectTo: 'not-found' },

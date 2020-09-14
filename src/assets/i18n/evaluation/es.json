@@ -1,0 +1,7 @@
+{
+    "EVALUATION":{
+        "evaluation_emptystate_title": "Todavia no has creado elementos calificables.",
+        "evaluation_emptystate_description": "Crea ejercicios o elementos transversales calificables dentro de una actividad para poder asignar porcentajes de calificación y calificar a tus alumnos aquí.",
+        "evaluation_emptystate_exercises_button": "nueva actividad"
+    }
+}

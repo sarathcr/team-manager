@@ -1,32 +1,34 @@
-<div class="dropdown dropdown_multiple {{ active ? 'active' : '' }}" #dropdown>
-  <div
-    class="dropdown__wrap  {{
-      config.settings.singleSelection ? 'dropdown_single-select' : ''
-    }} "
+<div class="span-dropdown" dropdown (isOpenChange)="isOpenChange()">
+  <div id="basic-link" dropdownToggle data-toggle="dropdown" autoClose="true">
+    <ng-content></ng-content>
+  </div>
+  <div class="arrow" *ngIf="showDropdown"></div>
+  <ul
+    id="basic-link-dropdown"
+    class="dropdown-menu"
+    role="menu"
+    aria-labelledby="basic-link"
     [ngClass]="{
-      selected: config.selectedItems.length,
-      'loading-active': config.loading,
-      'empty-list':
-        !config.data?.length && !config.priorityData?.length && !config.loading
+      'span-dropdown-menu_hide': !showDropdown,
+      'dropdown-menu_right': position === 'right',
+      'dropdown-menu_left': position === 'left',
+      'dropdown-menu_center': position === 'center'
     }"
   >
-    <label
-      class="dropdown__label"
-      [ngClass]="{ dropdown__label_disabled: config.disabled }"
-      for="config.name"
-      >{{ label | translate }}</label
+    <li
+      class="dropdown-menu-item"
+      (click)="onSelect(dropdownElement)"
+      *ngFor="let dropdownElement of list"
     >
-    <ng-multiselect-dropdown
-      [placeholder]="placeholder | translate"
-      [disabled]="config.disabled"
-      [settings]="dropdownSettings"
-      [data]="config.data"
-      [priorityData]="config.priorityData"
-      (onSelect)="onItemSelect()"
-      (onDeSelect)="onItemDeSelect($event)"
-      (onDropDownClose)="onDropDownClose()"
-      [(ngModel)]="config.selectedItems"
-    >
-    </ng-multiselect-dropdown>
-  </div>
+      <span
+        class="icon icon-tooltip {{
+          dropdownElement.icon ? dropdownElement.icon : ''
+        }}"
+        *ngIf="dropdownElement.icon"
+      ></span>
+      <a class="span-dropdown-menu__text">{{
+        dropdownElement.text | translate
+      }}</a>
+    </li>
+  </ul>
 </div>

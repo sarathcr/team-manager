@@ -1,12 +1,12 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 
 .checkbox {
   display: flex !important;
   flex-direction: row;
   flex: 1 1 100%;
   padding: 0;
-  font-family: $font-family-tertiary;
-  font-size: $font-size-body-s;
+  font-family: font-family(tertiary);
+  font-size: font-size(body-s);
   line-height: 24px;
   letter-spacing: 0;
   font-weight: 400;
@@ -38,8 +38,8 @@
     left: 0;
     height: 19px;
     width: 19px;
-    background-color: $color-quaternary;
-    border: 1px solid $color-tertiary;
+    background-color: color(quaternary);
+    border: 1px solid color(tertiary);
     opacity: 0.2;
     border-radius: 2px;
 
@@ -53,10 +53,10 @@
     }
   }
   &__input:checked ~ &__checkmark {
-    background-color: $color-quaternary;
-    color: $color-primary;
+    background-color: color(quaternary);
+    color: color(primary);
     opacity: 1;
-    border: 1px solid $color-primary;
+    border: 1px solid color(primary);
   }
 
   &__input:checked ~ &__checkmark::before {

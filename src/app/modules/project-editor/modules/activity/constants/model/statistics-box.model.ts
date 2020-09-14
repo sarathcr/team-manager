@@ -6,8 +6,6 @@ export interface Box {
   title: string
   phases?: Phase[]
   infoText?: string
-  action?: string
-  actionText?: string
   actionValue?: string
   actionValueUnit?: string
   chartText?: string
