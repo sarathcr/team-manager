@@ -1,4 +1,4 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 
 .not-found {
   width: 100vw;
@@ -44,20 +44,20 @@
     font-size: 148px;
     line-height: 92px;
     letter-spacing: 0.3px;
-    font-family: $font-family-primary;
+    font-family: font-family(primary);
     font-weight: 900;
-    color: $color-secondary;
+    color: color(secondary);
     display: flex;
     justify-content: center;
-    margin-bottom: $margin * 2;
+    margin-bottom: grid-gutter(primary);
   }
 
   &__desc {
     font-size: 24px;
     line-height: 36px;
     letter-spacing: 0.3px;
-    margin-bottom: $margin * 2;
-    font-family: $font-family-tertiary;
+    margin-bottom: grid-gutter(primary);
+    font-family: font-family(tertiary);
     text-align: center;
   }
 

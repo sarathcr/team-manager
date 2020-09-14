@@ -23,7 +23,7 @@ describe('ExercisesCardComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should contail title and should be a string', () => {
+  it('should contain title and should be a string', () => {
     component.title = 'title'
     expect(component.title).not.toBeNull()
     expect(component.title).toBeTruthy()

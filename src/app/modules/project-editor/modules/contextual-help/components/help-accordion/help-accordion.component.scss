@@ -1,19 +1,20 @@
 @import 'helpers/_helpers-master';
 @import 'helpers/_bt-mixins';
+@import 'variables/_variables-master';
 
 .help-accordion {
   $root: &;
   border: none;
   border-radius: 0;
-  background-color: $color-quaternary;
+  background-color: color(quaternary);
 
   &__heading {
     $root-head: &;
     border: none;
-    background-color: $color-quaternary;
+    background-color: color(quaternary);
     padding: 14px 30px 15px 0;
     margin-left: 40px;
-    border-top: 1px solid rgba($color-tertiary, 0.1);
+    border-top: 1px solid rgba(color(tertiary), 0.1);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -47,8 +48,8 @@
 
     &-title {
       width: 100%;
-      font-family: $font-family-secondary;
-      font-size: $font-size-body-overtitle;
+      font-family: font-family(secondary);
+      font-size: font-size(body-overtitle);
       line-height: 24px;
       letter-spacing: 1px;
       font-weight: 900;
@@ -79,23 +80,24 @@
     overflow-y: auto;
 
     &-content {
-      padding: 0 30px 25px 40px;
+      // padding: 0 30px 25px 40px;  // should confirm before delete
+      padding: 0 0 25px 0;
       height: 100%;
       min-height: 150px;
     }
 
     &-title {
-      font-family: $font-family-tertiary;
-      font-size: $font-size-body;
+      font-family: font-family(tertiary);
+      font-size: font-size(body);
       line-height: 28px;
       letter-spacing: 0.2px;
       font-weight: 700;
-      margin-bottom: $margin;
+      margin-bottom: spacing(primary);
     }
 
     &-desc {
-      font-family: $font-family-tertiary;
-      font-size: $font-size-body-s;
+      font-family: font-family(tertiary);
+      font-size: font-size(body-s);
       line-height: 24px;
       letter-spacing: normal;
       font-weight: 400;
@@ -106,8 +108,8 @@
       list-style: none;
       padding-left: 5px;
       margin-bottom: 0;
-      font-family: $font-family-tertiary;
-      font-size: $font-size-body-s;
+      font-family: font-family(tertiary);
+      font-size: font-size(body-s);
       line-height: 24px;
       letter-spacing: normal;
       font-weight: 400;
@@ -122,7 +124,7 @@
           font-family: 'icomoon' !important;
           font-size: 1.6rem;
           left: -10px;
-          color: $color-primary;
+          color: color(primary);
         }
       }
     }
@@ -156,7 +158,7 @@
     }
     &__body {
       &-content {
-        padding-left: 50px;
+        // padding-left: 50px;  // should confirm before delete
       }
       &-thumb {
         width: 100%;
@@ -201,9 +203,9 @@
     width: 74px;
     height: 74px;
     border-radius: 50%;
-    color: $color-quaternary;
-    background: $color-secondary;
-    border: 2px solid $color-secondary;
+    color: color(quaternary);
+    background: color(secondary);
+    border: 2px solid color(secondary);
     cursor: pointer;
     .icon {
       margin: auto;
@@ -218,8 +220,8 @@
   margin-top: 22px;
   margin-bottom: 30px;
   border-radius: 4px;
-  background-color: $color-quaternary;
-  color: $color-tertiary;
+  background-color: color(quaternary);
+  color: color(tertiary);
   @include card-box-shadow;
 
   &__img {
@@ -236,8 +238,8 @@
     display: flex;
 
     &-title {
-      font-family: $font-family-tertiary;
-      font-size: $font-size-body-s;
+      font-family: font-family(tertiary);
+      font-size: font-size(body-s);
       line-height: 24px;
       letter-spacing: normal;
       font-weight: 700;
@@ -281,8 +283,8 @@
   }
 
   &__title {
-    font-family: $font-family-tertiary;
-    font-size: $font-size-body-s;
+    font-family: font-family(tertiary);
+    font-size: font-size(body-s);
     line-height: 24px;
     letter-spacing: normal;
     font-weight: 700;
@@ -296,10 +298,10 @@
 }
 
 .help-pdf-thumb {
-  font-family: $font-family-tertiary;
-  font-size: $font-size-body-s;
+  font-family: font-family(tertiary);
+  font-size: font-size(body-s);
   font-weight: bold;
-  border-bottom: 1px solid $blue-whale;
+  border-bottom: 1px solid color(tertiary);
   cursor: pointer;
 }
 .iframe {

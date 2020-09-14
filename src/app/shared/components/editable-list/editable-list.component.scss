@@ -1,4 +1,4 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 
 .editable-list {
   &__list {
@@ -12,18 +12,18 @@
     align-items: flex-start;
     justify-content: flex-start;
     padding: 12px 63px 12px 18px;
-    border-bottom: 1px solid $link-water;
+    border-bottom: 1px solid color(border-secondary);
     margin-bottom: 0;
     position: relative;
 
     &:first-child {
-      border-top: 1px solid $link-water;
+      border-top: 1px solid color(border-secondary);
     }
   }
 
   &__text {
     font-weight: normal;
-    font-size: $font-size-default;
+    font-size: font-size(default);
     letter-spacing: 0;
     word-break: break-word;
     word-wrap: break-word;
@@ -36,40 +36,40 @@
     right: 17px;
 
     &-edit {
-      color: rgba($blue-whale, 0.4);
+      color: rgba(color(tertiary), 0.4);
       margin-right: 12px;
       cursor: pointer;
 
       .icon {
-        font-size: $font-size-s;
+        font-size: font-size(s);
       }
     }
 
     &-close {
-      color: rgba($blue-whale, 0.4);
+      color: rgba(color(tertiary), 0.4);
       cursor: pointer;
 
       .icon {
-        font-size: $font-size-icon;
+        font-size: font-size(icon);
       }
     }
   }
   &__border,
   &__placeholder-wrap {
-    border-bottom: 1px solid $link-water;
+    border-bottom: 1px solid color(border-secondary);
   }
   &__placeholder-wrap {
     padding: 12px 0 12px 18px;
   }
   &__placeholder {
-    color: rgba($color-tertiary, 0.6);
+    color: rgba(color(tertiary), 0.6);
   }
   &__optional-header {
     font-weight: 900;
   }
   &__numbered {
-    color: $color-tertiary;
+    color: color(tertiary);
     font-weight: 900;
-    font-size: $font-size-button;
+    font-size: font-size(button);
   }
 }

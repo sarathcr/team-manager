@@ -22,8 +22,12 @@
         'textarea__label_white-lilac': background === 'white-lilac'
       }"
       *ngIf="label"
-      >{{ label | translate }}</label
-    >
+      >{{ label | translate | TranslateOptions: 0 }}
+      <span class="textarea__label_optional"
+        >{{ label | translate | TranslateOptions: 1 }}
+      </span>
+    </label>
+
     <textarea
       class="textarea__description"
       [attr.maxlength]="maxLength"
@@ -37,6 +41,8 @@
       (keydown)="onKeyDown($event, validator.limitExceeds)"
       (keyup)="onKeyUp($event, validator)"
       (paste)="onPaste($event, validator)"
+      (drop)="onDrop($event, validator)"
+      (focusout)="setFocusOut($event)"
       #textarea
     ></textarea>
     <span

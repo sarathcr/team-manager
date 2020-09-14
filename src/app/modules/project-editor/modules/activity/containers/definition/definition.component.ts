@@ -8,6 +8,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core'
+import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import {
@@ -26,6 +27,7 @@ import { StudentGroupsEntityService } from 'src/app/modules/project-editor/store
 import { TeachingStrategyEntityService } from 'src/app/modules/project-editor/store/entity/teaching-strategy/teaching-strategy-entity.service'
 import { DropdownConfigInit } from 'src/app/shared/constants/data/form-elements.data'
 import { FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
+import { unfreeze } from 'src/app/shared/utility/object.utility'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import {
   CustomStudentGroup,
@@ -83,7 +85,9 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   learningObjectives: Objectives[] = []
   selectedObjectives = []
+  selectedObjectivesCopy = []
   compareObjectives = []
+  compareSelectedObjectives = []
 
   learningStandards: Standard[] = []
   selectedStandards = []
@@ -112,7 +116,8 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     private teachingStrategyService: TeachingStrategyEntityService,
     private studentGroupsService: StudentGroupsEntityService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -127,8 +132,10 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   }
 
   defInit(): void {
-    this.project = this.editor.project
-    this.getSubjects()
+    this.subscriptions.sink = this.editor.project$.subscribe((project) => {
+      this.project = unfreeze(project)
+      this.signatureDropdown.data = this.project.subjects
+    })
     this.phaseDropdown.disabled = false
     this.signatureDropdown.disabled = false
     this.modalityDropdown.disabled = false
@@ -156,8 +163,8 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   // Subscribing and assigning all activity data from project
   getDefinition(): void {
     this.subscriptions.sink = this.editor.activity$.subscribe((activity) => {
-      this.activity = { ...activity }
-      this.formData = { ...activity }
+      this.activity = unfreeze(activity)
+      this.formData = this.activity
       if (this.activity.phase) {
         const phase = this.definitionDropdownData.phasesData.find(
           (data) => data.id === this.activity.phase
@@ -173,6 +180,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
       }
       if (this.activity.subjects) {
         this.signatureDropdown.selectedItems = this.activity.subjects
+        this.formData.subjects = this.activity.subjects
         this.subjects = this.activity.subjects
         this.signatureDropdown.status = 'INPROCESS'
       }
@@ -187,21 +195,27 @@ export class DefinitionComponent implements OnInit, OnDestroy {
           },
         ]
         this.modalityData = this.activity.modality
+        this.formData.modality = this.activity.modality
         this.signatureDropdown.status = 'INPROCESS'
       }
       this.duration = this.activity.duration
+      this.formData.duration = this.activity.duration
       this.description = this.activity.description
+      this.formData.description = this.activity.description
       this.diversity = this.activity.diversity
+      this.formData.diversity = this.activity.diversity
       this.selectedContents = this.activity.contents
         ? this.deepCopyArray([...this.activity.contents])
         : []
+      this.formData.contents = [...this.selectedContents]
       this.resources = this.activity.resources
         ? this.deepCopyArray([...this.activity.resources])
         : []
+      this.formData.resources = [...this.resources]
       this.selectedStandards = this.activity.standards
         ? this.deepCopyArray([...this.activity.standards])
         : []
-
+      this.formData.standards = [...this.selectedStandards]
       this.selectedTeachings = this.concatArrays(
         this.activity.teachingStrategies,
         this.activity.customTeachingStrategies
@@ -210,19 +224,20 @@ export class DefinitionComponent implements OnInit, OnDestroy {
         this.activity.studentGroups,
         this.activity.customStudentGroups
       )
-      if (this.activity?.objectives) {
-        this.selectedObjectives = this.activity.objectives
-          ? this.deepCopyArray(this.activity.objectives)
-          : []
-      }
-      if (this.activity?.contents) {
-        this.selectedContents = this.deepCopyArray(this.activity.contents)
-      }
+      this.selectedObjectives = this.activity?.objectives
+        ? this.deepCopyArray(this.activity.objectives)
+        : []
+      this.formData.objectives = [...this.selectedObjectives]
+      this.selectedObjectivesCopy = [...this.selectedObjectives]
+      this.selectedContents = this.activity.contents
+        ? this.deepCopyArray(this.activity.contents)
+        : []
+      this.formData.contents = [...this.selectedContents]
       this.activity.state = this.activity.state
         ? this.activity.state
         : 'TO_DEFINE'
+      this.formData.state = this.activity.state
       this.validationCheck()
-
       this.getTeachingStrategies()
       this.getStudentGroups()
       this.getAllObjectives()
@@ -232,20 +247,19 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     })
   }
 
-  // Get subjects for signature dropdown
-  getSubjects(): void {
-    this.signatureDropdown.data = this.editor.project.subjects
-  }
-
   getTeachingStrategies(): void {
     this.compareTeachings = []
+    console.log(this.selectedTeachings)
     this.subscriptions.sink = this.teachingStrategyService.entities$.subscribe(
       (data) => {
         this.teachingStrategies = data.map((item) => {
           const newObject = Object.assign({}, item)
           newObject.checked = false
           this.selectedTeachings.forEach((selectedItem) => {
-            if (selectedItem.id === item.id) {
+            if (
+              selectedItem.id === item.id &&
+              selectedItem.type === 'primary'
+            ) {
               newObject.checked = true
             }
           })
@@ -267,7 +281,10 @@ export class DefinitionComponent implements OnInit, OnDestroy {
           const newObject = Object.assign({}, item)
           newObject.checked = false
           this.selectedStudentGroups.forEach((selectedItem) => {
-            if (selectedItem.id === item.id) {
+            if (
+              selectedItem.id === item.id &&
+              selectedItem.type === 'primary'
+            ) {
               newObject.checked = true
             }
           })
@@ -283,12 +300,21 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   getAllObjectives(): void {
     this.compareObjectives = []
-    this.learningObjectives = this.project.competencyObjectives.map((item) => {
+    this.learningObjectives = this.project.competencyObjectives.map(
+      ({ id, name, standards }) => ({
+        id,
+        name,
+        standards,
+      })
+    )
+    this.learningObjectives = this.learningObjectives.map((item, index) => {
       const newObject = Object.assign({}, item)
       newObject.checked = false
+      newObject.index = index + 1
       this.selectedObjectives.forEach((selectedItem) => {
         if (selectedItem.id === item.id) {
           newObject.checked = true
+          selectedItem.index = index + 1
         }
       })
       return newObject
@@ -308,57 +334,65 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     )
     const selectedContents = this.selectedContents.map(({ id }) => id)
     this.learningSubjects = this.learningSubjects.map((subject) => {
-      for (const content of subject.contents) {
-        content.checked = false
-        if (selectedContents.includes(content.id)) {
-          content.checked = true
+      if (subject.contents) {
+        for (const content of subject?.contents) {
+          content.checked = false
+          if (selectedContents.includes(content.id)) {
+            content.checked = true
+          }
         }
       }
       return subject
+    })
+    this.learningSubjects = this.learningSubjects.filter((subject) => {
+      if (this.formData.subjects) {
+        for (const selectedSubject of this.formData.subjects) {
+          if (subject.id === selectedSubject.id) {
+            return subject
+          }
+        }
+      }
     })
     this.compareSubjects = this.deepCopyArray(this.learningSubjects)
   }
 
   getAllStandards(): void {
-    this.compareObjectives = []
-    this.learningObjectives = this.project.competencyObjectives.map(
-      ({ id, name, standards }) => ({
-        id,
-        name,
-        standards,
-      })
-    )
     const selectedStandards = this.selectedStandards.map(({ id }) => id)
-    this.learningObjectives = this.learningObjectives.map((objective) => {
-      for (const standard of objective.standards) {
-        standard.checked = false
-        if (selectedStandards.includes(standard.id)) {
-          standard.checked = true
+    this.selectedObjectivesCopy = this.selectedObjectivesCopy.map(
+      (objective) => {
+        for (const standard of objective.standards) {
+          standard.checked = false
+          if (selectedStandards.includes(standard.id)) {
+            standard.checked = true
+          }
         }
+        return objective
       }
-      return objective
-    })
-    this.compareObjectives = this.deepCopyArray(this.learningObjectives)
+    )
+    this.compareSelectedObjectives = this.deepCopyArray(
+      this.selectedObjectivesCopy
+    )
   }
 
   // Funtion updates the edited list
   editResource(resources: ActivityResource[]): void {
     this.formData.resources = resources
+    this.isFormUpdated = true
     this.validationCheck()
-    this.saveForm('TO_DEFINE')
   }
 
   // Function updates the deleted list
   deleteResource(resources: ActivityResource[]): void {
     this.formData.resources = resources
-    this.validationCheck()
     this.isFormUpdated = true
+    this.validationCheck()
   }
 
   addResource(resources: ActivityResource[]): void {
     this.formData.resources = resources
-    this.validationCheck()
+    this.isFormUpdated = true
     this.saveForm('TO_DEFINE')
+    this.validationCheck()
   }
 
   openModal(data: object): void {
@@ -384,7 +418,9 @@ export class DefinitionComponent implements OnInit, OnDestroy {
         this.learningSubjects = this.deepCopyArray(this.compareSubjects)
         break
       case 'standards':
-        this.learningObjectives = this.deepCopyArray(this.compareObjectives)
+        this.selectedObjectives = this.deepCopyArray(
+          this.compareSelectedObjectives
+        )
         break
     }
   }
@@ -414,6 +450,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     } else {
       this.minuteError = false
       this.formData.duration = value
+      this.isFormUpdated = true
     }
     this.validationCheck()
   }
@@ -465,7 +502,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   }
 
   // Modal View Open Common
-  openSecondaryView(data: object): void {
+  openSecondaryView(data: object, type: string): void {
     this.modalRef = this.modalService.show(data, {
       ignoreBackdropClick: true,
       class: 'modal-dialog-centered modal-layout_small',
@@ -474,7 +511,11 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   }
 
   // Modal data checkbox change event catch
-  updateRowEntity(data: Item, property: string): void {
+  updateRowEntity(
+    data: Item,
+    property: string,
+    objectiveData?: Objectives
+  ): void {
     switch (property) {
       case 'teaching':
         const teaching = this.teachingStrategies.find((item) => {
@@ -522,19 +563,22 @@ export class DefinitionComponent implements OnInit, OnDestroy {
           this.learningSubjects
         )
         break
-      case 'standards':
-        this.learningObjectives = this.learningObjectives.map((objective) => {
-          for (const standard of objective.standards) {
-            if (standard.id === data.id) {
-              standard.checked = data.checked
+      case 'standards': // only for standards we have objectiveData
+        this.selectedObjectivesCopy = this.selectedObjectivesCopy.map(
+          (objective) => {
+            if (objective.id === objectiveData.id) {
+              for (const standard of objective.standards) {
+                if (standard.id === data.id) {
+                  standard.checked = data.checked
+                }
+              }
             }
+            return objective
           }
-          return objective
-        })
-
+        )
         this.modalButtonStatus = this.checkUpdation(
-          this.compareObjectives,
-          this.learningObjectives
+          this.compareSelectedObjectives,
+          this.selectedObjectivesCopy
         )
         break
     }
@@ -542,7 +586,6 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   // Save Secondary View Data
   saveSecondaryViewData(event: any, property: string): void {
-    this.modalRef.hide()
     switch (property) {
       case 'teaching':
         this.selectedTeachings = this.teachingStrategies
@@ -602,6 +645,8 @@ export class DefinitionComponent implements OnInit, OnDestroy {
           })
         this.compareObjectives = this.deepCopyArray(this.learningObjectives)
         this.formData.objectives = this.selectedObjectives
+        this.selectedObjectivesCopy = this.selectedObjectives
+        this.deleletDependent('objectives')
         break
       case 'contents':
         this.selectedContents = []
@@ -620,7 +665,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
         break
       case 'standards':
         this.selectedStandards = []
-        for (const objective of this.learningObjectives) {
+        for (const objective of this.selectedObjectivesCopy) {
           for (const standard of objective.standards) {
             if (standard.checked) {
               this.selectedStandards.push({
@@ -630,14 +675,17 @@ export class DefinitionComponent implements OnInit, OnDestroy {
             }
           }
         }
-        this.compareObjectives = this.deepCopyArray(this.learningObjectives)
+        this.compareSelectedObjectives = this.deepCopyArray(
+          this.selectedObjectivesCopy
+        )
         this.formData.standards = this.selectedStandards
         break
     }
     this.modalButtonStatus = true
+    this.validationCheck()
     this.saveForm('TO_DEFINE')
     this.isFormUpdated = true
-    this.validationCheck()
+    this.modalRef.hide()
   }
 
   // Delete modal open
@@ -727,11 +775,49 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     })
     result.checked = false
     this.formData[selector] = this[selectedArray]
+    this.deleletDependent(selector)
     this.saveForm('TO_DEFINE')
     this.isFormUpdated = true
     this.validationCheck()
   }
 
+  // Remove dependent data when removing subjects and objectives
+  deleletDependent(selector: string): void {
+    if (selector === 'objectives') {
+      let tempStandards = this.selectedObjectives.map((item) => item.standards)
+      tempStandards = [].concat.apply([], tempStandards)
+      this.formData.standards = this.activity.standards
+        ? this.activity.standards.filter((standard) => {
+            for (const tempStandard of tempStandards) {
+              if (tempStandard.id === standard.id) {
+                return standard
+              }
+            }
+          })
+        : []
+    }
+    if (selector === 'subjects') {
+      const temp = this.formData.subjects.map((item) => item.id)
+      const tempSubjects = this.learningSubjects.filter((subject) => {
+        for (const id of temp) {
+          if (subject.id === id) {
+            return subject
+          }
+        }
+      })
+      let tempContents: any = tempSubjects.map((subject) => subject.contents)
+      tempContents = [].concat.apply([], tempContents)
+      this.formData.contents = this.activity.contents
+        ? this.activity.contents.filter((content) => {
+            for (const tempContent of tempContents) {
+              if (tempContent.id === content.id) {
+                return content
+              }
+            }
+          })
+        : []
+    }
+  }
   // Contents/Standards delete data delete data
   deleteModalArrayItem(
     selectedArray: string,
@@ -765,6 +851,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
         }
         case 'signature': {
           this.formData.subjects = selectedData.val
+          this.deleletDependent('subjects')
           break
         }
         case 'modality': {
@@ -774,6 +861,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
       }
     }
     this.activity.state = 'TO_DEFINE'
+    this.saveForm('TO_DEFINE')
     this.validationCheck()
   }
 
@@ -820,16 +908,21 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   // Check for mandatory fields
   validationCheck(): void {
     if (
-      !this.description ||
-      !this.selectedStandards?.length ||
-      !this.selectedObjectives?.length ||
-      !this.phaseDropdown.selectedItems.length ||
-      !this.modalityDropdown.selectedItems.length
+      !this.formData.description?.length ||
+      !this.formData.duration ||
+      !this.formData.subjects?.length ||
+      !this.formData.standards?.length ||
+      !this.formData.objectives?.length ||
+      !this.formData.phase?.length ||
+      !this.formData.modality?.length
     ) {
       this.activity.state = 'TO_DEFINE'
       this.isValid = false
     } else {
       this.isValid = true
+    }
+    if (this.isFormUpdated) {
+      this.activity.state = 'TO_DEFINE'
     }
     this.setButtonStatus()
   }
@@ -861,6 +954,9 @@ export class DefinitionComponent implements OnInit, OnDestroy {
       this.formData.state = 'DEFINED'
       this.activity.state = 'DEFINED'
       this.setButtonStatus()
+    } else {
+      this.formData.state = 'TO_DEFINE'
+      this.activity.state = 'TO_DEFINE'
     }
     this.formData.id = this.editor.activityId
     this.editor.handleActivitySubmit({
@@ -868,5 +964,14 @@ export class DefinitionComponent implements OnInit, OnDestroy {
       updateType: type,
     })
     this.isFormUpdated = false
+  }
+
+  submitButtonClick(): void {
+    this.saveForm('DEFINED')
+    setTimeout(() => {
+      this.router.navigate([
+        `editor/project/${this.project.id}/activity/${this.activity.id}/creation`,
+      ])
+    }, 2000)
   }
 }

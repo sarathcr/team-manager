@@ -13,21 +13,57 @@
     &-wrapper {
       padding-left: 10px;
       padding-right: 10px;
-      width: 20%;
+      flex: 0 0 20%;
       padding-bottom: 20px;
     }
   }
-  .presentation {
-    margin-top: 22px;
-    &__title {
-      color: $color-tertiary;
-      font-size: $font-size-body;
-      font-weight: bold;
+}
+.presentation {
+  margin-top: 35px;
+  &__title {
+    font-size: font-size(body);
+    font-weight: bold;
+  }
+  &__content {
+    margin-top: 10px;
+    margin-bottom: 28px;
+  }
+}
+.pdf-viewer {
+  left: 60px;
+  right: 60px;
+  z-index: 999;
+
+  &__pdf-container {
+    height: 571px;
+    margin-top: 23px;
+    margin-bottom: 33px;
+    left: 60px;
+    right: 60px;
+    ::ng-deep {
+      .pdfViewer {
+        width: 100%;
+        padding: grid-gutter(primary);
+        position: absolute;
+        .page {
+          border: none;
+          border-image: none;
+          -webkit-border-image: none;
+          box-shadow: 1px 0 5px -3px rgba(color(tertiary), 0.2);
+        }
+      }
     }
-    &__content {
-      margin-top: 20px;
-      margin-bottom: 28px;
-    }
+  }
+  &__back {
+    width: 390px;
+    height: 24px;
+  }
+  &__title {
+    height: 24px;
+    width: 113px;
+    color: color(tertiary);
+    font-size: 14px;
+    font-weight: bold;
   }
 }
 :host {

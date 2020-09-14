@@ -26,6 +26,7 @@ export class Item extends List {
 }
 
 export class Objectives extends List {
+  index?: number
   standards?: Standards[]
   customStandards?: Standards[]
 }

@@ -1,57 +1,80 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core'
+import { PDFDocumentProxy } from 'pdfjs-dist'
+import { StatusMaterial } from 'src/app/modules/project-editor/constants/model/activity.model'
 
 @Component({
   selector: 'app-add-material',
   templateUrl: './add-material.component.html',
-  styleUrls: ['./add-material.component.scss']
+  styleUrls: ['./add-material.component.scss'],
 })
-export class AddMaterialComponent implements OnInit {
-  @Input() linkContent = ''
-  @Input() url = ''
-  @Input() linkStatus = 'default'
+export class AddMaterialComponent implements OnDestroy {
+  @Input() referenceMaterial: StatusMaterial = {
+    status: 'default',
+    fileType: 'DOCUMENT',
+    previewImageUrl: '',
+    sourceType: 'GOOGLEDRIVE',
+    title: '',
+    url: '',
+    visible: true,
+    callConfirm: false
+  }
+  @Input() activeMaterialTab = 0
+  @Input() currentMaterialView = 1
   @Output() declineModal = new EventEmitter()
   @Output() confirmModal = new EventEmitter()
-  @Output() link = new EventEmitter()
-  activeTab = 0
-  currentView = 1
+  @Output() setActiveTab = new EventEmitter()
+  @Output() nextMaterialView = new EventEmitter()
+  @Output() previousMaterialView = new EventEmitter()
+  @Output() setModalDetails = new EventEmitter()
+  @Output() resetTabs = new EventEmitter()
   addMaterialTabs = [
     'ADD_MATERIAL.material_add_new',
     'ADD_MATERIAL.material_add_link',
     'ADD_MATERIAL.material_add_device',
-    'ADD_MATERIAL.material_add_googledrive'
+    'ADD_MATERIAL.material_add_googledrive',
   ]
-  constructor() { }
+  pdfSrc = './../../../../../assets/images/step1_ac_000032_ver.pdf'
+  pdf: PDFDocumentProxy
+  fileName = ''
+  zoom = 0.98
+  zoomMax = 2
+  zoomMin = 0.5
+  zoomAmt = 0.2
+  zoomScale = 'page-width'
+  totalPages = 0
+  pageVariable = 1
 
-  ngOnInit(): void {
+  constructor() {}
+
+  ngOnDestroy(): void {
+    this.resetTabs.emit()
   }
 
   onDecline(event: string): void {
     this.declineModal.emit(event)
   }
 
-  onConfirm(event: string): void {
-    this.confirmModal.emit(event)
+  onConfirm(): void {
+    this.confirmModal.emit(this.referenceMaterial)
   }
 
   getActiveTab(tabNumber: number): void {
-    this.activeTab = tabNumber
+    this.setActiveTab.emit(tabNumber)
   }
 
   changeView(variant: string): void {
-    this.nextView()
+    this.nextModal()
   }
 
-  previousView(): void {
-    --this.currentView
+  previousModal(): void {
+    this.previousMaterialView.emit()
   }
 
-  nextView(): void {
-    ++this.currentView
+  nextModal(): void {
+    this.nextMaterialView.emit()
   }
 
-  getLinkDetails(link: string): void {
-    this.linkContent = 'loading'
-    this.link.emit(link)
+  getMaterialDetails(referenceMaterial: StatusMaterial, callConfirm?: boolean): void {
+    this.setModalDetails.emit({ ...referenceMaterial, callConfirm })
   }
-
 }

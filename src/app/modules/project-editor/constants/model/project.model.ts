@@ -2,7 +2,7 @@ import {
   CheckBoxData,
   Option,
 } from 'src/app/shared/constants/model/form-elements.model'
-import { Activity } from './activity.model'
+import { Activity, Exercise } from './activity.model'
 import { Dimensions, Indicator } from './curriculum.model'
 
 export class Project {
@@ -31,6 +31,7 @@ export class Project {
   state?: string
   activities?: Activity[]
   curriculumId?: number
+  type?: Type
 }
 
 export class ProjectUpdate extends Project {
@@ -41,10 +42,14 @@ export class ProjectUpdate extends Project {
   standardId?: number
   criteriaId?: number
   activityId?: number | string
+  exercise?: Exercise
 }
 export class ProjectStoreUpdate {
   id?: number
   changes: ProjectUpdate
+}
+export class ProjectSort extends Option {
+  type: ProjectSortType
 }
 
 export type ProjectUpdateTypes =
@@ -55,11 +60,13 @@ export type ProjectUpdateTypes =
   | 'cloneAvtivity'
   | 'deleteActivity'
   | 'createActivity'
+  | 'createExercise'
 
+export type ProjectSortType = 'openedAt' | 'updatedAt' | 'name' | 'createdAt'
 export class ProjectList {
   projects: Project[]
   projectCount: number
-  pageNumber: number
+  pageId: string
   pageSize: number
 }
 
@@ -74,6 +81,11 @@ export class AcademicYear {
   name?: string
   academicYear?: string
   curriculumId?: number
+}
+
+export class CurriculumAcademicYear {
+  curriculumId?: number
+  academicYears?: AcademicYear[]
 }
 
 export class Grade extends Option {
@@ -236,3 +248,5 @@ export function compareProjects(p1: Project, p2: Project): number {
     return 0
   }
 }
+
+export type Type = 'PROJECT' | 'ACTIVITY' | 'LEARNING UNIT'

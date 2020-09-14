@@ -21,19 +21,19 @@ export class DashboardService {
     }
     const draggableRows: DraggableRow[] = []
 
-    const dropdonwData = [
+    const dropdownData = [
       {
-        icon: 'edit',
+        icon: 'icon-ic_edit',
         text: this.translations['ACTIVITIES.activities_edit_title'],
         action: 'update',
       },
       {
-        icon: 'duplicate',
+        icon: 'icon-ic_duplicate',
         text: this.translations['ACTIVITIES.activities_duplicate'],
         action: 'clone',
       },
       {
-        icon: 'delete',
+        icon: 'icon-ic_delete',
         text: this.translations['ACTIVITIES.activities_delete'],
         action: 'delete',
       },
@@ -54,7 +54,7 @@ export class DashboardService {
           this.translations['ACTIVITIES.activity_card_objectives'] +
           (!activity.objectives || activity.objectives.length === 0
             ? ''
-            : activity.objectives.map((obj) => ' ' + obj.id).toString()),
+            : activity.objectives.map((obj) => ' ' + obj.id)),
         icon: 'objetivos',
         disabled: !activity.objectives || activity.objectives.length === 0,
       }
@@ -70,8 +70,23 @@ export class DashboardService {
         icon: 'actividades',
         disabled: !activity.exercises || activity?.exercises.length === 0,
       }
+      let translationText = ''
+      switch (activity.state) {
+        case 'DEFINED':
+          translationText = 'ACTIVITIES.activities_DEFINED'
+          break
+        case 'CREATED':
+          translationText = 'ACTIVITIES.activities_CREATED'
+          break
+        case 'PUBLISHED':
+          translationText = 'ACTIVITIES.activities_PUBLISHED'
+          break
+        case 'TO_DEFINE':
+          translationText = 'ACTIVITIES.activities_TO_DEFINE'
+          break
+      }
       const columnFive = {
-        text: this.translations['ACTIVITIES.activities_' + activity.state],
+        text: translationText,
         step:
           activity.state === 'DEFINED'
             ? 1
@@ -84,7 +99,7 @@ export class DashboardService {
       const draggableRow: DraggableRow = {
         id: activity.id,
         url: '/editor/project/' + projectId + '/activity',
-        dropdownElements: dropdonwData,
+        dropdownElements: dropdownData,
         columnOne,
         columnTwo,
         columnThree,

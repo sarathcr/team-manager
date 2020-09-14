@@ -18,14 +18,6 @@ storiesOf('|Typograhy', module)
     <p class="title">
         sample of title
     </p>
-    <h5>'title_xxl' class is used</h5>
-    <p class="title_xxl">
-        sample of xxl
-    </p>
-    <h5>'title_xl' class is used</h5>
-    <p class="title_xl">
-        sample of xl
-    </p>
     <h5>'title_l' class is used</h5>
     <p class="title_l">
         sample of large

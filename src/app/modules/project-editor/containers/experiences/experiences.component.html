@@ -1,0 +1,116 @@
+<ng-template #hasLoaded>
+  <ng-template #hasProject>
+    <h1 class="experiences__head-text">{{ title }} ({{ totalItems }})</h1>
+    <div class="w-100 d-flex mb-5 justify-content-between">
+      <div class="experiences__filters-left d-flex align-items-center">
+        <div class="mr-5">
+          <app-search
+            placeholder="{{
+              'PRIVATEHOME_HEADER.home_search_experience' | translate
+            }}"
+          ></app-search>
+        </div>
+        <div><app-filter></app-filter></div>
+      </div>
+      <div class="experiences__filters-right d-flex">
+        <div class="mr-5">
+          <app-dropdown-select
+            [data]="dropDownData"
+            [selectedItems]="selectedItem"
+            [defaultSelected]="false"
+            label="PRIVATEHOME_HEADER.home_sort"
+            (dropdownSelect)="onOderbySelection($event)"
+          ></app-dropdown-select>
+        </div>
+        <app-button icon="add" size="small" routerLink="../../project/create/1">
+          {{
+            'PRIVATEHOME_HEADER.home_button_create'
+              | translate
+              | TranslateCut: 1
+          }}
+        </app-button>
+      </div>
+    </div>
+    <div class="experiences__body">
+      <div class="row">
+        <app-card-experience
+          class="col-4"
+          *ngFor="let project of (projects$ | async)?.projects; index as i"
+          id="list-project-{{ i }}"
+          [data]="project"
+        >
+        </app-card-experience>
+      </div>
+      <app-loader
+        id="create-home-loader"
+        *ngIf="loading"
+        variant="block"
+        class="experiences__loader"
+      ></app-loader>
+    </div>
+    <div class="experiences__pagination d-flex justify-content-center mb-7">
+      <app-pagination
+        id="pagination"
+        *ngIf="loaded && !isSortApplied"
+        [totalItems]="totalItems"
+        [maxSize]="maxSize"
+        [itemsPerPage]="itemsPerPage"
+        [disabled]="loading"
+        [currentPage]="currentPage"
+        (pageChanged)="pageChanged($event)"
+      >
+      </app-pagination>
+    </div>
+  </ng-template>
+  <div
+    class="experiences__content"
+    *ngIf="totalItems === 0 && loaded; else hasProject"
+  >
+    <div class="experiences__content_empty">
+      <img
+        src="../assets/icons/img_evaluacion@2x.png"
+        class="experiences__content_empty-image"
+        alt=""
+      />
+      <h1 class="experiences__content_empty-title title_s">
+        {{
+          'PRIVATEHOME_EMPTYSTATE.home_section_yourexperiences_empty_title'
+            | translate
+        }}
+      </h1>
+      <p class="experiences__content_empty-description">
+        {{
+          'PRIVATEHOME_EMPTYSTATE.home_section_yourexperiences_empty_description'
+            | translate
+        }}
+      </p>
+      <div class="experiences__content_empty-button">
+        <app-button
+          theme="primary"
+          class="experiences__content_empty-button_primary"
+        >
+          {{
+            'PRIVATEHOME_EMPTYSTATE.home_section_yourexperiences_empty_button_examples'
+              | translate
+          }}
+        </app-button>
+        <app-button
+          theme="primary"
+          variant="outlined"
+          routerLink="../../project/create/1"
+        >
+          {{
+            'PRIVATEHOME_EMPTYSTATE.home_section_yourexperiences_empty_button_create'
+              | translate
+          }}
+        </app-button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<app-loader
+  id="create-home-loader"
+  *ngIf="!loaded; else hasLoaded"
+  variant="block"
+  class="experiences__loader"
+></app-loader>

@@ -1,4 +1,5 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
 .step-status-indicator {
   $root: &;
   position: absolute;
@@ -12,7 +13,7 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background-color: $color-primary;
+    background-color: color(primary);
     position: absolute;
     z-index: 2;
     transition: all 0.2s ease;
@@ -31,8 +32,8 @@
     margin: 0 3px;
     width: 1px;
     background-image: linear-gradient(
-      $frenchgray 33%,
-      rgba(255, 255, 255, 0) 0%
+      pantone(frenchgray) 33%,
+      rgba(pantone(white), 0) 0%
     );
     background-position: right;
     background-size: 1px 4px;
@@ -40,8 +41,8 @@
     z-index: 1;
     &_bottom {
       background-image: linear-gradient(
-        $color-tertiary 33%,
-        rgba(255, 255, 255, 0) 0%
+        color(tertiary) 33%,
+        rgba(pantone(white), 0) 0%
       );
       bottom: 0px;
       // height: 87px; // Below is a temp fix, so keeping the actual one commented
@@ -50,8 +51,8 @@
     }
     &_top {
       background-image: linear-gradient(
-        $color-tertiary 33%,
-        rgba(255, 255, 255, 0) 0%
+        color(tertiary) 33%,
+        (pantone(white), 0) 0%
       );
       top: -1px;
       height: 45px;
@@ -60,7 +61,7 @@
   }
   &_done {
     #{$root}__ball {
-      background-color: $color-secondary;
+      background-color: color(secondary);
     }
   }
 }

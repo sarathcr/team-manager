@@ -18,6 +18,7 @@ export class ValidatorComponent implements OnInit {
   @Input() error = false
   @Input() passwordValidator = false
   @Input() complexityControl: PasswordComlexity
+  @Input() validField = false
 
   prevLength: number
   limitExceeds = false
@@ -54,9 +55,9 @@ export class ValidatorComponent implements OnInit {
       }
       case 'keyUp': {
         if (
-          this.prevLength === $event.length &&
-          $event.length === +this.maxlength &&
-          this.isEnabled
+          (this.prevLength === $event.length &&
+            $event.length === +this.maxlength) ||
+          (this.validField && this.isEnabled)
         ) {
           this.limitExceeds = true
         } else if (this.limitExceeds === true) {

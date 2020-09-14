@@ -1,23 +1,23 @@
 //Numbered List Style
-.numbered-list{
-    list-style: none;
-    padding-left: $padding;
-    margin-bottom: 44px;
-    font-size: $font-size-body;
-    counter-reset: list;
-    & > li{
-        margin-bottom: 16px;
-        counter-increment: step-counter;
-        padding-left: 10px;
-        &:before{
-            content: counter(step-counter)'.';
-            color: $color-tertiary;
-            font-weight: $font-weight-bold;
-            font-size: $font-size-button;
-            position: relative;
-        }
-        &:last-child{
-            margin-bottom:0;
-        }
+.numbered-list {
+  list-style: none;
+  padding-left: spacing(primary);
+  margin-bottom: 44px;
+  font-size: font-size(body);
+  counter-reset: list;
+  & > li {
+    margin-bottom: 16px;
+    counter-increment: step-counter;
+    padding-left: 10px;
+    &:before {
+      content: counter(step-counter) '.';
+      color: $secondary;
+      font-weight: $font-weight-bold;
+      font-size: font-size(button);
+      position: relative;
     }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }

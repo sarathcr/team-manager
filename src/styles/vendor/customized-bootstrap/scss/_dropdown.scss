@@ -25,10 +25,10 @@
   padding: $dropdown-padding-y 0;
   margin: $dropdown-spacer 0 0; // override default ul
   @include font-size($dropdown-font-size);
-  color: rgba($color-tertiary,0.6);
+  color: rgba(color(tertiary), 0.6);
   text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
   list-style: none;
-  background-color: $color-quaternary;
+  background-color: color(quaternary);
   background-clip: padding-box;
   border: $dropdown-border-width solid $dropdown-border-color;
   @include border-radius($dropdown-border-radius);
@@ -103,10 +103,10 @@
 // When enabled Popper.js, reset basic dropdown position
 // stylelint-disable-next-line no-duplicate-selectors
 .dropdown-menu {
-  &[x-placement^="top"],
-  &[x-placement^="right"],
-  &[x-placement^="bottom"],
-  &[x-placement^="left"] {
+  &[x-placement^='top'],
+  &[x-placement^='right'],
+  &[x-placement^='bottom'],
+  &[x-placement^='left'] {
     right: auto;
     bottom: auto;
   }

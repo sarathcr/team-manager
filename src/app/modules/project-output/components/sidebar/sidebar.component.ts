@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 export class SidebarComponent implements OnInit {
   @Input() outline: any[]
   @Input() title = 'PROGRAMACION.output_index_title'
+  @Input() currentPage: number
   @Output() navigateTo: EventEmitter<any> = new EventEmitter()
   linkId = 0
   constructor() {}

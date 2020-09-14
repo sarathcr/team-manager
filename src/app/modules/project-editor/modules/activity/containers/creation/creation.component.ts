@@ -8,15 +8,20 @@ import {
 } from '@angular/core'
 import { Router } from '@angular/router'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
+import { SubscriptionLike } from 'rxjs'
 import {
   Activity,
   ActivityState,
-  Content
+  Exercise,
+  ReferenceMaterials,
+  StatusMaterial,
 } from 'src/app/modules/project-editor/constants/model/activity.model'
+import { Project } from 'src/app/modules/project-editor/constants/model/project.model'
 import { EditorService } from 'src/app/modules/project-editor/services/editor/editor.service'
+import { ProjectEntityService } from 'src/app/modules/project-editor/store/entity/project/project-entity.service'
 import { FieldEvent } from 'src/app/shared/constants/model/form-elements.model'
+import { unfreeze } from 'src/app/shared/utility/object.utility'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { CreationService } from '../../services/creation/creation.service'
 
 @Component({
   selector: 'app-creation',
@@ -26,23 +31,35 @@ import { CreationService } from '../../services/creation/creation.service'
 })
 export class CreationComponent implements OnInit, OnDestroy {
   activity: Activity
-  projectId: number
+  project: Project
   imageUrl: string
   isValidForm: boolean
-  isFormUpdated = false
   buttonDisabled = true
   buttonSubmitted = false
   subscriptions = new SubSink()
+  exerciseLoading = false
+  exercise: Exercise
   modalRef: BsModalRef
-  linkContent: Content | false
-  linkStatus = 'default'
+  referenceMaterial: StatusMaterial = {
+    status: 'default',
+    fileType: 'DOCUMENT',
+    previewImageUrl: '',
+    sourceType: 'GOOGLEDRIVE',
+    title: '',
+    url: '',
+    visible: true,
+  }
+  activeMaterialTab = 0
+  currentMaterialView = 1
+  exercisePercent = 0
 
   @ViewChild('addMaterial') addMaterial: TemplateRef<any>
+  @ViewChild('excerciseModal') excerciseModal: TemplateRef<any>
   constructor(
     private editor: EditorService,
     private router: Router,
     private modalService: BsModalService,
-    private creationService: CreationService
+    private projectService: ProjectEntityService
   ) {}
 
   ngOnInit(): void {
@@ -50,22 +67,33 @@ export class CreationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.isFormUpdated) {
-      this.handleSubmit()
-    }
+    this.subscriptions.unsubscribe()
   }
   creationInit(): void {
-    this.activity = { ...this.editor.activity }
-    this.projectId = this.editor.projectId
+    this.subscriptions.sink = this.editor.activity$.subscribe((activity) => {
+      this.activity = unfreeze(activity)
+      this.exercisePercent = !this.activity?.exercises
+        ? 0
+        : this.activity?.exercises?.reduce((sum, exercise) => {
+            return sum + (exercise.percentage || null)
+          }, 0)
+    })
+    if (this.activity.referenceMaterials) {
+      this.activity.referenceMaterials = unfreeze(
+        this.activity.referenceMaterials
+      ).reverse()
+    }
+    this.subscriptions.sink = this.editor.project$.subscribe(
+      (project) => (this.project = { ...project })
+    )
     this.imageUrl = this.activity.activityImageUrl
       ? this.activity.activityImageUrl
-      : this.editor.project?.creativeImage
+      : this.project?.creativeImage
     this.checkMandatoryFields()
   }
 
   handleTextareaChange(data: FieldEvent): void {
     this.activity.instructions = data.value
-    this.isFormUpdated = true
     this.checkFormState()
     this.checkMandatoryFields()
   }
@@ -80,11 +108,58 @@ export class CreationComponent implements OnInit, OnDestroy {
     this.modalRef.hide()
   }
 
-  addMaterials(materialType: string): void {
-    // code after saving the contents in popups
-    this.isFormUpdated = true
+  addMaterials(material: ReferenceMaterials): void {
+    this.activity = unfreeze(this.activity)
+    if (this.activity.referenceMaterials) {
+      this.activity.referenceMaterials.unshift(material)
+    } else {
+      this.activity.referenceMaterials = [material]
+    }
+    this.submitDatachange()
+    this.closeModal()
+  }
+
+  addExcercise(exercise: Exercise): void {
+    this.exerciseLoading = true
+    let projectSubscription: SubscriptionLike
+    this.activity = unfreeze(this.activity)
+    if (this.activity.exercises) {
+      this.activity.exercises.unshift(exercise)
+    } else {
+      this.activity.exercises = [exercise]
+    }
+    // this.updateMaterial()
     this.checkFormState()
     this.checkMandatoryFields()
+    this.editor.handleExerciseSubmit({ ...exercise, updateType: 'create' })
+
+    projectSubscription = this.projectService.loading$.subscribe((loading) => {
+      if (!loading) {
+        this.handleSubmit()
+        this.exerciseLoading = false
+        this.closeModal()
+        projectSubscription.unsubscribe()
+      }
+    })
+  }
+
+  handleExerciseEdit($event: Exercise): void {
+    this.exercise = $event
+    this.openModal(this.excerciseModal)
+  }
+
+  changeVisibility(id: number, visible: boolean): void {
+    this.activity = unfreeze(this.activity)
+    this.activity.referenceMaterials.find(
+      (material) => material.id === id
+    ).visible = visible
+    this.submitDatachange()
+  }
+
+  submitDatachange(): void {
+    this.checkFormState()
+    this.checkMandatoryFields()
+    this.handleSubmit()
   }
 
   checkFormState(): void {
@@ -105,12 +180,17 @@ export class CreationComponent implements OnInit, OnDestroy {
     this.handleButtonType()
   }
 
+  deleteMaterial(id: number): void {
+    this.activity.referenceMaterials = this.activity.referenceMaterials?.filter(
+      (material) => material.id !== id
+    )
+    this.submitDatachange()
+  }
+
   onImageSelect(imgUrl: string): void {
     this.activity.activityImageUrl = imgUrl
     this.imageUrl = imgUrl
-    this.isFormUpdated = true
-    this.checkFormState()
-    this.checkMandatoryFields()
+    this.submitDatachange()
   }
 
   handleButtonType(): void {
@@ -158,22 +238,51 @@ export class CreationComponent implements OnInit, OnDestroy {
       ...formData,
       updateType: 'update',
     })
-    this.isFormUpdated = false
     if (this.activity.state === 'CREATED') {
-      this.router.navigate([`editor/project/${this.projectId}/activities`])
+      this.router.navigate([`editor/project/${this.project.id}/activities`])
     }
   }
 
-  fetchLinkDetails(link: string): void {
-    this.linkStatus = 'loading'
-    this.creationService.getLinkDetails(link).subscribe(data => {
-      if (data) {
-        this.linkStatus = 'success'
-        this.linkContent = data
-      }
-      else {
-        this.linkStatus = 'failed'
-      }
-    })
+  onMaterialConfirm(): void {
+    if (this.referenceMaterial.fileType) {
+      this.addMaterials(this.referenceMaterial)
+    } else {
+      this.closeModal()
+    }
+  }
+
+  getActiveMaterialTab(tabNumber: number): void {
+    this.activeMaterialTab = tabNumber
+  }
+
+  previousMaterialView(): void {
+    this.referenceMaterial.status = 'default'
+    --this.currentMaterialView
+  }
+
+  nextMaterialView(): void {
+    this.referenceMaterial.status = 'default'
+    ++this.currentMaterialView
+  }
+
+  getReferenceMaterials({ callConfirm, ...material }: StatusMaterial): void {
+    this.referenceMaterial = material
+    if (callConfirm && material) {
+      this.onMaterialConfirm()
+    }
+  }
+
+  resetTabs(): void {
+    this.currentMaterialView = 1
+    this.activeMaterialTab = 0
+    this.referenceMaterial = {
+      status: 'default',
+      fileType: 'DOCUMENT',
+      previewImageUrl: '',
+      sourceType: 'GOOGLEDRIVE',
+      title: '',
+      url: '',
+      visible: true,
+    }
   }
 }

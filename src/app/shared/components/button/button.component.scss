@@ -1,29 +1,30 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
 .btn {
   $root: &;
   border-radius: 4px;
-  font-size: $font-size-button;
+  font-size: font-size(button);
   line-height: 24px;
   &_outline {
-    border: 1px solid $color-quinary;
+    border: 1px solid color(quinary);
     &#{$root} #{$root}__icon {
       margin-right: 0;
     }
   }
   &_primary {
     &#{$root}_text {
-      color: $color-primary;
+      color: color(primary);
     }
     &#{$root}_underlined {
-      color: $color-quaternary;
+      color: color(quaternary);
       #{$root}__content {
-        border-bottom: 1px solid $color-quaternary;
+        border-bottom: 1px solid color(quaternary);
       }
     }
     &#{$root}_outline {
-      border: 2px solid $color-primary;
+      border: 2px solid color(primary);
       background-color: inherit;
-      color: $color-primary;
+      color: color(primary);
       &:hover,
       &:focus,
       &:active {
@@ -31,16 +32,16 @@
       }
     }
     &:disabled {
-      background-color: rgba($color-tertiary, 0.1);
+      background-color: rgba(color(tertiary), 0.1);
       border-color: transparent;
-      color: $color-quaternary;
+      color: color(quaternary);
     }
   }
   &_secondary {
-    color: $color-quinary;
+    color: color(quinary);
     background: inherit;
     &#{$root}_medium {
-      font-size: $font-size-body;
+      font-size: font-size(body);
     }
     &:active,
     &:disabled {
@@ -49,7 +50,7 @@
     }
   }
   &_teritiary {
-    color: $color-quaternary;
+    color: color(quaternary);
     &#{$root}_underlined {
       border: none;
       padding: 0;
@@ -60,15 +61,22 @@
   }
   &_success {
     &:disabled {
-      background: $color-secondary;
-      border-color: $color-secondary;
+      background: color(secondary);
+      border-color: color(secondary);
     }
+  }
+  &__content {
+    display: flex;
+    align-items: center;
+  }
+  &_outline {
+    border: 1px solid color(quinary);
   }
   &_text {
     border: none;
     text-transform: capitalize;
-    color: $color-tertiary;
-    font-family: $font-family-tertiary;
+    color: color(tertiary);
+    font-family: font-family(tertiary);
     letter-spacing: 0.2px;
     padding: 0 17px;
     min-height: auto;
@@ -80,15 +88,15 @@
       background: none !important;
     }
     &#{$root}_teritiary {
-      color: $color-quaternary;
+      color: color(quaternary);
       #{$root}__icon {
         margin-right: 5px;
       }
     }
   }
   &_underlined {
-    color: $color-tertiary;
-    font-family: $font-family-tertiary;
+    color: color(tertiary);
+    font-family: font-family(tertiary);
     &#{$root} {
       line-height: 14px;
       letter-spacing: 0.16px;
@@ -98,7 +106,7 @@
     }
     #{$root}__content {
       padding-bottom: 5px;
-      border-bottom: 1px solid $color-tertiary;
+      border-bottom: 1px solid color(tertiary);
     }
     #{$root}__icon {
       margin-top: -3px;
@@ -108,7 +116,7 @@
   &_block {
     min-width: 100%;
     &#{$root}_secondary {
-      color: $color-tertiary;
+      color: color(tertiary);
     }
   }
   &_no-icon {
@@ -117,7 +125,7 @@
   &_small {
     text-transform: unset;
     min-height: 36px;
-    font-family: $font-family-tertiary;
+    font-family: font-family(tertiary);
     font-weight: 700;
     letter-spacing: normal;
     min-width: auto;
@@ -126,13 +134,13 @@
   &_icon {
     background-color: transparent;
     border: none;
-    color: $color-tertiary;
+    color: color(tertiary);
     padding: 0;
     min-height: auto;
     margin: 0 7px;
     position: relative;
     &#{$root}_teritiary {
-      color: $color-quaternary;
+      color: color(quaternary);
     }
     #{$root}__icon {
       margin: 0;
@@ -144,7 +152,7 @@
     &:disabled {
       min-height: auto;
       padding: 0;
-      color: rgba($color-tertiary, 0.1);
+      color: rgba(color(tertiary), 0.1);
       background-color: transparent;
     }
   }
@@ -155,7 +163,7 @@
   }
   &_back {
     background: inherit;
-    color: rgba($color-tertiary, 0.5);
+    color: rgba(color(tertiary), 0.5);
     border: none;
     padding: 0;
     min-height: auto;
@@ -164,10 +172,10 @@
       border-color: unset !important;
     }
     &#{$root}_teritiary {
-      color: $color-quaternary;
+      color: color(quaternary);
     }
     #{$root}__icon {
-      margin-right: 15px;
+      margin-right: spacing(primary) !important;
     }
   }
   &_loading {

@@ -2,7 +2,9 @@
   "extends": "../tsconfig.app.json",
   "compilerOptions": {
     "types": [
-      "node"
+      "node",
+      "@types/google.picker",
+      "@types/gapi"
     ]
   },
   "exclude": [

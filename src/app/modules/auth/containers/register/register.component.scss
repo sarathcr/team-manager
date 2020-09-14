@@ -1,4 +1,4 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 @import 'helpers/_bt-mixins';
 
 .register {
@@ -14,8 +14,8 @@
     position: relative;
   }
   &__logo {
-    margin-top: $margin * 3;
-    margin-bottom: $margin;
+    margin-top: spacing(primary) * 3;
+    margin-bottom: spacing(primary);
     max-width: 70px;
     max-height: 20px;
   }
@@ -23,12 +23,12 @@
   &__link {
     cursor: pointer;
     font-weight: 900;
-    border-bottom: 1px solid $color-tertiary;
+    border-bottom: 1px solid color(tertiary);
     color: inherit;
   }
   &__login-link {
     text-align: center;
-    font-size: $font-size-link-m;
+    font-size: font-size(link-mob);
     line-height: 32px;
     letter-spacing: 0.18px;
   }
@@ -44,8 +44,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: -1px;
   }
-  &__password, &__checkbox-wrapper {
+  &__password,
+  &__checkbox-wrapper {
     margin-top: 143px;
     margin-bottom: 40px;
     ::ng-deep {
@@ -62,13 +64,13 @@
   }
   &__text-lighter {
     opacity: 0.6;
-    color: $midnight-blue;
+    color: color(midnight-blue);
   }
 }
 @include media-breakpoint-down(sm) {
   .register {
     &__title {
-      font-size: $font-size-l-mob;
+      font-size: font-size(mob-l);
     }
   }
 }
@@ -83,19 +85,20 @@
     &__wrap {
       width: 470px;
     }
-    &__password, &__checkbox-wrapper{
-      margin-top: $margin * 4;
-      margin-bottom: $margin * 3;
+    &__password,
+    &__checkbox-wrapper {
+      margin-top: spacing(primary) * 4;
+      margin-bottom: spacing(primary) * 3;
     }
     &__title {
-      margin-bottom: $margin * 3;
+      margin-bottom: spacing(primary) * 3;
     }
     &__button-wrapper {
       margin-bottom: 28px;
     }
     &__login-link {
       text-align: left;
-      font-size: $font-size-default;
+      font-size: font-size(default);
       line-height: 24px;
     }
     &__button {

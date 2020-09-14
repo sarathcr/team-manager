@@ -1,5 +1,6 @@
 import { PlatformLocation } from '@angular/common'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { ButtonSize } from '../../constants/model/form-elements.model'
 
 @Component({
   selector: 'app-modal-layout',
@@ -10,9 +11,12 @@ export class ModalLayoutComponent implements OnInit {
   @Input() hasClose = true
   @Input() backLabel
   @Input() titleLighten = false
+  @Input() titleSecondary = false
   @Input() modalTitle: string
   @Input() confirmLabel: string
   @Input() isDisabled = false
+  @Input() buttonSize: ButtonSize = 'default'
+  @Input() loading = false
 
   @Output() confirm = new EventEmitter()
   @Output() decline = new EventEmitter()

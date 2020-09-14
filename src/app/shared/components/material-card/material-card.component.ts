@@ -15,13 +15,13 @@ export class MaterialCardComponent {
   @Input() label = ''
   @Input() title = ''
   @Input() loading = false
-  @Input() variant: typeVariant = 'video'
+  @Input() variant: typeVariant = 'VIDEO'
   @Input() size: sizeVariant = 'medium'
   @Input() showSwitch = true
   @Input() switchOn = false
   @Input() canDelete = true
   @Input() draggable = false
-  @Input() validPreviewLink = false
+  @Input() validPreviewLink = true
 
   @Output() delete: EventEmitter<any> = new EventEmitter()
   @Output() dragg: EventEmitter<any> = new EventEmitter()

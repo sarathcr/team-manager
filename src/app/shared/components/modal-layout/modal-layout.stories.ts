@@ -24,6 +24,7 @@ storiesOf('Shared|Modal Layout', module)
     template: `<div class="story_layout_style">
       <app-modal-layout class="modallayout"
         [title]="title"
+        [buttonSize]="buttonSize"
         [confirmLabel]="confirmLabel"
         (decline)="declineModal($event)"
         (confirm)="confirmModal($event)"
@@ -47,6 +48,11 @@ storiesOf('Shared|Modal Layout', module)
     ],
     props: {
       title: text('Title', 'Modal Info Title'),
+      buttonSize: select(
+        'Button size',
+        ['default', 'small', 'medium'],
+        'default'
+      ),
       confirmLabel: text('Confirm Button Label', 'Confirm'),
       decline: action('You are closed the modal info'),
       confirmModal: action(

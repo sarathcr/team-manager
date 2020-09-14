@@ -21,7 +21,6 @@ import { Status } from '../../constants/model/project.model'
 import { EditorService } from '../../services/editor/editor.service'
 import { ObjectiveService } from '../../services/objectives/objectives.service'
 import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
-import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 
@@ -125,7 +124,6 @@ describe('StepFiveComponent', (): void => {
         },
         { provide: Router, useClass: RouterStub },
         { provide: BsModalService, useClass: BsModalServiceStub },
-        { provide: GradeEntityService, useClass: ProjectEntityServiceStub },
         {
           provide: EvaluationCriteriaEntityService,
           useClass: EvaluationCriteriaEntityServiceStub,

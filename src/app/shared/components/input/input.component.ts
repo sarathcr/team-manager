@@ -37,7 +37,16 @@ import { isNonFunctionalKey } from '../../utility/keyboard.utility'
 export class InputComponent implements ControlValueAccessor, OnInit {
   @Input() placeholder = ''
   @Input() maxlength: number
-  @Input() value = ''
+  @Input()
+  get value(): string {
+    return this.val
+  }
+  set value(val: string) {
+    // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
+    this.val = val
+    this.onChange(val)
+    this.onTouch(val)
+  }
   @Input() label: string
   @Input() innerLabel: InputInnerLabel
   @Input() variant: InputVariant
@@ -47,10 +56,16 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   @Input() errorText: string
   @Input() error: boolean
   @Input() passwordValidator = false
+  @Input() maxDate: Date
+  @Input() minDate: Date
   @Input() isForm = false
   @Input() control: FormControl
   @Input() background: InputBackground = 'white'
+  @Input() maxNumber: number
+  @Input() showError = false
   @Output() inputChange = new EventEmitter()
+  @Output() focusOut = new EventEmitter()
+  val = ''
   config: FieldConfig
   group: FormGroup
   focus = false
@@ -79,7 +94,7 @@ export class InputComponent implements ControlValueAccessor, OnInit {
 
   onTouch(_: any): void {}
 
-  writeValue(): void {}
+  writeValue(_: any): void {}
 
   registerOnChange(fn: any): void {
     if (this.isForm) {
@@ -112,6 +127,20 @@ export class InputComponent implements ControlValueAccessor, OnInit {
       }
       this.validField = validatePasswordRegex(value)
     }
+    if (this.minDate || this.maxDate) {
+      const date: Date = new Date(value)
+      const minValidation = this.minDate
+        ? date.getTime() > this.minDate.getTime()
+        : true
+      const maxValidation = this.maxDate
+        ? date.getTime() < this.maxDate.getTime()
+        : true
+
+      this.validField = minValidation && maxValidation
+    }
+    if (this.variant === 'number' && this.maxNumber) {
+      this.validField = +this.value <= this.maxNumber
+    }
   }
 
   setFocus(): void {
@@ -142,7 +171,6 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   handleKeyPress($event: any, validator: any): void {
     const keyCode = $event.keyCode
     const value = $event.target.value
-    this.onValueChange(value)
     const inputComponent = this.titleInput.first.nativeElement
     const startPos = inputComponent.selectionStart
     const endPos = inputComponent.selectionEnd
@@ -156,7 +184,6 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   }
 
   onPaste($event: any, validator: any): void {
-    $event.preventDefault()
     const value = $event.clipboardData.getData('text/plain')
     let tempValue: string
     if (this.value?.length) {
@@ -165,15 +192,9 @@ export class InputComponent implements ControlValueAccessor, OnInit {
       tempValue = value
     }
     validator.valueChange(tempValue, 'paste')
-    if (tempValue?.length > this.maxlength) {
-      this.onValueChange(tempValue.slice(0, this.maxlength))
-    } else {
-      this.onValueChange(tempValue)
-    }
   }
 
   onDrop($event: any, validator: any): void {
-    $event.preventDefault()
     const value = $event.dataTransfer.getData('text/plain')
     let tempValue: string
     if (this.value?.length) {
@@ -182,11 +203,6 @@ export class InputComponent implements ControlValueAccessor, OnInit {
       tempValue = value
     }
     validator.valueChange(tempValue, 'drop')
-    if (tempValue?.length > this.maxlength) {
-      this.onValueChange(tempValue.slice(0, this.maxlength))
-    } else {
-      this.onValueChange(tempValue)
-    }
   }
 
   getTextSelection(value: string): string {
@@ -206,5 +222,21 @@ export class InputComponent implements ControlValueAccessor, OnInit {
         this.value.slice(startPos + 1, this.value.length)
     }
     return tempValue
+  }
+
+  setFocusOut($event: any): void {
+    this.focusOut.emit($event)
+  }
+
+  handleKeyDown($event: any): void {
+    const value = $event.target.value
+    if (
+      this.variant === 'number' &&
+      value?.length >= this.maxlength &&
+      $event.keyCode !== 8 &&
+      $event.keyCode !== 46
+    ) {
+      $event.preventDefault()
+    }
   }
 }

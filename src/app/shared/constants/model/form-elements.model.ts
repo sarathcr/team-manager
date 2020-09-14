@@ -122,10 +122,25 @@ export interface PasswordComlexity {
 
 export type ErrorType = 'danger' | 'info' | 'warning' | 'success'
 
-export type InputVariant = 'text' | 'email' | 'password' | 'number'
+export type InputVariant = 'text' | 'email' | 'password' | 'number' | 'date'
 
 export type ValidatorVariant = 'text' | 'counter' | 'password'
 
 export type InputInnerLabel = 'hours'
 
 export type InputBackground = 'white' | 'white-lilac'
+
+export type DropdownListPosition = 'right' | 'left' | 'center'
+
+export interface DropdownElement {
+  icon?: Dropdownicon
+  text: string
+  action: string
+}
+
+export type Dropdownicon =
+  | 'icon-ic_edit'
+  | 'icon-ic_duplicate'
+  | 'icon-ic_delete'
+  | 'icon-ic_user'
+  | 'icon-ic_copy'

@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 
+import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-import { BlockEntityService } from '../../store/entity/block/block-entity.service'
+import { BlockContentEntityService } from '../../store/entity/block-content/block-content-entity.service'
 
-import { Observable } from 'rxjs'
 import {
   ContentModal,
   ContentsWithSkills,
@@ -38,7 +38,7 @@ export class ContentService {
   grades: Grade[]
 
   constructor(
-    private blockService: BlockEntityService,
+    private blockContentService: BlockContentEntityService,
     private http: HttpClient
   ) {}
 
@@ -95,7 +95,7 @@ export class ContentService {
   }
 
   getBlockData(): void {
-    this.blockService.getWithQuery({
+    this.blockContentService.getWithQuery({
       gradeIds: this.gradeIds.toString(),
       subjectId: String(this.subject.id),
     })
@@ -127,7 +127,7 @@ export class ContentService {
 
   getBlocks(selectedGrade: Grade): void {
     const gradeBlocks = this.gradeIds.map((id) => ({ id, count: 0 }))
-    this.subscriptions.sink = this.blockService.entities$
+    this.subscriptions.sink = this.blockContentService.entities$
       .pipe(
         map((data) => {
           const filteredData = this.flattenArray(
@@ -158,7 +158,7 @@ export class ContentService {
             }
           }
         }
-        this.loading$ = this.blockService.loading$
+        this.loading$ = this.blockContentService.loading$
       })
   }
 

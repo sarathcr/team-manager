@@ -6,7 +6,7 @@ export interface DraggableRow {
   columnThree: DraggableColumn
   columnFour: DraggableColumn
   columnFive: DraggableColumnFive
-  dropdownElements?: DropdownElement[]
+  dropdownElements?: DropdownItem[]
   action?: string
 }
 
@@ -19,7 +19,7 @@ export interface DraggableColumnFive extends DraggableColumn {
   step: number
 }
 
-export interface DropdownElement {
+export interface DropdownItem {
   icon: string
   text: string
   action: string

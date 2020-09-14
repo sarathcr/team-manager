@@ -5,6 +5,7 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core'
+import { ReferenceMaterials } from 'src/app/modules/project-editor/constants/model/activity.model'
 import { MaterialCard } from 'src/app/shared/constants/model/exercises-card.model'
 
 @Component({
@@ -19,12 +20,17 @@ export class ExercisesCardComponent {
   @Input() subtitleKey = 'EXERCISES_CARD.exercises_card_subtitle_key'
   @Input() subtitleValue: string
   @Input() description: string
+  @Input() materials: ReferenceMaterials[]
   @Input() texts: MaterialCard = {
     label: 'MATERIAL.material_card_label',
     title: 'MATERIAL.material_card_title',
   }
   @Output() options = new EventEmitter()
+  @Output() editExercise = new EventEmitter()
 
+  onEdit(): void {
+    this.editExercise.emit()
+  }
   onClick(): void {
     this.options.emit()
   }

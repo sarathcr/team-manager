@@ -14,6 +14,13 @@ import { ValidatorComponent } from '../validator/validator.component'
 import { InputComponent } from './input.component'
 import markDown from './input.stories.md'
 
+const minDate = new Date()
+const maxDate = new Date(
+  minDate.getFullYear() + 10,
+  minDate.getMonth(),
+  minDate.getDate()
+)
+
 storiesOf('Shared|Input', module)
   .addDecorator(
     moduleMetadata({
@@ -42,6 +49,8 @@ storiesOf('Shared|Input', module)
                [errorText]="errorText"
                [error]="error"
                [background]="background"
+               [minDate]="minDate"
+               [maxDate]="maxDate"
                (inputChange)="inputChange($event)" >
               </app-input>
    </div>`,
@@ -64,6 +73,8 @@ storiesOf('Shared|Input', module)
         'text',
         'email',
         'password',
+        'number',
+        'date',
       ]),
       background: select(
         'Label Background',
@@ -79,6 +90,14 @@ storiesOf('Shared|Input', module)
       error: boolean('Validator Error Trigger'),
       helperText: text('Validator Helper Message', 'Enter your inputs'),
       errorText: text('Validator Error Message', 'validation message here'),
+      minDate: select('min Date', {
+        ' no restrictions': null,
+        [`allow since ${minDate}`]: minDate,
+      }),
+      maxDate: select('max Date', {
+        ' no restrictions': null,
+        [`allow before ${maxDate}`]: maxDate,
+      }),
       inputChange: action('You are enter this message'),
     },
   }))

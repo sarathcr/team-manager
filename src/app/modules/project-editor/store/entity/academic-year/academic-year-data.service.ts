@@ -4,11 +4,13 @@ import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data'
 import { Store } from '@ngrx/store'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
-import { AcademicYear } from 'src/app/modules/project-editor/constants/model/project.model'
+import { CurriculumAcademicYear } from 'src/app/modules/project-editor/constants/model/project.model'
 import { environment } from 'src/environments/environment'
 
 @Injectable()
-export class AcademicYearDataService extends DefaultDataService<AcademicYear> {
+export class AcademicYearDataService extends DefaultDataService<
+  CurriculumAcademicYear
+> {
   constructor(
     http: HttpClient,
     httpUrlGenerator: HttpUrlGenerator,
@@ -17,15 +19,15 @@ export class AcademicYearDataService extends DefaultDataService<AcademicYear> {
     super('AcademicYear', http, httpUrlGenerator)
   }
 
-  getWithQuery(curriculumId: any): Observable<AcademicYear[] | any> {
+  getWithQuery(curriculumId: any): Observable<CurriculumAcademicYear[] | any> {
     return this.http
-      .get<AcademicYear[]>(
+      .get<CurriculumAcademicYear[]>(
         `${environment.apiUrl.curriculumService}/curriculums/${curriculumId}/academicyears`
       )
       .pipe(
-        map((response) =>
-          response.map((res) => ({ ...res, curriculumId: +curriculumId }))
-        ),
+        map((response) => [
+          { curriculumId: +curriculumId, academicYears: response },
+        ]),
         catchError((err) =>
           of(
             this.store.dispatch({

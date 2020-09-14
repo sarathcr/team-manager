@@ -1,0 +1,9 @@
+<div class="evaluation">
+  <div *ngIf="loaded$ | async">
+    <router-outlet></router-outlet>
+  </div>
+  <app-loader
+    id="editor-loader"
+    *ngIf="(loaded$ | async) === false"
+  ></app-loader>
+</div>

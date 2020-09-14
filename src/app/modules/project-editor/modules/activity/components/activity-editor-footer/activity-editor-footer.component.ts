@@ -8,7 +8,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 export class ActivityEditorFooterComponent implements OnInit {
   @Input() btnStatus: boolean
   @Input() isSubmitted: boolean
-  @Input() doneButtonlabel = 'ACTIVITY_FOOTER.activity_footer_button_markdone'
+  @Input() subitButtonlabel = 'ACTIVITY_FOOTER.activity_footer_button_markdone'
+  @Input() doneButtonlabel = 'ACTIVITY_FOOTER.activity_footer_button_done'
   @Input() viewButtonLabel = 'ACTIVITY_FOOTER.activity_footer_button_view'
   @Input() viewButtonIcon = 'locked'
   @Output() submitButtonClick: EventEmitter<any> = new EventEmitter()

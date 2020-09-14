@@ -31,13 +31,13 @@ describe('OutputViewComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  // it('should create header component', () => {
-  //   const headerDebugElement = fixture.debugElement.query(By.css('.header'))
-  //   expect(headerDebugElement).toBeTruthy()
-  // })
+  it('should create header component', () => {
+    const headerDebugElement = fixture.debugElement.query(By.css('.header'))
+    expect(headerDebugElement).toBeTruthy()
+  })
 
-  // it('should create sidebar component', () => {
-  //   const sidebarmDebugElement = fixture.debugElement.query(By.css('.sidebar'))
-  //   expect(sidebarmDebugElement).toBeTruthy()
-  // })
+  it('should create sidebar component', () => {
+    const sidebarmDebugElement = fixture.debugElement.query(By.css('.sidebar'))
+    expect(sidebarmDebugElement).toBeTruthy()
+  })
 })

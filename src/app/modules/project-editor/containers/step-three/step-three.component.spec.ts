@@ -19,8 +19,8 @@ import { StepThreeComponent } from './step-three.component'
 import { DetailsSelectorComponent } from 'src/app/shared/components/details-selector/details-selector.component'
 import { EditorService } from '../../services/editor/editor.service'
 import { ObjectiveService } from '../../services/objectives/objectives.service'
+import { CurriculumGradesEntityService } from '../../store/entity/curriculum-grades/curriculum-grades-entity.service'
 import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
-import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 
@@ -32,9 +32,10 @@ class StepStatusEntityServiceStub {}
 class RouterStub {}
 class EvaluationCriteriaEntityServiceStub {}
 class ObjectiveServiceStub {}
-class GradeEntityServiceStub {
+class CurriculumGradesEntityServiceStub {
   entities$ = new BehaviorSubject(grades)
 }
+
 class BsModalServiceStub {
   getModalsCount = (): number => 0
 }
@@ -58,7 +59,7 @@ const dummyProject = {
   academicYear,
   region: dummyData,
 }
-const grades = [{ ...dummyData, academicYear, region: dummyData }]
+const grades = [{ gradesList: [dummyData], ...dummyData }]
 const getDataByStep = (): Observable<any> => {
   return new BehaviorSubject(dummyProject)
 }
@@ -112,7 +113,10 @@ describe('StepThreeComponent', (): void => {
         },
         { provide: Router, useClass: RouterStub },
         { provide: BsModalService, useClass: BsModalServiceStub },
-        { provide: GradeEntityService, useClass: GradeEntityServiceStub },
+        {
+          provide: CurriculumGradesEntityService,
+          useClass: CurriculumGradesEntityServiceStub,
+        },
         {
           provide: EvaluationCriteriaEntityService,
           useClass: EvaluationCriteriaEntityServiceStub,

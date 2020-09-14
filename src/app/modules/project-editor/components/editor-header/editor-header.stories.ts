@@ -13,6 +13,7 @@ import { ModalInfoComponent } from 'src/app/shared/components/modal-info/modal-i
 import { TextareaComponent } from 'src/app/shared/components/textarea/textarea.component'
 import { ValidatorComponent } from 'src/app/shared/components/validator/validator.component'
 import { StorybookTranslateModule } from 'src/app/shared/utility/storybook-translate.module'
+import { TranslateOptions } from '../../../../shared/pipe/translate-cut.pipe'
 import { ProjectTitleComponent } from '../project-title/project-title.component'
 import { EditorHeaderComponent } from './editor-header.component'
 import markDown from './editor-header.stories.md'
@@ -30,6 +31,7 @@ storiesOf('Shared|Editor Header', module)
         InputComponent,
         TextareaComponent,
         ValidatorComponent,
+        TranslateOptions
       ],
       imports: [
         ReactiveFormsModule,

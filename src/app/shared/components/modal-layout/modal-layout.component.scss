@@ -11,13 +11,19 @@
   }
   &__title {
     width: 100%;
-    font-family: $font-family-tertiary;
+    font-family: font-family(tertiary);
     font-weight: 700;
-    font-size: 18px;
+    font-size: font-size(sub-s);
     letter-spacing: 0.2px;
     line-height: 28px;
+    &_lighten,
+    &_secondary {
+      color: color(tertiary);
+      text-transform: uppercase;
+      font-size: font-size(default);
+      font-family: font-family(secondary);
+    }
     &_lighten {
-      color: $color-tertiary;
       opacity: 0.5;
     }
   }
@@ -25,8 +31,8 @@
     display: flex;
     background-color: transparent;
     border: none;
-    color: rgba($color-tertiary, 0.6);
-    font-size: $font-size-s;
+    color: rgba(color(tertiary), 0.6);
+    font-size: font-size(s);
     cursor: pointer;
     z-index: 1;
     margin-right: -5px;

@@ -36,14 +36,14 @@
     </h6>
     <div class="principal-modal__body-block">
       <div class="principal-modal__body-block-grade">
-        <app-dropdown
+        <app-select
           [config]="gradeDropdownConfig"
           [label]="gradeDropdownConfig.label | translate"
           (dropdownSelect)="
             serviceData.getBlocks($event.val[0]); changeCurrentBlock(0)
           "
           [canDeselect]="false"
-        ></app-dropdown>
+        ></app-select>
         <ng-scrollbar class="custom-scrollbar">
           <div class="principal-modal__body-scroll">
             <div

@@ -1,7 +1,60 @@
 <pagination
+  [ngClass]="{
+    'pagination_bounder-value': lastPage <= maxSize
+  }"
   [totalItems]="totalItems"
   [rotate]="rotate"
   [maxSize]="maxSize"
+  [itemsPerPage]="itemsPerPage"
   [disabled]="disabled"
+  [customPreviousTemplate]="prevTemplate"
+  [customNextTemplate]="nextTemplate"
+  [customLastTemplate]="lastTemplate"
+  [boundaryLinks]="true"
+  [customFirstTemplate]="firstTemplate"
   (pageChanged)="onPageChanged($event)"
-></pagination>
+>
+  <ng-template
+    #firstTemplate
+    let-disabled="disabled"
+    let-currentPage="currentPage"
+  >
+    <span class="pagination__first-last"> 1</span>
+  </ng-template>
+
+  <ng-template
+    #lastTemplate
+    let-disabled="disabled"
+    let-currentPage="currentPage"
+  >
+    <span class="pagination__first-last">
+      {{ lastPage }}
+    </span>
+  </ng-template>
+
+  <ng-template #prevTemplate let-disabled="disabled">
+    <ng-container *ngIf="!disabled">
+      <span class="icon icon-ic_paginator_back back_color"
+        ><span class="path1"></span><span class="path2"></span
+      ></span>
+    </ng-container>
+    <ng-container *ngIf="disabled">
+      <span class="icon icon-ic_paginator_back"
+        ><span class="path1"></span><span class="path2"></span>
+      </span>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #nextTemplate let-disabled="disabled">
+    <ng-container *ngIf="!disabled">
+      <span class="icon icon-ic_paginator_forward"
+        ><span class="path1"></span><span class="path2"></span
+      ></span>
+    </ng-container>
+    <ng-container *ngIf="disabled">
+      <span class="icon icon-ic_paginator_forward forward_end"
+        ><span class="path1"></span><span class="path2"></span
+      ></span>
+    </ng-container>
+  </ng-template>
+</pagination>

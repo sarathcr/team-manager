@@ -1,0 +1,66 @@
+@import 'variables/_variables-master';
+
+.evaluation {
+  &__bg-right {
+    background-image: url('../../../../../../../assets/images/shape-right@2x.png');
+    background-repeat: round;
+    background-position: right top;
+    background-size: 100% auto;
+    height: 100%;
+    width: 200px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &__bg-left {
+    background-image: url('../../../../../../../assets/images/shape-left@2x.png');
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: contain;
+    height: 100%;
+    width: 200px;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  background-color: color(background-primary);
+  width: 100%;
+  min-height: 100%;
+  height: auto;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  &__contextual-help {
+    right: 0;
+    margin-top: 76px;
+  }
+
+  &__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 637px;
+
+    &-image {
+      height: 60px;
+      width: 58px;
+      text-align: center;
+    }
+    &-title {
+      text-align: center;
+      padding-top: spacing(secondary);
+    }
+
+    &-description {
+      font-size: font-size(default);
+      text-align: center;
+      margin-bottom: spacing(secondary);
+    }
+  }
+}

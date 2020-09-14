@@ -36,59 +36,42 @@
     </span>
   </div>
   <div class="draggable-row__col draggable-row__col-five">
-    <span class="span-steps-container">
-      <span
-        class="span-steps span-steps-first"
-        [ngClass]="{
-          'span-steps-active': element.columnFive.step > 0
-        }"
-      >
-      </span>
-      <span
-        class="span-steps span-steps-second"
-        [ngClass]="{
-          'span-steps-active': element.columnFive.step > 1
-        }"
-      >
-      </span>
-      <span
-        class="span-steps span-steps-third"
-        [ngClass]="{
-          'span-steps-active': element.columnFive.step > 2
-        }"
-      >
-      </span>
-    </span>
-    <span class="draggable-row__col-five-text">{{
-      element.columnFive.text
-    }}</span>
-    <span class="span-dropdown" dropdown (isOpenChange)="isOpenChange()">
-      <div
-        id="basic-link"
-        dropdownToggle
-        data-toggle="dropdown"
-        autoClose="true"
-      >
-        ...
-      </div>
-      <ul
-        id="basic-link-dropdown"
-        *dropdownMenu
-        class="dropdown-menu"
-        role="menu"
-        aria-labelledby="basic-link"
-        [ngClass]="{ 'span-dropdown-menu_hide': !showDropdown }"
-      >
-        <li
-          (click)="executeAction(element, dropdownElement.action)"
-          *ngFor="let dropdownElement of element.dropdownElements"
+    <div class="pl-5 pr-3 d-flex align-items-center">
+      <span class="span-steps-container">
+        <span
+          class="span-steps span-steps-first"
+          [ngClass]="{
+            'span-steps-active': element.columnFive.step > 0
+          }"
         >
-          <span
-            class="icon icon-tooltip icon-ic_{{ dropdownElement.icon }}"
-          ></span>
-          <a class="span-dropdown-menu__text">{{ dropdownElement.text }}</a>
-        </li>
-      </ul>
-    </span>
+        </span>
+        <span
+          class="span-steps span-steps-second"
+          [ngClass]="{
+            'span-steps-active': element.columnFive.step > 1
+          }"
+        >
+        </span>
+        <span
+          class="span-steps span-steps-third"
+          [ngClass]="{
+            'span-steps-active': element.columnFive.step > 2
+          }"
+        >
+        </span>
+      </span>
+      <span class="draggable-row__col-five-text">{{
+        element.columnFive.text | translate
+      }}</span>
+    </div>
+    <div>
+      <app-dropdown
+        [list]="dropdownData"
+        position="right"
+        (selects)="actionEmit($event)"
+      >
+        <span class="icon icon-ic_more content-icon"></span>
+      </app-dropdown>
+    </div>
   </div>
 </div>

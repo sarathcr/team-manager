@@ -1,1 +1,1 @@
-export type GoogleCardVariant = 'slide' | 'site' | 'doc' | 'form' | 'sheet'
+export type GoogleCardVariant = 'SLIDE' | 'WEB' | 'DOC' | 'FORM' | 'SHEET'

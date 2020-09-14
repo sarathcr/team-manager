@@ -1,0 +1,58 @@
+@import './utilities';
+/*==================================
+=            Typography            =
+==================================*/
+/**
+	Define here all the typographies and sizes of the web fonts. We can use HTML tags directly or conceptual terms like title, lead...
+**/
+$font-family-basic: (
+  museo-sans: (
+    'Museo Sans Rounded',
+    sans-serif,
+  ),
+  brandon: (
+    'Brandon Grotesque',
+    sans-serif,
+  ),
+  pt-sans: (
+    'PT_Sans',
+    serif,
+  ),
+  icomoon: (
+    'icomoon',
+  ),
+);
+
+$font-family: (
+  default: map-get($font-family-basic, pt-sans),
+  primary: map-get($font-family-basic, museo-sans),
+  secondary: map-get($font-family-basic, brandon),
+  tertiary: map-get($font-family-basic, pt-sans),
+  icons: map-get($font-family-basic, icomoon),
+);
+
+$font-size: (
+  html: 16px,
+  /* base font size. Do not touch if you don't know what you're doing */
+  body: rem-calc(18),
+  body-s: rem-calc(14),
+  body-overtitle: rem-calc(14),
+  caption: rem-calc(14),
+  input: rem-calc(14),
+  label: rem-calc(12),
+  default: rem-calc(14),
+  button: rem-calc(14),
+  icon: rem-calc(16),
+  desktop-xxl: rem-calc(90),
+  desktop-xl: rem-calc(76),
+  desktop-l: rem-calc(54),
+  desktop-m: rem-calc(34),
+  mob-l: rem-calc(30),
+  l: rem-calc(44),
+  m: rem-calc(34),
+  s: rem-calc(24),
+  xs: rem-calc(24),
+  q: rem-calc(26),
+  sub-m: rem-calc(20),
+  sub-s: rem-calc(18),
+);

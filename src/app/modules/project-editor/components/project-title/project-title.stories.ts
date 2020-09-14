@@ -11,6 +11,7 @@ import { ModalFormComponent } from 'src/app/shared/components/modal-form/modal-f
 import { TextareaComponent } from 'src/app/shared/components/textarea/textarea.component'
 import { ValidatorComponent } from 'src/app/shared/components/validator/validator.component'
 import { StorybookTranslateModule } from 'src/app/shared/utility/storybook-translate.module'
+import { TranslateOptions } from '../../../../shared/pipe/translate-cut.pipe'
 import { ProjectTitleComponent } from './project-title.component'
 import markDown from './project-title.stories.md'
 
@@ -32,6 +33,7 @@ storiesOf('Shared|Project Title', module)
         ProjectTitleComponent,
         TextareaComponent,
         ValidatorComponent,
+        TranslateOptions
       ],
       providers: [BsModalService],
     })

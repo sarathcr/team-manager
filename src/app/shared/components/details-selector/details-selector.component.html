@@ -61,7 +61,14 @@
     <ng-template #loaded>
       <ng-container *ngFor="let item of subjectItem; let index = index">
         <li class="details-selector__item">
-          <div class="details-selector__text_normal">{{ item.name }}</div>
+          <div class="details-selector__text_normal d-flex">
+            <span class="details-selector__item-index"
+              ><strong *ngIf="item.index" class="pr-2"
+                >{{ item.index }}.</strong
+              ></span
+            >
+            {{ item.name }}
+          </div>
           <div
             *ngIf="item.dimensions?.length"
             class="details-selector__text_normal"

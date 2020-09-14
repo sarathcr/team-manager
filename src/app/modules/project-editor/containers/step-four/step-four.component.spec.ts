@@ -13,7 +13,6 @@ import { CurriculumBasicSkillsEntityService } from 'src/app/modules/project-edit
 import { ContentService } from '../../services/contents/contents.service'
 import { EditorService } from '../../services/editor/editor.service'
 import { CurriculumEntityService } from '../../store/entity/curriculum/curriculum-entity.service'
-import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 
@@ -22,7 +21,6 @@ class ProjectEntityServiceStub {}
 class StepStatusEntityServiceStub {}
 class CurriculumBasicSkillsEntityServiceStub {}
 class BsModalServiceStub {}
-class GradeEntityServiceStub {}
 class ContentServiceStub {}
 class RouterStub {}
 class CurriculumEntityServiceStub {}
@@ -51,7 +49,6 @@ describe('StepFourComponent', (): void => {
           useClass: CurriculumBasicSkillsEntityServiceStub,
         },
         { provide: ContentService, useClass: ContentServiceStub },
-        { provide: GradeEntityService, useClass: GradeEntityServiceStub },
         { provide: BsModalService, useClass: BsModalServiceStub },
         { provide: Router, useClass: RouterStub },
         {

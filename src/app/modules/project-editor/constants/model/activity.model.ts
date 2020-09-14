@@ -11,7 +11,7 @@ export class Activity {
   id?: number | string
   name?: string
   duration?: number
-  exercises?: Exercice[]
+  exercises?: Exercise[]
   state?: ActivityState
   phase?: string
   description?: string
@@ -33,26 +33,49 @@ export class Activity {
   instructions?: string
 }
 
-export class Content {
+export class LinkContent {
   type?: string
   title?: string
   url?: string
-  image?: string
+  imageUrl?: string
 }
 
-export class Exercice {
+export class Exercise {
   id?: number
   name?: string
+  delivery?: Modality
+  deliveryDate?: string
+  evaluation?: boolean
+  referenceMaterials?: ReferenceMaterials[]
+  evaluationStrategies?: EvaluationStrategy
+  percentage?: number
+  statement?: string
+  updateType?: string
 }
+
 export class ReferenceMaterials {
   id?: number
   fileName?: string
   fileType: FileType
   previewImageUrl: string
-  sourceType: string
+  sourceType: SourceType
   title: string
   url: string
   visible: boolean
+}
+export class EvaluationStrategy {
+  agent: AgentType
+  id: number
+  instruments: Instrument
+  name: string
+}
+export class Instrument {
+  id: number
+  name: string
+}
+export class StatusMaterial extends ReferenceMaterials {
+  status: 'default' | 'loading' | 'success' | 'failed'
+  callConfirm?: boolean
 }
 
 export class ActivityResource {
@@ -62,7 +85,7 @@ export class ActivityResource {
 
 export type ActivityPhase = 'INITIAL' | 'DEVELOP' | 'SYNTHESIS'
 export type ActivityState = 'TO_DEFINE' | 'DEFINED' | 'CREATED' | 'PUBLISHED'
-export type Modality = 'PRESENCIAL' | 'ONLINE'
+export type Modality = 'PRESENTIAL' | 'ONLINE' | 'NONE'
 export type FileType =
   | 'PRESENTATION'
   | 'DOCUMENT'
@@ -71,3 +94,8 @@ export type FileType =
   | 'TABLES'
 export type SourceType = 'GOOGLEDRIVE' | 'LOCALDRIVE' | 'WEB'
 export type UpdateType = 'clone' | 'update' | 'delete'
+export type AgentType =
+  | 'NONE'
+  | 'HETETOEVALUATION'
+  | 'COEVALUATION'
+  | 'SELFEVALUATION'

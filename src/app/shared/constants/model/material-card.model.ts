@@ -1,10 +1,11 @@
 import { GoogleCardVariant } from './google-card.model'
 
 export type typeVariant =
-  | 'video'
-  | 'image'
-  | 'evaluation'
-  | 'preview'
+  | 'VIDEO'
+  | 'IMAGE'
+  | 'EVALUATION'
+  | 'PREVIEW'
   | GoogleCardVariant
+  | 'OTHER'
 
 export type sizeVariant = 'medium' | 'small'

@@ -146,7 +146,7 @@ export class StepFiveComponent implements OnInit, OnDestroy {
   getModal(subject: Subject): void {
     const initialState = { modalConfig: {} }
     this.bsModalRef = this.modalService.show(this.infoModal, {
-      class: 'common-modal',
+      class: 'common-modal modal-dialog-centered',
       initialState,
     })
   }

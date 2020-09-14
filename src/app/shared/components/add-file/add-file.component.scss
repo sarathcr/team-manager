@@ -1,0 +1,86 @@
+@import 'helpers/_helpers-master';
+.add-file {
+  ngx-dropzone {
+    border: none;
+  }
+  &__container {
+    width: auto;
+    height: 472px;
+    display: flex;
+    padding: 126px 0 141px;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border-radius: 4px;
+
+    background: linear-gradient(
+        to right,
+        rgba(color(tertiary), 0.4) 10%,
+        rgba(pantone(nobel), 0) 20%
+      ),
+      linear-gradient(
+        rgba(color(tertiary), 0.4) 10%,
+        rgba(pantone(nobel), 0) 20%
+      ),
+      linear-gradient(
+        to right,
+        rgba(color(tertiary), 0.4) 10%,
+        rgba(pantone(nobel), 0) 20%
+      ),
+      linear-gradient(
+        rgba(color(tertiary), 0.4) 10%,
+        rgba(pantone(nobel), 0) 20%
+      );
+    background-position: top, right, bottom, left;
+    background-repeat: repeat-x, repeat-y;
+    background-size: 5px 1px, 1px 5px;
+  }
+  &__icon {
+    width: 52px;
+    height: 52px;
+    display: table;
+    background-repeat: no-repeat;
+    background-image: url(/assets/icons/group_15.png);
+  }
+  &__text {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    color: black;
+  }
+  &__option {
+    &-separator {
+      margin: 0 10px 2px;
+      width: 26px;
+      display: inline-block;
+      border-bottom: 1px solid rgba(color(tertiary), 0.1);
+    }
+    &-text {
+      display: inline-block;
+      font-weight: 600;
+      color: rgba(color(tertiary), 0.3);
+      font-size: font-size(body-s);
+    }
+  }
+  &__button {
+    border-radius: 5px;
+    font-style: normal;
+    text-transform: none;
+    margin-top: 19px;
+    min-height: 36px;
+    font-size: font-size(body-s);
+  }
+  &__title {
+    line-height: 28px;
+    font-size: font-size(body);
+    display: block;
+    font-weight: 600;
+    margin-bottom: 19px;
+    letter-spacing: 0.2px;
+  }
+}
+
+.bottom-right {
+  position: absolute;
+  right: 60px;
+  bottom: 40px;
+}

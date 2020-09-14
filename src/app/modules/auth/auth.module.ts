@@ -6,11 +6,7 @@ import { StoreModule } from '@ngrx/store'
 import { TranslateModule } from '@ngx-translate/core'
 import * as fromAuth from './reducers'
 
-import {
-  GoogleLoginProvider,
-  SocialAuthServiceConfig,
-  SocialLoginModule,
-} from 'angularx-social-login'
+import { SocialLoginModule } from 'angularx-social-login'
 
 import { ActivationErrorComponent } from './containers/activation-error/activation-error.component'
 import { ActivationComponent } from './containers/activation/activation.component'
@@ -20,10 +16,10 @@ import { RegisterComponent } from './containers/register/register.component'
 import { ResetPasswordComponent } from './containers/reset-password/reset-password.component'
 
 import { SharedModule } from 'src/app/shared/shared.module'
-import { environment } from '../../../environments/environment'
 
 import { AuthService } from 'src/app/modules/auth/services/auth.service'
 import { AuthGuard } from './guards/auth.guard'
+import { AuthStoreModule } from './store/auth-store.module'
 
 @NgModule({
   declarations: [
@@ -42,28 +38,14 @@ import { AuthGuard } from './guards/auth.guard'
     SocialLoginModule,
     TranslateModule.forChild(),
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducers),
+    AuthStoreModule,
   ],
 })
 export class AuthModule {
   static forRoot(): ModuleWithProviders<AuthModule> {
     return {
       ngModule: AuthModule,
-      providers: [
-        AuthGuard,
-        AuthService,
-        {
-          provide: 'SocialAuthServiceConfig',
-          useValue: {
-            autoLogin: false,
-            providers: [
-              {
-                id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider(environment.googleId),
-              },
-            ],
-          } as SocialAuthServiceConfig,
-        },
-      ],
+      providers: [AuthGuard, AuthService],
     }
   }
 }

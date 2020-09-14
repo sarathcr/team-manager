@@ -1,0 +1,53 @@
+<div *ngIf="!addedFile; else fileAdded" class="add-file">
+  <ngx-dropzone
+    class="add-file__container"
+    (change)="onSelect($event)"
+    [multiple]="false"
+    [accept]="acceptedType"
+    [disableClick]="loading ? true : false"
+    *ngIf="!loading"
+  >
+    <span class="add-file__icon"> </span>
+    <div class="add-file__text title_s">
+      {{ 'ADD_MATERIAL.material_add_device_title' | translate }}
+    </div>
+    <div class="add-file__option">
+      <span class="add-file__option-separator"></span>
+      <span class="add-file__option-text">{{
+        'ADD_MATERIAL.material_add_device_or' | translate
+      }}</span>
+      <span class="add-file__option-separator"></span>
+    </div>
+    <div class="add-file__button">
+      <app-button theme="primary" variant="contained" size="small">{{
+        'ADD_MATERIAL.material_add_device_button' | translate
+      }}</app-button>
+    </div>
+  </ngx-dropzone>
+
+  <div class="add-file__container" *ngIf="loading">
+    <app-loader></app-loader>
+  </div>
+</div>
+<ng-template #fileAdded>
+  <div class="add-file__title">
+    {{ 'ADD_MATERIAL.material_add_device_uploaded' | translate }}
+  </div>
+  <app-material-card
+    *ngIf="addedFile"
+    [link]="fileURL"
+    [label]="typeFile"
+    [title]="nameFile"
+    [variant]="'OTHER'"
+    [canDelete]="true"
+    [validPreviewLink]="true"
+    (delete)="onDelete()"
+  ></app-material-card>
+</ng-template>
+<app-button
+  class="bottom-right"
+  icon="tick"
+  [disabled]="disableSubmit"
+  (click)="onAdd()"
+  >{{ 'ADD_MATERIAL.material_add_button_add' | translate }}</app-button
+>

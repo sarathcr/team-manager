@@ -1,0 +1,84 @@
+/*=====================================
+=            Pantone		          =
+=====================================*/
+/*
+	Here there are all the colors that will be present in the Web. 
+	
+	NEVER include them colors directly in your scss files. You should create in the Colors sections 
+	all the links to those colors and include them instead
+	
+	The names are generated from http://www.color-blindness.com/color-name-hue/
+*/
+$pantone: (
+  electric-indigo: #6400e4,
+  medium-turquoise: #37d4c8,
+  deep-cerise: #e61f7f,
+  blue-whale: #141c3a,
+  black: #000000,
+  mischika: #b0afbb,
+  very-light-grey: #cccccc,
+  link-water: #cbcdd4,
+  frenchgray: #c2c3c7,
+  magnolia: #efe8fd,
+  white-lilac: #f8f8f9,
+  white-smoke: #f1f1f1,
+  white: #ffffff,
+  midnight-blue: #1b1048,
+  nobel: #999999,
+  hollywood-Cerise: #e40093,
+  cerulean-Blue: #3848d6,
+  orange-Peel: #ffa000,
+  Deep-Sky-Blue: #19b1ee,
+  Sunglow: #ffcd3e,
+  Iris-Blue: #4b5bba,
+  Blue: #508ef6,
+  Sapphire: #30b271,
+  Orange-Peel: #ffa000,
+  Navy-Blue: #37d4c8,
+  Wild-Strawberry: #ff3f81,
+  Kelly-Green: #60d124,
+  Free-Speech-Blue: #4b5bba,
+);
+
+/*=====================================
+=            Colors           		 =
+=====================================*/
+/* 
+	Here we decide the "conceptual" colors of the WEB. It englobes concepts as primary, secondary, tertiary, text, selected, lead, title, background...
+	
+	TRY NOT TO put here colors referencing Components or HTML tags (such as h1, h2, tbody, nav, user-form...). 
+	
+	This colors can be included in scss files althought we can create intermediate colors referencing this ones if we need so.
+*/
+$color: (
+  primary: map-get($pantone, electric-indigo),
+  secondary: map-get($pantone, medium-turquoise),
+  tertiary: map-get($pantone, blue-whale),
+  quaternary: map-get($pantone, white),
+  quinary: map-get($pantone, deep-cerise),
+  background-primary: map-get($pantone, white-lilac),
+  background-secondary: map-get($pantone, very-light-grey),
+  background-teritiary: map-get($pantone, mischika),
+  shadow-color: map-get($pantone, black),
+  background-sunglow: map-get($pantone, Sunglow),
+  background-free-speech-blue: map-get($pantone, Free-Speech-Blue),
+  background-Blue: map-get($pantone, Blue),
+  background-Sapphire: map-get($pantone, Sapphire),
+);
+
+/**
+	We now add colors referencing HTML Tags. 
+	
+	This colors SHOULD reference those defined in the $color Map, althougt can reference $pantone (not ideally thought)
+**/
+$html-colors: (
+  /* border colors */ border-primary: map-get($pantone, white-smoke),
+  border-secondary: map-get($pantone, link-water),
+  border-tertiary: map-get($pantone, magnolia)
+);
+/* 
+	DO NOT MODIFY NOR COMMENT: 
+	Merging the two maps. CAUTION, ATTRIBUTES WITH THE SAME NAME WILL BE OVERRIDED 
+*/
+$color: map-merge($color, $html-colors);
+$color: map-merge($color, $pantone);

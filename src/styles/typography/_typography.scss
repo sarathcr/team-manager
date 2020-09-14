@@ -1,16 +1,16 @@
 .subtitle {
   //Font size and styles common for both Mobile and Desktop
   &_m {
-    font-family: $font-family-primary;
-    font-size: $font-size-sub-m;
+    font-family: font-family(primary);
+    font-size: font-size(sub-m);
     line-height: 28px;
     letter-spacing: 0.3px;
     font-weight: 700;
   }
 
   &_s {
-    font-family: $font-family-secondary;
-    font-size: $font-size-sub-s;
+    font-family: font-family(secondary);
+    font-size: font-size(sub-s);
     line-height: 24px;
     letter-spacing: 0.5px;
     font-weight: 900;
@@ -25,16 +25,16 @@
 
   //Font size and styles common for both Mobile and Desktop
   &_m {
-    font-family: $font-family-tertiary;
-    font-size: $font-size-body;
+    font-family: font-family(tertiary);
+    font-size: font-size(body);
     line-height: 32px;
     letter-spacing: 0.2px;
     font-weight: 400;
   }
 
   &_s {
-    font-family: $font-family-tertiary;
-    font-size: $font-size-body-s;
+    font-family: font-family(tertiary);
+    font-size: font-size(body-s);
     line-height: 24px;
     letter-spacing: normal;
     font-weight: 400;
@@ -42,8 +42,8 @@
 }
 
 .overtitle {
-  font-family: $font-family-secondary;
-  font-size: $font-size-body-overtitle;
+  font-family: font-family(secondary);
+  font-size: font-size(body-overtitle);
   line-height: 24px;
   letter-spacing: 1px;
   font-weight: 900;
@@ -53,34 +53,34 @@
   }
 
   &_grey {
-    color: rgba($color-tertiary,0.6);
+    color: rgba(color(tertiary),0.6);
   }
 }
 
 .caption {
-  font-family: $font-family-tertiary;
+  font-family: font-family(tertiary);
   font-weight: 400;
-  font-size: $font-size-body-caption;
+  font-size: font-size(body-caption);
   line-height: 24px;
   letter-spacing: normal;
-  color: rgba($color-tertiary,0.6);
+  color: rgba(color(tertiary),0.6);
 }
 
 .input {
-  font-family: $font-family-tertiary;
-  color: rgba($color-tertiary,0.6);
+  font-family: font-family(tertiary);
+  color: rgba(color(tertiary),0.6);
   font-weight: 400;
-  font-size: $font-size-body-input;
+  font-size: font-size(body-input);
   line-height: 12px;
   letter-spacing: 0.2px;
 }
 
 .quote {
-  font-family: $font-family-tertiary;
+  font-family: font-family(tertiary);
   font-style: italic;
   font-weight: 400;
-  font-size: $font-size-q;
+  font-size: font-size(q);
   line-height: 40px;
   letter-spacing: normal;
-  color: $color-tertiary;
+  color: color(tertiary);
 }

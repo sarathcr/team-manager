@@ -3,12 +3,12 @@
 .creation {
   &__title {
     font-weight: 900;
-    font-size: $font-size-body;
+    font-size: font-size(body);
     letter-spacing: 0.2px;
     line-height: 28px;
   }
   &__optional {
-    font-size: $font-size-default;
+    font-size: font-size(default);
     font-weight: normal;
     letter-spacing: 0;
     line-height: 24px;
@@ -27,7 +27,7 @@
     }
   }
   &__exercises {
-    background-color: $color-quaternary;
+    background-color: color(quaternary);
     width: 100%;
     border-radius: 3px;
     @include card-box-shadow();
@@ -48,22 +48,6 @@
     &_star {
       opacity: 0.4;
       margin-right: 11px;
-    }
-  }
-
-  &__subtitle {
-    line-height: 14px;
-    letter-spacing: 0.16px;
-    font-weight: 900;
-    opacity: 0.5;
-    position: relative;
-    &:not(:last-child):after {
-      content: '';
-      position: absolute;
-      height: 20px;
-      width: 1px;
-      border-left: 1px dotted #bbbbbb;
-      right: -15px;
     }
   }
 }

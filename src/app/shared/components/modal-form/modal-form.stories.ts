@@ -3,6 +3,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { action } from '@storybook/addon-actions'
 import { number, text, withKnobs } from '@storybook/addon-knobs/angular'
 import { moduleMetadata, storiesOf } from '@storybook/angular'
+import { TranslateOptions } from '../../pipe/translate-cut.pipe'
 import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
 import { ButtonComponent } from '../button/button.component'
 import { InputComponent } from '../input/input.component'
@@ -22,6 +23,7 @@ storiesOf('Shared|Modal Form', module)
         InputComponent,
         TextareaComponent,
         ButtonComponent,
+        TranslateOptions
       ],
       imports: [
         ReactiveFormsModule,

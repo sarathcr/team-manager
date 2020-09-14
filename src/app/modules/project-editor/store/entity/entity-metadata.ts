@@ -2,6 +2,7 @@ import { EntityMetadataMap } from '@ngrx/data'
 
 import {
   compareProjects,
+  CurriculumAcademicYear,
   ProjectList,
 } from '../../constants/model/project.model'
 
@@ -13,7 +14,7 @@ export const entityMetadata: EntityMetadataMap = {
     },
   },
   ProjectList: {
-    selectId: (projectList: ProjectList) => projectList.pageNumber,
+    selectId: (projectList: ProjectList) => projectList.pageId,
     entityDispatcherOptions: {
       optimisticUpdate: true,
     },
@@ -33,12 +34,9 @@ export const entityMetadata: EntityMetadataMap = {
       optimisticUpdate: true,
     },
   },
-  Grade: {
-    entityDispatcherOptions: {
-      optimisticUpdate: true,
-    },
-  },
   AcademicYear: {
+    selectId: (academicYears: CurriculumAcademicYear) =>
+      academicYears.curriculumId,
     entityDispatcherOptions: {
       optimisticUpdate: true,
     },
@@ -49,6 +47,11 @@ export const entityMetadata: EntityMetadataMap = {
     },
   },
   Block: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true,
+    },
+  },
+  BlockContent: {
     entityDispatcherOptions: {
       optimisticUpdate: true,
     },

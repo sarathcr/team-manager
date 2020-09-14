@@ -59,6 +59,8 @@ export class EditorHeaderComponent {
   getActiveRoute(): string {
     if (this.router.url.includes('activities')) {
       return 'activities'
+    } else if (this.router.url.includes('evaluation')) {
+      return 'evaluation'
     } else {
       return 'editor'
     }

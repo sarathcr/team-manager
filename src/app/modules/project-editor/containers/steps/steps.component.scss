@@ -1,5 +1,6 @@
 @import 'helpers/_helpers-master';
 @import 'helpers/_bt-mixins';
+@import 'variables/_variables-master';
 
 .steps {
   $root: &;
@@ -11,12 +12,12 @@
   height: 100%;
   z-index: 1;
   min-height: 100vh;
-  background-color: $color-background-primary;
+  background-color: color(background-primary);
   margin-left: auto;
 
   &__head-text {
-    font-family: $font-family-tertiary;
-    font-size: $font-size-xs;
+    font-family: font-family(tertiary);
+    font-size: font-size(xs);
     line-height: 36px;
     letter-spacing: 0.3px;
     font-weight: 700;
@@ -58,7 +59,7 @@
 
   @include media-breakpoint-up(xl) {
     &__bg {
-      background-image: url('../../../../../../images/img_background_shapes.png');
+      background-image: url('../../../../../assets/images/shapes/img_background_shapes.png');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: right center;
@@ -115,13 +116,13 @@
 
     &__point {
       font-weight: bold;
-      border-bottom: 1px solid $blue-whale;
+      border-bottom: 1px solid color(tertiary);
       cursor: pointer;
       margin: 0 6px;
     }
 
     &__title {
-      font-size: $font-size-sub-s;
+      font-size: font-size(sub-s);
       line-height: 28px;
       letter-spacing: 0.2px;
       margin-bottom: 7px;
@@ -149,14 +150,14 @@
     &__subtitle {
       line-height: 28px;
       letter-spacing: 0.2px;
-      font-size: $font-size-body;
+      font-size: font-size(body);
     }
 
     &__title {
       line-height: 32px;
       display: flex;
       flex-direction: row;
-      padding-bottom: $padding;
+      padding-bottom: spacing(primary);
 
       &-number {
         display: flex;
@@ -165,7 +166,7 @@
     }
 
     &__description {
-      margin-bottom: $margin * 2;
+      margin-bottom: spacing(primary) * 2;
     }
   }
 }

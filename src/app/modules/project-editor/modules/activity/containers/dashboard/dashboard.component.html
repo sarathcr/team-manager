@@ -1,7 +1,21 @@
 <div class="dashboard position-relative">
+  <div class="dashboard__fig dashboard__fig_left position-absolute">
+    <img
+      src="../assets/images/dashboard-left-bg.png"
+      alt="shapes-left"
+      class="dashboard__image"
+    />
+  </div>
+  <div class="dashboard__fig dashboard__fig_right position-absolute">
+    <img
+      src="../assets/images/dashboard-right-bg.png"
+      alt="shapes-right"
+      class="dashboard__image"
+    />
+  </div>
   <div class="container-fluid">
     <div class="dashboard__boxes">
-      <div class="dashboard__header">
+      <div class="dashboard__header" (click)="openPicker()">
         {{ 'ACTIVITIES.activities_create_secuantiation' | translate }}
       </div>
       <div class="row">
@@ -13,7 +27,6 @@
           ></app-statistics-box>
         </div>
       </div>
-
       <div class="dashboard__activities">
         <div class="dashboard__activities-fase">
           <div class="dashboard__activities-fase-header">
@@ -81,7 +94,8 @@
             >
               <app-draggable-row
                 [element]="activity"
-                (action)="ExecuteDropdownActions($event)"
+                [dropdownData]="activity.dropdownElements"
+                (actionEmited)="executeDropdownActions($event)"
               ></app-draggable-row>
             </div>
           </div>
@@ -152,7 +166,8 @@
             >
               <app-draggable-row
                 [element]="activity"
-                (action)="ExecuteDropdownActions($event)"
+                [dropdownData]="activity.dropdownElements"
+                (actionEmited)="executeDropdownActions($event)"
               ></app-draggable-row>
             </div>
           </div>
@@ -227,27 +242,14 @@
             >
               <app-draggable-row
                 [element]="activity"
-                (action)="ExecuteDropdownActions($event)"
+                [dropdownData]="activity.dropdownElements"
+                (actionEmited)="executeDropdownActions($event)"
               ></app-draggable-row>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="dashboard__fig dashboard__fig_left position-absolute">
-    <img
-      src="../assets/images/dashboard-left-bg.png"
-      alt="shapes-left"
-      class="dashboard__image"
-    />
-  </div>
-  <div class="dashboard__fig dashboard__fig_right position-absolute">
-    <img
-      src="../assets/images/dashboard-right-bg.png"
-      alt="shapes-right"
-      class="dashboard__image"
-    />
   </div>
 </div>
 

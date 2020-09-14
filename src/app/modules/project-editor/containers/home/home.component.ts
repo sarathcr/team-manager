@@ -1,59 +1,36 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-
-import { Observable } from 'rxjs'
+import { Component, OnInit } from '@angular/core'
 import { map } from 'rxjs/operators'
-
-import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { ProjectList } from '../../constants/model/project.model'
-import { ProjectListEntityService } from '../../store/entity/project-list/project-list-entity.service'
+import { User } from 'src/app/modules/auth/constants/model/login'
+import { UserEntityService } from 'src/app/modules/auth/store/entity/user/user-entity.service'
+import { StorageService } from 'src/app/shared/services/storage/storage.service'
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
-  title = 'Tus plantillas'
-  projects$: Observable<ProjectList>
-  loading = true
-  loaded = false
-  currentPage = 1
-  totalItems = 0
-  subscriptions = new SubSink()
-  loadedIds = []
+export class HomeComponent implements OnInit {
+  user: User
 
-  constructor(private projectListService: ProjectListEntityService) {}
+  constructor(
+    private storage: StorageService,
+    private userService: UserEntityService
+  ) {}
 
   ngOnInit(): void {
-    this.getProjectsByPage(0, true)
+    this.getUsertype()
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe()
-  }
-
-  pageChanged($event: any): void {
-    const page = $event.page - 1
-    this.getProjectsByPage(page)
-  }
-
-  getProjectsByPage(page: number, inIt?: boolean): void {
-    this.loading = true
-    this.projects$ = this.projectListService.entities$.pipe(
-      map((projectList) => projectList.find((list) => list.pageNumber === page))
-    )
-    this.subscriptions.sink = this.projects$.subscribe((list) => {
-      if (list) {
-        this.loading = false
-        this.loadedIds.push(list.pageNumber)
-        if (this.totalItems < list.projectCount) {
-          this.totalItems = list.projectCount
-          if (this.loaded === false) {
-            this.loaded = true
-          }
+  getUsertype(): void {
+    const userId = this.storage.getUserId()
+    this.userService.entities$
+      .pipe(map((users) => users.find((user) => user.id === +userId)))
+      .subscribe((user) => {
+        if (!user) {
+          this.userService.getByKey(userId)
+        } else {
+          this.user = user
         }
-      }
-    })
-    this.projectListService.getByKey(page)
+      })
   }
 }

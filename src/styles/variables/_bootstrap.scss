@@ -1,0 +1,21 @@
+// Bootstrap variables alterations
+$primary: color('primary');
+$secondary: color('tertiary');
+$success: color('secondary');
+$black: black;
+
+$font-weight-default: 400 !default;
+
+$btn-font-family: $font-family('secondary');
+$btn-font-weight: 700;
+$btn-font-size: $font-size('body-s');
+$btn-line-height: 1.5rem;
+$btn-disabled-color: color('mischika');
+
+$input-btn-padding-x: 1.75rem !default;
+$input-btn-border-width: rem-calc(2);
+
+$link-color: color('tertiary');
+$link-hover-color: color('primary');
+
+$zindex-modal: 10001;

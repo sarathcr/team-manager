@@ -1,5 +1,6 @@
-@import 'helpers/_helpers-master';
 @import 'helpers/bt-mixins';
+@import 'variables/_variables-master';
+
 .activity-header {
   &__wrap {
     min-height: 208px;
@@ -9,8 +10,8 @@
     z-index: 999;
   }
   &__overtitle {
-    font-family: $font-family-secondary;
-    font-size: $font-size-body-s;
+    font-family: font-family(secondary);
+    font-size: font-size(body-s);
     line-height: 24px;
     letter-spacing: 1px;
   }
@@ -19,13 +20,13 @@
     line-height: 14px;
     letter-spacing: 0.16px;
     margin-right: 50px;
-    color: rgba($color-quaternary, 0.6);
+    color: rgba(color(quaternary), 0.6);
     font-weight: 900;
     &:last-child {
       margin-right: 0;
     }
     &_active {
-      color: $color-quaternary;
+      color: color(quaternary);
       position: relative;
       &:after {
         content: '';
@@ -34,12 +35,12 @@
         left: 0;
         width: 100%;
         height: 5px;
-        background: $color-primary;
+        background: color(primary);
       }
     }
   }
   &__button {
-    margin-right: -$padding-primary;
+    margin-right: -(spacing(primary));
   }
   &__figure {
     position: fixed;

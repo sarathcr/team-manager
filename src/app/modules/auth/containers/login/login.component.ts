@@ -1,4 +1,10 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core'
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core'
 import {
   AbstractControl,
   FormBuilder,
@@ -9,36 +15,42 @@ import { ActivatedRoute, Router } from '@angular/router'
 
 import { SocialAuthService } from 'angularx-social-login'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
+import { GoogleAuthService } from 'src/app/shared/services/google/google-auth.service'
 
-import { CheckBoxData } from 'src/app/shared/constants/model/form-elements.model'
 import { validateEmail } from 'src/app/shared/utility/form.utility'
+import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import { AuthService } from '../../services/auth.service'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup
-  checkboxData: CheckBoxData = { checked: false }
   enableValidator = true
   invalid = false
   loading = true
   active = false
   modalRef: BsModalRef
   buttonLoading = false
+  subscriptions = new SubSink()
   @ViewChild('activationSuccessModal') activationSuccessModal: TemplateRef<any>
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private googleAuthService: SocialAuthService,
+    private socialAuthService: SocialAuthService,
+    private googleAuthService: GoogleAuthService,
     private route: ActivatedRoute,
     private modalService: BsModalService
   ) {}
 
   ngOnInit(): void {
     this.redirectByStatus()
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
   }
 
   redirectByStatus(): void {
@@ -62,20 +74,22 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, validateEmail]],
       password: ['', [Validators.required]],
-      rememberMe: [false]
+      rememberMe: [false],
     })
-    this.googleAuthService.authState.subscribe((user) => {
-      if (user) {
-        this.authService
-          .googleAuth({ tocken: user.idToken }, this.checkboxData.checked)
-          .subscribe((valid) => {
-            if (valid) {
-              this.invalid = false
-              this.redirectByStatus()
-            }
-          })
+    this.subscriptions.sink = this.socialAuthService.authState.subscribe(
+      (user) => {
+        if (user && !this.authService.isLoggedout) {
+          this.authService
+            .googleAuth({ tocken: user.idToken }, this.rememberMe.value)
+            .subscribe((valid) => {
+              if (valid) {
+                this.invalid = false
+                this.redirectByStatus()
+              }
+            })
         }
-    })
+      }
+    )
   }
 
   setValid(): void {
@@ -118,7 +132,8 @@ export class LoginComponent implements OnInit {
   }
 
   googleLogin(): void {
-    this.authService.googleLogin()
+    this.authService.isLoggedout = false
+    this.googleAuthService.googleLogin()
   }
 
   sendActivationLink(token: string, userId: string): void {

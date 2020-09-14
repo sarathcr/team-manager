@@ -1,31 +1,16 @@
 .title {
-  &_xxl {
-    font-family: $font-family-primary;
-    font-size: $font-size-xxl-mob;
-    line-height: 48px;
-    letter-spacing: 0.2px;
-    font-weight: 900;
-  }
-
-  &_xl {
-    font-family: $font-family-primary;
-    font-size: $font-size-xl-mob;
-    line-height: 40px;
-    letter-spacing: normal;
-    font-weight: 900;
-  }
 
   &_l {
-    font-family: $font-family-primary;
-    font-size: $font-size-l;
+    font-family: font-family(primary);
+    font-size: font-size(l);
     line-height: 48px;
     letter-spacing: 0.2px;
     font-weight: 900;
   }
 
   &_m {
-    font-family: $font-family-primary;
-    font-size: $font-size-m;
+    font-family: font-family(primary);
+    font-size: font-size(m);
     line-height: 34px;
     letter-spacing: 0.3px;
     font-weight: 900;
@@ -33,32 +18,32 @@
 
   //Font size and styles common for both Mobile and Desktop
   &_s {
-    font-family: $font-family-primary;
-    font-size: $font-size-s;
+    font-family: font-family(primary);
+    font-size: font-size(s);
     line-height: 32px;
     letter-spacing: 0.3px;
     font-weight: 900;
   }
 
   &_xs {
-    font-family: $font-family-tertiary;
-    font-size: $font-size-xs;
+    font-family: font-family(tertiary);
+    font-size: font-size(xs);
     line-height: 36px;
     letter-spacing: 0.3px;
     font-weight: 700;
   }
 
   &_primary {
-    font-family: $font-family-primary;
+    font-family: font-family(primary);
   }
 
   &_secondary {
-    font-family: $font-family-secondary;
+    font-family: font-family(secondary);
     font-weight: 700;
   }
 
   &_grey {
-    color: rgba($color-tertiary, 0.6);
+    color: rgba(color(tertiary), 0.6);
   }
 
   &_upper-case {

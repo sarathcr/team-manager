@@ -11,7 +11,10 @@
     </app-button>
     <h4
       class="modal-layout__title"
-      [ngClass]="{ 'modal-layout__title_lighten': titleLighten }"
+      [ngClass]="{
+        'modal-layout__title_lighten': titleLighten,
+        'modal-layout__title_secondary': titleSecondary
+      }"
     >
       {{ modalTitle | translate }}
     </h4>
@@ -32,7 +35,9 @@
     <app-button
       class="ml-auto"
       icon="tick"
+      [size]="buttonSize"
       [disabled]="isDisabled"
+      [loading]="loading"
       (click)="onConfirm()"
     >
       {{ confirmLabel | translate }}

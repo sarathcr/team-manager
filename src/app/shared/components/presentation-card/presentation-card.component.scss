@@ -1,14 +1,14 @@
 @import 'helpers/_helpers-master';
 .presentation-card {
   width: 266px;
-  background-color: $color-quaternary;
+  background-color: color(quaternary);
   border-radius: 6px;
   padding: 18px 18px 14px;
   @include presentation-card-box-shadow();
   &__figure {
     height: 120px;
     width: 100%;
-    background-color: rgba($color-tertiary, 0.05);
+    background-color: rgba(color(tertiary), 0.05);
     cursor: pointer;
   }
   &__image {
@@ -41,12 +41,12 @@
     width: 110px;
     height: 36px;
     border-radius: 33px;
-    background: $color-secondary;
-    color: $color-quaternary;
+    background: color(secondary);
+    color: color(quaternary);
     top: 12px;
     right: 12px;
-    font-family: $font-family-secondary;
-    font-size: $font-size-body-label;
+    font-family: font-family(secondary);
+    font-size: font-size(label);
     letter-spacing: 0.86px;
   }
 }

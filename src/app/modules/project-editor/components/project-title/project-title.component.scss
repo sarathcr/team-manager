@@ -1,20 +1,20 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 
 .project-title {
   padding: 0px 30px;
 
   &__input,
   &__text {
-    color: $blue-whale;
-    font-family: $font-family-pt-sans;
-    font-size: $font-size-default;
+    color: color(tertiary);
+    font-family: font-family(tertiary);
+    font-size: font-size(default);
     font-weight: bold;
     letter-spacing: normal;
     line-height: 24px;
     padding: 6px 0;
     border: none;
     &:focus {
-      border-bottom: 1px solid $black;
+      border-bottom: 1px solid pantone(black);
     }
   }
 
@@ -35,7 +35,7 @@
   }
 
   &__edit {
-    font-size: $font-size-s;
+    font-size: font-size(s);
     margin: 0 5px;
     opacity: 0.4;
     cursor: pointer;

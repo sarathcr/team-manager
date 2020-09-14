@@ -3,17 +3,19 @@
   class="material-card"
   [ngClass]="{
     'material-card_medium': size === 'medium',
-    'material-card_small': size === 'small' || variant === 'preview',
-    'material-card_video': variant === 'video',
-    'material-card_image': variant === 'image',
-    'material-card_form': variant === 'form',
-    'material-card_evaluation': variant === 'evaluation',
-    'material-card_preview': variant === 'preview'
+    'material-card_small':
+      size === 'small' || variant === 'PREVIEW' || variant === 'OTHER',
+    'material-card_video': variant === 'VIDEO',
+    'material-card_image': variant === 'IMAGE',
+    'material-card_form': variant === 'FORM',
+    'material-card_evaluation': variant === 'EVALUATION',
+    'material-card_web': variant === 'WEB',
+    'material-card_preview': variant === 'PREVIEW' || variant === 'OTHER'
   }"
 >
   <div
     class="material-card__icon material-card__icon_draggable"
-    *ngIf="draggable && variant !== 'preview'"
+    *ngIf="draggable && variant !== 'PREVIEW' && variant !== 'OTHER'"
     (click)="onDragg($event)"
   >
     <span class="icon icon-ic_drag"></span>
@@ -33,66 +35,89 @@
       [href]="link"
       target="_blank"
       [ngClass]="{
-        'material-card__link_disable': !link && variant !== 'preview'
+        'material-card__link_disable':
+          !link && variant !== 'PREVIEW' && variant !== 'OTHER'
       }"
     >
       <img
         class="material-card__image"
         alt=""
         src="{{
-          variant === 'form'
+          variant === 'FORM'
             ? './assets/images/bitmap3.png'
-            : variant === 'evaluation'
+            : variant === 'EVALUATION'
             ? './assets/images/bitmap4.png'
-            : variant === 'slide'
+            : variant === 'SLIDE'
             ? './assets/images/bitmap7.png'
-            : variant === 'site'
+            : variant === 'WEB'
             ? './assets/images/bitmap1.png'
-            : variant === 'doc'
+            : variant === 'DOC'
             ? './assets/images/bitmap10.png'
-            : variant === 'sheet'
+            : variant === 'SHEET'
             ? './assets/images/bitmap9.png'
+            : variant === 'OTHER'
+            ? './assets/images/bitmap2.png'
             : thumbnail
+            ? thumbnail
+            : './assets/images/bitmap2.png'
         }}"
       />
-      <span class="icon__circle" *ngIf="variant === 'video'">
+      <span class="icon__circle" *ngIf="label.toLowerCase() === 'video'">
         <span class="icon__circle_triangle-right"></span>
       </span>
       <span
         class="icon material-card__icon"
         [ngClass]="{
-          'icon-ic_list_w material-card__icon_list': variant === 'form',
-          'icon-ic_doc2 material-card__icon_star': variant === 'evaluation'
+          'icon-ic_list_w material-card__icon_list': variant === 'FORM',
+          'icon-ic_doc2 material-card__icon_star': variant === 'EVALUATION',
+          'icon-ic_attach material-card__icon_star':
+            variant === 'OTHER' || (variant === 'VIDEO' && thumbnail === '')
         }"
-        *ngIf="variant === 'form' || variant === 'evaluation'"
+        *ngIf="
+          variant === 'FORM' ||
+          variant === 'EVALUATION' ||
+          variant === 'OTHER' ||
+          (variant === 'VIDEO' &&
+            thumbnail === '' &&
+            label.toLowerCase() !== 'video')
+        "
       ></span>
     </a>
   </div>
 
   <div class="material-card__content material-card__content_right">
-    <div class="material-card__typename" *ngIf="variant !== 'preview'">
+    <div
+      class="material-card__typename"
+      *ngIf="variant !== 'PREVIEW' && variant !== 'OTHER'"
+    >
       <span class="icon__triangle-right"></span>
       <span class="material-card__typename_text">
-        {{ label }}
+        {{ label.charAt(0).toUpperCase() + label.toLowerCase().slice(1) }}
       </span>
     </div>
     <div
       class="material-card__title"
-      [ngClass]="{ 'mb-4': variant !== 'preview' }"
+      [ngClass]="{ 'mb-4': variant !== 'PREVIEW' && variant !== 'OTHER' }"
     >
       {{ title }}
     </div>
-    <div class="material-card__typename" *ngIf="variant === 'preview'">
+    <div
+      class="material-card__typename"
+      *ngIf="variant === 'PREVIEW' || variant === 'OTHER'"
+    >
       <span class="icon__triangle-right"></span>
-      <span class="material-card__typename_text">
+      <span class="material-card__typename_text" *ngIf="variant === 'PREVIEW'">
         <a [href]="link" target="_blank">
           {{ link }}
         </a>
       </span>
+      <span class="material-card__typename_text" *ngIf="variant === 'OTHER'">
+        {{ 'MATERIAL.material_file' | translate }} {{ label }}
+      </span>
     </div>
     <div
       class="material-card__switchbox"
-      *ngIf="showSwitch && variant !== 'preview'"
+      *ngIf="showSwitch && variant !== 'PREVIEW' && variant !== 'OTHER'"
     >
       <app-switch
         [switchOn]="switchOn"

@@ -1,12 +1,13 @@
-@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
 .details-selector {
   margin-bottom: 48px;
   &__header {
     width: 100%;
     padding: 13px 18px;
     border-radius: 3px 3px 0 0;
-    border: 1px solid rgba($color-tertiary, 0.1);
-    background: rgba($color-tertiary, 0.05);
+    border: 1px solid rgba(color(tertiary), 0.1);
+    background: rgba(color(tertiary), 0.05);
     &_definition {
       display: flex;
       flex-direction: row;
@@ -14,14 +15,14 @@
     }
   }
   &__title {
-    font-size: $font-size-body-s;
+    font-size: font-size(body-s);
     line-height: 24px;
     letter-spacing: 0;
     font-weight: bold;
     word-break: break-word;
     word-wrap: break-word;
     &_optional {
-      color: rgba($color-tertiary, 0.5);
+      color: rgba(color(tertiary), 0.5);
       font-weight: normal;
     }
   }
@@ -35,7 +36,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    border-bottom: 1px solid $color-border-secondary;
+    border-bottom: 1px solid color(border-secondary);
   }
   &__item-details {
     word-break: break-all;
@@ -47,18 +48,19 @@
   &__text,
   &__add {
     line-height: 24px;
-    color: rgba($color-tertiary, 0.6);
-    padding: 0 $padding;
+    color: rgba(color(tertiary), 0.6);
+    padding: 0 spacing(primary);
     &_evaluation {
-      color: $blue-whale;
+      color: color(tertiary);
       font-weight: bold;
       line-height: 24px;
-      padding: 0 $padding;
+      padding: 0 spacing(primary);
     }
     &_normal {
       line-height: 24px;
       font-weight: normal;
-      padding: 0 $padding;
+      padding: 0 spacing(primary);
+      word-break: break-word;
       &:nth-child(1) {
         flex: 1 1 100%;
       }
@@ -69,7 +71,7 @@
   }
   &__add,
   &__close {
-    color: $electric-indigo;
+    color: color(primary);
     cursor: pointer;
   }
   &__add {
@@ -91,8 +93,8 @@
 
   &__close {
     line-height: 24px;
-    color: rgba($color-tertiary, 0.4);
-    margin-left: $margin;
+    color: rgba(color(tertiary), 0.4);
+    margin-left: spacing(primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,7 +102,7 @@
     margin-right: 11px;
     .icon {
       font-weight: 900;
-      font-size: $font-size-icon;
+      font-size: font-size(icon);
     }
   }
   &_last {
@@ -108,5 +110,8 @@
   }
   &__add-btn {
     margin-right: -2px;
+  }
+  &__item-index {
+    white-space: nowrap;
   }
 }

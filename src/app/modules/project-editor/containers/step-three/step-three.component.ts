@@ -14,8 +14,8 @@ import { map } from 'rxjs/operators'
 
 import { EditorService } from '../../services/editor/editor.service'
 import { ObjectiveService } from '../../services/objectives/objectives.service'
+import { CurriculumGradesEntityService } from '../../store/entity/curriculum-grades/curriculum-grades-entity.service'
 import { EvaluationCriteriaEntityService } from '../../store/entity/evaluation-criteria/evaluation-criteria-entity.service'
-import { GradeEntityService } from '../../store/entity/grade/grade-entity.service'
 
 import {
   CompetencyObjective,
@@ -75,7 +75,7 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public editor: EditorService,
     private modalService: BsModalService,
-    private gradeService: GradeEntityService,
+    private gradeService: CurriculumGradesEntityService,
     private criteriaEntityService: EvaluationCriteriaEntityService,
     private objective: ObjectiveService,
     private translateService: TranslateService
@@ -158,22 +158,17 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.subscriptions.sink = this.gradeService.entities$
         .pipe(
           map((grades) =>
-            grades.filter(
-              (grade) =>
-                grade.academicYear?.id === project.academicYear.id &&
-                grade.region?.id === project.region.id
-            )
+            grades.find((gradeslist) => gradeslist?.id === project.curriculumId)
           )
         )
         .subscribe((newData) => {
-          if (!newData?.length) {
-            const parms = {
-              regionId: project.region.id.toString(),
-              academicyearId: project.academicYear.id.toString(),
-            }
-            this.gradeService.getWithQuery(parms)
+          if (!newData) {
+            this.gradeService.getWithQuery(project.curriculumId?.toString())
           }
-          this.grades = newData.map(({ id, name }) => ({ id, name }))
+          this.grades = newData?.gradeList?.map(({ id, name }) => ({
+            id,
+            name,
+          }))
           this.selectedGrades = this.objective.selectedGrades
         })
     }

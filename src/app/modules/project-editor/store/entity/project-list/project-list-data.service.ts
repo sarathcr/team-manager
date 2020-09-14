@@ -17,20 +17,21 @@ export class ProjectListDataService extends DefaultDataService<ProjectList> {
     super('ProjectList', http, httpUrlGenerator)
   }
 
-  getById(pageNumber: number): Observable<ProjectList | any> {
-    const pageSize = 10
+  getWithQuery(query: string): Observable<ProjectList[] | any> {
+    const querys = query.split('/')
     return this.http
-      .get<ProjectList>(
-        `${environment.apiUrl.projectService}/projects/${pageNumber}/${pageSize}`
+      .get<ProjectList[]>(
+        `${environment.apiUrl.projectService}/projects/${query}`
       )
       .pipe(
         map((res) => {
-          return { ...res, pageNumber, pageSize }
+          const updatedRes = [{ ...res, pageId: query, pageSize: +querys[1] }]
+          return updatedRes
         }),
         catchError((err) =>
           of(
             this.store.dispatch({
-              type: '[ProjectList] @ngrx/data/query-by-key/failure',
+              type: '[EvaluationCriteria] @ngrx/data/query-many/failure',
               payload: err.message,
               error: { status: err.error.status, error: err.error.error },
             })
