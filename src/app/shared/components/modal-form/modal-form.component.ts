@@ -31,6 +31,7 @@ export class ModalFormComponent implements OnInit {
   @Input() helperText: string
   @Input() errorText: string
   @Input() maxLength: number
+  @Input() minLength: number
   @Input() enableValidator = true
   @Input() inputVariant: InputVariant = 'text'
   @Input() placeholder = ''
@@ -53,9 +54,18 @@ export class ModalFormComponent implements OnInit {
   }
 
   checkStatus(value: string): void {
-    if (this.variant === 'input' && this.inputVariant !== 'number') {
+    if (this.variant === 'input' && !this.minLength) {
       this.buttonDisabled = !value?.length
       this.data = value
+    } else if (
+      this.variant === 'input' &&
+      this.minLength &&
+      value?.length >= this.minLength
+    ) {
+      this.buttonDisabled = false
+      this.data = value
+    } else {
+      this.buttonDisabled = true
     }
   }
 

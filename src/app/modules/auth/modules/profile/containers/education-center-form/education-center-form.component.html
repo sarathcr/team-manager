@@ -1,0 +1,49 @@
+<div>
+  <h1 class="title_m education-form__title">
+    {{ 'PROFILE.profile_setup_educationalestablishment' | translate }}
+  </h1>
+  <p class="education-form__description">
+    {{
+      'PROFILE.profile_setup_educationalestablishment_description'
+        | translate
+        | TranslateCut: 0
+    }}
+    <br />
+    {{
+      'PROFILE.profile_setup_educationalestablishment_description'
+        | translate
+        | TranslateCut: 1
+    }}
+  </p>
+  <div class="education-form__input">
+    <div class="education-form__input-wrapper d-flex justify-content-between">
+      <app-search
+        type="number"
+        placeholder=""
+        [text]="userService.zipCode"
+        [fullWidth]="true"
+        [isValidated]="isValidated"
+        [isValid]="isValid"
+        [focus]="true"
+        [maxLength]="5"
+        errorText="PROFILE.profile_setup_educationalestablishment_search_incorrect_error"
+        (searchText)="handleSearch($event)"
+      ></app-search>
+    </div>
+    <app-listbox
+      loading="true"
+      [listData]="eduCenters"
+      [isValidated]="isValidated"
+      [heading]="
+        'PROFILE.profile_setup_educationalestablishment_search_results'
+      "
+      [placeholder]="
+        'PROFILE.profile_setup_educationalestablishment_search_results_placeholder'
+          | translate
+      "
+      [loading]="loading"
+      errorText="PROFILE.profile_setup_educationalestablishment_search_results_error"
+      (selected)="selectCenter($event)"
+    ></app-listbox>
+  </div>
+</div>

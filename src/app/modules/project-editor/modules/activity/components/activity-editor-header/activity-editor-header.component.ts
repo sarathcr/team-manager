@@ -1,5 +1,6 @@
 import { Location } from '@angular/common'
 import { Component, Input, OnInit } from '@angular/core'
+import { EditorService } from 'src/app/modules/project-editor/services/editor/editor.service'
 
 @Component({
   selector: 'app-activity-editor-header',
@@ -14,10 +15,11 @@ export class ActivityEditorHeaderComponent implements OnInit {
   backUrl: string
   tabUrl: string
 
-  constructor(private location: Location) {}
+  constructor(private location: Location, private editor: EditorService) {}
 
   ngOnInit(): void {
-    this.backUrl = `/editor/project/${this.projectId}/activities`
-    this.tabUrl = `/editor/project/${this.projectId}/activity/${this.activityId}/`
+    const experinceType = this.editor.getExperienceUrl()
+    this.backUrl = `/editor/${experinceType}/${this.projectId}/activities`
+    this.tabUrl = `/editor/${experinceType}/${this.projectId}/activity/${this.activityId}/`
   }
 }

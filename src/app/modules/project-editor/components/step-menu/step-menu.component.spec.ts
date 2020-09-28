@@ -2,6 +2,7 @@ import { DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { RouterTestingModule } from '@angular/router/testing'
+import { TranslateModule } from '@ngx-translate/core'
 
 import { Step } from '../../constants/model/project.model'
 import { StepMenuComponent } from './step-menu.component'
@@ -13,7 +14,7 @@ describe('StepMenuComponent', (): void => {
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [StepMenuComponent],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
     })
 
     fixture = TestBed.createComponent(StepMenuComponent)

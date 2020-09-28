@@ -1,12 +1,137 @@
+@import 'helpers/_helpers-master';
+@import 'helpers/_bt-mixins';
 @import 'variables/_variables-master';
 .filter-wrapper {
   display: flex;
   align-items: center;
   cursor: pointer;
   &__icon {
-    font-size: font-size(s);
+    font-size: 2rem;
   }
   &__content {
     font-weight: bold;
+  }
+}
+.filter-block {
+  height: calc(100vh - 180px);
+  margin: 25px 0;
+}
+.filter-accordion {
+  $root: &;
+  border: none;
+  border-radius: 0;
+  background-color: color(quaternary);
+  &:last-child {
+    border-bottom: 1px solid rgba(color(tertiary), 0.1);
+  }
+  &__search {
+    padding: 0 20px 0 0;
+    ::ng-deep {
+      .search {
+        width: unset;
+      }
+      .search__input {
+        caret-color: color(primary);
+      }
+    }
+  }
+  &__heading {
+    border: none;
+    background-color: color(quaternary);
+    padding: 14px 30px 15px 0;
+    border-top: 1px solid rgba(color(tertiary), 0.1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__title,
+  &__arrow {
+    display: inline-flex;
+  }
+  &__arrow {
+    float: right;
+    cursor: pointer;
+
+    .icon {
+      letter-spacing: 1px;
+      line-height: 24px;
+      font-size: 24px;
+    }
+
+    #{$root}_active & {
+      .icon {
+        @include rotate(180);
+      }
+    }
+  }
+  &__title {
+    width: 100%;
+    font-family: font-family(secondary);
+    font-size: font-size(body-overtitle);
+    line-height: 24px;
+    letter-spacing: 1px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  &__body {
+    overflow-y: auto;
+    height: 100%;
+    margin-right: 10px;
+    margin-bottom: grid-gutter(primary);
+    &-title {
+      font-family: font-family(tertiary);
+      font-size: font-size(body);
+      line-height: 28px;
+      letter-spacing: 0.2px;
+      font-weight: 700;
+      margin-bottom: spacing(primary);
+    }
+  }
+  &__list {
+    padding: 0 35px 0 0;
+    margin: 0;
+    list-style-type: none;
+    max-height: 200px;
+    overflow: auto;
+    &-item {
+      padding: 10px 0;
+      &:first-child {
+        padding-top: 0;
+      }
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
+  &:last-child {
+    &#{$root}_active {
+      border-bottom: none;
+    }
+  }
+}
+.filter-count {
+  margin-right: 8px;
+}
+.filter-item-count {
+  margin-left: 4px;
+}
+.figure {
+  &_circle {
+    background: color(primary);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+  }
+  &_count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: color(quaternary);
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 18px;
+    letter-spacing: 0.1px;
   }
 }

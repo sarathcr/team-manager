@@ -9,7 +9,7 @@ import {
 
 import { TranslateService } from '@ngx-translate/core'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
-import { Observable } from 'rxjs'
+import { combineLatest, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { EditorService } from '../../services/editor/editor.service'
@@ -100,9 +100,16 @@ export class StepThreeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.project$ = this.editor.getDataByStep(3)
     this.step$ = this.editor.getStepStatus()
     this.step = this.editor.steps[2]
-    this.subscriptions.sink = this.editor.loading$.subscribe((value) =>
-      !value ? (this.loading = value) : null
-    )
+
+    const obs$ = combineLatest([
+      this.editor.loading$,
+      this.gradeService.loading$,
+    ]).pipe(map(([loading1, loading2]) => loading1 || loading2))
+
+    this.subscriptions.sink = obs$.subscribe((loading) => {
+      this.loading = loading
+    })
+
     const secondarViewLabels: SecondaryViewLabels = {
       selectedItemText:
         'OBJECTIVES.project_objectives_criteriawindow_critera_selected',

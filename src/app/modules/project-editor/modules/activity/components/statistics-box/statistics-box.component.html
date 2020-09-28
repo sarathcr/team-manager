@@ -58,6 +58,11 @@
           "
         >
           {{ data.infoText }}
+          <span *ngIf="data.chartText">{{
+            'VARIABLES.experience_type_variable_2'
+              | translate
+              | TranslateCut: localExperienceType
+          }}</span>
         </div>
         <div class="statistics-box__status" *ngIf="data.hasValue">
           <span class="statistics-box__status-result">

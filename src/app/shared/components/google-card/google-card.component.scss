@@ -1,95 +1,119 @@
-@import "helpers/_helpers-master";
-@import "variables/_variables-master";
+@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
 
 .card {
-    min-height: 246px;
-    padding: 16px;
-    background-color: color(quaternary);
-    display: flex;
-    flex-direction: column;
+  min-height: 246px;
+  min-width: 132px;
+  padding: 16px;
+  background-color: color(quaternary);
+  display: flex;
+  flex-direction: column;
 
-    @include presentation-card-box-shadow;
+  @include presentation-card-box-shadow;
 
-    border-radius: 5.76px;
+  border-radius: 5.76px;
 
-    &-header {
-        position: relative;
-        display: block;
-        height: 94px;
-        border-radius: 5px;
-        overflow: hidden;
+  &-header {
+    position: relative;
+    display: block;
+    height: 94px;
+    border-radius: 5px;
+    overflow: hidden;
 
-        &_slide {
-            background-color: color(background-sunglow);
-        }
-
-        &_site {
-            background-color: color(background-free-speech-blue);
-        }
-
-        &_form {
-            background-color: color(primary);
-        }
-
-        &_doc {
-            background-color: color(background-Blue);
-        }
-
-        &_sheet {
-            background-color: color(background-Sapphire);
-        }
-
-        &__image {
-            width: 100.9%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        &__icon {
-            position: absolute;
-            top: calc(50% - 14px);
-            left: calc(50% - 14px);
-            font-size: 28px;
-            color: color(quaternary);
-        }
+    &_slide {
+      background-color: color(background-sunglow);
     }
 
-    &-body {
-        margin-top: 12px;
-        font-weight: 600;
-
-        &__title {
-            line-height: 32px;
-            font-size: font-size(body);
-        }
-
-        &__subtitle {
-            line-height: 24px;
-            font-size: font-size(body-s);
-            color: color(background-secondary);
-        }
+    &_site {
+      background-color: color(background-free-speech-blue);
     }
 
-    &-footer {
-        margin-top: auto;
-        line-height: 26px;
-        border-top: 1px solid color(background-secondary);
-        padding-top: 12px;
-        cursor: pointer;
-
-        &__text {
-            margin-top: 13px;
-            font-size: font-size(body-s);
-        }
-
-        &__arrow {
-            color: solid #141c3a;
-            float: right;
-            margin-top: 4px;
-            margin-right: -5px;
-            font-size: font-size(body);
-            font-weight: 600;
-        }
+    &_form {
+      background-color: color(primary);
     }
+
+    &_doc {
+      background-color: color(background-Blue);
+    }
+
+    &_sheet {
+      background-color: color(background-Sapphire);
+    }
+    &_rubrica {
+      background-color: color(Navy-Blue);
+    }
+    &_checklist {
+      background-color: color(orange-Peel);
+    }
+    &_diana {
+      background-color: color(Kelly-Green);
+    }
+
+    &__image {
+      width: 100.9%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    &__icon {
+      position: absolute;
+      top: calc(50% - 14px);
+      left: calc(50% - 14px);
+      font-size: 28px;
+      color: color(quaternary);
+    }
+  }
+
+  &-body {
+    margin-top: 12px;
+    font-weight: 600;
+    flex: 1 1 100%;
+    &__title {
+      line-height: 32px;
+      font-size: font-size(body);
+      letter-spacing: 0.2px;
+    }
+
+    &__subtitle {
+      line-height: 24px;
+      font-size: font-size(body-s);
+      color: rgba(color(tertiary), 0.3);
+    }
+  }
+
+  &-footer {
+    margin-top: auto;
+    line-height: 26px;
+    border-top: 1px solid rgba(color(tertiary), 0.1);
+    padding-top: 12px;
+    cursor: pointer;
+
+    &__text {
+      margin-top: 13px;
+      font-size: font-size(body-s);
+      line-height: 24px;
+    }
+
+    &__arrow {
+      color: solid #141c3a;
+      float: right;
+      margin-top: 4px;
+      margin-right: -5px;
+      font-size: font-size(body);
+      font-weight: 600;
+    }
+  }
+  &__comingsoon {
+    display: inline;
+    padding: 6px 12px;
+    background-color: color(primary);
+    color: color(quaternary);
+    line-height: 24px;
+    letter-spacing: 0.86px;
+    font-family: font-family(secondary);
+    font-size: 12px;
+    font-weight: 900;
+    border-radius: 33.5px;
+  }
 }

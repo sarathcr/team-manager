@@ -1,0 +1,74 @@
+<div class="project-editor__form step-nine" id="step-nine">
+  <app-step-status
+    id="step-nine-status"
+    [status]="step.state"
+  ></app-step-status>
+  <div class="project-form d-flex flex-column justify-content-between">
+    <div>
+      <h1 class="project-form__title title_s">
+        <span class="project-form__title-number">6.</span
+        >{{ 'SINOPSIS.project_synopsis_title' | translate }}
+        <app-info-tooltip id="step-nine-info-tooltip"></app-info-tooltip>
+      </h1>
+      <p class="project-form__description">
+        {{
+          'SINOPSIS.project_synopsis_description' | translate | TranslateCut: 0
+        }}
+        <span>
+          {{
+            'VARIABLES.experience_type_variable_2'
+              | translate
+              | TranslateCut: localExperienceType
+          }}
+        </span>
+        <span>
+          {{
+            'SINOPSIS.project_synopsis_description'
+              | translate
+              | TranslateCut: 1
+          }}
+        </span>
+      </p>
+      <app-textarea
+        id="step-six-didactic-unit-textarea"
+        placeholder="{{
+          ('SINOPSIS.project_synopsis_placeholder' | translate) +
+            ('VARIABLES.experience_type_variable_1'
+              | translate
+              | TranslateCut: localExperienceType)
+        }}"
+        [maxLength]="500"
+        [value]="synopsis"
+        (inputChange)="onValueChange($event)"
+        [size]="'medium'"
+      ></app-textarea>
+
+      <h2 class="title_xs project-form__subtitle mb-4">
+        {{ 'SINOPSIS.project_synopsis_addimage' | translate }}
+      </h2>
+      <app-image-upload
+        id="step-six-didactic-unit-image-upload"
+        [imageURL]="synopsisImage"
+        [maxFileSize]="5242880"
+        acceptedType="image/jpeg,image/jpg,image/png"
+        [label]="'Cargar archivo'"
+        (fileSelect)="onFileSelect($event)"
+      >
+      </app-image-upload>
+    </div>
+    <app-button
+      id="step-six-didactic-unit-button"
+      [disabled]="buttonConfig.disabled"
+      [theme]="buttonConfig.submitted ? 'success' : 'primary'"
+      [icon]="'tick'"
+      (click)="handleSubmit('DONE')"
+    >
+      {{
+        (buttonConfig.submitted
+          ? buttonConfig.successLabel
+          : buttonConfig.label
+        ) | translate
+      }}
+    </app-button>
+  </div>
+</div>

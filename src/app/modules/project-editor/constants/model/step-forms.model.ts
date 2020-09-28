@@ -119,6 +119,15 @@ export interface FormNine {
   stepStatus: StepState
 }
 
+export interface FormSixDidacticUnit {
+  data: {
+    synopsis?: string
+    creativeImage?: string
+    status?: Status
+  }
+  stepStatus: StepState
+}
+
 export interface DefineUnlockStep {
   step?: 'stepThree' | 'stepFour'
 }

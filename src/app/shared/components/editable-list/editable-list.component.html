@@ -6,6 +6,7 @@
     <li class="editable-list__optional-content" *ngIf="variant === 'optional'">
       <div
         class="d-flex justify-content-between align-items-center editable-list__placeholder-wrap"
+        id="personalised-content-wrap"
       >
         <div
           [ngClass]="
@@ -13,6 +14,7 @@
               ? 'editable-list__placeholder'
               : 'editable-list__optional-header'
           "
+          id="personalised-content"
         >
           {{ (list.length ? optionalTitle : optionalPlaceholder) | translate }}
         </div>
@@ -70,6 +72,7 @@
   placeholder="{{ textareaPlaceholder | translate }}"
   (inputChange)="onAddItem($event)"
   (textareaFocus)="toggleOptionalContent()"
+  id="resources-defintion-textarea"
 ></app-textarea>
 <ng-template #editModal>
   <app-modal-form

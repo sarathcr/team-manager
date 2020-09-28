@@ -23,7 +23,7 @@ $pantone: (
   white-lilac: #f8f8f9,
   white-smoke: #f1f1f1,
   white: #ffffff,
-  midnight-blue: #1b1048,
+  midnight-blue: #1b1246,
   nobel: #999999,
   hollywood-Cerise: #e40093,
   cerulean-Blue: #3848d6,
@@ -38,6 +38,9 @@ $pantone: (
   Wild-Strawberry: #ff3f81,
   Kelly-Green: #60d124,
   Free-Speech-Blue: #4b5bba,
+  Blackcurrant: #161a3d,
+  cerulean: #0161a3,
+  black-current: #181740,
 );
 
 /*=====================================
@@ -56,6 +59,10 @@ $color: (
   tertiary: map-get($pantone, blue-whale),
   quaternary: map-get($pantone, white),
   quinary: map-get($pantone, deep-cerise),
+  septenary: map-get($pantone, Blackcurrant),
+  senary: map-get($pantone, Cerulean),
+  octonary: map-get($pantone, midnight-blue),
+  nonary: map-get($pantone, Blackcurrant),
   background-primary: map-get($pantone, white-lilac),
   background-secondary: map-get($pantone, very-light-grey),
   background-teritiary: map-get($pantone, mischika),

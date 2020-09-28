@@ -3,6 +3,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -11,12 +12,14 @@ import { LinkContent } from 'src/app/modules/project-editor/constants/model/acti
 import { CreationService } from 'src/app/modules/project-editor/modules/activity/services/creation/creation.service'
 import { getFileType } from '../../utility/file.utility'
 import { isNonFunctionalKey } from '../../utility/keyboard.utility'
+import { SubSink } from '../../utility/subsink.utility'
+import { ClearAllSetTimeouts } from '../../utility/timeout.utility'
 @Component({
   selector: 'app-material-link',
   templateUrl: './material-link.component.html',
   styleUrls: ['./material-link.component.scss'],
 })
-export class MaterialLinkComponent implements OnInit {
+export class MaterialLinkComponent implements OnInit, OnDestroy {
   @Input() linkTitle = ''
   @Output() updateDetails = new EventEmitter()
 
@@ -27,14 +30,23 @@ export class MaterialLinkComponent implements OnInit {
   loading = false
   focus = true
   inputTextChange = true
+  subscriptions = new SubSink()
+  clearTimeouts = new ClearAllSetTimeouts()
   @ViewChild('input') input: ElementRef
   constructor(private creationService: CreationService) {}
 
   ngOnInit(): void {
     this.setFocus()
-    setTimeout(() => {
+    this.clearTimeouts.add = setTimeout(() => {
       this.input.nativeElement.focus()
     }, 0)
+  }
+
+  ngOnDestroy(): void {
+    this.link = ''
+    this.updateDetails.emit({}) // emit empty object on tab change or close
+    this.subscriptions.unsubscribe()
+    this.clearTimeouts.clearAll()
   }
 
   setFocus(): void {
@@ -68,7 +80,7 @@ export class MaterialLinkComponent implements OnInit {
       this.inputTextChange = false
       this.status = 'loading'
       this.creationService.getLinkDetails(this.link).subscribe((data) => {
-        if (data.imageUrl && data.title) {
+        if (data.title) {
           this.status = 'success'
         } else {
           this.status = 'failed'
@@ -97,17 +109,19 @@ export class MaterialLinkComponent implements OnInit {
 
   resetThumbNail(): void {
     this.status = 'default'
-    this.creationService.resetLinkDetails().subscribe((data) => {
-      this.linkContent = { ...data, status: this.status }
-      this.emitDetails()
-      this.input.nativeElement.focus()
-    })
+    this.subscriptions.sink = this.creationService
+      .resetLinkDetails()
+      .subscribe((data) => {
+        this.linkContent = { ...data, status: this.status }
+        this.emitDetails()
+        this.input.nativeElement.focus()
+      })
   }
 
   resetAll(): void {
     this.link = ''
     this.resetThumbNail()
-    setTimeout(() => {
+    this.clearTimeouts.add = setTimeout(() => {
       this.input.nativeElement.focus()
     }, 1)
   }

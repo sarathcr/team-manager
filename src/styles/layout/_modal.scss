@@ -19,4 +19,10 @@
       top: 32px;
     }
   }
+  &_height_auto {
+    .modal-content {
+      padding: 35px grid-gutter(primary) * 2;
+      height: auto;
+    }
+  }
 }

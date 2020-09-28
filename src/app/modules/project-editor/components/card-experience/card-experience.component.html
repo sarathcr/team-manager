@@ -1,6 +1,12 @@
 <div
-  class="card-experience p-5 mb-6 d-flex flex-column"
-  [routerLink]="'../../project/' + data.id + '/1'"
+  class="card-experience mb-6 d-flex flex-column"
+  [routerLink]="
+    '../../' +
+    data?.type.split('_').join('-').toLowerCase() +
+    '/' +
+    data.id +
+    '/1'
+  "
   [attr.data-project-id]="data.id"
 >
   <div

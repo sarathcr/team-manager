@@ -1,4 +1,4 @@
-<div class="modal-layout">
+<div class="modal-layout" [ngClass]="customClass">
   <div class="modal-layout__header">
     <app-button
       *ngIf="backLabel"
@@ -6,6 +6,7 @@
       variant="back"
       icon="back"
       (click)="onBackClick()"
+      id="add-material-back-button"
     >
       {{ backLabel | translate }}
     </app-button>
@@ -34,11 +35,14 @@
   <div class="modal-layout__footer" *ngIf="confirmLabel">
     <app-button
       class="ml-auto"
+      [ngClass]="{ 'w-100': buttonVariant === 'block' }"
+      [variant]="buttonVariant"
       icon="tick"
       [size]="buttonSize"
       [disabled]="isDisabled"
       [loading]="loading"
       (click)="onConfirm()"
+      id="definition-secondary-view-add-button"
     >
       {{ confirmLabel | translate }}
     </app-button>

@@ -5,16 +5,27 @@
   border-bottom: 1px solid rgba(color(tertiary), 0.1);
   &__tab {
     font-weight: bold;
-    padding-bottom: 10px;
-    margin-right: 42px;
     color: rgba(color(tertiary), 0.5);
-    cursor: pointer;
-    &_active {
-      border-bottom: 2px solid color(tertiary);
-      color: color(tertiary);
-    }
     &_disabled {
       cursor: not-allowed;
+    }
+    cursor: pointer;
+    &-material {
+      padding-bottom: 10px;
+      margin-right: 42px;
+      &_active {
+        border-bottom: 2px solid color(tertiary);
+        color: color(tertiary);
+      }
+    }
+    &-profile {
+      padding-bottom: 20px;
+      margin-right: 54px;
+      text-transform: uppercase;
+      &_active {
+        border-bottom: 4px solid color(medium-turquoise);
+        color: color(tertiary);
+      }
     }
   }
 }

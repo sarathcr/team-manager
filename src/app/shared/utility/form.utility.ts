@@ -1,8 +1,5 @@
 import { forwardRef } from '@angular/core'
-import {
-  FormControl,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms'
+import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { PasswordComlexity } from '../constants/model/form-elements.model'
 
 export const makeProvider = (type: any): any => ({
@@ -24,6 +21,11 @@ export const validatePassword = (formControl: FormControl): any => {
   return isValid ? null : { validatePassword: { valid: false } }
 }
 
+export const validatePhoneNumber = (formControl: FormControl): any => {
+  const isValid = validatePhoneNumberRegex(formControl.value)
+  return isValid ? null : { validatePhoneNumber: { valid: false } }
+}
+
 export const validatePasswordRegex = (password: string): boolean => {
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
   return passwordRegex.test(String(password))
@@ -39,11 +41,16 @@ export const validPasswordCheck = (password: string): PasswordComlexity => {
     hasMinLength,
     hasLowerCase,
     hasUpperCase,
-    hasNumber
+    hasNumber,
   }
 }
 
 export const validateEmailRegex = (email: string): boolean => {
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return emailRegex.test(String(email).toLowerCase())
+}
+
+export const validatePhoneNumberRegex = (phoneNumber: string): boolean => {
+  const phoneNumberRegex = /(?:^[6789][1-9]\d{7}$)|(?:^\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,13}$)/
+  return phoneNumberRegex.test(phoneNumber)
 }

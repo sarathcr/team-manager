@@ -36,6 +36,8 @@ export class SelectComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() label: string
   @Input() canDeselect = true
   @Input() getInitialData: boolean
+  @Input() isForm = false
+  @Input() value: any
   @Output() dropdownSelect: EventEmitter<any> = new EventEmitter()
   active = false
   dropdownSettings: IDropdownSettings = {}
@@ -128,6 +130,11 @@ export class SelectComponent implements OnInit, OnDestroy, AfterViewInit {
     this.config.status = this.config.selectedItems.length
       ? 'INPROCESS'
       : 'PENDING'
-    this.dropdownSelect.emit({ controller: this.config.name, val, updated })
+    this.value = {
+      controller: this.config.name,
+      val,
+      updated,
+    }
+    this.dropdownSelect.emit(this.value)
   }
 }

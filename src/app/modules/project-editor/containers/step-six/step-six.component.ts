@@ -27,11 +27,13 @@ export class StepSixComponent implements OnInit, OnDestroy {
   creativeTitle = ''
   creativeImage = ''
   subscriptions = new SubSink()
+  localExperienceType: number
 
   constructor(private editor: EditorService) {}
 
   ngOnInit(): void {
     this.stepInIt()
+    this.localExperienceType = this.editor.getLocalExperienceType()
   }
 
   ngOnDestroy(): void {

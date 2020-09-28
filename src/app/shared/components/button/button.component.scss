@@ -10,6 +10,10 @@
     &#{$root} #{$root}__icon {
       margin-right: 0;
     }
+    &#{$root}_teritiary {
+      color: color(tertiary);
+      border: 2px solid color(tertiary);
+    }
   }
   &_primary {
     &#{$root}_text {
@@ -21,6 +25,7 @@
         border-bottom: 1px solid color(quaternary);
       }
     }
+
     &#{$root}_outline {
       border: 2px solid color(primary);
       background-color: inherit;
@@ -35,6 +40,9 @@
       background-color: rgba(color(tertiary), 0.1);
       border-color: transparent;
       color: color(quaternary);
+    }
+    #{$root}__content {
+      margin-bottom: -1px;
     }
   }
   &_secondary {
@@ -68,6 +76,7 @@
   &__content {
     display: flex;
     align-items: center;
+    margin-bottom: -1px;
   }
   &_outline {
     border: 1px solid color(quinary);
@@ -123,6 +132,7 @@
     display: inline-block;
   }
   &_small {
+    display: inline-flex;
     text-transform: unset;
     min-height: 36px;
     font-family: font-family(tertiary);
@@ -130,6 +140,12 @@
     letter-spacing: normal;
     min-width: auto;
     padding: 4px 14px;
+    #{$root}__content {
+      margin-bottom: 0 !important;
+    }
+    #{$root}__icon {
+      margin-left: -9px !important;
+    }
   }
   &_icon {
     background-color: transparent;
@@ -171,12 +187,16 @@
       background-color: unset !important;
       border-color: unset !important;
     }
+    &:disabled {
+      background-color: unset;
+      color: rgba(color(tertiary), 0.1);
+    }
     &#{$root}_teritiary {
       color: color(quaternary);
     }
-    #{$root}__icon {
-      margin-right: spacing(primary) !important;
-    }
+  }
+  &.btn_back #{$root}__icon {
+    margin-right: spacing(primary);
   }
   &_loading {
     #{$root}__icon,
@@ -192,6 +212,7 @@
   }
 }
 :host {
+  display: inline-flex;
   align-self: flex-start;
 }
 :host(.disabled) {

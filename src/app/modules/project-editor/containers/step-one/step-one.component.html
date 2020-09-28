@@ -6,12 +6,27 @@
         <span class="project-form__title-number">1.</span>Punto de partida
         <app-info-tooltip id="step-one-info-tooltip"></app-info-tooltip>
       </h1>
-      <p
-        class="project-form__description"
-        [innerHTML]="
-          'STARTING_POINT.project_startingpoint_description' | translate
-        "
-      ></p>
+      <p class="project-form__description">
+        <span
+          >{{
+            'STARTING_POINT.project_startingpoint_description'
+              | translate
+              | TranslateCut: 0
+          }}
+        </span>
+        <span>{{
+          'VARIABLES.experience_type_variable_1'
+            | translate
+            | TranslateCut: localExperienceType
+        }}</span>
+        <span
+          >{{
+            'STARTING_POINT.project_startingpoint_description'
+              | translate
+              | TranslateCut: 1
+          }}
+        </span>
+      </p>
       <app-select
         id="step-one-dropdown-country"
         [config]="countryDropdown"

@@ -33,8 +33,8 @@ $font-family: (
 
 $font-size: (
   html: 16px,
-  /* base font size. Do not touch if you don't know what you're doing */
-  body: rem-calc(18),
+  /* base font size. Do not touch if you don't know what you're doing */ body:
+    rem-calc(18),
   body-s: rem-calc(14),
   body-overtitle: rem-calc(14),
   caption: rem-calc(14),
@@ -48,6 +48,7 @@ $font-size: (
   desktop-l: rem-calc(54),
   desktop-m: rem-calc(34),
   mob-l: rem-calc(30),
+  xl: rem-calc(68),
   l: rem-calc(44),
   m: rem-calc(34),
   s: rem-calc(24),

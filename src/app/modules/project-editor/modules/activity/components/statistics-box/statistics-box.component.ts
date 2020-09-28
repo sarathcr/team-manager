@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { EditorService } from 'src/app/modules/project-editor/services/editor/editor.service'
 import {
   Box,
   StatisticsVariant,
@@ -9,13 +10,18 @@ import {
   templateUrl: './statistics-box.component.html',
   styleUrls: ['./statistics-box.component.scss'],
 })
-export class StatisticsBoxComponent {
+export class StatisticsBoxComponent implements OnInit {
   @Input() variant: StatisticsVariant
   @Input() data: Box
   @Output() action: EventEmitter<any> = new EventEmitter()
+  localExperienceType: number
   rotation = '-91'
 
-  constructor() {}
+  constructor(private editor: EditorService) {}
+
+  ngOnInit(): void {
+    this.localExperienceType = this.editor.getLocalExperienceType()
+  }
 
   transformPercentage(percentage: number): string {
     return -95 + percentage * 0.95 + ''

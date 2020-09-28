@@ -28,11 +28,13 @@ export class StepEightComponent implements OnInit, OnDestroy {
   initialFormStatus: Status = 'PENDING'
   subscription = new SubSink()
   isFormUpdated = false
+  localExperienceType: number
 
   constructor(private editor: EditorService) {}
 
   ngOnInit(): void {
     this.stepInIt()
+    this.localExperienceType = this.editor.getLocalExperienceType()
   }
 
   ngOnDestroy(): void {

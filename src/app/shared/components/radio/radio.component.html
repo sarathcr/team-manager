@@ -1,0 +1,15 @@
+<label class="radio__label">
+  <div class="radio__label-content">
+    <div class="radio__label-text">
+      <ng-content> </ng-content>
+    </div>
+    <input
+      type="radio"
+      [checked]="checked"
+      (change)="onChanged($event)"
+      class="radio__input"
+      name="radio-input"
+    />
+    <div class="radio__custom-indicator"></div>
+  </div>
+</label>

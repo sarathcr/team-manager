@@ -1,0 +1,50 @@
+<div class="listbox">
+  <div class="listbox__header">
+    <h2 class="title_xs m-0" class="listbox__heading">
+      {{ heading | translate }}
+    </h2>
+  </div>
+  <div class="listbox__box">
+    <div class="listbox__scroll-content">
+      <div *ngIf="!loading">
+        <div
+          *ngIf="listData.length === 1 && isValidated"
+          class="listbox__box-error"
+        >
+          {{ errorText | translate }}
+        </div>
+        <ng-container *ngIf="listData.length">
+          <div
+            *ngFor="let data of listData; let index = index"
+            class="listbox__box-data"
+            [ngClass]="{
+              'listbox__box-data_bg': checkSelect(data.checked, index)
+            }"
+          >
+            <app-radio
+              [data]="data"
+              [checked]="checkSelect(data.checked, index)"
+              (changed)="onChanged($event, index)"
+            >
+              <div class="listbox__label-title">
+                {{ data.title | translate }}
+              </div>
+              <div class="listbox__label-description" *ngIf="data.description">
+                {{ data.description }}
+              </div>
+            </app-radio>
+          </div>
+        </ng-container>
+        <div
+          *ngIf="!listData.length && !isValidated"
+          class="listbox__box-data listbox__box-data_light"
+        >
+          {{ placeholder }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="listbox__loading" *ngIf="loading">
+    <app-loader variant="block" size="medium"></app-loader>
+  </div>
+</div>

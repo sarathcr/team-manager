@@ -6,4 +6,9 @@ export const entityMetadata: EntityMetadataMap = {
       optimisticUpdate: false,
     },
   },
+  Role: {
+    entityDispatcherOptions: {
+      optimisticUpdate: false,
+    },
+  },
 }

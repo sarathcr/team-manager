@@ -28,6 +28,7 @@ export class DetailsSelectorComponent implements OnDestroy {
   @Input() buttonLabel = 'OBJECTIVES.project_objectives_criteriawindow_add'
   @Input() simpleSelector = false
   @Input() optional = false
+  @Input() hideAddLine = false
   @Input() label: string
   @Output() addCriteria: EventEmitter<any> = new EventEmitter()
   @Output() add: EventEmitter<any> = new EventEmitter()
@@ -40,11 +41,11 @@ export class DetailsSelectorComponent implements OnDestroy {
     this.subscriptions.unsubscribe()
   }
 
-  onDeleteById(id: number, index: number): void {
+  onDeleteById(id: number, index: number, item: any): void {
     if (!this.simpleSelector) {
       this.deleteById.emit({ subjectId: this.subject.id, id })
     } else {
-      this.deleteById.emit({ id, type: this.subjectItem[index]?.type })
+      this.deleteById.emit({ id, type: this.subjectItem[index]?.type, item })
     }
   }
 

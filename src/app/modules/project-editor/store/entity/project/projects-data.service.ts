@@ -172,6 +172,9 @@ export class ProjectsDataService extends DefaultDataService<Project> {
                   !activity.id ? res : activity
                 ),
           }
+          if (data.changes?.updateType === 'createActivity') {
+            updateProject.activityCreated = res.id
+          }
           return updateProject
         }),
         catchError((err) =>

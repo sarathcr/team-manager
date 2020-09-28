@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { RouterTestingModule } from '@angular/router/testing'
 import { TranslateModule } from '@ngx-translate/core'
-import { BehaviorSubject, Observable } from 'rxjs'
 
 import { ProjectOutputService } from './../../services/output/project-output.service'
 
@@ -25,6 +24,10 @@ describe('OutputViewComponent', () => {
     fixture = TestBed.createComponent(OutputViewComponent)
     component = fixture.componentInstance
     // fixture.detectChanges()
+  })
+
+  afterEach((): void => {
+    fixture.destroy()
   })
 
   it('should create', () => {

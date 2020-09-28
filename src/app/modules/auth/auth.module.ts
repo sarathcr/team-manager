@@ -18,7 +18,11 @@ import { ResetPasswordComponent } from './containers/reset-password/reset-passwo
 import { SharedModule } from 'src/app/shared/shared.module'
 
 import { AuthService } from 'src/app/modules/auth/services/auth.service'
+import { UserService } from 'src/app/modules/auth/services/user/user.service'
+
 import { AuthGuard } from './guards/auth.guard'
+
+import { ProjectEditorStoreModule } from '../project-editor/store/project-editor-store.module'
 import { AuthStoreModule } from './store/auth-store.module'
 
 @NgModule({
@@ -39,13 +43,14 @@ import { AuthStoreModule } from './store/auth-store.module'
     TranslateModule.forChild(),
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducers),
     AuthStoreModule,
+    ProjectEditorStoreModule,
   ],
 })
 export class AuthModule {
   static forRoot(): ModuleWithProviders<AuthModule> {
     return {
       ngModule: AuthModule,
-      providers: [AuthGuard, AuthService],
+      providers: [AuthGuard, AuthService, UserService],
     }
   }
 }

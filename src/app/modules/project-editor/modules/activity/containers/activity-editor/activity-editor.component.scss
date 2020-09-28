@@ -13,7 +13,7 @@
     width: 100%;
     left: 0;
     top: 0;
-    z-index: 10000;
+    z-index: 9;
     @extend %contextual-help-placeholder;
   }
   &__body {
@@ -34,6 +34,7 @@
 
   &__contextual-help {
     right: 0;
+    z-index: 9;
   }
   &_open {
     ::ng-deep {

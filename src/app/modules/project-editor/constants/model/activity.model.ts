@@ -20,8 +20,10 @@ export class Activity {
   activityImageUrl?: string
   modality?: string
   contents?: Contents[]
+  customcontents?: Contents[]
   objectives?: any[]
   standards?: Standard[]
+  customStandards?: Standard[]
   studentGroups?: StudentGroup[]
   subjects?: Subject[]
   customTeachingStrategies?: CustomTeachingStrategy[]
@@ -47,7 +49,7 @@ export class Exercise {
   deliveryDate?: string
   evaluation?: boolean
   referenceMaterials?: ReferenceMaterials[]
-  evaluationStrategies?: EvaluationStrategy
+  evaluationStrategies?: EvaluationStrategy[]
   percentage?: number
   statement?: string
   updateType?: string
@@ -62,16 +64,14 @@ export class ReferenceMaterials {
   title: string
   url: string
   visible: boolean
+  entityType?: entityType
 }
+
 export class EvaluationStrategy {
   agent: AgentType
   id: number
-  instruments: Instrument
-  name: string
-}
-export class Instrument {
-  id: number
-  name: string
+  instrument: ReferenceMaterials
+  name?: string
 }
 export class StatusMaterial extends ReferenceMaterials {
   status: 'default' | 'loading' | 'success' | 'failed'
@@ -90,8 +90,12 @@ export type FileType =
   | 'PRESENTATION'
   | 'DOCUMENT'
   | 'WEB'
-  | 'FORMULA'
-  | 'TABLES'
+  | 'FORM'
+  | 'SHEET'
+  | 'RUBRICA'
+  | 'CHECKLIST'
+  | 'DIANA'
+  | 'INSTRUMENTUPLOAD'
 export type SourceType = 'GOOGLEDRIVE' | 'LOCALDRIVE' | 'WEB'
 export type UpdateType = 'clone' | 'update' | 'delete'
 export type AgentType =
@@ -99,3 +103,5 @@ export type AgentType =
   | 'HETETOEVALUATION'
   | 'COEVALUATION'
   | 'SELFEVALUATION'
+
+export type entityType = 'activity' | 'exercise' | 'instrument'

@@ -1,9 +1,9 @@
-import { FilterComponent } from './filter.component'
-import markDown from './filter.stories.md'
-import { moduleMetadata, storiesOf } from '@storybook/angular'
-import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
 import { TranslateModule } from '@ngx-translate/core'
 import { withKnobs } from '@storybook/addon-knobs/angular'
+import { moduleMetadata, storiesOf } from '@storybook/angular'
+import { StorybookTranslateModule } from '../../utility/storybook-translate.module'
+import { FilterComponent } from './filter.component'
+import markDown from './filter.stories.md'
 
 storiesOf('Shared|Filter', module)
   .addDecorator(

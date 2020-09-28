@@ -23,13 +23,14 @@
       }"
       *ngIf="label"
       >{{ label | translate | TranslateOptions: 0 }}
-      <span class="textarea__label_optional"
-        >{{ label | translate | TranslateOptions: 1 }}
+      <span class="textarea__label_optional" *ngIf="optionalLabel"
+        >({{ label | translate | TranslateOptions: 1 }})
       </span>
     </label>
 
     <textarea
       class="textarea__description"
+      id="textarea"
       [attr.maxlength]="maxLength"
       [placeholder]="focus ? '' : placeholder"
       background="background"

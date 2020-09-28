@@ -1,3 +1,5 @@
+import { GoogleCardVariant } from '../constants/model/google-card.model'
+
 const videoFormats = [
   'mp4',
   'mov',
@@ -137,4 +139,18 @@ export const getFileType = (type: string): Promise<string> => {
     }
     resolve(returnType)
   })
+}
+
+export function getDriveMimeFileType(type: GoogleCardVariant): string {
+  if (type === 'PRESENTATION') {
+    return 'application/vnd.google-apps.presentation'
+  } else if (type === 'DOCUMENT') {
+    return 'application/vnd.google-apps.document'
+  } else if (type === 'WEB') {
+    return 'application/vnd.google-apps.site'
+  } else if (type === 'FORM') {
+    return 'application/vnd.google-apps.form'
+  } else if (type === 'SHEET') {
+    return 'application/vnd.google-apps.spreadsheet'
+  }
 }

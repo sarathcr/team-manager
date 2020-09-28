@@ -2,40 +2,51 @@
   <div
     class="card-header"
     [ngClass]="{
-      'card-header_slide': variant === 'SLIDE',
+      'card-header_slide': variant === 'PRESENTATION',
       'card-header_site': variant === 'WEB',
       'card-header_form': variant === 'FORM',
-      'card-header_doc': variant === 'DOC',
-      'card-header_sheet': variant === 'SHEET'
+      'card-header_doc': variant === 'DOCUMENT',
+      'card-header_sheet': variant === 'SHEET',
+      'card-header_rubrica': variant === 'RUBRICA',
+      'card-header_checklist': variant === 'CHECKLIST',
+      'card-header_diana': variant === 'DIANA'
     }"
   >
     <img
       class="card-header__image"
-      src="./assets/images/background-bg.svg"
+      src="./assets/images/background_small.svg"
       alt=""
     />
     <span
       class="icon card-header__icon"
       [ngClass]="{
-        'icon-ic_presentacion': variant === 'SLIDE',
+        'icon-ic_presentacion': variant === 'PRESENTATION',
         'icon-ic2': variant === 'WEB',
         'icon-ic_list_w': variant === 'FORM',
-        'icon-ic_doc2_w': variant === 'DOC',
-        'icon-group': variant === 'SHEET'
+        'icon-ic_doc2_w': variant === 'DOCUMENT',
+        'icon-group': variant === 'SHEET',
+        'icon-ic_rubrica': variant === 'RUBRICA',
+        'icon-ic_checklist': variant === 'CHECKLIST',
+        'icon-ic_diana': variant === 'DIANA'
       }"
     ></span>
   </div>
 
   <div class="card-body">
     <div class="card-body__title">
-      {{ title | translate }}
+      {{ cardTitle | translate }}
     </div>
-    <div class="card-body__subtitle">
-      {{ subtitle | translate }}
+    <div class="card-body__subtitle" *ngIf="!commingSoon">
+      {{ cardSubtitle | translate }}
     </div>
   </div>
-  <div class="card-footer" (click)="onClick()">
+  <div class="card-footer" (click)="onClick()" *ngIf="!commingSoon">
     <span class="card-footer__text">{{ 'GCARD.see' | translate }}</span>
     <span class="icon icon-ic_br_next card-footer__arrow"></span>
+  </div>
+  <div *ngIf="commingSoon">
+    <span class="card__comingsoon">
+      {{ ('GENERAL.platform_label_comingsoon' | translate).toUpperCase() }}
+    </span>
   </div>
 </div>

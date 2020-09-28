@@ -3,15 +3,12 @@
 
 .card-experience {
   background: color(quaternary);
-
   @include card-box-shadow;
-
-  min-height: 336px;
   border-radius: 4px;
   width: 100%;
   position: relative;
   cursor: pointer;
-
+  padding: 24px;
   &__figure {
     width: 100%;
     border-radius: 4px;
@@ -21,7 +18,7 @@
     &:after {
       display: block;
       content: '';
-      padding-bottom: 56.25%;
+      padding-bottom: 44.73%;
     }
   }
 
@@ -48,6 +45,7 @@
     line-height: 28px;
     font-weight: 900;
     letter-spacing: 0.2px;
+    min-height: 56px;
   }
 
   &__type {
@@ -98,7 +96,7 @@
 
   &__icon {
     font-size: font-size(s);
-    margin-right: 12px;
+    margin-right: 8px;
   }
 
   &__bottom-wrapper {

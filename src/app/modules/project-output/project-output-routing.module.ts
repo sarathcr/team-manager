@@ -13,6 +13,10 @@ const routes: Routes = [
         path: 'project/:id',
         component: OutputViewComponent,
       },
+      {
+        path: 'didactic-unit/:id',
+        component: OutputViewComponent,
+      },
     ],
   },
   { path: '**', redirectTo: '' },

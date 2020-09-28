@@ -31,11 +31,12 @@ export class StepSevenComponent implements OnInit, OnDestroy {
   initialFormStatus: Status = 'PENDING'
   subscriptions = new SubSink()
   isFormUpdated = false
-
+  localExperienceType: number
   constructor(private editor: EditorService) {}
 
   ngOnInit(): void {
     this.stepInIt()
+    this.localExperienceType = this.editor.getLocalExperienceType()
   }
 
   ngOnDestroy(): void {

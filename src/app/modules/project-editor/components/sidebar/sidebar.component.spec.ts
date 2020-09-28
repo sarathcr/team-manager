@@ -2,6 +2,7 @@ import { DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { RouterTestingModule } from '@angular/router/testing'
+import { TranslateModule } from '@ngx-translate/core'
 
 import { StepMenuComponent } from '../step-menu/step-menu.component'
 import { SidebarComponent } from './sidebar.component'
@@ -13,7 +14,7 @@ describe('SidebarComponent', (): void => {
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [SidebarComponent, StepMenuComponent],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
     })
 
     fixture = TestBed.createComponent(SidebarComponent)

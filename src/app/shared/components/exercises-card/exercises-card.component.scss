@@ -21,6 +21,14 @@
       opacity: 0.4;
       margin-right: 11px;
     }
+    &_draggable {
+      position: absolute;
+      left: -36px;
+      top: calc(50% - 12px);
+      font-size: font-size(xs);
+      color: color(background-secondary);
+      cursor: pointer;
+    }
   }
   &__subtitle {
     line-height: 14px;

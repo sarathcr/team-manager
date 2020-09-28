@@ -28,6 +28,14 @@ const routes: Routes = [
     component: RegisterComponent,
   },
   {
+    path: 'profile',
+    loadChildren: () =>
+      import('./modules/auth/modules/profile/profile.module').then(
+        (m) => m.ProfileModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'editor',
     loadChildren: () =>
       import('./modules/project-editor/project-editor.module').then(

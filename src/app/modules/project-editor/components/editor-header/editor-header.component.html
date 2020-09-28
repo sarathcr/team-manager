@@ -21,7 +21,9 @@
         <ul class="project-editor-header__menu-list">
           <li
             class="project-editor-header__menu-item"
-            [routerLink]="['/editor/project/' + projectData?.id + '/1']"
+            [routerLink]="[
+              '/editor/' + localExperience + '/' + projectData?.id + '/1'
+            ]"
             [ngClass]="getActiveRoute() === 'editor' ? 'active' : ''"
           >
             <span class="project-editor-header__menu-link">
@@ -31,7 +33,11 @@
           <li
             class="project-editor-header__menu-item"
             [routerLink]="[
-              '/editor/project/' + projectData?.id + '/activities'
+              '/editor/' +
+                localExperience +
+                '/' +
+                projectData?.id +
+                '/activities'
             ]"
             [ngClass]="getActiveRoute() === 'activities' ? 'active' : ''"
           >
@@ -42,7 +48,11 @@
           <li
             class="project-editor-header__menu-item"
             [routerLink]="[
-              '/editor/project/' + projectData?.id + '/evaluation'
+              '/editor/' +
+                localExperience +
+                '/' +
+                projectData?.id +
+                '/evaluation'
             ]"
             [ngClass]="getActiveRoute() === 'evaluation' ? 'active' : ''"
           >

@@ -1,5 +1,4 @@
 .title {
-
   &_l {
     font-family: font-family(primary);
     font-size: font-size(l);
@@ -31,6 +30,17 @@
     line-height: 36px;
     letter-spacing: 0.3px;
     font-weight: 700;
+  }
+
+  &_default {
+    font-family: font-family(secondary);
+    font-size: font-size(default);
+    color: color(blue-whale);
+    font-weight: 900;
+    opacity: 0.6;
+    letter-spacing: 1px;
+    line-height: 24px;
+    text-transform: uppercase;
   }
 
   &_primary {

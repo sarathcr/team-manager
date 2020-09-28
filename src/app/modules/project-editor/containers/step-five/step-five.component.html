@@ -45,6 +45,7 @@
               (deleteById)="openDeleteStandardConfirmationModal($event)"
               (add)="openModalWithComponent(i, $event)"
               [variant]="allSubjectshasCriterias ? 'add' : 'locked'"
+              [hideAddLine]="!hasStandards"
             >
             </app-details-selector>
             <app-editable-list

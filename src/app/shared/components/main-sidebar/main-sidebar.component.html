@@ -1,31 +1,3 @@
-<div class="main-sidebar d-flex justify-content-between flex-column px-6 py-7">
-  <div>
-    <div
-      class="main-sidebar__item mb-3"
-      [routerLink]="['/editor/projects/inspirate']"
-      [routerLinkActive]="['main-sidebar__item_active']"
-    >
-      <span class="icon-ic_experiencias-creadas main-sidebar__icon"></span>
-      <span>{{
-        'PRIVATEHOME_GENERAL.home_menu_section_getinspired' | translate
-      }}</span>
-    </div>
-    <div
-      class="main-sidebar__item"
-      [routerLink]="['/editor/projects']"
-      [routerLinkActive]="['main-sidebar__item_active']"
-      [routerLinkActiveOptions]="{exact: true}"
-    >
-      <span class="icon-ic_experiencias-notification main-sidebar__icon"
-        ><span class="path1"></span><span class="path2"></span
-      ></span>
-      <span>{{
-        'PRIVATEHOME_GENERAL.home_menu_section_yourexperiences' | translate
-      }}</span>
-    </div>
-  </div>
-  <div class="main-sidebar__help d-flex align-items-center">
-    <span class="icon-ic_ayuda main-sidebar__icon"></span>
-    <span>{{ 'PRIVATEHOME_GENERAL.home_menu_section_help' | translate }}</span>
-  </div>
+<div class="main-sidebar px-6 py-7">
+  <ng-content></ng-content>
 </div>

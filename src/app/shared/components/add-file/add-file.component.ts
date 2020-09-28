@@ -6,7 +6,10 @@ import {
   Output,
 } from '@angular/core'
 
-import { LinkContent } from 'src/app/modules/project-editor/constants/model/activity.model'
+import {
+  entityType,
+  LinkContent,
+} from 'src/app/modules/project-editor/constants/model/activity.model'
 
 import { AwsImgUploadService } from '../../services/aws-img-upload/aws-img-upload.service'
 import { getFileType } from '../../utility/file.utility'
@@ -19,7 +22,7 @@ import { SubSink } from '../../utility/subsink.utility'
 })
 export class AddFileComponent implements OnDestroy {
   @Input() acceptedType = '*'
-
+  @Input() entityType: entityType
   @Output() delete: EventEmitter<any> = new EventEmitter()
   @Output() add: EventEmitter<any> = new EventEmitter()
 
@@ -32,26 +35,28 @@ export class AddFileComponent implements OnDestroy {
   nameFile = ''
   typeFile = ''
   disableSubmit = true
+  thumbnail = ''
 
   linkContent: LinkContent
 
   constructor(private aws: AwsImgUploadService) {}
 
   ngOnDestroy(): void {
+    this.clearData()
     this.subscriptions.unsubscribe()
   }
 
-  onDelete(): void {
+  clearData(): void {
     this.nameFile = ''
     this.addedFile = false
     this.disableSubmit = true
     this.file = null
+    this.thumbnail = ''
     this.delete.emit()
   }
 
   onAdd(): void {
     if (this.addedFile) {
-      this.add.emit()
       const title = this.linkContent.title.split('.')
       getFileType(title[title.length - 1]).then((fileType) => {
         if (fileType) {
@@ -113,6 +118,9 @@ export class AddFileComponent implements OnDestroy {
                       this.handleServerError(err)
                     }
                   )
+                if (this.file.type.includes('image')) {
+                  this.thumbnail = data.publicURL
+                }
               }
             },
             (err) => {

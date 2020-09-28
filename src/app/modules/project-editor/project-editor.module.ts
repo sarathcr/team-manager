@@ -27,13 +27,13 @@ import { StepFourComponent } from './containers/step-four/step-four.component'
 import { StepNineComponent } from './containers/step-nine/step-nine.component'
 import { StepOneComponent } from './containers/step-one/step-one.component'
 import { StepSevenComponent } from './containers/step-seven/step-seven.component'
+import { StepSixDidacticUnitComponent } from './containers/step-six-didactic-unit/step-six-didactic-unit.component'
 import { StepSixComponent } from './containers/step-six/step-six.component'
 import { StepThreeComponent } from './containers/step-three/step-three.component'
 import { StepTwoComponent } from './containers/step-two/step-two.component'
 import { StepsComponent } from './containers/steps/steps.component'
 import { ContextualHelpModule } from './modules/contextual-help/contextual-help.module'
 import { EvaluationModule } from './modules/evaluation/evaluation.module'
-import { CheckCount } from './pipes/check-count.pipe'
 import { FilterBySubjectId } from './pipes/filter-by-subject.pipe'
 import { ProjectEditorRoutingModule } from './project-editor-routing.module'
 import { ProjectEditorComponent } from './project-editor.component'
@@ -63,7 +63,6 @@ import { ProjectEditorStoreModule } from './store/project-editor-store.module'
     EditorHeaderComponent,
     ProjectTitleComponent,
     ProjectEditorComponent,
-    CheckCount,
     FilterBySubjectId,
     PrincipalViewComponent,
     ModalStandardsComponent,
@@ -71,6 +70,7 @@ import { ProjectEditorStoreModule } from './store/project-editor-store.module'
     SecondaryViewComponent,
     ExperiencesComponent,
     InspirationsComponent,
+    StepSixDidacticUnitComponent,
   ],
   imports: [
     CommonModule,

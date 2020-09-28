@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   TemplateRef,
   ViewChild,
@@ -10,13 +11,14 @@ import { Router } from '@angular/router'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { Labels } from 'src/app/shared/constants/model/editor-header.model'
 import { ProjectTitle } from '../../constants/model/project.model'
+import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
   selector: 'app-editor-header',
   templateUrl: './editor-header.component.html',
   styleUrls: ['./editor-header.component.scss'],
 })
-export class EditorHeaderComponent {
+export class EditorHeaderComponent implements OnInit {
   @Input() projectData: ProjectTitle
   @Input() stepOneStatus
   @Input() labels: Labels = {
@@ -27,9 +29,18 @@ export class EditorHeaderComponent {
   }
   @Output() titleSubmit = new EventEmitter()
   modalRef: BsModalRef
+  localExperience: string
   @ViewChild('modalUnlock') modalUnlock: TemplateRef<any>
 
-  constructor(private router: Router, private modalService: BsModalService) {}
+  constructor(
+    private router: Router,
+    private modalService: BsModalService,
+    private editor: EditorService
+  ) {}
+
+  ngOnInit(): void {
+    this.localExperience = this.editor.getExperienceUrl()
+  }
 
   handleTitleSubmit(event: Event): void {
     this.titleSubmit.emit(event)
@@ -39,7 +50,7 @@ export class EditorHeaderComponent {
     if (this.stepOneStatus === 'DONE') {
       event.currentTarget.querySelector('button').blur()
       this.router.navigate([]).then((result) => {
-        window.open('/output/project/' + id, '_blank')
+        window.open('/output/' + this.localExperience + '/' + id, '_blank')
       })
     } else {
       this.modalRef = this.modalService.show(this.modalUnlock, {

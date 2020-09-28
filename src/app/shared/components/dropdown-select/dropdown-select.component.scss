@@ -10,11 +10,11 @@
     .dropdown-btn {
       border: none !important;
       position: relative;
-      padding: 6px 20px 6px 9px !important;
+      padding: 6px spacing(secondary) 6px 9px !important;
 
       > .dropdown__control {
-        padding: 0 50px 0 0 !important;
-        display: block;
+        padding: 0 spacing(secondary) 0 0 !important;
+        height: 20px;
         span:not(.dropdown-up):not(.dropdown-down) {
           padding-right: 0px !important;
           &::before {
@@ -28,17 +28,34 @@
         span.dropdown-down {
           &::before {
             content: '\e903';
-            display: block;
-            width: 14px;
-            height: 14px;
+            display: flex;
             position: absolute;
-            top: 0;
-            left: -3px;
+            left: 0;
+            width: 20px;
+            height: 14px;
+            transition: transform 0.3s ease;
             line-height: 0.7;
             text-align: center;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            justify-content: center;
+            align-items: center;
           }
+
           &::after {
             content: none;
+          }
+        }
+        span.dropdown-down {
+          &::before {
+            transform: rotate(0);
+          }
+        }
+        span.dropdown-up {
+          &::before {
+            transform: rotate(180deg) !important;
           }
         }
       }
@@ -47,23 +64,22 @@
       .dropdown-down {
         border: none !important;
         font-family: font-family(icons);
-        font-size: 20px;
-        font-weight: bold;
+        font-size: font-size(s);
+        font-weight: normal;
         color: color(tertiary);
-        width: 14px !important;
-        height: 14px !important;
-        top: 50% !important;
+        width: 24px !important;
+        height: 24px !important;
         position: absolute;
-        transform: translateY(-50%);
-        right: 0px;
-        transition: transform 0.3s ease;
+        transition: all ease 0.3s;
+        left: 0;
+        right: 0;
+        top: 0 !important;
+        bottom: 0;
+        margin: auto;
       }
-
-      .dropdown-up {
-        transform: rotate(180deg) translateY(50%);
-        transform-origin: center;
+      .dropdown-down {
+        transform: rotate(0);
       }
-
       .selected-list {
         .selected-item {
           border: none !important;

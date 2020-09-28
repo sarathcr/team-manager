@@ -50,6 +50,7 @@ export interface Curriculum {
   valid?: boolean
   id: number
   name?: string
+  showBasicskill?: boolean
 }
 
 interface Content extends Option {

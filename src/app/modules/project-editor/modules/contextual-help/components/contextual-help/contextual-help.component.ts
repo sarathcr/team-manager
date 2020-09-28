@@ -1,8 +1,8 @@
 import {
   Component,
   EventEmitter,
-  Input,
   OnDestroy,
+  OnInit,
   Output,
   ViewEncapsulation,
 } from '@angular/core'
@@ -20,15 +20,15 @@ import { HelpEntityService } from '../../store/entity/help/help-entity.service'
   styleUrls: ['./contextual-help.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ContextualHelpComponent implements OnDestroy {
+export class ContextualHelpComponent implements OnInit, OnDestroy {
   @Output() status = new EventEmitter<boolean>()
   help: Help[]
   contextualHelp$: Observable<ContextualHelp>
   subscription = new SubSink()
-  closeContext = false
+  closeContext = true
   activeTab: any
   loaded = false
-  isSetOne = false // WIP contextual help testing
+  activetab = true
 
   constructor(
     public editorService: EditorService,
@@ -39,18 +39,23 @@ export class ContextualHelpComponent implements OnDestroy {
     this.subscription.unsubscribe()
   }
 
+  ngOnInit(): void {
+    this.getHelpContent()
+  }
+
   // Close tab
   closeTab(): void {
     this.closeContext = false
     this.status.emit(false)
     setTimeout(() => {
-      this.activeTab.active = false
+      // this.activeTab.active = false
+      this.activetab = false
     }, 500)
   }
 
   // Open tab
   openTab($event: any): void {
-    this.activeTab = $event
+    this.activetab = true
     this.status.emit(true)
     if (!this.closeContext) {
       this.closeContext = true
@@ -73,7 +78,6 @@ export class ContextualHelpComponent implements OnDestroy {
     this.contextualHelp$ = this.helpService.entities$.pipe(
       map((help) =>
         help.find((step) => {
-          this.isSetOne = stepid % 2 ? true : false
           return step.stepid === Number(stepid)
         })
       )

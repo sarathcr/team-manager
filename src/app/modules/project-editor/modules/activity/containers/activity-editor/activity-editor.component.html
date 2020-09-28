@@ -4,7 +4,7 @@
 >
   <div class="activity-editor__header" #header (window:resize)="onResize()">
     <app-activity-editor-header
-      [title]="activity.name"
+      [title]="activity?.name"
       [currentlyActive]="pageType"
       class="activity-editor__header-wrap"
       [projectId]="projectId"

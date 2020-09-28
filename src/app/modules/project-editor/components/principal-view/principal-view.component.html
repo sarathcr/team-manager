@@ -43,6 +43,7 @@
             serviceData.getBlocks($event.val[0]); changeCurrentBlock(0)
           "
           [canDeselect]="false"
+          id="principle-modal-courses-dropdown"
         ></app-select>
         <ng-scrollbar class="custom-scrollbar">
           <div class="principal-modal__body-scroll">
@@ -60,6 +61,7 @@
                 class="custom-tab__links"
                 [ngClass]="{ active: this.currentBlockIndex === index }"
                 (click)="changeCurrentBlock(index)"
+                id="custom-links-principle-view-{{ index }}"
               >
                 <strong class="custom-tab__links-index"
                   >{{ index + 1 }}.
@@ -162,6 +164,7 @@
           !(blockData | checkCount: serviceData.modalColumns?.colOneHead?.key)
         "
         (click)="handleButtonClick()"
+        id="principle-modal-add-button"
       >
         {{ labels.addButtonText | translate }}
       </app-button>

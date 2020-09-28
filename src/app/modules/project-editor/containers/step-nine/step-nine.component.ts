@@ -28,11 +28,12 @@ export class StepNineComponent implements OnInit, OnDestroy {
   buttonConfig = new StepButtonSubmitConfig()
   subscriptions = new SubSink()
   isFormUpdated = false
-
+  localExperienceType: number
   constructor(public editor: EditorService) {}
 
   ngOnInit(): void {
     this.stepInIt()
+    this.localExperienceType = this.editor.getLocalExperienceType()
   }
 
   ngOnDestroy(): void {

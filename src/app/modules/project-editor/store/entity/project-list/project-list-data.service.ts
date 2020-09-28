@@ -18,14 +18,14 @@ export class ProjectListDataService extends DefaultDataService<ProjectList> {
   }
 
   getWithQuery(query: string): Observable<ProjectList[] | any> {
-    const querys = query.split('/')
+    const pageSize = 6
     return this.http
       .get<ProjectList[]>(
-        `${environment.apiUrl.projectService}/projects/${query}`
+        `${environment.apiUrl.projectService}/projects${query}`
       )
       .pipe(
         map((res) => {
-          const updatedRes = [{ ...res, pageId: query, pageSize: +querys[1] }]
+          const updatedRes = [{ ...res, pageId: query, pageSize }]
           return updatedRes
         }),
         catchError((err) =>

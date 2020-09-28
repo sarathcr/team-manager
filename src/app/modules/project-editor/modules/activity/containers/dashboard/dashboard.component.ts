@@ -7,6 +7,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { Observable } from 'rxjs'
 import { SubSink } from '../../../../../../shared/utility/subsink.utility'
@@ -46,6 +47,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   action: string
   step$: Observable<Step>
   dropdownData: any
+  localExperienceType: number
 
   @ViewChild('modalDelete') deleteModal: TemplateRef<any>
   @ViewChild('modalUpdate') updateModal: TemplateRef<any>
@@ -56,13 +58,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     private dashboardService: DashboardService,
     private renderer: Renderer2,
-    private pickerService: PickerService
+    private pickerService: PickerService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.renderer.addClass(document.body, 'page-background')
     this.dashboardService.initTranslations()
     this.initActivitiesData()
+    this.localExperienceType = this.editor.getLocalExperienceType()
   }
 
   ngOnDestroy(): void {
@@ -204,6 +208,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.bsModalRef = this.modalService.show(this.updateModal, {
       class: 'modal-form  modal-dialog-centered',
     })
+    this.subscriptions.sink = this.translate
+      .stream([
+        'ACTIVITIES.activities_card_duration_project_title',
+        'VARIABLES.experience_type_variable_2',
+      ])
+      .subscribe((translations) => {
+        this.modalFormData.title =
+          translations['ACTIVITIES.activities_card_duration_project_title'] +
+          translations['VARIABLES.experience_type_variable_2'].split('|')[
+            this.localExperienceType
+          ]
+      })
   }
 
   openPicker(): void {

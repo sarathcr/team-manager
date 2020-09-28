@@ -18,6 +18,8 @@ A convenience directive for applying styling for Private home header component.
 <app-main-header
 [buttontext]="buttontext"
 [imgUrl]="imgUrl"
+[back]="back"
+[title]="title"
 ></app-main-header>
 ```
 

@@ -8,8 +8,18 @@
       <div
         class="counter__helper-text"
         *ngIf="value.length === 0 && helperText"
+        [ngClass]="{
+          'counter__helper-text_multiple':
+            helperText | translate | TranslateCut: 1
+        }"
       >
-        {{ helperText | translate }}
+        {{ helperText | translate | TranslateCut: 0 }}
+      </div>
+      <div
+        class="counter__helper-text counter__helper-text_multiple"
+        *ngIf="value.length === 0 && (helperText | translate | TranslateCut: 1)"
+      >
+        {{ helperText | translate | TranslateCut: 1 }}
       </div>
       <div
         class="counter__helper-text"

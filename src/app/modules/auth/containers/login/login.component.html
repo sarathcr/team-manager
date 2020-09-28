@@ -27,6 +27,8 @@
                 [error]="invalid"
                 [enableValidator]="enableValidator"
                 (inputChange)="setValid()"
+                validatorVariant="text"
+                id="login-email-input"
               ></app-input>
             </div>
             <div class="login__input-wrapper mb-7">
@@ -42,6 +44,8 @@
                 errorText="LOGIN.Error_login_password"
                 [error]="invalid"
                 (inputChange)="setValid()"
+                validatorVariant="text"
+                id="login-password-input"
               ></app-input>
             </div>
             <div
@@ -61,6 +65,7 @@
                 [theme]="'primary'"
                 [variant]="'block'"
                 [loading]="buttonLoading"
+                id="login-submit-button"
               >
                 {{ 'LOGIN.login_button-primary_login' | translate }}
               </app-button>
@@ -70,6 +75,7 @@
                 [theme]="'secondary'"
                 [variant]="'block'"
                 (click)="googleLogin()"
+                id="login-google-submit-button"
               >
                 <span class="icon icon-ic_google">
                   <span class="path1"></span>
