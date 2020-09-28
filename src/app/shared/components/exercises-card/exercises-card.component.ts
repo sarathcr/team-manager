@@ -5,7 +5,10 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core'
-import { ReferenceMaterials } from 'src/app/modules/project-editor/constants/model/activity.model'
+import {
+  entityType,
+  ReferenceMaterials,
+} from 'src/app/modules/project-editor/constants/model/activity.model'
 import { MaterialCard } from 'src/app/shared/constants/model/exercises-card.model'
 
 @Component({
@@ -19,6 +22,7 @@ export class ExercisesCardComponent {
   @Input() subtitle: string
   @Input() subtitleKey = 'EXERCISES_CARD.exercises_card_subtitle_key'
   @Input() subtitleValue: string
+  @Input() entityType: entityType
   @Input() description: string
   @Input() materials: ReferenceMaterials[]
   @Input() texts: MaterialCard = {

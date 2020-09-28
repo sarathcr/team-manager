@@ -1,0 +1,79 @@
+@import 'variables/_variables-master';
+.profile {
+  display: flex;
+  position: relative;
+  min-height: 100vh;
+  padding: grid-gutter(primary) * 2 0;
+  &__layout {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    &__mask {
+      position: absolute;
+      &_top-left {
+        width: 508px;
+        left: 117px;
+      }
+      &_top-right {
+        width: 566px;
+        right: 0;
+      }
+      &_logo {
+        top: 45px;
+        right: 60px;
+      }
+      &_bottom {
+        width: 231px;
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
+  &__form {
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 590px;
+    margin-left: 456px;
+    padding-right: spacing(secondary) * 2;
+  }
+  &__step {
+    max-width: 536px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 636px;
+  }
+  &__submit {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    &-button {
+      align-self: center;
+    }
+  }
+  ::ng-deep {
+    .profile__back-button {
+      margin: auto 0;
+      .btn.btn_back .btn__icon {
+        margin-left: 0;
+        margin-right: 2px;
+      }
+      .btn .btn__content {
+        margin-bottom: 0;
+      }
+    }
+  }
+  &__confirm {
+    &-button {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

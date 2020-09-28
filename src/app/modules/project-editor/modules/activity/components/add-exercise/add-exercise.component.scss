@@ -1,8 +1,6 @@
 @import 'variables/_variables-master';
 :host {
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 .helper-text {
   font-size: font-size(body-s);
@@ -13,8 +11,26 @@
   display: flex;
 }
 .excercise-modal {
-  padding-top: 35px;
-  padding-bottom: spacing(primary) * 2;
+  padding-top: grid-gutter(primary);
+  height: 600px;
+  position: relative;
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 40px;
+    width: 100%;
+    background: linear-gradient(
+      180deg,
+      color(quaternary) 0%,
+      rgba(color(tertiary), 0) 100%
+    );
+    pointer-events: none;
+    z-index: 9;
+  }
   &__column {
     &:first-child {
       padding-right: spacing(primary) * 4;
@@ -25,5 +41,57 @@
   }
   &__field {
     margin-bottom: spacing(secondary) * 2;
+  }
+  &__scroll-wrapper {
+    height: 100%;
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+  &__wrapper {
+    height: 100%;
+    margin-right: -60px;
+    margin-left: -60px;
+    ::ng-deep {
+      .add-material__wrapper {
+        padding-right: 60px;
+        padding-left: 60px;
+      }
+      .modal-layout__header {
+        padding: 0 60px;
+      }
+      .modal-layout__footer {
+        padding-right: 60px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  &__btn-wrapper {
+    margin-right: -15px;
+  }
+  &__material-wrapper:not(:last-child) {
+    margin-bottom: spacing(secondary);
+  }
+  &__instrumento {
+    border-bottom: 1px solid rgba(color(tertiary), 0.1);
+  }
+  &__delete-wrapper {
+    right: 0;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    height: 30px;
+    width: 30px;
+    background: rgba(color(tertiary), 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  &__delete-icon {
+    opacity: 0.4;
+  }
+  &--open {
+    width: 90%;
   }
 }

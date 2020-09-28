@@ -37,13 +37,25 @@ export class TextareaComponent implements OnInit, OnDestroy {
   @Input() initFocus = false
   @Input() lineLimit = 0
   @Input() value$: Observable<any>
-  @Input() value: string
+  @Input()
+  get value(): string {
+    return this.val
+  }
+  set value(val: string) {
+    // this value is updated by programmatic changes if( val !== undefined && this.val !== val){
+    this.val = val
+    this.onChange(val)
+    this.onTouch(val)
+  }
   @Input() enableValidator = false
   @Input() customClass: string
+  @Input() optionalLabel = false
+  @Input() isForm = false
   @Output() inputChange = new EventEmitter()
   @Output() textareaFocus = new EventEmitter()
   @Output() textareaFocusOut = new EventEmitter()
   @ViewChild('textarea') textArea: ElementRef
+  val = ''
   focus = false
   initialValue: string
   updated = false
@@ -227,6 +239,23 @@ export class TextareaComponent implements OnInit, OnDestroy {
     if (this.updated) {
       this.textareaFocusOut.emit($event)
       this.updated = false
+    }
+  }
+
+  onChange(_: any): void {}
+
+  onTouch(_: any): void {}
+
+  writeValue(_: any): void {}
+
+  registerOnChange(fn: any): void {
+    if (this.isForm) {
+      this.onChange = fn
+    }
+  }
+  registerOnTouched(fn: any): void {
+    if (this.isForm) {
+      this.onTouch = fn
     }
   }
 }

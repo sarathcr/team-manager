@@ -1,14 +1,12 @@
 import { EntityMetadataMap } from '@ngrx/data'
 
 import {
-  compareProjects,
   CurriculumAcademicYear,
   ProjectList,
 } from '../../constants/model/project.model'
 
 export const entityMetadata: EntityMetadataMap = {
   Project: {
-    sortComparer: compareProjects,
     entityDispatcherOptions: {
       optimisticUpdate: true,
     },
@@ -97,6 +95,11 @@ export const entityMetadata: EntityMetadataMap = {
     },
   },
   StudentGroups: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true,
+    },
+  },
+  DriveFile: {
     entityDispatcherOptions: {
       optimisticUpdate: true,
     },

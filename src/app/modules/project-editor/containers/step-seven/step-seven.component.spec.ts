@@ -1,5 +1,6 @@
 import { DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { FormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { Router } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
@@ -88,7 +89,7 @@ describe('StepSevenComponent', () => {
         { provide: Router, useClass: RouterStub },
         { provide: BsModalService, useClass: BsModalServiceStub },
       ],
-      imports: [TranslateModule.forRoot()],
+      imports: [TranslateModule.forRoot(), FormsModule],
     })
 
     editor = TestBed.inject(EditorService)

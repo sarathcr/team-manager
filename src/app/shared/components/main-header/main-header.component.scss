@@ -42,10 +42,12 @@
   }
   &__icon {
     font-size: font-size(s);
-    margin-top: 2px;
     &_default {
       color: rgba(color(tertiary), 0.2);
       font-size: font-size(mob-l);
+    }
+    &_dropdown {
+      margin-top: 2px;
     }
   }
   &__dropdown {
@@ -75,5 +77,8 @@
       border-bottom: 5px solid color(quaternary);
       @include dropdown-box-shadow();
     }
+  }
+  &__right-section {
+    margin-right: -7px;
   }
 }

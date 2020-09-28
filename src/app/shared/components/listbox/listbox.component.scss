@@ -1,0 +1,71 @@
+@import 'variables/_variables-master';
+
+.listbox {
+  border: 1px solid rgba(color(tertiary), 0.15);
+  border-radius: 4px;
+  position: relative;
+  &__header {
+    width: 100%;
+    padding: 10px 18px;
+    border-bottom: 1px solid rgba(color(tertiary), 0.1);
+    background: rgba(color(tertiary), 0.05);
+    min-height: 48px;
+  }
+  &__heading {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 24px;
+  }
+  &__scroll-content {
+    height: 100%;
+    overflow: auto;
+  }
+  &__box {
+    height: 222px;
+    &-data {
+      padding: 10px 20px;
+      position: relative;
+      &_light {
+        color: rgba(color(tertiary), 0.6);
+      }
+    }
+    &-data_bg {
+      background-color: rgba(color(primary), 0.1);
+    }
+    &-error {
+      padding: 10px 20px;
+      font-family: font-family(tertiary);
+      color: color(quinary);
+      font-size: 14px;
+    }
+  }
+  &__loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  &__label {
+    &-content {
+      padding-left: 10px;
+    }
+    &-title {
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 0;
+      line-height: 24px;
+    }
+  }
+}
+
+input[type='checkbox']:checked + div {
+  &:before {
+    background-color: color(primary) !important;
+    box-shadow: 0px 0px 0px 1px color(primary);
+  }
+}

@@ -1,11 +1,15 @@
 @import 'variables/_variables-master';
+:host {
+  width: 100%;
+}
 .search {
   width: 322px;
   position: relative;
+  height: 40px;
   &__input {
-    width: 100%;
-    height: 40px;
     padding: 0 35px;
+    height: 100%;
+    width: 100%;
     border-radius: 4px;
     border: 1px solid rgba(color(tertiary), 0.1);
   }
@@ -16,5 +20,58 @@
     opacity: 0.4;
     transform: translateY(-50%);
     font-size: font-size(s);
+    &_tick::before {
+      color: color(secondary);
+      cursor: default;
+    }
+    &_close::before {
+      color: color(quinary);
+      cursor: default;
+    }
   }
+  &__valid {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    &_check {
+      &::before {
+        color: color(secondary);
+      }
+    }
+    &_error {
+      &::before {
+        color: color(quinary);
+      }
+    }
+  }
+  &_focus {
+    border: 1px solid color(primary) !important;
+    box-shadow: inset 0 0 0 1px color(primary) !important;
+  }
+  &_error {
+    border: 1px solid color(quinary) !important;
+    box-shadow: inset 0 0 0 1px color(quinary) !important;
+  }
+  &__errortext {
+    padding-left: 16px;
+    font-family: font-family(tertiary);
+    color: color(quinary);
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 24px;
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
 }

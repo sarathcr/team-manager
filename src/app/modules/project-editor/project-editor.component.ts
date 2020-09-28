@@ -4,6 +4,7 @@ import { ProjectEditorToastService } from './services/project-editor-toast/proje
 
 import { ActivatedRoute } from '@angular/router'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
+import { Type } from './constants/model/project.model'
 import { EditorService } from './services/editor/editor.service'
 
 @Component({
@@ -15,6 +16,7 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
   subscription = new SubSink()
   errors = []
   projectId: string | number
+
   constructor(
     public projectEditorToastService: ProjectEditorToastService,
     public editor: EditorService,
@@ -24,8 +26,8 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.errorToast()
     this.projectId = this.route.firstChild.snapshot.paramMap.get('id')
-    this.editor.createSteps()
-    this.editor.getProject(this.projectId)
+    this.editor.createSteps(this.getExperienceType())
+    this.editor.getProject(this.projectId, this.getExperienceType())
   }
 
   ngOnDestroy(): void {
@@ -39,5 +41,17 @@ export class ProjectEditorComponent implements OnInit, OnDestroy {
         this.errors.push(error)
       }
     )
+  }
+  getExperienceType(): Type {
+    return this.route.firstChild.snapshot.routeConfig.path.split(`/`)[0] ===
+      'project'
+      ? 'PROJECT'
+      : this.route.firstChild.snapshot.routeConfig.path.split(`/`)[0] ===
+        'didactic-unit'
+      ? 'DIDACTIC_UNIT'
+      : this.route.firstChild.snapshot.routeConfig.path.split(`/`)[0] ===
+        'activity'
+      ? 'ACTIVITY'
+      : null
   }
 }

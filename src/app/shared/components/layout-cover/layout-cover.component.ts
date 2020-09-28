@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core'
+import { LayoutVariant } from '../../constants/model/layout.model'
 
 @Component({
   selector: 'app-layout-cover',
@@ -7,5 +8,6 @@ import { Component, Input } from '@angular/core'
 })
 export class LayoutCoverComponent {
   @Input() img: string
+  @Input() variant: LayoutVariant = 'auth'
   constructor() {}
 }

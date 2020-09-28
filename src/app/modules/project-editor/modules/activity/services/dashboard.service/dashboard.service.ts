@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
+import { EditorService } from 'src/app/modules/project-editor/services/editor/editor.service'
 import { SubSink } from '../../../../../../shared/utility/subsink.utility'
 import { Activity } from '../../../../constants/model/activity.model'
 import { Project } from '../../../../constants/model/project.model'
@@ -13,7 +14,10 @@ export class DashboardService {
   translations: string[]
   subscriptions = new SubSink()
 
-  constructor(private translate: TranslateService) {}
+  constructor(
+    private translate: TranslateService,
+    private editor: EditorService
+  ) {}
 
   initDraggableRows(activities: Activity[], projectId: number): DraggableRow[] {
     if (!activities) {
@@ -40,6 +44,7 @@ export class DashboardService {
     ]
 
     for (const activity of activities) {
+      const experienceType = this.editor.getExperienceUrl()
       const columnOne = { text: activity.name }
       const columnTwo = {
         text:
@@ -98,7 +103,7 @@ export class DashboardService {
       }
       const draggableRow: DraggableRow = {
         id: activity.id,
-        url: '/editor/project/' + projectId + '/activity',
+        url: `/editor/${experienceType}/${projectId}/activity`,
         dropdownElements: dropdownData,
         columnOne,
         columnTwo,
@@ -259,7 +264,6 @@ export class DashboardService {
         'ACTIVITIES.activities_title_objectives',
         'ACTIVITIES.activities_title_califications',
         'ACTIVITIES.activities_title_activities',
-        'ACTIVITIES.activities_card_duration_project_title',
         'ACTIVITIES.activities_card_duration_project_title',
         'ACTIVITIES.activities_card_objectives_placeholder',
         'ACTIVITIES.activities_card_exercises_placeholder',

@@ -52,7 +52,7 @@
     &_top {
       background-image: linear-gradient(
         color(tertiary) 33%,
-        (pantone(white), 0) 0%
+        rgba(pantone(white), 0) 0%
       );
       top: -1px;
       height: 45px;

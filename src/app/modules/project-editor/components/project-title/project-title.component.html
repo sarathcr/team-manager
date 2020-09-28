@@ -10,8 +10,18 @@
 </div>
 <ng-template #titleModal>
   <app-modal-form
-    [variant]="'input'"
-    [title]="modalTitle"
+    inputVariant="text"
+    variant="input"
+    [title]="
+      (modalTitle
+        | translate
+        | TranslateCut: (!projectData?.id ? localExperienceType : 0)) +
+      (projectData?.id
+        ? ('VARIABLES.experience_type_variable_2'
+          | translate
+          | TranslateCut: localExperienceType)
+        : '')
+    "
     [confirmLabel]="modalConfirmLabel"
     [data]="projectData?.title ? this.projectData?.title : ''"
     [maxLength]="maxLength"

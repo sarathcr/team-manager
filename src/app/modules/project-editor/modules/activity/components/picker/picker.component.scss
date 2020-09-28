@@ -1,3 +1,5 @@
+@import 'helpers/_helpers-master';
+
 .picker-container {
   display: flex;
   flex-flow: row wrap;
@@ -6,4 +8,26 @@
 
 .picker-dialog-bg {
   display: none !important;
+}
+
+.picker {
+  &__close {
+    position: absolute;
+    top: 29px;
+    right: 29px;
+    background-color: color(quaternary);
+    color: rgba(color(tertiary), 0.6);
+    font-size: font-size(s);
+    cursor: pointer;
+    z-index: 3;
+    padding: 3px;
+    &::before {
+      opacity: 0.5;
+    }
+    &:hover {
+      &::before {
+        opacity: 0.75;
+      }
+    }
+  }
 }

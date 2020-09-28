@@ -96,7 +96,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Other Variables
   errors = []
-  criteriaPageNumber: number
+  pageBreakPoint = 450
 
   @ViewChild('pdfViewer') pdfViewerContainer
 
@@ -143,7 +143,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Get short codes of the Dimensions or basic skills based on the Curriculum ID
   getCodesAndEvaluationCriterias(): void {
-    console.log('getCodesAndEvaluationCriterias()')
+    // console.log('getCodesAndEvaluationCriterias()')
     if (this.projectData.subjects.length) {
       const evalIds = []
       this.projectData.subjects.map((item) => {
@@ -185,7 +185,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
   }
 
   arrayCreation(): Promise<any> {
-    console.log('arrayCreation()')
+    // console.log('arrayCreation()')
     return new Promise(async (resolve, reject) => {
       if (this.projectData.subjects.length) {
         await Promise.all(
@@ -219,8 +219,8 @@ export class OutputViewComponent implements OnInit, OnDestroy {
               }
               this.curriculumRelation = relation
               const groupedData = []
-              const groupedContent = this.groupBy(contents, 'blockid')
               const groupedEvaluation = this.groupBy(evaluation, 'blockId')
+              const groupedContent = this.groupBy(contents, 'blockid')
               for (const key of Object.keys(groupedEvaluation)) {
                 groupedData.push({
                   blockID: key,
@@ -288,7 +288,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // PDF Generation
   async generatePDF(): Promise<any> {
-    console.log('Started generating PDF')
+    // console.log('Started generating PDF')
     const thisRef = this
     this.documentDefinition = {
       info: {
@@ -334,7 +334,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         if (currentPage === 1) {
           return {
             style: 'footer__cover',
-            text: 'Col·legi Virolai ',
+            text: '',
             margin: [40, 10, 0, 0],
           }
         } else if (currentPage === pageCount) {
@@ -403,8 +403,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
       pageBreakBefore(currentNode: any): boolean {
         if (
           currentNode.id === 'driving' &&
-          currentNode.startPosition.top >
-            currentNode.startPosition.pageInnerHeight
+          currentNode.startPosition.top > thisRef.pageBreakPoint
         ) {
           return true
         }
@@ -417,14 +416,15 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         }
         if (
           currentNode.id === 'objectives' &&
-          currentNode.startPosition.top >
-            currentNode.startPosition.pageInnerHeight
+          currentNode.startPosition.top > thisRef.pageBreakPoint
         ) {
           return true
         }
-        console.log(currentNode)
-        if (currentNode.id === 'evaluationCriteria') {
-          console.log(currentNode)
+        if (
+          String(currentNode.id).includes('subjectTableStart') &&
+          currentNode.startPosition.top > thisRef.pageBreakPoint
+        ) {
+          return true
         }
       },
       styles,
@@ -438,7 +438,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Contents for the PDF
   contents(): void {
-    console.log('contents()')
+    // console.log('contents()')
     this.coverPage()
       .then(() => this.overview())
       .then(() => this.evaluationCriteria())
@@ -446,14 +446,14 @@ export class OutputViewComponent implements OnInit, OnDestroy {
       .then(() => this.objectives())
       .then(() => this.driving())
       .then(() => {
-        console.log('completed data preparation')
+        // console.log('completed data preparation')
         this.generatePDF()
       })
   }
 
   // Build Cover page
   coverPage(): Promise<any> {
-    console.log('Build Cover Page : coverPage()')
+    // console.log('Build Cover Page : coverPage()')
     return new Promise(async (resolve, reject) => {
       this.subjectsInline = this.projectData.subjects
         ?.map((item) => item.name)
@@ -686,7 +686,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Build Overview
   overview(): Promise<any> {
-    console.log('Build Overview : overview()')
+    // console.log('Build Overview : overview()')
     return new Promise(async (resolve, reject) => {
       this.projectOverview = {
         id: 'overview',
@@ -777,14 +777,14 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           },
         ],
       }
-      console.log('finsihed overview')
+      // console.log('finsihed overview')
       resolve()
     })
   }
 
   // Build Evaluation Criteria and Contents
   evaluationCriteria(): Promise<any> {
-    console.log('Build Evaluation criteria: evaluationCriteria()')
+    // console.log('Build Evaluation criteria: evaluationCriteria()')
     return new Promise(async (resolve, reject) => {
       if (this.isStepDone(3) && this.isStepDone(4)) {
         this.projectEvaluationCriteria = await Promise.all(
@@ -858,7 +858,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         text: item.code,
         style: 'subjectSubHeaderCenter',
       })
-      widths.push(30)
+      widths.push('*')
     }
     const tableBody = []
     tableBody.push(tableHeader)
@@ -883,12 +883,12 @@ export class OutputViewComponent implements OnInit, OnDestroy {
                 style: ['contentText'],
               },
             ],
-            margin: [-10, 0, 0, 0],
+            margin: [-10, 0, 0, 5],
           })
         })
         if (group.contentData?.length) {
           group.contentData.forEach((entity) => {
-            contentsData.push({ text: entity.name })
+            contentsData.push({ text: entity.name, margin: [0, 0, 0, 5] })
           })
         }
         // Get distinct basic skills
@@ -974,7 +974,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         {
           id: subjectName + '-criteriaStart',
           table: {
-            widths: ['*', '*', ...widths],
+            widths: [180, 'auto', ...widths],
             headerRows: 1,
             // keepWithHeaderRows: 1,
             // dontBreakRows: true,
@@ -1035,12 +1035,12 @@ export class OutputViewComponent implements OnInit, OnDestroy {
                 text: trimWhitespace(item.name),
               },
             ],
-            margin: [-10, 0, 0, 0],
+            margin: [-10, 0, 0, 5],
           })
         })
         if (group.contentData?.length) {
           group.contentData.forEach((entity) => {
-            contentsData.push({ text: entity.name })
+            contentsData.push({ text: entity.name, margin: [0, 0, 0, 5] })
           })
         }
         // Get distinct basic skills
@@ -1121,7 +1121,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         {
           id: subjectName + '-criteriaStart',
           table: {
-            widths: [180, 140, ...widths],
+            widths: [220, 180, ...widths],
             headerRows: 1,
             // keepWithHeaderRows: 1,
             // dontBreakRows: true,
@@ -1144,7 +1144,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     index: number
   ): object {
     this.curriculumRelation = 'no-relation'
-    console.log('no relation')
     const tableHeader = [
       {
         text: this.evaluationSubtitle,
@@ -1175,13 +1174,14 @@ export class OutputViewComponent implements OnInit, OnDestroy {
                 text: trimWhitespace(item.name),
               },
             ],
-            margin: [-10, 0, 0, 0],
+            margin: [-10, 0, 0, 5],
           })
         })
         if (group.contentData?.length) {
           group.contentData.forEach((entity) => {
             contentsData.push({
               text: entity.name,
+              margin: [0, 0, 0, 5],
             })
           })
         }
@@ -1244,7 +1244,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
   }
 
   competencyRelation(): Promise<any> {
-    console.log('Build Competency Relation Table: competencyRelation()')
+    // console.log('Build Competency Relation Table: competencyRelation()')
     return new Promise((resolve, reject) => {
       const basicSkillTable = []
       const tableSubHeader = []
@@ -1253,7 +1253,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         this.projectData.basicSkills.length &&
         this.curriculumRelation === 'no-relation'
       ) {
-        for (const item of this.shortCodes.basicSkillCodes.slice(0, 7)) {
+        for (const item of this.shortCodes.basicSkillCodes) {
           tableSubHeader.push({
             text: item.code,
             style: 'subjectSubHeaderCenter',
@@ -1266,10 +1266,8 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           (item) => item.code
         )
         const markedBasicSkill = []
-        const basicSkillRelative = this.shortCodes.basicSkillCodes.slice(0, 7)
-        console.log(this.projectData.basicSkills, basicSkillRelative)
+        const basicSkillRelative = this.shortCodes.basicSkillCodes
         basicSkillRelative.forEach((item) => {
-          console.log(basicSkillData, item)
           if (basicSkillData.includes(item.code)) {
             markedBasicSkill.push({
               text: '.',
@@ -1279,7 +1277,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
             markedBasicSkill.push(' ')
           }
         })
-        console.log(markedBasicSkill)
         basicSkillTable.push([...markedBasicSkill])
         this.projectCompetencyRelation = {
           id: this.competenciasSubtitle,
@@ -1321,7 +1318,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Build Driving Questions
   driving(): Promise<any> {
-    console.log('Build Driving Question: driving()')
+    // console.log('Build Driving Question: driving()')
     return new Promise((resolve, reject) => {
       const questionList = this.projectData?.drivingQuestions
       if (this.isStepDone(7) && questionList?.length) {
@@ -1359,7 +1356,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Build Themes
   themes(): object {
-    console.log('Build Themes: themes()')
+    // console.log('Build Themes: themes()')
     const themesList = this.projectData?.themes
     const tableHeader = [
       {
@@ -1397,7 +1394,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Build Final product
   finalProduct(): object {
-    console.log('Build Final Product: finalProduct()')
+    // console.log('Build Final Product: finalProduct()')
     return {
       margin: [0, 0, 0, 20],
       table: {
@@ -1426,7 +1423,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Build Objectives and standards
   objectives(): Promise<any> {
-    console.log('Build Objectives: objectives()')
+    // console.log('Build Objectives: objectives()')
     return new Promise((resolve, reject) => {
       const objectives = this.projectData.competencyObjectives
       const tableBody = []
@@ -1512,7 +1509,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         'PROGRAMACION.project_startingpoint_year',
         'PROGRAMACION.project_startingpoint_grades',
         'PROGRAMACION.project_startingpoint_subjects',
-        'PROGRAMACION.project_structure_stepsmenu_topic',
+        'PROGRAMACION.project_structure_stepsmenu_thematic',
         'PROGRAMACION.project_structure_stepsmenu_finalproduct',
         'PROGRAMACION.project_stepsmenu_drivingquestion',
         'PROGRAMACION.project_structure_stepsmenu_objectives',
@@ -1533,7 +1530,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         this.subjectsTitle =
           translations['PROGRAMACION.project_startingpoint_subjects']
         this.themesTitle =
-          translations['PROGRAMACION.project_structure_stepsmenu_topic']
+          translations['PROGRAMACION.project_structure_stepsmenu_thematic']
         this.finalProductTitle =
           translations['PROGRAMACION.project_structure_stepsmenu_finalproduct']
         this.drivingQuestionsTitle =

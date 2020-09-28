@@ -1,6 +1,10 @@
 {
   "GENERAL": {
-    "platform_title_tab": "Thinkö"
+    "platform_title_tab": "Thinkö",
+    "experience_project":"Proyecto",
+    "experience_learningunit":"Unidad didáctica",
+    "experience_activity":"Actividad",
+    "platform_label_comingsoon": "Próximamente"
   },
   "PROJECT": {
     "project_button_markdone": "MARCAR COMO HECHO",
@@ -16,7 +20,7 @@
     "project_button_save": "Guardar",
     "project_button_create": "Crear",
     "project_title_title_newtitle": "Nuevo proyecto",
-    "project_title_title_edittitle": "Edita el título",
+    "project_title_title_edittitle": "Edita el título ",
     "project_title_input_title": "Título",
     "project_dependancy_title_cv": "Desbloquea el currículum",
     "Error_textlimit_specified_singleinput": "Has excedido los caracteres permitidos.",
@@ -28,18 +32,18 @@
   "STEPS_MENU": {
     "project_structure_stepsmenu_title": "Crea paso a paso",
     "project_structure_stepsmenu_startingpoint": "Punto de partida",
-    "project_structure_stepsmenu_topic": "Temática",
+    "project_structure_stepsmenu_thematic": "Temática/s",
     "project_structure_stepsmenu_creativetitle": "Título creativo",
     "project_stepsmenu_drivingquestion": "Preguntas guía",
     "project_structure_stepsmenu_finalproduct": "Producto final",
     "project_structure_stepsmenu_sinopsis": "Sinopsis",
     "project_structure_stepsmenu_output": "Ver ficha estructura",
-    "project_structure_stepsmenu_objectives": "Objetivos",
+    "project_structure_stepsmenu_objectives": "De criterios a objetivos",
     "project_structure_stepsmenu_standards": "Estándares/Indicadores"
   },
   "STARTING_POINT": {
     "project_startingpoint_title": "Punto de partida",
-    "project_startingpoint_description": "Escoge las áreas o asignaturas que van a estar implicadas en tu proyecto. Para ofrecerte solo las áreas que te interesan, necesitamos saber qué curso impartes y en qué territorio.",
+    "project_startingpoint_description": "Escoge las áreas o asignaturas que van a estar implicadas en|. Para ofrecerte el currículum de las áreas que te interesan, indica qué curso impartes y en qué territorio.|",
     "project_startingpoint_year": "Año académico",
     "project_startingpoint_year_placeholder": "Selecciona el año académico",
     "project_startingpoint_year_example": "aaaa-aaaa",
@@ -58,8 +62,8 @@
     "project_startingpoint_stage_placeholder": "Selecciona una etapa educativa"
   },
   "THEMATIC": {
-    "project_thematic_title": "Temática",
-    "project_thematic_description": "¿Sobre qué tratará el proyecto? <br>Escribe las temáticas que tienes previsto abordar. Más adelante te ayudaremos a contectarlas con los contenidos curriculares.",
+    "project_thematic_title": "Temática/s",
+    "project_thematic_description": "Especifica sobre qué aspectos de la vida cotidiana o de la actualidad tratará |. Estas son las temáticas que más adelante conectarás con los contenidos curriculares.|",
     "project_thematic_placeholder": "Escribe y añade una temática",
     "project_thematic_edit_title": "Edita la temática",
     "project_thematic_edit_label": "Temática",
@@ -67,19 +71,19 @@
     "project_thematic_delete_confirmation_message": "Si la eliminas la tendrás que volver a introducir."
   },
   "OBJECTIVES": {
-    "project_objectives_dependancy_description": "Para acceder al currículum y seleccionar los criterios de evaluación tienes que completar el paso Punto de partida.",
+    "project_objectives_dependancy_description": "Para acceder al currículum y seleccionar los criterios de evaluación tienes que completar el paso \"Punto de partida\".",
     "project_objectives_dependancy_button": "Ir al punto de partida",
-    "project_objectives_title": "Objetivos de aprendizaje",
-    "project_objectives_description": "¿Qué quieres que tu alumnado acabe aprendiendo? Los objetivos de aprendizaje son de elaboración propia, pero deben responder a la normativa educativa. Parte de los criterios de evaluación para redactar los objetivos.",
-    "project_objectives_criterion_title": "3.1 Conéctalos con el currículum",
+    "project_objectives_title": "De criterios a objetivos",
+    "project_objectives_description": "Al final del proyecto, ¿qué quieres que tu alumnado aprenda? Los objetivos de aprendizaje son de elaboración propia, pero deben responder a la normativa educativa. Parte de los criterios de evaluación para redactar los objetivos.",
+    "project_objectives_criterion_title": "3.1 Criterios de evaluación",
     "project_objectives_criterion": "Criterios de evaluación",
     "project_objectives_criteria_placeholder": "Añade criterios de evaluación del currículum.",
-    "project_objectives_objectives_title": "3.2 Redáctalos",
+    "project_objectives_objectives_title": "3.2 Objetivos de aprendizaje",
     "project_objectives_objectives_subtitle": {
       "subtitle": "Transforma los criterios de evaluación en objetivos de aprendizaje:",
       "description": "Al final del proyecto queremos que nuestros/as alumnos/as sepan..."
     },
-    "project_objectives_objectives_placeholder": "Escribe y agrega un objetivo de aprendizaje. Por ejemplo: \"...comprender que la cultura hace valorar la historia propia.\"",
+    "project_objectives_objectives_placeholder": "Escribe y agrega uno o más objetivos de aprendizaje.\nPor ejemplo: \"...comprender que la cultura hace valorar la historia propia.\"",
     "project_objectives_add_criteria": " + Añadir",
     "project_objectivies_add_more_subjects": {
       "one": "Accede al",
@@ -107,12 +111,14 @@
     "project_objectives_delete_objectives_confirmation_title": "¿Seguro que quieres eliminar este objetivo?",
     "project_objectives_delete_objectives_confirmation_message": "Si lo eliminas se eliminará de todas las actividades a las lo hayas asociado.",
     "project_objectives_edit_title": "Edita el objetivo",
-    "project_objectives_edit_label": "Objetivo de aprendizaje"
+    "project_objectives_edit_label": "Objetivo de aprendizaje",
+    "project_objectives_criterion_description": "Elige los criterios de evaluación de cada asignatura directamente desde el currículum.",
+    "project_objectives_objectives_description": "Toma como base los criterios de evaluación para redactar tus propios objetivos de aprendizaje.|Al final del proyecto queremos que el alumnado sepa...|"
   },
   "CONTENT": {
-    "project_content_dependancy_description": "Para acceder al currículum y seleccionar los contenidos tienes que completar el paso Punto de partida.",
+    "project_content_dependancy_description": "Para acceder al currículum y seleccionar los contenidos tienes que completar el paso \"Punto de partida\".",
     "project_content_dependancy_button": "Ir al punto de partida",
-    "project_content_dependancy_filterbycriteria_description": "Para seleccionar los contenidos, primero tienes que tienes que especificar los criterios de evaluación de esta asignatura en el paso Objetivos de aprendizaje.",
+    "project_content_dependancy_filterbycriteria_description": "Para seleccionar los contenidos, primero tienes que tienes que especificar los criterios de evaluación de esta asignatura en el paso \"De criterios a objetivos\".",
     "project_content_dependancy_filterbycriteria_button": "Especifica los criterios",
     "project_content_title": "Contenidos",
     "project_content_description": "Especifica los contenidos que te interesa trabajar. En el currículum te mostramos los contenidos ya filtrados en función de los criterios de evaluación que has añadido en el paso anterior.",
@@ -147,9 +153,9 @@
     "project_content_extracontent_delete_confirmation_message": "Si lo eliminas se eliminará de todas las actividades a las lo hayas asociado."
   },
   "STANDARDS": {
-    "project_standards_dependancy_description": "Para poder especificar los estándares o indicadores de aprendizaje, primero completa el paso objetivos de aprendizaje.",
+    "project_standards_dependancy_description": "Para poder especificar los estándares o indicadores de aprendizaje, primero completa el paso \"De criterios a objetivos\".",
     "project_standards_dependancy_button": "Especifica los objetivos",
-    "project_standards_dependancy_filterbycriteria_description": "Para seleccionar los estándares de aprendizaje, primero tienes que tienes que especificar los criterios de evaluación de esta asignatura en el paso Objetivos de aprendizaje.",
+    "project_standards_dependancy_filterbycriteria_description": "Para seleccionar los estándares de aprendizaje, primero tienes que tienes que especificar los criterios de evaluación de esta asignatura en el paso \"De criterios a objetivos\".",
     "project_standards_dependancy_filterbycriteria_button": "Especifica los criterios",
     "project_standards_title": "Estándares/Indicadores",
     "project_standards_initial_label": "Especifica los estándares o indicadores de aprendizaje para cada uno de los objetivos competenciales.",
@@ -172,17 +178,21 @@
     "project_standards_standardswindow_empty_title": "No tienes estándares seleccionados",
     "project_standards_contentwindow_empty_description": "Selecciona estándares de aprendizaje del currículum y visualiza el listado de seleccionados aquí para añadirlos.",
     "project_standards_contentwindow_empty_button": "Ver estándares",
-    "project_standards_delete_confirmation_title": "¿Seguro que quieres eliminar este estándar?"
+    "project_standards_delete_confirmation_title": "¿Seguro que quieres eliminar este estándar?",
+    "project_standards_extrastandards_edit_title": "Edita el estándar/indicador",
+    "project_standards_extrastandards_edit_label": "Estándar/indicador",
+    "project_standards_extrastandards_delete_confirmation_title": "¿Seguro que quieres eliminar este estándar/indicador?",
+    "project_standards_extrastandards_delete_confirmation_message": "Si lo eliminas se eliminará de todas las actividades a las lo hayas asociado."
   },
   "RETHINK_TITLE": {
     "project_rethinktitle_title": "Título creativo",
-    "project_rethinktitle_description": "¿Mantienes el nombre que le has dado a tu proyecto o prefieres cambiarlo? <br>Ahora puedes repensar el título inicial y darle un plus de creatividad. Si no se te ocurre nada, sigue nuestros consejos de la guía pedagógica. También puedes subir una imagen que te inspire. ",
+    "project_rethinktitle_description": "¿Quieres darle un plus de creatividad al título que has asignado |? Asegúrate que propones un título motivador para tu alumnado. Puedes inspirate siguiendo los consejos que te proponemos en la guía pedagógica.|",
     "project_rethinktitle_creativetitle_placeholder": "Escribe un título creativo",
     "project_rethinktitle_addimage": "Acompañalo de una imagen inspiradora"
   },
   "DRIVING_QUESTIONS": {
     "project_drivingquestions_title": "Preguntas guía",
-    "project_drivingquestions_description": "Formula las cuestiones esenciales a las que l@s alumn@s intentarán dar respuesta durante el proyecto.  Estas preguntas reflejan el <em>para qué</em> del proyecto.",
+    "project_drivingquestions_description": "Formula las cuestiones esenciales a las que el alumnado intentará dar respuesta durante |. Estas preguntas reflejan el para qué |",
     "project_drivingquestions_placeholder": "Escribe y añade una o más preguntas guía",
     "project_drivingquestions_edit_title": "Edita la pregunta",
     "project_drivingquestions_edit_label": "Pregunta",
@@ -191,13 +201,14 @@
   },
   "FINAL_PRODUCT": {
     "project_finalproduct_title": "Producto final",
-    "project_finalproduct_description": "El producto es el resultado, tangible o no, de los aprendizajes de tu alumnado a través del proyecto. Refleja <em>qué serán</em> capaces de hacer los alumnos con los aprendizajes que adquirirán. ",
+    "project_finalproduct_description": "El producto es el resultado, tangible o no, de los aprendizajes de tu alumnado a través |. Refleja qué serán capaces de hacer con los aprendizajes que adquirirán.|",
     "project_finalproduct_placeholder": "Describe la propuesta de producto final"
   },
   "SINOPSIS": {
     "project_synopsis_title": "Sinopsis",
-    "project_synopsis_description": "Describe en pocas líneas por qué has querido desarrollar este proyecto. No hay una receta cerrada para este apartado, menciona aquello que consideras relevante.",
-    "project_synopsis_placeholder": "Describe brevemente tu proyecto"
+    "project_synopsis_description": "Este espacio es para ti. Te ayudará a recordar las ideas generales | cuando haya pasado el tiempo. También servirá para orientar a otros docentes con los que quieras compartirlo.|",
+    "project_synopsis_placeholder": "Describe brevemente ",
+    "project_synopsis_addimage": "Acompañala de una imagen inspiradora"
   },
   "PROJECTGUIDE": {
     "projectguide_pedagogical_guide": "GUÍA PEDAGÓGICA"
@@ -239,7 +250,14 @@
   },
   "PRIVATEHOME_PROFILE": {
     "profile_dropdown_option_profile": "Perfil",
-    "profile_dropdown_option_logout": "Salir"
+    "profile_dropdown_option_logout": "Salir",
+    "profile_menu_profile_data": "Mis datos",
+    "profile_menu_profile_preferences": "Preferencias",
+    "profile_menu_workplace": "Espacio de trabajo",
+    "profile_menu_workplace_users": "Usuarios",
+    "profile_empty_title": "No hay ningún dato",
+    "profile_empty_description": "Una vez hayas completado el perfil, tus datos personales y los de tu centro educativo aparecerán aquí.",
+    "profile_empty_button": "Completar perfil"
   },
   "PRIVATEHOME_EMPTYSTATE": {
     "home_section_yourexperiences_empty_title": "Empieza a crear tus propias experiencias",
@@ -252,5 +270,74 @@
     "home_inspire_popup_cp_button_start": "Empezar",
     "home_inspire_popup_cp_error": "Este código postal no existe. Revísalo.",
     "home_inspire_popup_cp_placeholder": "Introduce el código postal"
+  },
+  "VARIABLES": {
+    "experience_type_variable_1": "el proyecto|la unidad didáctica|la actividad",
+    "experience_type_variable_2": "del proyecto|de la unidad didáctica|de la actividad",
+    "experience_type_variable_3": "Nuevo proyecto|Nueva unidad didáctica|Nueva actividad",
+    "experience_type_variable_4": "al proyecto|a la unidad didáctica",
+    "experience_type_variable_5": "un proyecto|una unidad didáctica|una actividad"
+  },
+  "CREATE_EXPERIENCE":{
+    "create_experience_title":"Crea una experiencia de aprendizaje",
+    "create_experience_description":"Selecciona el tipo de experiencia que vas a realizar y... ¡empieza a crear!",
+    "create_experience_project_description":"Crea la receta del aprendizaje activo: un tema motivador y actividades conectadas que culminan en un producto memorable.",
+    "create_experience_learningunit_description":"Estructura actividades creativas, orientadas a objetivos de aprendizaje, en torno a un tema central inspirador.",
+    "create_experience_activity_description":"Diseña un conjunto de ejercicios, vinculados al menos a un objetivo de aprendizaje, para entrenar a tu alumnado."
+  },
+    "ONBOARDING": {
+    "onboarding_pop-up_start_pretitle": "¡Hola!",
+    "onboarding_pop-up_start_title": "¿Quieres que te ayudemos a empezar?",
+    "onboarding_pop-up_start_description": "Aprende a utilizar Thinkö y descubre sus principales funcionalidades. Así, de forma rápida y senzilla, pordrás empezar a diseñar y gestionar experiencias de aprendizaje.",
+    "onboarding_pop-up_start_button": "Me encantaría"
+  },
+  "PROFILESETUP": {
+    "profile_setup_menu_title": "Completa tu perfil",
+    "profile_setup_profile_description": "Para poder personalizar la plataforma y ofrecerte el curriculum del territorio en el que enseñas necesitamos saber un poquito más sobre ti.",
+    "profile_setup_profile_overtitle": "¡Bienvenido/a!",
+    "profile_empty_button": "Completar perfil",
+    "profile_setup_workplace": "Crea tu espacio de trabajo",
+    "user_phone_label": "Teléfono o móvil",
+    "user_surname_label": "Apellidos",
+    "user_country_label": "País",
+    "user_region_label": "Provincia",
+    "user_role_placeholder": "¿Cuál es tu rol en la enseñanza?"
+  },
+  "FILTERS": {
+    "experience_filter_title": "Filtros",
+    "experience_filter_stage": "Etapa",
+    "experience_filter_stage_option_edinfantil": "Educación infantil",
+    "experience_filter_stage_option_primaria": "Primaria",
+    "experience_filter_stage_option_secundaria": "Secundaria",
+    "experience_filter_stage_option_bachillerato": "Bachillerato",
+    "experience_filter_experiencetype": "Tipo de experiencia",
+    "experience_project": "Proyecto",
+    "experience_learningunit": "Unidad didáctica",
+    "experience_activity": "Actividad",
+    "experience_filter_subjects": "Asignatura/s",
+    "experience_filter_subjects_browse_placeholder": "Busca una asignatura",
+    "experience_filter_academicyear": "Año académico",
+    "experience_filter_button_apply": "Aplicar"
+  },
+  "PROFILE": {
+    "header_profile_user": "Usuario",
+    "profile_dropdown_option_profile": "Perfil",
+    "profile_dropdown_option_logout": "Salir",
+    "profile_menu_profile": "Perfil",
+    "profile_menu_profile_data": "Mis datos",
+    "profile_menu_profile_preferences": "Preferencias",
+    "profile_menu_workplace": "Espacio de trabajo",
+    "profile_menu_workplace_users": "Usuarios",
+    "profile_data_login": "Datos de acceso",
+    "profile_edit_title": "Editar o eliminar perfil",
+    "profile_edit_description": "Si quieres modificar tus datos o eliminar tu perfil escríbenos a info@thinkoeducation.com",
+    "profile_data_personal": "Datos personales",
+    "user_role_label_long": "Rol en la enseñanza",
+    "user_photo": "Tu foto de perfil",
+    "profile_data_center": "Centro educativo",
+    "profile_data_center_name": "Nombre del centro",
+    "profile_data_center_adress": "Dirección",
+    "profile_preferences_language": "Idioma",
+    "profile_preferences_currentlanguage": "Idioma actual"
   }
 }

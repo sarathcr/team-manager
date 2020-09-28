@@ -4,7 +4,7 @@
   $root: &;
   max-width: 460px;
 
-  &__desc{
+  &__desc {
     padding: 0 30px;
   }
   &__header {
@@ -17,7 +17,7 @@
     display: flex;
     width: 100%;
     margin-bottom: 0;
-    &_primary{
+    &_primary {
       font-size: font-size(body-s);
       line-height: 24px;
       letter-spacing: 1px;
@@ -25,13 +25,14 @@
       color: rgba(color(tertiary), 0.5);
       text-transform: uppercase;
     }
-    &_secondary{
+    &_secondary {
       line-height: 28px;
       letter-spacing: 0.2px;
       font-family: font-family(default);
+      font-size: font-size(body);
     }
   }
-  &__description{
+  &__description {
     margin-bottom: 5px;
     margin-top: 10px;
   }
@@ -41,7 +42,7 @@
     border: none;
     color: rgba(color(tertiary), 0.6);
     font-size: 20px;
-    margin-right: -8px;
+    margin-right: -3px;
     cursor: pointer;
   }
   &__body {

@@ -20,7 +20,9 @@ storiesOf('Shared|Search', module)
   .add('Default', () => ({
     template: `<div class="story_layout_style">
     <app-search class="search"
-    [placeholder] ="placeholder">
+    [placeholder] ="placeholder"
+    [text]="text"
+    (searchText)="searchText($event)" >
     </app-search>
    </div>`,
     styles: [
@@ -38,6 +40,8 @@ storiesOf('Shared|Search', module)
  `,
     ],
     props: {
-      placeholder: text('Placeholder', ''),
+      text: text('Text', ''),
+      placeholder: text('Placeholder', 'Placeholder'),
+      searchText: action('The text you are searching is'),
     },
   }))

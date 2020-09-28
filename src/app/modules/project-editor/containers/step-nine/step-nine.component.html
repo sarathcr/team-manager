@@ -10,13 +10,33 @@
         >{{ 'SINOPSIS.project_synopsis_title' | translate }}
         <app-info-tooltip id="step-nine-info-tooltip"></app-info-tooltip>
       </h1>
-      <p
-        class="project-form__description"
-        [innerHTML]="'SINOPSIS.project_synopsis_description' | translate"
-      ></p>
+      <p class="project-form__description">
+        {{
+          'SINOPSIS.project_synopsis_description' | translate | TranslateCut: 0
+        }}
+        <span>
+          {{
+            'VARIABLES.experience_type_variable_2'
+              | translate
+              | TranslateCut: localExperienceType
+          }}
+        </span>
+        <span>
+          {{
+            'SINOPSIS.project_synopsis_description'
+              | translate
+              | TranslateCut: 1
+          }}
+        </span>
+      </p>
       <app-textarea
         id="step-nine-textarea"
-        placeholder="{{ 'SINOPSIS.project_synopsis_placeholder' | translate }}"
+        placeholder="{{
+          ('SINOPSIS.project_synopsis_placeholder' | translate) +
+            ('VARIABLES.experience_type_variable_1'
+              | translate
+              | TranslateCut: localExperienceType)
+        }}"
         [maxLength]="500"
         [value$]="synopsis$"
         (inputChange)="onValueChange($event)"

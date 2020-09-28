@@ -109,6 +109,9 @@
       > span:first-child {
         opacity: 0.6;
         line-height: 24px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       > .dropdown__control {

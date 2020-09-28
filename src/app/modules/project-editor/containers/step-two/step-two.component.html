@@ -7,10 +7,19 @@
         >{{ 'THEMATIC.project_thematic_title' | translate }}
         <app-info-tooltip id="step-two-info-tooltip"></app-info-tooltip>
       </h2>
-      <p
-        class="project-form__description"
-        [innerHTML]="'THEMATIC.project_thematic_description' | translate"
-      ></p>
+      <p class="project-form__description" [innerHTML]="">
+        <span>{{
+          'THEMATIC.project_thematic_description' | translate | TranslateCut: 0
+        }}</span>
+        <span>{{
+          'VARIABLES.experience_type_variable_1'
+            | translate
+            | TranslateCut: localExperienceType
+        }}</span>
+        <span>{{
+          'THEMATIC.project_thematic_description' | translate | TranslateCut: 1
+        }}</span>
+      </p>
       <div class="mb-5">
         <app-editable-list
           id="step-two-editable-list"

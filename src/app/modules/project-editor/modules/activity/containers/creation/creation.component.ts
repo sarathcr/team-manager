@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -38,6 +39,7 @@ export class CreationComponent implements OnInit, OnDestroy {
   buttonSubmitted = false
   subscriptions = new SubSink()
   exerciseLoading = false
+  materialLoading = false
   exercise: Exercise
   modalRef: BsModalRef
   referenceMaterial: StatusMaterial = {
@@ -59,11 +61,13 @@ export class CreationComponent implements OnInit, OnDestroy {
     private editor: EditorService,
     private router: Router,
     private modalService: BsModalService,
-    private projectService: ProjectEntityService
+    private projectService: ProjectEntityService,
+    private changeDetection: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.creationInit()
+    this.editor.setContextualhelpStep(21)
   }
 
   ngOnDestroy(): void {
@@ -100,15 +104,26 @@ export class CreationComponent implements OnInit, OnDestroy {
 
   openModal(modal: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(modal, {
+      ignoreBackdropClick: true,
       class: 'modal-dialog-centered modal-layout_large',
     })
   }
 
-  closeModal(): void {
-    this.modalRef.hide()
+  closeModal(modalType?: 'material'): void {
+    if (
+      modalType &&
+      modalType === 'material' &&
+      this.activeMaterialTab === 0 &&
+      this.currentMaterialView === 2
+    ) {
+      this.currentMaterialView = 1
+    } else {
+      this.modalRef.hide()
+    }
   }
 
   addMaterials(material: ReferenceMaterials): void {
+    this.materialLoading = true
     this.activity = unfreeze(this.activity)
     if (this.activity.referenceMaterials) {
       this.activity.referenceMaterials.unshift(material)
@@ -117,6 +132,7 @@ export class CreationComponent implements OnInit, OnDestroy {
     }
     this.submitDatachange()
     this.closeModal()
+    this.changeDetection.detectChanges()
   }
 
   addExcercise(exercise: Exercise): void {
@@ -141,6 +157,7 @@ export class CreationComponent implements OnInit, OnDestroy {
         projectSubscription.unsubscribe()
       }
     })
+    this.changeDetection.detectChanges()
   }
 
   handleExerciseEdit($event: Exercise): void {
@@ -252,6 +269,7 @@ export class CreationComponent implements OnInit, OnDestroy {
   }
 
   getActiveMaterialTab(tabNumber: number): void {
+    this.referenceMaterial.status = 'default' // to reset the modal button on tab change
     this.activeMaterialTab = tabNumber
   }
 
@@ -271,7 +289,22 @@ export class CreationComponent implements OnInit, OnDestroy {
       this.onMaterialConfirm()
     }
   }
+  getAllExcerciseMaterials(excerice: Exercise): ReferenceMaterials[] {
+    let materials: ReferenceMaterials[] = []
+    materials = excerice?.referenceMaterials?.length
+      ? [...excerice.referenceMaterials]
+      : []
+    excerice?.evaluationStrategies?.forEach((item) => {
+      if (item.instrument.sourceType === 'LOCALDRIVE') {
+        item.instrument.previewImageUrl = '' // to change the material card variant for instrument upload
+        item.instrument.fileType = 'INSTRUMENTUPLOAD'
+      }
+      item.instrument.entityType = 'instrument'
+      materials.push(item.instrument)
+    })
 
+    return materials
+  }
   resetTabs(): void {
     this.currentMaterialView = 1
     this.activeMaterialTab = 0

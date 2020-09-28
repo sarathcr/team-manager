@@ -2,6 +2,7 @@ import { DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { RouterTestingModule } from '@angular/router/testing'
+import { TranslateModule } from '@ngx-translate/core'
 import { BsModalService } from 'ngx-bootstrap/modal'
 import { ProjectTitleComponent } from '../project-title/project-title.component'
 import { EditorHeaderComponent } from './editor-header.component'
@@ -16,7 +17,7 @@ describe('EditorHeaderComponent', (): void => {
     TestBed.configureTestingModule({
       declarations: [EditorHeaderComponent, ProjectTitleComponent],
       providers: [{ provide: BsModalService, useClass: BsModalServiceStub }],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
     })
 
     fixture = TestBed.createComponent(EditorHeaderComponent)

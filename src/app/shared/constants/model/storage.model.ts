@@ -1,1 +1,1 @@
-export type StorageKey = 'JWT_TOKEN' | 'GOOGLE_TOKEN'
+export type StorageKey = 'JWT_TOKEN' | 'GOOGLE_TOKEN' | 'GOOGLE_TOKEN_EXPIRY'

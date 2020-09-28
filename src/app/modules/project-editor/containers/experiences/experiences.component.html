@@ -1,6 +1,10 @@
 <ng-template #hasLoaded>
   <ng-template #hasProject>
-    <h1 class="experiences__head-text">{{ title }} ({{ totalItems }})</h1>
+    <h1 class="experiences__head-text">
+      {{ 'PRIVATEHOME_HEADER.home_section_getinspired_title' | translate }} ({{
+        totalItems
+      }})
+    </h1>
     <div class="w-100 d-flex mb-5 justify-content-between">
       <div class="experiences__filters-left d-flex align-items-center">
         <div class="mr-5">
@@ -8,21 +12,29 @@
             placeholder="{{
               'PRIVATEHOME_HEADER.home_search_experience' | translate
             }}"
+            [text]="this.searchtext"
+            (searchText)="handleSearch($event)"
           ></app-search>
         </div>
-        <div><app-filter></app-filter></div>
+        <div>
+          <app-filter
+            [filterOption]="filterOption"
+            [filterSum]="filterSum"
+            (filter)="applyFilter($event)"
+          ></app-filter>
+        </div>
       </div>
       <div class="experiences__filters-right d-flex">
         <div class="mr-5">
           <app-dropdown-select
             [data]="dropDownData"
-            [selectedItems]="selectedItem"
+            [selectedItems]="selectedSortBy"
             [defaultSelected]="false"
             label="PRIVATEHOME_HEADER.home_sort"
             (dropdownSelect)="onOderbySelection($event)"
           ></app-dropdown-select>
         </div>
-        <app-button icon="add" size="small" routerLink="../../project/create/1">
+        <app-button icon="add" size="small" (click)="createExperience()">
           {{
             'PRIVATEHOME_HEADER.home_button_create'
               | translate
@@ -34,12 +46,11 @@
     <div class="experiences__body">
       <div class="row">
         <app-card-experience
-          class="col-4"
           *ngFor="let project of (projects$ | async)?.projects; index as i"
           id="list-project-{{ i }}"
+          class="col-4"
           [data]="project"
-        >
-        </app-card-experience>
+        ></app-card-experience>
       </div>
       <app-loader
         id="create-home-loader"
@@ -51,7 +62,7 @@
     <div class="experiences__pagination d-flex justify-content-center mb-7">
       <app-pagination
         id="pagination"
-        *ngIf="loaded && !isSortApplied"
+        *ngIf="loaded && !filterLoading && totalItems > 0"
         [totalItems]="totalItems"
         [maxSize]="maxSize"
         [itemsPerPage]="itemsPerPage"
@@ -64,14 +75,20 @@
   </ng-template>
   <div
     class="experiences__content"
-    *ngIf="totalItems === 0 && loaded; else hasProject"
+    *ngIf="
+      totalItems === 0 && !loading && searchtext == '' && !!!filterSum;
+      else hasProject
+    "
   >
     <div class="experiences__content_empty">
-      <img
-        src="../assets/icons/img_evaluacion@2x.png"
-        class="experiences__content_empty-image"
-        alt=""
-      />
+      <figure class="experiences__content_empty-figure m-0">
+        <img
+          src="../assets/images/pvt-home-empty.png"
+          class="experiences__content_empty-image"
+          alt=""
+        />
+      </figure>
+
       <h1 class="experiences__content_empty-title title_s">
         {{
           'PRIVATEHOME_EMPTYSTATE.home_section_yourexperiences_empty_title'
@@ -88,6 +105,7 @@
         <app-button
           theme="primary"
           class="experiences__content_empty-button_primary"
+          routerLink="/editor/projects/inspirate"
         >
           {{
             'PRIVATEHOME_EMPTYSTATE.home_section_yourexperiences_empty_button_examples'
@@ -95,9 +113,9 @@
           }}
         </app-button>
         <app-button
-          theme="primary"
+          theme="teritiary"
           variant="outlined"
-          routerLink="../../project/create/1"
+          (click)="createExperience()"
         >
           {{
             'PRIVATEHOME_EMPTYSTATE.home_section_yourexperiences_empty_button_create'
@@ -108,9 +126,80 @@
     </div>
   </div>
 </ng-template>
+<ng-template #LearingexperienceModal>
+  <app-modal-layout (decline)="declineModal()">
+    <div class="experiences__title mb-1">
+      {{ 'CREATE_EXPERIENCE.create_experience_title' | translate }}
+    </div>
+    <div class="experiences__description">
+      {{ 'CREATE_EXPERIENCE.create_experience_description' | translate }}
+    </div>
+    <div class="experiences__project-type">
+      <div class="experiences__project-type_card">
+        <app-presentation-card
+          [isComingSoon]="false"
+          description="CREATE_EXPERIENCE.create_experience_project_description"
+          class="experiences__project-type_title"
+          [title]="'GENERAL.experience_project'"
+          variant="project"
+          routerLink="/editor/project/create/1"
+          (click)="declineModal()"
+        ></app-presentation-card>
+      </div>
+      <div class="experiences__project-type_card">
+        <app-presentation-card
+          [isComingSoon]="false"
+          [title]="'GENERAL.experience_learningunit'"
+          variant="project"
+          description="CREATE_EXPERIENCE.create_experience_learningunit_description"
+          routerLink="/editor/didactic-unit/create/1"
+          (click)="declineModal()"
+        >
+        </app-presentation-card>
+      </div>
+      <div class="experiences__project-type_card">
+        <app-presentation-card
+          [isComingSoon]="true"
+          premiumLabel="GENERAL.platform_label_comingsoon"
+          [title]="'GENERAL.experience_activity'"
+          variant="project"
+          description="CREATE_EXPERIENCE.create_experience_activity_description"
+        >
+        </app-presentation-card>
+      </div>
+    </div>
+  </app-modal-layout>
+</ng-template>
+<ng-template #onBoardingModal>
+  <app-modal-info
+    [appearance]="'medium'"
+    [overTitle]="'ONBOARDING.onboarding_pop-up_start_pretitle'"
+    [modalTitle]="'ONBOARDING.onboarding_pop-up_start_title'"
+    [description]="'ONBOARDING.onboarding_pop-up_start_description'"
+    [confirmLabel]="'ONBOARDING.onboarding_pop-up_start_button'"
+    [variant]="'information'"
+    (confirm)="gotoProfile()"
+    (decline)="declineModal()"
+  >
+  </app-modal-info>
+</ng-template>
+<ng-template #profileSetupModal>
+  <app-modal-info
+    variant="information"
+    [appearance]="'medium'"
+    [modalTitle]="'PROFILESETUP.profile_setup_menu_title'"
+    [description]="'PROFILESETUP.profile_setup_profile_description'"
+    [overTitle]="'PROFILESETUP.profile_setup_profile_overtitle'"
+    [confirmLabel]="'PROFILESETUP.profile_empty_button'"
+    (decline)="declineModal()"
+    (confirm)="gotoProfile()"
+  >
+  </app-modal-info>
+</ng-template>
 <app-loader
   id="create-home-loader"
   *ngIf="!loaded; else hasLoaded"
   variant="block"
   class="experiences__loader"
-></app-loader>
+>
+</app-loader>

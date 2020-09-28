@@ -62,7 +62,7 @@ export type ProjectUpdateTypes =
   | 'createActivity'
   | 'createExercise'
 
-export type ProjectSortType = 'openedAt' | 'updatedAt' | 'name' | 'createdAt'
+export type ProjectSortType = 'openedAt' | 'updatedAt' | 'title' | 'createdAt'
 export class ProjectList {
   projects: Project[]
   projectCount: number
@@ -81,6 +81,10 @@ export class AcademicYear {
   name?: string
   academicYear?: string
   curriculumId?: number
+}
+
+export class FilterAcademicYear extends AcademicYear {
+  checked: boolean
 }
 
 export class CurriculumAcademicYear {
@@ -102,6 +106,22 @@ export class Subject extends Option {
   contents?: Content[]
   customContents?: CustomContent[]
   grade?: Grade
+}
+
+export class FilterSubject extends Subject {
+  checked: boolean
+}
+
+export class FilterOptionsValues {
+  id: number | string
+  value: string
+  checked: boolean
+}
+export class FilterOptions {
+  stage: FilterOptionsValues[]
+  subjects: FilterOptionsValues[]
+  academicYears: FilterOptionsValues[]
+  type: FilterOptionsValues[]
 }
 
 export interface DrivingQuestion {
@@ -193,6 +213,7 @@ export class CustomContent {
   name?: string
   checked?: boolean
   subjectId?: number
+  type?: string
 }
 
 export class ProjectTitle {
@@ -249,4 +270,4 @@ export function compareProjects(p1: Project, p2: Project): number {
   }
 }
 
-export type Type = 'PROJECT' | 'ACTIVITY' | 'LEARNING UNIT'
+export type Type = 'PROJECT' | 'ACTIVITY' | 'DIDACTIC_UNIT'

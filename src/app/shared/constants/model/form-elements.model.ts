@@ -1,4 +1,3 @@
-import { boolean } from '@storybook/addon-knobs/angular'
 import { IDropdownSettings } from 'ng-multiselect-dropdown'
 import { Status } from 'src/app/modules/project-editor/constants/model/project.model'
 
@@ -122,7 +121,13 @@ export interface PasswordComlexity {
 
 export type ErrorType = 'danger' | 'info' | 'warning' | 'success'
 
-export type InputVariant = 'text' | 'email' | 'password' | 'number' | 'date'
+export type InputVariant =
+  | 'text'
+  | 'email'
+  | 'password'
+  | 'number'
+  | 'date'
+  | 'tel'
 
 export type ValidatorVariant = 'text' | 'counter' | 'password'
 

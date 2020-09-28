@@ -1,18 +1,24 @@
 <pagination
   [ngClass]="{
-    'pagination_bounder-value': lastPage <= maxSize
+    'pagination_bounder-value': getLastPage() <= maxSize,
+    'pagination_hide-first': currentPage == 1 || currentPage == 2,
+    'pagination_hide-last':
+      currentPage == getLastPage() || currentPage == getLastPage() - 1,
+    'pagination_first-dots': currentPage == 3,
+    'pagination_last-dots': currentPage == getLastPage() - 2
   }"
   [totalItems]="totalItems"
   [rotate]="rotate"
   [maxSize]="maxSize"
   [itemsPerPage]="itemsPerPage"
+  [(ngModel)]="currentPage"
   [disabled]="disabled"
   [customPreviousTemplate]="prevTemplate"
   [customNextTemplate]="nextTemplate"
   [customLastTemplate]="lastTemplate"
   [boundaryLinks]="true"
   [customFirstTemplate]="firstTemplate"
-  (pageChanged)="onPageChanged($event)"
+  (ngModelChange)="onPageChanged($event)"
 >
   <ng-template
     #firstTemplate
@@ -28,7 +34,7 @@
     let-currentPage="currentPage"
   >
     <span class="pagination__first-last">
-      {{ lastPage }}
+      {{ getLastPage() }}
     </span>
   </ng-template>
 

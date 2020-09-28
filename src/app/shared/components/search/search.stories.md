@@ -16,7 +16,9 @@ A convenience directive for applying styling to a search.
 
 ```js
 <app-search
- [placeholder] =" ">
+ [placeholder] =" "
+ (searchTitle)="searchChanged($event)"
+ >
 </app-search>
 ```
 
@@ -24,9 +26,16 @@ A convenience directive for applying styling to a search.
 
 ### Input
 
-| Name              | Type               | Required | Values               |  Default  | Description                                  |
-| ----------------- | ------------------ | :------: | -------------------- | :-------: | -------------------------------------------- |
-| `placeholder`     | `String`           |    -     | -                    |     -     | To set the placeholder of search component |
+| Name          | Type     | Required | Values | Default | Description                                |
+| ------------- | -------- | :------: | ------ | :-----: | ------------------------------------------ |
+| `placeholder` | `String` |    -     | -      |    -    | To set the placeholder of search component |
+| `text`        | `String` |    -     | -      |    -    | To search project by title                 |
+
+### Output
+
+| Name          | Description                           |
+| ------------- | ------------------------------------- |
+| `searchText` | Event emited from the search component |
 
 ## Note
 

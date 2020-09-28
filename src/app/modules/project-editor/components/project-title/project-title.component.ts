@@ -14,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { ProjectTitle } from '../../constants/model/project.model'
+import { EditorService } from '../../services/editor/editor.service'
 
 @Component({
   selector: 'app-project-title',
@@ -32,6 +33,7 @@ export class ProjectTitleComponent implements OnInit, AfterViewInit {
   projectUrl: string
   modalTitle: string
   modalConfirmLabel: string
+  localExperienceType: number
   @HostListener('document:keydown.escape', ['$event']) handleKeyDown(
     event: KeyboardEvent
   ): void {
@@ -44,7 +46,8 @@ export class ProjectTitleComponent implements OnInit, AfterViewInit {
   constructor(
     private modalService: BsModalService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public editor: EditorService
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +56,7 @@ export class ProjectTitleComponent implements OnInit, AfterViewInit {
       this.showInputfield = false
     }
     this.projectUrl = this.route.snapshot.paramMap.get('id')
+    this.localExperienceType = this.editor.getLocalExperienceType()
   }
 
   ngAfterViewInit(): void {
@@ -76,7 +80,7 @@ export class ProjectTitleComponent implements OnInit, AfterViewInit {
 
   openModal(): void {
     this.modalTitle = !this.projectData?.id
-      ? 'PROJECT.project_title_title_newtitle'
+      ? 'VARIABLES.experience_type_variable_3'
       : 'PROJECT.project_title_title_edittitle'
     this.modalConfirmLabel = !this.projectData?.id
       ? 'PROJECT.project_button_create'

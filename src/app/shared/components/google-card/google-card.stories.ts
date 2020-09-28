@@ -19,8 +19,8 @@ storiesOf('shared|Google Card', module)
   .add('Default', () => ({
     template: `<div class="story_layout_style">
     <app-google-card 
-      [title]="title" 
-      [subtitle]="subtitle" 
+      [cardTitle]="cardTitle" 
+      [cardSubtitle]="cardSubtitle" 
       [variant]="variant"
     >
     </app-google-card>
@@ -34,12 +34,21 @@ storiesOf('shared|Google Card', module)
      }`,
     ],
     props: {
-      title: text('Title', 'Presentación'),
-      subtitle: text('Subtitle', 'Google Slides'),
+      cardTitle: text('Card Title', 'Presentación'),
+      cardSubtitle: text('Card Subtitle', 'Google Slides'),
       variant: select(
         'Variant',
-        ['slide', 'site', 'doc', 'form', 'sheet'],
-        'slide'
+        [
+          'PRESENTATION',
+          'WEB',
+          'DOCUMENT',
+          'SHEET',
+          'FORM',
+          'RUBRICA',
+          'CHECKLIST',
+          'DIANA',
+        ],
+        'PRESENTATION'
       ),
     },
   }))

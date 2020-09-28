@@ -31,6 +31,8 @@
           ? toggle && variant !== 'email'
             ? 'password'
             : 'text'
+          : variant === 'number'
+          ? 'text'
           : variant
       "
       [placeholder]="!focus ? placeholder : ''"
@@ -43,7 +45,7 @@
       (focusout)="setFocusOut($event)"
       (blur)="onBlur($event)"
       (keyup)="handleKeyPress($event, validator)"
-      (keydown)="handleKeyDown($event)"
+      (keypress)="variant === 'number' ? numberOnly($event, titleInput) : null"
       (paste)="onPaste($event, validator)"
       (drop)="onDrop($event, validator)"
       value="{{ value }}"
@@ -70,9 +72,7 @@
       [maxlength]="maxlength"
       [isEnabled]="enableValidator"
       [complexityControl]="complexityControl"
-      [variant]="
-        variant === 'password' || variant === 'email' ? 'text' : 'counter'
-      "
+      [variant]="validatorVariant"
       [validField]="(maxNumber || variant === 'date') && !validField"
       [error]="error"
       #validator

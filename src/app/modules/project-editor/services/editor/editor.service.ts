@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { UserService } from 'src/app/modules/auth/services/user/user.service'
 
 import {
   Project,
@@ -10,7 +11,9 @@ import {
   statusId,
   Step,
   StepState,
+  Type,
 } from 'src/app/modules/project-editor/constants/model/project.model'
+import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { unfreeze } from 'src/app/shared/utility/object.utility'
 import { SubSink } from 'src/app/shared/utility/subsink.utility'
 import {
@@ -27,7 +30,8 @@ import { StepStatusEntityService } from '../../store/entity/step-status/step-sta
   providedIn: 'root',
 })
 export class EditorService {
-  projectId: number
+  experienceId: number
+  experienceType: Type
   project$: Observable<Project>
   activities$: Observable<Activity[]>
   activity$: Observable<Activity>
@@ -53,20 +57,24 @@ export class EditorService {
 
   constructor(
     private projectsService: ProjectEntityService,
-    private stepStatusService: StepStatusEntityService,
     private projectListService: ProjectListEntityService,
-    private router: Router
+    private stepStatusService: StepStatusEntityService,
+    private router: Router,
+    private userService: UserService
   ) {}
 
-  getProject(projectId: string | number): void {
-    if (projectId !== 'create') {
-      if (!/^\d+$/.test(projectId?.toString())) {
+  getProject(experienceId: string | number, type?: Type): void {
+    if (type) {
+      this.experienceType = type
+    }
+    if (experienceId !== 'create') {
+      if (!/^\d+$/.test(experienceId?.toString())) {
         this.router.navigate(['not-found'])
       } else {
         this.project$ = this.projectsService.entities$.pipe(
           map((projects) =>
             projects.find((project) => {
-              return project.id === +projectId
+              return project.id === +experienceId
             })
           )
         )
@@ -75,16 +83,23 @@ export class EditorService {
         )
         this.subscriptions.sink = this.project$.subscribe((project) => {
           if (project) {
-            this.projectId = project.id
-            this.project = project
-            this.notFound = false
-            this.titleData = { id: project.id, title: project.title }
-            this.getStepsStatus()
+            if (
+              project.type.split('_').join('-').toLowerCase() ===
+              this.getExperienceUrl()
+            ) {
+              this.experienceId = project.id
+              this.project = project
+              this.notFound = false
+              this.titleData = { id: project.id, title: project.title }
+              this.getStepsStatus()
+            } else {
+              this.router.navigate(['not-found'])
+            }
           } else {
-            this.projectsService.getByKey(projectId.toString())
             this.notFound = true
           }
         })
+        this.projectsService.getByKey(experienceId.toString())
       }
     }
     this.loading$ = this.projectsService.loading$
@@ -93,6 +108,7 @@ export class EditorService {
         this.loaded$.next(true)
       }
     })
+    this.projectListService.clearCache() // To clear project list store
   }
 
   selectActivity(activityId: number): void {
@@ -109,6 +125,9 @@ export class EditorService {
     )
   }
 
+  setContextualhelpStep(step: number): void {
+    this.currentStep$.next(step)
+  }
   // filter data for each step
   getDataByStep(step: statusId): Observable<Project> {
     this.currentStepId = step
@@ -227,9 +246,18 @@ export class EditorService {
                 ),
               }
             case 6:
-              return {
-                creativeImage: data.creativeImage,
-                creativeTitle: data.creativeTitle,
+              if (this.experienceType === 'PROJECT') {
+                return {
+                  creativeImage: data.creativeImage,
+                  creativeTitle: data.creativeTitle,
+                }
+              } else if (this.experienceType === 'DIDACTIC_UNIT') {
+                return {
+                  synopsis: data.synopsis,
+                  synopsisImage: data.creativeImage,
+                }
+              } else {
+                break
               }
             case 7:
               return {
@@ -252,7 +280,7 @@ export class EditorService {
     this.stepStatus$ = this.stepStatusService.entities$.pipe(
       map((stepStates) =>
         stepStates.find((state) => {
-          return state.id === +this.projectId
+          return state.id === +this.experienceId
         })
       )
     )
@@ -260,8 +288,8 @@ export class EditorService {
       if (data) {
         this.updateStepStatus(data)
       } else {
-        if (this.projectId) {
-          this.stepStatusService.getWithQuery(this.projectId.toString())
+        if (this.experienceId) {
+          this.stepStatusService.getWithQuery(this.experienceId.toString())
         }
       }
     })
@@ -273,7 +301,7 @@ export class EditorService {
     this.stepStatus$ = this.stepStatusService.entities$.pipe(
       map((stepStates) =>
         stepStates.find((state) => {
-          return state.id === +this.projectId
+          return state.id === +this.experienceId
         })
       )
     )
@@ -289,7 +317,7 @@ export class EditorService {
       for (const step of this.steps) {
         if (
           step.stepid === newState.stepid &&
-          stepstatus.id === this.projectId
+          stepstatus.id === this.experienceId
         ) {
           step.state = newState.state
         }
@@ -298,24 +326,27 @@ export class EditorService {
   }
 
   handleSubmit(projectData: object): void {
-    if (!this.projectId) {
+    if (!this.experienceId) {
       // create mode
       const newProject = {
         title: '',
         ...projectData,
+        type: this.experienceType,
+        userIdLoggedIn: this.userService.getUserId(), // userId
       }
       const browserUrl = this.router.url
       this.subscriptions.sink = this.projectsService
         .add(newProject)
         .subscribe((newResProject) => {
-          this.projectListService.clearCache()
           if (browserUrl.includes('create')) {
             this.router.navigate([
-              `editor/project/${newResProject.id}/${this.currentStepId}`,
+              `editor/${this.getExperienceUrl()}/${newResProject.id}/${
+                this.currentStepId
+              }`,
             ])
           }
-          this.projectId = newResProject.id
-          this.getProject(this.projectId)
+          this.experienceId = newResProject.id
+          this.getProject(this.experienceId)
           this.handleNavigate()
           if (this.tempStatus) {
             this.tempStatus.id = newResProject.id
@@ -326,8 +357,10 @@ export class EditorService {
     } else {
       // update mode
       const updateProject = {
-        id: this.projectId,
+        id: this.experienceId,
         ...projectData,
+        type: this.experienceType,
+        userIdLoggedIn: this.userService.getUserId(), // userId
       }
       this.projectsService.update(updateProject)
     }
@@ -345,7 +378,13 @@ export class EditorService {
         // maybe in the future, we can use clone API separately if it's required
         project.updateType = 'createActivity'
         project.activities.push({ ...activity, id: null })
-        this.projectsService.update(project)
+        this.subscriptions.sink = this.projectsService
+          .update(project)
+          .subscribe((response) => {
+            this.router.navigate([
+              `/editor/project/${response.id}/activity/${response.activityCreated}/definition`,
+            ])
+          })
         break
       case 'delete':
         project.activities = this.project.activities.filter(
@@ -404,10 +443,10 @@ export class EditorService {
   }
 
   private submitStepStatus(data: any): void {
-    if (this.projectId) {
+    if (this.experienceId) {
       const dataWithId: StepState = {
         ...data,
-        id: this.projectId,
+        id: this.experienceId,
       }
       this.stepStatusService.update(dataWithId)
     } else {
@@ -419,7 +458,7 @@ export class EditorService {
   private handleNavigate(): void {
     this.getNextSectionId()
     if (this.isStepDone) {
-      if (this.projectId && this.currentStepId !== this.nextStepId) {
+      if (this.experienceId && this.currentStepId !== this.nextStepId) {
         this.currentUrl = this.router.url
         setTimeout(() => {
           this.redirectToStep(this.nextStepId, 'formSubmission')
@@ -450,7 +489,7 @@ export class EditorService {
     this.activity = null
     this.stepStatus$ = null
     this.titleData = null
-    this.projectId = null
+    this.experienceId = null
     this.currentStepId = null
     this.nextStepId = null
     this.isStepDone = false
@@ -463,51 +502,86 @@ export class EditorService {
     this.activitySubscription.unsubscribe()
   }
 
-  createSteps(): Step[] {
+  createSteps(experienceType?: Type): Step[] {
     if (!this.steps?.length) {
-      this.steps = [
-        {
-          stepid: 1,
-          state: 'PENDING',
-          name: 'STEPS_MENU.project_structure_stepsmenu_startingpoint',
-        },
-        {
-          stepid: 2,
-          state: 'PENDING',
-          name: 'STEPS_MENU.project_structure_stepsmenu_topic',
-        },
-        {
-          stepid: 3,
-          state: 'PENDING',
-          name: 'STEPS_MENU.project_structure_stepsmenu_objectives',
-        },
-        { stepid: 4, state: 'PENDING', name: 'Contenidos' },
-        {
-          stepid: 5,
-          state: 'PENDING',
-          name: 'STEPS_MENU.project_structure_stepsmenu_standards',
-        },
-        {
-          stepid: 6,
-          state: 'PENDING',
-          name: 'STEPS_MENU.project_structure_stepsmenu_creativetitle',
-        },
-        {
-          stepid: 7,
-          state: 'PENDING',
-          name: 'STEPS_MENU.project_stepsmenu_drivingquestion',
-        },
-        {
-          stepid: 8,
-          state: 'PENDING',
-          name: 'STEPS_MENU.project_structure_stepsmenu_finalproduct',
-        },
-        {
-          stepid: 9,
-          state: 'PENDING',
-          name: 'STEPS_MENU.project_structure_stepsmenu_sinopsis',
-        },
-      ]
+      if (experienceType === 'PROJECT') {
+        this.steps = [
+          {
+            stepid: 1,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_startingpoint',
+          },
+          {
+            stepid: 2,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_thematic',
+          },
+          {
+            stepid: 3,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_objectives',
+          },
+          { stepid: 4, state: 'PENDING', name: 'Contenidos' },
+          {
+            stepid: 5,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_standards',
+          },
+          {
+            stepid: 6,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_creativetitle',
+          },
+          {
+            stepid: 7,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_stepsmenu_drivingquestion',
+          },
+          {
+            stepid: 8,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_finalproduct',
+          },
+          {
+            stepid: 9,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_sinopsis',
+          },
+        ]
+      } else if (experienceType === 'DIDACTIC_UNIT') {
+        this.steps = [
+          {
+            stepid: 1,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_startingpoint',
+          },
+          {
+            stepid: 2,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_thematic',
+          },
+          {
+            stepid: 3,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_objectives',
+          },
+          {
+            stepid: 4,
+            state: 'PENDING',
+            name: 'Contenidos',
+          },
+          {
+            stepid: 5,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_standards',
+          },
+          {
+            stepid: 6,
+            state: 'PENDING',
+            name: 'STEPS_MENU.project_structure_stepsmenu_sinopsis',
+          },
+        ]
+      }
     }
     return this.steps
   }
@@ -518,12 +592,32 @@ export class EditorService {
         const intermediateUrl = this.router.url // if user switches to another route inbetween
         if (this.currentUrl === intermediateUrl) {
           this.router.navigate([
-            `editor/project/${this.projectId}/${nextStepId}`,
+            `editor/${this.getExperienceUrl()}/${
+              this.experienceId
+            }/${nextStepId}`,
           ])
         }
       } else {
-        this.router.navigate([`editor/project/${this.projectId}/${nextStepId}`])
+        this.router.navigate([
+          `editor/${this.getExperienceUrl()}/${
+            this.experienceId
+          }/${nextStepId}`,
+        ])
       }
     }
+  }
+  // Get localization Index based on Experiance Type
+  getLocalExperienceType(): number {
+    return this.experienceType === 'PROJECT'
+      ? 0
+      : this.experienceType === 'DIDACTIC_UNIT'
+      ? 1
+      : this.experienceType === 'ACTIVITY'
+      ? 2
+      : null
+  }
+
+  getExperienceUrl(): string {
+    return this.experienceType.split('_').join('-').toLowerCase()
   }
 }

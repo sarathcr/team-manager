@@ -1,8 +1,31 @@
-<div class="search">
+<div
+  class="search"
+  [ngClass]="{ 'w-100': fullWidth, customClass: customClass }"
+>
   <input
-    type="text"
+    [type]="type === 'number' ? 'text' : type"
     class="search__input"
+    [ngClass]="{ search_focus: focus, search_error: isValidated && !isValid }"
     [placeholder]="!focus ? placeholder : ''"
+    [(ngModel)]="text"
+    (ngModelChange)="onSearchText($event)"
+    (keypress)="type === 'number' ? numberOnly($event, searchInput) : null"
+    (blur)="setFocus(false)"
+    (focus)="setFocus(true)"
+    #searchInput
   />
   <span class="icon-ic_search search__icon"></span>
+  <ng-container *ngIf="isValidated">
+    <span
+      *ngIf="isValid"
+      class="icon icon-ic_check search__valid search__valid_check"
+    ></span>
+    <span
+      *ngIf="!isValid"
+      class="icon icon-ic_share_close search__valid search__valid_error"
+    ></span>
+  </ng-container>
+  <div *ngIf="isValidated && !isValid" class="search__errortext">
+    {{ errorText | translate }}
+  </div>
 </div>

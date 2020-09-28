@@ -1,1 +1,1 @@
-export type PresentationCardvariant = 'create' | 'default'
+export type PresentationCardvariant = 'create' | 'default' | 'project'

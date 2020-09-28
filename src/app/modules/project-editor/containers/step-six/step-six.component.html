@@ -7,12 +7,23 @@
         >{{ 'RETHINK_TITLE.project_rethinktitle_title' | translate }}
         <app-info-tooltip id="step-six-info-tooltip"></app-info-tooltip>
       </h1>
-      <p
-        class="project-form__description"
-        [innerHTML]="
-          'RETHINK_TITLE.project_rethinktitle_description' | translate
-        "
-      ></p>
+      <p class="project-form__description">
+        {{
+          'RETHINK_TITLE.project_rethinktitle_description'
+            | translate
+            | TranslateCut: 0
+        }}
+        <span>{{
+          'VARIABLES.experience_type_variable_4'
+            | translate
+            | TranslateCut: localExperienceType
+        }}</span>
+        <span>{{
+          'RETHINK_TITLE.project_rethinktitle_description'
+            | translate
+            | TranslateCut: 1
+        }}</span>
+      </p>
       <div class="project-editor__input-wrapper">
         <app-input
           id="step-six-input"

@@ -35,7 +35,11 @@ storiesOf('Shared|Material Card', module)
     [showSwitch]="showSwitch" 
     [switchOn]="switchOn" 
     [canDelete]="canDelete" 
-    [draggable]="draggable">
+    [draggable]="draggable"
+    [enableShadow]="enableShadow"
+    [enableBorder]="enableBorder"
+    [entityType]="entityType"
+    >
     </app-material-card>
    <div>`,
     styles: [
@@ -60,13 +64,31 @@ storiesOf('Shared|Material Card', module)
       ),
       variant: select(
         'Variant',
-        ['VIDEO', 'IMAGE', 'FORM', 'EVALUATION', 'PREVIEW', 'WEB'],
+        [
+          'VIDEO',
+          'IMAGE',
+          'FORM',
+          'PREVIEW',
+          'WEB',
+          'OTHER',
+          'DOCUMENT',
+          'PRESENTATION',
+          'SHEET',
+          'INSTRUMENTUPLOAD',
+        ],
         'IMAGE'
       ),
-      size: select('Size', ['medium', 'small'], 'medium'),
+      size: select('Size', ['normal', 'small', 'large'], 'normal'),
       showSwitch: boolean('Show Switch', true),
       switchOn: boolean('Switch is On by default?', true),
       canDelete: boolean('Delete X is shown?', true),
       draggable: boolean('Draggable icon is shown?', true),
+      enableShadow: boolean('Show Shadow', false),
+      enableBorder: boolean('Show Border', false),
+      entityType: select(
+        'Entity Type',
+        ['material', 'exercise', 'instrument'],
+        'material'
+      ),
     },
   }))

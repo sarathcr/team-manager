@@ -6,7 +6,7 @@
   <tabset class="contextual-help__tabset">
     <tab
       customClass="contextual-help__tabset-item contextual-help__tabset-item_multi-icon"
-      [active]="false"
+      [active]="activetab"
       (selectTab)="openTab($event)"
     >
       <ng-template tabHeading>
@@ -34,12 +34,12 @@
           *ngIf="loaded"
           [content]="help"
           [isOpen]="closeContext"
-          [isSetOne]="isSetOne"
         >
         </app-help-accordion>
       </div>
     </tab>
-    <!-- <tab customClass="contextual-help__tabset-item" (selectTab)="openTab($event)">
+    <!-- 
+      <tab customClass="contextual-help__tabset-item" (selectTab)="openTab($event)">
       <ng-template tabHeading>
         <span class="icon icon-ic_message"></span>
       </ng-template>

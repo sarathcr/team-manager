@@ -29,6 +29,23 @@
   // We deliberately don't use `-webkit-overflow-scrolling: touch;` due to a
   // gnarly iOS Safari bug: https://bugs.webkit.org/show_bug.cgi?id=158342
   // See also https://github.com/twbs/bootstrap/issues/17695
+
+  .modal-dialog-right {
+    position: fixed;
+    right: 0;
+    width: 470px !important;
+    top: 0;
+    height: 100vh;
+    z-index: 1;
+    border-radius: unset !important;
+    margin: unset !important;
+    .modal-content {
+      border-radius: unset !important;
+    }
+    .modal-layout__close {
+      margin-right: 30px;
+    }
+  }
 }
 
 // Shell div to position the modal with bottom padding

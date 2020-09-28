@@ -15,18 +15,18 @@ A convenience directive for applying styling to a google card.
 ### With properties
 
 ```js
-<app-google-card [title]="" [subtitle]="" [variant]="'doc'" ></app-google-card>
+<app-google-card [cardTitle]="" [cardSubtitle]="" [variant]="'DOCUMENT'" ></app-google-card>
 ```
 
 ## Properties
 
 ### Input
 
-| Name       | Type     | Required | Values                              |    Default    | Description                              |
-| ---------- | -------- | :------: | ----------------------------------- | :-----------: | ---------------------------------------- |
-| `Title`    | `text`   |    -     | -                                   |  `Documento`  | title the element                        |
-| `Subtitle` | `text`   |    -     | -                                   | `Google Docs` | subtitle the element                     |
-| `Variant`  | `option` |    -     | `slide` `site` `doc` `form` `sheet` |     `doc`     | To show image, video, form or evaluation |
+| Name           | Type     | Required | Values                                                                       | Default | Description                              |
+| -------------- | -------- | :------: | ---------------------------------------------------------------------------- | :-----: | ---------------------------------------- |
+| `cardTitle`    | `text`   |    -     | -                                                                            |    -    | title the element                        |
+| `cardSubtitle` | `text`   |    -     | -                                                                            |    -    | subtitle the element                     |
+| `Variant`      | `option` |    -     | `PRESENTATION` `WEB` `DOCUMENT` `SHEET` `FORM` `RUBRICA` `CHECKLIST` `DIANA` |    -    | To show image, video, form or evaluation |
 
 ## Note
 

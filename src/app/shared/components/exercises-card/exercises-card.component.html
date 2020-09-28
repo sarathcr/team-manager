@@ -22,12 +22,20 @@
   <div class="mb-5" *ngIf="materials?.length">
     <ng-container *ngFor="let material of materials">
       <app-material-card
-        [label]="material.fileType"
-        [title]="material.title"
-        variant="FORM"
-        size="medium"
+        customClass="mb-5"
+        [label]="material.fileType | FiletypeTranslate | translate"
+        [title]="material.title | FileName: material.sourceType"
+        [thumbnail]="material.previewImageUrl"
+        [entityType]="material.entityType"
+        [variant]="material.fileType"
+        [link]="material.url"
         [canDelete]="false"
+        [enableBorder]="true"
+        [enableShadow]="false"
       ></app-material-card>
     </ng-container>
+  </div>
+  <div class="creation__icon_draggable">
+    <span class="icon icon-ic_drag"></span>
   </div>
 </div>

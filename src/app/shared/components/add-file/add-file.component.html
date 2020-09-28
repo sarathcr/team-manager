@@ -35,13 +35,19 @@
   </div>
   <app-material-card
     *ngIf="addedFile"
+    size="large"
     [link]="fileURL"
     [label]="typeFile"
+    [thumbnail]="entityType === 'instrument' ? '' : thumbnail"
+    [entityType]="entityType"
     [title]="nameFile"
-    [variant]="'OTHER'"
+    variant="PREVIEW"
     [canDelete]="true"
     [validPreviewLink]="true"
-    (delete)="onDelete()"
+    [enableShadow]="false"
+    [enableBorder]="true"
+    [displayFiletype]="true"
+    (delete)="clearData()"
   ></app-material-card>
 </ng-template>
 <app-button

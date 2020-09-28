@@ -21,7 +21,7 @@ export class ActivityEditorComponent
   activity: Activity
   activityId: string
   projectId: number
-  contextualStatus = false
+  contextualStatus = true
   headerHeight: number
   currentComponent: string
   pageType: string
@@ -33,7 +33,7 @@ export class ActivityEditorComponent
 
   ngOnInit(): void {
     this.getActivity()
-    this.projectId = this.editor.projectId
+    this.projectId = this.editor.experienceId
   }
 
   ngAfterViewInit(): void {

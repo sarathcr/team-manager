@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { TranslateModule } from '@ngx-translate/core'
 
 import { ActivityEditorHeaderComponent } from './activity-editor-header.component'
 
@@ -9,6 +10,7 @@ describe('ActivityEditorHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ActivityEditorHeaderComponent],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents()
   }))
 

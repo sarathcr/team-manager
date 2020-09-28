@@ -16,6 +16,8 @@ import { CurriculumGradesDataService } from './entity/curriculum-grades/curricul
 import { CurriculumGradesEntityService } from './entity/curriculum-grades/curriculum-grades-entity.service'
 import { CurriculumDataService } from './entity/curriculum/curriculum-data.service'
 import { CurriculumEntityService } from './entity/curriculum/curriculum-entity.service'
+import { DriveFileDataService } from './entity/drive-file/drive-file-data.service'
+import { DriveFileEntityService } from './entity/drive-file/drive-file-entity.service'
 import { entityMetadata } from './entity/entity-metadata'
 import { EvaluationCriteriaDataService } from './entity/evaluation-criteria/evaluation-criteria-data.service'
 import { EvaluationCriteriaEntityService } from './entity/evaluation-criteria/evaluation-criteria-entity.service'
@@ -33,6 +35,8 @@ import { StepStatusDataService } from './entity/step-status/step-status-data.ser
 import { StepStatusEntityService } from './entity/step-status/step-status-entity.service'
 import { StudentGroupsDataService } from './entity/student-groups/student-groups-data.service'
 import { StudentGroupsEntityService } from './entity/student-groups/student-groups-entity.service'
+import { SubjectDataService } from './entity/subjects/subject-data.service'
+import { SubjectEntityService } from './entity/subjects/subject-entity.service'
 import { TeachingStrategyDataService } from './entity/teaching-strategy/teaching-strategy-data.service'
 import { TeachingStrategyEntityService } from './entity/teaching-strategy/teaching-strategy-entity.service'
 
@@ -70,8 +74,12 @@ import { TeachingStrategyEntityService } from './entity/teaching-strategy/teachi
     StudentGroupsEntityService,
     TeachingStrategyDataService,
     TeachingStrategyEntityService,
+    DriveFileDataService,
+    DriveFileEntityService,
     BlockContentDataService,
     BlockContentEntityService,
+    SubjectEntityService,
+    SubjectDataService,
   ],
 })
 export class ProjectEditorStoreModule {
@@ -83,6 +91,7 @@ export class ProjectEditorStoreModule {
     private countryDataService: CountryDataService,
     private regionDataService: RegionDataService,
     private academicYearDataService: AcademicYearDataService,
+    private subjectDataService: SubjectDataService,
     private stepStatusDataService: StepStatusDataService,
     private blockDataService: BlockDataService,
     private evaluatioCriteriaDataService: EvaluationCriteriaDataService,
@@ -93,6 +102,7 @@ export class ProjectEditorStoreModule {
     private curriculumGradesDataService: CurriculumGradesDataService,
     private studentGroupsDataService: StudentGroupsDataService,
     private teachingStrategyDataService: TeachingStrategyDataService,
+    private driveFileService: DriveFileDataService,
     private blockContentDataService: BlockContentDataService,
     projectEditorToastService: ProjectEditorToastService
   ) {
@@ -103,6 +113,7 @@ export class ProjectEditorStoreModule {
       Country: countryDataService,
       Region: regionDataService,
       AcademicYear: academicYearDataService,
+      Subject: subjectDataService,
       StepStatus: stepStatusDataService,
       Block: blockDataService,
       EvaluationCriteria: evaluatioCriteriaDataService,
@@ -113,6 +124,7 @@ export class ProjectEditorStoreModule {
       CurriculumGrades: curriculumGradesDataService,
       StudentGroups: studentGroupsDataService,
       TeachingStrategy: teachingStrategyDataService,
+      DriveFile: driveFileService,
       BlockContent: blockContentDataService,
     })
   }

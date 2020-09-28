@@ -40,18 +40,21 @@
       'material-link__preview-content_border': status === 'loading'
     }"
     *ngIf="
-      linkContent?.imageUrl ||
+      linkContent?.title ||
       status === 'loading' ||
       (!inputTextChange && status === 'failed')
     "
   >
     <app-material-card
       variant="PREVIEW"
+      [size]="status !== 'failed' ? 'large' : 'small'"
       [validPreviewLink]="status !== 'failed'"
       [loading]="status === 'loading'"
       [thumbnail]="linkContent?.imageUrl"
       [title]="linkContent?.title"
       [link]="linkContent?.url"
+      [enableBorder]="true"
+      [enableShadow]="false"
       (delete)="resetAll()"
     ></app-material-card>
     <app-loader *ngIf="status === 'loading'"></app-loader>

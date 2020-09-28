@@ -41,16 +41,19 @@
         'ACTIVITY_CREATION.activity_creation_materials_description' | translate
       }}
     </p>
+
     <ng-container *ngIf="activity?.referenceMaterials?.length">
       <div *ngFor="let material of activity.referenceMaterials" class="mb-7">
         <app-material-card
           [link]="material.url"
           [thumbnail]="material.previewImageUrl"
-          [label]="material.fileType"
-          [title]="material.title"
+          [label]="material.fileType | FiletypeTranslate | translate"
+          [title]="material.title | FileName: material.sourceType"
           [draggable]="true"
           [showSwitch]="true"
+          [variant]="material.fileType"
           [switchOn]="material.visible"
+          [sourceType]="material.sourceType"
           (switch)="changeVisibility(material.id, $event)"
           (delete)="deleteMaterial(material.id)"
         ></app-material-card>
@@ -62,6 +65,7 @@
       icon="add"
       size="small"
       (click)="openModal(addMaterial)"
+      id="add-material-button"
     >
       {{
         'ACTIVITY_CREATION.activity_creation_materials_button_add'
@@ -83,7 +87,7 @@
       <app-exercises-card
         [title]="excercise.name"
         [description]="excercise.statement"
-        [materials]="excercise.referenceMaterials"
+        [materials]="getAllExcerciseMaterials(excercise)"
         (editExercise)="handleExerciseEdit(excercise)"
       ></app-exercises-card>
     </ng-container>
@@ -93,6 +97,7 @@
       icon="add"
       size="small"
       (click)="openModal(excerciseModal)"
+      id="add-excercise-button"
     >
       {{
         'ACTIVITY_CREATION.activity_creation_exercises_button_add'
@@ -146,31 +151,34 @@
 <ng-template #addMaterial>
   <app-modal-layout
     class="add-material"
-    [modalTitle]="currentMaterialView === 1 ? 'ADD_MATERIAL.material_add_title' : ''"
+    [modalTitle]="
+      currentMaterialView === 1 ? 'ADD_MATERIAL.material_add_title' : ''
+    "
     [titleLighten]="true"
     [hasClose]="currentMaterialView != 3"
     [buttonSize]="currentMaterialView === 3 ? 'small' : 'default'"
     [confirmLabel]="
-      currentMaterialView == 3
-        ? 'ADD_MATERIAL.material_add_checktemplates_button_create'
-        : activeMaterialTab == 1
+      activeMaterialTab == 1 && currentMaterialView !== 3
         ? 'ADD_MATERIAL.material_add_button_add'
         : ''
     "
     [backLabel]="
-      currentMaterialView == 2 ? 'ACTIVITY_HEADER.activity_header_button_back' : ''
+      currentMaterialView == 2
+        ? 'ACTIVITY_HEADER.activity_header_button_back'
+        : ''
     "
     [isDisabled]="
-      currentMaterialView === 1 && activeMaterialTab === 1 && referenceMaterial.status !== 'success'
+      currentMaterialView === 1 &&
+      activeMaterialTab === 1 &&
+      referenceMaterial.status !== 'success'
     "
-    (decline)="closeModal()"
+    (decline)="closeModal('material')"
     (confirm)="onMaterialConfirm()"
     (backClick)="previousMaterialView()"
   >
     <app-add-material
-      (confirmModal)="addMaterials($event)"
+      entityType="activity"
       (declineModal)="closeModal()"
-
       [referenceMaterial]="referenceMaterial"
       [activeMaterialTab]="activeMaterialTab"
       [currentMaterialView]="currentMaterialView"

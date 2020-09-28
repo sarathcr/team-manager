@@ -20,7 +20,7 @@ describe('GoogleCardComponent', (): void => {
     component = fixture.componentInstance
     component.title = 'Lorem ipsum'
     component.subtitle = 'Dolor sic senet'
-    component.variant = 'doc'
+    component.variant = 'DOC'
 
     fixture.detectChanges()
   })

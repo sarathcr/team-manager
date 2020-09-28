@@ -1,6 +1,6 @@
 {
   "MATERIAL": {
-    "activity_material_switch_forstudent": "Visible para el alumno",
+    "activity_material_switch_forstudent": "Visible para el alumnado",
     "activity_material_switch_forteacher": "Sólo visible para el profesor",
     "material_card_label": "Google Forms",
     "material_card_title": "Cuestionario sobre la Edad Media - 4º ESO",
@@ -56,7 +56,11 @@
     "material_add_device_title": "Arrastra un archivo aquí.",
     "material_add_device_or": "o bien",
     "material_add_device_button": "Selecciona desde carpeta",
-    "material_add_device_uploaded": "Archivo subido"
+    "material_add_device_uploaded": "Archivo subido",
+    "material_type_video": "Vídeo",
+    "material_type_image": "Imagen",
+    "material_type_pdf": "PDF",
+    "material_type_archivo": "Archivo"
   },
   "EXERCISES_CARD": {
     "exercises_card_title": "¿Cuánto sabes de la Edad Media?",

@@ -1,19 +1,24 @@
-<ng-template #loaded>
-  <div class="project-editor__form step-three" id="step-three">
-    <app-step-status
-      id="step-three-status"
-      [status]="step.state"
-    ></app-step-status>
-    <div class="project-form d-flex flex-column justify-content-between">
-      <div>
-        <h1 class="project-form__title title_s">
-          <span class="project-form__title-number">3.</span
-          >{{ 'OBJECTIVES.project_objectives_title' | translate }}
-          <app-info-tooltip id="step-three-info-tooltip"></app-info-tooltip>
-        </h1>
-        <p class="project-form__description">
-          {{ 'OBJECTIVES.project_objectives_description' | translate }}
-        </p>
+<div class="project-editor__form step-three" id="step-three">
+  <app-step-status
+    id="step-three-status"
+    [status]="step.state"
+  ></app-step-status>
+  <div class="project-form d-flex flex-column justify-content-between">
+    <div>
+      <h1 class="project-form__title title_s">
+        <span class="project-form__title-number">3.</span
+        >{{ 'OBJECTIVES.project_objectives_title' | translate }}
+        <app-info-tooltip id="step-three-info-tooltip"></app-info-tooltip>
+      </h1>
+      <p class="project-form__description">
+        {{ 'OBJECTIVES.project_objectives_description' | translate }}
+      </p>
+
+      <app-loader
+        id="step-three-loader"
+        *ngIf="loading; else loaded"
+      ></app-loader>
+      <ng-template #loaded>
         <app-step-unlock
           id="step-three-step-unlock"
           *ngIf="!(editor.project$ | async)?.subjects?.length; else hasSubjects"
@@ -22,6 +27,14 @@
           [buttonLink]="'../1'"
         ></app-step-unlock>
         <ng-template #hasSubjects>
+          <h2 class="project-form__title_criterion mb-1">
+            {{ 'OBJECTIVES.project_objectives_criterion_title' | translate }}
+          </h2>
+          <p class="mb-5">
+            {{
+              'OBJECTIVES.project_objectives_criterion_description' | translate
+            }}
+          </p>
           <div class="project-editor__subject-wrapper">
             <app-details-selector
               id="step-three-details-selector-{{ i }}"
@@ -61,16 +74,19 @@
           </div>
           <div class="project-editor__transevaluation">
             <h2 class="title_xs project-editor__title">
-              {{
-                'OBJECTIVES.project_objectives_objectives_subtitle.subtitle'
-                  | translate
-              }}
+              {{ 'OBJECTIVES.project_objectives_objectives_title' | translate }}
             </h2>
             <p class="project-form__sub-description mb-6">
               {{
-                'OBJECTIVES.project_objectives_objectives_subtitle.description'
+                'OBJECTIVES.project_objectives_objectives_description'
                   | translate
+                  | TranslateCut: 0
               }}
+              <span class="d-block">{{
+                'OBJECTIVES.project_objectives_objectives_description'
+                  | translate
+                  | TranslateCut: 1
+              }}</span>
             </p>
             <div class="mb-5">
               <app-editable-list
@@ -96,25 +112,24 @@
             </div>
           </div>
         </ng-template>
-      </div>
-      <app-button
-        id="step-three-button"
-        [disabled]="buttonConfig.disabled || !project.subjects?.length"
-        [theme]="buttonConfig.submitted ? 'success' : 'primary'"
-        [icon]="'tick'"
-        (click)="handleSubmit('DONE')"
-      >
-        {{
-          (buttonConfig.submitted
-            ? buttonConfig.successLabel
-            : buttonConfig.label
-          ) | translate
-        }}
-      </app-button>
+      </ng-template>
     </div>
+    <app-button
+      id="step-three-button"
+      [disabled]="buttonConfig.disabled || !project.subjects?.length"
+      [theme]="buttonConfig.submitted ? 'success' : 'primary'"
+      [icon]="'tick'"
+      (click)="handleSubmit('DONE')"
+    >
+      {{
+        (buttonConfig.submitted
+          ? buttonConfig.successLabel
+          : buttonConfig.label
+        ) | translate
+      }}
+    </app-button>
   </div>
-</ng-template>
-<app-loader id="step-three-loader" *ngIf="loading; else loaded"></app-loader>
+</div>
 
 <ng-template #modalDelete>
   <app-modal-info

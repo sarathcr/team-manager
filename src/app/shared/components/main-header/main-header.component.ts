@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { Router } from '@angular/router'
 import { User } from 'src/app/modules/auth/constants/model/login'
 import { AuthService } from 'src/app/modules/auth/services/auth.service'
@@ -11,9 +11,12 @@ import { DropdownElement } from '../../constants/model/form-elements.model'
 })
 export class MainHeaderComponent {
   isShow = false
-  @Input() user: User
+  @Input() userType: string
   @Input() imgUrl: string
   @Input() buttonText: string
+  @Input() back = false
+  @Input() title = ''
+  @Input() username = ''
   profileDropdown: DropdownElement[] = [
     {
       icon: 'icon-ic_user',
@@ -29,8 +32,12 @@ export class MainHeaderComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onDropdownSelect(data: DropdownElement): void {
-    if (data.action === 'logout') {
-      this.authService.logout()
+    switch (data.action) {
+      case 'logout':
+        this.authService.logout()
+        break
+      case 'profile':
+        this.router.navigate(['/profile/details'])
     }
   }
 }

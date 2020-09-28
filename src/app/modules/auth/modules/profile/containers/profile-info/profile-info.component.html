@@ -1,0 +1,179 @@
+<div class="profile-main">
+  <app-main-header
+    back="true"
+    [imgUrl]="imageUrl"
+    [buttonText]="'PRIVATEHOME_GENERAL.home_header_button_upgrade'"
+    [title]="title"
+    [username]="user?.name"
+    id="profile-info-header"
+  ></app-main-header>
+  <app-main-sidebar id="profile-info-sidebar">
+    <div class="profile-sidebar">
+      <h2 class="title_default" text="">
+        {{ 'PRIVATEHOME_PROFILE.profile_dropdown_option_profile' | translate }}
+      </h2>
+      <app-sidebar-menu
+        icon="icon icon-ic_data"
+        text="PRIVATEHOME_PROFILE.profile_menu_profile_data"
+        link="/profile/details"
+      ></app-sidebar-menu>
+      <app-sidebar-menu
+        icon="icon icon-ic_preferences"
+        text="PRIVATEHOME_PROFILE.profile_menu_profile_preferences"
+        link="/profile/preferences"
+        [updated]="true"
+      ></app-sidebar-menu>
+    </div>
+    <div class="profile-sidebar">
+      <h2 class="title_default">
+        {{ 'PRIVATEHOME_PROFILE.profile_menu_workplace' | translate }}
+      </h2>
+      <app-sidebar-menu
+        icon="icon icon-ic_users"
+        text="PRIVATEHOME_PROFILE.profile_menu_workplace_users"
+        link="/profile/details"
+      ></app-sidebar-menu>
+    </div>
+  </app-main-sidebar>
+
+  <div class="profile-info">
+    <div
+      class="profile-info-empty profile-info_transparent"
+      *ngIf="!hasData; else showData"
+    >
+      <span class="title_primary">{{
+        'PRIVATEHOME_PROFILE.profile_empty_title' | translate
+      }}</span>
+      <p class="profile-info__description">
+        {{ 'PRIVATEHOME_PROFILE.profile_empty_description' | translate }}
+      </p>
+      <app-button
+        class="profile-info__btn"
+        routerLink="/profile/setup"
+        id="profile-info-empty-button"
+        >{{
+          'PRIVATEHOME_PROFILE.profile_empty_button' | translate
+        }}</app-button
+      >
+    </div>
+    <ng-template #showData>
+      <div class="profile-info-data profile-info_solid">
+        <app-tabset
+          [tabs]="tabsData"
+          (activeTab)="getActiveTab($event)"
+          variant="profile"
+          class="w-100"
+          id="profile-info-tabset"
+        ></app-tabset>
+        <div class="tabs" *ngIf="activeTab === 0">
+          <div class="tabs-col">
+            <div class="tabs-col__box">
+              <span class="tabs-col__box-items"
+                ><strong>{{
+                  'PRIVATEHOME_HEADER.home_sort_option_name' | translate
+                }}</strong></span
+              >
+              <span class="tabs-col__box-items"
+                ><strong>{{
+                  'PROFILESETUP.user_surname_label' | translate
+                }}</strong></span
+              >
+              <span class="tabs-col__box-items"
+                ><strong>{{
+                  'PROFILESETUP.user_phone_label' | translate
+                }}</strong></span
+              >
+              <span class="tabs-col__box-items"
+                ><strong>{{
+                  'PROFILESETUP.user_country_label' | translate
+                }}</strong></span
+              >
+              <span class="tabs-col__box-items"
+                ><strong>{{
+                  'PROFILESETUP.user_region_label' | translate
+                }}</strong></span
+              >
+              <span class="tabs-col__box-items"
+                ><strong>{{
+                  'PROFILESETUP.user_role_placeholder' | translate
+                }}</strong></span
+              >
+            </div>
+            <div class="tabs-col__box tabs-col__box_second">
+              <span class="tabs-col__box-items">{{ user?.name }}</span>
+              <span class="tabs-col__box-items">{{ user?.surName }}</span>
+              <span class="tabs-col__box-items">{{ user?.phonenumber }}</span>
+              <span class="tabs-col__box-items">{{ user?.country?.name }}</span>
+              <span class="tabs-col__box-items">{{ user?.region?.name }}</span>
+              <span class="tabs-col__box-items">{{ user?.role }}</span>
+            </div>
+          </div>
+          <div class="tabs-col">
+            <div class="tabs-col__avatar">
+              <app-profile-pic
+                title="PROFILE.user_photo"
+                [userName]="
+                  user?.name + (user?.surName ? ' ' + user?.surName : '')
+                "
+                (fileSelect)="updateAvatar($event)"
+                [imgUrl]="user?.imageUrl"
+                id="profile-info-profile-pic"
+              ></app-profile-pic>
+            </div>
+          </div>
+        </div>
+        <div class="tabs" *ngIf="activeTab === 1">
+          <div class="tabs-col">
+            <div class="tabs-col__box">
+              <span class="tabs-col__box-items"
+                ><strong>{{
+                  'PROFILE.profile_data_center_name' | translate
+                }}</strong></span
+              >
+              <span class="tabs-col__box-items"
+                ><strong>{{
+                  'PROFILE.profile_data_center_name' | translate
+                }}</strong></span
+              >
+            </div>
+            <div class="tabs-col__box tabs-col__box_second">
+              <span class="tabs-col__box-items">{{ user?.center?.name }}</span>
+              <span class="tabs-col__box-items">{{
+                user?.center?.address
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <div class="profile-info__footer">
+      <h2 class="title_default profile-info__footer-title">
+        {{ 'PROFILE.profile_data_login' | translate }}
+      </h2>
+      <div class="profile-info__footer-row">
+        <app-profile-row
+          label="LOGIN.login_label_email"
+          [data]="email"
+          id="profile-row-email"
+        ></app-profile-row>
+      </div>
+      <div class="profile-info__footer-row">
+        <app-profile-row
+          label="LOGIN.login_label_password"
+          data="******"
+          id="profile-row-password"
+        ></app-profile-row>
+      </div>
+      <h2 class="title_default profile-info__footer-title">
+        {{ 'PROFILE.profile_edit_title' | translate }}
+      </h2>
+      <p class="profile-info__footer-modify">
+        {{ 'PROFILE.profile_edit_description' | translate }}
+        <span class="profile-info__footer-modify_highlighted"
+          >info@thinkoeducation.com</span
+        >
+      </p>
+    </div>
+  </div>
+</div>

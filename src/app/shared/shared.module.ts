@@ -4,13 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { TranslateModule } from '@ngx-translate/core'
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown'
+import { AccordionModule } from 'ngx-bootstrap/accordion'
+import { NgScrollbarModule } from 'ngx-scrollbar'
 
 import { LanguageSelectorComponent } from './components/language-selector/language-selector.component'
 import { MainHeaderComponent } from './components/main-header/main-header.component'
 import { MainSidebarComponent } from './components/main-sidebar/main-sidebar.component'
 
 // lib's
-import { GoogleLoginProvider, SocialAuthServiceConfig } from 'angularx-social-login'
+import {
+  GoogleLoginProvider,
+  SocialAuthServiceConfig,
+} from 'angularx-social-login'
 import { AlertModule } from 'ngx-bootstrap/alert'
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown'
 import { BsModalRef, ModalModule } from 'ngx-bootstrap/modal'
@@ -32,6 +37,7 @@ import { ImageUploadComponent } from './components/image-upload/image-upload.com
 import { InfoToolTipComponent } from './components/info-tooltip/info-tooltip.component'
 import { InputComponent } from './components/input/input.component'
 import { LayoutCoverComponent } from './components/layout-cover/layout-cover.component'
+import { ListboxComponent } from './components/listbox/listbox.component'
 import { LoaderComponent } from './components/loader/loader.component'
 import { MaterialCardComponent } from './components/material-card/material-card.component'
 import { MaterialLinkComponent } from './components/material-link/material-link.component'
@@ -41,17 +47,32 @@ import { ModalLayoutComponent } from './components/modal-layout/modal-layout.com
 import { NotFoundComponent } from './components/not-found/not-found.component'
 import { PaginationComponent } from './components/pagination/pagination.component'
 import { PresentationCardComponent } from './components/presentation-card/presentation-card.component'
+import { RadioComponent } from './components/radio/radio.component'
 import { SearchComponent } from './components/search/search.component'
 import { SelectComponent } from './components/select/select.component'
+import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component'
 import { SwitchComponent } from './components/switch/switch.component'
 import { TabsetComponent } from './components/tabset/tabset.component'
 import { TextareaComponent } from './components/textarea/textarea.component'
 import { ValidatorComponent } from './components/validator/validator.component'
+
+// Pipes
+import { FileName } from './pipe/filename-trim.pipe'
+import { FiletypeTranslate } from './pipe/filetype-translate.pipe'
+import { ListFilter } from './pipe/list-filter.pipe'
+import { SafePipe } from './pipe/safe.pipe'
 import { TranslateCut, TranslateOptions } from './pipe/translate-cut.pipe'
+
+// Services
 import { AwsImgUploadService } from './services/aws-img-upload/aws-img-upload.service'
 import { GoogleAuthService } from './services/google/google-auth.service'
+import { GoogleFileService } from './services/google/google-file.service'
 
+// Environment
 import { environment } from 'src/environments/environment'
+import { ProfilePicComponent } from './components/profile-pic/profile-pic.component'
+
+import { CheckCount } from '../modules/project-editor/pipes/check-count.pipe'
 @NgModule({
   declarations: [
     MainHeaderComponent,
@@ -89,6 +110,15 @@ import { environment } from 'src/environments/environment'
     DropdownSelectComponent,
     FilterComponent,
     SearchComponent,
+    SafePipe,
+    FileName,
+    FiletypeTranslate,
+    SidebarMenuComponent,
+    ListboxComponent,
+    RadioComponent,
+    ListFilter,
+    ProfilePicComponent,
+    CheckCount,
   ],
   imports: [
     CommonModule,
@@ -96,12 +126,14 @@ import { environment } from 'src/environments/environment'
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
     BsDropdownModule.forRoot(),
+    AccordionModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     NgMultiSelectDropDownModule,
     RouterModule,
     AlertModule.forRoot(),
     NgxDropzoneModule,
+    NgScrollbarModule,
   ],
   exports: [
     MainHeaderComponent,
@@ -138,21 +170,35 @@ import { environment } from 'src/environments/environment'
     DropdownSelectComponent,
     FilterComponent,
     SearchComponent,
+    SafePipe,
+    FileName,
+    FiletypeTranslate,
+    SidebarMenuComponent,
+    ListboxComponent,
+    ListFilter,
+    ProfilePicComponent,
+    CheckCount,
   ],
-  providers: [BsModalRef, AwsImgUploadService, GoogleAuthService, {
-    provide: 'SocialAuthServiceConfig',
-    useValue: {
-      autoLogin: false,
-      providers: [
-        {
-          id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider(
-            environment.googleId,
-            environment.googleLoginOptions
-          ),
-        },
-      ],
-    } as SocialAuthServiceConfig,
-  }],
+  providers: [
+    BsModalRef,
+    AwsImgUploadService,
+    GoogleAuthService,
+    GoogleFileService,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              environment.googleId,
+              environment.googleLoginOptions
+            ),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
 })
 export class SharedModule {}

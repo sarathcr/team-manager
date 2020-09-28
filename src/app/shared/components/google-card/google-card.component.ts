@@ -7,10 +7,10 @@ import { GoogleCardVariant } from '../../constants/model/google-card.model'
   styleUrls: ['./google-card.component.scss'],
 })
 export class GoogleCardComponent {
-  @Input() title: string
-  @Input() subtitle: string
+  @Input() cardTitle: string
+  @Input() cardSubtitle: string
+  @Input() commingSoon = false
   @Input() variant: GoogleCardVariant
-
   @Output() openModal: EventEmitter<any> = new EventEmitter()
 
   constructor() {}

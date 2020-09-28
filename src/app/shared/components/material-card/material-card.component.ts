@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { entityType } from 'src/app/modules/project-editor/constants/model/activity.model'
 import {
   sizeVariant,
   typeVariant,
@@ -16,13 +17,18 @@ export class MaterialCardComponent {
   @Input() title = ''
   @Input() loading = false
   @Input() variant: typeVariant = 'VIDEO'
-  @Input() size: sizeVariant = 'medium'
+  @Input() sourceType: string
+  @Input() entityType: entityType
+  @Input() size: sizeVariant
   @Input() showSwitch = true
   @Input() switchOn = false
   @Input() canDelete = true
   @Input() draggable = false
   @Input() validPreviewLink = true
-
+  @Input() customClass = ''
+  @Input() enableShadow = true
+  @Input() enableBorder = false
+  @Input() displayFiletype = false
   @Output() delete: EventEmitter<any> = new EventEmitter()
   @Output() dragg: EventEmitter<any> = new EventEmitter()
   @Output() switch: EventEmitter<boolean> = new EventEmitter()

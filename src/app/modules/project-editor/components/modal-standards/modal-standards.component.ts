@@ -175,52 +175,99 @@ export class ModalStandardsComponent implements OnInit, OnDestroy {
         )
       )
     }
-    this.subscriptions.sink = this.standardEntityService
-      .getWithQuery(evaluationCriteriaIds.toString())
-      .subscribe((standards) => {
-        const standardByCriteria = {}
-        for (const standard of standards) {
-          const isChecked = this.returnStandardIds.indexOf(standard.id) > -1
-          const sub = this.getSubjectByEvaluationCriteria(
-            standard.evaluationCriteria.id
-          )
-          if (
-            standardByCriteria[standard.evaluationCriteria.id] === undefined
-          ) {
-            standardByCriteria[standard.evaluationCriteria.id] = {
-              id: standard.evaluationCriteria.id,
-              name: standard.evaluationCriteria.name,
-              contents: [],
-              evaluationCriteria: [standard.evaluationCriteria],
-              subjectId: sub.id,
-              standard: [
-                {
-                  id: standard.id,
-                  name: standard.name,
-                  checked: isChecked,
-                  colOneData: standard.name,
-                  colThreeData: standard.evaluationCriteria.name,
-                  colFourData: sub.name,
-                },
-              ],
-              numeration: standard.numeration,
-              virtual: true,
-            }
-          } else {
-            standardByCriteria[standard.evaluationCriteria.id].standard.push({
-              id: standard.id,
-              name: standard.name,
-              checked: isChecked,
-              colOneData: standard.name,
-              colThreeData: standard.evaluationCriteria.name,
-              colFourData: sub.name,
-            })
+    // this.subscriptions.sink = this.standardEntityService
+    //   .getWithQuery(evaluationCriteriaIds.toString())
+    //   .subscribe((standards) => {
+    //     const standardByCriteria = {}
+    //     for (const standard of standards) {
+    //       const isChecked = this.returnStandardIds.indexOf(standard.id) > -1
+    //       const sub = this.getSubjectByEvaluationCriteria(
+    //         standard.evaluationCriteria.id
+    //       )
+    //       if (
+    //         standardByCriteria[standard.evaluationCriteria.id] === undefined
+    //       ) {
+    //         standardByCriteria[standard.evaluationCriteria.id] = {
+    //           id: standard.evaluationCriteria.id,
+    //           name: standard.evaluationCriteria.name,
+    //           contents: [],
+    //           evaluationCriteria: [standard.evaluationCriteria],
+    //           subjectId: sub.id,
+    //           standard: [
+    //             {
+    //               id: standard.id,
+    //               name: standard.name,
+    //               checked: isChecked,
+    //               colOneData: standard.name,
+    //               colThreeData: standard.evaluationCriteria.name,
+    //               colFourData: sub.name,
+    //             },
+    //           ],
+    //           numeration: standard.numeration,
+    //           virtual: true,
+    //         }
+    //       } else {
+    //         standardByCriteria[standard.evaluationCriteria.id].standard.push({
+    //           id: standard.id,
+    //           name: standard.name,
+    //           checked: isChecked,
+    //           colOneData: standard.name,
+    //           colThreeData: standard.evaluationCriteria.name,
+    //           colFourData: sub.name,
+    //         })
+    //       }
+    //     }
+    //     for (const id of Object.keys(standardByCriteria)) {
+    //       this.blockData.push(standardByCriteria[id])
+    //     }
+    //   })
+    this.standardEntityService.entities$.subscribe((standards) => {
+      if (!standards) {
+        this.standardEntityService.getWithQuery(
+          evaluationCriteriaIds.toString()
+        )
+      }
+      const standardByCriteria = {}
+      for (const standard of standards) {
+        const isChecked = this.returnStandardIds.indexOf(standard.id) > -1
+        const sub = this.getSubjectByEvaluationCriteria(
+          standard.evaluationCriteria.id
+        )
+        if (standardByCriteria[standard.evaluationCriteria.id] === undefined) {
+          standardByCriteria[standard.evaluationCriteria.id] = {
+            id: standard.evaluationCriteria.id,
+            name: standard.evaluationCriteria.name,
+            contents: [],
+            evaluationCriteria: [standard.evaluationCriteria],
+            subjectId: sub.id,
+            standard: [
+              {
+                id: standard.id,
+                name: standard.name,
+                checked: isChecked,
+                colOneData: standard.name,
+                colThreeData: standard.evaluationCriteria.name,
+                colFourData: sub.name,
+              },
+            ],
+            numeration: standard.numeration,
+            virtual: true,
           }
+        } else {
+          standardByCriteria[standard.evaluationCriteria.id].standard.push({
+            id: standard.id,
+            name: standard.name,
+            checked: isChecked,
+            colOneData: standard.name,
+            colThreeData: standard.evaluationCriteria.name,
+            colFourData: sub.name,
+          })
         }
-        for (const id of Object.keys(standardByCriteria)) {
-          this.blockData.push(standardByCriteria[id])
-        }
-      })
+      }
+      for (const id of Object.keys(standardByCriteria)) {
+        this.blockData.push(standardByCriteria[id])
+      }
+    })
   }
 
   getSubjectByEvaluationCriteria(criteriaId: number): Subject {

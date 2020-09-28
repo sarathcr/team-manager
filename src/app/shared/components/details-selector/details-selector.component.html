@@ -23,13 +23,14 @@
         [variant]="'text'"
         [icon]="variant"
         (click)="addItem()"
+        id="definition-section-add-btn"
       >
         {{ buttonLabel | translate }}
       </app-button>
     </ng-container>
   </div>
   <ul class="details-selector__list">
-    <li class="details-selector__item" *ngIf="!simpleSelector">
+    <li class="details-selector__item" *ngIf="!simpleSelector && !hideAddLine">
       <span *ngIf="subjectItem?.length === 0" class="details-selector__text">
         {{ unselectedLabel | translate }}
       </span>
@@ -46,6 +47,7 @@
         [icon]="variant"
         (click)="addItem()"
         *ngIf="!simpleSelector"
+        id="definition-section-add-btn"
       >
         {{ buttonLabel | translate }}
       </app-button>
@@ -91,7 +93,7 @@
           </div>
           <div
             class="details-selector__close"
-            (click)="onDeleteById(item.id, index)"
+            (click)="onDeleteById(item.id, index, item)"
           >
             <span class="icon icon-ic_share_close"></span>
           </div>

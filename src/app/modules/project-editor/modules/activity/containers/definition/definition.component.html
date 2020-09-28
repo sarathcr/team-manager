@@ -60,6 +60,7 @@
         [error]="minuteError"
         (inputChange)="onValueChange($event, 'duration')"
         (focusOut)="saveForm('TO_DEFINE')"
+        id="duration-input"
       ></app-input>
     </div>
     <div class="col-6">
@@ -92,6 +93,7 @@
         errorText="PROJECT.Error_textlimit_specified_singleinput"
         (inputChange)="onTextAreaChange($event, 'description')"
         (textareaFocusOut)="saveForm('TO_DEFINE')"
+        [optionalLabel]="true"
       ></app-textarea>
     </div>
   </div>
@@ -164,7 +166,7 @@
         [unselectedLabel]="
           'ACTIVITY_DEFINITION.activity_definition_contents_placeholder'
         "
-        [subjectItem]="selectedContents"
+        [subjectItem]="selectedContents.concat(selectedCustomContents)"
         [optional]="true"
         [isLast]="true"
         [simpleSelector]="true"
@@ -188,7 +190,7 @@
         [unselectedLabel]="
           'ACTIVITY_DEFINITION.activity_definition_standards_placeholder'
         "
-        [subjectItem]="selectedStandards"
+        [subjectItem]="selectedStandards.concat(selectedCustomStandards)"
         [isLast]="true"
         [simpleSelector]="true"
         (deleteById)="openDeleteModal($event, 'standards')"
@@ -545,6 +547,21 @@
                   </div>
                 </div>
               </div>
+              <div class="row" *ngFor="let item of subject.customContents">
+                <div class="col-12">
+                  <div
+                    class="definition-modal__item definition-modal__item_pr_scrollbar"
+                  >
+                    <app-checkbox
+                      [id]="item.id"
+                      [isChecked]="item.checked"
+                      (changeEvent)="updateRowEntity($event, 'custom-contents')"
+                    >
+                      {{ item.name }}
+                    </app-checkbox>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </ng-scrollbar>
@@ -595,6 +612,26 @@
                       "
                     >
                       {{ standard.name }}
+                    </app-checkbox>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+                *ngFor="let customStandard of objective.customStandards"
+              >
+                <div class="col-12">
+                  <div
+                    class="definition-modal__item definition-modal__item_pr_scrollbar"
+                  >
+                    <app-checkbox
+                      [id]="customStandard.id"
+                      [isChecked]="customStandard.checked"
+                      (changeEvent)="
+                        updateRowEntity($event, 'custom-standards', objective)
+                      "
+                    >
+                      {{ customStandard.name }}
                     </app-checkbox>
                   </div>
                 </div>

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
+import { TranslateModule } from '@ngx-translate/core'
 
 import { ValidatorComponent } from '../validator/validator.component'
 import { InputComponent } from './input.component'
@@ -11,7 +12,7 @@ describe('InputComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [InputComponent, ValidatorComponent],
-      imports: [FormsModule],
+      imports: [TranslateModule.forRoot(), FormsModule],
     })
 
     fixture = TestBed.createComponent(InputComponent)

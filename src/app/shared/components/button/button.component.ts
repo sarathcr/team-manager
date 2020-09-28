@@ -24,5 +24,8 @@ export class ButtonComponent {
   @HostBinding('class.disabled') get t(): boolean {
     return this.disabled || this.loading
   }
+  @HostBinding('class.d-block') get tt(): boolean {
+    return this.variant === 'block'
+  }
   constructor() {}
 }

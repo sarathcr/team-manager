@@ -10,7 +10,7 @@ import {
 import { TranslateService } from '@ngx-translate/core'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
 
 import { ContentService } from '../../services/contents/contents.service'
 import { EditorService } from '../../services/editor/editor.service'
@@ -56,6 +56,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   step: Step
   project: Project
   loading = true
+  gradesLoading = true
   buttonConfig = new StepButtonSubmitConfig()
   subscriptions = new SubSink()
   showTextarea = false
@@ -72,6 +73,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
   dropDownConfig: DropdownCustom
   delData: object
   labels: PrincipalViewLabels
+  showBasicSkills = false
 
   // Modal
   modalColumns: PrincipalModalColData
@@ -109,6 +111,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptions.sink = this.editor.loading$.subscribe((value) =>
       !value ? (this.loading = value) : null
     )
+
     const secondarViewLabels: SecondaryViewLabels = {
       selectedItemText:
         'CONTENT.project_objectives_contentwindow_content_selected',
@@ -163,11 +166,13 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
         const params = {
           evaluationcriteriaIds: criteriaIds,
         }
+        this.gradesLoading = true
         this.subscriptions.sink = this.contentService
           .getGrades(params)
           .subscribe((data) => {
             this.grades = data
             this.filterGrades()
+            this.gradesLoading = false
           })
       }
     }
@@ -406,9 +411,13 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
                     name,
                   })
                 ),
+                showBasicskill: curriculumData.showBasicskill,
               }
             }
             return curriculumData
+          }),
+          tap((data) => {
+            this.showBasicSkills = data?.showBasicskill
           })
         )
         .subscribe((data) => {
@@ -490,7 +499,7 @@ export class StepFourComponent implements OnInit, OnDestroy, AfterViewInit {
         hasEmptyField = true
       }
     }
-    if (this.basicSkills?.length) {
+    if (this.showBasicSkills && this.basicSkills?.length) {
       const checkedArray = []
       for (const basicSkill of this.basicSkills) {
         checkedArray.push(basicSkill.checkData.checked)

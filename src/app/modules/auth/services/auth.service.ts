@@ -19,6 +19,7 @@ import {
 export class AuthService {
   private readonly JWT_TOKEN = 'JWT_TOKEN'
   private readonly GOOGLE_TOKEN = 'GOOGLE_TOKEN'
+  private readonly GOOGLE_TOKEN_EXPIRY = 'GOOGLE_TOKEN_EXPIRY'
   loggedUser: LoginInfo
   linkExpired = false
   userId: string
@@ -190,6 +191,7 @@ export class AuthService {
     this.googleAuthService.googleLogout()
     this.storage.getOrRemoveStorageItem(this.GOOGLE_TOKEN, 'removeItem')
     this.storage.getOrRemoveStorageItem(this.JWT_TOKEN, 'removeItem')
+    this.storage.getOrRemoveStorageItem(this.GOOGLE_TOKEN_EXPIRY, 'removeItem')
     this.router.navigate(['/login'])
   }
 }

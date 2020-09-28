@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { TranslateModule } from '@ngx-translate/core'
 
 import { DropdownComponent } from './dropdown.component'
 
@@ -9,6 +10,7 @@ describe('ActionsTooltipComponent', (): void => {
   beforeEach((): void => {
     TestBed.configureTestingModule({
       declarations: [DropdownComponent],
+      imports: [TranslateModule.forRoot()],
     })
 
     fixture = TestBed.createComponent(DropdownComponent)

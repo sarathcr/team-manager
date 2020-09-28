@@ -67,7 +67,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
     'gradesDropdown',
     'subjectsDropdown',
   ]
-
+  localExperienceType: number
   constructor(
     private countryService: CountryEntityService,
     private regionService: RegionEntityService,
@@ -81,6 +81,7 @@ export class StepOneComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getAllCountries()
     this.stepInIt()
+    this.localExperienceType = this.editor.getLocalExperienceType()
   }
 
   ngOnDestroy(): void {

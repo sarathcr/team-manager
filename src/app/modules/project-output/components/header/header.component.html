@@ -33,6 +33,7 @@
           [icon]="'download'"
           (click)="onDownload($event)"
           [disabled]="loading"
+          id="download-pdf"
         >
           {{ downloadButtonLabel | translate }}
         </app-button>
@@ -42,6 +43,7 @@
           [icon]="'print'"
           (click)="onPrint($event)"
           [disabled]="loading"
+          id="print-pdf"
         >
           {{ printButtonLabel | translate }}
         </app-button>

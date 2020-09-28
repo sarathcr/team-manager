@@ -57,7 +57,6 @@
     }
   }
   &__text {
-    vertical-align: text-bottom;
     font-size: font-size(body-s);
   }
   &-slider {
@@ -74,7 +73,7 @@
       border-radius: 4px;
     }
     &__item {
-      padding: 5px grid-gutter(secondary);
+      padding: 7px grid-gutter(secondary) 7px 36px;
       opacity: 0.6;
       display: flex;
       align-items: center;

@@ -24,6 +24,7 @@ import { FormFive } from '../../constants/model/step-forms.model'
 
 import { StepButtonSubmitConfig } from 'src/app/shared/constants/data/form-elements.data'
 import { SubSink } from '../../../../shared/utility/subsink.utility'
+import { StandardEntityService } from '../../store/entity/standard/standard-entity.service'
 
 @Component({
   selector: 'app-step-five',
@@ -52,6 +53,7 @@ export class StepFiveComponent implements OnInit, OnDestroy {
   dataPayload: CompetencyObjective
   competencyObjectiveSelected: number
   allSubjectshasCriterias = false
+  hasStandards = true
   @ViewChild('modalDelete') modalDelete: TemplateRef<any>
   @ViewChild('standardsModal') standardsModal: TemplateRef<any>
 
@@ -59,11 +61,26 @@ export class StepFiveComponent implements OnInit, OnDestroy {
 
   constructor(
     private editor: EditorService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private standardEntityService: StandardEntityService
   ) {}
 
   ngOnInit(): void {
     this.stepInIt()
+
+    const evaluationCriteriaIds = []
+    for (const subject of this.project?.subjects) {
+      evaluationCriteriaIds.push(
+        ...subject.evaluationCriteria.map(
+          (evaluationCriteria) => evaluationCriteria.id
+        )
+      )
+    }
+    if (evaluationCriteriaIds.length > 0) {
+      this.subscriptions.sink = this.standardEntityService
+        .getWithQuery(evaluationCriteriaIds.toString())
+        .subscribe((standards) => (this.hasStandards = standards.length > 0))
+    }
   }
 
   ngOnDestroy(): void {

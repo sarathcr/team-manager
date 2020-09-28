@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { TranslateModule } from '@ngx-translate/core'
 
 import { ActivityEditorFooterComponent } from './activity-editor-footer.component'
 
@@ -9,6 +10,7 @@ describe('ActivityEditorFooterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ActivityEditorFooterComponent],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents()
   }))
 

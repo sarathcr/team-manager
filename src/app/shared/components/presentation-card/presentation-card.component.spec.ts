@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
+import { TranslateModule } from '@ngx-translate/core'
 import { PresentationCardComponent } from './presentation-card.component'
 
 describe('PresentationCardComponent', () => {
@@ -9,6 +10,7 @@ describe('PresentationCardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PresentationCardComponent],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents()
   }))
 

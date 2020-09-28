@@ -13,7 +13,15 @@
       <p
         class="project-form__description"
         [innerHTML]="
-          'FINAL_PRODUCT.project_finalproduct_description' | translate
+          ('FINAL_PRODUCT.project_finalproduct_description'
+            | translate
+            | TranslateCut: 0) +
+          ('VARIABLES.experience_type_variable_2'
+            | translate
+            | TranslateCut: localExperienceType) +
+          ('FINAL_PRODUCT.project_finalproduct_description'
+            | translate
+            | TranslateCut: 1)
         "
       ></p>
       <app-textarea

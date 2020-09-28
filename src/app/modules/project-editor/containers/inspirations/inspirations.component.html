@@ -1,5 +1,9 @@
 <ng-template #hasLoaded>
-  <h1 class="inspirate__head-text">{{ title }} ({{ totalItems }})</h1>
+  <h1 class="inspirate__head-text">
+    {{ 'PRIVATEHOME_GENERAL.home_menu_section_getinspired' | translate }} ({{
+      totalItems
+    }})
+  </h1>
   <div class="w-100 d-flex mb-5 justify-content-between">
     <div class="inspirate__filters-left d-flex align-items-center">
       <div class="mr-5">
@@ -7,16 +11,24 @@
           placeholder="{{
             'PRIVATEHOME_HEADER.home_search_experience' | translate
           }}"
+          [text]="this.searchtext"
+          (searchText)="handleSearch($event)"
         ></app-search>
       </div>
-      <div><app-filter></app-filter></div>
+      <div>
+        <app-filter
+          [filterOption]="filterOption"
+          [filterSum]="filterSum"
+          (filter)="applyFilter($event)"
+        ></app-filter>
+      </div>
     </div>
     <div class="inspirate__filters-right d-flex">
       <div class="mr-5">
         <app-dropdown-select
           [data]="dropDownData"
-          [selectedItems]="selectedItem"
-          [defaultSelected]="true"
+          [selectedItems]="selectedSortBy"
+          [defaultSelected]="false"
           label="PRIVATEHOME_HEADER.home_sort"
           (dropdownSelect)="onOderbySelection($event)"
         ></app-dropdown-select>
@@ -48,10 +60,11 @@
   <div class="inspirate__pagination d-flex justify-content-center mb-7">
     <app-pagination
       id="pagination"
-      *ngIf="loaded && !isSortApplied"
+      *ngIf="loaded && !filterLoading && totalItems > 0"
       [totalItems]="totalItems"
       [maxSize]="maxSize"
       [itemsPerPage]="itemsPerPage"
+      [currentPage]="currentPage"
       [disabled]="loading"
       (pageChanged)="pageChanged($event)"
     >
@@ -61,7 +74,7 @@
 <ng-template #cpModal>
   <app-modal-form
     variant="input"
-    title="PRIVATEHOME_EMPTYSTATE.home_inspire_popup_cp_title"
+    [title]="'PRIVATEHOME_EMPTYSTATE.home_inspire_popup_cp_title'"
     confirmLabel="PRIVATEHOME_EMPTYSTATE.home_inspire_popup_cp_button_start"
     data=""
     [errorText]="'PRIVATEHOME_EMPTYSTATE.home_inspire_popup_cp_error'"
@@ -71,13 +84,14 @@
     titleVariant="secondary"
     inputVariant="number"
     [maxLength]="5"
+    [minLength]="5"
     [enableValidator]="false"
     [error]="hasError"
-    [buttonDisabled]="cpCode.length < 5"
     (decline)="declineModal()"
     (confirm)="confirmModal($event)"
     (getInputValue)="getInputValue($event)"
-  ></app-modal-form>
+  >
+  </app-modal-form>
 </ng-template>
 <app-loader
   id="create-home-loader"

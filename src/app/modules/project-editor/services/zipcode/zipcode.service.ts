@@ -5,19 +5,18 @@ import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ZipcodeService {
+  constructor(private http: HttpClient) {}
 
-  constructor(
-    private http: HttpClient,
-  ) {}
-
-  checkZipCode(code: string): Observable<any>{
+  checkZipCode(code: string): Observable<any> {
     return this.http
-      .get<any>(`${environment.apiUrl.curriculumService}/zipcode/${code}?code=${code}`)
+      .get<any>(
+        `${environment.apiUrl.curriculumService}/zipcode/${code}?code=${code}`
+      )
       .pipe(
-        map(value => value),
+        map((value) => value),
         catchError(() => {
           return of(false)
         })

@@ -11,7 +11,7 @@ import { EditorService } from '../../services/editor/editor.service'
 export class StepsComponent implements OnInit {
   loaded$: Observable<boolean>
   steps: Step[]
-  contextualStatus = false
+  contextualStatus = true
 
   constructor(public editor: EditorService) {}
 

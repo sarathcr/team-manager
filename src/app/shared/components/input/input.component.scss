@@ -11,7 +11,7 @@
   height: 48px;
   &__field {
     // min-height: 48px;
-    padding: 12px 20px;
+    padding: 12px 18px;
     font-size: font-size(body-s);
     line-height: 24px;
     width: 100%;
@@ -37,7 +37,7 @@
   &__innerLabel {
     font-weight: 600;
     text-align: right;
-    padding: 12px 20px 12px 0;
+    padding: 12px spacing(secondary) 12px 0;
     line-height: 24px;
     color: $black;
   }

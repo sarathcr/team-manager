@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -6,15 +7,14 @@ import {
   Output,
   TemplateRef,
 } from '@angular/core'
-import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import {
+  EvaluationStrategy,
   Exercise,
   ReferenceMaterials,
   StatusMaterial,
 } from 'src/app/modules/project-editor/constants/model/activity.model'
-import { EditorService } from 'src/app/modules/project-editor/services/editor/editor.service'
 import { DropdownConfigInit } from 'src/app/shared/constants/data/form-elements.data'
 import { unfreeze } from 'src/app/shared/utility/object.utility'
 
@@ -26,15 +26,18 @@ import { unfreeze } from 'src/app/shared/utility/object.utility'
 export class AddExerciseComponent implements OnInit {
   @Input() exercise: Exercise
   @Input() buttonLoading: boolean
-  @Input() exercisePercent = 0
+  @Input() exercisePercent
   @Output() declineModal = new EventEmitter()
   @Output() confirmModal = new EventEmitter()
   modalRef: BsModalRef
+  isFormValid = false
   creationModalityDropdown = new DropdownConfigInit('modality')
-  calificationDropdown = new DropdownConfigInit('calification')
   modalitySelected = []
+  AgentDropDowns = []
   showMaterial = false
   loading = false
+  instrumentModalIndex: number
+  showInstrumentModal = false
   referenceMaterial: StatusMaterial = {
     status: 'default',
     fileType: 'DOCUMENT',
@@ -46,17 +49,29 @@ export class AddExerciseComponent implements OnInit {
   }
   activeMaterialTab = 0
   currentMaterialView = 1
-  exercisePercentHelperText = ''
+  exercisePercentHelperText = null
+  showPercentError = false
   minDate = new Date()
+  maxDate = new Date('9999-12-31')
+  newEvaluationObj: EvaluationStrategy = {
+    agent: 'NONE',
+    id: null,
+    instrument: null,
+  }
+  materialType: 'exercise' | 'instrument'
   constructor(
-    private editor: EditorService,
-    private router: Router,
     private modalService: BsModalService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private changeDetection: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.minDate.setDate(this.minDate.getDate() - 1)
+    const agentDropdown = new DropdownConfigInit('agentsDDl')
+    agentDropdown.disabled = false
+    this.getAgentsDropDownData(agentDropdown)
+    this.AgentDropDowns.push(agentDropdown)
+
     if (this.exercise && this.exercise.delivery) {
       this.modalitySelected = [
         {
@@ -67,17 +82,48 @@ export class AddExerciseComponent implements OnInit {
         },
       ]
     }
-    this.exercise = this.exercise ? this.exercise : new Exercise()
+    const newExercise: Exercise = {
+      evaluationStrategies: [unfreeze(this.newEvaluationObj)],
+    }
+    this.exercise = this.exercise ? this.exercise : newExercise
     this.creationModalityDropdown.disabled = false
     this.creationModalityDropdown.selectedItems = this.modalitySelected
-    this.calificationDropdown.disabled = false
     this.exercise = unfreeze(this.exercise)
     if (this.exercise.evaluation === undefined) {
       this.exercise.evaluation = true
     }
-
-    this.getExercisePercentHelperText()
+    this.getExercisePercentHelperText(this.exercise?.percentage || 0)
     this.getModalityDropDownData()
+  }
+
+  getFormValidStatus(): boolean {
+    if (!this.exercise?.name) {
+      return false
+    }
+
+    if (
+      this.exercise.evaluation &&
+      (this.exercisePercent + this.exercise?.percentage > 100 ||
+        !this.exercise?.percentage)
+    ) {
+      return false
+    }
+    if (!this.isEvaluationFilled()) {
+      return false
+    }
+
+    return true
+  }
+
+  isEvaluationFilled(): boolean {
+    let valid = false
+    if (this.exercise?.evaluationStrategies?.length) {
+      const list = this.exercise.evaluationStrategies.filter(
+        (item) => item.agent === 'NONE' || !item.instrument
+      )
+      valid = list.length ? false : true
+    }
+    return valid
   }
 
   onValueChange(event: any, type: string): void {
@@ -85,7 +131,7 @@ export class AddExerciseComponent implements OnInit {
       this.exercise[type] = event?.value
     } else {
       if (type === 'percentage') {
-        this.exercise[type] = parseInt(event, 10)
+        this.exercise[type] = event ? parseInt(event, 10) : null
         this.getExercisePercentHelperText(this.exercise[type])
       } else {
         this.exercise[type] = event
@@ -94,11 +140,30 @@ export class AddExerciseComponent implements OnInit {
     if (type === 'evaluation' && !this.exercise[type]) {
       this.exercise.percentage = null
       this.getExercisePercentHelperText(0)
+    } else if (type === 'evaluation' && this.exercise[type]) {
+      this.getExercisePercentHelperText(this.exercise?.percentage || 0)
     }
+    this.isFormValid = this.getFormValidStatus()
   }
 
-  toggleModal(): void {
-    this.showMaterial = !this.showMaterial
+  toggleModal(materialType: 'exercise' | 'instrument', index?: number): void {
+    this.materialType = materialType
+    if (materialType === 'instrument') {
+      if (this.activeMaterialTab === 0 && this.currentMaterialView === 2) {
+        this.currentMaterialView = 1
+      } else {
+        this.instrumentModalIndex = index
+        this.showInstrumentModal = !this.showInstrumentModal
+      }
+    }
+    if (materialType === 'exercise') {
+      if (this.activeMaterialTab === 0 && this.currentMaterialView === 2) {
+        this.currentMaterialView = 1
+      } else {
+        this.showMaterial = !this.showMaterial
+      }
+    }
+    this.changeDetection.detectChanges()
   }
 
   onDropdownSelect(event: any): void {
@@ -107,6 +172,7 @@ export class AddExerciseComponent implements OnInit {
     } else {
       this.exercise.delivery = null
     }
+    this.isFormValid = this.getFormValidStatus()
   }
 
   onDecline(event: string): void {
@@ -138,12 +204,25 @@ export class AddExerciseComponent implements OnInit {
         ].split('|')
         const value =
           100 - (this.exercisePercent + (isNaN(inputValue) ? 0 : inputValue))
-        if (value <= 0) {
-          // 0 means 100, or
-          this.exercisePercentHelperText = ''
+
+        if (this.exercisePercent === 100 && this.exercise?.evaluation) {
+          this.showPercentError = true
+          this.exercisePercentHelperText = null
         } else {
-          this.exercisePercentHelperText = helpertext[0] + value + helpertext[1]
+          if (value === 0) {
+            this.showPercentError = false
+            this.exercisePercentHelperText = null
+          } else if (value < 0) {
+            this.showPercentError = true
+            this.exercisePercentHelperText = null
+          } else {
+            this.exercisePercentHelperText =
+              helpertext[0] + value + helpertext[1]
+            this.showPercentError = false
+          }
         }
+
+        this.isFormValid = this.getFormValidStatus()
       })
   }
 
@@ -163,7 +242,7 @@ export class AddExerciseComponent implements OnInit {
               ],
           },
           {
-            id: 'PRESENTIAL',
+            id: 'PRESENCIAL',
             name:
               translations[
                 'ACTIVITY_DEFINITION.activity_definition_dropdown_modality_item1'
@@ -175,17 +254,30 @@ export class AddExerciseComponent implements OnInit {
 
   onConfirmMaterial(): void {
     const material: ReferenceMaterials = this.referenceMaterial
-    this.exercise.referenceMaterials = this.exercise.referenceMaterials
-      ? [...this.exercise.referenceMaterials, material]
-      : [material]
-    this.toggleModal()
+    if (this.showInstrumentModal) {
+      // activated modal is triggered from instrumento button click
+      this.exercise.evaluationStrategies[
+        this.instrumentModalIndex
+      ].instrument = material
+    } else {
+      this.exercise.referenceMaterials = this.exercise.referenceMaterials
+        ? [material, ...this.exercise.referenceMaterials]
+        : [material]
+    }
+    this.resetTabs()
+    this.showInstrumentModal
+      ? this.toggleModal('instrument', 0)
+      : this.toggleModal('exercise')
+    this.isFormValid = this.getFormValidStatus()
   }
 
   deleteMaterial(index: number): void {
     this.exercise.referenceMaterials.splice(index, 1)
+    this.changeDetection.detectChanges()
   }
 
   getActiveMaterialTab(tabNumber: number): void {
+    this.referenceMaterial.status = 'default' // to reset the modal button on tab change
     this.activeMaterialTab = tabNumber
   }
 
@@ -202,7 +294,7 @@ export class AddExerciseComponent implements OnInit {
   getMaterialDetails({ callConfirm, ...material }: StatusMaterial): void {
     this.referenceMaterial = material
     if (callConfirm && material) {
-      this.onConfirm()
+      this.onConfirmMaterial()
     }
   }
 
@@ -218,5 +310,70 @@ export class AddExerciseComponent implements OnInit {
       url: '',
       visible: true,
     }
+  }
+  addEvaluationBlock(): void {
+    const crateAgentDropDown = new DropdownConfigInit(
+      'agentsDDl' + this.AgentDropDowns.length
+    )
+    this.getAgentsDropDownData(crateAgentDropDown)
+    crateAgentDropDown.disabled = false
+    this.AgentDropDowns.push(crateAgentDropDown)
+
+    if (this.exercise.evaluationStrategies?.length) {
+      this.exercise.evaluationStrategies.push(unfreeze(this.newEvaluationObj))
+    } else {
+      this.exercise.evaluationStrategies = [unfreeze(this.newEvaluationObj)]
+    }
+    this.isFormValid = this.getFormValidStatus()
+    this.changeDetection.detectChanges()
+  }
+
+  getAgentsDropDownData(dropDown: DropdownConfigInit): void {
+    this.translateService
+      .stream([
+        'EXCERCISE.exercise_definition_popup_agent_option1',
+        'EXCERCISE.exercise_definition_popup_agent_option2',
+        'EXCERCISE.exercise_definition_popup_agent_option3',
+      ])
+      .subscribe((translations) => {
+        dropDown.data = [
+          {
+            id: 'HETETOEVALUATION',
+            name:
+              translations['EXCERCISE.exercise_definition_popup_agent_option1'],
+          },
+          {
+            id: 'SELFEVALUATION',
+            name:
+              translations['EXCERCISE.exercise_definition_popup_agent_option2'],
+          },
+          {
+            id: 'COEVALUATION',
+            name:
+              translations['EXCERCISE.exercise_definition_popup_agent_option3'],
+          },
+        ]
+      })
+  }
+
+  onAgentDropdownSelect(index: number): void {
+    if (this.AgentDropDowns[index].selectedItems?.length) {
+      this.exercise.evaluationStrategies[index].agent = this.AgentDropDowns[
+        index
+      ].selectedItems[0]?.id
+    } else {
+      this.exercise.evaluationStrategies[index].agent = 'NONE'
+    }
+    this.isFormValid = this.getFormValidStatus()
+  }
+  deleteInstrumentMaterial(index: number): void {
+    this.exercise.evaluationStrategies[index].instrument = null
+    this.isFormValid = this.getFormValidStatus()
+    this.changeDetection.detectChanges()
+  }
+  deleteEvaluation(index: number): void {
+    this.exercise.evaluationStrategies.splice(index, 1)
+    this.isFormValid = this.getFormValidStatus()
+    this.changeDetection.detectChanges()
   }
 }

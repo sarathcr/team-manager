@@ -91,10 +91,12 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   learningStandards: Standard[] = []
   selectedStandards = []
+  selectedCustomStandards = []
   compareStandards = []
 
   learningSubjects: Subject[] = []
   selectedContents = []
+  selectedCustomContents = []
   compareSubjects = []
 
   resources: ActivityResource[]
@@ -122,6 +124,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.defInit()
+    this.editor.setContextualhelpStep(20)
   }
 
   ngOnDestroy(): void {
@@ -207,7 +210,11 @@ export class DefinitionComponent implements OnInit, OnDestroy {
       this.selectedContents = this.activity.contents
         ? this.deepCopyArray([...this.activity.contents])
         : []
+      this.selectedCustomContents = this.activity.customcontents
+        ? this.deepCopyArray([...this.activity.customcontents])
+        : []
       this.formData.contents = [...this.selectedContents]
+      this.formData.customcontents = [...this.selectedCustomContents]
       this.resources = this.activity.resources
         ? this.deepCopyArray([...this.activity.resources])
         : []
@@ -216,6 +223,10 @@ export class DefinitionComponent implements OnInit, OnDestroy {
         ? this.deepCopyArray([...this.activity.standards])
         : []
       this.formData.standards = [...this.selectedStandards]
+      this.selectedCustomStandards = this.activity?.customStandards
+        ? this.deepCopyArray(this.activity.customStandards)
+        : []
+      this.formData.customStandards = [...this.selectedCustomStandards]
       this.selectedTeachings = this.concatArrays(
         this.activity.teachingStrategies,
         this.activity.customTeachingStrategies
@@ -249,7 +260,6 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   getTeachingStrategies(): void {
     this.compareTeachings = []
-    console.log(this.selectedTeachings)
     this.subscriptions.sink = this.teachingStrategyService.entities$.subscribe(
       (data) => {
         this.teachingStrategies = data.map((item) => {
@@ -301,10 +311,11 @@ export class DefinitionComponent implements OnInit, OnDestroy {
   getAllObjectives(): void {
     this.compareObjectives = []
     this.learningObjectives = this.project.competencyObjectives.map(
-      ({ id, name, standards }) => ({
+      ({ id, name, standards, customStandards }) => ({
         id,
         name,
         standards,
+        customStandards,
       })
     )
     this.learningObjectives = this.learningObjectives.map((item, index) => {
@@ -332,13 +343,36 @@ export class DefinitionComponent implements OnInit, OnDestroy {
         customContents,
       })
     )
+    this.selectedCustomContents.forEach((item, index) => {
+      this.selectedCustomContents[index].type = 'custom-content'
+    })
     const selectedContents = this.selectedContents.map(({ id }) => id)
+    const selectedCustomContents = this.selectedCustomContents.map(
+      ({ id }) => id
+    )
     this.learningSubjects = this.learningSubjects.map((subject) => {
       if (subject.contents) {
         for (const content of subject?.contents) {
           content.checked = false
           if (selectedContents.includes(content.id)) {
             content.checked = true
+          }
+        }
+      }
+      if (subject.customContents) {
+        for (const customContent of subject?.customContents) {
+          this.selectedCustomContents.forEach((selectedItem, index) => {
+            if (selectedItem.id === customContent.id) {
+              this.selectedCustomContents[index].type = 'custom-content'
+              this.selectedCustomContents[index].subjectId = subject.id
+              this.selectedCustomContents[index].checked = true
+            }
+          })
+          customContent.checked = false
+          customContent.type = 'custom-content'
+          customContent.subjectId = subject.id
+          if (selectedCustomContents.includes(customContent.id)) {
+            customContent.checked = true
           }
         }
       }
@@ -358,12 +392,37 @@ export class DefinitionComponent implements OnInit, OnDestroy {
 
   getAllStandards(): void {
     const selectedStandards = this.selectedStandards.map(({ id }) => id)
+    const selectedCustomStandards = this.selectedCustomStandards.map(
+      ({ id }) => id
+    )
+    this.selectedCustomStandards.forEach((item, index) => {
+      this.selectedCustomStandards[index].type = 'custom-standard'
+    })
     this.selectedObjectivesCopy = this.selectedObjectivesCopy.map(
       (objective) => {
-        for (const standard of objective.standards) {
-          standard.checked = false
-          if (selectedStandards.includes(standard.id)) {
-            standard.checked = true
+        if (objective.standards) {
+          for (const standard of objective.standards) {
+            standard.checked = false
+            if (selectedStandards.includes(standard.id)) {
+              standard.checked = true
+            }
+          }
+        }
+        if (objective.customStandards) {
+          for (const customStandard of objective?.customStandards) {
+            this.selectedCustomStandards.forEach((selectedItem, index) => {
+              if (selectedItem.id === customStandard.id) {
+                this.selectedCustomStandards[index].type = 'custom-standard'
+                this.selectedCustomStandards[index].subjectId = objective.id
+                this.selectedCustomStandards[index].checked = true
+              }
+            })
+            customStandard.checked = false
+            customStandard.type = 'custom-standard'
+            customStandard.subjectId = objective.id
+            if (selectedCustomStandards.includes(customStandard.id)) {
+              customStandard.checked = true
+            }
           }
         }
         return objective
@@ -484,18 +543,34 @@ export class DefinitionComponent implements OnInit, OnDestroy {
         )
         break
       case 'contents':
-        this.deleteModalArrayItem(
-          'selectedContents',
-          'learningSubjects',
-          'contents'
-        )
+        if (this.deleteItem.type === 'custom-content') {
+          this.deleteModalArrayItem(
+            'selectedCustomContents',
+            'learningSubjects',
+            'customContents'
+          )
+        } else {
+          this.deleteModalArrayItem(
+            'selectedContents',
+            'learningSubjects',
+            'contents'
+          )
+        }
         break
       case 'standards':
-        this.deleteModalArrayItem(
-          'selectedStandards',
-          'learningObjectives',
-          'standards'
-        )
+        if (this.deleteItem.type === 'custom-standard') {
+          this.deleteModalArrayItem(
+            'selectedCustomStandards',
+            'learningObjectives',
+            'customStandards'
+          )
+        } else {
+          this.deleteModalArrayItem(
+            'selectedStandards',
+            'learningObjectives',
+            'standards'
+          )
+        }
         break
     }
     this.modalRef.hide()
@@ -563,11 +638,43 @@ export class DefinitionComponent implements OnInit, OnDestroy {
           this.learningSubjects
         )
         break
+      case 'custom-contents':
+        this.learningSubjects = this.learningSubjects.map((subject) => {
+          for (const content of subject.customContents) {
+            if (content.id === data.id) {
+              content.checked = data.checked
+            }
+          }
+          return subject
+        })
+        this.modalButtonStatus = this.checkUpdation(
+          this.compareSubjects,
+          this.learningSubjects
+        )
+        break
       case 'standards': // only for standards we have objectiveData
         this.selectedObjectivesCopy = this.selectedObjectivesCopy.map(
           (objective) => {
             if (objective.id === objectiveData.id) {
               for (const standard of objective.standards) {
+                if (standard.id === data.id) {
+                  standard.checked = data.checked
+                }
+              }
+            }
+            return objective
+          }
+        )
+        this.modalButtonStatus = this.checkUpdation(
+          this.compareSelectedObjectives,
+          this.selectedObjectivesCopy
+        )
+        break
+      case 'custom-standards': // only for standards we have objectiveData
+        this.selectedObjectivesCopy = this.selectedObjectivesCopy.map(
+          (objective) => {
+            if (objective.id === objectiveData.id) {
+              for (const standard of objective.customStandards) {
                 if (standard.id === data.id) {
                   standard.checked = data.checked
                 }
@@ -650,6 +757,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
         break
       case 'contents':
         this.selectedContents = []
+        this.selectedCustomContents = []
         for (const subject of this.learningSubjects) {
           for (const content of subject.contents) {
             if (content.checked) {
@@ -659,16 +767,34 @@ export class DefinitionComponent implements OnInit, OnDestroy {
               })
             }
           }
+          for (const content of subject.customContents) {
+            if (content.checked) {
+              this.selectedCustomContents.push({
+                id: content.id,
+                name: content.name,
+              })
+            }
+          }
         }
         this.compareSubjects = this.deepCopyArray(this.learningSubjects)
         this.formData.contents = this.selectedContents
+        this.formData.customcontents = this.selectedCustomContents
         break
       case 'standards':
         this.selectedStandards = []
+        this.selectedCustomStandards = []
         for (const objective of this.selectedObjectivesCopy) {
           for (const standard of objective.standards) {
             if (standard.checked) {
               this.selectedStandards.push({
+                id: standard.id,
+                name: standard.name,
+              })
+            }
+          }
+          for (const standard of objective.customStandards) {
+            if (standard.checked) {
+              this.selectedCustomStandards.push({
                 id: standard.id,
                 name: standard.name,
               })
@@ -679,6 +805,7 @@ export class DefinitionComponent implements OnInit, OnDestroy {
           this.selectedObjectivesCopy
         )
         this.formData.standards = this.selectedStandards
+        this.formData.customStandards = this.selectedCustomStandards
         break
     }
     this.modalButtonStatus = true
@@ -824,17 +951,29 @@ export class DefinitionComponent implements OnInit, OnDestroy {
     mainArray: string,
     selector: string
   ): void {
-    this[selectedArray] = this[selectedArray].filter(
-      (item) => item.id !== this.deleteItem.id
-    )
-    for (const item of this[mainArray]) {
-      for (const content of item[selector]) {
-        if (content.id === this.deleteItem.id) {
-          content.checked = false
+    if (selector === 'customContents') {
+      this.selectedCustomContents = this.selectedCustomContents.filter(
+        (item) => item.id !== this.deleteItem.id
+      )
+      this.formData.customcontents = this.selectedCustomContents
+    } else if (selector === 'customStandards') {
+      this.selectedCustomStandards = this.selectedCustomStandards.filter(
+        (item) => item.id !== this.deleteItem.id
+      )
+      this.formData.customStandards = this.selectedCustomStandards
+    } else {
+      this[selectedArray] = this[selectedArray].filter(
+        (item) => item.id !== this.deleteItem.id
+      )
+      for (const item of this[mainArray]) {
+        for (const content of item[selector]) {
+          if (content.id === this.deleteItem.id) {
+            content.checked = false
+          }
         }
       }
+      this.formData[selector] = this[selectedArray]
     }
-    this.formData[selector] = this[selectedArray]
     this.saveForm('TO_DEFINE')
     this.isFormUpdated = true
     this.validationCheck()

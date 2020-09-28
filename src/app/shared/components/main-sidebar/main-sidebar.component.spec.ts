@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { TranslateModule } from '@ngx-translate/core'
 
 import { MainSidebarComponent } from './main-sidebar.component'
 
@@ -9,6 +10,7 @@ describe('MainSidebarComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [MainSidebarComponent],
+      imports: [TranslateModule.forRoot()],
     })
 
     fixture = TestBed.createComponent(MainSidebarComponent)

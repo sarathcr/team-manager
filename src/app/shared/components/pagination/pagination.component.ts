@@ -14,7 +14,6 @@ export class PaginationComponent implements OnInit {
   @Output() pageChanged: EventEmitter<any> = new EventEmitter()
   rotate = true
   status = 'ON'
-  lastPage: number
   constructor() {}
 
   ngOnInit(): void {
@@ -25,10 +24,11 @@ export class PaginationComponent implements OnInit {
     this.pageChanged.emit($event)
   }
 
-  getLastPage(): void {
-    this.lastPage = this.totalItems / this.itemsPerPage
-    if (this.lastPage % 1 !== 0) {
-      this.lastPage = Math.trunc(this.lastPage) + 1
+  getLastPage(): number {
+    let lastPage = this.totalItems / this.itemsPerPage
+    if (lastPage % 1 !== 0) {
+      lastPage = Math.trunc(lastPage) + 1
     }
+    return lastPage
   }
 }

@@ -12,7 +12,7 @@
         >
           <img
             class="d-md-none register__logo"
-            src="../../../../../assets/images/thinko_logo.png"
+            src="../../../../../assets/images/thinko_logo.svg"
             alt="logo"
           />
           <div class="register__wrap">
@@ -32,6 +32,8 @@
                 [error]="invalid"
                 [enableValidator]="enableValidator"
                 (inputChange)="setValid()"
+                validatorVariant="text"
+                id="register-email-input"
               ></app-input>
             </div>
             <div class="register__input-wrapper mb-7">
@@ -47,6 +49,8 @@
                 (inputChange)="setValid()"
                 [passwordValidator]="true"
                 [control]="signUpForm"
+                validatorVariant="text"
+                id="register-password-input"
               ></app-input>
             </div>
           </div>
@@ -71,7 +75,11 @@
                 </app-checkbox>
               </div>
               <div class="register__checkbox">
-                <app-checkbox formControlName="privacyPolicy" [isForm]="true">
+                <app-checkbox
+                  formControlName="privacyPolicy"
+                  [isForm]="true"
+                  id="register-accept-policy"
+                >
                   {{
                     'SIGNUP_PAGE.platform_checkbox_policies'
                       | translate
@@ -102,6 +110,7 @@
                 [theme]="'primary'"
                 [variant]="'block'"
                 [loading]="buttonLoading"
+                id="register-submit-button"
               >
                 <div class="register__button">
                   {{
@@ -116,6 +125,7 @@
                 [theme]="'secondary'"
                 [variant]="'block'"
                 (click)="googleSignUp()"
+                id="register-google-button"
               >
                 <div class="register__button">
                   <span class="icon icon-ic_google">

@@ -24,6 +24,7 @@ import {
   makeProvider,
   validateEmailRegex,
   validatePasswordRegex,
+  validatePhoneNumberRegex,
   validPasswordCheck,
 } from '../../utility/form.utility'
 import { isNonFunctionalKey } from '../../utility/keyboard.utility'
@@ -63,6 +64,7 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   @Input() background: InputBackground = 'white'
   @Input() maxNumber: number
   @Input() showError = false
+  @Input() validatorVariant = 'counter'
   @Output() inputChange = new EventEmitter()
   @Output() focusOut = new EventEmitter()
   val = ''
@@ -140,6 +142,9 @@ export class InputComponent implements ControlValueAccessor, OnInit {
     }
     if (this.variant === 'number' && this.maxNumber) {
       this.validField = +this.value <= this.maxNumber
+    } else if (this.variant === 'tel') {
+      this.validField = validatePhoneNumberRegex(this.value)
+      this.error = !this.validField
     }
   }
 
@@ -175,6 +180,9 @@ export class InputComponent implements ControlValueAccessor, OnInit {
     const startPos = inputComponent.selectionStart
     const endPos = inputComponent.selectionEnd
     if (startPos === 0 && endPos === 0) {
+      if (!value) {
+        validator.valueChange(value, 'keyUp')
+      }
       if ($event.keyCode === 8) {
         $event.preventDefault()
       }
@@ -185,6 +193,11 @@ export class InputComponent implements ControlValueAccessor, OnInit {
 
   onPaste($event: any, validator: any): void {
     const value = $event.clipboardData.getData('text/plain')
+    if (this.variant === 'number' && value && isNaN(value)) {
+      $event.preventDefault()
+      return
+    }
+
     let tempValue: string
     if (this.value?.length) {
       tempValue = this.getTextSelection(value)
@@ -195,14 +208,8 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   }
 
   onDrop($event: any, validator: any): void {
-    const value = $event.dataTransfer.getData('text/plain')
-    let tempValue: string
-    if (this.value?.length) {
-      tempValue = this.value + value
-    } else {
-      tempValue = value
-    }
-    validator.valueChange(tempValue, 'drop')
+    $event.preventDefault()
+    return
   }
 
   getTextSelection(value: string): string {
@@ -228,15 +235,23 @@ export class InputComponent implements ControlValueAccessor, OnInit {
     this.focusOut.emit($event)
   }
 
-  handleKeyDown($event: any): void {
+  numberOnly($event: any, inputComponent: any): boolean {
     const value = $event.target.value
-    if (
-      this.variant === 'number' &&
-      value?.length >= this.maxlength &&
-      $event.keyCode !== 8 &&
-      $event.keyCode !== 46
-    ) {
-      $event.preventDefault()
+    const startPos = inputComponent.selectionStart
+    const endPos = inputComponent.selectionEnd
+    const charCode = $event.which ? $event.which : $event.keyCode
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false
     }
+    if (startPos || endPos) {
+      return true
+    }
+
+    if (this.maxlength && value) {
+      if (value?.length >= this.maxlength) {
+        return false
+      }
+    }
+    return true
   }
 }
