@@ -1,0 +1,47 @@
+@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
+.sidebar {
+  height: 100%;
+  width: 257px;
+  padding-left: 44px;
+  padding-right: spacing(secondary);
+  &-menu {
+    padding-top: 150px;
+    &__title {
+      font-weight: bold;
+      letter-spacing: 0.39px;
+      line-height: 0px;
+    }
+    &__element {
+      display: flex;
+      cursor: pointer;
+      flex-direction: row;
+      margin-top: grid-gutter(primary);
+      align-items: center;
+      &-circle {
+        height: 50px;
+        width: 50px;
+        display: flex;
+        background-color: color(quaternary);
+        border-radius: 50%;
+        justify-content: center;
+        align-items: center;
+      }
+      .icon {
+        font-size: font-size(body);
+        color: color(tertiary);
+      }
+      &-label {
+        font-family: font-family(default);
+        color: color(tertiary);
+        font-size: font-size(default);
+        font-weight: bold;
+        letter-spacing: 0;
+        margin-left: spacing(primary);
+        letter-spacing: 0;
+        line-height: 20px;
+      }
+    }
+  }
+}

@@ -1,10 +1,12 @@
 {
   "GENERAL": {
     "platform_title_tab": "Thinkö",
-    "experience_project":"Proyecto",
-    "experience_learningunit":"Unidad didáctica",
-    "experience_activity":"Actividad",
-    "platform_label_comingsoon": "Próximamente"
+    "experience_project": "Proyecto",
+    "experience_learningunit": "Unidad didáctica",
+    "experience_activity": "Actividad",
+    "platform_label_comingsoon": "Próximamente",
+    "label_pro": "Pro",
+    "label_new": "Nueva"
   },
   "PROJECT": {
     "project_button_markdone": "MARCAR COMO HECHO",
@@ -12,6 +14,7 @@
     "project_button_add": "Añadir",
     "project_notitle": "Experiencia sin título",
     "project_upload_file": "Cargar archivo",
+    "project_upload_file_limit": "(máx. {value}Mb)",
     "project_button_delete": "Eliminar",
     "project_button_cancel": "Cancelar",
     "project_dependancy_title": "Desbloquea este paso",
@@ -27,7 +30,9 @@
     "Error_nodata_dropdown": "No existen opciones disponibles de selección.",
     "Error_input_number": "Sólo puedes introducir números.",
     "Error_API_query_dropdown": "Lo sentimos, no se han encontrado opciones de selección. Vuelve a intentarlo.",
-    "project_input_singleitem_helpertext": "Pulsa la tecla intro para agregar un nuevo elemento a la lista."
+    "project_input_singleitem_helpertext": "Pulsa la tecla intro para agregar un nuevo elemento a la lista.",
+    "project_button_gotit": "Entendido",
+    "item_delete_confirmation_message": "Una vez eliminado, podrás voler a añadirlo si lo requieres."
   },
   "STEPS_MENU": {
     "project_structure_stepsmenu_title": "Crea paso a paso",
@@ -43,7 +48,7 @@
   },
   "STARTING_POINT": {
     "project_startingpoint_title": "Punto de partida",
-    "project_startingpoint_description": "Escoge las áreas o asignaturas que van a estar implicadas en|. Para ofrecerte el currículum de las áreas que te interesan, indica qué curso impartes y en qué territorio.|",
+    "project_startingpoint_description": "Escoge las áreas y/o asignaturas que van a estar implicadas en |. Para ofrecerte el currículum de las áreas que te interesan, indica qué curso impartes y en qué territorio.",
     "project_startingpoint_year": "Año académico",
     "project_startingpoint_year_placeholder": "Selecciona el año académico",
     "project_startingpoint_year_example": "aaaa-aaaa",
@@ -54,8 +59,8 @@
     "project_startingpoint_region_placeholder": "Selecciona un territorio",
     "project_startingpoint_grades": "Curso/s",
     "project_startingpoint_grades_placeholder": "Selecciona uno o más cursos",
-    "project_startingpoint_subjects": "Asignatura/s",
-    "project_startingpoint_subjects_placeholder": "Selecciona una o más asignaturas",
+    "project_startingpoint_subjects": "Área/s y/o asignatura/s",
+    "project_startingpoint_subjects_placeholder": "Selecciona una o más",
     "project_startingpoint_term": "Trimestre/s",
     "project_startingpoint_term_placeholder": "Selecciona uno o más trimestres",
     "project_startingpoint_stage": "Etapa",
@@ -74,7 +79,7 @@
     "project_objectives_dependancy_description": "Para acceder al currículum y seleccionar los criterios de evaluación tienes que completar el paso \"Punto de partida\".",
     "project_objectives_dependancy_button": "Ir al punto de partida",
     "project_objectives_title": "De criterios a objetivos",
-    "project_objectives_description": "Al final del proyecto, ¿qué quieres que tu alumnado aprenda? Los objetivos de aprendizaje son de elaboración propia, pero deben responder a la normativa educativa. Parte de los criterios de evaluación para redactar los objetivos.",
+    "project_objectives_description": "Al final |, ¿qué quieres que tu alumnado aprenda? Los objetivos de aprendizaje son de elaboración propia, pero deben responder a la normativa educativa. Parte de los criterios de evaluación para redactar los objetivos.",
     "project_objectives_criterion_title": "3.1 Criterios de evaluación",
     "project_objectives_criterion": "Criterios de evaluación",
     "project_objectives_criteria_placeholder": "Añade criterios de evaluación del currículum.",
@@ -91,6 +96,7 @@
       "three": "si deseas añadir nuevas asignaturas."
     },
     "project_objectives_delete_confirmation_title": "¿Seguro que quieres eliminar este criterio?",
+    "project_objectives_delete_criteria_confirmation_title": "¿Seguro que quieres eliminar este criterio?",
     "project_objectives_delete_confirmation_message_nonrelated": "Si lo eliminas te recomendamos que revises todos los contenidos y estándares que puedan tener relación con este.",
     "project_objectives_criteriawindow_curriculum": "Currículum",
     "project_objectives_criteriawindow_title": "Selecciona todos los criterios de evaluación a trabajar:",
@@ -113,7 +119,7 @@
     "project_objectives_edit_title": "Edita el objetivo",
     "project_objectives_edit_label": "Objetivo de aprendizaje",
     "project_objectives_criterion_description": "Elige los criterios de evaluación de cada asignatura directamente desde el currículum.",
-    "project_objectives_objectives_description": "Toma como base los criterios de evaluación para redactar tus propios objetivos de aprendizaje.|Al final del proyecto queremos que el alumnado sepa...|"
+    "project_objectives_objectives_description": "Toma como base los criterios de evaluación para redactar tus propios objetivos de aprendizaje.| Al final | queremos que el alumnado sepa..."
   },
   "CONTENT": {
     "project_content_dependancy_description": "Para acceder al currículum y seleccionar los contenidos tienes que completar el paso \"Punto de partida\".",
@@ -233,7 +239,7 @@
   "PRIVATEHOME_GENERAL": {
     "home_header_invite": "+ Invitar",
     "home_header_button_upgrade": "Mejorar mi plan",
-    "home_menu_section_getinspired": "Inspírate",
+    "home_menu_section_getinspired": "Personaliza",
     "home_menu_section_yourexperiences": "Tus experiencias",
     "home_menu_section_help": "Ayuda"
   },
@@ -278,14 +284,14 @@
     "experience_type_variable_4": "al proyecto|a la unidad didáctica",
     "experience_type_variable_5": "un proyecto|una unidad didáctica|una actividad"
   },
-  "CREATE_EXPERIENCE":{
-    "create_experience_title":"Crea una experiencia de aprendizaje",
-    "create_experience_description":"Selecciona el tipo de experiencia que vas a realizar y... ¡empieza a crear!",
-    "create_experience_project_description":"Crea la receta del aprendizaje activo: un tema motivador y actividades conectadas que culminan en un producto memorable.",
-    "create_experience_learningunit_description":"Estructura actividades creativas, orientadas a objetivos de aprendizaje, en torno a un tema central inspirador.",
-    "create_experience_activity_description":"Diseña un conjunto de ejercicios, vinculados al menos a un objetivo de aprendizaje, para entrenar a tu alumnado."
+  "CREATE_EXPERIENCE": {
+    "create_experience_title": "Crea una experiencia de aprendizaje",
+    "create_experience_description": "Selecciona el tipo de experiencia que vas a realizar y... ¡empieza a crear!",
+    "create_experience_project_description": "Crea la receta del aprendizaje activo: un tema motivador y actividades conectadas que culminan en un producto memorable.",
+    "create_experience_learningunit_description": "Estructura actividades creativas, orientadas a objetivos de aprendizaje, en torno a un tema central inspirador.",
+    "create_experience_activity_description": "Diseña un conjunto de ejercicios, vinculados al menos a un objetivo de aprendizaje, para entrenar a tu alumnado."
   },
-    "ONBOARDING": {
+  "ONBOARDING": {
     "onboarding_pop-up_start_pretitle": "¡Hola!",
     "onboarding_pop-up_start_title": "¿Quieres que te ayudemos a empezar?",
     "onboarding_pop-up_start_description": "Aprende a utilizar Thinkö y descubre sus principales funcionalidades. Así, de forma rápida y senzilla, pordrás empezar a diseñar y gestionar experiencias de aprendizaje.",
@@ -293,15 +299,16 @@
   },
   "PROFILESETUP": {
     "profile_setup_menu_title": "Completa tu perfil",
-    "profile_setup_profile_description": "Para poder personalizar la plataforma y ofrecerte el curriculum del territorio en el que enseñas necesitamos saber un poquito más sobre ti.",
+    "profile_setup_profile_description": "Antes de empezar a crear, necesitamos conocer un poquito más sobre ti para poder personalizarte la plataforma y ofrecerte el curriculum del territorio en el que enseñas.",
     "profile_setup_profile_overtitle": "¡Bienvenido/a!",
     "profile_empty_button": "Completar perfil",
     "profile_setup_workplace": "Crea tu espacio de trabajo",
     "user_phone_label": "Teléfono o móvil",
     "user_surname_label": "Apellidos",
     "user_country_label": "País",
-    "user_region_label": "Provincia",
-    "user_role_placeholder": "¿Cuál es tu rol en la enseñanza?"
+    "user_region_label": "Comunidad autónoma",
+    "user_role_placeholder": "¿Cuál es tu rol en la enseñanza?",
+    "user_role_label_long": "Rol en la enseñanza"
   },
   "FILTERS": {
     "experience_filter_title": "Filtros",
@@ -339,5 +346,36 @@
     "profile_data_center_adress": "Dirección",
     "profile_preferences_language": "Idioma",
     "profile_preferences_currentlanguage": "Idioma actual"
+  },
+  "BUSINESS": {
+    "Error_nodata_dropdown": "No existen opciones disponibles de selección.",
+    "Error_startingpoint_dependency_curriculum_title": "No se puede cambiar el currículum",
+    "Error_startingpoint_dependency_curriculum_description": "Para poder variar el currículum debes asegurarte que: <br/> 1. Si has definido actividades, ninguna tenga asociadas las asignaturas que tienes seleccionadas del currículum actual. <br/>2. No hay contenidos de las asignaturas del currículum actual especificados en el paso \"4. Contenidos\". <br/>3. No hay criterios de evaluación de las asignaturas del currículum actual especificados en el paso \"3. De criterios a objetivos\".",
+    "Error_startingpoint_dependency_subject_title": "No puedes eliminar las asignaturas",
+    "Error_startingpoint_dependency_subject_description": "Para eliminar una asignatura debes asegurarte que: <br/> 1. Si has definido actividades, ninguna tenga asociada esta asignatura.<br/>2. No hay contenidos de la asignatura especificados en el paso \"4. Contenidos\". <br/>3. No hay criterios de evaluación de la asignatura especificados en el paso \"3. De criterios a objetivos\".",
+    "Error_criteria_dependency_subject_title": "No puedes eliminar este criterio de evaluación",
+    "Error_criteria_criteriawindow_dependency_subject_title": "No puedes eliminar alguno de los criterios de evaluación",
+    "Error_criteria_dependency_subject_description": "Para poder eliminar un criterio debes borrar primero los elementos asociados a este:",
+    "Error_objectives_dependency_subject_title": "No puedes eliminar este objetivo",
+    "Error_objectives_dependency_subject_description": "Para eliminar un objetivo debes asegurarte que:<br/>1. Si has definido actividades, ninguna tenga asociado este objetivo.<br/>2. No hay estándares/indicadores asociados a este en el paso \"5. Estándares/indicadores\".",
+    "Error_experience_title_existing": "Ya existe [experience_type_variable_5] con este título. Propón uno nuevo.",
+    "Error_activity_title_existing": "Ya existe una actividad con este título en [experience_type_variable_1]. Propón uno nuevo.",
+    "Error_exercise_title_existing": "Ya existe un ejercicio con este título en [experience_type_variable_1]. Propón uno nuevo.",
+    "Error_imagelimit_title": "No se ha podido adjuntar la imagen",
+    "Error_imagelimit_description": "La imagen que has escogido pesa demasiado. Por favor, adjunta una imagen que no supere {value}Mb.",
+    "Error_button_gotit": "Entendido",
+    "Error_content_dependency_title": "No puedes eliminar este contenido",
+    "Error_content_dependency_description": "Para eliminar un contenido debes asegurarte que no esté asociado a ninguna de las actividades definidas. Puedes desasociar contenidos en la página de \"definición\" de cada actividad.",
+    "Error_content_criteriawindow_dependency_title": "No puedes eliminar alguno de los contenidos"
+  },
+  "EXPERIENCE_STRUCTURE": {
+    "project_button_gotit": "Entendido"
+  },
+  "ACCEPTING_INVITATION": {
+    "experience_invitation": "Invitación",
+    "experience_invitation_confirmation_title": "¿Aceptas la invitación?",
+    "experience_invitation_confirmation_description": "te ha compartido [experience_type_variable_6]. Acepta la invitación para poder acceder y colaborar. Si la rechazas, se eliminará de Tus experiencias.",
+    "action_accept": "Aceptar",
+    "action_deny": "Rechazar"
   }
 }

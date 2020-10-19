@@ -1,0 +1,114 @@
+<div class="project-editor__form step-one" id="step-one">
+  <app-step-status id="step-one-status" [status]="step.state"></app-step-status>
+  <div class="project-form d-flex flex-column justify-content-between">
+    <div class="project-form__wrapper">
+      <h1 class="project-form__title title_s">
+        <span class="project-form__title-number">1.</span>Punto de partida
+      </h1>
+      <p class="project-form__description">
+        <span
+          >{{
+            'STARTING_POINT.project_startingpoint_description'
+              | translate
+              | TranslateCut: 0
+          }}
+        </span>
+        <span>{{
+          'VARIABLES.experience_type_variable_1'
+            | translate
+            | TranslateCut: localExperienceType
+        }}</span>
+        <span
+          >{{
+            'STARTING_POINT.project_startingpoint_description'
+              | translate
+              | TranslateCut: 1
+          }}
+        </span>
+      </p>
+      <app-select
+        id="step-one-dropdown-country"
+        [config]="countryDropdown"
+        [data$]="country$"
+        label="STARTING_POINT.project_startingpoint_country"
+        placeholder="STARTING_POINT.project_startingpoint_country_placeholder"
+        (dropdownSelect)="onDropdownSelect($event)"
+      ></app-select>
+      <app-select
+        id="step-one-dropdown-region"
+        [config]="regionDropdown"
+        [data$]="region$"
+        label="STARTING_POINT.project_startingpoint_region"
+        placeholder="STARTING_POINT.project_startingpoint_region_placeholder"
+        (dropdownSelect)="onDropdownSelect($event)"
+      ></app-select>
+      <app-select
+        id="step-one-dropdown-stages"
+        [config]="stagesDropdown"
+        [data$]="stages$"
+        label="STARTING_POINT.project_startingpoint_stage"
+        placeholder="STARTING_POINT.project_startingpoint_stage_placeholder"
+        (dropdownSelect)="onDropdownSelect($event)"
+      ></app-select>
+      <app-select
+        id="step-one-dropdown-academic-year"
+        [config]="academicYearDropdown"
+        [data$]="academicYear$"
+        label="STARTING_POINT.project_startingpoint_year"
+        placeholder="STARTING_POINT.project_startingpoint_year_placeholder"
+        (dropdownSelect)="onDropdownSelect($event)"
+      ></app-select>
+      <app-select
+        id="step-one-dropdown-grades"
+        [config]="gradesDropdown"
+        [data$]="grades$"
+        label="STARTING_POINT.project_startingpoint_grades"
+        placeholder="STARTING_POINT.project_startingpoint_grades_placeholder"
+        (dropdownSelect)="onDropdownSelect($event)"
+      ></app-select>
+      <app-select
+        id="step-one-dropdown-subjects"
+        [config]="subjectsDropdown"
+        [data$]="subjects$"
+        [getInitialData]="true"
+        label="STARTING_POINT.project_startingpoint_subjects"
+        placeholder="STARTING_POINT.project_startingpoint_subjects_placeholder"
+        (dropdownSelect)="onDropdownSelect($event)"
+      ></app-select>
+    </div>
+    <app-button
+      id="step-one-button"
+      [disabled]="buttonConfig.disabled"
+      [loading]="editor.savingProgress"
+      [theme]="buttonConfig.submitted ? 'success' : 'primary'"
+      [icon]="'tick'"
+      (click)="handleSubmit('DONE')"
+    >
+      {{
+        (buttonConfig.submitted
+          ? buttonConfig.successLabel
+          : buttonConfig.label
+        ) | translate
+      }}
+    </app-button>
+    <ng-template #errorModal>
+      <app-modal-info
+        variant="unlock"
+        [modalTitle]="
+          errorType === 'CURRICULUM'
+            ? 'BUSINESS.Error_startingpoint_dependency_curriculum_title'
+            : 'BUSINESS.Error_startingpoint_dependency_subject_title'
+        "
+        [description]="
+          errorType === 'CURRICULUM'
+            ? 'BUSINESS.Error_startingpoint_dependency_curriculum_description'
+            : 'BUSINESS.Error_startingpoint_dependency_subject_description'
+        "
+        [confirmLabel]="'EXPERIENCE_STRUCTURE.project_button_gotit'"
+        (confirm)="closeModal()"
+        (decline)="closeModal()"
+      >
+      </app-modal-info>
+    </ng-template>
+  </div>
+</div>

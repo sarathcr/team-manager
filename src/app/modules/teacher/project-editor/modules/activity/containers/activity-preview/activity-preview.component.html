@@ -1,0 +1,139 @@
+<app-loader id="editor-loader" *ngIf="loading"></app-loader>
+<div
+  class="activity-preview"
+  [ngClass]="{ 'activity-preview_open': contextualStatus }"
+>
+  <div class="activity-preview__header" #header (window:resize)="onResize()">
+    <app-activity-editor-header
+      [title]="activity?.name"
+      class="activity-editor__header-wrap"
+      [projectId]="projectId"
+      [activityId]="activityId"
+      [experienceType]="experienceType"
+      [isDefinition]="false"
+      [initDate]="activity?.startDate"
+      [endDate]="activity?.endDate"
+      [modality]="
+        activity?.modality
+          ? ('ACTIVITIES.activities_title_activity' | translate) +
+            ' ' +
+            (activity?.modality | titlecase)
+          : ''
+      "
+      [status]="
+        activity?.status === 'PENDING'
+          ? ('ACTIVITY_PREVIEW.activity_state_pending_tag' | translate)
+          : activity?.status === 'COMPLETED'
+          ? ('ACTIVITY_PREVIEW.activity_state_completed_tag' | translate)
+          : ''
+      "
+    ></app-activity-editor-header>
+  </div>
+
+  <main class="px-6 position-relative">
+    <div class="activity-preview__body">
+      <div class="activity-preview__sidebar">
+        <app-exercise-sidebar
+          [exercises]="sidebarMenu"
+          (element)="scrollTo($event)"
+        ></app-exercise-sidebar>
+      </div>
+      <div class="container_s py-7">
+        <div
+          class="activity-preview__body-section"
+          *ngIf="activity?.instructions && activity?.instructions.length"
+        >
+          <h2 class="activity-preview-title mb-4">
+            {{
+              'ACTIVITY_PREVIEW.activity_detail_instructions_title' | translate
+            }}
+          </h2>
+          <p class="activity-preview__instructions">
+            {{ activity?.instructions }}
+          </p>
+        </div>
+
+        <div
+          class="activity-preview__body-section"
+          *ngIf="activity?.referenceMaterials?.length > 0"
+        >
+          <h2 class="activity-preview-title mb-6">
+            {{ 'ACTIVITY_PREVIEW.activity_detail_materials_title' | translate }}
+          </h2>
+          <div
+            class="mb-6"
+            *ngFor="let material of activity.referenceMaterials"
+          >
+            <app-material-card
+              [link]="material.url"
+              [thumbnail]="material.previewImageUrl"
+              [label]="material.fileType | FiletypeTranslate | translate"
+              [title]="material.title | FileName: material.sourceType"
+              [draggable]="false"
+              [showSwitch]="false"
+              [variant]="material.fileType"
+              [sourceType]="material.sourceType"
+              [canDelete]="false"
+            ></app-material-card>
+          </div>
+        </div>
+        <div
+          class="activity-preview__body-section activity-preview__body-section_exercises mt-5"
+          *ngIf="activity?.exercises && activity?.exercises.length > 0"
+        >
+          <h1 class="title_s mb-7">
+            {{ 'ACTIVITY_PREVIEW.activity_detail_exercises_title' | translate }}
+          </h1>
+          <div
+            *ngFor="let exercise of activity?.exercises; let i = index"
+            class="activity-preview__body-exercise-single"
+            id="exercise{{ i }}"
+          >
+            <app-exercise-info
+              [supertitle]="
+                ('ACTIVITY_PREVIEW.activity_detail_exercise_header_overtitle'
+                  | translate) +
+                ' ' +
+                (i + 1)
+              "
+              [title]="exercise.name"
+              [statement]="exercise.statement"
+              [isDelivered]="false"
+              [delivery]="
+                ((exercise.delivery === 'ONLINE'
+                  ? 'ACTIVITY_PREVIEW.activity_detail_exercise_header_onlinedelivery'
+                  : 'ACTIVITY_PREVIEW.activity_detail_exercise_header_attendeddelivery'
+                ) | translate) +
+                ' ' +
+                (exercise.deliveryDate
+                  ? (exercise.deliveryDate | date: 'dd.MM.yyyy')
+                  : '')
+              "
+              [qualifiying]="
+                (exercise.evaluation
+                  ? 'ACTIVITY_PREVIEW.activity_detail_exercise_header_qualifiable'
+                  : 'ACTIVITY_PREVIEW.activity_detail_exercise_header_nonqualifiable'
+                ) | translate
+              "
+              [isQualifying]="exercise.evaluation"
+              [refMaterial]="exercise.referenceMaterials"
+            ></app-exercise-info>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      [class]="contextualHelpHeight ? 'activity-preview__contextual-help' : ''"
+    >
+      <app-contextual-help
+        id="editor-contextual-help"
+        [position]="
+          contextualHelpHeight
+            ? 'contextual-help_absolute'
+            : 'contextual-help_fixed-top'
+        "
+        (status)="getContextualStatus($event)"
+      ></app-contextual-help>
+    </div>
+  </main>
+</div>

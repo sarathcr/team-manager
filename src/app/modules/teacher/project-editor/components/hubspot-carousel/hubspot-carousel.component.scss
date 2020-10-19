@@ -1,0 +1,46 @@
+@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
+.custom-carousel {
+  &__slide {
+    max-height: 410px;
+    background-size: cover;
+    padding: 60px;
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .slide {
+      width: 100%;
+      .carousel-inner {
+        max-height: 410px;
+      }
+    }
+    .carousel-control span {
+      display: none;
+    }
+
+    .carousel-item {
+      max-height: 410px;
+    }
+    .carousel-control-prev,
+    .carousel-control-next {
+      display: none;
+    }
+    .carousel-indicators {
+      margin-bottom: 30px;
+      li {
+        border-bottom: none;
+        border-top: none;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        transition: 0.3s;
+        &.active {
+          width: 30px;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}

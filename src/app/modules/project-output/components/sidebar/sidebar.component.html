@@ -23,9 +23,18 @@
           <li
             *ngFor="let child of item.items; let innerIndex = index"
             class="sidebar__item"
-            [ngClass]="{ active: innerIndex === linkId }"
+            [ngClass]="{
+              active:
+                (currentPage > child.pageNumber ||
+                  currentPage == child.pageNumber) &&
+                (currentPage == child.lastPageNumber ||
+                  currentPage < child.lastPageNumber)
+            }"
           >
-            <a (click)="anchorClick(index, item[1])" class="sidebar__link">
+            <a
+              (click)="anchorClick(index, child.pageNumber)"
+              class="sidebar__link"
+            >
               {{ child.title | translate }}
             </a>
           </li>

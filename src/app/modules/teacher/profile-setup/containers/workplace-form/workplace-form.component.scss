@@ -1,0 +1,18 @@
+@import 'variables/_variables-master';
+@import 'helpers/_bt-mixins';
+
+.workspace-wrapper {
+  &__description {
+    line-height: 32px;
+    letter-spacing: 0.2px;
+    color: color(septenary);
+    font-size: font-size(body);
+    margin-bottom: 46px;
+  }
+  &__footer {
+    margin-bottom: 56px;
+    &_button {
+      align-self: unset;
+    }
+  }
+}

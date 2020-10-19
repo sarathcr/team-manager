@@ -1,0 +1,311 @@
+<div
+  class="people-empty"
+  *ngIf="
+    this.tempRouteId !== 'pending-invite' &&
+    this.tempRouteId !== 'delete-invite'
+  "
+>
+  <div class="people__fig people__fig_left position-fixed">
+    <img
+      src="../assets/images/people/shape-left@2x.png"
+      alt="shapes-left"
+      class="people__image"
+    />
+  </div>
+  <div class="people__empty">
+    <img
+      src="../assets/icons/img_empty_personas@2x.png"
+      class="people__empty-profile"
+      alt=""
+    />
+    <p class="people__empty-title title_s">
+      {{
+        ('PEOPLE-EMPTY-STATE.people_emptystate_title' | translate) +
+          ' ' +
+          ('VARIABLES.experience_type_variable_4'
+            | translate
+            | TranslateCut: localExperienceType)
+      }}
+    </p>
+    <p class="people__empty-description">
+      {{
+        ('PEOPLE-EMPTY-STATE.people_emptystate_description' | translate) +
+          ' ' +
+          ('VARIABLES.experience_type_variable_1'
+            | translate
+            | TranslateCut: localExperienceType)
+      }}
+    </p>
+    <div class="row people__empty-button">
+      <div>
+        <app-button theme="primary" icon="add" (click)="inviteTeacher()">
+          {{ 'PEOPLE-EMPTY-STATE.people_add_teachers_button' | translate }}
+        </app-button>
+      </div>
+      <div class="people__fig people__fig_right position-absolute">
+        <img
+          src="../assets/images/people/shape-right@2x.png"
+          alt="shapes-right"
+          class="people__image"
+        />
+      </div>
+      <div>
+        <app-button
+          theme="secondary"
+          icon="add"
+          variant="block"
+          (click)="inviteStudent()"
+        >
+          {{ 'PEOPLE-EMPTY-STATE.people_add_students_button' | translate }}
+        </app-button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.tempRouteId === 'pending-invite'">
+  <div class="people people-pending-invite">
+    <div class="people__fig people__fig_left position-absolute">
+      <img
+        src="../assets/images/people/shape-left@2x.png"
+        alt="shapes-left"
+        class="people__image"
+      />
+    </div>
+    <div class="people__fig people__fig_right position-absolute">
+      <img
+        src="../assets/images/people/shape-right@2x.png"
+        alt="shapes-right"
+        class="people__image"
+      />
+    </div>
+    <h2 class="title_xs people-pending-invite__title my-6">
+      {{ 'PEOPLE-EMPTY-STATE.people_teachers' | translate
+      }}<span class="people-pending-invite__count ml-1">(0)</span>
+    </h2>
+    <div class="row">
+      <div class="people-pending-invite__card-wrap col-2">
+        <app-people-card
+          variant="invite"
+          inviteLabel="PEOPLE-EMPTY-STATE.people_add_teachers_button"
+        ></app-people-card>
+      </div>
+    </div>
+
+    <h2 class="title_xs people-pending-invite__title mb-6">
+      {{ 'PEOPLE-EMPTY-STATE.people_students' | translate
+      }}<span class="people-pending-invite__count ml-1">(0)</span>
+    </h2>
+    <div class="row">
+      <div class="people-pending-invite__card-wrap col-2">
+        <app-people-card
+          variant="invite"
+          inviteLabel="PEOPLE-EMPTY-STATE.people_add_students_button"
+        ></app-people-card>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between mb-7">
+      <h2 class="title_xs people-pending-invite__title">
+        {{ 'PEOPLE-EMPTY-STATE.people_pending' | translate
+        }}<span class="people-pending-invite__count ml-1"
+          >({{ invitations.length }})</span
+        >
+      </h2>
+      <app-dropdown-select
+        [data]="filterList"
+        [selectedItems]="filterList"
+        [defaultSelected]="true"
+      ></app-dropdown-select>
+    </div>
+    <div class="people-pending-invite__row-wrapper">
+      <div class="mb-1">
+        <app-box-row isHead="true" [experienceType]="localExperienceType">
+          <div class="people-pending-invite__head-wrap">
+            <div class="people-pending-invite__column_one">
+              {{ 'LOGIN.login_label_email' | translate }}
+            </div>
+            <div class="people-pending-invite__column_two">
+              {{ 'PROFILE.user_role_label' | translate }}
+            </div>
+            <div class="people-pending-invite__column_three">
+              {{ 'PEOPLE-EMPTY-STATE.people_card_state' | translate }}
+            </div>
+          </div>
+        </app-box-row>
+      </div>
+      <div class="mb-1" *ngFor="let invitation of invitations">
+        <app-box-row
+          hasClose="true"
+          (delete)="deleteInvitation(invitation)"
+          [experienceType]="localExperienceType"
+          role="invitation.role"
+          status="invitation.status"
+        >
+          <div class="people-pending-invite__col-wrap">
+            <div class="people-pending-invite__column_one">
+              {{ invitation.email }}
+            </div>
+            <div class="people-pending-invite__column_two">
+              {{ invitation.role }}
+            </div>
+            <div
+              class="people-pending-invite__column_three"
+              [ngClass]="{
+                'people-pending-invite__column_three_rejected':
+                  invitation.status === 'Rechazado'
+              }"
+            >
+              {{ invitation.status }}
+            </div>
+          </div>
+        </app-box-row>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.tempRouteId === 'delete-invite'">
+  <div class="people people-delete-invite__main position-relative">
+    <div class="people__fig people__fig_left position-absolute">
+      <img
+        src="../assets/images/people/shape-left@2x.png"
+        alt="shapes-left"
+        class="people__image"
+      />
+    </div>
+    <div class="people__fig people__fig_right position-absolute">
+      <img
+        src="../assets/images/people/shape-right@2x.png"
+        alt="shapes-right"
+        class="people__image"
+      />
+    </div>
+    <div class="teacher">
+      <div class="people-delete-invite__text">
+        <span>{{ 'PEOPLE-EMPTY-STATE.people_card_teacher' | translate }}</span>
+        <span>
+          {{ '(' + teachers.length + ')' }}
+        </span>
+      </div>
+      <div>
+        <div class="row">
+          <div class="col-2 mb-6">
+            <app-people-card
+              [profileName]=""
+              [profileType]=""
+              [inviteLabel]="'PEOPLE-EMPTY-STATE.people_add_teachers_button'"
+              [imageUrl]=""
+              [variant]="'invite'"
+            ></app-people-card>
+          </div>
+          <div class="col-2 mb-6" *ngFor="let teacher of teachers">
+            <app-people-card
+              [profileName]="teacher.profileName"
+              [profileType]="teacher.profileType"
+              [inviteLabel]="teacher.inviteLabel"
+              [imageUrl]="teacher.imageUrl"
+              [checked]="teacher.checked"
+              (cardSelect)="teacher.checked = !teacher.checked"
+            ></app-people-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="people-delete-invite__text">
+        <span>{{ 'PEOPLE-EMPTY-STATE.people_card_student' | translate }}</span>
+        <span>
+          {{ '(' + students.length + ')' }}
+        </span>
+      </div>
+      <div>
+        <div class="row mb-6">
+          <div class="col-2 mb-6">
+            <app-people-card
+              [profileName]=""
+              [profileType]=""
+              [inviteLabel]="'PEOPLE-EMPTY-STATE.people_add_students_button'"
+              [imageUrl]=""
+              [variant]="'invite'"
+            ></app-people-card>
+          </div>
+
+          <div class="col-2 mb-6" *ngFor="let student of students">
+            <app-people-card
+              [profileName]="student.profileName"
+              [profileType]="student.profileType"
+              [inviteLabel]="student.inviteLabel"
+              [imageUrl]="student.imageUrl"
+              [checked]="student.checked"
+              (cardSelect)="student.checked = !student.checked"
+            ></app-people-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div></div>
+    <div class="d-flex align-items-center justify-content-between mb-7">
+      <h2 class="title_xs people-pending-invite__title">
+        {{ 'PEOPLE-EMPTY-STATE.people_pending' | translate
+        }}<span class="people-pending-invite__count ml-1"
+          >({{ invitations.length }})</span
+        >
+      </h2>
+      <app-dropdown-select
+        [data]="filterList"
+        [selectedItems]="filterList"
+        [defaultSelected]="true"
+      ></app-dropdown-select>
+    </div>
+    <div class="people-pending-invite__row-wrapper">
+      <div class="mb-1">
+        <app-box-row isHead="true" [experienceType]="localExperienceType">
+          <div class="people-pending-invite__head-wrap">
+            <div class="people-pending-invite__column_one">
+              {{ 'LOGIN.login_label_email' | translate }}
+            </div>
+            <div class="people-pending-invite__column_two">
+              {{ 'PROFILE.user_role_label' | translate }}
+            </div>
+            <div class="people-pending-invite__column_three">
+              {{ 'PEOPLE-EMPTY-STATE.people_card_state' | translate }}
+            </div>
+          </div>
+        </app-box-row>
+      </div>
+      <div class="mb-1" *ngFor="let invitation of invitations">
+        <app-box-row
+          [experienceType]="localExperienceType"
+          hasClose="true"
+          (delete)="deleteInvitation(invitation)"
+          role="invitation.role"
+          status="invitation.status"
+        >
+          <div class="people-pending-invite__col-wrap">
+            <div class="people-pending-invite__column_one">
+              {{ invitation.email }}
+            </div>
+            <div class="people-pending-invite__column_two">
+              {{ invitation.role }}
+            </div>
+            <div
+              class="people-pending-invite__column_three"
+              [ngClass]="{
+                'people-pending-invite__column_three_rejected':
+                  invitation.status === 'Rechazado'
+              }"
+            >
+              {{ invitation.status }}
+            </div>
+          </div>
+        </app-box-row>
+      </div>
+    </div>
+  </div>
+
+  <app-sticky-footer
+    *ngIf="(teachers | checkCount) + (students | checkCount)"
+    [totalCount]="(teachers | checkCount) + (students | checkCount)"
+    (delete)="deleteCard()"
+  >
+  </app-sticky-footer>
+</div>

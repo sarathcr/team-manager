@@ -4,11 +4,15 @@ $page-max-width: 1320px;
 // Gutter margins
 $grid-gutter: (
   primary: 30px,
-  secondary: 40px
+  secondary: 40px,
+  tertiary: 80px,
 );
 
 // Component Paddings
 $spacing: (
-  primary: map-get($grid-gutter, primary)/2,
-  secondary: map-get($grid-gutter, secondary)/2
+  primary: map-get($grid-gutter, primary) / 2,
+  secondary: map-get($grid-gutter, secondary) / 2,
+  tertiary: map-get($grid-gutter, tertiary) / 2,
 );
+$tooltip-padding-y: 10px;
+$tooltip-padding-x: spacing(primary);

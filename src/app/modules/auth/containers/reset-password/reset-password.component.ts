@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router'
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 
-import { validatePassword } from 'src/app/shared/utility/form.utility'
-import { AuthService } from '../../services/auth.service'
+import { validatePassword } from 'src/app/common-shared/utility/form.utility'
+import { AuthService } from '../../services/auth/auth.service'
 
 @Component({
   selector: 'app-reset-password',

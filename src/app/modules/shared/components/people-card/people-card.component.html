@@ -1,0 +1,42 @@
+<div
+  class="people-card"
+  [ngClass]="{
+    'people-card_small': variant === 'invite',
+    'people-card__selected': checked && variant !== 'invite'
+  }"
+  (click)="onSelect()"
+>
+  <div
+    class="d-flex align-items-center justify-content-center flex-column w-100"
+    *ngIf="variant !== 'invite'; else invite"
+  >
+    <div
+      class="people-card__figure"
+      [ngClass]="{ 'people-card__figure_bg': !imageUrl }"
+    >
+      <img
+        src="{{ imageUrl }}"
+        alt="invite profile image"
+        class="people-card__image"
+      />
+    </div>
+    <div class="people-card__type">
+      {{ profileType | translate }}
+    </div>
+    <h4 class="people-card__name">{{ profileName | translate }}</h4>
+    <div class="people-card__select-box">
+      <span
+        class="people-card__icon people-card__icon_check icon-ic_check"
+        *ngIf="checked"
+      ></span>
+    </div>
+  </div>
+</div>
+<ng-template #invite>
+  <span
+    class="icon-ic_add people-card__icon people-card__icon_invite mb-2"
+  ></span>
+  <div class="people-card__invite-label">
+    {{ inviteLabel | translate }}
+  </div>
+</ng-template>

@@ -1,0 +1,61 @@
+<div class="project-editor__form step-two" id="step-two">
+  <app-step-status id="step-two-status" [status]="step.state"></app-step-status>
+  <div class="project-form d-flex flex-column justify-content-between">
+    <div>
+      <h2 class="project-form__title title_s">
+        <span class="project-form__title-number">2.</span
+        >{{ 'THEMATIC.project_thematic_title' | translate }}
+      </h2>
+      <p class="project-form__description" [innerHTML]="">
+        <span>{{
+          'THEMATIC.project_thematic_description' | translate | TranslateCut: 0
+        }}</span>
+        <span>{{
+          'VARIABLES.experience_type_variable_1'
+            | translate
+            | TranslateCut: localExperienceType
+        }}</span>
+        <span>{{
+          'THEMATIC.project_thematic_description' | translate | TranslateCut: 1
+        }}</span>
+      </p>
+      <div class="mb-5">
+        <app-editable-list
+          id="step-two-editable-list"
+          [list]="themes"
+          [maxLength]="500"
+          editModalTitle="THEMATIC.project_thematic_edit_title"
+          editModalLabel="THEMATIC.project_thematic_edit_label"
+          editModalbuttonLabel="PROJECT.project_button_save"
+          deleteModalTitle="THEMATIC.project_thematic_delete_confirmation_title"
+          deleteModalDescription="THEMATIC.project_thematic_delete_confirmation_message"
+          deleteModalbuttonLabel="PROJECT.project_button_delete"
+          helperText="PROJECT.project_input_singleitem_helpertext"
+          errorText="PROJECT.Error_textlimit_specified_singleinput"
+          textareaHelperText="PROJECT.project_input_singleitem_helpertext"
+          textareaErrorText="PROJECT.Error_textlimit_specified_singleinput"
+          textareaPlaceholder="THEMATIC.project_thematic_placeholder"
+          [lineLimit]="5"
+          (editItem)="editTheme($event)"
+          (deleteItem)="deleteTheme($event)"
+          (addItem)="addThemes()"
+        ></app-editable-list>
+      </div>
+    </div>
+    <app-button
+      id="step-two-button"
+      [disabled]="buttonConfig.disabled"
+      [loading]="editor.savingProgress"
+      [theme]="buttonConfig.submitted ? 'success' : 'primary'"
+      [icon]="'tick'"
+      (click)="handleSubmit('DONE')"
+    >
+      {{
+        (buttonConfig.submitted
+          ? buttonConfig.successLabel
+          : buttonConfig.label
+        ) | translate
+      }}
+    </app-button>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.read-more {
+  &__toggle {
+    color: color(tertiary);
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

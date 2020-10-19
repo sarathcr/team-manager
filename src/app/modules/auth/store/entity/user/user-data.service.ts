@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { User } from '../../../constants/model/login'
+import { User } from '../../../constants/model/login.model'
 
 @Injectable()
 export class UserDataService extends DefaultDataService<User> {

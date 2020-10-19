@@ -1,0 +1,57 @@
+<button
+  class="btn position-relative"
+  [ngClass]="{
+    btn_outline: variant === 'outlined',
+    btn_text: variant === 'text',
+    btn_block: variant === 'block',
+    btn_icon: variant === 'icon',
+    btn_back: variant === 'back',
+    btn_underlined: variant === 'underlined',
+    btn_primary: theme === 'primary' && variant !== 'icon',
+    btn_secondary: theme === 'secondary',
+    btn_quaternary: theme === 'quaternary',
+    btn_teritiary: theme === 'teritiary',
+    btn_success: theme === 'success',
+    btn_small: size === 'small',
+    btn_medium: size === 'medium',
+    btn_loading: loading
+  }"
+  [disabled]="disabled"
+  [type]="buttonType"
+>
+  <span
+    class="btn__icon"
+    *ngIf="icon"
+    [ngClass]="{
+      'icon-ic_check': icon === 'tick',
+      'icon-ic_add_small': icon === 'add',
+      'icon-ic_locked': icon === 'locked',
+      'icon-ic_view_small': icon === 'view',
+      'icon-ic_download': icon === 'download',
+      'icon-ic_print': icon === 'print',
+      'icon-ic_zoom_in': icon === 'zoomIn',
+      'icon-ic_zoom_out': icon === 'zoomOut',
+      'icon-ic_left_small': icon === 'left',
+      'icon-ic_back': icon === 'back',
+      'icon-ic_calendar_off': icon === 'calender',
+      'icon-ic_more': icon === 'three-dots',
+      'icon-ic_output': icon === 'three-shape',
+      'icon-ic_alumno': icon === 'alumno',
+      'icon-ic_close': icon === 'close',
+      'icon-ic_objetivos': icon === 'objetivos',
+      'icon-ic_check1': icon === 'check'
+    }"
+  ></span>
+  <span class="btn__content"><ng-content></ng-content></span>
+  <app-loader
+    *ngIf="loading"
+    [theme]="
+      theme === 'primary' && !disabled
+        ? 'secondary'
+        : theme === 'success'
+        ? 'teritiary'
+        : 'primary'
+    "
+    size="medium"
+  ></app-loader>
+</button>

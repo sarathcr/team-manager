@@ -1,0 +1,55 @@
+<div
+  [ngClass]="{ switch_disabled: disabled }"
+  [attr.visibility]="switchOn ? 'on' : 'off'"
+>
+  <span
+    class="switch"
+    [ngClass]="{
+      'switch-button': type === 'button'
+    }"
+  >
+    <!-- when switch type is default -->
+    <div class="switch-slider" *ngIf="type === 'default'">
+      <input
+        class="switch__input"
+        type="checkbox"
+        [checked]="switchOn == true"
+        id="switch_1"
+      />
+      <span
+        class="switch__slider switch__slider_round"
+        (click)="toggleSwitch($event)"
+      ></span>
+    </div>
+    <span class="switch__text" *ngIf="type === 'default'">
+      {{ switchOn ? (textOn | translate) : (textOff | translate) }}
+    </span>
+    <!-- when switch type is button -->
+    <div class="d-flex switch-button__wrapper" *ngIf="type === 'button'">
+      <div
+        class="switch-button__item"
+        [ngClass]="{ 'switch-button__item_active': isActive === 'item1' }"
+        (click)="this.isActive = 'item1'; toggleSwitch($event)"
+      >
+        <span
+          class="icon switch-button__icon"
+          [ngClass]="iconOne"
+          *ngIf="iconOne"
+        ></span>
+        <span class="switch-button__text">{{ buttonTextOne | translate }}</span>
+      </div>
+      <div
+        class="switch-button__item"
+        [ngClass]="{ 'switch-button__item_active': isActive === 'item2' }"
+        (click)="this.isActive = 'item2'; toggleSwitch($event)"
+      >
+        <span
+          class="icon switch-button__icon"
+          [ngClass]="iconTwo"
+          *ngIf="iconTwo"
+        ></span>
+        <span class="switch-button__text">{{ buttonTextTwo | translate }}</span>
+      </div>
+    </div>
+  </span>
+</div>

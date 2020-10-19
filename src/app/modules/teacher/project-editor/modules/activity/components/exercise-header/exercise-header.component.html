@@ -1,0 +1,54 @@
+<div class="exercise-header">
+  <div class="exercise-header__texts">
+    <span class="exercise-header__texts-title title_secondary">{{
+      title | translate
+    }}</span>
+    <p class="exercise-header__texts-description title_m">
+      {{ description | translate }}
+    </p>
+  </div>
+  <div class="exercise-header__panel">
+    <div class="exercise-header__panel_left">
+      <span
+        class="icon-ic_calendar_off"
+        *ngIf="!isDelivered && delivery"
+      ></span>
+      <span class="icon-ic_calendar_on" *ngIf="isDelivered"
+        ><span class="path1"></span><span class="path2"></span
+      ></span>
+      <span class="exercise-header__panel_font_styles" *ngIf="delivery">{{
+        delivery | translate
+      }}</span>
+      <span class="icon-ic_separador" *ngIf="delivery && qualifiying"></span>
+      <span
+        class="icon-ic_star-grey"
+        *ngIf="isQualifying && qualifiying"
+      ></span>
+      <span class="icon-ic_star-no" *ngIf="!isQualifying && qualifiying"></span>
+      <span class="exercise-header__panel_font_styles" *ngIf="qualifiying">{{
+        qualifiying | translate
+      }}</span>
+    </div>
+    <div
+      class="exercise-header__panel_right"
+      ngClass="isQualifying ? 'exercise-header__qualifiying_yes' : 'exercise-header__qualifiying_not'"
+    >
+      <app-button
+        [variant]="isDelivered ? 'outlined' : 'teritiary'"
+        [icon]="isDelivered ? 'close' : 'check'"
+        [theme]="isDelivered ? 'quaternary' : 'primary'"
+        *ngIf="buttonText"
+      >
+        {{ buttonText | translate }}
+      </app-button>
+    </div>
+  </div>
+  <div
+    class="exercise-header__calification_show"
+    *ngIf="showCalifications"
+  ></div>
+  <div
+    class="exercise-header__calification_hide"
+    *ngIf="!showCalifications"
+  ></div>
+</div>

@@ -1,0 +1,114 @@
+<div class="carousel">
+  <app-hubspot-carousel></app-hubspot-carousel>
+</div>
+<ng-template #hasLoaded>
+  <h1 class="inspirate__head-text">
+    {{ 'PRIVATEHOME_GENERAL.home_menu_section_getinspired' | translate }} ({{
+      totalItems
+    }})
+  </h1>
+  <div class="w-100 d-flex mb-5 justify-content-between">
+    <div class="inspirate__filters-left d-flex align-items-center">
+      <div class="mr-5">
+        <app-search
+          placeholder="{{
+            'PRIVATEHOME_HEADER.home_search_experience' | translate
+          }}"
+          [text]="this.searchtext"
+          (searchText)="handleSearch($event)"
+        ></app-search>
+      </div>
+      <div>
+        <app-filter
+          [filterOption]="filterOption"
+          [filterSum]="filterSum"
+          (filter)="applyFilter($event)"
+        ></app-filter>
+      </div>
+    </div>
+    <div class="inspirate__filters-right d-flex">
+      <div class="mr-0">
+        <app-dropdown-select
+          [data]="dropDownData"
+          [selectedItems]="selectedSortBy"
+          [defaultSelected]="false"
+          label="PRIVATEHOME_HEADER.home_sort"
+          (dropdownSelect)="onOderbySelection($event)"
+        ></app-dropdown-select>
+      </div>
+    </div>
+  </div>
+  <div class="inspirate__body">
+    <div class="row">
+      <app-card-experience
+        class="col-4 d-flex"
+        *ngFor="let project of (projects$ | async)?.projects; index as i"
+        id="list-project-{{ i }}"
+        [data]="project"
+        variant="template"
+        (cardClick)="checkUserProfile(project)"
+      >
+      </app-card-experience>
+    </div>
+    <app-loader
+      id="create-home-loader"
+      *ngIf="loading"
+      variant="block"
+      class="inspirate__loader"
+    ></app-loader>
+  </div>
+  <div class="inspirate__pagination d-flex justify-content-center mb-7">
+    <app-pagination
+      id="pagination"
+      *ngIf="loaded && !filterLoading && totalItems > 0"
+      [totalItems]="totalItems"
+      [maxSize]="maxSize"
+      [itemsPerPage]="itemsPerPage"
+      [currentPage]="currentPage"
+      [disabled]="loading"
+      (pageChanged)="pageChanged($event)"
+    >
+    </app-pagination>
+  </div>
+</ng-template>
+<ng-template #cpModal>
+  <app-modal-form
+    variant="input"
+    [title]="'PRIVATEHOME_EMPTYSTATE.home_inspire_popup_cp_title'"
+    confirmLabel="PRIVATEHOME_EMPTYSTATE.home_inspire_popup_cp_button_start"
+    data=""
+    [errorText]="'PRIVATEHOME_EMPTYSTATE.home_inspire_popup_cp_error'"
+    label="PRIVATEHOME_EMPTYSTATE.home_inspire_popup_cp_input_cp"
+    [placeholder]="cpPlaceHolder"
+    description="PRIVATEHOME_EMPTYSTATE.home_inspire_popup_cp_description"
+    titleVariant="secondary"
+    inputVariant="number"
+    [maxLength]="5"
+    [minLength]="5"
+    [enableValidator]="false"
+    [error]="hasError"
+    (decline)="declineModal()"
+    (confirm)="confirmModal($event)"
+    (getInputValue)="getInputValue($event)"
+  >
+  </app-modal-form>
+</ng-template>
+<ng-template #profileSetupModal>
+  <app-modal-info
+    variant="information"
+    [appearance]="'medium'"
+    [modalTitle]="'PROFILESETUP.profile_setup_menu_title'"
+    [description]="'PROFILESETUP.profile_setup_profile_description'"
+    [overTitle]="'PROFILESETUP.profile_setup_profile_overtitle'"
+    [confirmLabel]="'PROFILESETUP.profile_empty_button'"
+    (decline)="declineProfileModal()"
+    (confirm)="gotoProfile()"
+  >
+  </app-modal-info>
+</ng-template>
+<app-loader
+  id="create-home-loader"
+  *ngIf="!loaded || cpLoading; else hasLoaded"
+  variant="block"
+  class="inspirate__loader"
+></app-loader>

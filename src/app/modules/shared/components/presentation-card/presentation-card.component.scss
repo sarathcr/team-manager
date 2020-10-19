@@ -1,0 +1,164 @@
+@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+.presentation-card {
+  width: 100%;
+  height: 100%;
+  background-color: color(quaternary);
+  border-radius: 6px;
+  padding: 18px 18px 14px;
+  min-width: 142px;
+  cursor: pointer;
+  &_sm {
+    padding: 12px 12px 7px 12px;
+  }
+  @include presentation-card-box-shadow();
+  &__size {
+    padding: grid-gutter(primary);
+  }
+  &-delete {
+    display: none;
+    position: absolute;
+    background-color: color(quaternary);
+
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    top: 20px;
+    right: 20px;
+    z-index: 9;
+  }
+
+  &__figure {
+    height: 120px;
+    width: 100%;
+    background-color: rgba(color(tertiary), 0.05);
+    &_projecttype {
+      height: 170px;
+    }
+    &_sm {
+      width: 161px;
+      height: 84px;
+    }
+  }
+  &_slide {
+    background-color: color(background-sunglow);
+  }
+
+  &_site {
+    background-color: color(background-free-speech-blue);
+  }
+
+  &_form {
+    background-color: color(primary);
+  }
+
+  &_doc {
+    background-color: color(background-Blue);
+  }
+
+  &_sheet {
+    background-color: color(background-Sapphire);
+  }
+  &_rubrica {
+    background-color: color(Navy-Blue);
+  }
+  &_checklist {
+    background-color: color(orange-Peel);
+  }
+  &_diana {
+    background-color: color(Kelly-Green);
+  }
+  &_video {
+    background-color: color(Wild-Strawberry);
+  }
+  &__image {
+    object-fit: cover;
+    object-position: center;
+  }
+  &__figure,
+  &__image {
+    border-radius: 4px;
+  }
+  &__icon {
+    color: color(quaternary);
+    &_add {
+      position: absolute;
+      font-size: 38px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &_premium {
+      font-size: 15px;
+      margin-right: 10px;
+    }
+  }
+  &__title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    &_project {
+      text-align: center;
+      letter-spacing: 0.3px;
+      line-height: 32px;
+      font-size: font-size(s);
+      font-family: font-family(primary);
+      margin-top: spacing(secondary);
+      font-weight: 900;
+    }
+    &_sm {
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  &__description {
+    text-align: center;
+    font-size: font-size(body-s);
+    letter-spacing: normal;
+    margin-bottom: 12px;
+  }
+  &__bgimage {
+    background: color(secondary);
+  }
+  &__premium {
+    position: absolute;
+    padding: 6px 14px;
+    height: 36px;
+    border-radius: 33px;
+    background: color(secondary);
+    color: color(quaternary);
+    top: -7px;
+    right: -7px;
+    font-family: font-family(secondary);
+    font-size: font-size(label);
+    letter-spacing: 0.86px;
+    &_color {
+      background: color(primary);
+    }
+    &_project {
+      top: 18px;
+      right: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      background-color: color(primary);
+    }
+    &_text {
+      margin-top: 1px;
+    }
+  }
+  &_disabled {
+    opacity: 0.8;
+    cursor: default;
+  }
+  &__coming-soon {
+    cursor: default;
+  }
+}
+.presentation-card:hover {
+  .presentation-card-delete {
+    display: flex;
+  }
+}

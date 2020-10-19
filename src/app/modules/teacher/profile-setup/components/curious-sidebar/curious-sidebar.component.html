@@ -1,0 +1,42 @@
+<div class="curious-sidebar">
+  <div class="curious-sidebar__scroll-wrapper">
+    <ng-scrollbar class="custom-scrollbar" position="invertY">
+      <div class="curious-sidebar__wrap">
+        <div class="step-navigator">
+          <h3 class="step-navigator__title">
+            {{ title | translate }}
+          </h3>
+          <ul class="step-navigator__progress">
+            <li
+              *ngFor="let item of stepData"
+              class="step-node activated"
+              [ngClass]="{
+                active: item.status === 'INPROGRESS',
+                activated: item.status === 'DONE'
+              }"
+            >
+              <span
+                class="step-node__indicator"
+                [ngClass]="{
+                  'step-node__indicator_bg_white': item.status === 'PENDING'
+                }"
+              ></span>
+              <p class="step-node__label">
+                {{ item.name | translate }}
+              </p>
+            </li>
+          </ul>
+        </div>
+        <div class="asset">
+          <div class="asset__wrap" *ngFor="let item of stepData">
+            <img
+              class="asset__image"
+              src="{{ item.assetUrl }}"
+              alt="asset"
+              [class]="item.currentStep ? 'd-block' : 'd-none'"
+            />
+          </div>
+        </div></div
+    ></ng-scrollbar>
+  </div>
+</div>

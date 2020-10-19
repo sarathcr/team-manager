@@ -15,11 +15,12 @@ import { ActivatedRoute, Router } from '@angular/router'
 
 import { SocialAuthService } from 'angularx-social-login'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
-import { GoogleAuthService } from 'src/app/shared/services/google/google-auth.service'
+import { GoogleAuthService } from 'src/app/common-shared/services/google/google-auth.service'
 
-import { validateEmail } from 'src/app/shared/utility/form.utility'
-import { SubSink } from 'src/app/shared/utility/subsink.utility'
-import { AuthService } from '../../services/auth.service'
+import { validateEmail } from 'src/app/common-shared/utility/form.utility'
+import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
+import { environment } from 'src/environments/environment'
+import { AuthService } from '../../services/auth/auth.service'
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef
   buttonLoading = false
   subscriptions = new SubSink()
+  env = environment
   @ViewChild('activationSuccessModal') activationSuccessModal: TemplateRef<any>
   constructor(
     private authService: AuthService,
@@ -85,6 +87,10 @@ export class LoginComponent implements OnInit, OnDestroy {
               if (valid) {
                 this.invalid = false
                 this.redirectByStatus()
+                const tokenExpiry = JSON.parse(atob(user.idToken.split('.')[1]))
+                  .exp // get token expiry from google JWT token
+                this.googleAuthService.setGoogleToken(user.authToken) // set google auth token
+                this.googleAuthService.setGoogleTokenExpiry(tokenExpiry) // set google auth token expiry
               }
             })
         }

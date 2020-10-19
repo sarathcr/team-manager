@@ -13,15 +13,20 @@ import { PDFDocumentProxy } from 'ng2-pdf-viewer'
 
 import { ProjectOutputService } from './../../services/output/project-output.service'
 
-import { Step } from 'src/app/modules/project-editor/constants/model/project.model.js'
+import {
+  ActivityData,
+  ActivityPhaseObject,
+} from '../../../teacher/project-editor/constants/model/activity.model'
+
+import { Step } from 'src/app/modules/teacher/project-editor/constants/model/project.model.js'
 
 import { defaultStyle, styles } from './../../config/pdfCustomStyles'
 import { fonts } from './../../config/pdfFonts'
 
 import { TableLayouts } from '../../config/pdfTableLayouts'
 
-import { SubSink } from './../../../../shared/utility/subsink.utility'
-import { trimWhitespace } from './../../../../shared/utility/trim-whitespace.utility'
+import { SubSink } from '../../../../common-shared/utility/subsink.utility'
+import { trimWhitespace } from '../../../../common-shared/utility/trim-whitespace.utility'
 
 // PDFMAKE Fonts
 pdfMake.vfs = pdfFonts.pdfMake.vfs
@@ -48,16 +53,20 @@ export class OutputViewComponent implements OnInit, OnDestroy {
   pageVariable = 1
   generatedPDF: any
   outline: any[]
+  activityChild: any[]
   pageWidth = 842
   pageHeight = 595
 
   // Project Variables
   projectId: string
   projectData: any
+  activityID: string
+  imageBase64: any
   title: string
-  subscription = new SubSink()
+  subscriptions = new SubSink()
   documentDefinition: object
   curriculumId: string
+  showBasicSkill = false
   shortCodes: any
   steps: Step[]
   loading = true
@@ -67,6 +76,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
   rowIndex = 0
   subjectWiseDimension = []
   allCriterias: any[] = []
+  allCriteriasAndContent: any
   projectImage: any
   projectBackground: object
   projectCoverText: object
@@ -76,6 +86,14 @@ export class OutputViewComponent implements OnInit, OnDestroy {
   projectEvaluationCriteria: object
   projectCompetencyRelation: object
   projectShortCodeDesc: object
+  projectActivitiesData: ActivityData
+  projectActivityList: object
+  projectActivityInitialPhase: object
+  projectActivityDevelopPhase: object
+  projectActivitySynthesisPhase: object
+  projectActivityInitialDetail: object
+  projectActivityDevelopDetail: object
+  projectActivitySynthesisDetail: object
 
   // Localisation title Variables
   academicYearTitle: string
@@ -93,6 +111,29 @@ export class OutputViewComponent implements OnInit, OnDestroy {
   competenciasSubtitle: string
   footerCompetencias: string
   footerDimension: string
+  activitySectionTitle: string
+  activityVariableHour: string
+  activityVariableActivities: string
+  activityVariableExercises: string
+  activityInitialPhaseTitle: string
+  activityDevelopPhaseTitle: string
+  activitySynthesisPhaseTitle: string
+  activityMinTitle: string
+  activityVariableObjectives: string
+  activityTeachingStrategies: string
+  activityStudentGroups: string
+  activityResources: string
+  activityExercise: string
+  activityExerciseOnline: string
+  activityExerciseSchool: string
+  activityExerciseNone: string
+  activityExerciseQualified: string
+  activityExerciseNotQualified: string
+  activityDiversity: string
+  activityModalityOnline: string
+  activityModalityPresencial: string
+  activityModalityBoth: string
+  activityDesc: string
 
   // Other Variables
   errors = []
@@ -109,7 +150,8 @@ export class OutputViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getLocalizations()
     this.projectId = this.route.snapshot.paramMap.get('id')
-    combineLatest([
+    this.activityID = this.route.snapshot.queryParamMap.get('activity')
+    this.subscriptions.sink = combineLatest([
       this.outputService.getProjectData(this.projectId),
       this.outputService.getStepStatus(this.projectId),
     ])
@@ -138,33 +180,71 @@ export class OutputViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe()
+    this.subscriptions.unsubscribe()
   }
 
   // Get short codes of the Dimensions or basic skills based on the Curriculum ID
   getCodesAndEvaluationCriterias(): void {
-    // console.log('getCodesAndEvaluationCriterias()')
     if (this.projectData.subjects.length) {
       const evalIds = []
+      const contentIds = []
       this.projectData.subjects.map((item) => {
         const ids = item.evaluationCriteria.map(({ id }) => id)
+        const cids = item.contents.map(({ id }) => id)
         evalIds.push(...ids)
+        contentIds.push(...cids)
       })
       if (evalIds.length) {
-        this.callAPICodesAndEvaluation(evalIds)
+        this.getImagedata()
+          .then(() => this.callAPICodesAndEvaluation(evalIds, contentIds))
           .then(() => this.arrayCreation())
           .then(() => this.extractSubjectWiseDimension())
       } else {
-        this.arrayCreation().then(() => this.contents())
+        this.getImagedata()
+          .then(() => this.arrayCreation())
+          .then(() => this.contents())
       }
     }
   }
 
-  callAPICodesAndEvaluation(evalIds: Array<number>): Promise<any> {
+  getImagedata(): Promise<any> {
     return new Promise(async (resolve, reject) => {
-      combineLatest([
+      if (this.isStepDone(6)) {
+        this.subscriptions.sink = this.outputService
+          .getJsonData(this.projectData?.creativeImage + '.json')
+          .pipe(
+            catchError((err) => {
+              this.errors.push(err.error)
+              return throwError(err)
+            })
+          )
+          .subscribe((data) => {
+            this.imageBase64 = data.data
+            resolve()
+          })
+      } else {
+        resolve()
+      }
+    })
+  }
+
+  callAPICodesAndEvaluation(
+    evalIds: Array<number>,
+    contentIds: Array<number>
+  ): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      this.subscriptions.sink = forkJoin([
         this.outputService.getCodes(this.curriculumId),
         this.outputService.getCrtieriasDetails(evalIds),
+        this.outputService.getCriteriaAndContentGradeWise(
+          evalIds,
+          contentIds?.length ? contentIds : 0
+        ),
+        this.outputService.getCurriculumRelation(
+          this.projectData.region.id,
+          this.projectData.stage
+        ),
+        this.outputService.getBasicSkillShow(this.projectData.curriculumId),
       ])
         .pipe(
           catchError((err) => {
@@ -172,20 +252,38 @@ export class OutputViewComponent implements OnInit, OnDestroy {
             return throwError(err)
           })
         )
-        .subscribe(([codes, criterias]) => {
-          if (codes) {
-            this.shortCodes = codes
+        .subscribe(
+          ([
+            codes,
+            baseCriterias,
+            criteriasContents,
+            relation,
+            curriculumBasicSkill,
+          ]) => {
+            if (codes) {
+              this.shortCodes = codes
+            }
+            if (baseCriterias) {
+              this.allCriterias = baseCriterias
+            }
+            if (criteriasContents) {
+              this.allCriteriasAndContent = criteriasContents
+            }
+            if (relation) {
+              this.curriculumRelation = relation.curriculumType
+            }
+            if (curriculumBasicSkill) {
+              curriculumBasicSkill.forEach(({ showBasicskill }) => {
+                this.showBasicSkill = showBasicskill
+              })
+            }
+            resolve()
           }
-          if (criterias) {
-            this.allCriterias = criterias
-          }
-          resolve()
-        })
+        )
     })
   }
 
   arrayCreation(): Promise<any> {
-    // console.log('arrayCreation()')
     return new Promise(async (resolve, reject) => {
       if (this.projectData.subjects.length) {
         await Promise.all(
@@ -197,48 +295,82 @@ export class OutputViewComponent implements OnInit, OnDestroy {
               customContents,
               contents,
             }) => {
-              const subjectWiseIds = evaluationCriteria.map(({ id }) => id)
-              const evaluation = this.allCriterias.filter((item) =>
-                subjectWiseIds.includes(item.id)
+              const subjectWiseEvalIds = evaluationCriteria.map(({ id }) => id)
+              const subjectWiseContentIds = contents.map(({ id }) => id)
+              const evaluation = this.allCriteriasAndContent?.evaluationCriteriaRPs.filter(
+                (item) => subjectWiseEvalIds.includes(item.id)
               )
-              let relation = ''
+              const derivedContents = this.allCriteriasAndContent?.contentRPs.filter(
+                (item) => subjectWiseContentIds.includes(item.id)
+              )
               this.subjectWiseDimension = []
-              evaluation.forEach(({ basicSkills, dimensions }) => {
-                if (basicSkills.length) {
-                  relation = 'basic-skill'
-                } else if (dimensions.length) {
-                  relation = 'dimension'
-                } else {
-                  relation = 'no-relation'
+              let buildEvaluation = []
+              buildEvaluation = evaluation?.map((item) => {
+                const baseEval = this.allCriterias.find(
+                  (bev) => bev.id === item.id
+                )
+                return {
+                  ...item,
+                  basicSkills: baseEval.basicSkills,
+                  dimensions: baseEval.dimensions,
+                  namepdf: baseEval.namepdf,
                 }
               })
-              if (relation === 'dimension') {
+              if (this.curriculumRelation === 'DIMENSIONS_RELATED') {
                 this.subjectWiseDimension.push(
                   this.outputService.getSubjectWiseDimension(subjectID)
                 )
               }
-              this.curriculumRelation = relation
               const groupedData = []
-              const groupedEvaluation = this.groupBy(evaluation, 'blockId')
-              const groupedContent = this.groupBy(contents, 'blockid')
-              for (const key of Object.keys(groupedEvaluation)) {
-                groupedData.push({
-                  blockID: key,
-                  evaluationData: groupedEvaluation[key],
-                  contentData: groupedContent[key] ? groupedContent[key] : [],
-                })
+              if (buildEvaluation?.length) {
+                const groupedEvaluation = this.groupBy(
+                  buildEvaluation,
+                  'gradeId'
+                )
+                const groupedContent = this.groupBy(derivedContents, 'gradeId')
+                for (const key of Object.keys(groupedEvaluation)) {
+                  groupedData.push({
+                    gradeId: key,
+                    evaluationData: groupedEvaluation[key],
+                    contentData: groupedContent[key] ? groupedContent[key] : [],
+                  })
+                }
               }
               this.subjectEvaluation.push({
                 subjectID,
                 subjectName: name,
                 customContents,
                 evaluationCriteria: groupedData,
-                subjectRelation: relation,
+                subjectRelation: this.curriculumRelation,
                 subjectDimensions: this.subjectWiseDimension,
               })
             }
           )
         )
+        if (this.projectData.activities) {
+          const duration = this.projectData.activities.reduce(
+            (a, b) => a + (b.duration || 0),
+            0
+          )
+          const activitiesCount = this.projectData.activities.length
+          const exercisesCount = this.projectData.activities.reduce(
+            (a, b) => a + (b.exercises?.length || 0),
+            0
+          )
+          const groupedActivities: ActivityPhaseObject = this.groupBy(
+            this.projectData.activities,
+            'phase'
+          )
+          this.projectActivitiesData = {
+            duration,
+            activitiesCount,
+            exercisesCount,
+            intialPhase: groupedActivities?.INITIAL,
+            developPhase: groupedActivities?.DEVELOP,
+            synthesisPhase: groupedActivities?.SYNTHESIS,
+          }
+        }
+
         resolve()
       } else {
         resolve()
@@ -252,8 +384,11 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         ({ subjectID, subjectRelation, subjectDimensions }) => {
           this.subjectWiseDimension = []
           return new Promise((resolve, reject) => {
-            if (subjectRelation === 'dimension' && subjectDimensions.length) {
-              forkJoin(subjectDimensions)
+            if (
+              subjectRelation === 'DIMENSIONS_RELATED' &&
+              subjectDimensions.length
+            ) {
+              this.subscriptions.sink = forkJoin(subjectDimensions)
                 .pipe(
                   catchError((err) => {
                     this.errors.push(err.error)
@@ -288,7 +423,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // PDF Generation
   async generatePDF(): Promise<any> {
-    // console.log('Started generating PDF')
     const thisRef = this
     this.documentDefinition = {
       info: {
@@ -399,10 +533,20 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         this.projectCompetencyRelation,
         this.projectObjectiveStandards,
         this.projectDrivingQns,
+        this.projectActivityList,
+        this.projectActivityInitialPhase,
+        this.projectActivityDevelopPhase,
+        this.projectActivitySynthesisPhase,
+        this.projectActivityInitialDetail,
+        this.projectActivityDevelopDetail,
+        this.projectActivitySynthesisDetail,
       ],
       pageBreakBefore(currentNode: any): boolean {
         if (
-          currentNode.id === 'driving' &&
+          (currentNode.id === 'driving' ||
+            currentNode.id === 'objectives' ||
+            String(currentNode.id).includes('subjectTableStart') ||
+            currentNode.id === 'compentenceRelation') &&
           currentNode.startPosition.top > thisRef.pageBreakPoint
         ) {
           return true
@@ -415,14 +559,24 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           return true
         }
         if (
-          currentNode.id === 'objectives' &&
-          currentNode.startPosition.top > thisRef.pageBreakPoint
+          (currentNode.id === 'activityObjectivetable' ||
+            currentNode.id === 'activitySContenttable' ||
+            currentNode.id === 'activityStandardtable' ||
+            currentNode.id === 'activityResourcestable' ||
+            currentNode.id === 'activityDiversitytable' ||
+            currentNode.id === 'activityExercisetable') &&
+          currentNode.startPosition.top >
+            currentNode.startPosition.pageInnerHeight
         ) {
           return true
         }
+
         if (
-          String(currentNode.id).includes('subjectTableStart') &&
-          currentNode.startPosition.top > thisRef.pageBreakPoint
+          (currentNode.id === 'activityList-initial' ||
+            currentNode.id === 'activityList-develop' ||
+            currentNode.id === 'activityList-synthesis') &&
+          currentNode.startPosition.top >
+            currentNode.startPosition.pageInnerHeight
         ) {
           return true
         }
@@ -438,37 +592,750 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Contents for the PDF
   contents(): void {
-    // console.log('contents()')
-    this.coverPage()
-      .then(() => this.overview())
-      .then(() => this.evaluationCriteria())
-      .then(() => this.competencyRelation())
-      .then(() => this.objectives())
-      .then(() => this.driving())
-      .then(() => {
-        // console.log('completed data preparation')
-        this.generatePDF()
+    Promise.all([
+      this.coverPage(),
+      this.overview(),
+      this.evaluationCriteria(),
+      this.competencyRelation(),
+      this.objectives(),
+      this.driving(),
+      this.activityList(),
+      this.ActivityDetail(),
+    ]).then((values) => {
+      this.generatePDF()
+    })
+  }
+
+  activityList(): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      if (this.projectData.activities?.length) {
+        if (this.projectActivitiesData.intialPhase?.length) {
+          this.projectActivityInitialPhase = this.phaseWiseActivityList(
+            this.activityInitialPhaseTitle,
+            this.projectActivitiesData.intialPhase,
+            'initial'
+          )
+        }
+        if (this.projectActivitiesData.developPhase?.length) {
+          this.projectActivityDevelopPhase = this.phaseWiseActivityList(
+            this.activityDevelopPhaseTitle,
+            this.projectActivitiesData.developPhase,
+            'develop'
+          )
+        }
+        if (this.projectActivitiesData.synthesisPhase?.length) {
+          this.projectActivitySynthesisPhase = this.phaseWiseActivityList(
+            this.activitySynthesisPhaseTitle,
+            this.projectActivitiesData.synthesisPhase,
+            'synthesis'
+          )
+        }
+        const totalDuration: any = (
+          this.projectActivitiesData.duration / 60
+        ).toFixed(1)
+        this.projectActivityList = {
+          pageBreak: 'before',
+          id: 'activityList',
+          tocItem: true,
+          margin: [0, 5, 0, 0],
+          columns: [
+            {
+              text: this.activitySectionTitle,
+              alignment: 'left',
+              style: 'activityMainHead',
+            },
+            {
+              width: 'auto',
+              alignment: 'center',
+              layout: 'resumenLayout',
+              table: {
+                widths: ['*'],
+                body: [
+                  [
+                    {
+                      columnGap: 10,
+                      columns: [
+                        {
+                          width: 'auto',
+                          text:
+                            Math.abs(totalDuration) +
+                            ' ' +
+                            (totalDuration > 1
+                              ? this.activityVariableHour.split('|')[1]
+                              : this.activityVariableHour.split('|')[0]
+                            ).toUpperCase(),
+                          style: 'resumenCell',
+                          margin: [4, 0, 0, 0],
+                        },
+                        {
+                          width: 1,
+                          text: '|',
+                          style: ['icon', 'resumenSeparator'],
+                          margin: [0, 2, 0, 0],
+                        },
+                        {
+                          width: 'auto',
+                          text:
+                            this.projectActivitiesData.activitiesCount +
+                            ' ' +
+                            (this.projectActivitiesData.activitiesCount > 1
+                              ? this.activityVariableActivities.split('|')[1]
+                              : this.activityVariableActivities.split('|')[0]
+                            ).toUpperCase(),
+                          style: 'resumenCell',
+                        },
+                        {
+                          width: 1,
+                          text: '|',
+                          style: ['icon', 'resumenSeparator'],
+                          margin: [0, 2, 0, 0],
+                        },
+                        {
+                          width: 'auto',
+                          text:
+                            this.projectActivitiesData.exercisesCount +
+                            ' ' +
+                            (this.projectActivitiesData.exercisesCount > 1
+                              ? this.activityVariableExercises.split('|')[1]
+                              : this.activityVariableExercises.split('|')[0]
+                            ).toUpperCase(),
+                          style: 'resumenCell',
+                          margin: [0, 0, 4, 0],
+                        },
+                      ],
+                    },
+                  ],
+                ],
+              },
+            },
+          ],
+        }
+        resolve('activity list completed')
+      } else {
+        resolve('activity list completed')
+      }
+    })
+  }
+
+  // Activity List
+  phaseWiseActivityList(name: string, arr: any, type: string): object {
+    const initialData = []
+    initialData.push([
+      {
+        colSpan: 9,
+        text: [
+          name.toUpperCase() +
+            ' (' +
+            arr.length +
+            ' ' +
+            (arr.length > 1
+              ? this.activityVariableActivities.split('|')[1]
+              : this.activityVariableActivities.split('|')[0]
+            ).toUpperCase() +
+            ')',
+        ],
+        style: ['activity'],
+        margin: [-20, 14, 0, 0],
+      },
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+    ])
+    arr.forEach((item) => {
+      initialData.push([
+        {
+          text: item.name,
+          style: 'activityListTitle',
+        },
+        {
+          text: '|',
+          style: ['icon', 'activitySeparator'],
+        },
+        {
+          text: [
+            {
+              text: '* ',
+              style: ['icon', 'activityListIcon'],
+            },
+            {
+              text:
+                (item.duration ? item.duration : 0) +
+                ' ' +
+                this.activityMinTitle.toUpperCase(),
+              style: 'activityListCellText',
+            },
+          ],
+          alignment: 'center',
+        },
+        {
+          text: '|',
+          style: ['icon', 'activitySeparator'],
+        },
+        {
+          text: [
+            {
+              text: '@ ',
+              style: ['icon', 'activityListIcon'],
+            },
+            {
+              text:
+                (item.objectives?.length > 1
+                  ? this.activityVariableObjectives.split('|')[1].toUpperCase()
+                  : this.activityVariableObjectives
+                      .split('|')[0]
+                      .toUpperCase()) +
+                ' ' +
+                (item.objectives?.length ? item.objectives.length : 0),
+              style: 'activityListCellText',
+            },
+          ],
+          alignment: 'center',
+        },
+        {
+          text: '|',
+          style: ['icon', 'activitySeparator'],
+        },
+        {
+          text: this.modalityCheck(item.modality),
+          alignment: 'center',
+          style: 'activityListCellText',
+        },
+        {
+          text: '|',
+          style: ['icon', 'activitySeparator'],
+        },
+        {
+          text: [
+            {
+              text: '! ',
+              style: ['icon', 'activityListIcon'],
+            },
+            {
+              text:
+                (item.exercises?.length ? item.exercises.length : 0) +
+                ' ' +
+                (item.exercises?.length > 1
+                  ? this.activityVariableExercises.split('|')[1].toUpperCase()
+                  : this.activityVariableExercises.split('|')[0].toUpperCase()),
+              style: 'activityListCellText',
+            },
+          ],
+          alignment: 'center',
+        },
+      ])
+    })
+    return {
+      id: 'activityList-' + type,
+      layout: 'activityList',
+      table: {
+        headerRows: 1,
+        dontBreakRows: true,
+        widths: [350, 1, 55, 1, 75, 1, '*', 1, 80],
+        body: initialData,
+      },
+      margin: [0, 0, 0, 5],
+    }
+  }
+
+  ActivityDetail(): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      if (this.projectData.activities?.length) {
+        if (this.projectActivitiesData.intialPhase?.length) {
+          this.projectActivityInitialDetail = this.phaseWiseActivityDetails(
+            this.activityInitialPhaseTitle,
+            this.projectActivitiesData.intialPhase,
+            'initial'
+          )
+        }
+        if (this.projectActivitiesData.developPhase?.length) {
+          this.projectActivityDevelopDetail = this.phaseWiseActivityDetails(
+            this.activityDevelopPhaseTitle,
+            this.projectActivitiesData.developPhase,
+            'develop'
+          )
+        }
+        if (this.projectActivitiesData.synthesisPhase?.length) {
+          this.projectActivitySynthesisDetail = this.phaseWiseActivityDetails(
+            this.activitySynthesisPhaseTitle,
+            this.projectActivitiesData.synthesisPhase,
+            'synthesis'
+          )
+        }
+        resolve('activity detail completed')
+      } else {
+        resolve('activity detail completed')
+      }
+    })
+  }
+
+  // Activity List Details
+  phaseWiseActivityDetails(name: string, arr: any, type: string): object {
+    let details = []
+    details = arr.map((item, index) => {
+      const teachingStrategies = []
+      const studentGroups = []
+      const objectives = []
+      const contents = []
+      const standards = []
+      const exercisesList = []
+      const resources = []
+
+      const renderDescSubjectsTable = [
+        {
+          colSpan: 2,
+          layout: 'rowTable',
+          table: {
+            widths: ['*', '*'],
+            body: [
+              [
+                {
+                  stack: [
+                    {
+                      text: item.description?.length ? this.activityDesc : '',
+                      style: 'activityDetailSubhead',
+                    },
+                    {
+                      text: item.description ? item.description : '',
+                      style: 'activityDetailDesc',
+                    },
+                  ],
+                },
+                {
+                  stack: [
+                    {
+                      text: item.subjects?.length ? this.subjectsTitle : '',
+                      style: 'activityDetailSubhead',
+                    },
+                    {
+                      text: item.subjects?.length
+                        ? item.subjects
+                            ?.map(({ name: subjectName }) => subjectName)
+                            .join(', ')
+                        : '',
+                      style: 'activityDetailDesc',
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        '',
+      ]
+
+      item.teachingStrategies?.forEach(({ name: tsname }) =>
+        teachingStrategies.push(tsname)
+      )
+      item.customTeachingStrategies?.forEach(({ name: ctsname }) =>
+        teachingStrategies.push(ctsname)
+      )
+
+      item.studentGroups?.forEach(({ name: sgname }) =>
+        studentGroups.push(sgname)
+      )
+      item.customStudentGroups?.forEach(({ name: csgname }) =>
+        studentGroups.push(csgname)
+      )
+      const renderTeachingAndSGroupTable = [
+        {
+          colSpan: 2,
+          layout: 'rowTable',
+          table: {
+            widths: ['*', '*'],
+            body: [
+              [
+                {
+                  text: teachingStrategies?.length
+                    ? this.activityTeachingStrategies
+                    : '',
+                  style: 'activityDetailSubhead',
+                },
+                {
+                  text: studentGroups?.length ? this.activityStudentGroups : '',
+                  style: 'activityDetailSubhead',
+                },
+              ],
+              [
+                {
+                  text: teachingStrategies?.length
+                    ? teachingStrategies?.join(', ')
+                    : '',
+                  style: 'activityDetailDesc',
+                },
+                {
+                  text: studentGroups?.length ? studentGroups?.join(', ') : '',
+                  style: 'activityDetailDesc',
+                },
+              ],
+            ],
+          },
+        },
+        '',
+      ]
+
+      // Activity Objectives
+      objectives.push([
+        {
+          text:
+            item.objectives?.length > 1
+              ? this.activityVariableObjectives
+                  .split('|')[1]
+                  .charAt(0)
+                  .toUpperCase() +
+                this.activityVariableObjectives.split('|')[1].slice(1)
+              : this.activityVariableObjectives
+                  .split('|')[0]
+                  .charAt(0)
+                  .toUpperCase() +
+                this.activityVariableObjectives.split('|')[0].slice(1),
+          style: 'activityDetailSubhead',
+        },
+      ])
+      item.objectives?.forEach(({ name: objname }, id) =>
+        objectives.push([
+          {
+            columns: [
+              {
+                width: 12,
+                text: id + 1 + '.',
+                style: 'activityObjectiveNo',
+                margin: [0, 0, 2, 0],
+              },
+              {
+                text: objname,
+              },
+            ],
+            style: ['listGap', 'activityDetailDesc'],
+          },
+        ])
+      )
+      const renderObjectiveTable = [
+        {
+          id: 'activityObjectivetable',
+          colSpan: 2,
+          layout: 'rowTable',
+          table: {
+            widths: ['*'],
+            headerRows: 1,
+            body: objectives,
+          },
+        },
+        '',
+      ]
+
+      // Activity Contents
+      contents.push([
+        {
+          text: this.contentSubtitle,
+          style: 'activityDetailSubhead',
+        },
+      ])
+      item.contents?.forEach(({ name: cname }) =>
+        contents.push([
+          {
+            ul: [{ text: cname }],
+            style: ['listGap', 'activityDetailDesc'],
+          },
+        ])
+      )
+      item.customcontents?.forEach(({ name: ccname }) =>
+        contents.push([
+          {
+            ul: [{ text: ccname }],
+            style: ['listGap', 'activityDetailDesc'],
+          },
+        ])
+      )
+      const renderContentTable = [
+        {
+          id: 'activitySContenttable',
+          colSpan: 2,
+          layout: 'rowTable',
+          table: {
+            widths: ['*'],
+            body: contents,
+          },
+        },
+        '',
+      ]
+
+      // Activity Standards
+      standards.push([
+        {
+          text: this.standardsTitle,
+          style: 'activityDetailSubhead',
+        },
+      ])
+      item.standards?.forEach(({ name: sname }) =>
+        standards.push([
+          { ul: [{ text: sname }], style: ['listGap', 'activityDetailDesc'] },
+        ])
+      )
+      item.customStandards?.forEach(({ name: csname }) =>
+        standards.push([
+          { ul: [{ text: csname }], style: ['listGap', 'activityDetailDesc'] },
+        ])
+      )
+      const renderStandardTable = [
+        {
+          id: 'activityStandardtable',
+          colSpan: 2,
+          layout: 'rowTable',
+          table: {
+            widths: ['*'],
+            body: standards,
+          },
+        },
+        '',
+      ]
+
+      // Activity Resources
+      resources.push([
+        {
+          text: this.activityResources,
+          style: 'activityDetailSubhead',
+        },
+      ])
+      item.resources?.forEach(({ name: objname }) =>
+        resources.push([
+          {
+            ul: [{ text: this.identifyLink(objname) }],
+            style: ['listGap', 'activityDetailDesc'],
+          },
+        ])
+      )
+      const renderResourcesTable = [
+        {
+          id: 'activityResourcestable',
+          colSpan: 2,
+          layout: 'rowTable',
+          table: {
+            widths: ['*'],
+            body: resources,
+          },
+        },
+        '',
+      ]
+
+      const renderDiversity = [
+        {
+          id: 'activityDiversitytable',
+          colSpan: 2,
+          layout: 'rowTable',
+          table: {
+            widths: ['*'],
+            body: [
+              [
+                {
+                  text: this.activityDiversity,
+                  style: 'activityDetailSubhead',
+                },
+              ],
+              [
+                {
+                  text: item.diversity,
+                  style: ['activityDetailDesc'],
+                },
+              ],
+            ],
+          },
+        },
+        '',
+      ]
+
+      exercisesList.push([
+        {
+          text: this.activityExercise,
+          style: 'activityDetailSubhead',
+        },
+      ])
+      item.exercises?.forEach((exercise, i) => {
+        const qualify = exercise.evaluation
+          ? this.activityExerciseQualified
+          : this.activityExerciseNotQualified
+        const delivery = exercise.delivery
+          ? exercise.delivery === 'PRESENCIAL'
+            ? this.activityExerciseSchool
+            : this.activityExerciseOnline
+          : this.activityExerciseNone
+        exercisesList.push([
+          {
+            columns: [
+              {
+                width: 15,
+                text: i + 1 + '.',
+                margin: [0, 0, 2, 0],
+              },
+              {
+                width: 'auto',
+                text: exercise.name,
+                margin: [0, 0, 4, 0],
+              },
+              {
+                width: 'auto',
+                text: ' (' + qualify + ',' + delivery + ')',
+                style: 'activityExerciseStatus',
+              },
+            ],
+            style: ['listGap', 'activityExerciseName'],
+          },
+        ])
       })
+
+      const renderExerciseTable = [
+        {
+          id: 'activityExercisetable',
+          colSpan: 2,
+          layout: 'rowTable',
+          table: {
+            widths: ['*'],
+            body: exercisesList,
+          },
+        },
+        '',
+      ]
+
+      const renderAllTables = []
+
+      renderAllTables.push([
+        {
+          colSpan: 2,
+          columnGap: 10,
+          columns: [
+            {
+              width: 'auto',
+              text: name.toUpperCase(),
+              style: 'actDetailPhase',
+            },
+            {
+              width: 1,
+              text: '|',
+              style: ['icon', 'actDetailSeparator'],
+              margin: [0, 1, 0, 0],
+            },
+            {
+              width: 'auto',
+              text: [
+                {
+                  text: '* ',
+                  style: 'icon',
+                  fontSize: 9,
+                },
+                {
+                  text:
+                    (item.duration ? item.duration : '0') +
+                    ' ' +
+                    this.activityMinTitle.toUpperCase(),
+                  style: 'actDetailIndicator',
+                },
+              ],
+            },
+            {
+              width: 1,
+              text: '|',
+              style: ['icon', 'actDetailSeparator'],
+              margin: [0, 1, 0, 0],
+            },
+            {
+              width: '*',
+              text: item.modality ? this.modalityCheck(item.modality) : '',
+              style: 'actDetailIndicator',
+            },
+          ],
+        },
+        '',
+      ])
+
+      renderAllTables.push([
+        {
+          colSpan: 2,
+          text: item.name,
+          style: 'activityDetailHead',
+          margin: [0, 5, 0, 5],
+        },
+        '',
+      ])
+
+      if (item.description || item.subjects?.length) {
+        renderAllTables.push(renderDescSubjectsTable)
+      }
+
+      if (teachingStrategies?.length > 1 || studentGroups?.length > 1) {
+        renderAllTables.push(renderTeachingAndSGroupTable)
+      }
+
+      if (objectives?.length > 1) {
+        renderAllTables.push(renderObjectiveTable)
+      }
+
+      if (contents?.length > 1) {
+        renderAllTables.push(renderContentTable)
+      }
+
+      if (standards?.length > 1) {
+        renderAllTables.push(renderStandardTable)
+      }
+
+      if (resources?.length > 1) {
+        renderAllTables.push(renderResourcesTable)
+      }
+
+      if (item.diversity) {
+        renderAllTables.push(renderDiversity)
+      }
+
+      if (exercisesList?.length > 1) {
+        renderAllTables.push(renderExerciseTable)
+      }
+
+      renderAllTables?.map((section, i) => {
+        if (i === renderAllTables?.length - 1) {
+          section.forEach((sectionCol, sectionColIndex) => {
+            if (sectionColIndex === 0 && sectionCol.table?.body.length) {
+              sectionCol.table.body[
+                sectionCol.table.body.length - 1
+              ][0].border = [false, false, false, false]
+            }
+          })
+        }
+      })
+      return {
+        pageBreak: index === arr.length - 1 ? '' : 'after',
+        id: 'activityDetail' + type + '-' + item.id,
+        layout: 'activityDetails',
+        table: {
+          widths: ['*', '*'],
+          body: renderAllTables,
+        },
+      }
+    })
+
+    return {
+      id: 'activityDetails-' + type,
+      tocItem: true,
+      pageBreak: 'before',
+      stack: [...details],
+    }
   }
 
   // Build Cover page
   coverPage(): Promise<any> {
-    // console.log('Build Cover Page : coverPage()')
     return new Promise(async (resolve, reject) => {
       this.subjectsInline = this.projectData.subjects
         ?.map((item) => item.name)
         .join(', ')
-      if (this.isStepDone(6)) {
-        await this.getBase64ImageFromURL(this.projectData.creativeImage).then(
-          (data) => {
-            this.projectImage = {
-              image: data,
-              width: 435,
-              height: 435,
-              absolutePosition: { x: 385, y: 105 },
-            }
-          }
-        )
+      if (this.isStepDone(6) && this.imageBase64) {
+        this.projectImage = {
+          image: this.imageBase64,
+          width: 435,
+          height: 435,
+          absolutePosition: { x: 385, y: 105 },
+        }
       } else {
         this.projectImage = null
       }
@@ -513,39 +1380,87 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         absolutePosition: { x: 40, y: 210 },
         pageBreak: 'after',
       }
-      resolve()
+      resolve('coverPage completed')
     })
   }
+
   // PDF Viewer after event
   afterLoadComplete(pdf: PDFDocumentProxy): void {
     this.pdf = pdf
     this.loading = false
     this.totalPages = pdf.numPages
-    const toc = this.generatedPDF.docDefinition.content.filter((content) => {
-      return content.tocItem
-    })
-    this.loadOutline(toc)
+    const toc = this.generatedPDF.docDefinition.content.filter(
+      (content) => content.tocItem
+    )
+    const activityIndex = []
+    this.generatedPDF.docDefinition.content
+      .filter((content) => {
+        return content.id?.includes('activityDetails-')
+      })
+      ?.forEach((phase) => {
+        phase.stack?.forEach((activity) => {
+          activityIndex.push({
+            activityID: activity.id.split('-')[1],
+            pageNumber: activity.nodeInfo.pageNumbers[0],
+          })
+        })
+      })
+    this.loadOutline(toc).then(() => this.initialNavigation(activityIndex))
   }
 
   // Get Outlines from the PDF Viewer
-  loadOutline(toc: any): void {
-    this.outline = []
-    toc.map((item) => {
-      this.outline.push({
-        id: item.id,
-        title: this.chooseOutlineTitle(item.id),
-        pageNumber: item.positions[0].pageNumber,
-        lastPageNumber:
-          item.nodeInfo.pageNumbers[item.nodeInfo.pageNumbers.length - 1],
-      })
-      if (item.id === 'objectives') {
-        this.outline.push({
-          id: 'standards',
-          title: this.chooseOutlineTitle('standards'),
-          pageNumber: item.positions[0].pageNumber,
-          lastPageNumber:
-            item.nodeInfo.pageNumbers[item.nodeInfo.pageNumbers.length - 1],
+  loadOutline(toc: any): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      this.outline = []
+      this.activityChild = []
+      toc
+        .filter(({ id }) => id.includes('activityDetails'))
+        .forEach((item) => {
+          this.activityChild.push({
+            id: item.id,
+            title: this.chooseOutlineTitle(item.id),
+            pageNumber: item.positions[0].pageNumber,
+            lastPageNumber:
+              item.nodeInfo.pageNumbers[item.nodeInfo.pageNumbers.length - 1],
+          })
         })
+      toc.map((item) => {
+        if (!item.id.includes('activityDetails')) {
+          this.outline.push({
+            id: item.id,
+            title: this.chooseOutlineTitle(item.id),
+            pageNumber: item.positions[0].pageNumber,
+            lastPageNumber:
+              item.nodeInfo.pageNumbers[item.nodeInfo.pageNumbers.length - 1],
+            items: item.id.includes('activityList') ? this.activityChild : null,
+          })
+        }
+        if (item.id === 'objectives') {
+          this.outline.push({
+            id: 'standards',
+            title: this.chooseOutlineTitle('standards'),
+            pageNumber: item.positions[0].pageNumber,
+            lastPageNumber:
+              item.nodeInfo.pageNumbers[item.nodeInfo.pageNumbers.length - 1],
+          })
+        }
+      })
+      resolve()
+    })
+  }
+
+  initialNavigation(activityIndex: any): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      if (this.activityID) {
+        const isActivity = activityIndex.find(
+          (activity) => this.activityID === activity.activityID
+        )
+        setTimeout(() => {
+          this.scrollToPage(isActivity.pageNumber)
+        }, 500)
+        resolve()
+      } else {
+        resolve()
       }
     })
   }
@@ -570,6 +1485,24 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         break
       case 'driving':
         title = 'PROGRAMACION.output_index_drivingquestions'
+        break
+      case 'activityList':
+        title = this.activitySectionTitle
+        break
+      case 'activityDetails-initial':
+        title =
+          this.activityInitialPhaseTitle.charAt(0).toUpperCase() +
+          this.activityInitialPhaseTitle.slice(1)
+        break
+      case 'activityDetails-develop':
+        title =
+          this.activityDevelopPhaseTitle.charAt(0).toUpperCase() +
+          this.activityDevelopPhaseTitle.slice(1)
+        break
+      case 'activityDetails-synthesis':
+        title =
+          this.activitySynthesisPhaseTitle.charAt(0).toUpperCase() +
+          this.activitySynthesisPhaseTitle.slice(1)
         break
     }
     return title
@@ -646,27 +1579,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Convert url image to base64
-  getBase64ImageFromURL(url: string): any {
-    return new Promise((resolve, reject) => {
-      const img = new Image()
-      img.setAttribute('crossOrigin', 'anonymous')
-      img.onload = () => {
-        const canvas = document.createElement('canvas')
-        canvas.width = img.width
-        canvas.height = img.height
-        const ctx = canvas.getContext('2d')
-        ctx.drawImage(img, 0, 0)
-        const dataURL = canvas.toDataURL('image/png')
-        resolve(dataURL)
-      }
-      img.onerror = (error) => {
-        reject(error)
-      }
-      img.src = url
-    })
-  }
-
   //  check IE
   isIE(): boolean {
     return navigator.userAgent.indexOf('MSIE') !== -1
@@ -686,12 +1598,10 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Build Overview
   overview(): Promise<any> {
-    // console.log('Build Overview : overview()')
     return new Promise(async (resolve, reject) => {
       this.projectOverview = {
         id: 'overview',
         tocItem: true,
-        // pageBreak: 'after',
         columns: [
           {
             width: '50%',
@@ -777,14 +1687,12 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           },
         ],
       }
-      // console.log('finsihed overview')
-      resolve()
+      resolve('overview completed')
     })
   }
 
   // Build Evaluation Criteria and Contents
   evaluationCriteria(): Promise<any> {
-    // console.log('Build Evaluation criteria: evaluationCriteria()')
     return new Promise(async (resolve, reject) => {
       if (this.isStepDone(3) && this.isStepDone(4)) {
         this.projectEvaluationCriteria = await Promise.all(
@@ -799,14 +1707,14 @@ export class OutputViewComponent implements OnInit, OnDestroy {
               },
               index
             ) => {
-              if (subjectRelation === 'basic-skill') {
+              if (subjectRelation === 'BASIC_SKILLS_RELATED') {
                 return this.evaluationBasicSkill(
                   subjectName,
                   evaluationCriteria,
                   customContents,
                   index
                 )
-              } else if (subjectRelation === 'dimension') {
+              } else if (subjectRelation === 'DIMENSIONS_RELATED') {
                 return this.evaluationDimension(
                   subjectID,
                   subjectName,
@@ -814,7 +1722,7 @@ export class OutputViewComponent implements OnInit, OnDestroy {
                   customContents,
                   index
                 )
-              } else if (subjectRelation === 'no-relation') {
+              } else if (subjectRelation === 'NO_RELATION') {
                 return this.evaluationNoRelation(
                   subjectName,
                   evaluationCriteria,
@@ -825,9 +1733,9 @@ export class OutputViewComponent implements OnInit, OnDestroy {
             }
           )
         )
-        resolve(this.projectEvaluationCriteria)
+        resolve('Evaluation completed')
       } else {
-        resolve()
+        resolve('Evaluation completed')
       }
     })
   }
@@ -841,7 +1749,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     const basicSkillCodes = this.shortCodes.basicSkillCodes.sort((a, b) => {
       return a.id - b.id
     })
-    this.curriculumRelation = 'basic-skill'
     const tableHeader = [
       {
         text: this.evaluationSubtitle,
@@ -873,22 +1780,22 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           evalNames.push({
             columns: [
               {
-                width: 'auto',
+                width: 12,
                 text: this.rowIndex + '.',
                 style: ['orderedList', 'contentText'],
               },
               {
                 width: '*',
-                text: trimWhitespace(item.name),
+                text: trimWhitespace(item.namepdf),
                 style: ['contentText'],
               },
             ],
-            margin: [-10, 0, 0, 5],
+            margin: [-8, 3, 0, 2],
           })
         })
         if (group.contentData?.length) {
           group.contentData.forEach((entity) => {
-            contentsData.push({ text: entity.name, margin: [0, 0, 0, 5] })
+            contentsData.push({ text: entity.name, margin: [0, 3, 0, 4] })
           })
         }
         // Get distinct basic skills
@@ -920,17 +1827,18 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         ])
       })
     }
+    const customContentBody = []
+    let customContentSection = {}
     if (customContents?.length) {
-      tableBody.push([
+      customContentBody.push([
         {
           text: this.customContentSubtitle,
           fillColor: '#fff',
           style: 'subjectSubHeader',
-          colSpan: tableHeader.length,
         },
       ])
       customContents.map((item) => {
-        tableBody.push([
+        customContentBody.push([
           {
             ul: [
               {
@@ -938,10 +1846,19 @@ export class OutputViewComponent implements OnInit, OnDestroy {
                 style: ['contentText'],
               },
             ],
-            colSpan: tableHeader.length,
           },
         ])
       })
+      customContentSection = {
+        id: subjectName + '-customContent',
+        table: {
+          widths: ['*'],
+          headerRows: 1,
+          dontBreakRows: true,
+          body: customContentBody,
+        },
+        layout: 'finalLayout',
+      }
     }
     const basicSkillDesc = []
     basicSkillDesc.push({
@@ -960,7 +1877,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     return {
       id: 'subjectTableStart' + index,
       tocItem: true,
-      // unbreakable: true,
       stack: [
         {
           table: {
@@ -974,14 +1890,13 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         {
           id: subjectName + '-criteriaStart',
           table: {
-            widths: [180, 'auto', ...widths],
+            widths: [200, 'auto', ...widths],
             headerRows: 1,
-            // keepWithHeaderRows: 1,
-            // dontBreakRows: true,
             body: tableBody,
           },
-          layout: 'tertiaryLayout',
+          layout: customContents?.length ? 'tertiaryLayout' : 'finalLayout',
         },
+        customContentSection,
         {
           text: basicSkillDesc,
           margin: [0, 10, 0, 15],
@@ -1000,7 +1915,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     const dim = this.subjectWiseDimension.filter(
       (item) => item.id === subjectID
     )[0].dimensions
-    this.curriculumRelation = 'dimension'
     const tableHeader = [
       { text: this.evaluationSubtitle, style: 'subjectSubHeader' },
       { text: this.contentSubtitle, style: 'subjectSubHeader' },
@@ -1026,21 +1940,22 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           evalNames.push({
             columns: [
               {
-                width: 'auto',
+                width: 12,
                 text: this.rowIndex + '.',
-                style: 'orderedList',
+                style: ['orderedList', 'contentText'],
               },
               {
                 width: '*',
-                text: trimWhitespace(item.name),
+                text: trimWhitespace(item.namepdf),
+                style: ['contentText'],
               },
             ],
-            margin: [-10, 0, 0, 5],
+            margin: [-8, 3, 0, 2],
           })
         })
         if (group.contentData?.length) {
           group.contentData.forEach((entity) => {
-            contentsData.push({ text: entity.name, margin: [0, 0, 0, 5] })
+            contentsData.push({ text: entity.name, margin: [0, 3, 0, 4] })
           })
         }
         // Get distinct basic skills
@@ -1060,35 +1975,48 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           {
             type: 'none',
             ul: evalNames,
+            style: ['contentText'],
           },
           {
             ul: contentsData,
+            style: ['contentText'],
           },
           ...markedDimension,
         ])
       })
     }
+    const customContentBody = []
+    let customContentSection = {}
     if (customContents?.length) {
-      tableBody.push([
+      customContentBody.push([
         {
           text: this.customContentSubtitle,
           fillColor: '#fff',
           style: 'subjectSubHeader',
-          colSpan: tableHeader.length,
         },
       ])
       customContents.map((item) => {
-        tableBody.push([
+        customContentBody.push([
           {
             ul: [
               {
                 text: item.name,
+                style: ['contentText'],
               },
             ],
-            colSpan: tableHeader.length,
           },
         ])
       })
+      customContentSection = {
+        id: subjectName + '-customContent',
+        table: {
+          widths: ['*'],
+          headerRows: 1,
+          dontBreakRows: true,
+          body: customContentBody,
+        },
+        layout: 'finalLayout',
+      }
     }
     const dimensionDesc = []
     dimensionDesc.push({
@@ -1106,7 +2034,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     })
     return {
       id: 'subjectTableStart' + index,
-      // unbreakable: true,
       tocItem: true,
       stack: [
         {
@@ -1121,14 +2048,13 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         {
           id: subjectName + '-criteriaStart',
           table: {
-            widths: [220, 180, ...widths],
+            widths: [220, 200, ...widths],
             headerRows: 1,
-            // keepWithHeaderRows: 1,
-            // dontBreakRows: true,
             body: tableBody,
           },
-          layout: 'tertiaryLayout',
+          layout: customContents?.length ? 'tertiaryLayout' : 'finalLayout',
         },
+        customContentSection,
         {
           text: dimensionDesc,
           margin: [0, 10, 0, 15],
@@ -1143,7 +2069,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     customContents: any,
     index: number
   ): object {
-    this.curriculumRelation = 'no-relation'
     const tableHeader = [
       {
         text: this.evaluationSubtitle,
@@ -1165,23 +2090,25 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           evalNames.push({
             columns: [
               {
-                width: 'auto',
+                width: 12,
                 text: this.rowIndex + '.',
-                style: 'orderedList',
+                style: ['orderedList', 'contentText'],
               },
               {
                 width: '*',
-                text: trimWhitespace(item.name),
+                text: trimWhitespace(item.namepdf),
+                style: ['contentText'],
               },
             ],
-            margin: [-10, 0, 0, 5],
+            margin: [-8, 3, 0, 2],
           })
         })
         if (group.contentData?.length) {
           group.contentData.forEach((entity) => {
             contentsData.push({
               text: entity.name,
-              margin: [0, 0, 0, 5],
+              margin: [0, 3, 0, 4],
+              style: ['contentText'],
             })
           })
         }
@@ -1189,42 +2116,53 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           {
             type: 'none',
             ul: evalNames,
+            style: ['contentText'],
           },
           {
             ul: contentsData,
+            style: ['contentText'],
           },
         ])
       })
     }
+    const customContentBody = []
+    let customContentSection = {}
     if (customContents?.length) {
-      tableBody.push([
+      customContentBody.push([
         {
           text: this.customContentSubtitle,
           fillColor: '#fff',
           style: 'subjectSubHeader',
-          margin: [10, 0, 10, 0],
-          colSpan: tableHeader.length,
         },
       ])
       customContents.map((item) => {
-        tableBody.push([
+        customContentBody.push([
           {
             text: item.name,
-            margin: [10, 0, 10, 0],
-            colSpan: tableHeader.length,
+            style: ['contentText'],
           },
         ])
       })
+      customContentSection = {
+        id: subjectName + '-customContent',
+        table: {
+          widths: ['*'],
+          headerRows: 1,
+          body: customContentBody,
+        },
+        layout: 'finalLayout',
+      }
     }
     return {
       id: 'subjectTableStart' + index,
       unbreakable: true,
-      // tocItem: true,
       stack: [
         {
           table: {
             widths: ['*'],
-            body: [[{ text: subjectName, style: ['subjectHeader'] }]],
+            body: [
+              [{ text: subjectName.toUpperCase(), style: ['subjectHeader'] }],
+            ],
           },
           layout: 'headerLayout',
         },
@@ -1233,109 +2171,111 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           table: {
             widths: ['*', '*'],
             headerRows: 1,
-            keepWithHeaderRows: 1,
-            dontBreakRows: true,
             body: tableBody,
           },
-          layout: 'tertiaryLayout',
+          layout: customContents?.length ? 'tertiaryLayout' : 'finalLayout',
         },
+        customContentSection,
       ],
     }
   }
 
   competencyRelation(): Promise<any> {
-    // console.log('Build Competency Relation Table: competencyRelation()')
     return new Promise((resolve, reject) => {
-      const basicSkillTable = []
-      const tableSubHeader = []
-      const widths = []
-      if (
-        this.projectData.basicSkills.length &&
-        this.curriculumRelation === 'no-relation'
-      ) {
-        for (const item of this.shortCodes.basicSkillCodes) {
-          tableSubHeader.push({
-            text: item.code,
-            style: 'subjectSubHeaderCenter',
-          })
-          widths.push('*')
-        }
-        basicSkillTable.push(tableSubHeader)
-
-        const basicSkillData = this.projectData.basicSkills.map(
-          (item) => item.code
-        )
-        const markedBasicSkill = []
-        const basicSkillRelative = this.shortCodes.basicSkillCodes
-        basicSkillRelative.forEach((item) => {
-          if (basicSkillData.includes(item.code)) {
-            markedBasicSkill.push({
-              text: '.',
-              style: ['icon', 'mark'],
+      if (this.isStepDone(3) && this.isStepDone(4)) {
+        const basicSkillTable = []
+        const tableSubHeader = []
+        const widths = []
+        if (
+          this.curriculumRelation === 'NO_RELATION' ||
+          (this.curriculumRelation === 'DIMENSIONS_RELATED' &&
+            this.showBasicSkill)
+        ) {
+          for (const item of this.shortCodes.basicSkillCodes) {
+            tableSubHeader.push({
+              text: item.name,
+              style: 'subjectSubHeaderCenter',
             })
-          } else {
-            markedBasicSkill.push(' ')
+            widths.push('*')
           }
-        })
-        basicSkillTable.push([...markedBasicSkill])
-        this.projectCompetencyRelation = {
-          id: this.competenciasSubtitle,
-          margin: [0, 10, 0, 10],
-          stack: [
-            {
-              table: {
-                widths: ['*'],
-                body: [
-                  [
-                    {
-                      text: this.competenciasSubtitle,
-                      style: ['subjectHeader'],
-                    },
+          basicSkillTable.push(tableSubHeader)
+
+          const basicSkillData = this.projectData.basicSkills.map(
+            (item) => item.code
+          )
+          const markedBasicSkill = []
+          const basicSkillRelative = this.shortCodes.basicSkillCodes
+          basicSkillRelative.forEach((item) => {
+            if (basicSkillData.includes(item.code)) {
+              markedBasicSkill.push({
+                text: '.',
+                style: ['icon', 'mark'],
+              })
+            } else {
+              markedBasicSkill.push(' ')
+            }
+          })
+          basicSkillTable.push([...markedBasicSkill])
+          this.projectCompetencyRelation = {
+            id: 'compentenceRelation',
+            margin: [0, 10, 0, 10],
+            unbreakable: true,
+            stack: [
+              {
+                table: {
+                  widths: ['*'],
+                  body: [
+                    [
+                      {
+                        text: this.competenciasSubtitle.toUpperCase(),
+                        style: ['subjectHeader'],
+                      },
+                    ],
                   ],
-                ],
+                },
+                layout: 'headerLayout',
               },
-              layout: 'headerLayout',
-            },
-            {
-              id: this.competenciasSubtitle + '-table',
-              table: {
-                widths: [...widths],
-                headerRows: 1,
-                keepWithHeaderRows: 1,
-                dontBreakRows: true,
-                body: basicSkillTable,
+              {
+                id: this.competenciasSubtitle + '-table',
+                table: {
+                  widths: [...widths],
+                  headerRows: 1,
+                  keepWithHeaderRows: 1,
+                  body: basicSkillTable,
+                },
+                layout: 'competencyLayout',
               },
-              layout: 'competencyLayout',
-            },
-          ],
+            ],
+          }
+          resolve('competency relation completed')
+        } else {
+          resolve('competency relation completed')
         }
-        resolve(this.projectCompetencyRelation)
       } else {
-        resolve()
+        resolve('competency relation completed')
       }
     })
   }
 
   // Build Driving Questions
   driving(): Promise<any> {
-    // console.log('Build Driving Question: driving()')
     return new Promise((resolve, reject) => {
       const questionList = this.projectData?.drivingQuestions
       if (this.isStepDone(7) && questionList?.length) {
-        const tableHeader = [
+        const tableBody = []
+        tableBody.push([
           {
             text: this.drivingQuestionsTitle.toUpperCase(),
             style: 'tableHeader',
           },
-        ]
-        const tableBody = []
-        tableBody.push(tableHeader)
+        ])
         questionList.forEach((item) => {
-          const dataRow = []
-          tableHeader.forEach(() => {
-            dataRow.push([this.getList(item.name)])
-          })
-          tableBody.push(dataRow)
+          tableBody.push([
+            {
+              ul: [item.name],
+              style: ['contentText'],
+            },
+          ])
         })
         this.projectDrivingQns = {
           id: 'driving',
@@ -1347,16 +2287,15 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           },
           layout: 'defaultLayout',
         }
-        resolve()
+        resolve('driving completed')
       } else {
-        resolve()
+        resolve('driving completed')
       }
     })
   }
 
   // Build Themes
   themes(): object {
-    // console.log('Build Themes: themes()')
     const themesList = this.projectData?.themes
     const tableHeader = [
       {
@@ -1367,13 +2306,19 @@ export class OutputViewComponent implements OnInit, OnDestroy {
     const tableBody = []
     tableBody.push(tableHeader)
     if (this.isStepDone(2) && themesList?.length) {
-      themesList.forEach((item) => {
-        const dataRow = []
-        tableHeader.forEach(() => {
-          dataRow.push([this.getList(item.name)])
+      const dataRow = []
+      themesList.forEach((item, i) => {
+        dataRow.push({
+          text: trimWhitespace(item.name),
+          margin: i === themesList.length - 1 ? [6, 0, 6, 0] : [6, 0, 6, 5],
         })
-        tableBody.push(dataRow)
       })
+      tableBody.push([
+        {
+          ul: dataRow,
+          style: ['contentText'],
+        },
+      ])
     } else {
       tableBody.push([
         {
@@ -1394,7 +2339,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Build Final product
   finalProduct(): object {
-    // console.log('Build Final Product: finalProduct()')
     return {
       margin: [0, 0, 0, 20],
       table: {
@@ -1412,7 +2356,9 @@ export class OutputViewComponent implements OnInit, OnDestroy {
                 this.isStepDone(8) && this.projectData.finalProduct
                   ? trimWhitespace(this.projectData.finalProduct)
                   : '',
+              style: ['contentText'],
               lineHeight: 1.25,
+              margin: [6, 0],
             },
           ],
         ],
@@ -1423,7 +2369,6 @@ export class OutputViewComponent implements OnInit, OnDestroy {
 
   // Build Objectives and standards
   objectives(): Promise<any> {
-    // console.log('Build Objectives: objectives()')
     return new Promise((resolve, reject) => {
       const objectives = this.projectData.competencyObjectives
       const tableBody = []
@@ -1453,34 +2398,33 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         tableBody.push(tableHeader)
         objectives.forEach((item, row) => {
           const allStandards = item.standards.concat(item.customStandards)
-          const standards = allStandards.map((standard) => {
-            return this.getList(standard.name, 'bulletList')
+          const standards = allStandards.map((standard, i) => {
+            return {
+              text: trimWhitespace(standard.name),
+              margin:
+                i === allStandards.length - 1 ? [6, 0, 6, 0] : [6, 0, 6, 5],
+            }
           })
-          const dataRow = []
-          tableHeader.forEach((heading, column) => {
-            if (column === 0) {
-              dataRow.push([
+          tableBody.push([
+            {
+              columns: [
                 {
-                  columns: [
-                    {
-                      width: 'auto',
-                      text: row + 1 + '.',
-                      style: 'orderedList',
-                    },
-                    {
-                      width: '*',
-                      text: trimWhitespace(item.name),
-                    },
-                  ],
+                  width: 12,
+                  text: row + 1 + '.',
+                  style: ['orderedList', 'contentText'],
                 },
-              ])
-            }
-            if (column === 1) {
-              standards.forEach(() => {})
-              dataRow.push([standards])
-            }
-          })
-          tableBody.push(dataRow)
+                {
+                  width: '*',
+                  text: trimWhitespace(item.name),
+                  style: 'contentText',
+                },
+              ],
+            },
+            {
+              ul: standards,
+              style: 'contentText',
+            },
+          ])
         })
       }
       this.projectObjectiveStandards = tableBody.length
@@ -1489,22 +2433,19 @@ export class OutputViewComponent implements OnInit, OnDestroy {
             tocItem: true,
             margin: [0, 10, 0, 10],
             table: {
-              // headerRows: 1,
-              // keepWithHeaderRows: 1,
-              // dontBreakRows: true,
               widths: ['50%', '50%'],
               body: tableBody,
             },
             layout: 'defaultLayout',
           }
         : null
-      resolve()
+      resolve('objectives completed')
     })
   }
 
   // Get localizations for the content
   getLocalizations(): void {
-    this.translateService
+    this.subscriptions.sink = this.translateService
       .stream([
         'PROGRAMACION.project_startingpoint_year',
         'PROGRAMACION.project_startingpoint_grades',
@@ -1521,6 +2462,30 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         'PROGRAMACION.project_content_extracontent',
         'PROGRAMACION.output_footer_dimensions',
         'PROGRAMACION.output_footer_competences',
+        'PROGRAMACION.output_index_activities',
+        'PROGRAMACION.output_intropage_teachers',
+        'PROGRAMACION.variable_hours',
+        'PROGRAMACION.variable_activities',
+        'PROGRAMACION.variable_exercices',
+        'PROGRAMACION.variable_objetivos',
+        'PROGRAMACION.activity_duration_minutes',
+        'PROGRAMACION.activity_strategies',
+        'PROGRAMACION.activity_groups',
+        'PROGRAMACION.activity_resources',
+        'PROGRAMACION.exercise_delivery_modality_online',
+        'PROGRAMACION.exercise_delivery_modality_school',
+        'PROGRAMACION.exercise_delivery_modality_none',
+        'PROGRAMACION.activity_diversity',
+        'ACTIVITIES.activities_phase_initial',
+        'ACTIVITIES.activities_phase_development',
+        'ACTIVITIES.activities_phase_syntesis',
+        'ACTIVITY_DEFINITION.activity_definition_dropdown_modality_item1',
+        'ACTIVITY_DEFINITION.activity_definition_dropdown_modality_item2',
+        'PROGRAMACION.activity_modality_item3_output',
+        'EXCERCISE_CARD.exercise_evaluation_noncalificable',
+        'EXCERCISE_CARD.exercise_evaluation_calificable',
+        'ACTIVITY_PREVIEW.activity_detail_exercises_title',
+        'PROGRAMACION.activity_description',
       ])
       .subscribe((translations) => {
         this.academicYearTitle =
@@ -1555,30 +2520,53 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           translations['PROGRAMACION.output_footer_competences']
         this.footerDimension =
           translations['PROGRAMACION.output_footer_dimensions']
+        this.activitySectionTitle =
+          translations['PROGRAMACION.output_index_activities']
+        this.activityVariableHour = translations['PROGRAMACION.variable_hours']
+        this.activityVariableActivities =
+          translations['PROGRAMACION.variable_activities']
+        this.activityVariableExercises =
+          translations['PROGRAMACION.variable_exercices']
+        this.activityInitialPhaseTitle =
+          translations['ACTIVITIES.activities_phase_initial']
+        this.activityDevelopPhaseTitle =
+          translations['ACTIVITIES.activities_phase_development']
+        this.activitySynthesisPhaseTitle =
+          translations['ACTIVITIES.activities_phase_syntesis']
+        this.activityMinTitle =
+          translations['PROGRAMACION.activity_duration_minutes']
+        this.activityVariableObjectives =
+          translations['PROGRAMACION.variable_objetivos']
+        this.activityTeachingStrategies =
+          translations['PROGRAMACION.activity_strategies']
+        this.activityStudentGroups =
+          translations['PROGRAMACION.activity_groups']
+        this.activityResources = translations['PROGRAMACION.activity_resources']
+        this.activityExercise =
+          translations['ACTIVITY_PREVIEW.activity_detail_exercises_title']
+        this.activityExerciseOnline =
+          translations['PROGRAMACION.exercise_delivery_modality_online']
+        this.activityExerciseSchool =
+          translations['PROGRAMACION.exercise_delivery_modality_school']
+        this.activityExerciseNone =
+          translations['PROGRAMACION.exercise_delivery_modality_none']
+        this.activityExerciseQualified =
+          translations['EXCERCISE_CARD.exercise_evaluation_noncalificable']
+        this.activityExerciseNotQualified =
+          translations['EXCERCISE_CARD.exercise_evaluation_calificable']
+        this.activityDiversity = translations['PROGRAMACION.activity_diversity']
+        this.activityModalityOnline =
+          translations[
+            'ACTIVITY_DEFINITION.activity_definition_dropdown_modality_item1'
+          ]
+        this.activityModalityPresencial =
+          translations[
+            'ACTIVITY_DEFINITION.activity_definition_dropdown_modality_item2'
+          ]
+        this.activityModalityBoth =
+          translations['PROGRAMACION.activity_modality_item3_output']
+        this.activityDesc = translations['PROGRAMACION.activity_description']
       })
-  }
-
-  getList(item: string, styleName: string = ''): object {
-    return {
-      ul: [
-        {
-          text: trimWhitespace(item),
-          style: styleName,
-        },
-      ],
-    }
-  }
-
-  customOrderedList(item: string, styleName: string = ''): object {
-    return {
-      // markerColor: 'red',
-      ol: [
-        {
-          text: trimWhitespace(item),
-          style: styleName,
-        },
-      ],
-    }
   }
 
   groupBy(objectArray: any, property: string): object {
@@ -1590,5 +2578,46 @@ export class OutputViewComponent implements OnInit, OnDestroy {
       acc[key].push(obj)
       return acc
     }, {})
+  }
+
+  identifyLink(text: string): object {
+    const textArrays = text.split(' ')
+    const regexp = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/
+    const renderArray = []
+    textArrays.forEach((item, index) => {
+      if (regexp.test(item)) {
+        renderArray.push({
+          text: item,
+          link: item,
+          decoration: 'underline',
+        })
+      } else {
+        renderArray.push({
+          text:
+            (renderArray[index - 1]?.hasOwnProperty('link') ? ' ' : '') +
+            item +
+            ' ',
+        })
+      }
+    })
+
+    return renderArray
+  }
+
+  modalityCheck(type: string): string {
+    let modality = ''
+
+    switch (type) {
+      case 'PRESENCIAL':
+        modality = this.activityModalityOnline.toUpperCase()
+        break
+      case 'ONLINE':
+        modality = this.activityModalityPresencial.toUpperCase()
+        break
+      case 'MIXTA':
+        modality = this.activityModalityBoth.toUpperCase()
+        break
+    }
+    return modality
   }
 }

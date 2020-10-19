@@ -1,0 +1,22 @@
+<div
+  class="sidebar-menu__item mb-3"
+  [routerLink]="[link]"
+  [ngClass]="{
+    'sidebar-menu__item_active': router.url.split('?')[0] === link
+  }"
+  *ngIf="link"
+>
+  <span class="sidebar-menu__icon position-relative {{ icon ? icon : '' }}"
+    ><div class="" *ngIf="updated"></div
+  ></span>
+  <span>{{ text | translate }}</span>
+</div>
+<div
+  class="sidebar-menu__item mb-0"
+  [ngClass]="{ 'sidebar-menu__help': variant === 'help' }"
+  *ngIf="variant === 'help'"
+>
+  <!-- temporarly hiding the below icons. Please do not remove the commented code. -->
+  <!-- <span class="sidebar-menu__icon {{ icon ? icon : '' }}"></span>
+  <span>{{ text | translate }}</span> -->
+</div>

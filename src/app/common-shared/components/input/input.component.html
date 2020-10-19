@@ -1,0 +1,98 @@
+<div
+  class="input"
+  [ngClass]="{
+    input_focus: focus,
+    input_border: value,
+    input_disabled: disabled,
+    input_error:
+      (enableValidator ? validator.limitExceeds && value.length !== 0 : null) ||
+      error ||
+      (passwordValidator && value && (control?.touched || focus) && !validField)
+  }"
+>
+  <label
+    class="input__label"
+    [ngClass]="{
+      input__label_white: background === 'white',
+      'input__label_white-lilac': background === 'white-lilac'
+    }"
+    *ngIf="label"
+  >
+    {{ label | translate }}
+  </label>
+  <div [ngClass]="innerLabel ? 'd-flex' : ''">
+    <input
+      class="form-control input__field"
+      [ngClass]="{
+        input__field_password: variant === 'password',
+        input__field_date: variant === 'date' && !value
+      }"
+      [type]="
+        variant === 'password' || variant === 'email'
+          ? toggle && variant !== 'email'
+            ? 'password'
+            : 'text'
+          : variant === 'number'
+          ? 'text'
+          : variant
+      "
+      [placeholder]="!focus ? (placeholder | translate) : ''"
+      [autocomplete]="variant === 'password' ? 'new-password' : 'off'"
+      [attr.maxlength]="maxlength"
+      [ngModel]="value"
+      background="background"
+      (ngModelChange)="onValueChange($event)"
+      (focus)="setFocus()"
+      (focusout)="setFocusOut($event)"
+      (blur)="onBlur($event)"
+      (keyup)="handleKeyPress($event, validator)"
+      (keypress)="variant === 'number' ? numberOnly($event, titleInput) : null"
+      (paste)="onPaste($event, validator)"
+      (drop)="onDrop($event, validator)"
+      value="{{ value }}"
+      [max]="variant === 'date' ? (maxDate | date: 'yyyy-MM-dd') : ''"
+      [min]="variant === 'date' ? (minDate | date: 'yyyy-MM-dd') : ''"
+      [disabled]="disabled"
+      #titleInput
+    />
+    <span class="input__innerLabel" *ngIf="innerLabel">
+      {{ innerLabel | translate }}
+    </span>
+  </div>
+  <span
+    *ngIf="variant === 'password'"
+    class="input__icon icon"
+    [ngClass]="toggle ? 'icon-ic_view_small' : 'icon-ic_hide_small'"
+    tabindex="0"
+    (click)="toggle = !toggle"
+  ></span>
+  <div class="input__counter-wrapper">
+    <app-validator
+      [helperText]="helperText"
+      [errorText]="errorText"
+      [value]="titleInput.value"
+      [maxlength]="maxlength"
+      [isEnabled]="enableValidator"
+      [complexityControl]="complexityControl"
+      [variant]="validatorVariant"
+      [validField]="(maxNumber || variant === 'date') && !validField"
+      [error]="error"
+      #validator
+    ></app-validator>
+  </div>
+  <div
+    class="input__helperText {{ error ? 'input__helperText_error' : '' }}"
+    *ngIf="!enableValidator"
+  >
+    {{ (error ? errorText : helperText) | translate }}
+  </div>
+  <div class="input__password-validator" *ngIf="passwordValidator">
+    <app-validator
+      [value]="titleInput.value"
+      [variant]="'password'"
+      [passwordValidator]="passwordValidator"
+      [complexityControl]="complexityControl"
+    >
+    </app-validator>
+  </div>
+</div>

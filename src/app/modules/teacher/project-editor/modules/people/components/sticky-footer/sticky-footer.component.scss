@@ -1,0 +1,34 @@
+@import 'helpers/_bt-mixins';
+@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+.sticky-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 22px grid-gutter(primary);
+  background-color: color(quaternary);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @include card-box-shadow();
+  &__icon-wrap {
+    width: 18px;
+    height: 18px;
+    background: color(primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: spacing(primary);
+  }
+  &__icon {
+    font-size: font-size(s);
+    &_check {
+      color: color(quaternary);
+    }
+    &_delete {
+      cursor: pointer;
+    }
+  }
+}

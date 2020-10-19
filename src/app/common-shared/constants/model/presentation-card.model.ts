@@ -1,0 +1,12 @@
+export type PresentationCardvariant = 'create' | 'default' | 'project'
+export type IconVariant =
+  | 'PRESENTATION'
+  | 'WEB'
+  | 'DOCUMENT'
+  | 'FORM'
+  | 'SHEET'
+  | 'RUBRICA'
+  | 'CHECKLIST'
+  | 'DIANA'
+  | 'OTHER'
+  | 'VIDEO'

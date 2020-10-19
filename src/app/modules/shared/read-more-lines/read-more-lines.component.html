@@ -1,0 +1,21 @@
+<div class="mb-5">
+  <div class="read-more" #read [ngClass]="{ open: readMoreOpen }">
+    {{ description | translate }}
+  </div>
+
+  <div
+    class="read-more__button mb-5"
+    *ngIf="read.scrollHeight > read.offsetHeight"
+    (click)="readMoreOpen = !readMoreOpen"
+  >
+    {{ 'ACTIVITY_PREVIEW.activity_detail_exercise_statement_more' | translate }}
+  </div>
+
+  <div
+    class="read-more__button"
+    *ngIf="readMoreOpen"
+    (click)="readMoreOpen = !readMoreOpen"
+  >
+    {{ 'ACTIVITY_PREVIEW.activity_detail_exercise_statement_less' | translate }}
+  </div>
+</div>

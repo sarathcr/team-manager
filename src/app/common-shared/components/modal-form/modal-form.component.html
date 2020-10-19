@@ -1,0 +1,79 @@
+<form [formGroup]="modalForm" (ngSubmit)="onSubmit(modalForm.value)">
+  <div class="modal-form__header">
+    <div class="w-100">
+      <h4
+        class="modal-form__title title_xs"
+        [ngClass]="{
+          'modal-form__title_primary': titleVariant === 'primary',
+          'modal-form__title_secondary': titleVariant === 'secondary'
+        }"
+      >
+        {{ title | translate }}
+      </h4>
+      <div class="modal-form__description" *ngIf="description">
+        {{ description | translate }}
+      </div>
+    </div>
+    <button
+      class="close modal-form__close"
+      type="button"
+      aria-label="Close"
+      (click)="onDecline()"
+    >
+      <span class="icon icon-ic_share_close"></span>
+    </button>
+  </div>
+  <div class="modal-form__body">
+    <div class="modal-form__input" *ngIf="variant == 'input'">
+      <app-input
+        formControlName="data"
+        [(value)]="data"
+        (inputChange)="onValueChange($event)"
+        [initFocus]="true"
+        [maxlength]="maxLength"
+        [enableValidator]="enableValidator"
+        [label]="label"
+        [innerLabel]="innerLabel"
+        [helperText]="helperText"
+        [errorText]="errorText"
+        [variant]="inputVariant"
+        [placeholder]="placeholder"
+        [error]="error"
+        [validatorVariant]="validatorVariant"
+        [isForm]="true"
+      ></app-input>
+    </div>
+    <div class="modal-form__textarea" *ngIf="variant == 'textarea'">
+      <app-textarea
+        ngDefaultControl
+        formControlName="data"
+        [value]="data"
+        size="small"
+        [initFocus]="true"
+        [maxLength]="maxLength"
+        [enableValidator]="enableValidator"
+        [label]="label"
+        [helperText]="helperText"
+        [errorText]="errorText"
+        [isForm]="true"
+        (formSubmit)="onSubmit(modalForm.value)"
+        (inputChange)="onTextareaValueChange($event)"
+      ></app-textarea>
+    </div>
+  </div>
+  <div class="modal-form__footer">
+    <ng-container>
+      <div class="modal-form__button-wrapper">
+        <app-button
+          id="project-title-submit-button"
+          [disabled]="buttonDisabled"
+          [loading]="buttonLoading"
+          buttonType="submit"
+          #inputButton
+        >
+          {{ confirmLabel | translate }}
+        </app-button>
+      </div>
+    </ng-container>
+  </div>
+</form>

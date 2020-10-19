@@ -1,0 +1,30 @@
+@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
+.feedback {
+  width: 676px;
+  border-radius: 0 0 4px 4px;
+  background-color: color(quaternary);
+  padding: grid-gutter(primary) grid-gutter(secondary);
+  @include common-card-box-shadow();
+  &__title {
+    margin-bottom: spacing(secondary);
+    display: flex;
+    align-items: center;
+    &-icon {
+      margin-left: 5px;
+    }
+  }
+  &__input {
+    position: relative;
+    &-icon {
+      position: absolute;
+      right: 10px;
+      top: 13px;
+      font-size: font-size(xs);
+      &_disabled {
+        color: pantone(link-water);
+      }
+    }
+  }
+}

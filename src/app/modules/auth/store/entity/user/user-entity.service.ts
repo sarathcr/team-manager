@@ -4,7 +4,7 @@ import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data'
-import { User } from '../../../constants/model/login'
+import { User } from '../../../constants/model/login.model'
 
 @Injectable()
 export class UserEntityService extends EntityCollectionServiceBase<User> {

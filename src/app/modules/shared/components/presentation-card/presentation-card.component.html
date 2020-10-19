@@ -1,0 +1,109 @@
+<div
+  class="presentation-card d-flex flex-column position-relative"
+  [ngClass]="{
+    'presentation-card_sm': iconVariant,
+    'presentation-card_disabled': disabled,
+    'presentation-card__size': variant === 'project',
+    'presentation-card__coming-soon': isComingSoon
+  }"
+  (click)="!disabled ? onCardSelect() : null"
+>
+  <div
+    class="presentation-card-delete"
+    *ngIf="delete"
+    (click)="onCardDelete($event)"
+  >
+    <span class="icon icon-ic_share_close"></span>
+  </div>
+  <figure
+    class="presentation-card__figure m-0 position-relative"
+    [ngClass]="{
+      'mb-3': !iconVariant,
+      'mb-1': iconVariant,
+      'presentation-card__figure_sm': iconVariant,
+      'presentation-card__figure_create': variant === 'create',
+      'presentation-card_disabled': disabled,
+      'presentation-card__figure_projecttype': variant === 'project',
+      'presentation-card_slide': iconVariant === 'PRESENTATION',
+      'presentation-card_site': iconVariant === 'WEB',
+      'presentation-card_form': iconVariant === 'FORM',
+      'presentation-card_doc': iconVariant === 'DOCUMENT',
+      'presentation-card_sheet': iconVariant === 'SHEET',
+      'presentation-card_rubrica': iconVariant === 'RUBRICA',
+      'presentation-card_checklist': iconVariant === 'CHECKLIST',
+      'presentation-card_diana': iconVariant === 'DIANA',
+      'presentation-card_video': iconVariant === 'VIDEO'
+    }"
+  >
+    <img
+      *ngIf="!iconVariant || iconVariant === 'OTHER'"
+      src="{{
+        imageURL
+          ? imageURL
+          : variant === 'create'
+          ? './assets/images/presentation-cards/create-bg-shapes.png'
+          : './assets/images/presentation-cards/create-bg-shapes.png'
+      }}"
+      alt="presentation image"
+      class="presentation-card__image h-100 w-100"
+    />
+    <img
+      *ngIf="iconVariant && iconVariant !== 'OTHER'"
+      class="presentation-card__image h-100 w-100"
+      src="./assets/images/background_small.svg"
+      alt=""
+    />
+    <span
+      class="icon icon-ic_folder_add presentation-card__icon presentation-card__icon_add"
+      *ngIf="variant === 'create' && !loading && !iconVariant"
+      ><span class="path1"></span><span class="path2"></span
+      ><span class="path3"></span
+    ></span>
+    <span
+      *ngIf="iconVariant"
+      class="presentation-card__icon presentation-card__icon_add"
+      [ngClass]="{
+        'icon-ic_presentacion': iconVariant === 'PRESENTATION',
+        'icon-ic2': iconVariant === 'WEB',
+        'icon-ic_list_w': iconVariant === 'FORM',
+        'icon-ic_doc2_w': iconVariant === 'DOCUMENT',
+        'icon-group': iconVariant === 'SHEET',
+        'icon-ic_rubrica': iconVariant === 'RUBRICA',
+        'icon-ic_checklist': iconVariant === 'CHECKLIST',
+        'icon-ic_diana': iconVariant === 'DIANA',
+        'icon-ic_attach': iconVariant === 'VIDEO'
+      }"
+    ></span>
+    <app-loader *ngIf="loading"></app-loader>
+    <div
+      class="presentation-card__premium d-flex align-items-center justify-content-center"
+      *ngIf="isPremium || isComingSoon"
+      [ngClass]="{
+        'presentation-card__premium_color': isComingSoon,
+        'presentation-card__premium_project': variant === 'project'
+      }"
+    >
+      <span
+        class="icon icon-think_small presentation-card__icon presentation-card__icon_premium"
+        *ngIf="variant != 'project'"
+      ></span
+      ><span class="presentation-card__premium_text">{{
+        premiumLabel | translate
+      }}</span>
+    </div>
+  </figure>
+  <div
+    class="presentation-card__title"
+    [ngClass]="{
+      'presentation-card__title_sm': iconVariant,
+      'presentation-card__title_project': variant === 'project',
+      'presentation-card_disabled': disabled
+    }"
+  >
+    {{ title | translate }}
+  </div>
+  <div class="presentation-card__description" *ngIf="description">
+    {{ description | translate }}
+  </div>
+  <div class="presentation-card__bgimage" *ngIf="imageURL"></div>
+</div>

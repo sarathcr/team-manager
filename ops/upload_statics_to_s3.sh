@@ -23,6 +23,10 @@ S3_BUCKET="s3://${S3_BUCKET_NAME}"
 # Upload static site to S3
 aws --profile ${AWS_PROFILE} s3 cp ${STATIC_FILES_PATH} ${S3_BUCKET} --recursive
 
+#Upload index.html with no cache
+aws --profile ${AWS_PROFILE} s3 cp ${STATIC_FILES_PATH}/index.html ${S3_BUCKET} --cache-control "no-cache, no-store, must-revalidate"
+
+
 # Invalidate CloudFront cache
 aws --profile ${AWS_PROFILE} cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
 

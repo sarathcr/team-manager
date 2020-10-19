@@ -7,9 +7,9 @@ import {
   withKnobs,
 } from '@storybook/addon-knobs/angular'
 import { moduleMetadata, storiesOf } from '@storybook/angular'
-import { LoaderComponent } from 'src/app/shared/components/loader/loader.component'
-import { ButtonComponent } from '../../../../shared/components/button/button.component'
-import { StorybookTranslateModule } from '../../../../shared/utility/storybook-translate.module'
+import { LoaderComponent } from 'src/app/common-shared/components/loader/loader.component'
+import { ButtonComponent } from '../../../../common-shared/components/button/button.component'
+import { StorybookTranslateModule } from '../../../../common-shared/utility/storybook-translate.module'
 import { HeaderComponent } from './header.component'
 import markDown from './header.stories.md'
 storiesOf('Project-Output|Header', module)

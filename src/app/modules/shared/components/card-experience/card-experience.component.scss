@@ -1,0 +1,284 @@
+@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
+.card-experience {
+  background: color(quaternary);
+  @include card-box-shadow;
+  border-radius: 4px;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+  padding: 24px;
+  &__figure {
+    width: 100%;
+    border-radius: 4px;
+    position: relative;
+
+    &:after {
+      display: block;
+      content: '';
+      padding-bottom: 44.73%;
+    }
+  }
+
+  &__image {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__title-section {
+    margin-bottom: 8px;
+    flex: 1 0 auto;
+    overflow-wrap: break-word;
+  }
+
+  &__title {
+    overflow: hidden;
+    font-size: font-size(body);
+    line-height: 28px;
+    font-weight: 900;
+    letter-spacing: 0.2px;
+    min-height: 56px;
+  }
+
+  &__type {
+    font-weight: 700;
+    font-family: font-family(secondary);
+    line-height: 24px;
+    letter-spacing: 1px;
+    opacity: 0.5;
+    text-transform: uppercase;
+  }
+
+  &__inspirate {
+    height: 30px;
+    width: 85px;
+    opacity: 0.5;
+    color: color(tertiary);
+    font-family: font-family(secondary);
+    font-size: font-size(default);
+    font-weight: bold;
+    letter-spacing: spacing(primary) / 15;
+    line-height: 24px;
+    padding: 5px 0;
+  }
+
+  &__seperator {
+    &.icon-ic_separador:before {
+      font-size: font-size(xs);
+      padding: 0 10px;
+    }
+  }
+
+  &__status {
+    font-family: font-family(secondary);
+    font-weight: 700;
+    letter-spacing: 0.39px;
+    line-height: 20px;
+    border-radius: 15.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    max-width: 140px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+
+    &_inprogress {
+      background-color: rgba(pantone(hollywood-Cerise), 0.2);
+    }
+
+    &_draft {
+      background-color: rgba(pantone(cerulean-Blue), 0.2);
+    }
+
+    &_readonly {
+      background-color: rgba(pantone(orange-Peel), 0.2);
+    }
+
+    &_done {
+      background-color: rgba(pantone(Deep-Sky-Blue), 0.3);
+    }
+  }
+
+  &__notification {
+    position: absolute;
+    top: 26px !important;
+    right: 26px !important;
+    font-size: font-size(s);
+    transform: translate(50%, -50%);
+  }
+
+  &__icon {
+    font-size: font-size(s);
+    margin-right: 14px;
+    &_thinko,
+    &_thinko-teacher {
+      font-size: font-size(default);
+      margin-right: spacing(secondary) / 2;
+    }
+    &_thinko-teacher {
+      margin: 0;
+      &:before {
+        color: color(secondary);
+      }
+    }
+  }
+  &__circle {
+    border-radius: 50%;
+    height: 18px;
+    width: 18px;
+    border: 2px solid color(tertiary);
+  }
+  &__extra-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    height: 33px;
+    width: 33px;
+    background-color: rgba(color(tertiary), 0.05);
+    font-weight: bold;
+    font-size: font-size(label);
+    line-height: 24px;
+    border: 3px solid color(quaternary);
+  }
+  &__bottom-wrapper {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  &__student {
+    &-primaryColumn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 50%;
+      min-width: 95px;
+      flex: 1 0 auto;
+      margin-right: 5%;
+    }
+    &-progress {
+      &-bar {
+        width: 62.62%;
+        height: 16px;
+        position: relative;
+        background: rgba(color(tertiary), 0.05);
+        -moz-border-radius: 15px;
+        -webkit-border-radius: 15px;
+        border-radius: 15px;
+        margin-right: 13px;
+      }
+      &-count {
+        font-family: font-family(secondary);
+        font-weight: 900;
+        letter-spacing: 1px;
+      }
+    }
+    &-seperator {
+      margin-right: -11px;
+      font-size: font-size(s);
+    }
+    &__bg-fill {
+      display: block;
+      height: 100%;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      background-color: color(primary);
+      position: relative;
+      overflow: hidden;
+      &_radius {
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+      &_secondary {
+        background-color: color(secondary);
+      }
+    }
+  }
+  &__pro {
+    padding: 6px 13px;
+    background: color(primary);
+    border-radius: 33.5px;
+    position: absolute;
+    text-transform: uppercase;
+    color: color(quaternary);
+    font-family: font-family(secondary);
+    font-size: font-size(label);
+    font-weight: 900;
+    letter-spacing: 0.9px;
+    top: -10px;
+    right: -10px;
+    display: flex;
+    align-items: center;
+  }
+  &__teacher-wrap {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    display: flex;
+    align-items: center;
+  }
+  &__teacher {
+    background: color(quaternary);
+    padding: 2px 13px 2px 2px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    &__figure {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: color(tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+    &__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    &__name {
+      font-size: font-size(label);
+      letter-spacing: normal;
+      font-weight: bold;
+    }
+    &-count {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: color(quaternary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      line-height: 10px;
+      font-size: font-size(label);
+    }
+  }
+  &__tooltip {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    &:not(:last-child) {
+      margin-bottom: spacing(secondary) / 2;
+    }
+    &-figure {
+      width: 30px;
+      height: 30px;
+      margin: 0 spacing(secondary) / 2 0 0;
+    }
+    &-name {
+      white-space: nowrap;
+    }
+  }
+}
+
+:host {
+  display: flex;
+}

@@ -19,9 +19,9 @@ import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader'
 import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
+import { CommonSharedModule } from './common-shared/common-shared.module'
 import { CoreModule } from './core/core.module'
 import { AuthModule } from './modules/auth/auth.module'
-import { SharedModule } from './shared/shared.module'
 import { appReducers, metaReducers } from './store'
 
 @NgModule({
@@ -31,7 +31,7 @@ import { appReducers, metaReducers } from './store'
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     AppRoutingModule,
-    SharedModule,
+    CommonSharedModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -76,6 +76,7 @@ export function HttpLoaderFactory(http: HttpClient): any {
     { prefix: 'assets/i18n/project-editor/', suffix: '.json' },
     { prefix: 'assets/i18n/activities/', suffix: '.json' },
     { prefix: 'assets/i18n/evaluation/', suffix: '.json' },
+    { prefix: 'assets/i18n/people/', suffix: '.json' },
     { prefix: 'assets/i18n/auth/', suffix: '.json' },
     { prefix: 'assets/i18n/project-output/', suffix: '.json' },
     { prefix: 'assets/i18n/shared/', suffix: '.json' },

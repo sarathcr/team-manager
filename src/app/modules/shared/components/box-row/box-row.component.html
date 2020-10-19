@@ -1,0 +1,28 @@
+<div class="profile-row" [ngClass]="{ 'profile-row-head': isHead }">
+  <ng-content></ng-content>
+  <span
+    class="profile-row__icon icon-ic_close ml-4"
+    *ngIf="hasClose"
+    (click)="confirmModal($event)"
+  ></span>
+</div>
+<ng-template #modalDelete>
+  <app-modal-info
+    id="step-three-modal-info"
+    variant="delete"
+    theme="secondary"
+    modalTitle="PEOPLE-EMPTY-STATE.people_pending_delete_confirmation_title"
+    [description]="
+      'PEOPLE-EMPTY-STATE.people_pending_delete_confirmation_message'
+        | translate
+        | TranslateConcat
+          : 1
+          : ('VARIABLES.experience_type_variable_4'
+              | translate
+              | TranslateCut: experienceType)
+    "
+    confirmLabel="PROJECT.project_button_delete"
+    (decline)="declineModal()"
+    (confirm)="deleteItem($event)"
+  ></app-modal-info>
+</ng-template>

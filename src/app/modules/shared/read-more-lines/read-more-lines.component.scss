@@ -1,0 +1,21 @@
+@import 'helpers/_helpers-master';
+.read-more {
+  max-height: 75px;
+  overflow: hidden;
+  word-break: break-word;
+  word-wrap: break-word;
+
+  &__button {
+    text-decoration: underline;
+    font-weight: 700;
+    color: color(tertiary);
+  }
+  &:not(.open) {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  &.open {
+    max-height: none;
+  }
+}

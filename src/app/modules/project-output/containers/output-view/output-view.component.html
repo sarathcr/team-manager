@@ -29,11 +29,15 @@
       [autoresize]="true"
       [fit-to-page]="true"
       [zoom-scale]="zoomScale"
+      [stick-to-page]="true"
       [(page)]="pageVariable"
       (after-load-complete)="afterLoadComplete($event)"
       #pdfViewer
     ></pdf-viewer>
-    <app-loader *ngIf="loading"></app-loader>
+    <app-loader
+      *ngIf="loading"
+      [detail]="'PROGRAMACION.output_spinner' | translate"
+    ></app-loader>
   </div>
 </div>
 <app-error-toast

@@ -1,0 +1,70 @@
+<div class="project-editor__form step-six" id="step-six">
+  <app-step-status id="step-six-status" [status]="step.state"></app-step-status>
+  <div class="project-form d-flex flex-column justify-content-between">
+    <div>
+      <h1 class="project-form__title title_s">
+        <span class="project-form__title-number">6.</span
+        >{{ 'RETHINK_TITLE.project_rethinktitle_title' | translate }}
+      </h1>
+      <p class="project-form__description">
+        {{
+          'RETHINK_TITLE.project_rethinktitle_description'
+            | translate
+            | TranslateCut: 0
+        }}
+        <span>{{
+          'VARIABLES.experience_type_variable_4'
+            | translate
+            | TranslateCut: localExperienceType
+        }}</span>
+        <span>{{
+          'RETHINK_TITLE.project_rethinktitle_description'
+            | translate
+            | TranslateCut: 1
+        }}</span>
+      </p>
+      <div class="project-editor__input-wrapper">
+        <app-input
+          id="step-six-input"
+          placeholder="{{
+            'RETHINK_TITLE.project_rethinktitle_creativetitle_placeholder'
+              | translate
+          }}"
+          [maxlength]="500"
+          [(value)]="creativeTitle"
+          (inputChange)="onValueChange($event)"
+        >
+        </app-input>
+      </div>
+
+      <h2 class="title_xs project-form__subtitle mb-4">
+        {{ 'RETHINK_TITLE.project_rethinktitle_addimage' | translate }}
+      </h2>
+      <app-image-upload
+        id="step-six-image-upload"
+        [imageURL]="creativeImage"
+        [maxFileSize]="5242880"
+        uploadPath="creative-images/"
+        acceptedType="image/jpeg,image/jpg,image/png"
+        [label]="'PROJECT.project_upload_file' | translate"
+        (fileSelect)="onFileSelect($event)"
+      >
+      </app-image-upload>
+    </div>
+    <app-button
+      id="step-six-button"
+      [disabled]="buttonConfig.disabled"
+      [loading]="editor.savingProgress"
+      [theme]="buttonConfig.submitted ? 'success' : 'primary'"
+      [icon]="'tick'"
+      (click)="handleSubmit('DONE')"
+    >
+      {{
+        (buttonConfig.submitted
+          ? buttonConfig.successLabel
+          : buttonConfig.label
+        ) | translate
+      }}
+    </app-button>
+  </div>
+</div>

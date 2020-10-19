@@ -1,0 +1,59 @@
+<div class="creation__exercises mb-7">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="creation__title">
+      {{ title | translate }}
+    </h2>
+    <div>
+      <span
+        (click)="onExcerciseTitleEdit()"
+        class="icon icon-ic_edit mr-5 creation__icon_size creation__icon_custom"
+      ></span>
+      <span
+        (click)="onClick()"
+        class="icon icon-ic_more creation__icon_size"
+      ></span>
+    </div>
+  </div>
+  <div class="d-flex align-items-center mb-4">
+    <span
+      *ngIf="evaluation"
+      class="icon icon-ic_star-grey creation__icon_star"
+    ></span>
+    <span
+      *ngIf="!evaluation"
+      class="icon icon-ic_star-no creation__icon_star"
+    ></span>
+
+    <span class="creation__subtitle mr-2">
+      {{ subtitle | translate }}
+    </span>
+    <span *ngIf="subtitleKey" class="icon icon-ic_separador mr-2"></span>
+    <span class="creation__subtitle">
+      {{ subtitleKey | translate }}
+      {{ subtitleValue | date: 'dd/MM/yyyy' | translate }}</span
+    >
+  </div>
+
+  <app-read-more-lines [description]="description"></app-read-more-lines>
+  <div class="mb-5" *ngIf="materials?.length">
+    <ng-container *ngFor="let material of materials">
+      <app-material-card
+        customClass="mb-5"
+        [label]="material.fileType | FiletypeTranslate | translate"
+        [title]="material.title | FileName: material.sourceType"
+        [thumbnail]="material.previewImageUrl"
+        [entityType]="material.entityType"
+        [variant]="material.fileType"
+        [link]="material.url"
+        [canDelete]="false"
+        [enableBorder]="true"
+        [enableShadow]="false"
+        [switchOn]="material.visible"
+        (switch)="changeVisibility(material.id, $event)"
+      ></app-material-card>
+    </ng-container>
+  </div>
+  <div class="creation__icon_draggable">
+    <span class="icon icon-ic_drag"></span>
+  </div>
+</div>

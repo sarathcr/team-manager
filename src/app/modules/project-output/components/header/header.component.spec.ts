@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser'
 
 import { HeaderComponent } from './header.component'
 
-import { ButtonComponent } from './../../../../shared/components/button/button.component'
+import { ButtonComponent } from '../../../../common-shared/components/button/button.component'
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent

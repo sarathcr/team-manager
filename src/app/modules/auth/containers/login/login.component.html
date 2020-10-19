@@ -70,7 +70,8 @@
                 {{ 'LOGIN.login_button-primary_login' | translate }}
               </app-button>
             </div>
-            <div class="login__button-wrapper">
+            <!-- Temporarily removing the register link and googleLogin from the production build/version will be reverted once the app is out for public use.-->
+            <div class="login__button-wrapper" *ngIf="env.name !== 'prd'">
               <app-button
                 [theme]="'secondary'"
                 [variant]="'block'"
@@ -86,7 +87,7 @@
                 {{ 'LOGIN.login_button-secondary_sociallogin' | translate }}
               </app-button>
             </div>
-            <div class="login__register-link">
+            <div class="login__register-link" *ngIf="env.name !== 'prd'">
               <span>{{
                 'LOGIN.login_button-tertiary_signup.one' | translate
               }}</span>
