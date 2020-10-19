@@ -1,0 +1,180 @@
+<div class="project-editor__form step-four" id="step-four">
+  <app-step-status
+    id="step-four-status"
+    [status]="step.state"
+  ></app-step-status>
+  <div class="project-form d-flex flex-column justify-content-between">
+    <div class="project-form__wrap">
+      <h1 class="project-form__title title_s">
+        <span class="project-form__title-number">4.</span>
+        {{ 'CONTENT.project_content_title' | translate }}
+      </h1>
+      <p class="project-form__description">
+        {{ 'CONTENT.project_content_description' | translate }}
+      </p>
+
+      <app-loader
+        id="step-four-loader"
+        *ngIf="loading || gradesLoading; else loaded"
+      ></app-loader>
+      <ng-template #loaded>
+        <app-step-unlock
+          id="step-four-step-unlock"
+          *ngIf="!(editor.project$ | async)?.subjects?.length; else hasSubjects"
+          [description]="'CONTENT.project_content_dependancy_description'"
+          [buttonText]="'CONTENT.project_content_dependancy_button'"
+          [buttonLink]="'../1'"
+        >
+        </app-step-unlock>
+        <ng-template #hasSubjects>
+          <div
+            class="project-form__detail-selector-wrapper"
+            *ngFor="
+              let subject of project?.subjects;
+              let i = index;
+              let last = last
+            "
+          >
+            <app-details-selector
+              id="step-four-details-selector-{{ i }}"
+              [unselectedLabel]="'CONTENT.project_content_placeholder'"
+              [selectedLabel]="'CONTENT.project_content_cvcontent'"
+              [subject]="subject"
+              [subjectItem]="subject.contents"
+              [isLast]="last"
+              [variant]="subject.evaluationCriteria.length ? 'add' : 'locked'"
+              (add)="openPrincipalView($event)"
+              (deleteById)="openModalDelete($event)"
+            ></app-details-selector>
+            <app-editable-list
+              id="step-four-editable-list"
+              [variant]="'optional'"
+              [list]="subject.customContents"
+              [maxLength]="150"
+              [loading]="showDataDependancyLoader"
+              overrideDelete="true"
+              [isTextareaActive]="activeEditableLists.includes(subject.id)"
+              [initFocus]="subject.id == activeTextarea"
+              editModalTitle="CONTENT.project_content_extracontent_edit_title"
+              editModalLabel="CONTENT.project_content_extracontent_edit_label"
+              editModalbuttonLabel="PROJECT.project_button_save"
+              deleteModalTitle="CONTENT.project_content_extracontent_delete_confirmation_title"
+              deleteModalDescription="CONTENT.project_content_extracontent_delete_confirmation_message"
+              deleteModalbuttonLabel="PROJECT.project_button_delete"
+              helperText="PROJECT.project_input_singleitem_helpertext"
+              errorText="PROJECT.Error_textlimit_specified_singleinput"
+              optionalButtonLabel="PROJECT.project_button_add"
+              optionalTitle="CONTENT.project_content_extracontent_input"
+              optionalPlaceholder="CONTENT.project_content_extracontent_placeholder"
+              (addItem)="textareaDataChange($event, i)"
+              (editItem)="textItemEdit($event, i)"
+              (deleteItem)="textItemDelete($event, i)"
+              (textareaActive)="updateEditableListStatus(subject.id)"
+              (deleteConfirmed)="onCustomContentDeleteStart($event)"
+              (declineConfirmed)="onCustomContentyDeleteDeclined($event)"
+            ></app-editable-list>
+          </div>
+          <ng-container *ngIf="basicSkills.length && showBasicSkills">
+            <div class="project-form__basic-skill">
+              <h3 class="project-form__basic-skill__title">
+                {{ 'CONTENT.project_content_competencies' | translate }}
+              </h3>
+              <div class="project-form__basic-skill_row">
+                <app-custom-checkbox
+                  id="step-four-checkbox-{{ i }}"
+                  *ngFor="let basicSkill of basicSkills; let i = index"
+                  [checkboxData]="basicSkill.checkData"
+                  [colOne]="{ value: basicSkill.name }"
+                  [parentID]="basicSkill.id"
+                  (checked)="handleSkillSelect()"
+                ></app-custom-checkbox>
+              </div>
+            </div>
+          </ng-container>
+        </ng-template>
+      </ng-template>
+    </div>
+
+    <app-button
+      id="step-four-button"
+      [disabled]="buttonConfig.disabled || !project.subjects?.length"
+      [loading]="editor.savingProgress"
+      [theme]="buttonConfig.submitted ? 'success' : 'primary'"
+      [icon]="'tick'"
+      (click)="handleSubmit('DONE')"
+    >
+      {{
+        (buttonConfig.submitted
+          ? buttonConfig.successLabel
+          : buttonConfig.label
+        ) | translate
+      }}
+    </app-button>
+  </div>
+</div>
+
+<ng-template #modalUnlock>
+  <app-modal-info
+    id="step-four-modal-info"
+    variant="unlock"
+    modalTitle="PROJECT.project_dependancy_title_cv"
+    [description]="
+      'CONTENT.project_content_dependancy_filterbycriteria_description'
+    "
+    [confirmLabel]="
+      'CONTENT.project_content_dependancy_filterbycriteria_button'
+    "
+    (confirm)="confirmModalUnlock()"
+    (decline)="declineModal()"
+  ></app-modal-info>
+</ng-template>
+
+<ng-template #modalDelete>
+  <app-modal-info
+    id="step-four-modal-info-delete"
+    variant="delete"
+    theme="secondary"
+    modalTitle="CONTENT.project_content_delete_confirmation_title"
+    [description]="
+      'OBJECTIVES.project_objectives_delete_confirmation_message_nonrelated'
+    "
+    [loading]="showDataDependancyLoader"
+    [confirmLabel]="'PROJECT.project_button_delete'"
+    (confirm)="confirmModalDelete()"
+    (decline)="declineModal()"
+  ></app-modal-info>
+</ng-template>
+
+<ng-template #principalViewModal>
+  <app-principal-view-modal
+    id="step-four-principal-view-modal"
+    [grades]="grades"
+    [selectedGrades]="selectedGrades"
+    [stepId]="4"
+    [modalColumns]="modalColumns"
+    [blockData]="blockData"
+    [dropdownTitles]="dropDownConfig"
+    [labels]="labels"
+    [showPrimaryView]="showPrimaryView"
+    (modalSubmit)="handleModalSubmit($event)"
+    (decline)="declineModal()"
+  ></app-principal-view-modal>
+</ng-template>
+
+<ng-template #dependancyModalOne>
+  <app-modal-info
+    id="step-four-modal-dependency-info"
+    variant="unlock"
+    buttonPosition="left"
+    [modalTitle]="
+      showPrimaryView
+        ? 'BUSINESS.Error_content_criteriawindow_dependency_title'
+        : 'BUSINESS.Error_content_dependency_title'
+    "
+    description="BUSINESS.Error_content_dependency_description"
+    [confirmLabel]="'PROJECT.project_button_gotit'"
+    (confirm)="declineModal()"
+    (decline)="declineModal()"
+  >
+  </app-modal-info>
+</ng-template>

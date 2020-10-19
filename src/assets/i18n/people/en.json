@@ -1,0 +1,20 @@
+{
+  "PEOPLE-EMPTY-STATE": {
+    "people_emptystate_title": "No has asignado ninguna persona ",
+    "people_emptystate_description": "Añade el listado de profesores/as y alumnos/as que van a participar en ",
+    "people_add_teachers_button": "Invitar docentes",
+    "people_add_students_button": "Invitar alumnado",
+    "people_teachers": "Docentes",
+    "people_students": "Alumnado",
+    "people_card_teacher": "Docente",
+    "people_card_student": "Alumno/a",
+    "people_pending": "Invitaciones pendientes",
+    "people_pending_filter_all": "Ver todas",
+    "variable_selected_item_counter": "persona seleccionada|personas seleccionadas|",
+    "people_delete_confirmation_title": "¿Seguro que quieres eliminar las personas seleccionadas?",
+    "people_delete_confirmation_message": "Si las eliminas dejarán de tener acceso [experience_type_variable_4]. Podrás volver a añadirlas cuando quieras.",
+    "people_pending_delete_confirmation_title": "¿Seguro que quieres eliminar a esta persona?",
+    "people_pending_delete_confirmation_message": "Esta persona todavía no ha aceptado la invitación. Si la eliminas no podrá tener acceso [experience_type_variable_4]. Podrás volver a invitarla cuando quieras.",
+    "people_card_state": "Estado"
+  }
+}

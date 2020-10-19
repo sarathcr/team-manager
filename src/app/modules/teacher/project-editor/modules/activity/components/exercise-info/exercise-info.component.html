@@ -1,0 +1,69 @@
+<div class="exercise">
+  <div class="exercise__header">
+    <app-exercise-header
+      buttonText="{{
+        'ACTIVITY_PREVIEW.activity_detail_exercise_header_delivery_button'
+          | translate
+      }}
+      "
+      [title]="supertitle"
+      [description]="title"
+      [delivery]="delivery"
+      [qualifiying]="qualifiying"
+      [isDelivered]="isDelivered"
+      [isQualifying]="isQualifying"
+      [showCalifications]=""
+    ></app-exercise-header>
+  </div>
+  <div class="exercise__info" *ngIf="statement">
+    <h2 class="exercise__info-title mb-2 title_body">
+      {{
+        'ACTIVITY_PREVIEW.activity_detail_exercise_statement_title' | translate
+      }}
+    </h2>
+    <p class="exercise__info-content">
+      <app-read-more
+        *ngIf="statement"
+        [text]="statement"
+        maxCharacters="285"
+        showText="ACTIVITY_PREVIEW.activity_detail_exercise_statement_more"
+        hideText="ACTIVITY_PREVIEW.activity_detail_exercise_statement_less"
+      >
+      </app-read-more>
+    </p>
+  </div>
+  <div
+    class="exercise__info exercise__info_material"
+    *ngIf="refMaterial?.length > 0"
+  >
+    <h2 class="exercise__material-title title_body">
+      {{
+        'ACTIVITY_PREVIEW.activity_detail_exercise_material_title' | translate
+      }}
+    </h2>
+    <div class="exercise__cards-container">
+      <div
+        class="exercise__cards-container-single"
+        *ngFor="let material of refMaterial"
+      >
+        <app-presentation-card
+          [title]="material.title | FileName: material.sourceType"
+          [iconVariant]="material.previewImageUrl ? 'OTHER' : material.fileType"
+          [imageURL]="material.previewImageUrl ? material.previewImageUrl : ''"
+          [link]="material.url"
+        ></app-presentation-card>
+      </div>
+    </div>
+  </div>
+  <div class="exercise__feedback">
+    <app-feedback
+      [title]="
+        'ACTIVITY_PREVIEW.activity_detail_exercise_feedback_title' | translate
+      "
+      placeholder="ACTIVITY_PREVIEW.activity_detail_exercise_feedback_placeholder"
+      [comments]="[]"
+      icon="message"
+      [disabled]="true"
+    ></app-feedback>
+  </div>
+</div>

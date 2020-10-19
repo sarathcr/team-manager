@@ -32,6 +32,21 @@
     font-weight: 700;
   }
 
+  &_body {
+    font-family: font-family(default);
+    font-size: font-size(body);
+    line-height: 28px;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+  }
+  &_sub-s {
+    font-family: font-family(default);
+    font-size: font-size(sub-s);
+    line-height: 28px;
+    letter-spacing: 0.2px;
+    font-weight: bold;
+  }
+
   &_default {
     font-family: font-family(secondary);
     font-size: font-size(default);

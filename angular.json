@@ -28,11 +28,11 @@
             }
           },
           "configurations": {
-            "production": {
+            "prd": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.prd.ts"
                 }
               ],
               "optimization": true,
@@ -148,8 +148,8 @@
             "browserTarget": "thinko-creator:build"
           },
           "configurations": {
-            "production": {
-              "browserTarget": "thinko-creator:build:production"
+            "prd": {
+              "browserTarget": "thinko-creator:build:prd"
             },
             "qa": {
               "browserTarget": "thinko-creator:build:qa"
@@ -214,12 +214,12 @@
             "tsConfig": "tsconfig.server.json"
           },
           "configurations": {
-            "production": {
+            "prd": {
               "outputHashing": "media",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.prd.ts"
                 }
               ],
               "sourceMap": false,

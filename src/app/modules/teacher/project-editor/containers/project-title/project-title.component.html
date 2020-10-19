@@ -1,0 +1,49 @@
+<div class="project-title d-flex align-items-center">
+  <div class="project-title__input">
+    {{ projectData?.title || tempTitle }}
+  </div>
+  <div
+    class="icon-ic_edit_small project-title__edit"
+    (click)="openModal()"
+    *ngIf="projectData"
+  ></div>
+</div>
+<ng-template #titleModal>
+  <app-modal-form
+    inputVariant="text"
+    variant="input"
+    [title]="
+      (modalTitle
+        | translate
+        | TranslateCut
+          : (!projectData?.id || !showEditTitle ? localExperienceType : 0)) +
+      (projectData?.id && showEditTitle
+        ? ('VARIABLES.experience_type_variable_2'
+          | translate
+          | TranslateCut: localExperienceType)
+        : '')
+    "
+    [confirmLabel]="modalConfirmLabel"
+    [data]="projectData?.title ? projectData?.title : ''"
+    [maxLength]="maxLength"
+    helperText="PROJECT.project_title_helpertext"
+    [error]="error"
+    [errorText]="
+      error
+        ? ('BUSINESS.Error_experience_title_existing'
+          | translate
+          | TranslateConcat
+            : 1
+            : ('VARIABLES.experience_type_variable_5'
+                | translate
+                | TranslateCut: localExperienceType))
+        : 'PROJECT.Error_textlimit_specified_singleinput'
+    "
+    label="PROJECT.project_title_input_title"
+    [buttonLoading]="buttonLoading"
+    [buttonDisabled]="error || !inputTitle"
+    (decline)="declineModal()"
+    (confirm)="confirmModal($event)"
+    (getInputValue)="onValueChange($event)"
+  ></app-modal-form>
+</ng-template>

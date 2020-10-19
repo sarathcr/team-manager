@@ -1,0 +1,11 @@
+<div class="read-more">
+  <div class="read-more__text">
+    {{ text | slice: 0:charactersToShow }}
+  </div>
+  <span
+    *ngIf="text.length > maxCharacters"
+    (click)="toggleShowMore()"
+    class="read-more__toggle"
+    >{{ (showMore ? hideText : showText) | translate }}</span
+  >
+</div>

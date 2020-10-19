@@ -1,0 +1,35 @@
+<div class="creator-home" id="creator-home">
+  <app-main-header
+    id="creator-header"
+    [buttonText]="'PRIVATEHOME_GENERAL.home_header_button_upgrade'"
+    [userType]="userType"
+    [imgUrl]="profileCompleted ? imageUrl : ''"
+    [title]="workspace"
+    [username]="profileCompleted ? username : 'PROFILE.header_profile_user'"
+  ></app-main-header>
+  <app-main-sidebar id="sidebar">
+    <div class="creator-home__sidebar-wrapper">
+      <div>
+        <app-sidebar-menu
+          icon="icon-ic_experiencias-creadas"
+          text="PRIVATEHOME_GENERAL.home_menu_section_getinspired"
+          link="/editor/experiences/inspirate"
+          active="true"
+        ></app-sidebar-menu>
+        <app-sidebar-menu
+          icon="icon-ic_experiencias"
+          text="PRIVATEHOME_GENERAL.home_menu_section_yourexperiences"
+          link="/editor/experiences"
+          [updated]="true"
+          active="true"
+        ></app-sidebar-menu>
+      </div>
+      <app-sidebar-menu
+        icon="icon-ic_ayuda"
+        text="PRIVATEHOME_GENERAL.home_menu_section_help"
+        [variant]="'help'"
+      ></app-sidebar-menu>
+    </div>
+  </app-main-sidebar>
+  <router-outlet></router-outlet>
+</div>

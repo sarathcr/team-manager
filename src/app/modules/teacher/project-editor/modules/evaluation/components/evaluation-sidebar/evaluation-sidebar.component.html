@@ -1,0 +1,19 @@
+<div class="sidebar">
+  <div class="sidebar-menu">
+    <h2 class="sidebar-menu__title title_default">{{ title }}</h2>
+    <div class="sidebar-menu__element">
+      <div class="sidebar-menu__element-circle">
+        <span
+          class="icon"
+          [ngClass]="{
+            'icon-ic_user': icon === 'user',
+            'icon-ic_add_person': icon === 'add'
+          }"
+        ></span>
+      </div>
+      <div class="sidebar-menu__element-label">
+        {{ label }}
+      </div>
+    </div>
+  </div>
+</div>

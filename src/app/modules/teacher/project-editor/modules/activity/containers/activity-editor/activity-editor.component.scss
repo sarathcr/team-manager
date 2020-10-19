@@ -1,0 +1,83 @@
+@import 'helpers/_helpers-master';
+@import 'helpers/_bt-mixins';
+@import 'variables/_variables-master';
+
+.activity-editor {
+  $root: &;
+  background-color: color(background-primary);
+  overflow: hidden;
+  min-height: 100vh;
+  @include transitions(all, 0.5s, ease-in-out);
+  &__header {
+    background: color(tertiary);
+    width: 100%;
+    z-index: 9;
+    position: relative;
+    @extend %contextual-help-placeholder;
+  }
+  &__body {
+    position: relative;
+    @extend %contextual-help-placeholder;
+  }
+  ::ng-deep {
+    .activity__footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+      background-color: #ffffff;
+      z-index: 3;
+      @extend %contextual-help-placeholder;
+    }
+  }
+
+  &__contextual-help {
+    position: absolute;
+    width: 100%;
+    right: 0;
+    z-index: 9;
+    top: 0;
+    height: 100%;
+    pointer-events: none;
+  }
+  &_open {
+    ::ng-deep {
+      .btn_back {
+        .btn__content {
+          display: none;
+        }
+      }
+      .activity-header__figure {
+        &_left {
+          display: none;
+        }
+      }
+      .activity__footer {
+        @extend %contextual-help-placeholder;
+      }
+    }
+
+    %contextual-help-placeholder {
+      &:after {
+        content: '';
+        min-width: 532px !important;
+        width: 34.9% !important;
+      }
+    }
+  }
+}
+
+%contextual-help-placeholder {
+  display: flex;
+  &:after {
+    content: '';
+    display: block;
+    min-width: 0;
+    width: 0;
+    max-width: 0;
+    @include transitions(all, 0.5s, ease-in-out);
+  }
+  > *:first-child {
+    flex: 1 1 100%;
+  }
+}

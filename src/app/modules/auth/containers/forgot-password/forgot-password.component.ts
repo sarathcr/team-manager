@@ -9,8 +9,8 @@ import { Router } from '@angular/router'
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 
-import { validateEmail } from 'src/app/shared/utility/form.utility'
-import { AuthService } from '../../services/auth.service'
+import { validateEmail } from 'src/app/common-shared/utility/form.utility'
+import { AuthService } from '../../services/auth/auth.service'
 
 @Component({
   selector: 'app-forgot-password',

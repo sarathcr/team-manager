@@ -1,0 +1,104 @@
+<div
+  class="editable-list mb-5"
+  *ngIf="variant === 'optional' ? true : list?.length ? true : false"
+>
+  <ul class="editable-list__list">
+    <li class="editable-list__optional-content" *ngIf="variant === 'optional'">
+      <div
+        class="d-flex justify-content-between align-items-center editable-list__placeholder-wrap"
+        id="personalised-content-wrap"
+      >
+        <div
+          [ngClass]="
+            !list?.length
+              ? 'editable-list__placeholder'
+              : 'editable-list__optional-header'
+          "
+          id="personalised-content"
+        >
+          {{ (list.length ? optionalTitle : optionalPlaceholder) | translate }}
+        </div>
+        <div *ngIf="!isTextareaActive">
+          <app-button
+            class="details-selector__add-btn"
+            [theme]="'primary'"
+            [variant]="'text'"
+            [icon]="'add'"
+            (click)="toggleOptionalContent()"
+          >
+            {{ optionalButtonLabel | translate }}
+          </app-button>
+        </div>
+      </div>
+    </li>
+    <ng-container *ngFor="let item of list; let i = index">
+      <li class="editable-list__item">
+        <span class="editable-list__numbered" *ngIf="isNumbered">{{
+          i + 1 + '.'
+        }}</span>
+        <div class="editable-list__text" [ngClass]="{ 'ml-2': isNumbered }">
+          {{ item.name }}
+        </div>
+        <div class="editable-list__icon d-flex align-items-center">
+          <div
+            class="editable-list__icon-edit"
+            (click)="openEditModal(item.name, i)"
+          >
+            <span class="icon icon-ic_edit_small"></span>
+          </div>
+          <div class="editable-list__icon-close" (click)="openDeleteModal(i)">
+            <span class="icon icon-ic_share_close"></span>
+          </div>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+<app-textarea
+  *ngIf="
+    lineLimit
+      ? list.length < lineLimit
+      : variant === 'optional'
+      ? isTextareaActive
+      : true
+  "
+  variant="listItem"
+  [customClass]="customTextareaClass"
+  [maxLength]="maxLength"
+  [enableValidator]="true"
+  [helperText]="helperText"
+  [errorText]="errorText"
+  [initFocus]="variant === 'optional' ? initFocus : false"
+  placeholder="{{ textareaPlaceholder | translate }}"
+  (inputChange)="onAddItem($event)"
+  (textareaFocus)="toggleOptionalContent()"
+  id="resources-defintion-textarea"
+></app-textarea>
+<ng-template #editModal>
+  <app-modal-form
+    variant="textarea"
+    [title]="editModalTitle"
+    [label]="editModalLabel"
+    [confirmLabel]="editModalbuttonLabel"
+    [helperText]="helperText"
+    [errorText]="errorText"
+    [data]="editString"
+    [maxLength]="maxLength"
+    (decline)="declineEditModal()"
+    (confirm)="confirmEditModal($event)"
+  ></app-modal-form>
+</ng-template>
+
+<ng-template #deleteModal>
+  <app-modal-info
+    variant="delete"
+    theme="secondary"
+    [appearance]="'default'"
+    [loading]="loading"
+    [modalTitle]="deleteModalTitle"
+    [description]="deleteModalDescription"
+    [confirmLabel]="deleteModalbuttonLabel"
+    (decline)="declineDeleteModal()"
+    (confirm)="confirmDeleteModal()"
+  ></app-modal-info>
+</ng-template>

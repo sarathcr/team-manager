@@ -1,0 +1,55 @@
+@import 'variables/_variables-master';
+.project-form {
+  &__title {
+    &_criterion {
+      font-size: font-size(body);
+      font-weight: bold;
+      line-height: 28px;
+      letter-spacing: 0.2px;
+    }
+  }
+}
+.dependency-modal {
+  &__table {
+    border-radius: 4px;
+    border: 1px solid rgba(color(tertiary), 0.1);
+    overflow: auto;
+    height: 438px;
+    margin-bottom: grid-gutter(primary);
+    ::ng-deep {
+      .custom-scrollbar {
+        height: 100% !important;
+      }
+    }
+    &-head {
+      padding: 12px spacing(secondary);
+      background-color: rgba(color(tertiary), 0.05);
+      font-weight: bold;
+      border-bottom: 1px solid rgba(color(tertiary), 0.1);
+      &:not(:first-child) {
+        border-bottom: 1px solid rgba(color(tertiary), 0.1);
+        border-top: 1px solid rgba(color(tertiary), 0.1);
+      }
+    }
+  }
+  &__pr-scrollbar {
+    padding-right: 33px !important;
+  }
+  &__body {
+    height: 100%;
+  }
+  &__list {
+    padding: spacing(secondary);
+    margin: 0;
+    &-item {
+      font-family: font-family(default);
+      font-size: font-size(body-s);
+      line-height: 24px;
+      padding-left: 25px;
+      &:before {
+        top: 0;
+        left: -7px;
+      }
+    }
+  }
+}

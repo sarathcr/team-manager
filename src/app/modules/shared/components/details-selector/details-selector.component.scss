@@ -1,0 +1,124 @@
+@import 'variables/_variables-master';
+
+.details-selector {
+  margin-bottom: 48px;
+  &__header {
+    width: 100%;
+    padding: 13px 18px;
+    border-radius: 3px 3px 0 0;
+    border: 1px solid rgba(color(tertiary), 0.1);
+    background: rgba(color(tertiary), 0.05);
+    &_definition {
+      display: flex;
+      flex-direction: row;
+      padding-right: 0;
+    }
+  }
+  &__title {
+    font-size: font-size(body-s);
+    line-height: 24px;
+    letter-spacing: 0;
+    font-weight: bold;
+    word-break: break-word;
+    word-wrap: break-word;
+    &_optional {
+      color: rgba(color(tertiary), 0.5);
+      font-weight: normal;
+    }
+  }
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  &__item {
+    padding: 10px 3px 13px 3px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid color(border-secondary);
+  }
+  &__item-details {
+    word-break: break-word;
+    padding: 0 1px;
+    &:not(:last-child)::after {
+      content: ', ';
+    }
+  }
+  &__text,
+  &__add {
+    line-height: 24px;
+    color: rgba(color(tertiary), 0.6);
+    padding: 0 spacing(primary);
+    &_evaluation {
+      color: color(tertiary);
+      font-weight: bold;
+      line-height: 24px;
+      padding: 0 spacing(primary);
+    }
+    &_normal {
+      line-height: 24px;
+      font-weight: normal;
+      padding: 0 spacing(primary);
+      word-break: break-word;
+      &:nth-child(1) {
+        flex: 1 1 100%;
+      }
+      &:nth-child(2) {
+        flex: 1 1 58%;
+      }
+    }
+  }
+  &__add,
+  &__close {
+    color: color(primary);
+    cursor: pointer;
+  }
+  &__add {
+    position: relative;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+    padding-left: 0;
+    &_icon {
+      font-size: 24px;
+      position: absolute;
+      top: 50%;
+      left: -25px;
+      transform: translateY(-50%);
+    }
+    .icon-ic_locked {
+      left: -30px;
+    }
+  }
+
+  &__close {
+    line-height: 24px;
+    color: rgba(color(tertiary), 0.4);
+    margin-left: spacing(primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+    margin-right: 11px;
+    .icon {
+      font-weight: 900;
+      font-size: font-size(icon);
+    }
+  }
+  &_last {
+    margin-bottom: grid-gutter(primary);
+  }
+  &__add-btn {
+    margin-right: -2px;
+  }
+  &__item-index {
+    white-space: nowrap;
+  }
+  &__loader {
+    padding: grid-gutter(primary) * 2;
+    &_small {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}

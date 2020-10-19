@@ -89,3 +89,6 @@ $html-colors: (
 */
 $color: map-merge($color, $html-colors);
 $color: map-merge($color, $pantone);
+
+$tooltip-color: color(tertiary);
+$tooltip-bg: color(quaternary);

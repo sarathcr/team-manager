@@ -1,0 +1,93 @@
+<div class="profile" *ngIf="!loading">
+  <app-curious-sidebar
+    [title]="'PROFILE.profile_setup_menu_title'"
+    [stepData]="profileService.profileStepdata"
+  ></app-curious-sidebar>
+  <div class="profile__form">
+    <div class="profile__step" *ngIf="!profileService.profileCompleted">
+      <app-user-details-form
+        *ngIf="profileService.currentStep.value === 'USER_DETAILS'"
+      ></app-user-details-form>
+      <app-education-center-form
+        *ngIf="profileService.currentStep.value === 'EDUCATIONAL_CENTER'"
+      ></app-education-center-form>
+      <app-workplace-form
+        *ngIf="profileService.currentStep.value === 'WORKPLACE'"
+      ></app-workplace-form>
+      <div
+        class="profile__submit"
+        [class]="
+          profileService.currentStep.stepIndex === firstStepIndex
+            ? 'justify-content-end'
+            : 'justify-content-between'
+        "
+      >
+        <app-button
+          *ngIf="profileService.currentStep.stepIndex != firstStepIndex"
+          theme="primary"
+          variant="back"
+          icon="left"
+          class="profile__back-button"
+          (click)="goToStep(profileService.currentStep.stepIndex - 1)"
+        >
+          {{ 'PROFILE.Previous' | translate }}
+        </app-button>
+        <app-button
+          buttonType="submit"
+          theme="primary"
+          variant="block"
+          class="profile__submit-button"
+          [loading]="buttonLoading"
+          [disabled]="
+            !profileService.profileStepdata[
+              profileService.currentStep.stepIndex
+            ].valid
+          "
+          (click)="handleCurrentFormSubmit()"
+        >
+          {{
+            (profileService.currentStep.stepIndex === lastStepIndex
+              ? 'PROFILE.Finish'
+              : 'PROFILE.Next'
+            ) | translate
+          }}
+        </app-button>
+      </div>
+    </div>
+    <div *ngIf="profileService.profileCompleted">
+      <app-profile-confirm></app-profile-confirm>
+      <app-button
+        buttonType="submit"
+        theme="primary"
+        variant="contained"
+        class="profile__confirm-button"
+        [routerLink]="['/']"
+      >
+        {{ 'PROFILE.profile_setup_confirmpage_button' | translate }}
+      </app-button>
+    </div>
+  </div>
+  <picture class="profile__layout">
+    <img
+      src="../assets/images/profile-edit-top-left@2x.png"
+      alt="top-left-shape"
+      class="profile__layout__mask profile__layout__mask_top-left"
+    />
+    <img
+      src="../assets/images/profile-edit-top-right@2x.png"
+      alt="top-right-shape"
+      class="profile__layout__mask profile__layout__mask_top-right d-md-none d-lg-block"
+    />
+    <img
+      src="../assets/images/profile-edit-bottom@2x.png"
+      alt="bottom-shape"
+      class="profile__layout__mask profile__layout__mask_bottom"
+    />
+    <img
+      src="../assets/images/thinko_logo.svg"
+      alt="mask-logo"
+      class="profile__layout__mask profile__layout__mask_logo"
+    />
+  </picture>
+</div>
+<app-loader *ngIf="loading"></app-loader>

@@ -1,0 +1,418 @@
+<div class="excercise-modal__wrapper">
+  <app-modal-layout
+    modalTitle="EXCERCISE.exercise_definition_popup_title"
+    confirmLabel="EXCERCISE.exercise_definition_popup_button"
+    [titleLighten]="true"
+    [titleSecondary]="true"
+    [loading]="buttonLoading"
+    (decline)="onDecline($event)"
+    (confirm)="onConfirm()"
+    [isDisabled]="!isFormValid || isTitleConflict"
+    *ngIf="!showMaterial && !showInstrumentModal"
+    ><div class="excercise-modal">
+      <ng-scrollbar class="custom-scrollbar">
+        <div class="excercise-modal__scroll-wrapper">
+          <div class="row">
+            <div class="col-6 border-right excercise-modal__column">
+              <div class="excercise-modal__field mt-1">
+                <app-input
+                  variant="text"
+                  [value]="exercise.name"
+                  formControlName="title"
+                  placeholder="{{
+                    'EXCERCISE.exercise_definition_popup_input_title_placehoder'
+                      | translate
+                  }}"
+                  [maxlength]="70"
+                  enableValidator="true"
+                  [error]="isTitleConflict"
+                  [errorText]="
+                    isTitleConflict
+                      ? ('BUSINESS.Error_exercise_title_existing'
+                        | translate
+                        | TranslateConcat
+                          : 1
+                          : ('VARIABLES.experience_type_variable_1'
+                              | translate
+                              | TranslateCut: localExperienceType))
+                      : 'PROJECT.Error_textlimit_specified_singleinput'
+                  "
+                  label="{{
+                    'EXCERCISE.exercise_definition_popup_input_title_label'
+                  }}"
+                  (inputChange)="onValueChange($event, 'name')"
+                ></app-input>
+              </div>
+              <div class="excercise-modal__field mt-0">
+                <app-textarea
+                  id="activity-definition-description"
+                  [value]="exercise.statement"
+                  placeholder="{{
+                    'EXCERCISE.exercise_definition_popup_input_instructions_placehoder'
+                      | translate
+                  }}"
+                  [maxLength]="1000"
+                  [enableValidator]="true"
+                  errorText="PROJECT.Error_textlimit_specified_singleinput"
+                  label="{{
+                    'EXCERCISE.exercise_definition_popup_input_instructions_label'
+                      | translate
+                  }}"
+                  [optionalLabel]="true"
+                  customClass="mb-0"
+                  size="medium"
+                  (inputChange)="onValueChange($event, 'statement')"
+                ></app-textarea>
+              </div>
+              <div class="excercise-modal__field">
+                <h3 class="creation__title mb-2">
+                  {{
+                    'EXCERCISE.exercise_definition_popup_section1_title'
+                      | translate
+                      | TranslateCut: 0
+                  }}
+                  <span class="creation__optional">{{
+                    'EXCERCISE.exercise_definition_popup_section1_title'
+                      | translate
+                      | TranslateCut: 1
+                  }}</span>
+                </h3>
+                <div class="mb-4 d-flex justify-content-between">
+                  <span>{{
+                    'EXCERCISE.exercise_definition_popup_materials_description'
+                      | translate
+                  }}</span>
+                  <!-- Show below button only if it has added content -->
+                  <div class="excercise-modal__btn-wrapper">
+                    <app-button
+                      *ngIf="exercise?.referenceMaterials?.length"
+                      class="details-selector__add-btn"
+                      icon="add"
+                      [theme]="'primary'"
+                      [variant]="'text'"
+                      (click)="toggleModal('exercise')"
+                    >
+                      {{
+                        'EXCERCISE.exercise_definition_popup_strategy_button_add'
+                          | translate
+                          | TranslateCut: 1
+                      }}
+                    </app-button>
+                  </div>
+                </div>
+                <app-button
+                  *ngIf="!exercise?.referenceMaterials?.length"
+                  theme="primary"
+                  variant="outlined"
+                  icon="add"
+                  size="small"
+                  (click)="toggleModal('exercise')"
+                >
+                  {{
+                    'EXCERCISE.exercise_definition_popup_materials_button_add'
+                      | translate
+                      | TranslateCut: 1
+                  }}
+                </app-button>
+
+                <ng-container *ngIf="exercise?.referenceMaterials?.length">
+                  <div
+                    class="excercise-modal__material-wrapper"
+                    *ngFor="
+                      let material of exercise?.referenceMaterials;
+                      let index = index
+                    "
+                  >
+                    <app-material-card
+                      [label]="
+                        material.fileType | FiletypeTranslate | translate
+                      "
+                      [title]="material.title | FileName: material.sourceType"
+                      [variant]="material.fileType"
+                      size="small"
+                      [draggable]="true"
+                      [canDelete]="true"
+                      [showSwitch]="false"
+                      [thumbnail]="material.previewImageUrl"
+                      [enableBorder]="true"
+                      [enableShadow]="false"
+                      (delete)="deleteMaterial(index)"
+                    ></app-material-card>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="col-6 excercise-modal__column">
+              <div class="excercise-modal__field">
+                <h3 class="creation__title mb-6">
+                  {{
+                    'EXCERCISE.exercise_definition_popup_section2_title'
+                      | translate
+                      | TranslateOptions: 0
+                  }}
+                  <span class="creation__optional"
+                    >({{
+                      'EXCERCISE.exercise_definition_popup_section2_title'
+                        | translate
+                        | TranslateOptions: 1
+                    }})</span
+                  >
+                </h3>
+                <div class="row">
+                  <div class="col-6">
+                    <app-select
+                      id="activity-creation-modality"
+                      customClass="dropdown_bg-white mb-0"
+                      [config]="creationModalityDropdown"
+                      label="EXCERCISE.exercise_definition_popup_dropdown_modality_label"
+                      placeholder="EXCERCISE.exercise_definition_popup_dropdown_modality_placeholder"
+                      (dropdownSelect)="onDropdownSelect($event)"
+                    ></app-select>
+                  </div>
+                  <div class="col-6">
+                    <form novalidate>
+                      <app-input
+                        variant="date"
+                        [value]="exercise.deliveryDate"
+                        formControlName="date"
+                        (inputChange)="onValueChange($event, 'deliveryDate')"
+                        [placeholder]="
+                          'EXCERCISE.exercise_definition_popup_input_date_placeholder'
+                            | translate
+                        "
+                        [minDate]="minDate"
+                        [maxDate]="maxDate"
+                        label="EXCERCISE.exercise_definition_popup_input_date_label"
+                      ></app-input>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="excercise-modal__field">
+                <h3 class="creation__title mb-2">
+                  {{
+                    'EXCERCISE.exercise_definition_popup_section3_title'
+                      | translate
+                  }}
+                </h3>
+                <div class="d-flex justify-content-between">
+                  <p>
+                    {{
+                      'EXCERCISE.exercise_definition_popup_evaluation_description'
+                        | translate
+                    }}
+                  </p>
+                  <app-switch
+                    (changeSwitch)="onValueChange($event, 'evaluation')"
+                    type="button"
+                    iconOne="icon-ic_star-grey"
+                    iconTwo="icon-ic_star-no"
+                    buttonTextOne="EXCERCISE.exercise_definition_popup_input_calification_yes"
+                    buttonTextTwo="EXCERCISE.exercise_definition_popup_input_calification_no"
+                  >
+                  </app-switch>
+                </div>
+              </div>
+              <div
+                class="excercise-modal__field mb-5 pb-6"
+                *ngIf="exercise.evaluation"
+              >
+                <app-input
+                  variant="number"
+                  [value]="exercise.percentage"
+                  [maxNumber]="100 - exercisePercent"
+                  [maxlength]="3"
+                  formControlName="calification"
+                  [error]="showPercentError"
+                  (inputChange)="onValueChange($event, 'percentage')"
+                  [placeholder]="
+                    'EXCERCISE.exercise_definition_popup_input_calification_placehoder'
+                      | translate
+                  "
+                  label="EXCERCISE.exercise_definition_popup_input_calification_label"
+                  [helperText]="exercisePercentHelperText"
+                  innerLabel="%"
+                  [errorText]="
+                    'EXCERCISE.exercise_definition_popup_input_calification_info_error'
+                      | translate
+                  "
+                ></app-input>
+              </div>
+              <div class="excercise-modal__field mb-4">
+                <app-details-selector
+                  id="evaluation-strategy"
+                  [label]="'EXCERCISE.exercise_definition_popup_strategy_title'"
+                  [subjectItem]=""
+                  [optional]="false"
+                  [isLast]="true"
+                  [simpleSelector]="true"
+                  [variant]="'add'"
+                  [loading]="loading"
+                  (add)="addEvaluationBlock()"
+                ></app-details-selector>
+              </div>
+              <ng-container
+                *ngFor="
+                  let evaluation of exercise?.evaluationStrategies;
+                  let index = index;
+                  let last = last
+                "
+              >
+                <div class="mb-0">
+                  <div class="position-relative">
+                    <div
+                      class="excercise-modal__field mb-4"
+                      [ngClass]="{
+                        'excercise-modal--open':
+                          exercise?.evaluationStrategies?.length > 1
+                      }"
+                    >
+                      <app-select
+                        id="activity-creation-modality"
+                        customClass="dropdown_bg-white mb-0"
+                        [config]="AgentDropDowns[index]"
+                        label="EXCERCISE.exercise_definition_popup_input_agent_label"
+                        placeholder="EXCERCISE.exercise_definition_popup_input_agent_placeholder"
+                        (dropdownSelect)="onAgentDropdownSelect(index)"
+                      ></app-select>
+                      <span
+                        class="excercise-modal__delete-wrapper excercise-modal__delete-icon d-flex align-self-center"
+                        *ngIf="exercise?.evaluationStrategies?.length > 1"
+                        (click)="deleteEvaluation(index)"
+                      >
+                        <span
+                          class="icon icon-ic_share_close d-flex align-self-center"
+                        ></span
+                      ></span>
+                    </div>
+                  </div>
+                  <ng-container
+                    *ngIf="(exercise?.evaluationStrategies)[index].instrument"
+                  >
+                    <div
+                      class="excercise-modal__material-wrapper mb-5"
+                      [ngClass]="{
+                        'excercise-modal--open':
+                          exercise?.evaluationStrategies?.length > 1
+                      }"
+                    >
+                      <app-material-card
+                        [label]="
+                          (exercise?.evaluationStrategies)[index].instrument
+                            .fileType
+                            | FiletypeTranslate
+                            | translate
+                        "
+                        [title]="
+                          (exercise?.evaluationStrategies)[index].instrument
+                            .title
+                            | FileName
+                              : (exercise?.evaluationStrategies)[index]
+                                  .instrument.sourceType
+                        "
+                        [variant]="
+                          (exercise?.evaluationStrategies)[index].instrument
+                            .sourceType === 'LOCALDRIVE'
+                            ? 'INSTRUMENTUPLOAD'
+                            : (exercise?.evaluationStrategies)[index].instrument
+                                .fileType
+                        "
+                        entityType="instrument"
+                        size="small"
+                        [draggable]="true"
+                        [canDelete]="true"
+                        [showSwitch]="false"
+                        [thumbnail]="
+                          (exercise?.evaluationStrategies)[index].instrument
+                            .sourceType === 'LOCALDRIVE'
+                            ? ''
+                            : (exercise?.evaluationStrategies)[index].instrument
+                                .previewImageUrl
+                        "
+                        [link]="
+                          (exercise?.evaluationStrategies)[index].instrument.url
+                        "
+                        [enableBorder]="true"
+                        [enableShadow]="false"
+                        [draggable]="false"
+                        (delete)="deleteInstrumentMaterial(index)"
+                      ></app-material-card>
+                    </div>
+                  </ng-container>
+                  <div
+                    class="excercise-modal__field mb-0"
+                    *ngIf="!(exercise?.evaluationStrategies)[index].instrument"
+                  >
+                    <app-button
+                      theme="primary"
+                      variant="outlined"
+                      icon="add"
+                      size="small"
+                      (click)="toggleModal('instrument', index)"
+                    >
+                      {{
+                        'EXCERCISE.exercise_definition_popup_tool_button_add'
+                          | translate
+                          | TranslateCut: 1
+                      }}
+                    </app-button>
+                  </div>
+                  <div
+                    *ngIf="exercise?.evaluationStrategies?.length > 1 && !last"
+                    class="excercise-modal__instrumento my-7"
+                  ></div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </ng-scrollbar>
+    </div>
+  </app-modal-layout>
+  <app-modal-layout
+    *ngIf="showMaterial || showInstrumentModal"
+    class="add-material"
+    [modalTitle]="
+      currentMaterialView === 1
+        ? materialType === 'instrument'
+          ? 'ADD_INSTRUMENT.instrument_add_title'
+          : 'ADD_MATERIAL.material_add_title'
+        : ''
+    "
+    [titleLighten]="true"
+    [hasClose]="currentMaterialView != 3"
+    [buttonSize]="currentMaterialView === 3 ? 'small' : 'default'"
+    [confirmLabel]="
+      activeMaterialTab == 1 && currentMaterialView !== 3
+        ? 'ADD_MATERIAL.material_add_button_add'
+        : ''
+    "
+    [backLabel]="
+      currentMaterialView == 2
+        ? 'ACTIVITY_HEADER.activity_header_button_back'
+        : ''
+    "
+    [isDisabled]="
+      currentMaterialView === 1 &&
+      activeMaterialTab === 1 &&
+      referenceMaterial.status !== 'success'
+    "
+    (decline)="toggleModal(materialType)"
+    (confirm)="onConfirmMaterial()"
+    (backClick)="previousMaterialView()"
+  >
+    <app-add-material
+      [entityType]="materialType"
+      (declineModal)="toggleModal(materialType)"
+      [referenceMaterial]="referenceMaterial"
+      [activeMaterialTab]="activeMaterialTab"
+      [currentMaterialView]="currentMaterialView"
+      (setActiveTab)="getActiveMaterialTab($event)"
+      (setModalDetails)="getMaterialDetails($event)"
+      (previousMaterialView)="previousMaterialView()"
+      (nextMaterialView)="nextMaterialView()"
+      (resetTabs)="resetTabs()"
+    ></app-add-material>
+  </app-modal-layout>
+</div>

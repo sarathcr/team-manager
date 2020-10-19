@@ -4,9 +4,9 @@ import { By } from '@angular/platform-browser'
 
 import { TranslateModule } from '@ngx-translate/core'
 
-import { ButtonComponent } from 'src/app/shared/components/button/button.component'
-import { CheckboxComponent } from 'src/app/shared/components/checkbox/checkbox.component'
-import { InputComponent } from 'src/app/shared/components/input/input.component'
+import { ButtonComponent } from 'src/app/common-shared/components/button/button.component'
+import { CheckboxComponent } from 'src/app/common-shared/components/checkbox/checkbox.component'
+import { InputComponent } from 'src/app/common-shared/components/input/input.component'
 import { LoginComponent } from './login.component'
 
 describe('LoginComponent', () => {

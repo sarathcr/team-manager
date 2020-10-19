@@ -1,0 +1,32 @@
+@import 'variables/_variables-master';
+
+.preferences {
+  &-sidebar {
+    .title_default {
+      margin-bottom: spacing(primary);
+    }
+
+    &:not(:first-of-type) {
+      margin-top: grid-gutter(primary);
+    }
+  }
+
+  background-color: color(background-primary);
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 237px);
+  min-height: 100vh;
+  margin-left: auto;
+  padding: 108px grid-gutter(primary) 0 grid-gutter(primary);
+  position: relative;
+
+  &-info {
+    &__row {
+      &-label {
+        font-weight: bold;
+        width: 124px;
+        margin-right: 54px;
+      }
+    }
+  }
+}

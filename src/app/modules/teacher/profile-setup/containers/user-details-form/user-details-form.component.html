@@ -1,0 +1,72 @@
+<div class="user-form">
+  <h1 class="title_m user-form__title">
+    {{ 'PROFILE.profile_setup_aboutyou' | translate }}
+  </h1>
+  <p class="user-form__description">
+    {{ 'PROFILE.profile_setup_aboutyou_description' | translate }}
+  </p>
+  <div class="user-form__input">
+    <div class="user-form__input-wrapper d-flex justify-content-between">
+      <app-input
+        [placeholder]="'PROFILE.user_name_placeholder' | translate"
+        label="PROFILE.user_name_label"
+        class="user-form__input_left"
+        [value]="formData.name"
+        [initFocus]="true"
+        (inputChange)="handleInputChange($event, 'name')"
+      ></app-input>
+      <app-input
+        [placeholder]="'PROFILE.user_surname_placeholder' | translate"
+        label="PROFILE.user_surname_label"
+        class="user-form__input_right"
+        [value]="formData.surName"
+        (inputChange)="handleInputChange($event, 'surName')"
+      ></app-input>
+    </div>
+    <div class="user-form__input-wrapper">
+      <app-input
+        label="PROFILE.user_phone_label"
+        [placeholder]="'PROFILE.user_phone_placeholder' | translate"
+        [value]="formData.phonenumber"
+        validatorVariant="text"
+        [enableValidator]="true"
+        errorText="PROFILE.user_phone_error"
+        [error]="invalidPhoneNo"
+        (inputChange)="handleInputChange($event, 'phonenumber')"
+      ></app-input>
+    </div>
+    <div class="user-form__input-wrapper">
+      <app-select
+        id="profile-dropdown-country"
+        [config]="countryDropdown"
+        [data$]="country$"
+        [canDeselect]="true"
+        (dropdownSelect)="onDropdownSelect($event)"
+        placeholder="PROFILE.user_country_placeholder"
+        label="PROFILE.user_country_label"
+      ></app-select>
+    </div>
+    <div class="user-form__input-wrapper">
+      <app-select
+        id="profile-dropdown-region"
+        [config]="regionDropdown"
+        [data$]="region$"
+        [canDeselect]="true"
+        (dropdownSelect)="onDropdownSelect($event)"
+        [placeholder]="'PROFILE.user_region_placeholder' | translate"
+        label="PROFILE.user_region_label"
+      ></app-select>
+    </div>
+    <div class="user-form__input-wrapper">
+      <app-select
+        id="profile-dropdown-role"
+        [config]="rolesDropdown"
+        [data$]="role$"
+        [canDeselect]="true"
+        (dropdownSelect)="onDropdownSelect($event)"
+        [placeholder]="'PROFILE.user_role_placeholder' | translate"
+        label="PROFILE.user_role_label"
+      ></app-select>
+    </div>
+  </div>
+</div>

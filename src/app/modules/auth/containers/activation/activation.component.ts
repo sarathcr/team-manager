@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core'
 import { Router } from '@angular/router'
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
-import { AuthService } from '../../services/auth.service'
+import { AuthService } from '../../services/auth/auth.service'
 
 @Component({
   selector: 'app-activation',

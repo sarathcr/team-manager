@@ -1,0 +1,146 @@
+@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
+.draggable-row {
+  width: 100%;
+  background-color: #ffffff;
+  font-family: font-family(default);
+  font-weight: bold;
+  padding: 0 12px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  @include common-card-box-shadow();
+  &__col {
+    display: inline-block;
+    vertical-align: middle;
+    border-left: 1px dotted pantone(mischika);
+    text-align: center;
+    text-transform: uppercase;
+    font-family: font-family(secondary);
+    &:first-child {
+      font-family: font-family(default);
+    }
+    &_disabled {
+      color: pantone(link-water);
+    }
+
+    &-one {
+      display: inline-flex;
+      align-items: center;
+      text-transform: none;
+      width: 40%;
+      font-size: font-size(body);
+      border-left: 0;
+      text-align: left;
+      line-height: 32px;
+
+      &-wrap-icon {
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-bottom: 3px;
+        padding-left: 24px;
+      }
+      &-text {
+        font-size: font-size(body);
+        margin-left: 16px;
+      }
+    }
+    &-two {
+      width: 10%;
+      line-height: 20px;
+      letter-spacing: 0.39px;
+    }
+    &-three {
+      width: 15%;
+      line-height: 20px;
+      letter-spacing: 0.39px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    &-four {
+      width: 15%;
+      line-height: 20px;
+      letter-spacing: 0.39px;
+    }
+    &-five {
+      width: 20%;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      &-text {
+        line-height: 20px;
+        letter-spacing: 0.39px;
+      }
+    }
+    &-text {
+      cursor: pointer;
+      padding: 24px 0 24px 10px;
+      letter-spacing: 0.2px;
+      width: 100%;
+    }
+  }
+}
+
+.icon {
+  color: pantone(link-water);
+  font-size: font-size(sub-m);
+  vertical-align: sub;
+  margin-right: 4px;
+
+  &-ic {
+    &_actividades {
+      vertical-align: text-top;
+      font-size: font-size(icon);
+
+      &-draggable {
+        vertical-align: text-top;
+        font-size: 24px;
+        margin: 0;
+      }
+    }
+  }
+  &-tooltip {
+    color: pantone(black);
+    margin-right: 15px;
+  }
+}
+
+.span {
+  &-steps {
+    display: inline-block;
+    width: 12px;
+    height: 6px;
+    margin: 1px 2px;
+    background-color: pantone(magnolia);
+
+    &-container {
+      vertical-align: top;
+      width: auto;
+      height: auto;
+      margin-right: 12px;
+    }
+    &-first {
+      border-radius: 4px 0 0 4px;
+    }
+    &-third {
+      border-radius: 0 4px 4px 0;
+    }
+    &-active {
+      background-color: color(secondary);
+      width: 13px;
+      height: 8px;
+      margin: 0 1px;
+    }
+  }
+}
+
+.content-icon {
+  font-size: 26px;
+  letter-spacing: 1px;
+  margin-top: 4px;
+  margin-left: -7px;
+  color: $black;
+}

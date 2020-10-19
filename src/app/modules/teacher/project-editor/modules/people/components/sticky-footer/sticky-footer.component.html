@@ -1,0 +1,43 @@
+<div class="sticky-footer">
+  <div class="sticky-footer__selected d-flex align-items-center">
+    <div class="sticky-footer__icon-wrap">
+      <span class="icon-ic_check icon sticky-footer__icon_check"></span>
+    </div>
+    <span class="sticky-footer__text"
+      ><span class="font-weight-bold">{{ totalCount }}</span>
+      {{
+        totalCount === 1
+          ? ('PEOPLE-EMPTY-STATE.variable_selected_item_counter'
+            | translate
+            | TranslateCut: 0)
+          : ('PEOPLE-EMPTY-STATE.variable_selected_item_counter'
+            | translate
+            | TranslateCut: 1)
+      }}</span
+    >
+  </div>
+  <span
+    class="sticky-footer__icon sticky-footer__icon_delete icon-ic_delete"
+    (click)="confirmModal($event)"
+  ></span>
+</div>
+<ng-template #modalDelete>
+  <app-modal-info
+    id="step-three-modal-info"
+    variant="delete"
+    theme="secondary"
+    modalTitle="PEOPLE-EMPTY-STATE.people_delete_confirmation_title"
+    [description]="
+      'PEOPLE-EMPTY-STATE.people_delete_confirmation_message'
+        | translate
+        | TranslateConcat
+          : 1
+          : ('VARIABLES.experience_type_variable_4'
+              | translate
+              | TranslateCut: localExperienceType)
+    "
+    confirmLabel="PROJECT.project_button_delete"
+    (decline)="declineModal()"
+    (confirm)="deleteItem($event)"
+  ></app-modal-info>
+</ng-template>

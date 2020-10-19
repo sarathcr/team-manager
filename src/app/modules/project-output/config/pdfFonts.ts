@@ -10,6 +10,10 @@ export const fonts = {
     italics: 'PTSans-Italic.ttf',
     bolditalics: 'PTSans-BoldItalic.ttf',
   },
+  Brandon: {
+    normal: 'Brandon_bld.otf',
+    bold: 'Brandon_blk.otf',
+  },
   Icomoon: {
     normal: 'icomoon.ttf',
   },

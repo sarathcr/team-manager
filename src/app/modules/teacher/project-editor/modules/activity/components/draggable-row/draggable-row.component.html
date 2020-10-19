@@ -1,0 +1,78 @@
+<div class="draggable-row">
+  <div class="draggable-row__col draggable-row__col-one">
+    <div class="draggable-row__col-one-wrap-icon">
+      <!-- based on US TA-5155, hide  drag and drop icon temporarily until we implement this functionality on cards
+      <span class="icon icon-ic_drag"></span> -->
+    </div>
+    <div
+      class="draggable-row__col-text"
+      [routerLink]="[element.url, element.id]"
+    >
+      {{ element.columnOne.text }}
+    </div>
+  </div>
+  <div
+    class="draggable-row__col draggable-row__col-two"
+    [ngClass]="element.columnTwo.disabled ? 'draggable-row__col_disabled' : ''"
+  >
+    <span class="icon icon-ic_{{ element.columnTwo.icon }}"></span>
+    {{ element.columnTwo.text }}
+  </div>
+  <div
+    class="draggable-row__col draggable-row__col-three"
+    [ngClass]="{ 'draggable-row__col_disabled': element.columnThree.disabled }"
+  >
+    <span class="icon icon-ic_{{ element.columnThree.icon }}"></span>
+    <span class="dashboard__activities-components-fase-header-numactivities">
+      {{ element.columnThree.text }}
+    </span>
+  </div>
+  <div
+    class="draggable-row__col draggable-row__col-four"
+    [ngClass]="{ 'draggable-row__col_disabled': element.columnFour.disabled }"
+  >
+    <span class="icon icon-ic_{{ element.columnFour.icon }}"></span>
+    <span class="dashboard__activities-components-fase-header-numactivities">
+      {{ element.columnFour.text }}
+    </span>
+  </div>
+  <div class="draggable-row__col draggable-row__col-five">
+    <div class="pl-5 pr-3 d-flex align-items-center">
+      <span class="span-steps-container">
+        <span
+          class="span-steps span-steps-first"
+          [ngClass]="{
+            'span-steps-active': element.columnFive.step > 0
+          }"
+        >
+        </span>
+        <span
+          class="span-steps span-steps-second"
+          [ngClass]="{
+            'span-steps-active': element.columnFive.step > 1
+          }"
+        >
+        </span>
+        <span
+          class="span-steps span-steps-third"
+          [ngClass]="{
+            'span-steps-active': element.columnFive.step > 2
+          }"
+        >
+        </span>
+      </span>
+      <span class="draggable-row__col-five-text">{{
+        element.columnFive.text | translate
+      }}</span>
+    </div>
+    <div>
+      <app-dropdown
+        [list]="dropdownData"
+        position="right"
+        (selects)="actionEmit($event)"
+      >
+        <span class="icon icon-ic_more content-icon"></span>
+      </app-dropdown>
+    </div>
+  </div>
+</div>

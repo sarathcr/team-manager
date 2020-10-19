@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
-import { Role } from '../../../constants/model/login'
+import { Role } from '../../../constants/model/login.model'
 
 @Injectable()
 export class RoleDataService extends DefaultDataService<Role> {

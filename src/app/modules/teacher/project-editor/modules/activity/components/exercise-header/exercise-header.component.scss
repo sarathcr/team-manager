@@ -1,0 +1,120 @@
+@import 'helpers/bt-mixins';
+@import 'variables/_variables-master';
+
+.exercise-header {
+  [class^='icon-'],
+  [class*=' icon-'],
+  .icon-ic_calendar_on .path1::before {
+    color: color(quaternary);
+    font-size: font-size(s);
+  }
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 676px;
+  height: 319px;
+  padding: 47px spacing(tertiary) 23px;
+  border-radius: 3px 3px 0 0;
+  background-color: color(tertiary);
+
+  &__texts {
+    &-description {
+      height: 100%;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      height: 162px;
+      overflow: hidden;
+      letter-spacing: 0.27px;
+      margin-bottom: 0;
+    }
+
+    .title_secondary {
+      color: color(quaternary);
+      text-transform: uppercase;
+      font-size: font-size(body-s);
+      letter-spacing: 1px;
+      line-height: 24px;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+    }
+
+    .title_m {
+      margin-top: 17px;
+      color: color(quaternary);
+      line-height: 40px;
+    }
+  }
+
+  &__panel {
+    display: inherit;
+    height: 48px;
+
+    &_left {
+      display: flex;
+      align-items: center;
+      flex: 1 0 67%;
+
+      .icon-ic_star-grey,
+      .icon-ic_star-no {
+        font-size: font-size(m);
+      }
+
+      .icon-ic_separador {
+        padding: 0 3px 0 8px;
+      }
+    }
+
+    &_right {
+      display: inherit;
+      justify-content: flex-end;
+      flex: 1 0 33%;
+    }
+
+    &_font_styles {
+      font-family: font-family(default);
+      color: color(quaternary);
+      font-size: font-size(default);
+      font-weight: bold;
+      letter-spacing: 0.2px;
+      line-height: 14px;
+      margin-left: 9px;
+      padding-top: 3px;
+
+      &:last-child {
+        margin-left: 4px;
+      }
+    }
+  }
+
+  &__calification {
+    &_hide {
+      display: none;
+    }
+
+    &_show {
+      display: block;
+      position: absolute;
+      right: -63px;
+      top: 45px;
+      width: 122px;
+      height: 134px;
+      background-color: color(secondary);
+      border-radius: 4px;
+    }
+  }
+  ::ng-deep {
+    .btn {
+      font-family: font-family(tertiary);
+      letter-spacing: 0.16px;
+      text-transform: none;
+    }
+
+    .icon-ic_check1:before {
+      color: color(quaternary);
+    }
+  }
+}

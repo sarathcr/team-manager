@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core'
 
 import { Observable } from 'rxjs'
 import { environment } from './../../../../../environments/environment'
+
 import {
   Project,
   StepState,
-} from './../../../project-editor/constants/model/project.model'
+} from '../../../teacher/project-editor/constants/model/project.model'
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,31 @@ export class ProjectOutputService {
   getSubjectWiseDimension(id: any): Observable<any> {
     return this.http.get<any>(
       `${environment.apiUrl.curriculumService}/curriculums/${id}/dimensions`
+    )
+  }
+
+  getCriteriaAndContentGradeWise(
+    criteriaId: any,
+    contentId: any
+  ): Observable<any> {
+    return this.http.get<any>(
+      `${environment.apiUrl.curriculumService}/grades/evaluationcriteira/${criteriaId}/contents/${contentId}/`
+    )
+  }
+
+  getCurriculumRelation(regionId: number, stage: string): Observable<any> {
+    return this.http.get<any>(
+      `${environment.apiUrl.curriculumService}/curriculums/regions/${regionId}/stage/${stage}/curriculum`
+    )
+  }
+
+  getJsonData(url: string): Observable<any> {
+    return this.http.get<any>(url)
+  }
+
+  getBasicSkillShow(curriculumID: number): Observable<any> {
+    return this.http.get<any>(
+      `${environment.apiUrl.curriculumService}/curriculums/${curriculumID}/basicskills`
     )
   }
 }

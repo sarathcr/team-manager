@@ -120,7 +120,8 @@
                 </div>
               </app-button>
             </div>
-            <div class="register__button-wrapper">
+            <!-- Temporarily removing the  googlSignup from the production build/version will be reverted once the app is out for public use.-->
+            <div class="register__button-wrapper" *ngIf="env.name !== 'prd'">
               <app-button
                 [theme]="'secondary'"
                 [variant]="'block'"

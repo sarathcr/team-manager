@@ -1,0 +1,57 @@
+@import 'variables/_variables-master';
+
+:host {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.carousel {
+  margin-top: -41px;
+  margin-left: -30px;
+  margin-bottom: grid-gutter(primary);
+  width: calc(100% + 60px);
+}
+
+.inspirate {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 237px);
+  min-height: 100vh;
+  background-color: color(background-primary);
+  margin-left: auto;
+  padding: 115px 30px 0 30px;
+  position: relative;
+
+  &__body {
+    flex: 1 1 auto;
+  }
+
+  &__head-text {
+    font-family: font-family(primary);
+    font-size: font-size(xs);
+    line-height: 32px;
+    letter-spacing: 0.3px;
+    font-weight: 900;
+    margin-bottom: 22px;
+  }
+
+  &__filters {
+    width: 100%;
+  }
+  &__filters-left {
+    ::ng-deep {
+      .search__input {
+        caret-color: color(primary);
+      }
+    }
+  }
+
+  &__loader {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 42px;
+    padding: grid-gutter(primary) * 2;
+  }
+}

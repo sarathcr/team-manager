@@ -1,0 +1,35 @@
+@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
+.tabset {
+  display: flex;
+  border-bottom: 1px solid rgba(color(tertiary), 0.1);
+  &__tab {
+    font-weight: bold;
+    color: rgba(color(tertiary), 0.5);
+    &_disabled {
+      cursor: not-allowed;
+    }
+    cursor: pointer;
+    &-material {
+      padding-bottom: 10px;
+      margin-right: 42px;
+      &_active {
+        border-bottom: 2px solid color(tertiary);
+        color: color(tertiary);
+      }
+    }
+    &-profile {
+      padding-bottom: 20px;
+      margin-right: 54px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: font-family(secondary);
+      &_active {
+        border-bottom: 4px solid color(medium-turquoise);
+        color: color(tertiary);
+        margin-bottom: -1px;
+      }
+    }
+  }
+}

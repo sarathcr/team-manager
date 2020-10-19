@@ -1,0 +1,56 @@
+@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
+.step-unlock {
+  width: 100%;
+  min-height: 236px;
+  border-radius: 4px;
+  background: color(quaternary);
+  padding: 37px 41px;
+  margin-bottom: 36px;
+  position: relative;
+  @include common-card-box-shadow();
+  &__title {
+    font-size: font-size(body);
+    line-height: 28px;
+    letter-spacing: 0.2px;
+    margin-bottom: 11px;
+    position: relative;
+    padding-left: 32px;
+  }
+  &__icon {
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+  &__description {
+    line-height: 24px;
+    font-size: font-size(body-s);
+    margin-bottom: 29px;
+  }
+  &__bg-left {
+    background-image: url('../../../../../../assets/images/shapes/bg-left.png');
+    background-position: left center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+  }
+  &__bg-right {
+    background-image: url('../../../../../../assets/images/shapes/bg-right.png');
+    background-position: left center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 270px;
+    height: 170px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}

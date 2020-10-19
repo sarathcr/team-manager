@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core'
 import { PdfViewerModule } from 'ng2-pdf-viewer'
 import { NgScrollbarModule } from 'ngx-scrollbar'
 // Modules
-import { SharedModule } from 'src/app/shared/shared.module'
+import { CommonSharedModule } from 'src/app/common-shared/common-shared.module'
 // Services
 import { ProjectOutputService } from './services/output/project-output.service'
 
@@ -26,7 +26,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component'
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    CommonSharedModule,
     ProjectOutputRoutingModule,
     PdfViewerModule,
     NgScrollbarModule,

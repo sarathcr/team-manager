@@ -1,0 +1,26 @@
+<div class="profile-pic">
+  <figure class="profile-pic__figure mx-0 mt-0">
+    <img
+      src="{{ imgUrl }}"
+      alt="Profile Image"
+      class="profile-pic__image"
+      *ngIf="imgUrl; else profileText"
+      title=""
+    />
+    <ng-template #profileText>
+      <span class="profile-pic__text">{{ userName | slice: 0:2 }}</span>
+    </ng-template>
+    <app-image-upload
+      variant="custom"
+      id="profile-image-upload"
+      acceptedType="image/x-png,image/gif,image/jpeg"
+      (fileSelect)="updateAvatar($event)"
+    >
+      <div class="profile-pic__upload" *ngIf="editable">
+        <span class="profile-pic__icon icon icon-ic_camera"></span></div
+    ></app-image-upload>
+  </figure>
+  <div class="profile-pic__title">
+    {{ title | translate }}
+  </div>
+</div>

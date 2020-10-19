@@ -47,7 +47,8 @@
     "activities_project_button_save": "Guardar",
     "activities_card_objectives_placeholder": "Aún no has asignado objetivos a las actividades.",
     "activities_card_exercises_placeholder": "Crea ejercicios calificables dentro de una actividad.",
-    "activity_duplicate_title": "Asigna un título a la actividad duplicada"
+    "activity_duplicate_title": "Asigna un título a la actividad duplicada",
+    "activities_card_duration_hours_error": "Sólo puedes especificar hasta 9999 horas."
   },
   "ACTIVITY_DEFINITION": {
     "activity_definition_description": "Explica en qué consiste y cómo desarrollarás la actividad: si será online y/o presencial, su conexión con el currículum, cómo organizarás la clase o qué método didáctico utilizarás.",
@@ -138,7 +139,7 @@
     "activity_creation_materials_description": "Añade materiales de consulta útiles para desarrollar la actividad ya sean para ti o para tu alumnado.",
     "activity_creation_materials_button_add": "+ |Añadir material|",
     "activity_material_switch_forstudent": "Visible para el alumnado",
-    "activity_creation_section3_title": "Ejercicios",
+    "activity_creation_section3_title": "Ejercicios |(opcional)|",
     "activity_creation_exercises_description": "Crea los ejercicios de práctica de la actividad: indica si son calificables y adjuntales material específico y/o instrumentos de evaluación.",
     "activity_creation_exercises_button_add": "+ |Añadir ejercicio|",
     "activity_creation_section4_title": "Adjunta una imagen de portada para la actividad |(opcional)|",
@@ -181,6 +182,14 @@
     "exercise_definition_popup_agent_option2": "Autoevaluación",
     "exercise_definition_popup_agent_option3": "Coevaluación"
   },
+  "EXCERCISE_CARD": {
+    "exercise_evaluation_calificable": "Calificable",
+    "exercise_evaluation_noncalificable": "No calificable",
+    "exercise_delivery_modality_online": "Entrega online:",
+    "exercise_delivery_modality_school": "Entrega presencial:",
+    "exercise_delivery_date_outofshedule": "fuera de fechas",
+    "exercise_delivery_date_unsheduled": "fecha por asignar"
+  },
   "ADD_INSTRUMENT": {
     "instrument_add_title": "Añadir instrumento",
     "instrument_add_type_rubrik": "Rúbrica",
@@ -188,5 +197,24 @@
     "instrument_add_type_dartboard": "Diana",
     "instrument_add_link_title": "Pega el enlace para acceder al instrumento",
     "instrument_label": "Instrumento de evaluación"
+  },
+  "ACTIVITY_PREVIEW": {
+    "activity_detail_exercise_statement_more": "Leer más",
+    "activity_detail_exercise_statement_less": "Leer menos",
+    "activity_detail_instructions_title": "Instrucciones",
+    "activity_detail_materials_title": "Materiales de consulta",
+    "activity_detail_exercises_title": "Ejercicios",
+    "activity_detail_exercise_feedback_placeholder": "Envía feedback del ejercicio al profesor",
+    "activity_detail_exercise_feedback_title": "Feedback",
+    "activity_detail_exercise_statement_title": "Enunciado",
+    "activity_detail_exercise_material_title": "Materiales del ejercicio",
+    "activity_detail_exercise_header_overtitle": "Ejercicio",
+    "activity_detail_exercise_header_delivery_button": "Entregar ejercicio",
+    "activity_detail_exercise_header_qualifiable": "Calificable",
+    "activity_detail_exercise_header_nonqualifiable": "No calificable",
+    "activity_detail_exercise_header_onlinedelivery": "Entrega online",
+    "activity_detail_exercise_header_attendeddelivery": "Entrega presencial",
+    "activity_state_pending_tag": "Pendiente",
+    "activity_state_completed_tag": "Finalizada"
   }
 }

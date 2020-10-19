@@ -1,0 +1,58 @@
+<div class="modal-layout" [ngClass]="customClass">
+  <div class="modal-layout__header">
+    <app-button
+      *ngIf="backLabel"
+      theme="primary"
+      variant="back"
+      icon="back"
+      (click)="onBackClick()"
+      id="add-material-back-button"
+    >
+      {{ backLabel | translate }}
+    </app-button>
+    <span
+      class="icon modal-layout__title-icon mr-2"
+      [ngClass]="icon"
+      *ngIf="icon"
+    ></span>
+    <h4
+      class="modal-layout__title"
+      [ngClass]="{
+        'modal-layout__title_lighten': titleLighten,
+        'modal-layout__title_secondary': titleSecondary
+      }"
+    >
+      {{ modalTitle | translate }}
+    </h4>
+    <button
+      *ngIf="hasClose"
+      class="close modal-layout__close"
+      type="button"
+      aria-label="Close"
+      (click)="onDecline()"
+    >
+      <span class="icon icon-ic_share_close d-flex align-self-center"></span>
+    </button>
+  </div>
+  <div class="modal-layout__content">
+    <ng-content></ng-content>
+  </div>
+  <div class="modal-layout__footer" *ngIf="confirmLabel">
+    <app-button
+      [ngClass]="{
+        'w-100': buttonVariant === 'block',
+        'mr-auto': buttonPosition === 'left',
+        'ml-auto': buttonPosition === 'right'
+      }"
+      [variant]="buttonVariant"
+      [icon]="hideButtonIcon ? 'null' : 'tick'"
+      [size]="buttonSize"
+      [disabled]="isDisabled"
+      [loading]="loading"
+      (click)="onConfirm()"
+      id="definition-secondary-view-add-button"
+    >
+      {{ confirmLabel | translate }}
+    </app-button>
+  </div>
+</div>

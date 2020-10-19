@@ -15,14 +15,16 @@ import { LoginComponent } from './containers/login/login.component'
 import { RegisterComponent } from './containers/register/register.component'
 import { ResetPasswordComponent } from './containers/reset-password/reset-password.component'
 
-import { SharedModule } from 'src/app/shared/shared.module'
+import { CommonSharedModule } from 'src/app/common-shared/common-shared.module'
 
-import { AuthService } from 'src/app/modules/auth/services/auth.service'
+import { AuthService } from 'src/app/modules/auth/services/auth/auth.service'
 import { UserService } from 'src/app/modules/auth/services/user/user.service'
+import { UserResolver } from './resolvers/user-resolver.service'
 
 import { AuthGuard } from './guards/auth.guard'
 
-import { ProjectEditorStoreModule } from '../project-editor/store/project-editor-store.module'
+import { ProjectEditorStoreModule } from '../teacher/project-editor/store/project-editor-store.module'
+import { TeacherGuard } from './guards/teacher.guard'
 import { AuthStoreModule } from './store/auth-store.module'
 
 @NgModule({
@@ -38,7 +40,7 @@ import { AuthStoreModule } from './store/auth-store.module'
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    SharedModule,
+    CommonSharedModule,
     SocialLoginModule,
     TranslateModule.forChild(),
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducers),
@@ -50,7 +52,13 @@ export class AuthModule {
   static forRoot(): ModuleWithProviders<AuthModule> {
     return {
       ngModule: AuthModule,
-      providers: [AuthGuard, AuthService, UserService],
+      providers: [
+        AuthGuard,
+        AuthService,
+        UserService,
+        UserResolver,
+        TeacherGuard,
+      ],
     }
   }
 }

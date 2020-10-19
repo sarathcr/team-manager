@@ -1,0 +1,103 @@
+@import 'helpers/_helpers-master';
+@import 'variables/_variables-master';
+
+.activity-preview {
+  $root: &;
+  background-color: color(background-primary);
+  overflow: hidden;
+  min-height: 100vh;
+  @include transitions(all, 0.5s, ease-in-out);
+  &__header {
+    background: color(tertiary);
+    width: 100%;
+    z-index: 9;
+    @extend %contextual-help-placeholder;
+  }
+  &__body {
+    position: relative;
+    min-height: 100vh;
+    height: 100%;
+    @extend %contextual-help-placeholder;
+
+    &-section {
+      &_exercises {
+        padding-top: 50px;
+      }
+    }
+    &-exercise {
+      &-single {
+        margin-bottom: 86px;
+      }
+    }
+  }
+  &__sidebar {
+    margin-top: 87px;
+    padding-left: 19px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+  &__instructions {
+    margin-bottom: 50px;
+    font-size: font-size(body);
+    font-family: font-family(default);
+    letter-spacing: 0.2px;
+    line-height: 32px;
+  }
+
+  &-title {
+    font-weight: 900;
+    font-size: font-size(body);
+    letter-spacing: 0.2px;
+    line-height: 28px;
+  }
+
+  &__contextual-help {
+    position: absolute;
+    width: 100%;
+    right: 0;
+    z-index: 9;
+    top: 0;
+    height: 100%;
+    pointer-events: none;
+  }
+  &_open {
+    ::ng-deep {
+      .btn_back {
+        .btn__content {
+          display: none;
+        }
+      }
+      .activity-header__figure {
+        &_left {
+          display: none;
+        }
+      }
+      .activity-preview__sidebar {
+        display: none;
+      }
+    }
+
+    %contextual-help-placeholder {
+      &:after {
+        content: '';
+        min-width: 532px !important;
+        width: 34.9% !important;
+      }
+    }
+  }
+}
+%contextual-help-placeholder {
+  display: flex;
+  &:after {
+    content: '';
+    display: block;
+    min-width: 0;
+    width: 0;
+    max-width: 0;
+    @include transitions(all, 0.5s, ease-in-out);
+  }
+  > *:first-child {
+    flex: 1 1 100%;
+  }
+}

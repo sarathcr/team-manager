@@ -1,0 +1,199 @@
+<div
+  class="card-experience mb-6 d-flex flex-column"
+  [attr.data-project-id]="data.id"
+  (click)="navigateToProject()"
+>
+  <div
+    class="card-experience__figure mb-3"
+    [ngClass]="{
+      'card-experience__figure_empty bg-light': !data.creativeImage
+    }"
+  >
+    <img
+      *ngIf="data.creativeImage"
+      class="card-experience__image"
+      [src]="data.creativeImage"
+      alt="{{ data.title }}"
+    />
+    <div
+      class="card-experience__pro"
+      [ngClass]="{
+        'card-experience__invite_new': variant === 'student',
+        'card-experience__invite_invitation': variant === 'teacher'
+      }"
+      *ngIf="isPro || invitation"
+    >
+      <div *ngIf="isPro && variant === 'template'">
+        <span
+          class="icon icon-think_small card-experience__icon card-experience__icon_thinko"
+        ></span>
+        <span>{{ 'GENERAL.label_pro' | translate }}</span>
+      </div>
+      <div *ngIf="invitation && variant !== 'template'">
+        {{
+          (invitation && variant === 'student'
+            ? 'GENERAL.label_new'
+            : 'ACCEPTING_INVITATION.experience_invitation'
+          ) | translate
+        }}
+      </div>
+    </div>
+
+    <div class="card-experience__teacher-wrap" *ngIf="teacherList.length > 0">
+      <div class="card-experience__teacher mr-2">
+        <figure class="card-experience__teacher__figure mr-2">
+          <img
+            src="{{ teacherImgSrc }}"
+            alt="Teacher profile Image"
+            class="card-experience__teacher__image"
+            *ngIf="teacherImgSrc"
+          />
+          <span
+            class="icon icon-think_small card-experience__icon card-experience__icon_thinko-teacher"
+          ></span>
+        </figure>
+        <span class="card-experience__teacher__name">{{
+          teacherList[0].name
+        }}</span>
+      </div>
+      <div
+        class="card-experience__teacher-count"
+        [tooltip]="teacherProfiles"
+        placement="auto"
+      >
+        +{{ teacherList.length - 1 }}
+      </div>
+    </div>
+  </div>
+
+  <span
+    class="icon icon-ic_notification card-experience__notification"
+    *ngIf="notification"
+    ><span class="path1"></span><span class="path2"> </span>
+  </span>
+
+  <div class="card-experience__title-section">
+    <div class="card-experience__type mb-1">
+      {{
+        data?.type === 'PROJECT'
+          ? 'PROYECTO'
+          : data?.type === 'ACTIVITY'
+          ? 'ACTIVIDAD'
+          : 'UNIDAD DIDACTICA'
+      }}
+    </div>
+    <div class="card-experience__title">
+      {{ data.title }}
+    </div>
+  </div>
+
+  <div
+    class="card-experience__bottom-wrapper d-flex align-items-center"
+    [ngClass]="{
+      'card-experience__student align-items-center': variant === 'student'
+    }"
+  >
+    <div
+      *ngIf="variant === 'teacher'"
+      class="card-experience__status mr-3"
+      [ngClass]="{
+        'card-experience__status_inprogress': status === 'inprogress',
+        'card-experience__status_draft': status === 'draft',
+        'card-experience__status_readonly': status === 'readonly',
+        'card-experience__status_done': status === 'done'
+      }"
+    >
+      {{
+        (status === 'inprogress'
+          ? 'PRIVATEHOME_CARD.home_card_experience_state_inprogress'
+          : status === 'draft'
+          ? 'PRIVATEHOME_CARD.home_card_experience_state_draft'
+          : status === 'readonly'
+          ? 'PRIVATEHOME_CARD.home_card_experience_state_readonly'
+          : status === 'done'
+          ? 'PRIVATEHOME_CARD.home_card_experience_state_done'
+          : ''
+        ) | translate
+      }}
+    </div>
+    <div
+      *ngIf="data.academicYear && variant === 'template'"
+      class="card-experience__inspirate"
+    >
+      {{ data.academicYear.academicYear | slice: 0:4 | translate }}
+      <span>-</span>
+      {{ data.academicYear.academicYear | slice: 5:9 | translate }}
+    </div>
+    <div
+      *ngIf="data.academicYear && variant === 'template'"
+      class="icon-ic_separador card-experience__seperator"
+    ></div>
+    <div
+      class="card-experience__student-primaryColumn"
+      *ngIf="variant === 'student' && progressCount"
+    >
+      <div class="card-experience__student-progress-bar">
+        <span
+          class="card-experience__student__bg-fill"
+          [ngClass]="{
+            'card-experience__student__bg-fill_secondary card-experience__student__bg-fill_radius':
+              progressCount === 100
+          }"
+          [ngStyle]="{ width: progressCount + '%' }"
+        ></span>
+      </div>
+      <span
+        class="card-experience__student-progress-count"
+        *ngIf="variant === 'student'"
+        >{{ progressCount + '%' }}</span
+      >
+      <div
+        *ngIf="variant === 'student'"
+        class="icon-ic_separador card-experience__student-seperator"
+      ></div>
+    </div>
+    <span
+      *ngFor="let subject of data.subjects | slice: 0:4"
+      class="card-experience__icon my-2"
+      [class]="subject.icon !== null ? subject.icon : 'card-experience__circle'"
+      [tooltip]="subject.name"
+      placement="bottom"
+    ></span>
+    <span
+      *ngIf="extraSubjects.length > 0"
+      class="card-experience__extra-count"
+      [tooltip]="subjectList"
+      placement="bottom"
+    >
+      +{{ extraSubjects.length }}</span
+    >
+  </div>
+</div>
+<ng-template #subjectList>
+  <ng-container class="tooltip">
+    <span class="d-block tooltip-item" *ngFor="let subject of extraSubjects">
+      {{ subject.name }}
+    </span>
+  </ng-container>
+</ng-template>
+<ng-template #teacherProfiles>
+  <ng-container class="tooltip">
+    <div
+      class="card-experience__tooltip"
+      *ngFor="let item of teacherList | slice: 1"
+    >
+      <figure class="card-experience__tooltip-figure">
+        <img
+          src="{{ item.img }}"
+          alt="Teacher Tooltip Image"
+          class="card-experience__teacher__image"
+        />
+      </figure>
+      <span
+        class="tooltip-item card-experience__tooltip-name font-weight-bold m-0"
+      >
+        {{ item.name }}
+      </span>
+    </div>
+  </ng-container>
+</ng-template>

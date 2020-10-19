@@ -1,0 +1,662 @@
+<div class="definition">
+  <div class="row">
+    <div class="col-12">
+      <p class="definition__description">
+        {{ 'ACTIVITY_DEFINITION.activity_definition_description' | translate }}
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <app-select
+        id="activity-definition-phase"
+        [config]="phaseDropdown"
+        [canDeselect]="false"
+        label="ACTIVITY_DEFINITION.activity_definition_dropdown_phase_label"
+        placeholder="ACTIVITY_DEFINITION.activity_definition_dropdown_phase_label"
+        (dropdownSelect)="onDropdownSelect($event)"
+      ></app-select>
+    </div>
+    <div class="col-6">
+      <app-select
+        id="activity-definition-subjects"
+        [config]="signatureDropdown"
+        label="STARTING_POINT.project_startingpoint_subjects"
+        placeholder="STARTING_POINT.project_startingpoint_subjects_placeholder"
+        (dropdownSelect)="onDropdownSelect($event)"
+      ></app-select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h3 class="definition__title">
+        {{
+          'ACTIVITY_DEFINITION.activity_definition_section1_title' | translate
+        }}
+      </h3>
+    </div>
+  </div>
+  <div class="row definition__duration-bottom">
+    <div class="col-6">
+      <app-input
+        variant="number"
+        formControlName="duration"
+        [maxlength]="4"
+        placeholder="{{
+          'ACTIVITY_DEFINITION.activity_definition_input_duration_placeholder'
+            | translate
+        }}"
+        label="{{
+          'ACTIVITY_DEFINITION.activity_definition_input_duration_label'
+            | translate
+        }}"
+        innerLabel="{{
+          'ACTIVITY_DEFINITION.activity_definition_input_duration_minutes'
+            | translate
+        }}"
+        errorText="ACTIVITY_DEFINITION.activity_definition_input_duration_error"
+        [enableValidator]="true"
+        background="white-lilac"
+        [(value)]="duration"
+        [error]="minuteError"
+        (inputChange)="onValueChange($event, 'duration')"
+        (focusOut)="saveForm('TO_DEFINE')"
+        id="duration-input"
+        [validatorVariant]="'text'"
+      ></app-input>
+    </div>
+    <div class="col-6">
+      <app-select
+        id="activity-definition-modality"
+        [config]="modalityDropdown"
+        label="ACTIVITY_DEFINITION.activity_definition_dropdown_modality_label"
+        placeholder="ACTIVITY_DEFINITION.activity_definition_dropdown_modality_placeholder"
+        (dropdownSelect)="onDropdownSelect($event)"
+      ></app-select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-textarea
+        id="activity-definition-description"
+        placeholder="{{
+          'ACTIVITY_DEFINITION.activity_definition_input_description_placeholder'
+            | translate
+        }}"
+        [maxLength]="1000"
+        [enableValidator]="true"
+        [value]="description"
+        label="{{
+          'ACTIVITY_DEFINITION.activity_definition_input_description_label'
+            | translate
+        }}"
+        size="medium"
+        background="white-lilac"
+        errorText="PROJECT.Error_textlimit_specified_singleinput"
+        (inputChange)="onTextAreaChange($event, 'description')"
+        (textareaFocusOut)="saveForm('TO_DEFINE')"
+        [optionalLabel]="true"
+      ></app-textarea>
+    </div>
+  </div>
+  <div class="row mb-6">
+    <div class="col-12">
+      <app-details-selector
+        id="didactic-strategy"
+        [label]="'ACTIVITY_DEFINITION.activity_definition_strategies_title'"
+        [unselectedLabel]="
+          'ACTIVITY_DEFINITION.activity_definition_strategies_placeholder'
+        "
+        [subjectItem]="selectedTeachings"
+        [optional]="true"
+        [isLast]="true"
+        [simpleSelector]="true"
+        (deleteById)="openDeleteModal($event, 'teaching')"
+        (add)="openSecondaryView(didacticStrategy, 'teaching')"
+        [variant]="'add'"
+        [loading]="loading"
+      ></app-details-selector>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col-12">
+      <app-details-selector
+        id="student-groups"
+        [label]="'ACTIVITY_DEFINITION.activity_definition_groups_title'"
+        [unselectedLabel]="
+          'ACTIVITY_DEFINITION.activity_definition_groups_placeholder'
+        "
+        [subjectItem]="selectedStudentGroups"
+        [optional]="true"
+        [isLast]="true"
+        [simpleSelector]="true"
+        (deleteById)="openDeleteModal($event, 'student-groups')"
+        (add)="openSecondaryView(studentGroup, 'student-groups')"
+        [variant]="'add'"
+        [loading]="loading"
+      ></app-details-selector>
+    </div>
+  </div>
+  <div class="row mb-6">
+    <div class="col-12">
+      <h3 class="definition__title">
+        {{
+          'ACTIVITY_DEFINITION.activity_definition_section2_title' | translate
+        }}
+      </h3>
+      <app-details-selector
+        id="learning-objectives"
+        [label]="'ACTIVITY_DEFINITION.activity_definition_objectives_title'"
+        [unselectedLabel]="
+          'ACTIVITY_DEFINITION.activity_definition_objectives_placeholder'
+        "
+        [subjectItem]="selectedObjectives"
+        [isLast]="true"
+        [simpleSelector]="true"
+        (deleteById)="openDeleteModal($event, 'objectives')"
+        (add)="openSecondaryView(objectives, 'objectives')"
+        [variant]="'add'"
+        [loading]="loading"
+      ></app-details-selector>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col-12">
+      <app-details-selector
+        id="learning-contents"
+        [label]="'ACTIVITY_DEFINITION.activity_definition_contents_title'"
+        [unselectedLabel]="
+          'ACTIVITY_DEFINITION.activity_definition_contents_placeholder'
+        "
+        [subjectItem]="selectedContents.concat(selectedCustomContents)"
+        [optional]="true"
+        [isLast]="true"
+        [simpleSelector]="true"
+        (deleteById)="openDeleteModal($event, 'contents')"
+        (add)="openSecondaryView(contents, 'contents')"
+        [variant]="'add'"
+        [loading]="loading"
+      ></app-details-selector>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col-12">
+      <h3 class="definition__title">
+        {{
+          'ACTIVITY_DEFINITION.activity_definition_section3_title' | translate
+        }}
+      </h3>
+      <app-details-selector
+        id="learning-standards"
+        [label]="'ACTIVITY_DEFINITION.activity_definition_standards_title'"
+        [unselectedLabel]="
+          'ACTIVITY_DEFINITION.activity_definition_standards_placeholder'
+        "
+        [subjectItem]="selectedStandards.concat(selectedCustomStandards)"
+        [isLast]="true"
+        [simpleSelector]="true"
+        (deleteById)="openDeleteModal($event, 'standards')"
+        (add)="openSecondaryView(evaluation, 'standards')"
+        [variant]="'add'"
+        [loading]="loading"
+      ></app-details-selector>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h2 class="definition__title">
+        {{
+          'ACTIVITY_DEFINITION.activity_definition_section4_title'
+            | translate
+            | TranslateOptions: 0
+        }}
+        <span class="definition__title_optional"
+          >({{
+            'ACTIVITY_DEFINITION.activity_definition_section4_title'
+              | translate
+              | TranslateOptions: 1
+          }})</span
+        >
+      </h2>
+      <app-editable-list
+        id="activity-definition-resources"
+        [list]="resources"
+        [maxLength]="150"
+        customTextareaClass="mb-5"
+        editModalTitle="ACTIVITY_DEFINITION.activity_definition_resources_edit_title"
+        editModalLabel="ACTIVITY_DEFINITION.activity_definition_resources_edit_label"
+        editModalbuttonLabel="PROJECT.project_button_save"
+        deleteModalTitle="ACTIVITY_DEFINITION.project_definition_delete_confirmation_title"
+        deleteModalDescription="ACTIVITY_DEFINITION.project_definition_delete_confirmation_message"
+        deleteModalbuttonLabel="PROJECT.project_button_delete"
+        errorText="PROJECT.Error_textlimit_specified_singleinput"
+        textareaPlaceholder="ACTIVITY_DEFINITION.activity_definition_input_resources_placeholder"
+        (editItem)="editResource($event)"
+        (deleteItem)="deleteResource($event)"
+        (addItem)="addResource($event)"
+      ></app-editable-list>
+    </div>
+  </div>
+  <div class="row mb-6">
+    <div class="col-12">
+      <h2 class="definition__title">
+        {{
+          'ACTIVITY_DEFINITION.activity_definition_section5_title'
+            | translate
+            | TranslateOptions: 0
+        }}
+        <span class="definition__title_optional"
+          >({{
+            'ACTIVITY_DEFINITION.activity_definition_section5_title'
+              | translate
+              | TranslateOptions: 1
+          }})</span
+        >
+      </h2>
+      <app-textarea
+        id="activity-definition-diversity"
+        placeholder="{{
+          'ACTIVITY_DEFINITION.activity_definition_input_diversity_placeholder'
+            | translate
+        }}"
+        [maxLength]="500"
+        [enableValidator]="true"
+        [value]="diversity"
+        size="medium"
+        background="white-lilac"
+        errorText="PROJECT.Error_textlimit_specified_singleinput"
+        (inputChange)="onTextAreaChange($event, 'diversity')"
+        (textareaFocusOut)="saveForm('TO_DEFINE')"
+      ></app-textarea>
+    </div>
+  </div>
+</div>
+<div class="activity__footer">
+  <app-activity-editor-footer
+    [btnStatus]="!buttonDisabled"
+    [isSubmitted]="buttonSubmitted"
+    submitButtonlabel="ACTIVITY_FOOTER.activity_footer_button_markdone"
+    doneButtonlabel="ACTIVITY_FOOTER.activity_footer_button_done"
+    viewButtonLabel="ACTIVITY_FOOTER.activity_footer_button_view"
+    [viewButtonIcon]="
+      !buttonDisabled || buttonSubmitted ? 'three-shape' : 'locked'
+    "
+    (submitButtonClick)="submitButtonClick()"
+    (submitLinkClick)="navigateToOutput()"
+  ></app-activity-editor-footer>
+</div>
+
+<!-- Delete Modal for repeted content in standard view -->
+<ng-template #modalDelete>
+  <app-modal-info
+    id="definition-modal-info"
+    variant="delete"
+    theme="secondary"
+    [modalTitle]="deleteModalTitle"
+    [description]="deleteModalMessage"
+    confirmLabel="PROJECT.project_button_delete"
+    (decline)="declineModal($event)"
+    (confirm)="confirmDelete()"
+  ></app-modal-info>
+</ng-template>
+
+<!-- Teaching Startegy Modal View  -->
+<ng-template #didacticStrategy>
+  <app-modal-layout
+    modalTitle="ACTIVITY_POPUPS.definition_strategy_popup_title"
+    confirmLabel="ACTIVITY_POPUPS.definition_generic_popup_button"
+    [isDisabled]="modalButtonStatus"
+    (decline)="declineModal($event, 'teaching')"
+    (confirm)="saveSecondaryViewData($event, 'teaching')"
+  >
+    <div class="definition-modal">
+      <div class="definition-modal__table">
+        <div class="definition-modal__header">
+          <div class="row">
+            <div class="col-5">
+              <h4 class="definition-modal__title">
+                {{
+                  'ACTIVITY_POPUPS.definition_strategy_popup_strategy_title'
+                    | translate
+                }}
+              </h4>
+            </div>
+            <div class="col-7">
+              <h4
+                class="definition-modal__title definition-modal__title_pr_scrollbar"
+              >
+                {{
+                  'ACTIVITY_POPUPS.definition_generic_popup_description_title'
+                    | translate
+                }}
+              </h4>
+            </div>
+          </div>
+        </div>
+        <ng-scrollbar class="custom-scrollbar custom-shadow-bottom">
+          <div class="definition-modal__body">
+            <label
+              class="definition-modal__label"
+              *ngFor="let item of teachingStrategies"
+            >
+              <div class="row">
+                <div class="col-5">
+                  <div class="definition-modal__item">
+                    <app-checkbox
+                      [id]="item.id"
+                      [isChecked]="item.checked"
+                      (changeEvent)="updateRowEntity($event, 'teaching')"
+                      >{{ item.name }}</app-checkbox
+                    >
+                  </div>
+                </div>
+                <div class="col-7">
+                  <div
+                    class="definition-modal__item definition-modal__item_pr_scrollbar"
+                    *ngIf="item.description"
+                  >
+                    {{ item.description }}
+                  </div>
+                </div>
+              </div>
+            </label>
+          </div>
+        </ng-scrollbar>
+      </div>
+      <div class="definition-modal__input">
+        <app-input
+          (inputChange)="onValueChange($event, 'teachingstrategy')"
+          [initFocus]="false"
+          [maxlength]="75"
+          [enableValidator]="true"
+          [label]="'ACTIVITY_POPUPS.definition_generic_popup_other_label'"
+          [placeholder]="
+            'ACTIVITY_POPUPS.definition_strategy_popup_other_placeholder'
+              | translate
+          "
+          errorText="PROJECT.Error_textlimit_specified_singleinput"
+          [variant]="'text'"
+        ></app-input>
+      </div>
+    </div>
+  </app-modal-layout>
+</ng-template>
+
+<!-- Student Groups Modal View -->
+<ng-template #studentGroup>
+  <app-modal-layout
+    modalTitle="ACTIVITY_POPUPS.definition_groups_popup_title"
+    confirmLabel="ACTIVITY_POPUPS.definition_generic_popup_button"
+    [isDisabled]="modalButtonStatus"
+    (decline)="declineModal($event, 'student-groups')"
+    (confirm)="saveSecondaryViewData($event, 'student-groups')"
+  >
+    <div class="definition-modal">
+      <div class="definition-modal__table">
+        <div class="definition-modal__header">
+          <div class="row">
+            <div class="col-5">
+              <h4 class="definition-modal__title">
+                {{
+                  'ACTIVITY_POPUPS.definition_groups_popup_organization_title'
+                    | translate
+                }}
+              </h4>
+            </div>
+            <div class="col-7">
+              <h4
+                class="definition-modal__title definition-modal__title_pr_scrollbar"
+              >
+                {{
+                  'ACTIVITY_POPUPS.definition_generic_popup_description_title'
+                    | translate
+                }}
+              </h4>
+            </div>
+          </div>
+        </div>
+        <ng-scrollbar class="custom-scrollbar custom-shadow-bottom">
+          <div class="definition-modal__body">
+            <label
+              class="definition-modal__label"
+              *ngFor="let group of studentGroups"
+            >
+              <div class="row">
+                <div class="col-5">
+                  <div class="definition-modal__item">
+                    <app-checkbox
+                      [id]="group.id"
+                      [isChecked]="group.checked"
+                      (changeEvent)="updateRowEntity($event, 'student-groups')"
+                    >
+                      {{ group.name }}
+                    </app-checkbox>
+                  </div>
+                </div>
+                <div class="col-7 pr_scrollbar">
+                  <div
+                    class="definition-modal__item definition-modal__item_pr_scrollbar"
+                    *ngIf="group.description"
+                  >
+                    {{ group.description }}
+                  </div>
+                </div>
+              </div>
+            </label>
+          </div>
+        </ng-scrollbar>
+      </div>
+      <div class="definition-modal__input">
+        <app-input
+          (inputChange)="onValueChange($event, 'studentgroup')"
+          [initFocus]="false"
+          [maxlength]="75"
+          [enableValidator]="true"
+          [label]="'ACTIVITY_POPUPS.definition_generic_popup_other_label'"
+          [placeholder]="
+            'ACTIVITY_POPUPS.definition_groups_popup_other_placeholder'
+              | translate
+          "
+          errorText="PROJECT.Error_textlimit_specified_singleinput"
+          [variant]="'text'"
+        ></app-input>
+      </div>
+    </div>
+  </app-modal-layout>
+</ng-template>
+
+<!-- Learning Objective Modal View -->
+<ng-template #objectives>
+  <app-modal-layout
+    modalTitle="ACTIVITY_POPUPS.definition_objectives_popup_title"
+    confirmLabel="ACTIVITY_POPUPS.definition_generic_popup_button"
+    [isDisabled]="modalButtonStatus"
+    (decline)="declineModal($event, 'objectives')"
+    (confirm)="saveSecondaryViewData($event, 'objectives')"
+  >
+    <div class="definition-modal">
+      <div class="definition-modal__table">
+        <ng-scrollbar class="custom-scrollbar custom-shadow-bottom">
+          <div
+            class="definition-modal__body definition-modal__body_padding definition-modal__body_height"
+          >
+            <div
+              class="row"
+              *ngFor="let item of learningObjectives; let index = index"
+            >
+              <div class="col-12">
+                <div
+                  class="definition-modal__item definition-modal__item_pr_scrollbar"
+                >
+                  <app-checkbox
+                    [id]="item.id"
+                    [isChecked]="item.checked"
+                    (changeEvent)="updateRowEntity($event, 'objectives')"
+                  >
+                    <div class="definition-modal__item-block">
+                      <span class="definition-modal__item-index"
+                        ><strong class="pr-2">{{ item.index }}.</strong></span
+                      >{{ item.name }}
+                    </div>
+                  </app-checkbox>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-scrollbar>
+      </div>
+    </div>
+  </app-modal-layout>
+</ng-template>
+
+<!-- Learning Contents Modal View -->
+<ng-template #contents>
+  <app-modal-layout
+    modalTitle="ACTIVITY_POPUPS.definition_contents_popup_title"
+    confirmLabel="ACTIVITY_POPUPS.definition_generic_popup_button"
+    [isDisabled]="modalButtonStatus"
+    (decline)="declineModal($event, 'contents')"
+    (confirm)="saveSecondaryViewData($event, 'contents')"
+  >
+    <div class="definition-modal">
+      <div class="definition-modal__table">
+        <ng-scrollbar class="custom-scrollbar custom-shadow-bottom">
+          <div class="definition-modal__body definition-modal__body_height">
+            <div
+              class="definition-modal__subject"
+              *ngFor="let subject of learningSubjects"
+            >
+              <div class="definition-modal__subject-head px-0">
+                <div class="row">
+                  <div class="col-12">
+                    <h5
+                      class="definition-modal__subject-title px-4 definition-modal__title_pr_scrollbar"
+                    >
+                      {{ subject.name }}
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngFor="let item of subject.contents">
+                <div class="col-12">
+                  <div
+                    class="definition-modal__item definition-modal__item_pr_scrollbar"
+                  >
+                    <app-checkbox
+                      [id]="item.id"
+                      [isChecked]="item.checked"
+                      (changeEvent)="updateRowEntity($event, 'contents')"
+                    >
+                      {{ item.name }}
+                    </app-checkbox>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngFor="let item of subject.customContents">
+                <div class="col-12">
+                  <div
+                    class="definition-modal__item definition-modal__item_pr_scrollbar"
+                  >
+                    <app-checkbox
+                      [id]="item.id"
+                      [isChecked]="item.checked"
+                      (changeEvent)="updateRowEntity($event, 'custom-contents')"
+                    >
+                      {{ item.name }}
+                    </app-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-scrollbar>
+      </div>
+    </div>
+  </app-modal-layout>
+</ng-template>
+
+<!-- Evaluation Modal View -->
+<ng-template #evaluation>
+  <app-modal-layout
+    modalTitle="ACTIVITY_POPUPS.definition_standards_popup_title"
+    confirmLabel="ACTIVITY_POPUPS.definition_generic_popup_button"
+    [isDisabled]="modalButtonStatus"
+    (decline)="declineModal($event, 'standards')"
+    (confirm)="saveSecondaryViewData($event, 'standards')"
+  >
+    <div class="definition-modal">
+      <div class="definition-modal__table">
+        <ng-scrollbar class="custom-scrollbar custom-shadow-bottom">
+          <div class="definition-modal__body definition-modal__body_height">
+            <div
+              class="definition-modal__standard"
+              *ngFor="let objective of selectedObjectives; let index = index"
+            >
+              <div class="definition-modal__standard-head px-0">
+                <div class="row">
+                  <div class="col-12">
+                    <span
+                      class="definition-modal__standard-title px-4 definition-modal__title_pr_scrollbar"
+                      ><span class="definition-modal__item-index">
+                        <strong class="pr-2">{{ index + 1 }}.</strong></span
+                      >{{ objective.name }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngFor="let standard of objective.standards">
+                <div class="col-12">
+                  <div
+                    class="definition-modal__item definition-modal__item_pr_scrollbar"
+                  >
+                    <app-checkbox
+                      [id]="standard.id"
+                      [isChecked]="standard.checked"
+                      (changeEvent)="
+                        updateRowEntity($event, 'standards', objective)
+                      "
+                    >
+                      {{ standard.name }}
+                    </app-checkbox>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="row"
+                *ngFor="let customStandard of objective.customStandards"
+              >
+                <div class="col-12">
+                  <div
+                    class="definition-modal__item definition-modal__item_pr_scrollbar"
+                  >
+                    <app-checkbox
+                      [id]="customStandard.id"
+                      [isChecked]="customStandard.checked"
+                      (changeEvent)="
+                        updateRowEntity($event, 'custom-standards', objective)
+                      "
+                    >
+                      {{ customStandard.name }}
+                    </app-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-scrollbar>
+      </div>
+    </div>
+  </app-modal-layout>
+</ng-template>
+
+<ng-template #modalUnlock>
+  <app-modal-info
+    id="definition-modal-info"
+    [variant]="'unlock'"
+    modalTitle="PROGRAMACION.output_dependancy_activity_title"
+    [description]="'PROGRAMACION.output_dependancy_activity_description'"
+    [confirmLabel]="'PROGRAMACION.project_button_gotit'"
+    (confirm)="confirmModal($event)"
+    (decline)="confirmModal($event)"
+  ></app-modal-info>
+</ng-template>

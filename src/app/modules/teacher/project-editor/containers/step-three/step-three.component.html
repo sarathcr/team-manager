@@ -1,0 +1,288 @@
+<div class="project-editor__form step-three" id="step-three">
+  <app-step-status
+    id="step-three-status"
+    [status]="step.state"
+  ></app-step-status>
+  <div class="project-form d-flex flex-column justify-content-between">
+    <div>
+      <h1 class="project-form__title title_s">
+        <span class="project-form__title-number">3.</span
+        >{{ 'OBJECTIVES.project_objectives_title' | translate }}
+      </h1>
+      <p class="project-form__description">
+        <span>{{
+          'OBJECTIVES.project_objectives_description'
+            | translate
+            | TranslateCut: 0
+        }}</span>
+        <span>{{
+          'VARIABLES.experience_type_variable_2'
+            | translate
+            | TranslateCut: localExperienceType
+        }}</span>
+        <span>{{
+          'OBJECTIVES.project_objectives_description'
+            | translate
+            | TranslateCut: 1
+        }}</span>
+      </p>
+
+      <app-loader
+        id="step-three-loader"
+        *ngIf="loading; else loaded"
+      ></app-loader>
+      <ng-template #loaded>
+        <app-step-unlock
+          id="step-three-step-unlock"
+          *ngIf="!(editor.project$ | async)?.subjects?.length; else hasSubjects"
+          [description]="'OBJECTIVES.project_objectives_dependancy_description'"
+          [buttonText]="'OBJECTIVES.project_objectives_dependancy_button'"
+          [buttonLink]="'../1'"
+        ></app-step-unlock>
+        <ng-template #hasSubjects>
+          <h2 class="project-form__title_criterion mb-1">
+            {{ 'OBJECTIVES.project_objectives_criterion_title' | translate }}
+          </h2>
+          <p class="mb-5">
+            {{
+              'OBJECTIVES.project_objectives_criterion_description' | translate
+            }}
+          </p>
+          <div class="project-editor__subject-wrapper">
+            <app-details-selector
+              id="step-three-details-selector-{{ i }}"
+              *ngFor="
+                let subject of project?.subjects;
+                let i = index;
+                let last = last
+              "
+              [unselectedLabel]="
+                'OBJECTIVES.project_objectives_criteria_placeholder'
+              "
+              [selectedLabel]="'OBJECTIVES.project_objectives_criterion'"
+              [subject]="subject"
+              [subjectItem]="subject.evaluationCriteria"
+              [isLast]="last"
+              (deleteById)="openModal($event)"
+              (add)="newPrincipalView($event)"
+              [variant]="'add'"
+              [loading]="criteriaLoader"
+            ></app-details-selector>
+            <div class="project-editor__goto-step">
+              {{
+                'OBJECTIVES.project_objectivies_add_more_subjects.one'
+                  | translate
+              }}
+              <span class="project-editor__point" [routerLink]="'../1'">
+                {{
+                  'OBJECTIVES.project_objectivies_add_more_subjects.two'
+                    | translate
+                }}
+              </span>
+              {{
+                'OBJECTIVES.project_objectivies_add_more_subjects.three'
+                  | translate
+              }}
+            </div>
+          </div>
+          <div class="project-editor__transevaluation">
+            <h2 class="title_xs project-editor__title">
+              {{ 'OBJECTIVES.project_objectives_objectives_title' | translate }}
+            </h2>
+            <p class="project-form__sub-description mb-6">
+              <span>{{
+                'OBJECTIVES.project_objectives_objectives_description'
+                  | translate
+                  | TranslateCut: 0
+              }}</span>
+              <span class="d-block">
+                <span>{{
+                  'OBJECTIVES.project_objectives_objectives_description'
+                    | translate
+                    | TranslateCut: 1
+                }}</span>
+                <span>{{
+                  'VARIABLES.experience_type_variable_2'
+                    | translate
+                    | TranslateCut: localExperienceType
+                }}</span>
+                <span>{{
+                  'OBJECTIVES.project_objectives_objectives_description'
+                    | translate
+                    | TranslateCut: 2
+                }}</span>
+              </span>
+            </p>
+            <div class="mb-5">
+              <app-editable-list
+                id="step-three-editable-list"
+                [isNumbered]="true"
+                [list]="competencyObjectives"
+                [maxLength]="500"
+                [loading]="showDataDependancyLoader"
+                overrideDelete="true"
+                editModalTitle="OBJECTIVES.project_objectives_edit_title"
+                editModalLabel="OBJECTIVES.project_objectives_edit_label"
+                editModalbuttonLabel="PROJECT.project_button_save"
+                [deleteModalTitle]="
+                  isActivityDependancyErrorEnabled
+                    ? 'BUSINESS.Error_objectives_dependency_subject_title'
+                    : 'OBJECTIVES.project_objectives_delete_objectives_confirmation_title'
+                "
+                [deleteModalDescription]="
+                  isActivityDependancyErrorEnabled
+                    ? ' BUSINESS.Error_objectives_dependency_subject_description'
+                    : 'PROJECT.item_delete_confirmation_message'
+                "
+                deleteModalbuttonLabel="PROJECT.project_button_delete"
+                helperText="PROJECT.project_input_singleitem_helpertext"
+                errorText="PROJECT.Error_textlimit_specified_singleinput"
+                textareaHelperText="PROJECT.project_input_singleitem_helpertext"
+                textareaErrorText="PROJECT.Error_textlimit_specified_singleinput"
+                textareaPlaceholder="OBJECTIVES.project_objectives_objectives_placeholder"
+                (editItem)="editObjective($event)"
+                (deleteItem)="deleteObjective($event)"
+                (addItem)="addObjectives()"
+                (deleteConfirmed)="onCompetencyDeleteStart($event)"
+                (declineConfirmed)="onCompetencyDeleteDeclined($event)"
+              ></app-editable-list>
+            </div>
+          </div>
+        </ng-template>
+      </ng-template>
+    </div>
+    <app-button
+      id="step-three-button"
+      [disabled]="buttonConfig.disabled || !project.subjects?.length"
+      [loading]="editor.savingProgress"
+      [theme]="buttonConfig.submitted ? 'success' : 'primary'"
+      [icon]="'tick'"
+      (click)="handleSubmit('DONE')"
+    >
+      {{
+        (buttonConfig.submitted
+          ? buttonConfig.successLabel
+          : buttonConfig.label
+        ) | translate
+      }}
+    </app-button>
+  </div>
+</div>
+
+<ng-template #modalDelete>
+  <app-modal-info
+    id="step-three-modal-info"
+    variant="delete"
+    theme="secondary"
+    modalTitle="OBJECTIVES.project_objectives_delete_criteria_confirmation_title"
+    description="PROJECT.item_delete_confirmation_message"
+    confirmLabel="PROJECT.project_button_delete"
+    [loading]="showDataDependancyLoader"
+    (decline)="declineModal()"
+    (confirm)="confirmModal()"
+  ></app-modal-info>
+</ng-template>
+
+<ng-template #principalViewModal>
+  <app-principal-view-modal
+    id="step-three-principal-view-modal"
+    [grades]="grades"
+    [stepId]="3"
+    [modalColumns]="modalColumns"
+    [blockData]="blockData"
+    [dropdownTitles]="dropDownConfig"
+    [selectedGrades]="selectedGrades"
+    [labels]="labels"
+    [showPrimaryView]="showPrimaryView"
+    (viewChange)="changeView($event)"
+    (modalSubmit)="handleModalSubmit($event)"
+    (decline)="declineModal(false, true)"
+  ></app-principal-view-modal>
+</ng-template>
+
+<ng-template #dependancyModalOne>
+  <app-modal-info
+    id="step-three-modal-info"
+    variant="unlock"
+    buttonPosition="left"
+    modalTitle="BUSINESS.Error_objectives_dependency_subject_title"
+    [description]="'BUSINESS.Error_objectives_dependency_subject_description'"
+    [confirmLabel]="'PROJECT.project_button_gotit'"
+    (confirm)="declineModal()"
+    (decline)="declineModal()"
+  >
+  </app-modal-info>
+</ng-template>
+
+<!-- Evaluation Modal View -->
+<ng-template #dependancyModalTwo>
+  <app-modal-layout
+    [modalTitle]="
+      showPrimaryView || isSecondaryViewEnabled
+        ? 'BUSINESS.Error_criteria_criteriawindow_dependency_subject_title'
+        : 'BUSINESS.Error_criteria_dependency_subject_title'
+    "
+    confirmLabel="PROJECT.project_button_gotit"
+    buttonPosition="left"
+    icon="icon-ic_locked"
+    hideButtonIcon="true"
+    (decline)="declineModal(true)"
+    (confirm)="declineModal(true)"
+  >
+    <div class="dependency-modal mt-2">
+      <div class="dependency-modal__description mb-5">
+        {{
+          !showPrimaryView
+            ? ('BUSINESS.Error_criteria_dependency_subject_description'
+              | translate)
+            : ('BUSINESS.Error_criteria_dependency_subject_description'
+              | translate)
+        }}
+      </div>
+      <div class="dependency-modal__table">
+        <ng-scrollbar class="custom-scrollbar custom-shadow-bottom">
+          <div class="dependency-modal__body">
+            <div
+              class="dependency-modal__table-head dependency-modal__pr-scrollbar"
+              *ngIf="contentsMappingList.length"
+            >
+              {{
+                'PROGRAMACION.project_structure_stepsmenu_content' | translate
+              }}
+            </div>
+            <ul
+              class="dependency-modal__list bullet-list dependency-modal__pr-scrollbar"
+              *ngIf="contentsMappingList.length"
+            >
+              <li
+                class="dependency-modal__list-item"
+                *ngFor="let contents of contentsMappingList"
+              >
+                {{ contents.name }}
+              </li>
+            </ul>
+            <div
+              class="dependency-modal__table-head dependency-modal__pr-scrollbar"
+              *ngIf="standardsMappingList.length"
+            >
+              {{
+                'PROGRAMACION.project_structure_stepsmenu_standards' | translate
+              }}
+            </div>
+            <ul
+              class="dependency-modal__list bullet-list dependency-modal__pr-scrollbar"
+              *ngIf="standardsMappingList.length"
+            >
+              <li
+                class="dependency-modal__list-item"
+                *ngFor="let standard of standardsMappingList"
+              >
+                {{ standard.name }}
+              </li>
+            </ul>
+          </div>
+        </ng-scrollbar>
+      </div>
+    </div>
+  </app-modal-layout>
+</ng-template>

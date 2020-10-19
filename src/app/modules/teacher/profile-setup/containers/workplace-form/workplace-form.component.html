@@ -1,0 +1,24 @@
+<div class="workspace-wrapper">
+  <h1 class="title_m mb-3">
+    {{ 'PROFILE.profile_setup_workplace' | translate }}
+  </h1>
+  <div class="workspace-wrapper__description">
+    {{ 'PROFILE.profile_setup_workplace_description' | translate }}
+  </div>
+  <div class="h-100 d-flex flex-column justify-content-between">
+    <div class="workspace-wrapper__input-wrapper">
+      <app-input
+        variant="counter"
+        [maxlength]="70"
+        class="workspace-wrapper__input-wrapper_input"
+        label="PROFILE.profile_setup_workplace_input_label"
+        [enableValidator]="true"
+        helperText="PROFILE.profile_setup_workplace_input_helpertext"
+        errorText="PROFILE.Error_textlimit_specified_singleinput"
+        [value]="profileService.workPlace.descriptionSection"
+        [initFocus]="true"
+        (inputChange)="handleInput($event)"
+      ></app-input>
+    </div>
+  </div>
+</div>

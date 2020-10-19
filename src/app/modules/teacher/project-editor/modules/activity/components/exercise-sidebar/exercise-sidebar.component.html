@@ -1,0 +1,26 @@
+<div class="exercise-sidebar">
+  <ul class="exercise-sidebar__list-box">
+    <li
+      *ngFor="let item of exercises; index as i"
+      class="exercise-sidebar__list-item"
+      [ngClass]="{
+        default: item.state === 'DEFAULT',
+        notification: item.state === 'NOTIFICATION',
+        actived: actived == i
+      }"
+    >
+      <span class="exercise-sidebar__list_indicator"></span>
+      <span
+        (click)="onClick(i)"
+        class="exercise-sidebar__list-text"
+        [ngClass]="{ actived: actived == i }"
+        >{{ item.name }}</span
+      >
+      <span
+        *ngIf="item.state == 'NOTIFICATION'"
+        class="icon icon-ic_notification_bullet"
+        ><span class="path1"></span><span class="path2"></span
+      ></span>
+    </li>
+  </ul>
+</div>

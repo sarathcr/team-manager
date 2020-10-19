@@ -1,0 +1,27 @@
+<div class="feedback">
+  <h3 class="feedback__title title_sub-s">
+    {{ title | translate }} ({{ comments.length }})
+    <span
+      class="icon feedback__title-icon"
+      *ngIf="icon"
+      [ngClass]="{
+        'icon-ic_message': icon === 'message',
+        'icon-ic_message_new': icon === 'message_new'
+      }"
+      ><span class="path1"></span><span class="path2"></span
+    ></span>
+  </h3>
+  <div class="feedback__input">
+    <span
+      class="icon icon-ic_send feedback__input-icon"
+      [ngClass]="{ 'feedback__input-icon_disabled': disabled }"
+    ></span>
+    <app-input [placeholder]="placeholder" [disabled]="disabled"> </app-input>
+  </div>
+  <div class="feedback__container">
+    <div
+      class="feedback__container-comment"
+      *ngFor="let comment of comments"
+    ></div>
+  </div>
+</div>

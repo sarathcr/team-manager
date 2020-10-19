@@ -1,0 +1,58 @@
+<div class="preferences">
+  <app-main-header
+    back="true"
+    [title]="title"
+    [username]="
+      user?.profileCompleted ? user.name : 'PROFILE.header_profile_user'
+    "
+    [imgUrl]="user?.profileCompleted ? user.imageUrl : ''"
+    id="profile-preferences-header"
+  ></app-main-header>
+  <app-main-sidebar>
+    <div class="preferences-sidebar" id="profile-preferences-sidebar">
+      <h2 class="title title_default" text="">
+        {{ 'PRIVATEHOME_PROFILE.profile_dropdown_option_profile' | translate }}
+      </h2>
+      <app-sidebar-menu
+        icon="icon icon-ic_data"
+        text="PRIVATEHOME_PROFILE.profile_menu_profile_data"
+        link="/profile/details"
+      ></app-sidebar-menu>
+      <app-sidebar-menu
+        icon="icon icon-ic_preferences"
+        text="PRIVATEHOME_PROFILE.profile_menu_profile_preferences"
+        link="/profile/preferences"
+        [updated]="true"
+      ></app-sidebar-menu>
+    </div>
+    <div class="preferences-sidebar">
+      <!-- temporarly hiding the below icons. Please do not remove the commented code. -->
+      <!-- <h2 class="title title_default">
+        {{ 'PRIVATEHOME_PROFILE.profile_menu_workplace' | translate }}
+      </h2>
+      <app-sidebar-menu
+        icon="icon icon-ic_users"
+        text="PRIVATEHOME_PROFILE.profile_menu_workplace_users"
+        link="#"
+      ></app-sidebar-menu> -->
+    </div>
+  </app-main-sidebar>
+
+  <div class="preferences-info">
+    <h2 class="title_default">
+      {{ 'PROFILE.profile_preferences_language' | translate }}
+    </h2>
+    <div class="preferences-info__row mt-3">
+      <app-box-row id="profile-row-language">
+        <div class="d-flex align-items-center w-100">
+          <div class="preferences-info__row-label font-weight-bold">
+            {{ 'PROFILE.profile_preferences_currentlanguage' | translate }}
+          </div>
+          <div class="preferences-info__row-data">
+            {{ userLanguage | translate }}
+          </div>
+        </div></app-box-row
+      >
+    </div>
+  </div>
+</div>
