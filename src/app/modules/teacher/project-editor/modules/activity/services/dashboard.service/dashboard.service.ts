@@ -1,3 +1,6 @@
+import { Observable } from 'rxjs'
+
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { EditorService } from 'src/app/modules/teacher/project-editor/services/editor/editor.service'
@@ -16,7 +19,8 @@ export class DashboardService {
 
   constructor(
     private translate: TranslateService,
-    private editor: EditorService
+    private editor: EditorService,
+    private http: HttpClient
   ) {}
 
   initDraggableRows(activities: Activity[], projectId: number): DraggableRow[] {
@@ -42,8 +46,25 @@ export class DashboardService {
         action: 'delete',
       },
     ]
-
-    for (const activity of activities) {
+    activities.sort((a, b) => (a.sortOrder > b.sortOrder ? 1 : -1))
+    for (const [index, activity] of activities.entries()) {
+      let dragControls = []
+      if (activities?.length > 1) {
+        dragControls = [
+          {
+            icon: 'icon-ic_up',
+            text: this.translations['ACTIVITIES.item_moveup'],
+            action: 'moveup',
+            disabled: index === 0 ? true : false,
+          },
+          {
+            icon: 'icon-ic_down',
+            text: this.translations['ACTIVITIES.item_movedown'],
+            action: 'movedown',
+            disabled: index === activities?.length - 1 ? true : false,
+          },
+        ]
+      }
       const experienceType = this.editor.getExperienceUrl()
       const columnOne = { text: activity.name }
       const columnTwo = {
@@ -104,12 +125,13 @@ export class DashboardService {
       const draggableRow: DraggableRow = {
         id: activity.id,
         url: `/editor/${experienceType}/${projectId}/activity`,
-        dropdownElements: dropdownData,
+        dropdownElements: [...dragControls, ...dropdownData],
         columnOne,
         columnTwo,
         columnThree,
         columnFour,
         columnFive,
+        sortOrder: activity.sortOrder,
       }
       draggableRows.push(draggableRow)
     }
@@ -272,6 +294,8 @@ export class DashboardService {
         'ACTIVITIES.activities_card_duration_project_input',
         'ACTIVITIES.activities_project_button_save',
         'ACTIVITIES.activities_title_activity',
+        'ACTIVITIES.item_moveup',
+        'ACTIVITIES.item_movedown',
       ])
       .subscribe((translations) => {
         this.translations = translations

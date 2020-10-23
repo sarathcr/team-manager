@@ -191,6 +191,12 @@
     }
   }
 
+  &__title-link {
+    a {
+      color: inherit;
+      text-decoration: inherit;
+    }
+  }
   &_preview {
     #{$root}__typename {
       margin-bottom: 6px;

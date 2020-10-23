@@ -1,5 +1,8 @@
 <div class="profile-pic">
-  <figure class="profile-pic__figure mx-0 mt-0">
+  <figure
+    class="profile-pic__figure mx-0 mt-0"
+    [ngClass]="{ 'profile-pic__figure_medium': variant === 'medium' }"
+  >
     <img
       src="{{ imgUrl }}"
       alt="Profile Image"
@@ -8,9 +11,14 @@
       title=""
     />
     <ng-template #profileText>
-      <span class="profile-pic__text">{{ userName | slice: 0:2 }}</span>
+      <span
+        class="profile-pic__text"
+        [ngClass]="{ 'profile-pic__text_medium': variant === 'medium' }"
+        >{{ userName | slice: 0:2 }}</span
+      >
     </ng-template>
     <app-image-upload
+      *ngIf="fileUpload"
       variant="custom"
       id="profile-image-upload"
       acceptedType="image/x-png,image/gif,image/jpeg"
@@ -20,7 +28,7 @@
         <span class="profile-pic__icon icon icon-ic_camera"></span></div
     ></app-image-upload>
   </figure>
-  <div class="profile-pic__title">
+  <div class="profile-pic__title" *ngIf="title">
     {{ title | translate }}
   </div>
 </div>

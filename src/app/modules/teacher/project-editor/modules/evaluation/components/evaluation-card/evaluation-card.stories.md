@@ -29,6 +29,7 @@ A convenience directive for applying styling to an Input component.
 | `clickableLabel`    | `boolean` |    -     |   -    |    -    | If is 'clickableLabel' and 'isExercise' are true and 'percentage' value is 0 then the 'Assign Percentage' label is shown       |
 | `isExercise`        | `boolean` |    -     |   -    |    -    | If is false the model of card is Final Average, else the card model is of type gradable.                                       |
 | `isNotClasificable` | `boolean` |    -     |   -    |    -    | If is true and the 'isExercise' value is also true, the star icon changes to one with a slash and shown "No calificable" lable |
+| `hasHeader`         | `boolean` |    -     |   -    |    -    | If is true shown on the top of the card a header to add info                                                                   |
 
 ## Note
 

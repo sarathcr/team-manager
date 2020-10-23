@@ -10,5 +10,12 @@
     spinner_small: size === 'small'
   }"
 >
-  <span class="spinner__text" *ngIf="detail">{{ detail }}</span>
+  <div class="spinner__content">
+    <div class="spinner__anim"></div>
+    <span
+      class="spinner__text spinner__text_{{ detailVariant }}"
+      *ngIf="detail"
+      >{{ detail }}</span
+    >
+  </div>
 </div>

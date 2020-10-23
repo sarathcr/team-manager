@@ -3,9 +3,10 @@
     ! Name the master file with '__' double underscore and partials with '_' single underscore.
     ! Don't write code|style here and master files, it's only for importing the partials.
 ***************************************************************************/
-@import "./variables/_variables-master";
-@import "./helpers/_helpers-master";
-@import "./vendor/_vendor-master";
-@import "./base/_base-master";
-@import "./typography/_typography-master";
-@import "./layout/_layout-master";
+@import './variables/_variables-master';
+@import './helpers/_helpers-master';
+@import './vendor/_vendor-master';
+@import './base/_base-master';
+@import './typography/_typography-master';
+@import './layout/_layout-master';
+@import './component/__component-master';

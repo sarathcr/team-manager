@@ -1,16 +1,18 @@
 import { Option } from 'src/app/common-shared/constants/model/form-elements.model'
 import {
   AcademicYear,
-  CompetencyObjective,
   Content,
   Country,
-  DrivingQuestion,
   Grade,
-  ProjectUpdate,
   Region,
+  Subject,
+} from 'src/app/modules/shared/constants/model/curriculum-data.model'
+import {
+  CompetencyObjective,
+  DrivingQuestion,
+  ProjectUpdate,
   Status,
   StepState,
-  Subject,
   Theme,
 } from 'src/app/modules/teacher/project-editor/constants/model/project.model'
 

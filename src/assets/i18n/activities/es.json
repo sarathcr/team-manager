@@ -48,7 +48,9 @@
     "activities_card_objectives_placeholder": "Aún no has asignado objetivos a las actividades.",
     "activities_card_exercises_placeholder": "Crea ejercicios calificables dentro de una actividad.",
     "activity_duplicate_title": "Asigna un título a la actividad duplicada",
-    "activities_card_duration_hours_error": "Sólo puedes especificar hasta 9999 horas."
+    "activities_card_duration_hours_error": "Sólo puedes especificar hasta 9999 horas.",
+    "item_moveup": "Subir elemento",
+    "item_movedown": "Bajar elemento"
   },
   "ACTIVITY_DEFINITION": {
     "activity_definition_description": "Explica en qué consiste y cómo desarrollarás la actividad: si será online y/o presencial, su conexión con el currículum, cómo organizarás la clase o qué método didáctico utilizarás.",

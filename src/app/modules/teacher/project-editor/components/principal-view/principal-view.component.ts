@@ -10,12 +10,12 @@ import {
   DropdownCustom,
   Option,
 } from 'src/app/common-shared/constants/model/form-elements.model'
+import { Subject } from 'src/app/modules/shared/constants/model/curriculum-data.model'
 import { Block } from '../../constants/model/curriculum.model'
 import {
   PrincipalModalColData,
   PrincipalViewLabels,
 } from '../../constants/model/principle-view.model'
-import { Subject } from '../../constants/model/project.model'
 import { ContentService } from '../../services/contents/contents.service'
 
 @Component({

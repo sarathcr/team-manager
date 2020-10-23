@@ -26,6 +26,7 @@
       <accordion [isAnimated]="true" [closeOthers]="oneAtATime">
         <accordion-group
           [isOpen]="true"
+          *ngIf="filterData?.stage"
           panelClass="filter-accordion__content"
           class="filter-accordion"
           [ngClass]="{
@@ -65,6 +66,7 @@
         </accordion-group>
         <accordion-group
           [isOpen]="false"
+          *ngIf="filterData?.type"
           panelClass="filter-accordion__content"
           class="filter-accordion"
           [ngClass]="{
@@ -108,12 +110,60 @@
         </accordion-group>
         <accordion-group
           [isOpen]="false"
+          *ngIf="filterData?.state"
           panelClass="filter-accordion__content"
           class="filter-accordion"
           [ngClass]="{
             'filter-accordion_active': accordionGroupThree.isOpen
           }"
           #accordionGroupThree
+        >
+          <div accordion-heading class="filter-accordion__heading">
+            <h5 class="filter-accordion__title">
+              {{
+                'PRIVATEHOME_EXPERIENCES.home_student_experiences_filter_state'
+                  | translate
+              }}
+              <span
+                class="filter-item-count"
+                *ngIf="filterData.state | checkCount"
+              >
+                ({{ filterData.state | checkCount }})
+              </span>
+            </h5>
+            <div class="filter-accordion__arrow">
+              <span class="icon icon-ic_dropdown"></span>
+            </div>
+          </div>
+          <div class="filter-accordion__body">
+            <div class="filter-accordion__body-content" #accordionBody>
+              <ul class="filter-accordion__list">
+                <ng-container *ngFor="let item of filterData.state">
+                  <li class="filter-accordion__list-item">
+                    <app-checkbox
+                      [isChecked]="item.checked"
+                      (changeEvent)="item.checked = $event.checked"
+                      >{{ item.value | translate }}</app-checkbox
+                    >
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+        </accordion-group>
+        <accordion-group
+          [isOpen]="false"
+          *ngIf="filterData?.subjects"
+          panelClass="filter-accordion__content"
+          class="filter-accordion"
+          [ngClass]="{
+            'filter-accordion_active': accordionGroupFour.isOpen,
+            'filter-accordion_bottom-border':
+              userType === 'STUDENT' && accordionGroupFour.isOpen,
+            'filter-accordion_no-bottom-border':
+              userType === 'STUDENT' && !accordionGroupFour.isOpen
+          }"
+          #accordionGroupFour
         >
           <div accordion-heading class="filter-accordion__heading">
             <h5 class="filter-accordion__title">
@@ -143,7 +193,12 @@
                 ></app-search>
               </div>
 
-              <ul class="filter-accordion__list">
+              <ul
+                class="filter-accordion__list"
+                [ngClass]="{
+                  'filter-accordion__list_long': userType === 'STUDENT'
+                }"
+              >
                 <li
                   class="filter-accordion__list-item"
                   *ngFor="
@@ -162,12 +217,13 @@
         </accordion-group>
         <accordion-group
           [isOpen]="false"
+          *ngIf="filterData?.academicYears"
           panelClass="filter-accordion__content"
           class="filter-accordion"
           [ngClass]="{
-            'filter-accordion_active': accordionGroupFour.isOpen
+            'filter-accordion_active': accordionGroupFive.isOpen
           }"
-          #accordionGroupFour
+          #accordionGroupFive
         >
           <div accordion-heading class="filter-accordion__heading">
             <h5 class="filter-accordion__title">

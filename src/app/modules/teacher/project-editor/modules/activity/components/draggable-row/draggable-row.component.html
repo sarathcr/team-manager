@@ -1,6 +1,6 @@
 <div class="draggable-row">
   <div class="draggable-row__col draggable-row__col-one">
-    <div class="draggable-row__col-one-wrap-icon">
+    <div class="draggable-row__col-one-wrap-icon d-none">
       <!-- based on US TA-5155, hide  drag and drop icon temporarily until we implement this functionality on cards
       <span class="icon icon-ic_drag"></span> -->
     </div>
@@ -65,13 +65,15 @@
         element.columnFive.text | translate
       }}</span>
     </div>
-    <div>
+    <div class="draggable-row__dropdown-wrapper">
       <app-dropdown
         [list]="dropdownData"
         position="right"
         (selects)="actionEmit($event)"
       >
-        <span class="icon icon-ic_more content-icon"></span>
+        <a href="javascript:void(0);" class="draggable-row__dropdown"
+          ><span class="icon icon-ic_more"></span
+        ></a>
       </app-dropdown>
     </div>
   </div>

@@ -20,6 +20,7 @@ import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { CommonSharedModule } from './common-shared/common-shared.module'
+import { PreviousRouteService } from './common-shared/services/previous-route/previous-route.service'
 import { CoreModule } from './core/core.module'
 import { AuthModule } from './modules/auth/auth.module'
 import { appReducers, metaReducers } from './store'
@@ -65,7 +66,7 @@ import { appReducers, metaReducers } from './store'
       routerState: RouterState.Minimal,
     }),
   ],
-  providers: [AppRoutingModule, Title],
+  providers: [AppRoutingModule, Title, PreviousRouteService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
@@ -80,5 +81,6 @@ export function HttpLoaderFactory(http: HttpClient): any {
     { prefix: 'assets/i18n/auth/', suffix: '.json' },
     { prefix: 'assets/i18n/project-output/', suffix: '.json' },
     { prefix: 'assets/i18n/shared/', suffix: '.json' },
+    { prefix: 'assets/i18n/student/', suffix: '.json' },
   ])
 }

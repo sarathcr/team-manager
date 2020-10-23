@@ -27,6 +27,7 @@ export class ModalLayoutComponent implements OnInit {
   @Input() buttonSize: ButtonSize = 'default'
   @Input() buttonVariant: ButtonVariants = 'contained'
   @Input() loading = false
+  @Input() size = 'large'
 
   @Output() confirm = new EventEmitter()
   @Output() decline = new EventEmitter()

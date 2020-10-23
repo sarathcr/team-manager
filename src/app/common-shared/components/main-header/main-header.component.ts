@@ -37,7 +37,10 @@ export class MainHeaderComponent {
         this.authService.logout()
         break
       case 'profile':
-        this.router.navigate(['/profile/details'])
+        // On completing profile user story for student remove this if check
+        if (this.userType !== 'STUDENT') {
+          this.router.navigate(['/profile/details'])
+        }
     }
   }
 }

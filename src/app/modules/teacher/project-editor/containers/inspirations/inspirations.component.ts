@@ -20,19 +20,21 @@ import { StorageService } from 'src/app/common-shared/services/storage/storage.s
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
 import { ClearAllSetTimeouts } from 'src/app/common-shared/utility/timeout.utility'
 import { UserService } from 'src/app/modules/auth/services/user/user.service'
+import { CardList } from 'src/app/modules/shared/constants/model/card-experience.model'
 import {
   FilterAcademicYear,
   FilterOptions,
   FilterOptionsValues,
   FilterSubject,
+} from 'src/app/modules/shared/constants/model/filter.model'
+import {
   Project,
-  ProjectList,
   ProjectSort,
   ProjectSortType,
 } from '../../constants/model/project.model'
 import { ZipcodeService } from '../../services/zipcode/zipcode.service'
 import { AcademicYearEntityService } from '../../store/entity/academic-year/academic-year-entity.service'
-import { ProjectListEntityService } from '../../store/entity/project-list/project-list-entity.service'
+import { CardListEntityService } from '../../store/entity/card-list/card-list-entity.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { SubjectEntityService } from '../../store/entity/subjects/subject-entity.service'
 
@@ -45,7 +47,7 @@ export class InspirationsComponent implements OnInit, OnDestroy {
   @Input() maxLength: number
 
   hasError = false
-  projects$: Observable<ProjectList>
+  cards$: Observable<CardList>
   academicYearSubcription = new SubSink()
   subjectSubcription = new SubSink()
   clearTimeout = new ClearAllSetTimeouts()
@@ -123,7 +125,7 @@ export class InspirationsComponent implements OnInit, OnDestroy {
     this.modalRef.hide()
   }
   constructor(
-    private projectListService: ProjectListEntityService,
+    private cardListService: CardListEntityService,
     private projectService: ProjectEntityService,
     private translateService: TranslateService,
     private router: Router,
@@ -195,7 +197,7 @@ export class InspirationsComponent implements OnInit, OnDestroy {
       }
       this.setSortByList(query?.sortBy)
       this.setFilter(query)
-      this.getProjectsByQuery(routeQuery)
+      this.getCardsByQuery(routeQuery)
     })
   }
 
@@ -341,15 +343,15 @@ export class InspirationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  getProjectsByQuery(routerQuery: string = ''): void {
+  getCardsByQuery(routerQuery: string = ''): void {
     const query = routerQuery
-      ? `?${routerQuery}&template=true`
-      : '?template=true'
+      ? `?${routerQuery}&options=Inspire`
+      : '?options=Inspire'
     this.loading = true
-    this.projects$ = this.projectListService.entities$.pipe(
-      map((projectList) => projectList.find((list) => list.pageId === query))
+    this.cards$ = this.cardListService.entities$.pipe(
+      map((cardList) => cardList.find((list) => list.pageId === query))
     )
-    this.subscriptions.sink = this.projects$.subscribe((list) => {
+    this.subscriptions.sink = this.cards$.subscribe((list) => {
       if (list) {
         this.loading = false
         this.totalItems = list.projectCount
@@ -362,7 +364,7 @@ export class InspirationsComponent implements OnInit, OnDestroy {
     this.projectSubcription.sink = this.projectService.loading$.subscribe(
       (loading) => {
         if (!loading) {
-          this.projectListService.getWithQuery(query)
+          this.cardListService.getWithQuery(query)
           this.projectSubcription.unsubscribe()
         }
       }

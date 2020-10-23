@@ -20,6 +20,7 @@
     opacity: 0.4;
     transform: translateY(-50%);
     font-size: font-size(s);
+    pointer-events: none;
     &_tick::before {
       color: color(secondary);
       cursor: default;

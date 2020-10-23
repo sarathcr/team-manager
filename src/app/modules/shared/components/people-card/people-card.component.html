@@ -14,11 +14,13 @@
       class="people-card__figure"
       [ngClass]="{ 'people-card__figure_bg': !imageUrl }"
     >
-      <img
-        src="{{ imageUrl }}"
-        alt="invite profile image"
-        class="people-card__image"
-      />
+      <app-profile-pic
+        variant="medium"
+        [editable]="false"
+        [userName]="userName + (surName ? '' + surName : '')"
+        [imgUrl]="imageUrl"
+        [fileUpload]="false"
+      ></app-profile-pic>
     </div>
     <div class="people-card__type">
       {{ profileType | translate }}

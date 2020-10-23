@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { ImageVariant } from '../../constants/model/profile-pic.model'
 
 @Component({
   selector: 'app-profile-pic',
@@ -10,6 +11,8 @@ export class ProfilePicComponent implements OnInit {
   @Input() title: string
   @Input() editable = false
   @Input() userName: string
+  @Input() variant: ImageVariant = 'large'
+  @Input() fileUpload = true
   @Output() fileSelect: EventEmitter<any> = new EventEmitter()
   constructor() {}
   ngOnInit(): void {

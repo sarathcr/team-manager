@@ -16,6 +16,7 @@
             <div class="col-6 border-right excercise-modal__column">
               <div class="excercise-modal__field mt-1">
                 <app-input
+                  id="add-excercise-input-title"
                   variant="text"
                   [value]="exercise.name"
                   formControlName="title"
@@ -162,7 +163,7 @@
                 <div class="row">
                   <div class="col-6">
                     <app-select
-                      id="activity-creation-modality"
+                      id="add-excercise-modality-dropdown"
                       customClass="dropdown_bg-white mb-0"
                       [config]="creationModalityDropdown"
                       label="EXCERCISE.exercise_definition_popup_dropdown_modality_label"
@@ -173,6 +174,7 @@
                   <div class="col-6">
                     <form novalidate>
                       <app-input
+                        id="add-excercise-date-field"
                         variant="date"
                         [value]="exercise.deliveryDate"
                         formControlName="date"
@@ -204,12 +206,13 @@
                     }}
                   </p>
                   <app-switch
-                    (changeSwitch)="onValueChange($event, 'evaluation')"
                     type="button"
                     iconOne="icon-ic_star-grey"
                     iconTwo="icon-ic_star-no"
                     buttonTextOne="EXCERCISE.exercise_definition_popup_input_calification_yes"
                     buttonTextTwo="EXCERCISE.exercise_definition_popup_input_calification_no"
+                    [switchOn]="exercise.evaluation"
+                    (changeSwitch)="onValueChange($event, 'evaluation')"
                   >
                   </app-switch>
                 </div>
@@ -219,6 +222,7 @@
                 *ngIf="exercise.evaluation"
               >
                 <app-input
+                  id="add-excercise-activity-percentage-input"
                   variant="number"
                   [value]="exercise.percentage"
                   [maxNumber]="100 - exercisePercent"
@@ -269,7 +273,7 @@
                       }"
                     >
                       <app-select
-                        id="activity-creation-modality"
+                        id="add-excercise-agent-dropdown-{{ index }}"
                         customClass="dropdown_bg-white mb-0"
                         [config]="AgentDropDowns[index]"
                         label="EXCERCISE.exercise_definition_popup_input_agent_label"

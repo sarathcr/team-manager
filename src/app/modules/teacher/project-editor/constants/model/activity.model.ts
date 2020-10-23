@@ -1,11 +1,14 @@
 import {
+  Standard,
+  Subject,
+} from 'src/app/modules/shared/constants/model/curriculum-data.model'
+import {
   Contents,
   CustomStudentGroup,
   CustomTeachingStrategy,
   StudentGroup,
   TeachingStrategy,
 } from '../../modules/activity/constants/model/form-elements.model'
-import { Standard, Subject } from './project.model'
 
 export class Activity {
   id?: number | string
@@ -34,6 +37,7 @@ export class Activity {
   projectId?: number
   instructions?: string
   error?: any
+  sortOrder?: number
 }
 
 export class LinkContent {
@@ -56,6 +60,8 @@ export class Exercise {
   updateType?: string
   error?: any
   isMaterialVisibiityChange?: boolean
+  sortOrder?: number
+  activityId?: number | string
 }
 
 export class ReferenceMaterials {
@@ -100,6 +106,11 @@ export class ActivityData {
   intialPhase?: any[]
   developPhase?: any[]
   synthesisPhase?: any[]
+}
+
+export class Order {
+  id: number | string
+  sortOrder: number
 }
 
 export type ActivityPhase = 'INITIAL' | 'DEVELOP' | 'SYNTHESIS'

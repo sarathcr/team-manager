@@ -11,20 +11,28 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { Option } from 'src/app/common-shared/constants/model/form-elements.model'
+import { PreviousRouteService } from 'src/app/common-shared/services/previous-route/previous-route.service'
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
 import { ClearAllSetTimeouts } from 'src/app/common-shared/utility/timeout.utility'
 import { UserService } from 'src/app/modules/auth/services/user/user.service'
+import {
+  Card,
+  CardList,
+  ExperienceType,
+} from 'src/app/modules/shared/constants/model/card-experience.model'
 import {
   FilterAcademicYear,
   FilterOptions,
   FilterOptionsValues,
   FilterSubject,
-  ProjectList,
+} from 'src/app/modules/shared/constants/model/filter.model'
+import { InvitationService } from 'src/app/modules/shared/services/invitation/invitation.service'
+import {
   ProjectSort,
   ProjectSortType,
 } from '../../constants/model/project.model'
 import { AcademicYearEntityService } from '../../store/entity/academic-year/academic-year-entity.service'
-import { ProjectListEntityService } from '../../store/entity/project-list/project-list-entity.service'
+import { CardListEntityService } from '../../store/entity/card-list/card-list-entity.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { SubjectEntityService } from '../../store/entity/subjects/subject-entity.service'
 
@@ -34,7 +42,7 @@ import { SubjectEntityService } from '../../store/entity/subjects/subject-entity
   styleUrls: ['./experiences.component.scss'],
 })
 export class ExperiencesComponent implements OnInit, OnDestroy {
-  projects$: Observable<ProjectList>
+  cards$: Observable<CardList>
   academicYearSubcription = new SubSink()
   subjectSubcription = new SubSink()
   clearTimeout = new ClearAllSetTimeouts()
@@ -46,6 +54,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
   maxSize = 3
   modalRef: BsModalRef
   subscriptions = new SubSink()
+  invitationSubscription = new SubSink()
   projectSubcription = new SubSink()
   loadedIds = []
   dropDownData: ProjectSort[]
@@ -87,21 +96,20 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
       checked: false,
     },
   ]
-  // To be implemented once API is ready
-  // teacherLists = [
-  //   { name: 'Liam Seattle', img: './assets/images/people/student1.png' },
-  //   { name: 'Carles Castellví', img: './assets/images/people/student2.png' },
-  //   { name: 'Carme Piñol', img: './assets/images/people/student3.png' },
-  //   { name: 'Manel Iglesias', img: './assets/images/people/student4.png' },
-  //   { name: 'Elena Jiménez', img: './assets/images/people/student5.png' },
-  //   { name: 'Liam Seattle', img: './assets/images/people/student6.png' },
-  // ]
   filterOption: any = {}
+  invitatorMail: string
+  localExperienceType: number
+  cardData: Card
+  projectId: number
+  queryString: string
+  acceptLoading = false
+  rejectLoading = false
   @ViewChild('profileSetupModal') profileSetupModal: TemplateRef<any>
   @ViewChild('LearingexperienceModal') LearingexperienceModal: TemplateRef<any>
+  @ViewChild('invitationModal') invitationModal: TemplateRef<any>
 
   constructor(
-    private projectListService: ProjectListEntityService,
+    private cardListService: CardListEntityService,
     private projectService: ProjectEntityService,
     private translateService: TranslateService,
     private router: Router,
@@ -109,7 +117,9 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     private modalService: BsModalService,
     private academicYearService: AcademicYearEntityService,
     private subjectDataService: SubjectEntityService,
-    private userService: UserService
+    private userService: UserService,
+    private invitationService: InvitationService,
+    private previousRouteService: PreviousRouteService
   ) {}
 
   ngOnInit(): void {
@@ -131,14 +141,20 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     }
     this.subscriptions.unsubscribe()
     this.projectSubcription.unsubscribe()
+    this.invitationSubscription.unsubscribe()
     this.clearTimeout.clearAll()
   }
 
-  checkUserProfile(): void {
+  checkUserProfile(checkFrom?: 'cardSelection'): void {
     this.subscriptions.sink = this.userService.getUser().subscribe((user) => {
       this.userProfileCompleted = !!user?.profileCompleted
       if (user && !user?.profileCompleted) {
-        this.clearTimeout.add = this.openModal('profileSetupModal')
+        if (
+          this.previousRouteService.getPreviousUrl() === '/login' ||
+          checkFrom === 'cardSelection'
+        ) {
+          this.clearTimeout.add = this.openModal('profileSetupModal')
+        }
       }
     })
   }
@@ -152,7 +168,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
       }
       this.setSortByList(query?.sortBy)
       this.setFilter(query)
-      this.getProjectsByQuery(routeQuery)
+      this.getCardsByQuery(routeQuery)
     })
   }
 
@@ -296,16 +312,17 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     }
   }
 
-  getProjectsByQuery(routerQuery: string = ''): void {
-    const ownerId = this.userService.getUserId()
+  getCardsByQuery(routerQuery: string = ''): void {
+    const userId = this.userService.getUserId()
     const query = routerQuery
-      ? `?${routerQuery}&ownerId=${ownerId}&template=false`
-      : '?ownerId=${ownerId}&template=false'
+      ? `?${routerQuery}&userId=${userId}`
+      : `?userId=${userId}`
+    this.queryString = query
     this.loading = true
-    this.projects$ = this.projectListService.entities$.pipe(
-      map((projectList) => projectList.find((list) => list.pageId === query))
+    this.cards$ = this.cardListService.entities$.pipe(
+      map((cardsList) => cardsList.find((list) => list.pageId === query))
     )
-    this.subscriptions.sink = this.projects$.subscribe((list) => {
+    this.subscriptions.sink = this.cards$.subscribe((list) => {
       if (list) {
         this.loading = false
         this.totalItems = list.projectCount
@@ -318,7 +335,7 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
     this.projectSubcription.sink = this.projectService.loading$.subscribe(
       (loading) => {
         if (!loading) {
-          this.projectListService.getWithQuery(query)
+          this.cardListService.getWithQuery(query)
           this.projectSubcription.unsubscribe()
         }
       }
@@ -386,5 +403,88 @@ export class ExperiencesComponent implements OnInit, OnDestroy {
         }
       }
     )
+  }
+
+  onCardSelection(data: Card): void {
+    if (this.userService.user.profileCompleted) {
+      if (data.cardtype === 'TEACHER_INVITATION') {
+        this.cardData = data
+        this.localExperienceType = this.getLocalExperienceType(data.type)
+        this.openInvitationModal()
+      } else {
+        this.router.navigate([
+          `editor/${data?.type.split('_').join('-').toLowerCase()}/${
+            data.id
+          }/1`,
+        ])
+      }
+    } else {
+      this.checkUserProfile('cardSelection')
+    }
+  }
+
+  // invitation actions
+
+  openInvitationModal(): void {
+    this.modalRef = this.modalService.show(this.invitationModal, {
+      ignoreBackdropClick: true,
+      class: 'modal-info modal-dialog-centered',
+    })
+  }
+
+  invitationAction(accepted: boolean = false): void {
+    if (accepted) {
+      this.acceptLoading = true
+    } else {
+      this.rejectLoading = true
+    }
+    this.invitationSubscription.sink = this.invitationService
+      .invitationAction({
+        projectId: this.cardData.id,
+        accepted,
+        email: this.userService.user.email,
+      })
+      .subscribe(
+        () => {
+          this.closeInvitationModal(accepted)
+          this.invitationSubscription.unsubscribe()
+        },
+        () => {
+          this.acceptLoading = false
+          this.rejectLoading = false
+          this.invitationSubscription.unsubscribe()
+        }
+      )
+  }
+
+  closeInvitationModal(accepted?: boolean): void {
+    this.modalRef.hide()
+    this.clearTimeout.add = setTimeout(() => {
+      if (accepted) {
+        this.router.navigate([
+          `editor/${this.cardData?.type.split('_').join('-').toLowerCase()}/${
+            this.cardData.id
+          }/1`,
+        ])
+      } else if (accepted === false) {
+        this.filterLoading = true
+        this.cardListService.getWithQuery(this.queryString)
+      }
+      this.localExperienceType = null
+      this.acceptLoading = false
+      this.rejectLoading = false
+      this.cardData = null
+    }, 400)
+  }
+
+  // Get localization Index based on Experiance Type
+  getLocalExperienceType(experienceType: ExperienceType): number {
+    return experienceType === 'PROJECT'
+      ? 0
+      : experienceType === 'DIDACTIC_UNIT'
+      ? 1
+      : experienceType === 'ACTIVITY'
+      ? 2
+      : null
   }
 }

@@ -4,34 +4,31 @@ import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data'
 import { Store } from '@ngrx/store'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
+import {
+  AcademicYear,
+  Subject,
+} from 'src/app/modules/shared/constants/model/curriculum-data.model'
 import { environment } from 'src/environments/environment'
-import { ProjectList } from '../../../constants/model/project.model'
 
 @Injectable()
-export class ProjectListDataService extends DefaultDataService<ProjectList> {
+export class SubjectDataService extends DefaultDataService<AcademicYear> {
   constructor(
     http: HttpClient,
     httpUrlGenerator: HttpUrlGenerator,
     private store: Store
   ) {
-    super('ProjectList', http, httpUrlGenerator)
+    super('Subject', http, httpUrlGenerator)
   }
 
-  getWithQuery(query: string): Observable<ProjectList[] | any> {
-    const pageSize = 6
+  getAll(): Observable<Subject[] | any> {
     return this.http
-      .get<ProjectList[]>(
-        `${environment.apiUrl.projectService}/projects${query}`
-      )
+      .get<Subject[]>(`${environment.apiUrl.curriculumService}/subjects`)
       .pipe(
-        map((res) => {
-          const updatedRes = [{ ...res, pageId: query, pageSize }]
-          return updatedRes
-        }),
+        map((response) => response),
         catchError((err) =>
           of(
             this.store.dispatch({
-              type: '[EvaluationCriteria] @ngrx/data/query-many/failure',
+              type: '[Subject] @ngrx/data/query-many/failure',
               payload: err.message,
               error: { status: err.error.status, error: err.error.error },
             })

@@ -1,0 +1,33 @@
+{
+  "PRIVATEHOME_STRUCTURE": {
+    "home_student_menu_experiences": "Experiencias"
+  },
+  "PRIVATEHOME_EXPERIENCES": {
+    "home_student_experiences_title": "Experiencias |(n)",
+    "home_student_experiences_search_placeholder": "Buscar experiencia",
+    "home_student_experiences_filter_label": "Filtrar",
+    "home_student_experiences_sort_label": "Ordenar por:",
+    "home_student_experiences_sort_openedrecently": "Abierto recientemente",
+    "home_student_experiences_sort_option_lastchange": "Última modificación",
+    "home_student_experiences_sort_option_name": "Nombre",
+    "home_student_experiences_emptystate_title": "No tienes ninguna experiencia",
+    "home_student_experiences_emptystate_description": "¡Pronto recibirás una invitación de tu profesor/a con nuevas experiencias para empezar! 💪",
+    "home_student_experiences_filter_title": "filtros",
+    "home_student_experiences_filter_state": "estado",
+    "home_student_experiences_filter_state_pending": "Pendientes",
+    "home_student_experiences_filter_state_completed": "Completadas",
+    "home_student_experiences_filter_subjects": "asignaturas",
+    "home_student_experiences_filter_search_placeholder": "Busca una asignatura",
+    "home_student_experiences_filter_button": "aplicar"
+  },
+  "ACTIVITIES_LAYOUT_LISTING": {
+    "experience_student_list_header_overtitle": "experiencia",
+    "experience_student_list_pending_title": "Actividades pendientes ",
+    "experience_student_list_completed_title": "Actividades finalizadas ",
+    "experience_student_list_online_label": "online",
+    "experience_student_list_school_label": "presencial",
+    "experience_student_list_mixed_label": "mixta",
+    "experience_student_list_pending_tag": "pendiente",
+    "experience_student_list_completed_tag": "finalizada"
+  }
+}

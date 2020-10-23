@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core'
 
 import { DropdownElement } from '../../../../../../../common-shared/constants/model/form-elements.model'
 import {
-  DraggableRow,
   DropdownItem,
 } from '../../../activity/constants/model/draggable-row.model'
 
@@ -15,9 +14,10 @@ export class EvaluationCardComponent {
   @Input() title: string
   @Input() percentage: number
   @Input() infoPercentage: string
+  @Input() id: number
   @Input() isExercise: false
   @Input() isNotClasificable: false
-  @Input() tooltip: string
+  @Input() tooltipText: string
   @Input() dropdownElements: DropdownElement[] = [
     {
       icon: 'icon-ic_view_small',
@@ -25,13 +25,11 @@ export class EvaluationCardComponent {
       action: 'update',
     },
   ]
-  @Input() element: DraggableRow
+  @Input() hasHeader: false
 
   @Output() actionEmited: EventEmitter<any> = new EventEmitter()
 
   actionEmit(elementSelected: DropdownItem): void {
-    const action = elementSelected.action
-    const elem = { ...this.element, action }
-    this.actionEmited.emit(elem)
+    this.actionEmited.emit( this.id )
   }
 }

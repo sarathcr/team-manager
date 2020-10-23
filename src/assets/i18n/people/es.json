@@ -1,7 +1,7 @@
 {
   "PEOPLE-EMPTY-STATE": {
     "people_emptystate_title": "No has asignado ninguna persona ",
-    "people_emptystate_description": "Añade el listado de profesores/as y alumnos/as que van a participar en ",
+    "people_emptystate_description": "Añade el listado de profesores/as y alumnos/as que van a participar en |.",
     "people_add_teachers_button": "Invitar docentes",
     "people_add_students_button": "Invitar alumnado",
     "people_teachers": "Docentes",
@@ -15,6 +15,37 @@
     "people_delete_confirmation_message": "Si las eliminas dejarán de tener acceso [experience_type_variable_4]. Podrás volver a añadirlas cuando quieras.",
     "people_pending_delete_confirmation_title": "¿Seguro que quieres eliminar a esta persona?",
     "people_pending_delete_confirmation_message": "Esta persona todavía no ha aceptado la invitación. Si la eliminas no podrá tener acceso [experience_type_variable_4]. Podrás volver a invitarla cuando quieras.",
-    "people_card_state": "Estado"
+    "people_card_state": "Estado",
+    "people_invititation_state_pending": "Pendiente",
+    "people_invititation_state_denied": "Rechazada"
+  },
+  "PEOPLE-INVITE-GENERAL": {
+    "invite_popup_invite_button": "invitar",
+    "action_send": "Enviar",
+    "spinner_sending_people_invitations": "Enviando invitaciones...",
+    "invite_popup_confirmation_title": "¡Invitaciones enviadas!",
+    "invite_popup_error1_title": "¡Vaya, no hemos podido invitar a alguien!",
+    "invite_popup_error1_message_teacher": "Estas son las personas que no hemos podido invitar como docentes y el motivo:",
+    "invite_popup_error1_message_student": "Estas son las personas que no hemos podido invitar como alumnado y el motivo:",
+    "invite_popup_error1_reason1": "Ya tiene acceso a la experiencia:",
+    "invite_popup_error1_reason2": "Dispone de una invitación pendiente:",
+    "invite_popup_error1_reason3": "Dispone de cuenta de alumno/a:",
+    "invite_popup_error1_reason4": "Dispone de una cuenta de docente:",
+    "invite_popup_teacher_error1_message_success": "El resto de personas, han sido invitadas correctamente."
+  },
+  "PEOPLE-INVITE-TEACHER": {
+    "invite_popup_teacher_title": "Invitar docentes",
+    "invite_popup_teacher_mail_input_label": "E-mail/s",
+    "invite_popup_teacher_mail_input_placeholder": "Escribe o pega el listado de e-mails de los docentes que quieras invitar",
+    "invite_popup_teacher_confirmation_message": "Te mandaremos un e-mail cuando los docentes acepten la invitación y se unan a la experiencia. Desde la sección “Personas” los podrás administrar.",
+    "invite_popup_teacher_error1_message_success": "El resto de personas, han sido invitadas correctamente."
+  },
+  "PEOPLE-INVITE-STUDENT": {
+    "invite_popup_student_title": "Invitar alumnado",
+    "invite_popup_student_mail_tab": "Por e-mail",
+    "invite_popup_student_classroom_tab": "Google Classroom",
+    "invite_popup_student_mail_input_label": "E-mail/s",
+    "invite_popup_student_mail_input_placeholder": "Escribe o pega el listado de e-mails del alumnado que quieras invitar",
+    "invite_popup_student_confirmation_message": "Te mandaremos un e-mail cuando los alumnos o las alumnas acepten la invitación y se unan a la experiencia. Desde la sección \"Personas\" los podrás administrar."
   }
 }

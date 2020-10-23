@@ -8,7 +8,7 @@ import { catchError, map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 
 import { Store } from '@ngrx/store'
-import { EvaluationCriteria } from '../../../constants/model/project.model'
+import { EvaluationCriteria } from 'src/app/modules/shared/constants/model/curriculum-data.model'
 
 @Injectable()
 export class EvaluationCriteriaDataService extends DefaultDataService<

@@ -10,7 +10,6 @@ import { Option } from 'src/app/common-shared/constants/model/form-elements.mode
 import {
   ContentModal,
   ContentsWithSkills,
-  Grade,
 } from 'src/app/modules/teacher/project-editor/constants/model/project.model'
 import { Block } from '../../constants/model/curriculum.model'
 import {
@@ -19,6 +18,7 @@ import {
 } from '../../constants/model/principle-view.model'
 
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
+import { Grade } from 'src/app/modules/shared/constants/model/curriculum-data.model'
 import { environment } from 'src/environments/environment'
 
 @Injectable({

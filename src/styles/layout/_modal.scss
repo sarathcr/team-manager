@@ -19,6 +19,12 @@
       top: 32px;
     }
   }
+  &_medium {
+    max-width: 700px;
+    .modal-content {
+      padding: 38px;
+    }
+  }
   &_height_auto {
     .modal-content {
       padding: 35px grid-gutter(primary) * 2;

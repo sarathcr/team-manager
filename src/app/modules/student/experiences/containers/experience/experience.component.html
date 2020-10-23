@@ -1,0 +1,148 @@
+<div class="experience">
+  <app-banner
+    [imgUrl]="studentActivities?.creativeImage"
+    [heading]="studentActivities?.experienceTitle"
+  ></app-banner>
+
+  <div class="experience__listing">
+    <!-- Activity pending section -->
+    <div *ngIf="studentActivities?.pending?.activities?.length > 0">
+      <h2 class="title_s mb-6">
+        {{
+          'ACTIVITIES_LAYOUT_LISTING.experience_student_list_pending_title'
+            | translate
+        }}
+        <span>({{ studentActivities?.pending.activities.length }})</span>
+      </h2>
+      <div class="experience__pending-wrapper">
+        <div
+          class="experience__listing-row"
+          *ngFor="
+            let list of studentActivities?.pending.activities;
+            let index = index
+          "
+        >
+          <app-box-row>
+            <div class="experience__box-row">
+              <div class="experience__box-row-title">
+                {{ list.name }}
+              </div>
+              <div class="experience__box-row-right">
+                <span
+                  class="icon-ic_separador experience__icon"
+                  *ngIf="list.begin"
+                ></span>
+                <div
+                  class="experience__box-row-schedule"
+                  *ngIf="list.begin || list.end"
+                >
+                  <span
+                    class="experience__icon icon-ic_calendar_off mr-3"
+                    *ngIf="list.begin"
+                  ></span>
+                  <span class="experience__date"
+                    ><span>{{ list.begin | date: 'dd.MM.yyyy' }}</span>
+                    <span *ngIf="list.begin && list.end">
+                      - {{ list.end | date: 'dd.MM.yyyy' }}</span
+                    ></span
+                  >
+                </div>
+                <span
+                  class="icon-ic_separador experience__icon"
+                  *ngIf="list.modality"
+                ></span>
+                <div class="experience__box-row-modality" *ngIf="list.modality">
+                  {{ list.modality }}
+                </div>
+                <span class="icon-ic_separador experience__icon"></span>
+                <div class="experience__box-row-state">
+                  <div class="experience__state-wrap">
+                    {{
+                      'ACTIVITIES_LAYOUT_LISTING.experience_student_list_pending_tag'
+                        | translate
+                    }}
+                  </div>
+                </div>
+                <span class="icon-ic_separador experience__icon"></span>
+                <div class="experience__box-row-notification">
+                  <span class="experience__icon icon-ic_notification_bullet">
+                    <span class="path1"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </app-box-row>
+        </div>
+      </div>
+    </div>
+    <!-- Activity Completed Section -->
+    <div *ngIf="studentActivities?.done?.activities?.length > 0">
+      <h2 class="title_s mb-6">
+        {{
+          'ACTIVITIES_LAYOUT_LISTING.experience_student_list_completed_title'
+            | translate
+        }}<span>({{ studentActivities?.done?.activities?.length }})</span>
+      </h2>
+      <div
+        class="experience__listing-row"
+        *ngFor="
+          let list of studentActivities?.done.activities;
+          let index = index
+        "
+      >
+        <app-box-row>
+          <div class="experience__box-row">
+            <div class="experience__box-row-title">
+              {{ list.name }}
+            </div>
+            <div class="experience__box-row-right">
+              <span
+                class="icon-ic_separador experience__icon"
+                *ngIf="list.begin"
+              ></span>
+              <div
+                class="experience__box-row-schedule"
+                *ngIf="list.begin || list.end"
+              >
+                <span
+                  class="experience__icon icon-ic_calendar_off mr-3"
+                  *ngIf="list.begin"
+                ></span>
+                <span class="experience__date"
+                  ><span>{{ list.begin | date: 'dd.MM.yyyy' }}</span>
+                  <span *ngIf="list.begin && list.end">
+                    - {{ list.end | date: 'dd.MM.yyyy' }}</span
+                  ></span
+                >
+              </div>
+              <span
+                class="icon-ic_separador experience__icon"
+                *ngIf="list.modality"
+              ></span>
+              <div class="experience__box-row-modality" *ngIf="list.modality">
+                {{ list.modality }}
+              </div>
+              <span class="icon-ic_separador experience__icon"></span>
+              <div class="experience__box-row-state">
+                <div
+                  class="experience__state-wrap experience__state-wrap_completed"
+                >
+                  {{
+                    'ACTIVITIES_LAYOUT_LISTING.experience_student_list_completed_tag'
+                      | translate
+                  }}
+                </div>
+              </div>
+              <span class="icon-ic_separador experience__icon"></span>
+              <div class="experience__box-row-notification">
+                <span class="experience__icon icon-ic_notification_bullet">
+                  <span class="path1"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </app-box-row>
+      </div>
+    </div>
+  </div>
+</div>

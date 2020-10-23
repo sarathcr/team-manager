@@ -13,8 +13,8 @@ export const environment = {
     imgUpload: 'https://api.dev.abp.thinkoeducation.com/uploads/',
   },
   googleId:
-    '339066244978-j4e1oo8296374f1v6s8nn7ctkned11vf.apps.googleusercontent.com',
-  googleAPIKey: 'AIzaSyAqWYDpv0auQ2Jbzd1SmJpY3FDOqDedEXE',
+    '331724195625-san881tgsb37476n1ujcfvs2u98gic1p.apps.googleusercontent.com',
+  googleAPIKey: 'AIzaSyC-NmISTEj4Tc0WXbgV_r5QpUORQqV24GU',
   googleLoginOptions: {
     scope: 'https://www.googleapis.com/auth/drive',
     discoveryDocs: 'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',

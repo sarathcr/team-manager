@@ -1,9 +1,33 @@
-<div class="evaluation">
-  <div class="evaluation__bg-left"></div>
-  <div class="evaluation__empty" *ngIf="!hasEvaluableExercises">
+<div
+  class="evaluation-editor"
+  [ngClass]="{ 'evaluation-editor_empty': !hasExercises }"
+>
+  <div
+    class="evaluation-editor__col-left"
+    [ngClass]="
+      !hasExercises
+        ? 'evaluation-editor__col-left_bg_empty'
+        : 'evaluation-editor__col-left_bg_data'
+    "
+  ></div>
+  <app-evaluation-sidebar
+    *ngIf="hasExercises"
+    [title]="
+      ('EVALUATION.evaluation_table_ students_title' | translate) +
+      ' (' +
+      0 +
+      ')'
+    "
+    [label]="'EVALUATION.evaluation_emptystate_student_placeholder' | translate"
+    icon="add"
+  ></app-evaluation-sidebar>
+  <div
+    class="evaluation__empty"
+    *ngIf="!hasExercises; else containEvaluableExercises"
+  >
     <img
       src="../assets/icons/img_evaluacion@2x.png"
-      class="evaluation__empty-image"
+      class="evaluation-editor__empty-image"
       alt=""
     />
     <p class="evaluation__empty-title title_s">
@@ -13,19 +37,99 @@
       {{ 'EVALUATION.evaluation_emptystate_description' | translate }}
     </p>
     <div class="evaluation__empty-button">
-      <app-button theme="primary" icon="add" (click)="createActivity()">
+      <app-button
+        theme="primary"
+        icon="add"
+        class="evaluation__btn"
+        (click)="createActivity()"
+      >
         {{ 'EVALUATION.evaluation_emptystate_exercises_button' | translate }}
       </app-button>
     </div>
+    <div
+      class="evaluation-editor__col-right evaluation-editor__col-right_bg_data"
+    ></div>
   </div>
-  <div class="evaluation__exercises"></div>
-  <div class="evaluation__bg-right">
-    <div class="evaluation__contextual-help">
-      <app-contextual-help
-        (status)="getContextualStatus($event)"
-      ></app-contextual-help>
+  <ng-template #containEvaluableExercises>
+    <div class="evaluation__exercises">
+      <div class="evaluation__exercises-cards">
+        <app-evaluation-card
+          [title]="'EVALUATION.evaluation_table_ average_title' | translate"
+          [percentage]="totalPercentage"
+          [tooltipText]="
+            'EVALUATION.evaluation_table_ exercises_percentage_tooltip'
+              | translate
+          "
+          [isNotClasificable]="false"
+          [hasHeader]="true"
+        ></app-evaluation-card>
+        <div class="evaluation-carousel-box">
+          <div class="evaluation__header">
+            <h1 class="evaluation_title">
+              {{ 'EVALUATION.evaluation_table_ exercises_header' | translate }}
+              ({{ exercises.length }})
+            </h1>
+          </div>
+          <div
+            class="carousel-multilist"
+            [ngClass]="{
+              'carousel-multilist_disable-prev': !hasPrevCards,
+              'carousel-multilist_disable-next': !hasNextCards,
+              'carousel-multilist_hide-btns': exercises.length <= itemsPerSlide
+            }"
+          >
+            <carousel
+              [(itemsPerSlide)]="itemsPerSlide"
+              [singleSlideOffset]="singleSlideOffset"
+              [interval]="false"
+              [noWrap]="noWrap"
+              (slideRangeChange)="updatePrevNext()"
+            >
+              <slide *ngFor="let exercise of exercises">
+                <app-evaluation-card
+                  [title]="exercise.name"
+                  [id]="exercise.activityId"
+                  [isExercise]="true"
+                  [percentage]="exercise.percentage"
+                  [isNotClasificable]="!exercise.evaluation"
+                  (actionEmited)="navigate($event)"
+                ></app-evaluation-card>
+              </slide>
+            </carousel>
+          </div>
+        </div>
+      </div>
+
+      <div class="evaluation__empty evaluation__empty_transparent">
+        <span class="title_primary">{{
+          'EVALUATION.evaluation_emptystate_students_title' | translate
+        }}</span>
+        <p class="evaluation__empty_description">
+          {{
+            'EVALUATION.evaluation_emptystate_students_description' | translate
+          }}
+        </p>
+        <app-button
+          class="evaluation__btn"
+          icon="add"
+          id="evaluation-add-student-button"
+          >{{
+            'EVALUATION.evaluation_emptystate_students_button_add' | translate
+          }}</app-button
+        >
+      </div>
     </div>
-  </div>
+    <div
+      class="evaluation-editor__col-right"
+      [ngClass]="{ 'evaluation-editor__col-right_close': !contextualStatus }"
+    >
+      <div class="evaluation__contextual-help">
+        <app-contextual-help
+          (status)="getContextualStatus($event)"
+        ></app-contextual-help>
+      </div>
+    </div>
+  </ng-template>
   <ng-template #modalCreate>
     <app-modal-form
       variant="input"

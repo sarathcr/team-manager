@@ -16,15 +16,15 @@ import { FieldEvent } from 'src/app/common-shared/constants/model/form-elements.
 import { unfreeze } from 'src/app/common-shared/utility/object.utility'
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
 import {
+  Standard,
+  Subject,
+} from 'src/app/modules/shared/constants/model/curriculum-data.model'
+import {
   Activity,
   ActivityResource,
   ActivityState,
 } from 'src/app/modules/teacher/project-editor/constants/model/activity.model'
-import {
-  Project,
-  Standard,
-  Subject,
-} from 'src/app/modules/teacher/project-editor/constants/model/project.model'
+import { Project } from 'src/app/modules/teacher/project-editor/constants/model/project.model'
 import { DefinitionDropdownData } from 'src/app/modules/teacher/project-editor/modules/activity/constants/data/form-elements.data'
 import { EditorService } from 'src/app/modules/teacher/project-editor/services/editor/editor.service'
 import { StudentGroupsEntityService } from 'src/app/modules/teacher/project-editor/store/entity/student-groups/student-groups-entity.service'

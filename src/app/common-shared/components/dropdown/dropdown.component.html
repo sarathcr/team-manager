@@ -17,8 +17,11 @@
   >
     <li
       class="dropdown-menu-item"
-      (click)="onSelect(dropdownElement)"
+      (click)="onSelect(dropdownElement, dropdownElement?.disabled)"
       *ngFor="let dropdownElement of list"
+      [ngClass]="{
+        'span-dropdown-menu-item_disabled': dropdownElement?.disabled
+      }"
     >
       <span
         class="icon icon-tooltip {{

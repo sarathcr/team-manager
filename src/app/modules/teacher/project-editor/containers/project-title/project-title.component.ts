@@ -193,7 +193,7 @@ export class ProjectTitleComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // function to manage the delay in modal closing
   modalCloseDelay(callback: any): void {
-    setTimeout(() => {
+    this.clearTimeout.add = setTimeout(() => {
       callback()
     }, 500)
   }

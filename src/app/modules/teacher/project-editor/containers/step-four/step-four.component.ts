@@ -15,11 +15,20 @@ import { ContentService } from '../../services/contents/contents.service'
 import { EditorService } from '../../services/editor/editor.service'
 import { CurriculumBasicSkillsEntityService } from '../../store/entity/curriculum-basic-skills/curriculum-basic-skills-entity.service'
 
+import { StepButtonSubmitConfig } from 'src/app/common-shared/constants/data/form-elements.data'
 import {
   CheckBoxData,
   DropdownCustom,
   Option,
 } from 'src/app/common-shared/constants/model/form-elements.model'
+import { unfreeze } from 'src/app/common-shared/utility/object.utility'
+import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
+import { ClearAllSetTimeouts } from 'src/app/common-shared/utility/timeout.utility'
+import {
+  BasicSkill,
+  Content,
+  Subject as CurriculumSubject,
+} from 'src/app/modules/shared/constants/model/curriculum-data.model'
 import { Block } from '../../constants/model/curriculum.model'
 import {
   PrincipalModalColData,
@@ -27,19 +36,12 @@ import {
   SecondaryViewLabels,
 } from '../../constants/model/principle-view.model'
 import {
-  BasicSkill,
-  Content,
   Project,
   ProjectContent,
   Status,
   Step,
-  Subject as CurriculumSubject,
 } from '../../constants/model/project.model'
 import { FormFour } from '../../constants/model/step-forms.model'
-
-import { StepButtonSubmitConfig } from 'src/app/common-shared/constants/data/form-elements.data'
-import { unfreeze } from 'src/app/common-shared/utility/object.utility'
-import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
 
 @Component({
   selector: 'app-step-four',
@@ -81,6 +83,8 @@ export class StepFourComponent implements OnInit, OnDestroy {
   showPrimaryView = false
   reopenPrimaryView = false
   selectedPrimaryViewData: CurriculumSubject
+  clearTimeout = new ClearAllSetTimeouts()
+  isSecondaryViewEnabled = false
 
   // Modal
   modalColumns: PrincipalModalColData
@@ -103,6 +107,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.clearTimeout.clearAll()
     this.subscriptions.unsubscribe()
     this.errorSubscriptions.unsubscribe()
     this.editor.updateOneProjectFromCache({ error: null })
@@ -352,6 +357,7 @@ export class StepFourComponent implements OnInit, OnDestroy {
 
   // Open Modal for delete
   openModalDelete(data: { subjectId: number; id: number }): void {
+    this.showPrimaryView = false
     this.delData = data
     this.modalRef = this.modalService.show(this.modalDelete, {
       class: 'common-modal  modal-dialog-centered',
@@ -359,9 +365,9 @@ export class StepFourComponent implements OnInit, OnDestroy {
   }
 
   // Decline Modal for both Unlock and delete
-  declineModal(): void {
-    this.modalRef.hide()
+  declineModal(clearSecondary: boolean = false): void {
     this.childModalRef?.hide()
+    this.modalRef?.hide()
     this.showDataDependancyLoader = false
     this.showPrimaryView = false
     this.errorSubscriptions.unsubscribe()
@@ -369,6 +375,11 @@ export class StepFourComponent implements OnInit, OnDestroy {
     if (this.reopenPrimaryView) {
       this.openPrincipalView(this.selectedPrimaryViewData)
       this.reopenPrimaryView = false
+    }
+    if (clearSecondary) {
+      this.clearTimeout.add = setTimeout(() => {
+        this.isSecondaryViewEnabled = false
+      }, 500)
     }
   }
 
@@ -564,23 +575,33 @@ export class StepFourComponent implements OnInit, OnDestroy {
     return [...subjectPayload]
   }
 
+  changeView(showPrimaryView: boolean): void {
+    if (!showPrimaryView) {
+      this.isSecondaryViewEnabled = true
+    } else {
+      this.isSecondaryViewEnabled = false
+    }
+  }
   getRemoveContentError(): void {
     this.errorSubscriptions.sink = this.editor.project$
       .pipe(skip(1))
       .subscribe((data) => {
         this.modalRef?.hide()
-        if (data?.error?.type === 'CONTENT_ACTIVITY') {
-          if (this.showPrimaryView) {
-            this.reopenPrimaryView = true
+        this.clearTimeout.add = setTimeout(() => {
+          if (data?.error?.type === 'CONTENT_ACTIVITY') {
+            if (this.showPrimaryView) {
+              this.reopenPrimaryView = true
+            }
+
+            this.modalRef = this.modalService.show(this.dependancyModalOne, {
+              class: 'common-modal modal-dialog-centered',
+              animated: false,
+            })
+          } else {
+            this.reopenPrimaryView = false
+            this.declineModal(true)
           }
-          this.modalRef = this.modalService.show(this.dependancyModalOne, {
-            class: 'common-modal modal-dialog-centered',
-            animated: false,
-          })
-        } else {
-          this.reopenPrimaryView = false
-          this.declineModal()
-        }
+        }, 500)
       })
   }
 

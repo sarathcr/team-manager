@@ -8,6 +8,7 @@ export interface DraggableRow {
   columnFive: DraggableColumnFive
   dropdownElements?: DropdownItem[]
   action?: string
+  sortOrder: number
 }
 
 export interface DraggableColumn {

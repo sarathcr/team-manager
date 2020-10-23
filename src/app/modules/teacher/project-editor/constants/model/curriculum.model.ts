@@ -1,12 +1,11 @@
 import { Option } from 'src/app/common-shared/constants/model/form-elements.model'
 import {
   BasicSkill,
-  ContentsWithSkills,
   EvaluationCriteria,
   Grade,
   Region,
-  StandardsWithSkills,
-} from './project.model'
+} from 'src/app/modules/shared/constants/model/curriculum-data.model'
+import { ContentsWithSkills, StandardsWithSkills } from './project.model'
 
 export class BlockWithQuery {
   id: string
@@ -27,17 +26,6 @@ export class Block {
   colOneHead?: string
   blockIndex?: number
   standard?: StandardsWithSkills[]
-}
-
-export class Dimensions extends Option {
-  description?: string
-  specificSkills?: SpecificSkills[]
-}
-
-export class Indicator extends Option {
-  code: string
-  description: string
-  numeration: number
 }
 
 export class SpecificSkills extends Option {

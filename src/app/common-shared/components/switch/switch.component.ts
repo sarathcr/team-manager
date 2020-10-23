@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { Type } from '../../constants/model/switch.model'
 
 @Component({
@@ -6,7 +6,7 @@ import { Type } from '../../constants/model/switch.model'
   templateUrl: './switch.component.html',
   styleUrls: ['./switch.component.scss'],
 })
-export class SwitchComponent {
+export class SwitchComponent implements OnInit {
   @Input() switchOn = true
   @Input() disabled = false
   @Input() textOn = 'On'
@@ -21,6 +21,12 @@ export class SwitchComponent {
   @Output() changeSwitch: EventEmitter<boolean> = new EventEmitter()
 
   constructor() {}
+
+  ngOnInit(): void {
+    if (this.type === 'button') {
+      this.isActive = this.switchOn ? 'item1' : 'item2'
+    }
+  }
 
   toggleSwitch($event: any): void {
     if (!this.disabled) {

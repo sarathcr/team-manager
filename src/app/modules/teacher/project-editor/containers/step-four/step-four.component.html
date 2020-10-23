@@ -155,7 +155,8 @@
     [blockData]="blockData"
     [dropdownTitles]="dropDownConfig"
     [labels]="labels"
-    [showPrimaryView]="showPrimaryView"
+    [showPrimaryView]="!isSecondaryViewEnabled"
+    (viewChange)="changeView($event)"
     (modalSubmit)="handleModalSubmit($event)"
     (decline)="declineModal()"
   ></app-principal-view-modal>

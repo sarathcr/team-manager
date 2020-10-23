@@ -9,7 +9,7 @@ import {
 } from '@angular/core'
 import { cloneDeep } from 'lodash'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
-import { FilterOptions } from 'src/app/modules/teacher/project-editor/constants/model/project.model'
+import { FilterOptions } from '../../constants/model/filter.model'
 
 @Component({
   selector: 'app-filter',
@@ -19,6 +19,7 @@ import { FilterOptions } from 'src/app/modules/teacher/project-editor/constants/
 export class FilterComponent implements OnInit {
   @Input() filterOption: FilterOptions
   @Input() filterSum: number
+  @Input() userType: 'TEACHER' | 'STUDENT' = 'TEACHER'
   @Output() filter = new EventEmitter()
   @ViewChild('filterModal') filterModal: TemplateRef<any>
   searchText: string

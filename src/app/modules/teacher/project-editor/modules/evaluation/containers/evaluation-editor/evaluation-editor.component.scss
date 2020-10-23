@@ -1,43 +1,127 @@
 @import 'variables/_variables-master';
-@import 'helpers/_bt-mixins';
 
 .evaluation {
-  &__bg-right {
-    background-image: url('../../../../../../../../assets/images/shape-right@2x.png');
-    background-repeat: round;
-    background-position: right top;
-    background-size: 100% auto;
-    height: 100%;
-    width: 200px;
-    position: absolute;
-    right: 0;
-    top: 0;
+  &-editor {
+    background-color: color(background-primary);
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 102px;
+
+    &_empty {
+      position: fixed;
+    }
+
+    &__col {
+      &-right {
+        height: 100%;
+        width: 200px;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        &_close {
+          height: 100px;
+          ::ng-deep {
+            .contextual-help {
+              height: 86px;
+            }
+          }
+        }
+
+        &_bg_data {
+          background-image: url('../../../../../../../../assets/images/shape-right@2x.png');
+          background-repeat: round;
+          background-position: right top;
+          background-size: 100% auto;
+        }
+      }
+
+      &-left {
+        background-repeat: no-repeat;
+        background-position: left top;
+        background-size: contain;
+        height: 100%;
+
+        &_bg_empty {
+          background-image: url('../../../../../../../../assets/images/shape-left@2x.png');
+          width: 200px;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+
+        &_bg_data {
+          background-image: url('../../../../../../../../assets/images/shape-left-data@2x.png');
+          width: 425px;
+          height: 225px;
+          position: absolute;
+          left: 0;
+          top: 77px;
+        }
+      }
+    }
   }
 
-  &__bg-left {
-    background-image: url('../../../../../../../../assets/images/shape-left@2x.png');
-    background-repeat: no-repeat;
-    background-position: left top;
-    background-size: contain;
-    height: 100%;
-    width: 200px;
-    position: absolute;
-    left: 0;
-    top: 0;
+  &__header {
+    width: 100%;
+    border-radius: 3px 3px 0 0;
+    background-color: color(white-smoke);
+    padding: spacing(primary) spacing(secondary) spacing(primary) 18px;
+
+    &_center {
+      text-align: center;
+    }
+
+    &_left {
+      text-align: left;
+    }
+
+    .evaluation_title {
+      color: color(tertiary);
+      font-family: font-family(secondary);
+      font-weight: 800;
+      font-size: font-size(default);
+      letter-spacing: 0.4px;
+      line-height: 20px;
+      opacity: 0.6;
+    }
   }
 
-  background-color: color(background-primary);
-  width: 100%;
-  min-height: 100%;
-  height: auto;
-  position: fixed;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
+  &-carousel-box {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-left: 26px;
+    margin-right: 15px;
+
+    .evaluation__header {
+      width: 99.3%;
+    }
+  }
 
   &__contextual-help {
     margin-top: 75px;
+  }
+
+  &__exercises {
+    background-color: color(background-primary);
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 260px);
+    min-height: 100vh;
+    margin-left: auto;
+    padding: 106px grid-gutter(primary) 0 0;
+    position: relative;
+    &-cards {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 30px;
+    }
   }
 
   &__empty {
@@ -45,7 +129,9 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    max-width: 637px;
+    padding: 26px 36px;
+    height: 298px;
+    margin-top: 1px;
 
     &-image {
       height: 60px;
@@ -60,7 +146,52 @@
     &-description {
       font-size: font-size(default);
       text-align: center;
+      color: pantone(blue-whale);
+      line-height: 24px;
       margin-bottom: spacing(secondary);
     }
+
+    &_transparent {
+      margin-right: 22px;
+      background-color: transparent;
+      border-radius: 4px;
+      background: linear-gradient(
+          to right,
+          rgba(color(tertiary), 0.4) 10%,
+          rgba(pantone(nobel), 0) 20%
+        ),
+        linear-gradient(
+          rgba(color(tertiary), 0.4) 10%,
+          rgba(pantone(nobel), 0) 20%
+        ),
+        linear-gradient(
+          to right,
+          rgba(color(tertiary), 0.4) 10%,
+          rgba(pantone(nobel), 0) 20%
+        ),
+        linear-gradient(
+          rgba(color(tertiary), 0.4) 10%,
+          rgba(pantone(nobel), 0) 20%
+        );
+      background-position: top, right, bottom, left;
+      background-repeat: repeat-x, repeat-y;
+      background-size: 5px 1px, 1px 5px;
+    }
+
+    .title_primary {
+      margin-bottom: 10px;
+      font-size: font-size(xs);
+      font-weight: 900;
+      color: pantone(blue-whale);
+      line-height: 32px;
+      letter-spacing: 0.3px;
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
   }
 }

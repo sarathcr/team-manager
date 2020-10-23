@@ -1,0 +1,39 @@
+<div
+  class="chipset position-relative"
+  [ngClass]="{
+    chipset_focus: focus,
+    chipset_border: hasValue
+  }"
+  (click)="setInputFocus()"
+  (focusout)="focus = false"
+  (focusin)="focus = true"
+>
+  <label class="chipset__label" *ngIf="label">
+    {{ label | translate }}
+  </label>
+  <div class="chipset__wrapper" tabindex="0">
+    <div class="chipset__chip-wrapper position-relative">
+      <div
+        *ngFor="let chip of chips; let index = index"
+        class="chipset__chip chip"
+      >
+        <span class="chip__text">
+          {{ chip }}
+        </span>
+        <span
+          class="icon-ic_close chip__icon"
+          (click)="removeChip(index)"
+        ></span>
+      </div>
+      <input
+        class="form-control chipset__input mb-1"
+        type="text"
+        [ngModel]="inputValue"
+        [placeholder]="this.chips.length ? '' : placeholder"
+        (keyup)="handleKeyUp($event)"
+        (keydown)="handleKeyDown($event)"
+        #input
+      />
+    </div>
+  </div>
+</div>

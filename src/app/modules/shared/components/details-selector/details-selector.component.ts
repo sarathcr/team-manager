@@ -8,7 +8,7 @@ import {
 import { ButtonIcon } from 'src/app/common-shared/constants/model/form-elements.model'
 
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
-import { Subject } from 'src/app/modules/teacher/project-editor/constants/model/project.model'
+import { Subject } from '../../constants/model/curriculum-data.model'
 
 @Component({
   selector: 'app-details-selector',

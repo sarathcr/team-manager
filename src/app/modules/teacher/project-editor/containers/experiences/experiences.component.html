@@ -46,11 +46,14 @@
     <div class="experiences__body">
       <div class="row">
         <app-card-experience
-          *ngFor="let project of (projects$ | async)?.projects; index as i"
-          id="list-project-{{ i }}"
+          *ngFor="let card of (cards$ | async)?.projects; index as i"
+          id="list-card-{{ i }}"
           class="col-4 d-flex"
-          [data]="project"
-          (cardClick)="checkUserProfile()"
+          [data]="card"
+          [isInvitation]="card?.cardtype === 'TEACHER_INVITATION'"
+          [experienceCreator]="card?.assigned.mainUser"
+          [teacherList]="card?.assigned?.otherUsers"
+          (cardClick)="onCardSelection(card)"
         ></app-card-experience>
       </div>
       <app-loader
@@ -185,6 +188,34 @@
     (decline)="declineModal()"
     (confirm)="gotoProfile()"
   >
+  </app-modal-info>
+</ng-template>
+<ng-template #invitationModal>
+  <!-- add user mail and experience type -->
+  <app-modal-info
+    modalTitle="ACCEPTING_INVITATION.experience_invitation_confirmation_title"
+    [showClose]="true"
+    [appearance]="'medium'"
+    confirmLabel="ACCEPTING_INVITATION.action_accept"
+    cancelLabel="ACCEPTING_INVITATION.action_deny"
+    [loading]="acceptLoading"
+    [cancelLoading]="rejectLoading"
+    (confirm)="invitationAction(true)"
+    (decline)="invitationAction()"
+    (closeModal)="closeInvitationModal()"
+  >
+    <div>
+      <b> {{ cardData?.assigned.invitator.email }}</b>
+      {{
+        'ACCEPTING_INVITATION.experience_invitation_confirmation_description'
+          | translate
+          | TranslateConcat
+            : 1
+            : ('VARIABLES.experience_type_variable_6'
+                | translate
+                | TranslateCut: localExperienceType)
+      }}
+    </div>
   </app-modal-info>
 </ng-template>
 <app-loader

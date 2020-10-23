@@ -1,17 +1,30 @@
 <div class="creation__exercises mb-7">
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <h2 class="creation__title">
+  <div class="d-flex justify-content-between align-items-start mb-2">
+    <h2 class="creation__title pr-3">
       {{ title | translate }}
     </h2>
-    <div>
+    <div class="creation__icon-wrapper">
       <span
-        (click)="onExcerciseTitleEdit()"
-        class="icon icon-ic_edit mr-5 creation__icon_size creation__icon_custom"
+        (click)="onEdit()"
+        class="icon icon-ic_edit mr-4 creation__icon_size creation__icon_custom"
       ></span>
-      <span
-        (click)="onClick()"
-        class="icon icon-ic_more creation__icon_size"
-      ></span>
+    </div>
+    <div class="creation__exercises-dropdown">
+      <app-dropdown
+        [list]="dropdownData"
+        position="right"
+        (selects)="actionEmit($event)"
+      >
+        <a
+          href="javascript:void(0);"
+          class="creation__exercises-dropdown-btn"
+          (click)="onClick()"
+        >
+          <span
+            class="icon icon-ic_more creation__icon_size creation__custom-btn"
+          ></span>
+        </a>
+      </app-dropdown>
     </div>
   </div>
   <div class="d-flex align-items-center mb-4">
@@ -48,12 +61,10 @@
         [canDelete]="false"
         [enableBorder]="true"
         [enableShadow]="false"
+        enableTitleLink="true"
         [switchOn]="material.visible"
         (switch)="changeVisibility(material.id, $event)"
       ></app-material-card>
     </ng-container>
-  </div>
-  <div class="creation__icon_draggable">
-    <span class="icon icon-ic_drag"></span>
   </div>
 </div>

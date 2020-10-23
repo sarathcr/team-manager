@@ -10,6 +10,10 @@ import { BlockContentDataService } from './entity/block-content/block-content-da
 import { BlockContentEntityService } from './entity/block-content/block-content-entity.service'
 import { BlockDataService } from './entity/block/block-data.service'
 import { BlockEntityService } from './entity/block/block-entity.service'
+import { CardListDataService } from './entity/card-list/card-list-data.service'
+import { CardListEntityService } from './entity/card-list/card-list-entity.service'
+import { CollaboratorListDataService } from './entity/collaborator-list/collaborator-list-data.service'
+import { CollaboratorListEntityService } from './entity/collaborator-list/collaborator-list-entity.service'
 import { CountryDataService } from './entity/country/country-data.service'
 import { CountryEntityService } from './entity/country/country-entity.service'
 import { CurriculumBasicSkillsDataService } from './entity/curriculum-basic-skills/curriculum-basic-skills-data.service'
@@ -23,8 +27,6 @@ import { DriveFileEntityService } from './entity/drive-file/drive-file-entity.se
 import { entityMetadata } from './entity/entity-metadata'
 import { EvaluationCriteriaDataService } from './entity/evaluation-criteria/evaluation-criteria-data.service'
 import { EvaluationCriteriaEntityService } from './entity/evaluation-criteria/evaluation-criteria-entity.service'
-import { ProjectListDataService } from './entity/project-list/project-list-data.service'
-import { ProjectListEntityService } from './entity/project-list/project-list-entity.service'
 import { ProjectEntityService } from './entity/project/project-entity.service'
 import { ProjectsDataService } from './entity/project/projects-data.service'
 import { RegionDataService } from './entity/region/region-data.service'
@@ -48,8 +50,6 @@ import { TeachingStrategyEntityService } from './entity/teaching-strategy/teachi
   providers: [
     ProjectEntityService,
     ProjectsDataService,
-    ProjectListEntityService,
-    ProjectListDataService,
     CountryEntityService,
     CountryDataService,
     RegionEntityService,
@@ -84,6 +84,10 @@ import { TeachingStrategyEntityService } from './entity/teaching-strategy/teachi
     SubjectDataService,
     ActivityPreviewEntityService,
     ActivityPreviewDataService,
+    CollaboratorListEntityService,
+    CollaboratorListDataService,
+    CardListDataService,
+    CardListEntityService,
   ],
 })
 export class ProjectEditorStoreModule {
@@ -91,7 +95,6 @@ export class ProjectEditorStoreModule {
     private eds: EntityDefinitionService,
     private entityDataService: EntityDataService,
     private projectsDataService: ProjectsDataService,
-    private projectListDataService: ProjectListDataService,
     private countryDataService: CountryDataService,
     private regionDataService: RegionDataService,
     private academicYearDataService: AcademicYearDataService,
@@ -109,12 +112,13 @@ export class ProjectEditorStoreModule {
     private driveFileService: DriveFileDataService,
     private blockContentDataService: BlockContentDataService,
     private activityPreviewDataService: ActivityPreviewDataService,
+    private collaboratorListDataService: CollaboratorListDataService,
+    private cardListDataService: CardListDataService,
     projectEditorToastService: ProjectEditorToastService
   ) {
     eds.registerMetadataMap(entityMetadata)
     entityDataService.registerServices({
       Project: projectsDataService,
-      ProjectList: projectListDataService,
       Country: countryDataService,
       Region: regionDataService,
       AcademicYear: academicYearDataService,
@@ -132,6 +136,8 @@ export class ProjectEditorStoreModule {
       DriveFile: driveFileService,
       BlockContent: blockContentDataService,
       ActivityPreview: activityPreviewDataService,
+      CollaboratorList: collaboratorListDataService,
+      CardList: cardListDataService,
     })
   }
 }

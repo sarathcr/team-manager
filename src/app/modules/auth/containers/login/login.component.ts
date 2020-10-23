@@ -16,8 +16,10 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { SocialAuthService } from 'angularx-social-login'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { GoogleAuthService } from 'src/app/common-shared/services/google/google-auth.service'
+import { PreviousRouteService } from 'src/app/common-shared/services/previous-route/previous-route.service'
 
 import { validateEmail } from 'src/app/common-shared/utility/form.utility'
+import { getUserFromJWT } from 'src/app/common-shared/utility/jwt.utility'
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
 import { environment } from 'src/environments/environment'
 import { AuthService } from '../../services/auth/auth.service'
@@ -44,15 +46,25 @@ export class LoginComponent implements OnInit, OnDestroy {
     private socialAuthService: SocialAuthService,
     private googleAuthService: GoogleAuthService,
     private route: ActivatedRoute,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private previousRouteService: PreviousRouteService
   ) {}
 
   ngOnInit(): void {
     this.redirectByStatus()
+    this.routeInit()
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe()
+  }
+
+  routeInit(): void {
+    this.subscriptions.sink = this.route.queryParams.subscribe((query) => {
+      if (query?.email) {
+        this.email.setValue(atob(query.email))
+      }
+    })
   }
 
   redirectByStatus(): void {
@@ -62,7 +74,12 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.sendActivationLink(token, userId)
     } else {
       if (this.authService.isLoggedIn()) {
-        this.router.navigate(['/editor'])
+        if (getUserFromJWT()?.profile === 'TEACHER') {
+          this.router.navigate(['/editor'])
+        } else {
+          this.router.navigate(['/experiences'])
+        }
+        this.previousRouteService.previousUrl = '/login'
       } else if (this.authService.loggedUser?.id) {
         this.router.navigate(['/activation'])
       } else {

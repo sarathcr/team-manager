@@ -25,6 +25,7 @@
                 label="LOGIN.login_label_email"
                 errorText="LOGIN.Error_login_email"
                 [error]="invalid"
+                [value]="email.value"
                 [enableValidator]="enableValidator"
                 (inputChange)="setValid()"
                 validatorVariant="text"

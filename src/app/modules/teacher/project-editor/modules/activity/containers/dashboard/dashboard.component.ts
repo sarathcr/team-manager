@@ -9,8 +9,8 @@ import {
 } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
-import { Observable } from 'rxjs'
-import { skip } from 'rxjs/operators'
+import { combineLatest, Observable, throwError } from 'rxjs'
+import { catchError, skip } from 'rxjs/operators'
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
 import { ClearAllSetTimeouts } from 'src/app/common-shared/utility/timeout.utility'
 import {
@@ -234,14 +234,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
       (activity) => activity.id === row.id
     )[0]
     act = { ...act, updateType: row.action }
+    console.log('acrion')
     if (act.updateType === 'clone') {
       this.cloneActivity(act)
     } else if (act.updateType === 'update') {
       this.openModalUpdate(act.updateType, 'INITIAL', act)
     } else if (act.updateType === 'delete') {
       this.deleteActivity(act)
+    } else if (act.updateType === 'moveup') {
+      const order = {
+        id: act.id,
+        sortOrder: act.sortOrder - 1,
+      }
+      this.activityEditorService.updateSortOrderActivity(act, order)
+    } else if (act.updateType === 'movedown') {
+      const order = {
+        id: act.id,
+        sortOrder: act.sortOrder + 1,
+      }
+      this.activityEditorService.updateSortOrderActivity(act, order)
     }
   }
+
   openEditProjectModal(data: Box): void {
     this.action = 'updateActivity'
     this.modalFormData = this.dashboardService.initModalProjectTimeForm(

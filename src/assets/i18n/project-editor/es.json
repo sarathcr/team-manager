@@ -282,7 +282,8 @@
     "experience_type_variable_2": "del proyecto|de la unidad didáctica|de la actividad",
     "experience_type_variable_3": "Nuevo proyecto|Nueva unidad didáctica|Nueva actividad",
     "experience_type_variable_4": "al proyecto|a la unidad didáctica",
-    "experience_type_variable_5": "un proyecto|una unidad didáctica|una actividad"
+    "experience_type_variable_5": "un proyecto|una unidad didáctica|una actividad",
+    "experience_type_variable_6": "este proyecto|esta unidad didáctica|esta actividad"
   },
   "CREATE_EXPERIENCE": {
     "create_experience_title": "Crea una experiencia de aprendizaje",
@@ -352,7 +353,7 @@
     "Error_startingpoint_dependency_curriculum_title": "No se puede cambiar el currículum",
     "Error_startingpoint_dependency_curriculum_description": "Para poder variar el currículum debes asegurarte que: <br/> 1. Si has definido actividades, ninguna tenga asociadas las asignaturas que tienes seleccionadas del currículum actual. <br/>2. No hay contenidos de las asignaturas del currículum actual especificados en el paso \"4. Contenidos\". <br/>3. No hay criterios de evaluación de las asignaturas del currículum actual especificados en el paso \"3. De criterios a objetivos\".",
     "Error_startingpoint_dependency_subject_title": "No puedes eliminar las asignaturas",
-    "Error_startingpoint_dependency_subject_description": "Para eliminar una asignatura debes asegurarte que: <br/> 1. Si has definido actividades, ninguna tenga asociada esta asignatura.<br/>2. No hay contenidos de la asignatura especificados en el paso \"4. Contenidos\". <br/>3. No hay criterios de evaluación de la asignatura especificados en el paso \"3. De criterios a objetivos\".",
+    "Error_startingpoint_dependency_subject_description": "Para eliminar una asignatura debes asegurarte que: <br/>1. No hay criterios de evaluación de la asignatura especificados en el paso \"3. De criterios a objetivos\".<br/>2. No hay contenidos de la asignatura especificados en el paso \"4. Contenidos\". <br/> 3. Si has definido actividades, ninguna tenga asociada esta asignatura.",
     "Error_criteria_dependency_subject_title": "No puedes eliminar este criterio de evaluación",
     "Error_criteria_criteriawindow_dependency_subject_title": "No puedes eliminar alguno de los criterios de evaluación",
     "Error_criteria_dependency_subject_description": "Para poder eliminar un criterio debes borrar primero los elementos asociados a este:",
@@ -366,7 +367,10 @@
     "Error_button_gotit": "Entendido",
     "Error_content_dependency_title": "No puedes eliminar este contenido",
     "Error_content_dependency_description": "Para eliminar un contenido debes asegurarte que no esté asociado a ninguna de las actividades definidas. Puedes desasociar contenidos en la página de \"definición\" de cada actividad.",
-    "Error_content_criteriawindow_dependency_title": "No puedes eliminar alguno de los contenidos"
+    "Error_content_criteriawindow_dependency_title": "No puedes eliminar alguno de los contenidos",
+    "Error_standards_dependency_title": "No puedes eliminar este estándar/indicador",
+    "Error_standards_criteriawindow_dependency_title": "No puedes eliminar alguno de los estándares/indicadores",
+    "Error_standards_dependency_description": "Para eliminar un estándar/indicador debes asegurarte que no esté asociado a ninguna de las actividades definidas. Puedes desasociar estándares/indicadores en la página de \"definición\" de cada actividad."
   },
   "EXPERIENCE_STRUCTURE": {
     "project_button_gotit": "Entendido"

@@ -3,7 +3,7 @@ import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data'
-import { Country } from 'src/app/modules/teacher/project-editor/constants/model/project.model'
+import { Country } from 'src/app/modules/shared/constants/model/curriculum-data.model'
 
 @Injectable()
 export class CountryEntityService extends EntityCollectionServiceBase<Country> {
