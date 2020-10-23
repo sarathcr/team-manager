@@ -30,6 +30,7 @@
                 label="SIGNUP_PAGE.login_label_email"
                 errorText="SIGNUP_PAGE.login_input_email_error_existingmail"
                 [error]="invalid"
+                [value]="email.value"
                 [enableValidator]="enableValidator"
                 (inputChange)="setValid()"
                 validatorVariant="text"

@@ -2,36 +2,42 @@
 @import 'variables/_variables-master';
 
 .sidebar {
-  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 235px;
   width: 257px;
   padding-left: 44px;
   padding-right: spacing(secondary);
+
   &-menu {
-    padding-top: 150px;
     &__title {
       font-weight: bold;
       letter-spacing: 0.39px;
       line-height: 0px;
     }
+
     &__element {
       display: flex;
       cursor: pointer;
       flex-direction: row;
-      margin-top: grid-gutter(primary);
+      margin-top: 37px;
       align-items: center;
+
       &-circle {
         height: 50px;
-        width: 50px;
+        width: 58px;
         display: flex;
         background-color: color(quaternary);
         border-radius: 50%;
         justify-content: center;
         align-items: center;
       }
+
       .icon {
-        font-size: font-size(body);
+        font-size: font-size(s);
         color: color(tertiary);
       }
+
       &-label {
         font-family: font-family(default);
         color: color(tertiary);

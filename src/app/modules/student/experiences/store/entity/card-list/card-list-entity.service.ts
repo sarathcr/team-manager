@@ -3,12 +3,13 @@ import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data'
-import { ProjectList } from '../../../constants/model/project.model'
+import { CardList } from 'src/app/modules/shared/constants/model/card-experience.model'
+
 @Injectable()
-export class ProjectListEntityService extends EntityCollectionServiceBase<
-  ProjectList
+export class CardListEntityService extends EntityCollectionServiceBase<
+  CardList
 > {
   constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
-    super('ProjectList', serviceElementsFactory)
+    super('CardList', serviceElementsFactory)
   }
 }

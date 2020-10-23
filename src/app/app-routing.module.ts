@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
 import { NotFoundComponent } from './common-shared/components/not-found/not-found.component'
+import { getUserFromJWT } from './common-shared/utility/jwt.utility'
 import { ActivationErrorComponent } from './modules/auth/containers/activation-error/activation-error.component'
 import { ActivationComponent } from './modules/auth/containers/activation/activation.component'
 import { ForgotPasswordComponent } from './modules/auth/containers/forgot-password/forgot-password.component'
@@ -11,6 +12,7 @@ import { RegisterComponent } from './modules/auth/containers/register/register.c
 import { ResetPasswordComponent } from './modules/auth/containers/reset-password/reset-password.component'
 
 import { AuthGuard } from './modules/auth/guards/auth.guard'
+import { StudentGuard } from './modules/auth/guards/student.gaurd'
 import { TeacherGuard } from './modules/auth/guards/teacher.guard'
 import { UserResolver } from './modules/auth/resolvers/user-resolver.service'
 
@@ -32,11 +34,11 @@ const routes: Routes = [
   {
     path: 'profile/setup',
     loadChildren: () => {
-      if (localStorage.getItem('PROFILE') === 'TEACHER') {
+      if (getUserFromJWT()?.profile === 'TEACHER') {
         return import(
           './modules/teacher/profile-setup/profile-setup.module'
         ).then((m) => m.ProfileSetupModule)
-      } else {
+      } else if (getUserFromJWT()?.profile === 'STUDENT') {
         return import(
           './modules/student/profile-setup/profile-setup.module'
         ).then((m) => m.ProfileSetupModule)
@@ -47,9 +49,7 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => {
-      const token =
-        localStorage.getItem('JWT_TOKEN') || sessionStorage.getItem('JWT_TOKEN')
-      if (token && JSON.parse(atob(token.split('.')[1]))?.profile) {
+      if (getUserFromJWT()?.profile) {
         return import('./modules/teacher/profile/profile.module').then(
           (m) => m.ProfileModule
         )
@@ -103,11 +103,33 @@ const routes: Routes = [
     component: ForgotPasswordComponent,
   },
   { path: 'not-found', component: NotFoundComponent },
+
+  // student Module
+  {
+    path: 'experiences', // Private Home
+    loadChildren: () =>
+      import('./modules/student/experiences/experiences.module').then(
+        (m) => m.ExperiencesModule
+      ),
+    canActivate: [AuthGuard, StudentGuard],
+  },
+  {
+    path: 'experience',
+    loadChildren: () =>
+      import('./modules/student/experiences/experiences.module').then(
+        (m) => m.ExperiencesModule
+      ),
+    canActivate: [AuthGuard, StudentGuard],
+  },
   {
     path: '',
-    redirectTo: 'editor/experiences',
+    redirectTo:
+      getUserFromJWT()?.profile === 'TEACHER'
+        ? 'editor/experiences' // teacher home
+        : '/experiences', // student home
     pathMatch: 'full',
   },
+
   { path: '**', redirectTo: 'not-found' },
 ]
 

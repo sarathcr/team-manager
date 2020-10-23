@@ -9,7 +9,9 @@ import {
 } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
+import { map } from 'rxjs/operators'
 import { Exercise } from 'src/app/common-shared/constants/model/exercise-sidebar.model'
+import { unfreeze } from 'src/app/common-shared/utility/object.utility'
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
 import { ActivityPreview } from '../../../../constants/model/activity-preview.model'
 import { EditorService } from '../../../../services/editor/editor.service'
@@ -26,7 +28,7 @@ export class ActivityPreviewComponent
   activity: ActivityPreview
   projectId: number
   experienceType: string
-  contextualStatus = true
+  contextualStatus = false
   headerHeight: number
   contextualHelpHeight = 0
   subscriptions = new SubSink()
@@ -61,6 +63,15 @@ export class ActivityPreviewComponent
 
     this.subscriptions.sink = this.activityPreviewService
       .getByKey(this.activityId)
+      .pipe(
+        map((res: any) => {
+          const activityData = unfreeze(res)
+          activityData.exercises = activityData.exercises?.sort((a, b) =>
+            a.sortOrder > b.sortOrder ? 1 : -1
+          )
+          return activityData
+        })
+      )
       .subscribe((response) => {
         this.activity = response
         this.createSidebarData()

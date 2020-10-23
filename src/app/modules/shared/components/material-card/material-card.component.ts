@@ -28,6 +28,7 @@ export class MaterialCardComponent {
   @Input() customClass = ''
   @Input() enableShadow = true
   @Input() enableBorder = false
+  @Input() enableTitleLink = false
   @Input() displayFiletype = false
   @Output() delete: EventEmitter<any> = new EventEmitter()
   @Output() dragg: EventEmitter<any> = new EventEmitter()

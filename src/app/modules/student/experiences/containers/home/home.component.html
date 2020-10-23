@@ -1,0 +1,147 @@
+<div class="student-home" id="student-home">
+  <app-main-header
+    id="student-header"
+    userType="STUDENT"
+    [imgUrl]="profileCompleted ? imageUrl : ''"
+    [username]="profileCompleted ? username : 'PROFILE.header_profile_user'"
+  ></app-main-header>
+  <app-main-sidebar id="sidebar">
+    <div class="student-home__sidebar-wrapper">
+      <div>
+        <app-sidebar-menu
+          icon="icon-ic_experiencias-creadas"
+          text="PRIVATEHOME_STRUCTURE.home_student_menu_experiences"
+          link="/experiences"
+          [updated]="true"
+          active="true"
+        ></app-sidebar-menu>
+      </div>
+    </div>
+  </app-main-sidebar>
+
+  <ng-template #hasLoaded>
+    <ng-template #hasProjects>
+      <div class="student-home__body position-relative">
+        <!-- Invitation action loader -->
+        <app-loader
+          *ngIf="acceptLoading"
+          class="student-home__invitation-loader"
+        >
+        </app-loader>
+        <h1 class="student-home__head-text">
+          {{
+            'PRIVATEHOME_EXPERIENCES.home_student_experiences_title'
+              | translate
+              | TranslateCut: 0
+          }}({{ totalItems }})
+        </h1>
+        <div
+          class="student-home__filters w-100 d-flex mb-5 justify-content-between"
+        >
+          <div class="student-home__filters-left d-flex align-items-center">
+            <app-search
+              class="mr-5"
+              [text]="this.searchtext"
+              placeholder="{{
+                'PRIVATEHOME_HEADER.home_search_experience' | translate
+              }}"
+              (searchText)="handleSearch($event)"
+            >
+            </app-search>
+            <app-filter
+              [filterOption]="filterOption"
+              [filterSum]="filterSum"
+              userType="STUDENT"
+              (filter)="applyFilter($event)"
+            >
+            </app-filter>
+          </div>
+          <app-dropdown-select
+            label="PRIVATEHOME_EXPERIENCES.home_student_experiences_sort_label"
+            [defaultSelected]="false"
+            [data]="sortDropdownData"
+            [selectedItems]="selectedSortBy"
+            (dropdownSelect)="onSortSelection($event)"
+          ></app-dropdown-select>
+        </div>
+        <div class="student-home__cards-wrapper">
+          <div class="row">
+            <app-card-experience
+              *ngFor="let card of (cards$ | async)?.projects; index as i"
+              id="list-project-{{ i }}"
+              class="col-4 d-flex"
+              [data]="card"
+              variant="student"
+              [progressCount]="card.advance"
+              [notification]="card.isNotificationPresent"
+              [isInvitation]="card?.cardtype === 'STUDENT_INVITATION'"
+              [experienceCreator]="card?.assigned.mainUser"
+              [teacherList]="card?.assigned?.otherUsers"
+              (cardClick)="onExperienceSelection(card)"
+            ></app-card-experience>
+          </div>
+          <app-loader
+            id="create-home-loader"
+            *ngIf="loading"
+            variant="block"
+            class="student-home__loader"
+          ></app-loader>
+        </div>
+        <div
+          class="student-home__pagination d-flex justify-content-center mb-7"
+        >
+          <app-pagination
+            id="pagination"
+            *ngIf="loaded && !filterLoading && totalItems > 0"
+            [totalItems]="totalItems"
+            [maxSize]="maxSize"
+            [itemsPerPage]="itemsPerPage"
+            [disabled]="loading"
+            [currentPage]="currentPage"
+            (pageChanged)="handlePageChange($event)"
+          >
+          </app-pagination>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- empty screen -->
+    <div
+      class="student-home__content"
+      *ngIf="
+        totalItems === 0 && !loading && searchtext == '' && !!!filterSum;
+        else hasProjects
+      "
+    >
+      <div class="student-home__content_empty">
+        <figure class="student-home__content_empty-figure m-0 pb-2">
+          <img
+            src="../assets/images/img_empty_experiencias@2x.png"
+            class="student-home__content_empty-image"
+            alt=""
+          />
+        </figure>
+
+        <h1 class="student-home__content_empty-title title_s">
+          {{
+            'PRIVATEHOME_EXPERIENCES.home_student_experiences_emptystate_title'
+              | translate
+          }}
+        </h1>
+        <p class="student-home__content_empty-description">
+          {{
+            'PRIVATEHOME_EXPERIENCES.home_student_experiences_emptystate_description'
+              | translate
+          }}
+        </p>
+      </div>
+    </div>
+  </ng-template>
+  <app-loader
+    id="create-home-loader"
+    *ngIf="!loaded; else hasLoaded"
+    variant="block"
+    class="student-home__loader"
+  >
+  </app-loader>
+</div>

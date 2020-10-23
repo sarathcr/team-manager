@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { Activity } from '../../../constants/model/activity.model'
 import { EditorService } from '../../../services/editor/editor.service'
+import { Order } from './../../../constants/model/activity.model'
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +29,15 @@ export class ActivityEditorService {
       ...activity,
       updateType: 'delete',
     })
+  }
+
+  updateSortOrderActivity(activity: Activity, value: Order): void {
+    this.editorService.handleActivitySubmit(
+      {
+        ...activity,
+        updateType: 'sortOrder',
+      },
+      value
+    )
   }
 }

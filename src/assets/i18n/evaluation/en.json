@@ -1,9 +1,17 @@
 {
   "EVALUATION": {
-    "evaluation_emptystate_title": "Todavia no has creado elementos calificables.",
+    "evaluation_emptystate_title": "Todavía no has creado elementos calificables.",
     "evaluation_emptystate_description": "Crea ejercicios o elementos transversales calificables dentro de una actividad para poder asignar porcentajes de calificación y calificar a tus alumnos aquí.",
     "evaluation_emptystate_exercises_button": "nueva actividad",
     "evaluation_table_ exercises_percentage_button": "Asigna porcentaje",
-    "evaluation_table_ exercises_percentage_tooltip": "La suma de porcentajes debe ser 100"
+    "evaluation_table_ exercises_percentage_tooltip": "La suma de porcentajes debe ser 100",
+    "evaluation_emptystate_students_title": "Añade alumnos al proyecto",
+    "evaluation_emptystate_students_description": "Añade el listado de alumnos que van a realizar el proyecto para poder evaluarles aquí.",
+    "evaluation_emptystate_students_button_add": "AÑADIR ALUMNOS",
+    "evaluation_table_ average_title": "Calificación global",
+    "evaluation_table_ students_title": "ALUMNOS",
+    "evaluation_table_ average_header": "MEDIA FINAL",
+    "evaluation_table_ exercises_header": "EJERCICIOS Y ELEMENTOS TRANSVERSALES",
+    "evaluation_emptystate_student_placeholder": "Añadir un nuevo alumno"
   }
 }

@@ -9,6 +9,8 @@ import { ProfileCardVariant } from '../../constants/model/profile-card.model'
 export class PeopleCardComponent {
   @Input() imageUrl: string
   @Input() profileName: string
+  @Input() surName: string
+  @Input() userName: string
   @Input() profileType: string
   @Input() inviteLabel: string
   @Input() variant: ProfileCardVariant = 'default'

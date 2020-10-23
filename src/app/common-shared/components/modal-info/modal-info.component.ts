@@ -28,11 +28,14 @@ export class ModalInfoComponent implements OnInit {
   @Input() description: string
   @Input() confirmLabel: string
   @Input() loading = false
+  @Input() cancelLoading = false
+  @Input() showClose = false
   @Input() icon: ModalIcon = 'lock'
   @Input() theme: ModalInfoTheme = 'primary'
   @Input() cancelLabel = 'PROJECT.project_button_cancel'
   @Output() decline = new EventEmitter()
   @Output() confirm = new EventEmitter()
+  @Output() closeModal = new EventEmitter()
 
   constructor(private location: PlatformLocation) {
     // closes modal when back button is clicked
@@ -47,5 +50,9 @@ export class ModalInfoComponent implements OnInit {
 
   onConfirm(): void {
     this.confirm.emit()
+  }
+
+  onClose(): void {
+    this.closeModal.emit()
   }
 }

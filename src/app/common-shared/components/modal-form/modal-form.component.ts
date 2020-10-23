@@ -52,15 +52,14 @@ export class ModalFormComponent implements OnInit {
     private location: PlatformLocation,
     private formBuilder: FormBuilder
   ) {
-    this.modalForm = this.formBuilder.group({
-      data: '',
-    })
-
     // closes modal when back button is clicked
     this.location.onPopState(() => this.onDecline())
   }
 
   ngOnInit(): void {
+    this.modalForm = this.formBuilder.group({
+      data: this.data || '',
+    })
     this.checkStatus(this.data)
   }
 

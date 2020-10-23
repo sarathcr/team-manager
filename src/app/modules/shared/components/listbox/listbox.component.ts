@@ -5,6 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core'
+import { ListBoxType } from '../../constants/model/listbox.model'
 
 @Component({
   selector: 'app-listbox',
@@ -18,7 +19,7 @@ export class ListboxComponent {
   @Input() heading = ''
   @Input() listData: any
   @Input() loader = false
-  @Input() type = 'radio'
+  @Input() type: ListBoxType = 'radio'
   @Input() label = ''
   @Input() placeholder = ''
   @Input() errorText = ''
@@ -34,6 +35,8 @@ export class ListboxComponent {
   }
   @Input() loading = false
   @Input() maxCount: number
+  @Input() scroll = true
+  @Input() customClass = ''
   @Output() selected = new EventEmitter()
   constructor() {}
 
@@ -48,10 +51,14 @@ export class ListboxComponent {
   }
 
   checkSelect(checked: boolean, index: number): boolean {
-    if (checked) {
-      this.checkedIndex = index
+    if (this.type === 'radio') {
+      if (checked) {
+        this.checkedIndex = index
+      }
+      this.listData[index].checked = false
+      return this.checkedIndex === index
+    } else {
+      return false
     }
-    this.listData[index].checked = false
-    return this.checkedIndex === index
   }
 }

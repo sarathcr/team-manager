@@ -139,7 +139,15 @@
         }}
       </span>
     </div>
-    <div class="material-card__title">
+    <div class="material-card__title-link">
+      <a *ngIf="enableTitleLink" [href]="link" target="_blank">
+        <div class="material-card__title">
+          {{ title }}
+        </div>
+      </a>
+    </div>
+
+    <div *ngIf="!enableTitleLink" class="material-card__title">
       {{ title }}
     </div>
     <div class="material-card__typename" *ngIf="variant === 'PREVIEW'">

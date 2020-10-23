@@ -4,10 +4,7 @@ import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data'
 import { Store } from '@ngrx/store'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
-import {
-  AcademicYear,
-  CurriculumAcademicYear,
-} from 'src/app/modules/teacher/project-editor/constants/model/project.model'
+import { CurriculumAcademicYear } from 'src/app/modules/shared/constants/model/curriculum-data.model'
 import { environment } from 'src/environments/environment'
 
 @Injectable()

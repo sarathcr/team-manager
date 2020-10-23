@@ -42,11 +42,14 @@
     <div class="row">
       <app-card-experience
         class="col-4 d-flex"
-        *ngFor="let project of (projects$ | async)?.projects; index as i"
-        id="list-project-{{ i }}"
-        [data]="project"
+        *ngFor="let card of (cards$ | async)?.projects; index as i"
+        id="list-card-{{ i }}"
+        [data]="card"
+        [isPro]="card.isPremium"
         variant="template"
-        (cardClick)="checkUserProfile(project)"
+        [experienceCreator]="card?.assigned.mainUser"
+        [teacherList]="card?.assigned?.otherUsers"
+        (cardClick)="checkUserProfile(card)"
       >
       </app-card-experience>
     </div>

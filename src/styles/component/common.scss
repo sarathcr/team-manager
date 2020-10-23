@@ -1,0 +1,10 @@
+@import '../../app/common-shared/components/loader/loader.component.scss';
+
+.loading-active {
+  .no-data {
+    h5 {
+      @extend .spinner;
+      @extend .spinner_medium;
+    }
+  }
+}

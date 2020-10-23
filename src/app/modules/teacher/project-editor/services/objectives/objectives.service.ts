@@ -16,9 +16,10 @@ import {
   PrincipalModalColData,
   PrincipalModalColHead,
 } from '../../constants/model/principle-view.model'
-import { CriteriaWithSkills, Grade } from '../../constants/model/project.model'
+import { CriteriaWithSkills } from '../../constants/model/project.model'
 
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
+import { Grade } from 'src/app/modules/shared/constants/model/curriculum-data.model'
 
 @Injectable({
   providedIn: 'root',

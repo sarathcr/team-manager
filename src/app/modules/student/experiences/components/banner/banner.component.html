@@ -1,0 +1,51 @@
+<div class="banner" [ngClass]="{ 'banner_no-image': !imgUrl }">
+  <div class="banner__overlay" *ngIf="imgUrl"></div>
+  <img
+    src="../../../../../../assets/images/student-activity/shape-wave.png"
+    alt="background shapes"
+    class="banner__image_left"
+  />
+  <img
+    src="../../../../../../assets/images/student-activity/shape-right.png"
+    alt="background shapes"
+    class="banner__image_right"
+    [ngClass]="{ 'banner__image_right-no-image': !imgUrl }"
+  />
+  <img
+    src="../../../../../../assets/images/student-activity/shape-top.png"
+    alt="background shapes"
+    class="banner__image_top"
+  />
+  <img
+    src="../../../../../../assets/images/student-activity/shape-circle.png"
+    alt="background shapes"
+    class="banner__image_circle"
+  />
+  <div class="banner__btn position-absolute">
+    <app-button
+      variant="icon"
+      icon="back"
+      theme="teritiary"
+      (click)="back()"
+    ></app-button>
+  </div>
+  <div class="banner__figure">
+    <img
+      src="{{ imgUrl }}"
+      alt="Activities Banner Image"
+      class="banner__image"
+      *ngIf="imgUrl"
+    />
+  </div>
+  <div class="banner__content">
+    <div class="banner__overtitle">
+      {{
+        'ACTIVITIES_LAYOUT_LISTING.experience_student_list_header_overtitle'
+          | translate
+      }}
+    </div>
+    <div class="banner__title">
+      {{ heading }}
+    </div>
+  </div>
+</div>

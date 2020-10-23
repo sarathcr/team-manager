@@ -7,7 +7,7 @@ import { catchError, map } from 'rxjs/operators'
 import {
   AcademicYear,
   Subject,
-} from 'src/app/modules/teacher/project-editor/constants/model/project.model'
+} from 'src/app/modules/shared/constants/model/curriculum-data.model'
 import { environment } from 'src/environments/environment'
 
 @Injectable()

@@ -4,7 +4,6 @@ import { MainHeaderComponent } from 'src/app/common-shared/components/main-heade
 import { MainSidebarComponent } from 'src/app/common-shared/components/main-sidebar/main-sidebar.component'
 import { HomeComponent } from './home.component'
 
-import { ProjectListEntityService } from '../../store/entity/project-list/project-list-entity.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 
 class ProjectEntityServiceStub {}
@@ -20,7 +19,6 @@ describe('HomeComponent', (): void => {
       providers: [
         { provide: ProjectEntityService, useClass: ProjectEntityServiceStub },
         {
-          provide: ProjectListEntityService,
           useClass: ProjectListEntityServiceStub,
         },
       ],

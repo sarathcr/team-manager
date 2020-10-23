@@ -4,8 +4,8 @@ import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data'
 import { Store } from '@ngrx/store'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
+import { Standard } from 'src/app/modules/shared/constants/model/curriculum-data.model'
 import { environment } from 'src/environments/environment'
-import { Standard } from '../../../constants/model/project.model'
 @Injectable()
 export class StandardDataService extends DefaultDataService<Standard> {
   constructor(

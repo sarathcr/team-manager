@@ -34,7 +34,7 @@ storiesOf('Evalutaion|Evaluation Card', module)
   })
   .add('Default', () => ({
     template: `<div class="story_layout_style">
-    <app-evaluation-card [title]="title" [percentage]="percentage" [infoPercentage]="infoPercentage" [isExercise]="isExercise" [isNotClasificable]="isNotClasificable">
+    <app-evaluation-card [title]="title" [percentage]="percentage" [infoPercentage]="infoPercentage" [isExercise]="isExercise" [isNotClasificable]="isNotClasificable" [hasHeader]="hasHeader">
               </app-evaluation-card>
    </div>`,
     styles: [
@@ -55,5 +55,6 @@ storiesOf('Evalutaion|Evaluation Card', module)
       ),
       isExercise: boolean('Is an Exercise Card?', false),
       isNotClasificable: boolean('Is not clasificable?', false),
+      hasHeader: boolean('Has header?', false),
     },
   }))

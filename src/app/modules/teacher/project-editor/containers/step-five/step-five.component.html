@@ -52,6 +52,8 @@
               [variant]="'optional'"
               [list]="competency.customStandards"
               [maxLength]="150"
+              [loading]="showDataDependancyLoader"
+              overrideDelete="true"
               [isTextareaActive]="activeEditableLists.includes(competency.id)"
               [initFocus]="competency.id == activeTextarea"
               editModalTitle="STANDARDS.project_standards_extrastandards_edit_title"
@@ -119,6 +121,7 @@
     [description]="
       'OBJECTIVES.project_objectives_delete_confirmation_message_nonrelated'
     "
+    [loading]="showDataDependancyLoader"
     [confirmLabel]="'PROJECT.project_button_delete'"
     (decline)="declineModal()"
     (confirm)="confirmModalDelete()"
@@ -132,8 +135,28 @@
     [project]="project"
     [competencyObjectiveSelected]="competencyObjectiveSelected"
     [dropdownData]="project?.subjects"
+    [showModalStandards]="!isSecondaryViewEnabled"
     (modalSubmit)="handleModalSubmit($event)"
     (decline)="declineModal()"
+    (viewChange)="changeView($event)"
   >
   </app-modal-standards>
+</ng-template>
+
+<ng-template #dependancyModal>
+  <app-modal-info
+    id="step-four-modal-dependency-info"
+    variant="unlock"
+    buttonPosition="left"
+    [modalTitle]="
+      showPrimaryView
+        ? 'BUSINESS.Error_standards_criteriawindow_dependency_title'
+        : 'BUSINESS.Error_standards_dependency_title'
+    "
+    description="BUSINESS.Error_standards_dependency_description"
+    [confirmLabel]="'PROJECT.project_button_gotit'"
+    (confirm)="declineModal()"
+    (decline)="declineModal()"
+  >
+  </app-modal-info>
 </ng-template>

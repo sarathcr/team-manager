@@ -1,6 +1,5 @@
 @import 'helpers/_helpers-master';
 @import 'variables/_variables-master';
-@import '../loader/loader.component.scss';
 
 .dropdown {
   width: 100%;
@@ -338,8 +337,6 @@
         font-size: 20px !important;
         text-indent: -999999999px;
         color: transparent;
-        @extend .spinner;
-        @extend .spinner_medium;
         margin: 0;
       }
     }

@@ -612,21 +612,27 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         if (this.projectActivitiesData.intialPhase?.length) {
           this.projectActivityInitialPhase = this.phaseWiseActivityList(
             this.activityInitialPhaseTitle,
-            this.projectActivitiesData.intialPhase,
+            this.projectActivitiesData.intialPhase?.sort((a, b) =>
+              a.sortOrder > b.sortOrder ? 1 : -1
+            ),
             'initial'
           )
         }
         if (this.projectActivitiesData.developPhase?.length) {
           this.projectActivityDevelopPhase = this.phaseWiseActivityList(
             this.activityDevelopPhaseTitle,
-            this.projectActivitiesData.developPhase,
+            this.projectActivitiesData.developPhase?.sort((a, b) =>
+              a.sortOrder > b.sortOrder ? 1 : -1
+            ),
             'develop'
           )
         }
         if (this.projectActivitiesData.synthesisPhase?.length) {
           this.projectActivitySynthesisPhase = this.phaseWiseActivityList(
             this.activitySynthesisPhaseTitle,
-            this.projectActivitiesData.synthesisPhase,
+            this.projectActivitiesData.synthesisPhase?.sort((a, b) =>
+              a.sortOrder > b.sortOrder ? 1 : -1
+            ),
             'synthesis'
           )
         }
@@ -1154,38 +1160,40 @@ export class OutputViewComponent implements OnInit, OnDestroy {
           style: 'activityDetailSubhead',
         },
       ])
-      item.exercises?.forEach((exercise, i) => {
-        const qualify = exercise.evaluation
-          ? this.activityExerciseQualified
-          : this.activityExerciseNotQualified
-        const delivery = exercise.delivery
-          ? exercise.delivery === 'PRESENCIAL'
-            ? this.activityExerciseSchool
-            : this.activityExerciseOnline
-          : this.activityExerciseNone
-        exercisesList.push([
-          {
-            columns: [
-              {
-                width: 15,
-                text: i + 1 + '.',
-                margin: [0, 0, 2, 0],
-              },
-              {
-                width: 'auto',
-                text: exercise.name,
-                margin: [0, 0, 4, 0],
-              },
-              {
-                width: 'auto',
-                text: ' (' + qualify + ',' + delivery + ')',
-                style: 'activityExerciseStatus',
-              },
-            ],
-            style: ['listGap', 'activityExerciseName'],
-          },
-        ])
-      })
+      item.exercises
+        ?.sort((a, b) => (a.sortOrder > b.sortOrder ? 1 : -1))
+        .forEach((exercise, i) => {
+          const qualify = exercise.evaluation
+            ? this.activityExerciseQualified
+            : this.activityExerciseNotQualified
+          const delivery = exercise.delivery
+            ? exercise.delivery === 'PRESENCIAL'
+              ? this.activityExerciseSchool
+              : this.activityExerciseOnline
+            : this.activityExerciseNone
+          exercisesList.push([
+            {
+              columns: [
+                {
+                  width: 15,
+                  text: i + 1 + '.',
+                  margin: [0, 0, 2, 0],
+                },
+                {
+                  width: 'auto',
+                  text: exercise.name,
+                  margin: [0, 0, 4, 0],
+                },
+                {
+                  width: 'auto',
+                  text: ' (' + qualify + ',' + delivery + ')',
+                  style: 'activityExerciseStatus',
+                },
+              ],
+              style: ['listGap', 'activityExerciseName'],
+            },
+          ])
+        })
 
       const renderExerciseTable = [
         {
@@ -2551,9 +2559,9 @@ export class OutputViewComponent implements OnInit, OnDestroy {
         this.activityExerciseNone =
           translations['PROGRAMACION.exercise_delivery_modality_none']
         this.activityExerciseQualified =
-          translations['EXCERCISE_CARD.exercise_evaluation_noncalificable']
-        this.activityExerciseNotQualified =
           translations['EXCERCISE_CARD.exercise_evaluation_calificable']
+        this.activityExerciseNotQualified =
+          translations['EXCERCISE_CARD.exercise_evaluation_noncalificable']
         this.activityDiversity = translations['PROGRAMACION.activity_diversity']
         this.activityModalityOnline =
           translations[

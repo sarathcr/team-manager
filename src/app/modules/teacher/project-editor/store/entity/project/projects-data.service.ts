@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
 import { DefaultDataService, HttpUrlGenerator } from '@ngrx/data'
 import { Store } from '@ngrx/store'
+import { cloneDeep } from 'lodash'
 import { Observable, of } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 import { unfreeze } from 'src/app/common-shared/utility/object.utility'
@@ -12,6 +13,7 @@ import {
 } from 'src/app/modules/teacher/project-editor/constants/model/project.model'
 import { environment } from 'src/environments/environment'
 import { Activity, Exercise } from '../../../constants/model/activity.model'
+
 @Injectable()
 export class ProjectsDataService extends DefaultDataService<Project> {
   constructor(
@@ -190,7 +192,27 @@ export class ProjectsDataService extends DefaultDataService<Project> {
           `${environment.apiUrl.projectService}/project/${id}/competencyObjectives/${competencyObjectiveId}/standards/${standardId}`
         )
         .pipe(
-          map(() => data.changes),
+          map((res) => {
+            let updateProject = data.changes
+
+            if (res && res?.type !== 'NONE') {
+              // This block is executed when step4 dependency with Activity
+              updateProject = {
+                ...updateProject,
+                error: res,
+              }
+            } else {
+              updateProject = {
+                ...updateProject,
+                competencyObjectives: this.getStandardsUpdatedProject(
+                  updateProject,
+                  competencyObjectiveId,
+                  standardId
+                ),
+              }
+            }
+            return updateProject
+          }),
           catchError((err) =>
             of(
               this.store.dispatch({
@@ -306,6 +328,96 @@ export class ProjectsDataService extends DefaultDataService<Project> {
         )
       )
     }
+    if (data.changes?.updateType === 'deleteExercise') {
+      const { id, activityId, exerciseId } = data.changes
+      return this.http
+        .delete<Activity[]>(
+          `${environment.apiUrl.projectService}/projects/${id}/activities/${activityId}/excercise/${exerciseId}`
+        )
+        .pipe(
+          map((res) => res),
+          catchError((err) =>
+            of(
+              this.store.dispatch({
+                type: '[Activity] @ngrx/data/delete/failure',
+                payload: err.message,
+                error: { status: err.error.status, error: err.error.error },
+              })
+            )
+          )
+        )
+    }
+
+    if (data.changes?.updateType === 'sortOrderActivity') {
+      const { id, sortOrder } = data.changes
+      return this.http
+        .put(
+          `${environment.apiUrl.projectService}/projects/${id}/activity/updatesortorder`,
+          sortOrder
+        )
+        .pipe(
+          map((res: any) => {
+            if (res) {
+              const activities = cloneDeep(data.changes.activities)
+              activities.map(
+                (activity) =>
+                  (activity.sortOrder = res.find(
+                    (resp) => resp.modelId === activity.id
+                  ).modelOrder)
+              )
+              const dataChanges = {
+                ...data.changes,
+                activities,
+              }
+              return dataChanges
+            }
+          }),
+          catchError((err) =>
+            of(
+              this.store.dispatch({
+                type: '[Activity] @ngrx/data/query-many/failure',
+                payload: err.message,
+                error: { status: err.error.status, error: err.error.error },
+              })
+            )
+          )
+        )
+    }
+    if (data.changes?.updateType === 'sortOrderExercise') {
+      const { id, sortOrder, activityId } = data.changes
+      return this.http
+        .put(
+          `${environment.apiUrl.projectService}/projects/${id}/activity/${activityId}/exercise/updatesortorder`,
+          sortOrder
+        )
+        .pipe(
+          map((res: any) => {
+            const activities = cloneDeep(data.changes.activities)
+            activities
+              .filter((activity) => activity.id === activityId)[0]
+              .exercises?.map(
+                (exercise) =>
+                  (exercise.sortOrder = res.find(
+                    (resp) => resp.modelId === exercise.id
+                  ).modelOrder)
+              )
+            const dataChanges = {
+              ...data.changes,
+              activities,
+            }
+            return dataChanges
+          }),
+          catchError((err) =>
+            of(
+              this.store.dispatch({
+                type: '[Exercise] @ngrx/data/query-many/failure',
+                payload: err.message,
+                error: { status: err.error.status, error: err.error.error },
+              })
+            )
+          )
+        )
+    }
   }
 
   private getContentsUpdatedProject(
@@ -327,6 +439,29 @@ export class ProjectsDataService extends DefaultDataService<Project> {
         return subClone
       } else {
         return sub
+      }
+    })
+  }
+
+  private getStandardsUpdatedProject(
+    projectObj: any,
+    competencyObjectiveId: number,
+    standardId: number
+  ): Project {
+    return projectObj?.competencyObjectives?.map((obj) => {
+      if (obj.id === competencyObjectiveId) {
+        const subClone = unfreeze(obj)
+        const standards = subClone.standards.filter(
+          (std) => std.id !== standardId
+        )
+        const customStandards = subClone.customStandards.filter(
+          (std) => std.id !== standardId
+        )
+        subClone.standards = standards
+        subClone.customStandards = customStandards
+        return subClone
+      } else {
+        return obj
       }
     })
   }

@@ -35,6 +35,10 @@
       &_hide {
         display: none;
       }
+      &-item_disabled {
+        color: rgba(color(tertiary), 0.4);
+        cursor: not-allowed;
+      }
     }
     .basic-link {
       writing-mode: vertical-rl;
@@ -69,6 +73,8 @@
       }
       &-item {
         white-space: nowrap; //Important to keep width for dropdown list respect to the content length
+        display: flex;
+        align-items: center;
       }
     }
     .main-header__icon {

@@ -8,6 +8,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core'
 import { Router } from '@angular/router'
+import { TranslateService } from '@ngx-translate/core'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { FieldEvent } from 'src/app/common-shared/constants/model/form-elements.model'
 import { unfreeze } from 'src/app/common-shared/utility/object.utility'
@@ -20,6 +21,8 @@ import {
   ReferenceMaterials,
   StatusMaterial,
 } from 'src/app/modules/teacher/project-editor/constants/model/activity.model'
+import { DraggableRow } from './../../constants/model/draggable-row.model'
+
 import { Project } from 'src/app/modules/teacher/project-editor/constants/model/project.model'
 import { EditorService } from 'src/app/modules/teacher/project-editor/services/editor/editor.service'
 import { ProjectEntityService } from 'src/app/modules/teacher/project-editor/store/entity/project/project-entity.service'
@@ -60,6 +63,10 @@ export class CreationComponent implements OnInit, OnDestroy {
   localExperienceType: number
   projectSubscription = new SubSink()
   clearTimeOuts = new ClearAllSetTimeouts()
+  dropdownData: any
+  exercisesBlock: any
+  translations: string[]
+  isExerciseEdit = false
 
   @ViewChild('addMaterial') addMaterial: TemplateRef<any>
   @ViewChild('excerciseModal') excerciseModal: TemplateRef<any>
@@ -70,11 +77,13 @@ export class CreationComponent implements OnInit, OnDestroy {
     private router: Router,
     private modalService: BsModalService,
     private projectService: ProjectEntityService,
-    private changeDetection: ChangeDetectorRef
+    private changeDetection: ChangeDetectorRef,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.experienceType = this.editor.getExperienceUrl()
+    this.initTranslations()
     this.creationInit()
     this.editor.setContextualhelpStep(21)
   }
@@ -83,6 +92,7 @@ export class CreationComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe()
     this.clearTimeOuts.clearAll()
   }
+
   creationInit(): void {
     this.localExperienceType = this.editor.getLocalExperienceType()
     this.subscriptions.sink = this.editor.activity$.subscribe((activity) => {
@@ -92,6 +102,7 @@ export class CreationComponent implements OnInit, OnDestroy {
         : this.activity?.exercises?.reduce((sum, exercise) => {
             return sum + (exercise?.percentage || null)
           }, 0)
+      this.exerciseBlock()
     })
     if (this.activity?.referenceMaterials) {
       this.activity.referenceMaterials = unfreeze(
@@ -105,6 +116,43 @@ export class CreationComponent implements OnInit, OnDestroy {
       ? this.activity.activityImageUrl
       : this.project?.creativeImage
     this.checkMandatoryFields()
+  }
+
+  exerciseBlock(): void {
+    this.dropdownData = [
+      {
+        icon: 'icon-ic_delete',
+        text: this.translations['ACTIVITIES.activities_delete'],
+        action: 'delete',
+      },
+    ]
+    this.exercisesBlock = []
+    this.activity?.exercises
+      ?.sort((a, b) => (a.sortOrder > b.sortOrder ? 1 : -1))
+      .forEach((item, index) => {
+        let dragControls = []
+        if (this.activity?.exercises?.length > 1) {
+          dragControls = [
+            {
+              icon: 'icon-ic_up',
+              text: this.translations['ACTIVITIES.item_moveup'],
+              action: 'moveup',
+              disabled: index === 0 ? true : false,
+            },
+            {
+              icon: 'icon-ic_down',
+              text: this.translations['ACTIVITIES.item_movedown'],
+              action: 'movedown',
+              disabled:
+                index === this.activity?.exercises?.length - 1 ? true : false,
+            },
+          ]
+        }
+        this.exercisesBlock.push({
+          exercise: item,
+          dropdownData: [...dragControls, ...this.dropdownData],
+        })
+      })
   }
 
   handleTextareaChange(data: FieldEvent): void {
@@ -132,6 +180,12 @@ export class CreationComponent implements OnInit, OnDestroy {
     } else {
       this.modalRef?.hide()
     }
+    if (this.exercise) {
+      this.modalCloseDelay(() => {
+        this.exercise = null
+        this.isExerciseEdit = false
+      })
+    }
     this.projectSubscription.unsubscribe()
     this.editor.updateOneProjectFromCache({ error: null })
   }
@@ -149,16 +203,41 @@ export class CreationComponent implements OnInit, OnDestroy {
     this.changeDetection.detectChanges()
   }
 
+  // function to add or edit exercise
   addExcercise(exercise: Exercise): void {
     this.exerciseLoading = true
     this.isTitleConflict = false
     this.activity = unfreeze(this.activity)
-    if (this.activity.exercises) {
-      this.activity.exercises.push(exercise)
-    } else {
-      this.activity.exercises = [exercise]
+    if (!exercise?.id) {
+      if (this.activity.exercises) {
+        this.activity.exercises.push(exercise)
+      } else {
+        this.activity.exercises = [exercise]
+      }
     }
-    this.saveExcercise(exercise, 'create')
+    const updateType = exercise?.id ? 'update' : 'create'
+    if (
+      updateType === 'create' ||
+      (updateType === 'update' && this.isExerciseUpdated(exercise)) // new exercise or exercise updated
+    ) {
+      this.saveExcercise(exercise, updateType)
+    } else {
+      this.modalCloseDelay(() => {
+        this.exerciseLoading = false
+        this.isExerciseEdit = false
+      })
+      this.modalRef?.hide()
+    }
+  }
+
+  isExerciseUpdated(exercise: Exercise): boolean {
+    const initialValue = this.activity.exercises.find(
+      (initialExercise) => initialExercise.id === exercise.id
+    )
+    if (JSON.stringify(initialValue) !== JSON.stringify(exercise)) {
+      return true
+    }
+    return false
   }
 
   saveExcercise(exercise: Exercise, updateType: string): void {
@@ -168,9 +247,9 @@ export class CreationComponent implements OnInit, OnDestroy {
         if (!result.error) {
           this.isTitleConflict = false
           // modal close delay
-          this.clearTimeOuts.add = setTimeout(() => {
+          this.modalCloseDelay(() => {
             this.exerciseLoading = false
-          }, 500)
+          })
           this.checkFormState()
           this.checkMandatoryFields()
           this.handleSubmit()
@@ -186,32 +265,18 @@ export class CreationComponent implements OnInit, OnDestroy {
 
   // This deals with the whole exercise Edit
   handleExerciseEdit($event: Exercise): void {
+    this.isExerciseEdit = true
     this.exercise = $event
     this.openModal(this.excerciseModal)
   }
-  // This deals with the  exercise title update
-  handleExcerciseTitleUpdate($event: Exercise): void {
-    this.exerciseTitleObject = $event
-    this.modalRef = this.modalService.show(this.excerciseTitleUpdate, {
-      ignoreBackdropClick: true,
-      class: 'modal-form modal-dialog-centered',
-    })
+
+  // function to manage the delay in modal closing
+  modalCloseDelay(callback: any): void {
+    this.clearTimeOuts.add = setTimeout(() => {
+      callback()
+    }, 800)
   }
-  declinEditTitleModal(): void {
-    this.isTitleConflict = false
-    this.exerciseLoading = false
-    this.modalRef.hide()
-  }
-  confirmExerciseTitleUpdate(event: string): void {
-    this.isTitleConflict = false
-    this.exerciseLoading = true
-    const exerciseObj = unfreeze(this.exerciseTitleObject)
-    exerciseObj.name = event
-    this.saveExcercise(exerciseObj, 'update')
-  }
-  getExcerciseTitleValueChange(event: string): void {
-    this.isTitleConflict = false
-  }
+
   changeVisibility(id: number, visible: boolean): void {
     this.activity = unfreeze(this.activity)
     this.activity.referenceMaterials.find(
@@ -408,5 +473,55 @@ export class CreationComponent implements OnInit, OnDestroy {
     this.router.navigate([
       `editor/${this.experienceType}/${this.project.id}/activity/${this.activity.id}/preview`,
     ])
+  }
+
+  initTranslations(): void {
+    this.subscriptions.sink = this.translate
+      .stream([
+        'ACTIVITIES.activities_delete',
+        'ACTIVITIES.item_moveup',
+        'ACTIVITIES.item_movedown',
+      ])
+      .subscribe((translations) => {
+        this.translations = translations
+      })
+  }
+
+  executeDropdownActions(row: DraggableRow): void {
+    let currentExercise: Exercise = this.exercisesBlock.filter(
+      (exercise) => exercise.id === row.id
+    )[0]
+    currentExercise = {
+      ...currentExercise,
+      updateType: 'sortOrder',
+    }
+    switch (row.action) {
+      case 'moveup': {
+        const order = {
+          id: row.id,
+          sortOrder: row.sortOrder - 1,
+        }
+        this.editor.handleExerciseSubmit(currentExercise, order)
+        break
+      }
+      case 'movedown': {
+        const order = {
+          id: row.id,
+          sortOrder: row.sortOrder + 1,
+        }
+        this.editor.handleExerciseSubmit(currentExercise, order)
+        break
+      }
+      case 'delete':
+        this.handleExerciseDelete(row.id)
+        break
+    }
+  }
+
+  handleExerciseDelete(exerciseid: any): void {
+    this.editor.handleExerciseSubmit({
+      updateType: 'delete',
+      id: exerciseid,
+    })
   }
 }

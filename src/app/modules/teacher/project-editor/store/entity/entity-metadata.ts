@@ -1,15 +1,12 @@
 import { EntityMetadataMap } from '@ngrx/data'
+import { CardList } from 'src/app/modules/shared/constants/model/card-experience.model'
+import { CurriculumAcademicYear } from 'src/app/modules/shared/constants/model/curriculum-data.model'
 import { BlockWithQuery } from '../../constants/model/curriculum.model'
-
-import {
-  CurriculumAcademicYear,
-  ProjectList,
-} from '../../constants/model/project.model'
 
 export const entityMetadata: EntityMetadataMap = {
   Project: {},
-  ProjectList: {
-    selectId: (projectList: ProjectList) => projectList.pageId,
+  CardList: {
+    selectId: (cardList: CardList) => cardList.pageId,
     entityDispatcherOptions: {
       optimisticUpdate: true,
     },
@@ -103,6 +100,11 @@ export const entityMetadata: EntityMetadataMap = {
     },
   },
   ActivityPreview: {
+    entityDispatcherOptions: {
+      optimisticUpdate: true,
+    },
+  },
+  CollaboratorList: {
     entityDispatcherOptions: {
       optimisticUpdate: true,
     },

@@ -14,17 +14,21 @@ import { EditorService } from '../../services/editor/editor.service'
 import { Option } from 'src/app/common-shared/constants/model/form-elements.model'
 import {
   CompetencyObjective,
-  EvaluationCriteria,
   Project,
   Status,
   Step,
-  Subject,
 } from '../../constants/model/project.model'
 import { FormFive } from '../../constants/model/step-forms.model'
 
 import { skip } from 'rxjs/operators'
 import { StepButtonSubmitConfig } from 'src/app/common-shared/constants/data/form-elements.data'
+import { unfreeze } from 'src/app/common-shared/utility/object.utility'
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
+import { ClearAllSetTimeouts } from 'src/app/common-shared/utility/timeout.utility'
+import {
+  EvaluationCriteria,
+  Subject,
+} from 'src/app/modules/shared/constants/model/curriculum-data.model'
 import { StandardEntityService } from '../../store/entity/standard/standard-entity.service'
 
 @Component({
@@ -56,8 +60,18 @@ export class StepFiveComponent implements OnInit, OnDestroy {
   allSubjectshasCriterias = false
   hasStandards = true
   standardsLoading = false
+  showPrimaryView = false
+  showDataDependancyLoader = false
+  errorSubscriptions = new SubSink()
+  childModalRef: any = null
+  reopenPrimaryView = false
+  clearTimeout = new ClearAllSetTimeouts()
+  isSecondaryViewEnabled = false
+  selectedPrimaryViewData: Subject
+  modalNumber: number
   @ViewChild('modalDelete') modalDelete: TemplateRef<any>
   @ViewChild('standardsModal') standardsModal: TemplateRef<any>
+  @ViewChild('dependancyModal') dependancyModal: TemplateRef<any>
 
   selectedStandards: Option[]
 
@@ -90,7 +104,10 @@ export class StepFiveComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.clearTimeout.clearAll()
     this.subscriptions.unsubscribe()
+    this.errorSubscriptions.unsubscribe()
+    this.editor.updateOneProjectFromCache({ error: null })
   }
 
   stepInIt(): void {
@@ -158,7 +175,11 @@ export class StepFiveComponent implements OnInit, OnDestroy {
   }
 
   openModalWithComponent(i: number, subject: Subject): void {
+    this.modalNumber = i
+    this.showPrimaryView = true
+    // this.isSecondaryViewEnabled = false
     this.activeTextarea = null
+    this.selectedPrimaryViewData = unfreeze(subject)
     if (this.allSubjectshasCriterias) {
       this.openStandardsModal(i)
     } else {
@@ -166,7 +187,12 @@ export class StepFiveComponent implements OnInit, OnDestroy {
     }
   }
 
+  changeView(showPrimaryView: boolean): void {
+    this.isSecondaryViewEnabled = !showPrimaryView ? true : false
+  }
+
   openDeleteStandardConfirmationModal(data: Subject): void {
+    this.showPrimaryView = false
     this.deleteData = data
     this.bsModalRef = this.modalService.show(this.modalDelete, {
       class: 'common-modal  modal-dialog-centered',
@@ -201,26 +227,13 @@ export class StepFiveComponent implements OnInit, OnDestroy {
   }
 
   confirmModalDelete(): void {
+    this.showDataDependancyLoader = true
     this.removeStandard(this.deleteData)
-    this.bsModalRef.hide()
   }
 
   // Delete selected criteria
   removeStandard(standardData: any): void {
-    const competencyObjectivesCopy = [...this.project.competencyObjectives]
-    for (const [
-      cindex,
-      competencyObjective,
-    ] of competencyObjectivesCopy.entries()) {
-      if (competencyObjective.id === standardData.subjectId) {
-        this.project.competencyObjectives[cindex].standards = [
-          ...competencyObjective.standards.filter(
-            (standard) => standard.id !== standardData.id
-          ),
-        ]
-      }
-    }
-
+    this.getRemoveContentError()
     this.checkFormEmpty()
     const formData: FormFive = {
       data: {
@@ -326,8 +339,25 @@ export class StepFiveComponent implements OnInit, OnDestroy {
     this.bsModalRef.hide()
   }
 
-  declineModal(): void {
+  declineModal(clearSecondary: boolean = false): void {
     this.bsModalRef.hide()
+    this.childModalRef?.hide()
+    this.showDataDependancyLoader = false
+    this.showPrimaryView = false
+    this.errorSubscriptions.unsubscribe()
+    this.editor.updateOneProjectFromCache({ error: null })
+    if (this.reopenPrimaryView) {
+      this.openModalWithComponent(
+        this.modalNumber,
+        this.selectedPrimaryViewData
+      )
+      this.reopenPrimaryView = false
+    }
+    if (clearSecondary) {
+      this.clearTimeout.add = setTimeout(() => {
+        this.isSecondaryViewEnabled = false
+      }, 500)
+    }
   }
 
   handleModalSubmit(event: any): void {
@@ -339,8 +369,8 @@ export class StepFiveComponent implements OnInit, OnDestroy {
       standards: event,
     }
     this.step.state = 'INPROCESS'
+    this.getRemoveContentError()
     this.handleSubmit()
-    this.bsModalRef.hide()
   }
 
   allSubjectContainsCriteria(): boolean {
@@ -349,5 +379,27 @@ export class StepFiveComponent implements OnInit, OnDestroy {
         (subject) => subject.evaluationCriteria.length === 0
       ).length === 0
     )
+  }
+
+  getRemoveContentError(): void {
+    this.errorSubscriptions.sink = this.editor.project$
+      .pipe(skip(1))
+      .subscribe((data) => {
+        this.bsModalRef?.hide()
+        this.clearTimeout.add = setTimeout(() => {
+          if (data?.error?.type === 'STANDARD_ACTIVITY') {
+            if (this.showPrimaryView) {
+              this.reopenPrimaryView = true
+            }
+            this.bsModalRef = this.modalService.show(this.dependancyModal, {
+              class: 'common-modal modal-dialog-centered',
+              animated: false,
+            })
+          } else {
+            this.reopenPrimaryView = false
+            this.declineModal(true)
+          }
+        }, 500)
+      })
   }
 }

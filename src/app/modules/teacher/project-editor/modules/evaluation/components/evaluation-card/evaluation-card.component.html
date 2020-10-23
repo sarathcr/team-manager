@@ -1,72 +1,92 @@
-<div
-  class="evaluation-card"
-  [ngClass]="
-    !isExercise ? 'evaluation-card_average' : 'evaluation-card_qualifying'
-  "
->
-  <div class="evaluation-card__box evaluation-card__box_row1">
-    <div class="evaluation-card__head">
-      <h1 class="evaluation-card__title">
-        {{ title | translate }}
-      </h1>
-      <div *ngIf="isExercise" class="evaluation-card__dropdown">
-        <app-dropdown
-          [list]="dropdownElements"
-          position="center"
-          (selects)="actionEmit($event)"
-        >
-          <span class="icon icon-ic_more content-icon"></span>
-        </app-dropdown>
-      </div>
-    </div>
-    <div class="evaluation-card__main">
-      <div *ngIf="percentage === 100 && !isExercise">
-        <span class="icon-ic_doc2"></span>
-        <span class="title_s"
-          >{{ percentage
-          }}<sup class="evaluation-card__percentage">%</sup></span
-        >
-      </div>
-      <div
-        class="evaluation-card__box"
-        *ngIf="percentage > 0 && percentage <= 100 && isExercise"
-      >
-        <span
-          [ngClass]="isNotClasificable ? 'icon-ic_star-no' : 'icon-ic_doc2'"
-        ></span>
-        <span *ngIf="!isNotClasificable" class="title_s"
-          >{{ percentage
-          }}<sup class="evaluation-card__percentage">%</sup></span
-        >
-        <span *ngIf="isNotClasificable" class="evaluation-card__calificable">{{
-          'No calificable' | translate
-        }}</span>
-      </div>
-      <div *ngIf="percentage > 100 || (percentage < 100 && !isExercise)">
-        <span
-          class="icon-ic_warning warning"
-          tooltip="La suma de porcentajes debe ser 100."
-          [adaptivePosition]="false"
-          placement="bottom"
-          containerClass="tooltip_custom"
-        ></span>
-        <span class="title_s warning"
-          >{{ percentage
-          }}<sup class="evaluation-card__percentage">%</sup></span
-        >
-      </div>
-      <div
-        class="evaluation-card__clickacable"
-        *ngIf="percentage <= 0 && isExercise"
-      >
-        <span class="warning">{{ 'Asigna porcentaje' | translate }}</span>
-      </div>
-    </div>
+<div>
+  <div
+    *ngIf="hasHeader"
+    class="evaluation-card__header"
+    [ngClass]="
+      isExercise
+        ? 'evaluation-card__header_left'
+        : 'evaluation-card__header_center'
+    "
+  >
+    <h1 class="evaluation-card_title">
+      {{ 'EVALUATION.evaluation_table_ average_header' | translate }}
+    </h1>
   </div>
-  <hr class="evaluation-card__separator" />
-  <div class="evaluation-card__box evaluation-card__box_row2">
-    <span class="evaluation-card__item"
-      ><!-- {{ infoPercentage | translate }} -->-</span
-    >
+  <div
+    class="evaluation-card"
+    [ngClass]="
+      !isExercise ? 'evaluation-card_average' : 'evaluation-card_qualifying'
+    "
+  >
+    <div class="evaluation-card__box evaluation-card__box_row1">
+      <div class="evaluation-card__statement">
+        <h3 class="evaluation-card_title">
+          {{ title | translate }}
+        </h3>
+        <div *ngIf="isExercise" class="evaluation-card__dropdown">
+          <app-dropdown
+            [list]="dropdownElements"
+            position="center"
+            (selects)="actionEmit($event)"
+          >
+            <span class="icon icon-ic_more content-icon"></span>
+          </app-dropdown>
+        </div>
+      </div>
+      <div class="evaluation-card__main">
+        <div *ngIf="percentage === 100 && !isExercise">
+          <span class="icon-ic_doc2"></span>
+          <span class="title_s"
+            >{{ percentage
+            }}<sup class="evaluation-card__percentage">%</sup></span
+          >
+        </div>
+        <div
+          class="evaluation-card__box"
+          *ngIf="
+            (percentage > 0 && percentage <= 100 && isExercise) ||
+            isNotClasificable
+          "
+        >
+          <span
+            [ngClass]="isNotClasificable ? 'icon-ic_star-no' : 'icon-ic_doc2'"
+          ></span>
+          <span *ngIf="!isNotClasificable" class="title_s"
+            >{{ percentage
+            }}<sup class="evaluation-card__percentage">%</sup></span
+          >
+          <span
+            *ngIf="isNotClasificable"
+            class="evaluation-card__calificable"
+            >{{ 'No calificable' | translate }}</span
+          >
+        </div>
+        <div *ngIf="percentage > 100 || (percentage < 100 && !isExercise)">
+          <span
+            class="icon-ic_warning warning"
+            [tooltip]="tooltipText"
+            [adaptivePosition]="false"
+            placement="bottom"
+            containerClass="tooltip_custom"
+          ></span>
+          <span class="title_s warning"
+            >{{ percentage
+            }}<sup class="evaluation-card__percentage">%</sup></span
+          >
+        </div>
+        <div
+          class="evaluation-card__clickacable"
+          *ngIf="percentage <= 0 && isExercise && !isNotClasificable"
+        >
+          <span class="warning">{{ 'Asigna porcentaje' | translate }}</span>
+        </div>
+      </div>
+    </div>
+    <hr class="evaluation-card__separator" />
+    <div class="evaluation-card__box evaluation-card__box_row2">
+      <span class="evaluation-card__item"
+        ><!-- {{ infoPercentage | translate }} -->-</span
+      >
+    </div>
   </div>
 </div>

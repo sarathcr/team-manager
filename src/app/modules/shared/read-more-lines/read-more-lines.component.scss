@@ -9,6 +9,7 @@
     text-decoration: underline;
     font-weight: 700;
     color: color(tertiary);
+    cursor: pointer;
   }
   &:not(.open) {
     display: -webkit-box;

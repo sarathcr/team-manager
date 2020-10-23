@@ -1,9 +1,17 @@
+import { Option } from 'src/app/common-shared/constants/model/form-elements.model'
 import {
-  CheckBoxData,
-  Option,
-} from 'src/app/common-shared/constants/model/form-elements.model'
-import { Activity, Exercise } from './activity.model'
-import { Dimensions, Indicator } from './curriculum.model'
+  AcademicYear,
+  BasicSkill,
+  Content,
+  Country,
+  CustomContent,
+  EvaluationCriteria,
+  Grade,
+  Region,
+  Standard,
+  Subject,
+} from 'src/app/modules/shared/constants/model/curriculum-data.model'
+import { Activity, Exercise, Order } from './activity.model'
 
 export class Project {
   id?: number | null
@@ -45,7 +53,9 @@ export class ProjectUpdate extends Project {
   standardId?: number
   criteriaId?: number
   activityId?: number | string
+  exerciseId?: number | string
   exercise?: Exercise
+  sortOrder?: Order
 }
 export class ProjectStoreUpdate {
   id?: number
@@ -65,6 +75,9 @@ export type ProjectUpdateTypes =
   | 'createActivity'
   | 'createExercise'
   | 'updateExercise'
+  | 'sortOrderActivity'
+  | 'sortOrderExercise'
+  | 'deleteExercise'
 
 export type ProjectSortType = 'openedAt' | 'updatedAt' | 'title' | 'createdAt'
 export class ProjectList {
@@ -72,61 +85,6 @@ export class ProjectList {
   projectCount: number
   pageId: string
   pageSize: number
-}
-
-export class Country extends Option {}
-
-export class Region extends Option {
-  country?: Country
-}
-
-export class AcademicYear {
-  id: number
-  name?: string
-  academicYear?: string
-  curriculumId?: number
-}
-
-export class FilterAcademicYear extends AcademicYear {
-  checked: boolean
-}
-
-export class CurriculumAcademicYear {
-  curriculumId?: number
-  academicYears?: AcademicYear[]
-}
-
-export class Grade extends Option {
-  academicYear?: AcademicYear
-  region?: Region
-  subjectList?: Subject[]
-  description?: string
-}
-
-export class Subject extends Option {
-  academicYear?: AcademicYear
-  region?: Region
-  evaluationCriteria?: EvaluationCriteria[]
-  contents?: Content[]
-  customContents?: CustomContent[]
-  grade?: Grade
-  icon?: string
-}
-
-export class FilterSubject extends Subject {
-  checked: boolean
-}
-
-export class FilterOptionsValues {
-  id: number | string
-  value: string
-  checked: boolean
-}
-export class FilterOptions {
-  stage: FilterOptionsValues[]
-  subjects: FilterOptionsValues[]
-  academicYears: FilterOptionsValues[]
-  type: FilterOptionsValues[]
 }
 
 export interface DrivingQuestion {
@@ -146,20 +104,6 @@ export class CompetencyObjective {
   standards?: Standard[]
   checked?: boolean
 }
-
-export class EvaluationCriteria extends Option {
-  gradeId?: number
-  subjectId?: number
-  dimensions?: Dimensions[]
-  basicSkills?: BasicSkill[]
-  code?: string
-  description?: string
-  numeration?: number
-  indicators?: Indicator[]
-  standards?: Standard[]
-  checked?: boolean
-  blockid?: number
-}
 export interface ProjectContent {
   basicSkills: BasicSkill[]
   code: string
@@ -176,15 +120,6 @@ export interface ContentModal {
   block?: string
   checked?: boolean
 }
-
-export class BasicSkill {
-  id?: number
-  name?: string
-  code?: string
-  description?: string
-  checkData?: CheckBoxData
-}
-
 export class CommonThread {
   id?: number
   name?: string
@@ -194,35 +129,6 @@ export class CustomStandard {
   id?: number
   name?: string
 }
-
-export class Standard {
-  id?: number
-  name?: string
-  code?: string
-  description?: string
-  numeration?: number
-  evaluationCriteria?: EvaluationCriteria
-  checked?: boolean
-}
-
-export class Content extends Option {
-  basicSkills?: BasicSkill[]
-  code?: string
-  description?: string
-  numeration?: number
-  checked?: boolean
-  subjectId?: number
-  blockid?: number
-}
-
-export class CustomContent {
-  id?: number
-  name?: string
-  checked?: boolean
-  subjectId?: number
-  type?: string
-}
-
 export class ProjectTitle {
   id?: ProjectId
   title?: string
@@ -297,3 +203,4 @@ export type ProjectErrorType =
   | 'CURRICULUM'
   | 'COMPTETENCY_ACTIVITY'
   | 'CONTENT_ACTIVITY'
+  | 'STANDARD_ACTIVITY'

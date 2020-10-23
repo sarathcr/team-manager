@@ -1,5 +1,6 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core'
 import {
+  DetailVariant,
   LoaderSize,
   LoaderTheme,
   LoaderVariants,
@@ -16,5 +17,6 @@ export class LoaderComponent {
   @Input() theme: LoaderTheme = 'primary'
   @Input() size: LoaderSize = 'large'
   @Input() detail = ''
+  @Input() detailVariant: DetailVariant = 'primary'
   constructor() {}
 }

@@ -24,6 +24,7 @@ import { UserResolver } from './resolvers/user-resolver.service'
 import { AuthGuard } from './guards/auth.guard'
 
 import { ProjectEditorStoreModule } from '../teacher/project-editor/store/project-editor-store.module'
+import { StudentGuard } from './guards/student.gaurd'
 import { TeacherGuard } from './guards/teacher.guard'
 import { AuthStoreModule } from './store/auth-store.module'
 
@@ -58,6 +59,7 @@ export class AuthModule {
         UserService,
         UserResolver,
         TeacherGuard,
+        StudentGuard,
       ],
     }
   }

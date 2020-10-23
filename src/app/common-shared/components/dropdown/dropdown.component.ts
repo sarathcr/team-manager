@@ -26,8 +26,10 @@ export class DropdownComponent {
 
   constructor() {}
 
-  onSelect(elementSelected: DropdownElement): void {
-    this.selects.emit(elementSelected)
+  onSelect(elementSelected: DropdownElement, disabled: boolean = false): void {
+    if (!disabled) {
+      this.selects.emit(elementSelected)
+    }
   }
 
   isOpenChange(): void {

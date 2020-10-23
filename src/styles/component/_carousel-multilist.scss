@@ -1,0 +1,76 @@
+.carousel-multilist {
+  .carousel {
+    &-inner {
+      display: flex;
+      overflow: inherit;
+    }
+
+    &-item {
+      margin-right: 8px;
+    }
+
+    &-indicators {
+      display: none;
+    }
+
+    &-control-prev,
+    &-control-next {
+      width: 36px;
+      height: 36px;
+      margin-top: 121px;
+      opacity: 1;
+      .carousel-control-prev-icon,
+      .carousel-control-next-icon {
+        @extend .icon-ic_br_next;
+        background-image: none;
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        text-align: center;
+        display: block;
+      }
+    }
+
+    .carousel-control-prev {
+      background-color: color(primary);
+      margin-left: -18px;
+      border-radius: 50%;
+      cursor: pointer;
+      &-icon {
+        transform: rotate(180deg);
+      }
+    }
+    .carousel-control-next {
+      margin-right: -12px;
+      cursor: pointer;
+      background-color: color(primary);
+      border-radius: 50%;
+    }
+  }
+
+  &_hide-btns {
+    .carousel {
+      &-control-prev,
+      &-control-next {
+        display: none;
+      }
+    }
+  }
+
+  &_disable-prev {
+    .carousel {
+      .carousel-control-prev {
+        background-color: pantone(link-water);
+        cursor: default;
+      }
+    }
+  }
+  &_disable-next {
+    .carousel {
+      .carousel-control-next {
+        background-color: pantone(link-water);
+        cursor: default;
+      }
+    }
+  }
+}

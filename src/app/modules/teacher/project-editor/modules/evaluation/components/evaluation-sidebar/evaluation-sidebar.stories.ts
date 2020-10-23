@@ -31,7 +31,7 @@ storiesOf('Evaluation|Evaluation-sidebar', module)
     ],
     props: {
       title: text('text', 'Alumnos (0)'),
-      label: text('label', 'Alumno'),
+      label: text('label', 'Añadir un nuevo alumno'),
       icon: select('Select icon', ['user', 'add'], 'user'),
     },
   }))

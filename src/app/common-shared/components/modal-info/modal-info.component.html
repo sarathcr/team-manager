@@ -29,11 +29,11 @@
     </h4>
   </div>
   <button
-    *ngIf="variant === 'information' || variant === 'unlock'"
+    *ngIf="variant === 'information' || variant === 'unlock' || showClose"
     class="close modal-info__close"
     type="button"
     aria-label="Close"
-    (click)="onDecline()"
+    (click)="showClose ? onClose() : onDecline()"
   >
     <span class="icon icon-ic_share_close"></span>
   </button>
@@ -43,6 +43,12 @@
     class="modal-info__content"
     [ngClass]="{ 'modal-info__content_medium': appearance === 'medium' }"
     [innerHTML]="description | translate"
+    *ngIf="description"
+  ></div>
+  <div
+    class="modal-info__content"
+    [ngClass]="{ 'modal-info__content_medium': appearance === 'medium' }"
+    *ngIf="!description"
   >
     <ng-content></ng-content>
   </div>
@@ -55,7 +61,7 @@
     <div class="modal-info__button-wrapper">
       <app-button
         [variant]="variant === 'delete' ? 'outlined' : 'contained'"
-        [disabled]="loading"
+        [disabled]="loading || cancelLoading"
         [theme]="theme"
         [size]="appearance"
         [loading]="loading"
@@ -73,6 +79,8 @@
         [variant]="'text'"
         [theme]="'secondary'"
         [size]="appearance"
+        [disabled]="cancelLoading || loading"
+        [loading]="cancelLoading"
         (click)="onDecline()"
       >
         {{ cancelLabel | translate }}

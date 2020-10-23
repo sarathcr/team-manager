@@ -17,9 +17,9 @@ import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
 import {
   Project,
   StandardsWithSkills,
-  Subject,
 } from '../../constants/model/project.model'
 
+import { Subject } from 'src/app/modules/shared/constants/model/curriculum-data.model'
 import { Block } from '../../constants/model/curriculum.model'
 import {
   CompetencyModal,
@@ -37,11 +37,12 @@ export class ModalStandardsComponent implements OnInit, OnDestroy {
   @Input() competencyObjectiveSelected: number
   @Input() dropdownData: Subject[]
   @Input() loading = false
+  @Input() showModalStandards = true
   @Output() modalSubmit = new EventEmitter()
   @Output() decline = new EventEmitter()
-
+  @Output() viewChange = new EventEmitter()
+  buttonLoading = false
   subjectDropdownConfig: DropDownConfig
-  showModalStandards = true
 
   subscriptions = new SubSink()
 
@@ -119,9 +120,11 @@ export class ModalStandardsComponent implements OnInit, OnDestroy {
 
   toggleModalStandards(): void {
     this.showModalStandards = !this.showModalStandards
+    this.viewChange.emit(this.showModalStandards)
   }
 
   handleButtonClick(): void {
+    this.buttonLoading = true
     let standardsSelected = []
     for (const competency of this.blockData) {
       standardsSelected = [

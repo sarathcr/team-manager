@@ -35,6 +35,7 @@ export class ExercisePreview {
   percentage: number
   delivery: string
   referenceMaterials: ReferenceMaterialPreview[]
+  sortOrder: number
 }
 
 export type ActivityPreviewStatus = 'PENDING' | 'COMPLETED'

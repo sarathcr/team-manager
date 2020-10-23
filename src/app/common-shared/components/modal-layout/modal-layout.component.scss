@@ -5,6 +5,9 @@
   flex-direction: column;
   height: 100%;
   $root: &;
+  &_medium {
+    min-height: 177px;
+  }
   &__header {
     display: flex;
     flex-direction: row;

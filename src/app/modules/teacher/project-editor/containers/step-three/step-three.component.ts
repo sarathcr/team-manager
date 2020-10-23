@@ -24,11 +24,9 @@ import {
 } from 'src/app/common-shared/constants/model/form-elements.model'
 import {
   CompetencyObjective,
-  EvaluationCriteria,
   Project,
   Status,
   Step,
-  Subject as CurriculumSubject,
 } from 'src/app/modules/teacher/project-editor/constants/model/project.model'
 import { Block } from '../../constants/model/curriculum.model'
 import {
@@ -42,6 +40,10 @@ import { StepButtonSubmitConfig } from 'src/app/common-shared/constants/data/for
 import { unfreeze } from 'src/app/common-shared/utility/object.utility'
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
 import { ClearAllSetTimeouts } from 'src/app/common-shared/utility/timeout.utility'
+import {
+  EvaluationCriteria,
+  Subject as CurriculumSubject,
+} from 'src/app/modules/shared/constants/model/curriculum-data.model'
 
 @Component({
   selector: 'app-step-three',

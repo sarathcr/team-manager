@@ -13,6 +13,7 @@
   position: relative;
   border: 1px solid transparent;
   height: 100%;
+  min-width: 150px;
   @include card-box-shadow();
   &:after {
     content: none;
@@ -109,9 +110,6 @@
     justify-content: center;
     position: relative;
     margin-bottom: spacing(primary);
-    &_bg {
-      background-color: color(primary);
-    }
   }
   &__image {
     width: 100%;

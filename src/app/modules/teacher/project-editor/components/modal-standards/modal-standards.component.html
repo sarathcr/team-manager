@@ -148,6 +148,7 @@
       <app-button
         class="ml-auto"
         icon="tick"
+        [loading]="buttonLoading"
         [disabled]="!(blockData | checkCount: modalColumns?.colOneHead?.key)"
         (click)="handleButtonClick()"
       >

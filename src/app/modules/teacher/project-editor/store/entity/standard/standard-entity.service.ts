@@ -4,7 +4,7 @@ import {
   EntityCollectionServiceBase,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data'
-import { Standard } from '../../../constants/model/project.model'
+import { Standard } from 'src/app/modules/shared/constants/model/curriculum-data.model'
 
 @Injectable()
 export class StandardEntityService extends EntityCollectionServiceBase<

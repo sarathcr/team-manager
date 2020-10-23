@@ -35,6 +35,9 @@ import { FiletypeTranslate } from './pipe/filetype-translate.pipe'
 import { ListFilter } from './pipe/list-filter.pipe'
 import { ReadMoreLinesComponent } from './read-more-lines/read-more-lines.component'
 
+// Services
+import { InvitationService } from './services/invitation/invitation.service'
+
 @NgModule({
   declarations: [
     EditableListComponent,
@@ -92,6 +95,6 @@ import { ReadMoreLinesComponent } from './read-more-lines/read-more-lines.compon
     CardExperienceComponent,
     ReadMoreLinesComponent,
   ],
-  providers: [],
+  providers: [InvitationService],
 })
 export class SharedModule {}

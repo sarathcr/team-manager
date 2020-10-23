@@ -11,7 +11,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 
 import { SocialAuthService } from 'angularx-social-login'
@@ -52,11 +52,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private router: Router,
     private socialAuthService: SocialAuthService,
     private googleAuthService: GoogleAuthService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.redirectByStatus()
+    this.routeInit()
     this.getPolicyTextLink()
   }
 
@@ -72,6 +74,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
           'SIGNUP_PAGE.platform_checkbox_policies'
         ].split('|')[1]
       })
+  }
+
+  routeInit(): void {
+    this.subscriptions.sink = this.route.queryParams.subscribe((query) => {
+      if (query?.email) {
+        this.email.setValue(atob(query.email))
+      }
+    })
   }
 
   redirectByStatus(): void {

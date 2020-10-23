@@ -1,10 +1,10 @@
-<div class="listbox">
+<div class="listbox" [class]="customClass">
   <div class="listbox__header">
     <h2 class="title_xs m-0" class="listbox__heading">
       {{ heading | translate }}
     </h2>
   </div>
-  <div class="listbox__box">
+  <div class="listbox__box" [ngClass]="{ 'pb-4 h-auto': !scroll }">
     <div class="listbox__scroll-content">
       <div *ngIf="!loading">
         <div
@@ -18,13 +18,15 @@
             *ngFor="let data of listData; let index = index"
             class="listbox__box-data"
             [ngClass]="{
-              'listbox__box-data_bg': checkSelect(data.checked, index)
+              'listbox__box-data_bg': checkSelect(data.checked, index),
+              'pb-0': type === 'bullet'
             }"
           >
             <app-radio
               [data]="data"
               [checked]="checkSelect(data.checked, index)"
               (changed)="onChanged($event, index)"
+              *ngIf="type === 'radio'"
             >
               <div class="listbox__label-title">
                 {{ data.title | translate }}
@@ -33,6 +35,10 @@
                 {{ data.description }}
               </div>
             </app-radio>
+            <div *ngIf="type === 'bullet'" class="listbox__bullet">
+              <span class="icon-ic_list listbox__bullet-icon"></span>
+              <span>{{ data }}</span>
+            </div>
           </div>
         </ng-container>
         <div

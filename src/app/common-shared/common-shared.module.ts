@@ -60,6 +60,7 @@ import { GoogleFileService } from './services/google/google-file.service'
 import { environment } from 'src/environments/environment'
 
 import { CheckCount } from '../modules/teacher/project-editor/pipes/check-count.pipe'
+import { ChipsetComponent } from './components/chipset/chipset.component'
 import { LayoutCoverComponent } from './components/layout-cover/layout-cover.component'
 import { ReversePipe } from './pipe/reverse.pipe'
 @NgModule({
@@ -94,6 +95,7 @@ import { ReversePipe } from './pipe/reverse.pipe'
     CheckCount,
     ReversePipe,
     LayoutCoverComponent,
+    ChipsetComponent,
   ],
   imports: [
     CommonModule,
@@ -140,6 +142,7 @@ import { ReversePipe } from './pipe/reverse.pipe'
     ReversePipe,
     RadioComponent,
     LayoutCoverComponent,
+    ChipsetComponent,
   ],
   providers: [
     BsModalRef,

@@ -117,4 +117,50 @@
       margin: spacing(secondary) 0;
     }
   }
+  &__modal-chipset {
+    padding-top: 35px;
+    padding-bottom: spacing(primary) * 2;
+    &_student {
+      padding-top: 20px;
+    }
+  }
+  &__modal-description {
+    padding: 22px 0;
+    letter-spacing: 0;
+  }
+  &__modal-tabset {
+    padding-bottom: 35px;
+  }
+  &__modal {
+    &-error {
+      padding-top: 6px;
+      padding-bottom: 28px;
+      min-height: 173px;
+      .error-box {
+        position: relative;
+        &::after {
+          content: '';
+          position: absolute;
+          left: 1px;
+          right: 1px;
+          bottom: 1px;
+          height: spacing(primary) * 2;
+          width: 100%;
+          background: linear-gradient(
+            180deg,
+            rgba(color(black), 0) 1.3%,
+            color(quaternary) 100%
+          );
+        }
+        &__item {
+          max-height: 398px;
+          min-height: 173px;
+          margin-top: 24px;
+          margin-bottom: spacing(secondary);
+          border: 1px solid rgba(color(tertiary), 0.15);
+          overflow: auto;
+        }
+      }
+    }
+  }
 }

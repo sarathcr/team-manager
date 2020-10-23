@@ -19,9 +19,10 @@ import {
   Activity,
   ActivityState,
   Exercise,
+  Order,
 } from '../../constants/model/activity.model'
 import { FormsData } from '../../constants/model/step-forms.model'
-import { ProjectListEntityService } from '../../store/entity/project-list/project-list-entity.service'
+import { CardListEntityService } from '../../store/entity/card-list/card-list-entity.service'
 import { ProjectEntityService } from '../../store/entity/project/project-entity.service'
 import { StepStatusEntityService } from '../../store/entity/step-status/step-status-entity.service'
 
@@ -61,7 +62,7 @@ export class EditorService {
   loaded = false
   constructor(
     private projectsService: ProjectEntityService,
-    private projectListService: ProjectListEntityService,
+    private cardListService: CardListEntityService,
     private stepStatusService: StepStatusEntityService,
     private router: Router,
     private userService: UserService
@@ -117,7 +118,7 @@ export class EditorService {
         this.loaded = true
       }
     })
-    this.projectListService.clearCache() // To clear project list store
+    this.cardListService.clearCache() // To clear card list store
   }
 
   selectActivity(activityId: number): void {
@@ -397,7 +398,7 @@ export class EditorService {
     this.projectsService.updateOneInCache({ ...this.project, ...updatedData })
   }
 
-  handleActivitySubmit(activity: Activity): void {
+  handleActivitySubmit(activity: Activity, value?: Order): void {
     const project: ProjectUpdate = {
       ...this.project,
       activityId: activity.id ? activity.id : null,
@@ -426,6 +427,11 @@ export class EditorService {
         project.updateType = 'deleteActivity'
         this.projectsService.update(project)
         break
+      case 'sortOrder':
+        project.sortOrder = value
+        project.updateType = 'sortOrderActivity'
+        this.projectsService.update(project)
+        break
       default:
         // this case is for update activity
         project.activities = this.project.activities.map((acvty) =>
@@ -438,7 +444,7 @@ export class EditorService {
     }
   }
 
-  handleExerciseSubmit(exercise: Exercise): Observable<any> {
+  handleExerciseSubmit(exercise: Exercise, value?: Order): Observable<any> {
     const project: ProjectUpdate = unfreeze({
       ...this.project,
       activityId: this.activityId,
@@ -459,6 +465,14 @@ export class EditorService {
         project.exercise = exercise
         return this.projectsService.update(project)
       case 'delete':
+        for (const activity of project.activities) {
+          activity.exercises = activity.exercises?.filter(
+            (exerciseData) => exerciseData.id !== exercise.id
+          )
+        }
+        project.exerciseId = exercise.id
+        project.updateType = 'deleteExercise'
+        this.projectsService.update(project)
         break
       case 'update':
         delete exercise.updateType
@@ -479,6 +493,11 @@ export class EditorService {
         delete exercise?.isMaterialVisibiityChange
         project.exercise = exercise
         return this.projectsService.update(project)
+      case 'sortOrder':
+        project.sortOrder = value
+        project.updateType = 'sortOrderExercise'
+        this.projectsService.update(project)
+        break
       default:
         break
     }

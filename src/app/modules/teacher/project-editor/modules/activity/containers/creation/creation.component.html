@@ -52,7 +52,7 @@
           [thumbnail]="material.previewImageUrl"
           [label]="material.fileType | FiletypeTranslate | translate"
           [title]="material.title | FileName: material.sourceType"
-          [draggable]="true"
+          [draggable]="false"
           [showSwitch]="true"
           [variant]="material.fileType"
           [switchOn]="material.visible"
@@ -97,23 +97,25 @@
         'ACTIVITY_CREATION.activity_creation_exercises_description' | translate
       }}
     </p>
-    <ng-container *ngFor="let excercise of activity?.exercises | reverse">
+    <ng-container *ngFor="let block of exercisesBlock">
       <app-exercises-card
-        [title]="excercise.name"
+        [title]="block.exercise.name"
         [subtitle]="
-          excercise.evaluation
+          block?.exercise.evaluation
             ? 'EXCERCISE_CARD.exercise_evaluation_calificable'
             : 'EXCERCISE_CARD.exercise_evaluation_noncalificable'
         "
-        [evaluation]="excercise.evaluation"
-        [subtitleValue]="excercise.deliveryDate"
-        [subtitleKey]="getTranslationKey(excercise.delivery)"
-        [description]="excercise.statement"
-        [selectedExcerciseId]="excercise.id"
-        [materials]="getAllExcerciseMaterials(excercise)"
-        (editExercise)="handleExerciseEdit(excercise)"
-        (updateExerciseTitle)="handleExcerciseTitleUpdate(excercise)"
+        [evaluation]="block.exercise.evaluation"
+        [subtitleValue]="block.exercise.deliveryDate"
+        [subtitleKey]="getTranslationKey(block.exercise.delivery)"
+        [description]="block.exercise.statement"
+        [selectedExcerciseId]="block.exercise.id"
+        [element]="block.exercise"
+        [dropdownData]="block.dropdownData"
+        [materials]="getAllExcerciseMaterials(block.exercise)"
+        (editExercise)="handleExerciseEdit(block.exercise)"
         (changeExerciseVisibility)="changeExerciseVisibility($event)"
+        (actionEmited)="executeDropdownActions($event)"
       ></app-exercises-card>
     </ng-container>
     <app-button
@@ -218,47 +220,12 @@
 </ng-template>
 <ng-template #excerciseModal>
   <app-add-exercise
-    (declineModal)="closeModal()"
-    (confirmModal)="addExcercise($event)"
     [buttonLoading]="exerciseLoading"
+    [isEdit]="isExerciseEdit"
     [exercise]="exercise"
     [exercisePercent]="exercisePercent"
     [isTitleConflict]="isTitleConflict"
+    (declineModal)="closeModal()"
+    (confirmModal)="addExcercise($event)"
   ></app-add-exercise>
-</ng-template>
-
-<ng-template #excerciseTitleUpdate>
-  <app-modal-form
-    variant="input"
-    title="ACTIVITIES.activities_header_update"
-    label="{{ 'EXCERCISE.exercise_definition_popup_input_title_label' }}"
-    confirmLabel="ACTIVITIES.activities_update"
-    [innerLabel]=""
-    [data]="exerciseTitleObject.name"
-    [maxLength]="70"
-    placeholder="{{
-      'EXCERCISE.exercise_definition_popup_input_title_placehoder' | translate
-    }}"
-    inputVariant="text"
-    [buttonDisabled]="isTitleConflict"
-    [buttonLoading]="exerciseLoading"
-    [error]="isTitleConflict"
-    helperText="PROJECT.project_title_helpertext"
-    [errorText]="
-      isTitleConflict
-        ? ('BUSINESS.Error_activity_title_existing'
-          | translate
-          | TranslateConcat
-            : 1
-            : ('VARIABLES.experience_type_variable_1'
-                | translate
-                | TranslateCut: localExperienceType))
-        : 'PROJECT.Error_textlimit_specified_singleinput'
-    "
-    (decline)="declinEditTitleModal()"
-    (confirm)="confirmExerciseTitleUpdate($event)"
-    (getInputValue)="getExcerciseTitleValueChange($event)"
-    enableValidator="false"
-  >
-  </app-modal-form>
 </ng-template>

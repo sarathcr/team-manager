@@ -61,6 +61,17 @@
       line-height: 24px;
     }
   }
+  &__bullet {
+    display: flex;
+    align-items: center;
+    padding-top: 4px;
+    &-icon {
+      font-size: 22px;
+      color: color(primary);
+      margin-left: -4px;
+      padding-right: 8px;
+    }
+  }
 }
 
 input[type='checkbox']:checked + div {

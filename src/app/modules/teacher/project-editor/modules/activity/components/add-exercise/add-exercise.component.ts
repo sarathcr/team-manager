@@ -27,6 +27,7 @@ import { EditorService } from 'src/app/modules/teacher/project-editor/services/e
 export class AddExerciseComponent implements OnInit {
   @Input() exercise: Exercise
   @Input() buttonLoading: boolean
+  @Input() isEdit = false
   @Input() exercisePercent
   @Input() isTitleConflict
   @Output() declineModal = new EventEmitter()
@@ -96,6 +97,9 @@ export class AddExerciseComponent implements OnInit {
     this.exercise = unfreeze(this.exercise)
     if (this.exercise.evaluation === undefined) {
       this.exercise.evaluation = true
+    }
+    if (this.isEdit && this.exercise?.percentage) {
+      this.exercisePercent = this.exercisePercent - this.exercise?.percentage
     }
     this.getExercisePercentHelperText(this.exercise?.percentage || 0)
     this.getModalityDropDownData()

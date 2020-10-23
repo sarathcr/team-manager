@@ -19,14 +19,9 @@ import { StageEntityService } from '../../store/entity/stage/stage-entity.servic
 
 import { Curriculum } from '../../constants/model/curriculum.model'
 import {
-  AcademicYear,
-  Country,
-  Grade,
   ProjectErrorType,
-  Region,
   Status,
   Step,
-  Subject,
 } from '../../constants/model/project.model'
 import { FormOne } from '../../constants/model/step-forms.model'
 
@@ -37,6 +32,13 @@ import {
   DropdownConfigInit,
   StepButtonSubmitConfig,
 } from 'src/app/common-shared/constants/data/form-elements.data'
+import {
+  AcademicYear,
+  Country,
+  Grade,
+  Region,
+  Subject,
+} from 'src/app/modules/shared/constants/model/curriculum-data.model'
 
 @Component({
   selector: 'app-step-one',
