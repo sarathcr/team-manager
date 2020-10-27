@@ -17,7 +17,7 @@
       <app-profile-pic
         variant="medium"
         [editable]="false"
-        [userName]="userName + (surName ? '' + surName : '')"
+        [userName]="userName"
         [imgUrl]="imageUrl"
         [fileUpload]="false"
       ></app-profile-pic>
@@ -25,7 +25,7 @@
     <div class="people-card__type">
       {{ profileType | translate }}
     </div>
-    <h4 class="people-card__name">{{ profileName | translate }}</h4>
+    <h4 class="people-card__name">{{ userName | translate }}</h4>
     <div class="people-card__select-box">
       <span
         class="people-card__icon people-card__icon_check icon-ic_check"

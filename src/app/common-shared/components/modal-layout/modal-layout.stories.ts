@@ -45,6 +45,7 @@ storiesOf('Common-shared|Modal Layout', module)
         background-clip: padding-box;
         border: 1px solid rgba(0, 0, 0, 0.2);
         border-radius: 0.3rem;
+        padding:20px;
       }`,
     ],
     props: {

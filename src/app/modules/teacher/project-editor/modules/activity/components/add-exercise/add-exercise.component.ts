@@ -73,10 +73,7 @@ export class AddExerciseComponent implements OnInit {
   ngOnInit(): void {
     this.localExperienceType = this.editor.getLocalExperienceType()
     this.minDate.setDate(this.minDate.getDate() - 1)
-    const agentDropdown = new DropdownConfigInit('agentsDDl')
-    agentDropdown.disabled = false
-    this.getAgentsDropDownData(agentDropdown)
-    this.AgentDropDowns.push(agentDropdown)
+    this.createAgentDropdownConfig()
 
     if (this.exercise && this.exercise.delivery) {
       this.modalitySelected = [
@@ -265,7 +262,7 @@ export class AddExerciseComponent implements OnInit {
         this.instrumentModalIndex
       ].instrument = material
     } else {
-      this.exercise.referenceMaterials = this.exercise.referenceMaterials
+      this.exercise.referenceMaterials = this.exercise?.referenceMaterials
         ? [material, ...this.exercise.referenceMaterials]
         : [material]
     }
@@ -331,6 +328,36 @@ export class AddExerciseComponent implements OnInit {
     }
     this.isFormValid = this.getFormValidStatus()
     this.changeDetection.detectChanges()
+  }
+
+  createAgentDropdownConfig(): void {
+    const agentDropdown = new DropdownConfigInit('agentsDDl')
+    agentDropdown.disabled = false
+    this.getAgentsDropDownData(agentDropdown)
+    if (!this.exercise?.evaluationStrategies) {
+      this.AgentDropDowns.push({ ...agentDropdown })
+    } else {
+      for (const strategy of this.exercise.evaluationStrategies) {
+        this.AgentDropDowns.push({ ...agentDropdown })
+      }
+    }
+    if (this.exercise?.evaluationStrategies?.length >= 1) {
+      for (const [
+        index,
+        strategy,
+      ] of this.exercise.evaluationStrategies.entries()) {
+        if (strategy.agent !== 'NONE') {
+          this.AgentDropDowns[index].selectedItems = [
+            {
+              id: strategy.agent,
+              name:
+                strategy.agent.charAt(0) +
+                strategy.agent.slice(1).toLowerCase(),
+            },
+          ]
+        }
+      }
+    }
   }
 
   getAgentsDropDownData(dropDown: DropdownConfigInit): void {

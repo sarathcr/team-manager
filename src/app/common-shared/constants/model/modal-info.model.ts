@@ -8,4 +8,4 @@ export type ModalInfoAppearance = 'default' | 'medium'
 
 export type ModalInfoTheme = 'primary' | 'secondary'
 
-export type ModalIcon = 'lock' | 'warning'
+export type ModalIcon = 'lock' | 'warning' | 'cone'

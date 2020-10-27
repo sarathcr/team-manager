@@ -59,9 +59,9 @@
           background-image: url('../../../../../../../../assets/images/shape-left-data@2x.png');
           width: 425px;
           height: 225px;
-          position: absolute;
+          position: fixed;
           left: 0;
-          top: 77px;
+          top: 0;
         }
       }
     }
@@ -109,7 +109,7 @@
   }
 
   &__exercises {
-    background-color: color(background-primary);
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     width: calc(100% - 260px);

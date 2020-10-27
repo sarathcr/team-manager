@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { StorageService } from 'src/app/common-shared/services/storage/storage.service'
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
 import { UserService } from 'src/app/modules/auth/services/user/user.service'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit {
   workspace = ''
   profileCompleted = false
   subscriptions = new SubSink()
+  env = environment
 
   constructor(
     private storage: StorageService,

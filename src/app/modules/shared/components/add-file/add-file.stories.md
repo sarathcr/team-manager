@@ -15,10 +15,10 @@ A convenience directive for applying styling to a Add File.
 ### With properties
 
 ```js
-<app-add-file [maxFileSize]="5242880"
-      [acceptedType]="doc,docx,pdf,xls,xlsx"
-      [label]="Cargar archivo"
-      [fileURL]="creativeFile" >
+<app-add-file 
+      [acceptedType]="acceptType"
+      [entityType]="entityType"
+      >
 </app-add-file>
 ```
 
@@ -28,10 +28,8 @@ A convenience directive for applying styling to a Add File.
 
 | Name           | Type     | Required | Values | Default | Description                           |
 | -------------- | -------- | :------: | ------ | :-----: | ------------------------------------- |
-| `fileURL`      | `string` |    -     | -      |    -    | URL of image to upload                |
-| `label`        | `string` |    -     | -      |    -    | To set the label                      |
-| `maxFileSize`  | `string` |    -     | -      |    -    | To set maximum file size of imagefile |
 | `acceptedType` | `string` |    -     | -      |    -    | To set accepted types                 |
+| `entityType`   | `entityType` |    -     | 'activity' , 'exercise' , 'instrument'     |    -    | Entity types                 |
 
 ## Note
 

@@ -9,6 +9,7 @@ import { Router } from '@angular/router'
 import { TranslateService } from '@ngx-translate/core'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { SubSink } from 'src/app/common-shared/utility/subsink.utility'
+import { User } from 'src/app/modules/auth/constants/model/login.model'
 import { UserService } from 'src/app/modules/auth/services/user/user.service'
 import { EditorService } from 'src/app/modules/teacher/project-editor/services/editor/editor.service'
 import {
@@ -489,5 +490,9 @@ export class PeopleEditorComponent implements OnInit, OnDestroy {
   onChipsetValueChange(emails: string[]): void {
     this.addedEmails = [...new Set(emails)]
     this.modalButtonDisabled = !emails?.length
+  }
+
+  getUserName(user: User): string {
+    return user.surName ? `${user.name} ${user.surName}` : user.name
   }
 }

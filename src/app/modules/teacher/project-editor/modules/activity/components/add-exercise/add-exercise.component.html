@@ -18,7 +18,7 @@
                 <app-input
                   id="add-excercise-input-title"
                   variant="text"
-                  [value]="exercise.name"
+                  [value]="exercise?.name"
                   formControlName="title"
                   placeholder="{{
                     'EXCERCISE.exercise_definition_popup_input_title_placehoder'
@@ -47,7 +47,7 @@
               <div class="excercise-modal__field mt-0">
                 <app-textarea
                   id="activity-definition-description"
-                  [value]="exercise.statement"
+                  [value]="exercise?.statement"
                   placeholder="{{
                     'EXCERCISE.exercise_definition_popup_input_instructions_placehoder'
                       | translate
@@ -176,7 +176,7 @@
                       <app-input
                         id="add-excercise-date-field"
                         variant="date"
-                        [value]="exercise.deliveryDate"
+                        [value]="exercise?.deliveryDate"
                         formControlName="date"
                         (inputChange)="onValueChange($event, 'deliveryDate')"
                         [placeholder]="
@@ -211,7 +211,7 @@
                     iconTwo="icon-ic_star-no"
                     buttonTextOne="EXCERCISE.exercise_definition_popup_input_calification_yes"
                     buttonTextTwo="EXCERCISE.exercise_definition_popup_input_calification_no"
-                    [switchOn]="exercise.evaluation"
+                    [switchOn]="exercise?.evaluation"
                     (changeSwitch)="onValueChange($event, 'evaluation')"
                   >
                   </app-switch>
@@ -219,12 +219,12 @@
               </div>
               <div
                 class="excercise-modal__field mb-5 pb-6"
-                *ngIf="exercise.evaluation"
+                *ngIf="exercise?.evaluation"
               >
                 <app-input
                   id="add-excercise-activity-percentage-input"
                   variant="number"
-                  [value]="exercise.percentage"
+                  [value]="exercise?.percentage"
                   [maxNumber]="100 - exercisePercent"
                   [maxlength]="3"
                   formControlName="calification"

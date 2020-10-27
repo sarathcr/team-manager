@@ -1,8 +1,9 @@
 <div
   class="sidebar-menu__item mb-3"
-  [routerLink]="[link]"
+  (click)="navigateTo(link)"
   [ngClass]="{
-    'sidebar-menu__item_active': router.url.split('?')[0] === link
+    'sidebar-menu__item_active': router.url.split('?')[0] === link,
+    'sidebar-menu__item_disabled': disabled
   }"
   *ngIf="link"
 >
@@ -20,3 +21,15 @@
   <!-- <span class="sidebar-menu__icon {{ icon ? icon : '' }}"></span>
   <span>{{ text | translate }}</span> -->
 </div>
+
+<ng-template #modalSoon>
+  <app-modal-info
+    id="step-four-modal-info"
+    [variant]="'info'"
+    icon="cone"
+    [modalTitle]="soonTitle"
+    [description]="soonDescription"
+    [confirmLabel]="'ENTIENDO'"
+    (confirm)="declineModal()"
+  ></app-modal-info>
+</ng-template>

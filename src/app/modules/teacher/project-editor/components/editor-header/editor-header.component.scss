@@ -21,6 +21,9 @@
     align-items: center;
     height: 100%;
     margin: 0;
+    &_disabled {
+      color: pantone(link-water) !important;
+    }
   }
   &__collapse,
   &__nav,
@@ -78,4 +81,15 @@
     display: block;
     cursor: pointer;
   }
+}
+
+.cone_icon {
+  display: inline-block;
+  mask-size: cover;
+  mask: url(../../../../../../assets/icons/ic_cone.svg);
+  background: pantone(link-water);
+  width: 20px;
+  height: 20px;
+  margin-bottom: 7px;
+  margin-right: 4px;
 }
