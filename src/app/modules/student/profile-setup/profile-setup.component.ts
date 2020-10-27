@@ -130,6 +130,6 @@ export class ProfileSetupComponent implements OnInit, OnDestroy {
   }
 
   navigateToHome(): void {
-    this.router.navigate(['/'])
+    this.router.navigate([''])
   }
 }

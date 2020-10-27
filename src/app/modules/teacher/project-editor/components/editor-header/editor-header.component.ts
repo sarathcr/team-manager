@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router'
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal'
 import { Labels } from 'src/app/common-shared/constants/model/editor-header.model'
+import { environment } from 'src/environments/environment'
 import { ProjectTitle } from '../../constants/model/project.model'
 import { EditorService } from '../../services/editor/editor.service'
 
@@ -33,6 +34,10 @@ export class EditorHeaderComponent implements OnInit {
   modalRef: BsModalRef
   localExperience: string
   @ViewChild('modalUnlock') modalUnlock: TemplateRef<any>
+  @ViewChild('modalSoon') modalSoon: TemplateRef<any>
+  env = environment
+  soonTitle = ''
+  soonDescription = ''
 
   constructor(
     private router: Router,
@@ -48,12 +53,18 @@ export class EditorHeaderComponent implements OnInit {
     this.titleSubmit.emit(event)
   }
 
-  onListClick(type: string): void {
+  onListClick(type: string, disable: boolean = false): void {
     const routeData =
       type === 'home'
         ? 'experiences'
         : `${this.localExperience}/${this.projectData?.id + type}`
-    this.editor.navigateClick(`/editor/${routeData}`)
+    if (!disable) {
+      if (type !== '/calendar') {
+        this.editor.navigateClick(`/editor/${routeData}`)
+      }
+    } else {
+      this.openSoonModal(type)
+    }
   }
 
   onClick(id: number, event: any): void {
@@ -67,6 +78,23 @@ export class EditorHeaderComponent implements OnInit {
         class: 'common-modal modal-dialog-centered',
       })
     }
+  }
+
+  openSoonModal(type: string): void {
+    console.log(type)
+    if (type === '/calendar') {
+      this.soonTitle = 'COMING_SOON.calendar_comingsoon_title'
+      this.soonDescription = 'COMING_SOON.calendar_comingsoon_description'
+    } else if (type === '/people') {
+      this.soonTitle = 'COMING_SOON.personas_comingsoon_title'
+      this.soonDescription = 'COMING_SOON.personas_comingsoon_description'
+    } else if (type === '/evaluation') {
+      this.soonTitle = 'COMING_SOON.evaluation_comingsoon_title'
+      this.soonDescription = 'COMING_SOON.evaluation_comingsoon_description'
+    }
+    this.modalRef = this.modalService.show(this.modalSoon, {
+      class: 'common-modal modal-dialog-centered',
+    })
   }
 
   declineModal(): void {

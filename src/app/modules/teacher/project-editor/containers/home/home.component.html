@@ -11,10 +11,13 @@
     <div class="creator-home__sidebar-wrapper">
       <div>
         <app-sidebar-menu
-          icon="icon-ic_experiencias-creadas"
+          [icon]="
+            env.name === 'prd' ? 'icon-ic_cone' : 'icon-ic_experiencias-creadas'
+          "
           text="PRIVATEHOME_GENERAL.home_menu_section_getinspired"
           link="/editor/experiences/inspirate"
           active="true"
+          [disabled]="env.name === 'prd'"
         ></app-sidebar-menu>
         <app-sidebar-menu
           icon="icon-ic_experiencias"

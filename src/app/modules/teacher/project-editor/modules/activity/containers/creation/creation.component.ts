@@ -223,6 +223,7 @@ export class CreationComponent implements OnInit, OnDestroy {
       this.saveExcercise(exercise, updateType)
     } else {
       this.modalCloseDelay(() => {
+        this.exercise = null
         this.exerciseLoading = false
         this.isExerciseEdit = false
       })

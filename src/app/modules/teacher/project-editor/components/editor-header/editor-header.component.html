@@ -39,25 +39,44 @@
           </li>
           <li
             class="project-editor-header__menu-item"
-            (click)="onListClick('/evaluation')"
-            [ngClass]="getActiveRoute() === 'evaluation' ? 'active' : ''"
+            (click)="onListClick('/calendar', env.name === 'prd')"
           >
-            <span class="project-editor-header__menu-link"
-              >{{ labels.evaluation | translate }}
-            </span>
-          </li>
-          <li class="project-editor-header__menu-item">
-            <span class="project-editor-header__menu-link"
-              >{{ labels.calendar | translate }}
+            <span
+              class="project-editor-header__menu-link"
+              [ngClass]="{
+                'project-editor-header__menu-link_disabled': env.name === 'prd'
+              }"
+              ><span class="cone_icon" *ngIf="env.name === 'prd'"></span>
+              {{ labels.calendar | translate }}
             </span>
           </li>
           <li
             class="project-editor-header__menu-item"
-            (click)="onListClick('/people')"
+            (click)="onListClick('/people', env.name === 'prd')"
             [ngClass]="getActiveRoute() === 'people' ? 'active' : ''"
           >
-            <span class="project-editor-header__menu-link"
-              >{{ labels.people | translate }}
+            <span
+              class="project-editor-header__menu-link"
+              [ngClass]="{
+                'project-editor-header__menu-link_disabled': env.name === 'prd'
+              }"
+              ><span class="cone_icon" *ngIf="env.name === 'prd'"></span>
+              {{ labels.people | translate }}
+            </span>
+          </li>
+          <li
+            class="project-editor-header__menu-item"
+            (click)="onListClick('/evaluation', env.name === 'prd')"
+            [ngClass]="getActiveRoute() === 'evaluation' ? 'active' : ''"
+          >
+            <span
+              class="project-editor-header__menu-link"
+              [ngClass]="{
+                'project-editor-header__menu-link_disabled': env.name === 'prd'
+              }"
+            >
+              <span class="cone_icon" *ngIf="env.name === 'prd'"></span>
+              {{ labels.evaluation | translate }}
             </span>
           </li>
         </ul>
@@ -84,5 +103,17 @@
     [confirmLabel]="'PROGRAMACION.output_dependancy_button'"
     (confirm)="confirmModalUnlock()"
     (decline)="declineModal()"
+  ></app-modal-info>
+</ng-template>
+
+<ng-template #modalSoon>
+  <app-modal-info
+    id="step-four-modal-info"
+    [variant]="'info'"
+    icon="cone"
+    [modalTitle]="soonTitle"
+    [description]="soonDescription"
+    [confirmLabel]="'ENTIENDO'"
+    (confirm)="declineModal()"
   ></app-modal-info>
 </ng-template>

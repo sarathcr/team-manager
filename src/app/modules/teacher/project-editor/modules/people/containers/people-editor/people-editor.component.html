@@ -93,7 +93,6 @@
       <div class="row">
         <div class="col-2 mb-6">
           <app-people-card
-            [profileName]=""
             [profileType]=""
             [inviteLabel]="'PEOPLE-EMPTY-STATE.people_add_teachers_button'"
             [imageUrl]=""
@@ -107,10 +106,8 @@
         >
           <app-people-card
             *ngIf="teacher.name"
-            [profileName]="teacher.name"
-            [userName]="teacher.name"
-            [surName]="teacher.surName"
-            profileType="PEOPLE-EMPTY-STATE.people_teachers"
+            [userName]="getUserName(teacher)"
+            profileType="PEOPLE-EMPTY-STATE.people_card_teacher"
             [inviteLabel]="teacher.inviteLabel"
             [imageUrl]="teacher.imageUrl"
             [checked]="teacher.checked"
@@ -129,7 +126,6 @@
       <div class="row mb-6">
         <div class="col-2 mb-6">
           <app-people-card
-            [profileName]=""
             [profileType]=""
             [inviteLabel]="'PEOPLE-EMPTY-STATE.people_add_students_button'"
             [imageUrl]=""
@@ -144,9 +140,7 @@
         >
           <app-people-card
             *ngIf="student.name"
-            [profileName]="student.name"
-            [userName]="student.name"
-            [surName]="student?.surName"
+            [userName]="getUserName(student)"
             profileType="PEOPLE-EMPTY-STATE.people_card_student"
             [inviteLabel]="student.inviteLabel"
             [imageUrl]="student.imageUrl"

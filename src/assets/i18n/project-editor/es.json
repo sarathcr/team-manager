@@ -381,5 +381,15 @@
     "experience_invitation_confirmation_description": "te ha compartido [experience_type_variable_6]. Acepta la invitación para poder acceder y colaborar. Si la rechazas, se eliminará de Tus experiencias.",
     "action_accept": "Aceptar",
     "action_deny": "Rechazar"
+  },
+  "COMING_SOON": {
+    "inspire_comingsoon_title": "Personaliza experiencias próximamente",
+    "inspire_comingsoon_description": "Muy pronto podrás consultar y adaptar programaciones de proyectos y unidades didácticas creadas por otros docentes a las necesidades de tu aula",
+    "evaluation_comingsoon_title": "Evaluación disponible próximamente",
+    "evaluation_comingsoon_description": "Muy pronto podrás calificar al alumnado calificando ejercicios e intercambiando feedback.",
+    "calendar_comingsoon_title": "Calendario disponible próximamente",
+    "calendar_comingsoon_description": "Muy pronto podrás visualizar todas las actividades de la experiencia en un calendario.",
+    "personas_comingsoon_title": "Invita a docentes y alumnado próximamente",
+    "personas_comingsoon_description": "Muy pronto podrás invitar a otros docentes para crear colaborativamente la experiencia de aprendizaje y podrás añadir al alumnado que la llevará a cabo"
   }
 }
